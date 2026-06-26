@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary> Provides a compatibility shim for the IngestionSettingResource class. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [System.Obsolete("This API is no longer supported by the service. No direct replacement is available.")]
     public partial class IngestionSettingResource : ArmResource, System.ClientModel.Primitives.IJsonModel<IngestionSettingData>, System.ClientModel.Primitives.IPersistableModel<IngestionSettingData>
     {
         private const string UnsupportedMessage = "This API is no longer supported by the service. No direct replacement is available.";
@@ -42,43 +41,33 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Gets the ingestion setting. </summary>
-        [System.Obsolete("This API is no longer supported by the service.")]
         public virtual Azure.Response<IngestionSettingResource> Get(System.Threading.CancellationToken cancellationToken = default) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
 
         /// <summary> Gets the ingestion setting. </summary>
-        [System.Obsolete("This API is no longer supported by the service.")]
         public virtual System.Threading.Tasks.Task<Azure.Response<IngestionSettingResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
 
         /// <summary> Deletes the ingestion setting. </summary>
-        [System.Obsolete("This API is no longer supported by the service.")]
         public virtual ArmOperation Delete(WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
 
         /// <summary> Deletes the ingestion setting. </summary>
-        [System.Obsolete("This API is no longer supported by the service.")]
         public virtual System.Threading.Tasks.Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
 
         /// <summary> Updates the ingestion setting. </summary>
-        [System.Obsolete("This API is no longer supported by the service.")]
         public virtual ArmOperation<IngestionSettingResource> Update(WaitUntil waitUntil, IngestionSettingData data, System.Threading.CancellationToken cancellationToken = default) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
 
         /// <summary> Updates the ingestion setting. </summary>
-        [System.Obsolete("This API is no longer supported by the service.")]
         public virtual System.Threading.Tasks.Task<ArmOperation<IngestionSettingResource>> UpdateAsync(WaitUntil waitUntil, IngestionSettingData data, System.Threading.CancellationToken cancellationToken = default) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
 
         /// <summary> Gets the ingestion setting connection strings. </summary>
-        [System.Obsolete("This API is no longer supported by the service.")]
         public virtual Azure.Pageable<IngestionConnectionString> GetConnectionStrings(System.Threading.CancellationToken cancellationToken = default) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
 
         /// <summary> Gets the ingestion setting connection strings. </summary>
-        [System.Obsolete("This API is no longer supported by the service.")]
         public virtual Azure.AsyncPageable<IngestionConnectionString> GetConnectionStringsAsync(System.Threading.CancellationToken cancellationToken = default) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
 
         /// <summary> Gets the ingestion setting tokens. </summary>
-        [System.Obsolete("This API is no longer supported by the service.")]
         public virtual Azure.Response<IngestionSettingToken> GetTokens(System.Threading.CancellationToken cancellationToken = default) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
 
         /// <summary> Gets the ingestion setting tokens. </summary>
-        [System.Obsolete("This API is no longer supported by the service.")]
         public virtual System.Threading.Tasks.Task<Azure.Response<IngestionSettingToken>> GetTokensAsync(System.Threading.CancellationToken cancellationToken = default) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
 
         IngestionSettingData System.ClientModel.Primitives.IJsonModel<IngestionSettingData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) => new IngestionSettingData();

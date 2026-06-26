@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
-        [System.Obsolete("This class is obsolete and will be removed in a future release.", false)]
         public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityConnectorGovernanceRuleResource> GetSecurityConnectorGovernanceRule(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             => GetSecurityConnectorGovernanceRules().Get(ruleId, cancellationToken);
         /// <summary>
@@ -33,7 +32,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
-        [System.Obsolete("This class is obsolete and will be removed in a future release.", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityConnectorGovernanceRuleResource>> GetSecurityConnectorGovernanceRuleAsync(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             => GetSecurityConnectorGovernanceRules().GetAsync(ruleId, cancellationToken);
     }
@@ -56,7 +54,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Provides a compatibility shim for the GetSecurityConnectorGovernanceRules operation preserved from the previous public API surface.
         /// </summary>
         /// <returns>The compatibility result.</returns>
-        [System.Obsolete("This class is obsolete and will be removed in a future release.", false)]
         public virtual Azure.ResourceManager.SecurityCenter.SecurityConnectorGovernanceRuleCollection GetSecurityConnectorGovernanceRules()
             => new SecurityConnectorGovernanceRuleCollection(Client, Id);
     }

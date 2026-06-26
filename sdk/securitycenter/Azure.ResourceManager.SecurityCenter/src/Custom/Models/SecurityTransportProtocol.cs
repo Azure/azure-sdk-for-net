@@ -14,7 +14,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Provides a compatibility shim for the SecurityTransportProtocol structure.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [System.Obsolete("This API is no longer supported by the service. No direct replacement is available.")]
     public readonly partial struct SecurityTransportProtocol : IEquatable<SecurityTransportProtocol>
     {
         private readonly string _value;

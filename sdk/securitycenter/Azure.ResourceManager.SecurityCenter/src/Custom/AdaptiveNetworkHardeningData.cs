@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.SecurityCenter
     /// Provides a compatibility shim for the AdaptiveNetworkHardeningData class.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [System.Obsolete("This API is no longer supported by the service. No direct replacement is available.")]
     public partial class AdaptiveNetworkHardeningData : ResourceData, IJsonModel<AdaptiveNetworkHardeningData>, IPersistableModel<AdaptiveNetworkHardeningData>
     {
         private const string UnsupportedMessage = "This API is no longer supported by the service. No direct replacement is available.";

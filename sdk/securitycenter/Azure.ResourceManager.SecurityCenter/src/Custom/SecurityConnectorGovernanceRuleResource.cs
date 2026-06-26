@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.SecurityCenter
     /// Provides a compatibility shim for the SecurityConnectorGovernanceRuleResource class.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [System.Obsolete("This class is obsolete and will be removed in a future release.", false)]
     public partial class SecurityConnectorGovernanceRuleResource : ArmResource
     {
         /// <summary>
@@ -118,7 +117,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use GovernanceRuleResource.Execute instead.")]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.Models.ExecuteRuleStatus> GetRuleExecutionStatus(Azure.WaitUntil waitUntil, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use GovernanceRuleResource.Execute instead."); }
         /// <summary>
         /// Provides a compatibility shim for the GetRuleExecutionStatusAsync operation preserved from the previous public API surface.
@@ -129,7 +127,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use GovernanceRuleResource.Execute instead.")]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.Models.ExecuteRuleStatus>> GetRuleExecutionStatusAsync(Azure.WaitUntil waitUntil, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use GovernanceRuleResource.Execute instead."); }
     }
 }

@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Provides a compatibility shim for the SecurityAlertSyncSettings class.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [System.Obsolete("This API is no longer supported by the service. No direct replacement is available.")]
     public partial class SecurityAlertSyncSettings : Azure.ResourceManager.SecurityCenter.SecuritySettingData, IJsonModel<SecurityAlertSyncSettings>, IPersistableModel<SecurityAlertSyncSettings>
     {
         /// <summary>

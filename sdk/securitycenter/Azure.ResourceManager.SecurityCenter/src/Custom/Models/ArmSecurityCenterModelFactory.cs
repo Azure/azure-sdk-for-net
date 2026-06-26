@@ -49,7 +49,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityCenter.IngestionSettingData"/>. </summary>
-        [System.Obsolete("This API is no longer supported by the service. No direct replacement is available.")]
         public static IngestionSettingData IngestionSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BinaryData properties = default)
         {
             return new IngestionSettingData(id, name, resourceType, systemData, properties);

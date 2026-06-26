@@ -91,7 +91,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ResourceGroupResource.GetJitNetworkAccessPoliciesByResourceGroup() or ResourceGroupResource.GetJitNetworkAccessPoliciesByResourceGroupAsync() instead.")]
         public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.JitNetworkAccessPolicyResource> GetJitNetworkAccessPoliciesByRegionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ResourceGroupResource.GetJitNetworkAccessPoliciesByResourceGroup() or ResourceGroupResource.GetJitNetworkAccessPoliciesByResourceGroupAsync() instead."); }
         /// <summary>
         /// Provides a compatibility shim for the GetDiscoveredSecuritySolutionsByHomeRegionAsync operation preserved from the previous public API surface.
@@ -143,7 +142,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use SubscriptionResource.GetSecuritySolutionsReferenceData() instead.")]
         public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.Models.SecuritySolutionsReferenceData> GetAllSecuritySolutionsReferenceDataByHomeRegionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use SubscriptionResource.GetSecuritySolutionsReferenceData() instead."); }
         /// <summary>
         /// Provides a compatibility shim for the GetTopologiesByHomeRegionAsync operation preserved from the previous public API surface.
@@ -173,7 +171,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ResourceGroupResource.GetJitNetworkAccessPoliciesByResourceGroup() or ResourceGroupResource.GetJitNetworkAccessPoliciesByResourceGroupAsync() instead.")]
         public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.JitNetworkAccessPolicyResource> GetJitNetworkAccessPoliciesByRegion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ResourceGroupResource.GetJitNetworkAccessPoliciesByResourceGroup() or ResourceGroupResource.GetJitNetworkAccessPoliciesByResourceGroupAsync() instead."); }
         /// <summary>
         /// Provides a compatibility shim for the GetDiscoveredSecuritySolutionsByHomeRegion operation preserved from the previous public API surface.
@@ -225,7 +222,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use SubscriptionResource.GetSecuritySolutionsReferenceData() instead.")]
         public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.Models.SecuritySolutionsReferenceData> GetAllSecuritySolutionsReferenceDataByHomeRegion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use SubscriptionResource.GetSecuritySolutionsReferenceData() instead."); }
         /// <summary>
         /// Provides a compatibility shim for the GetTopologiesByHomeRegion operation preserved from the previous public API surface.
@@ -273,7 +269,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetAdaptiveApplicationControlGroupResource(ResourceIdentifier id) instead.")]
         public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.AdaptiveApplicationControlGroupResource> GetAdaptiveApplicationControlGroup(string groupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetAdaptiveApplicationControlGroupResource(ResourceIdentifier id) instead."); }
         /// <summary>
         /// Provides a compatibility shim for the GetAdaptiveApplicationControlGroupAsync operation preserved from the previous public API surface.
@@ -283,7 +278,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetAdaptiveApplicationControlGroupResource(ResourceIdentifier id) instead.")]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.AdaptiveApplicationControlGroupResource>> GetAdaptiveApplicationControlGroupAsync(string groupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetAdaptiveApplicationControlGroupResource(ResourceIdentifier id) instead."); }
         /// <summary>
         /// Provides a compatibility shim for the GetAdaptiveApplicationControlGroups operation preserved from the previous public API surface.
@@ -291,7 +285,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetAdaptiveApplicationControlGroupResource(ResourceIdentifier id) instead.")]
         public virtual Azure.ResourceManager.SecurityCenter.AdaptiveApplicationControlGroupCollection GetAdaptiveApplicationControlGroups() { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetAdaptiveApplicationControlGroupResource(ResourceIdentifier id) instead."); }
     }
 }

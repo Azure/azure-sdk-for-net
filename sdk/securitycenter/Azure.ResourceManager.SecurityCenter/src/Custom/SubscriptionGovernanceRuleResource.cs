@@ -115,7 +115,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="operationId">The value preserved for API compatibility.</param>
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        [System.Obsolete("This API is no longer supported by the service. Use GovernanceRuleResource.Execute instead.")]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.Models.ExecuteRuleStatus> GetRuleExecutionStatus(Azure.WaitUntil waitUntil, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use GovernanceRuleResource.Execute instead."); }
         /// <summary>
         /// Provides a compatibility shim for the GetRuleExecutionStatusAsync operation preserved from the previous public API surface.
@@ -124,7 +123,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="operationId">The value preserved for API compatibility.</param>
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        [System.Obsolete("This API is no longer supported by the service. Use GovernanceRuleResource.Execute instead.")]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.Models.ExecuteRuleStatus>> GetRuleExecutionStatusAsync(Azure.WaitUntil waitUntil, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use GovernanceRuleResource.Execute instead."); }
         /// <summary>
         /// Provides a compatibility shim for the Update operation preserved from the previous public API surface.

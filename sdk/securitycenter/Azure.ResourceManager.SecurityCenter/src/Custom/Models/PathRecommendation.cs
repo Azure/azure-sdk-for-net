@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Provides a compatibility shim for the PathRecommendation class.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [System.Obsolete("This API is no longer supported by the service. No direct replacement is available.")]
     public partial class PathRecommendation : IJsonModel<PathRecommendation>, IPersistableModel<PathRecommendation>
     {
         /// <summary>

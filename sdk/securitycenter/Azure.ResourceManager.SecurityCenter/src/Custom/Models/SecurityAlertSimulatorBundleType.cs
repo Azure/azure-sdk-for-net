@@ -14,7 +14,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Provides a compatibility shim for the SecurityAlertSimulatorBundleType structure.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [System.Obsolete("This API is no longer supported by the service. No direct replacement is available.")]
     public readonly partial struct SecurityAlertSimulatorBundleType : IEquatable<SecurityAlertSimulatorBundleType>
     {
         private readonly string _value;

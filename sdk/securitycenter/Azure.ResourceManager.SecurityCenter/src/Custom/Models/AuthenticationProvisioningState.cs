@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Provides a compatibility shim for the AuthenticationDetailsProperties class.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [System.Obsolete("This API is no longer supported by the service. No direct replacement is available.")]
     public abstract partial class AuthenticationDetailsProperties : IJsonModel<AuthenticationDetailsProperties>, IPersistableModel<AuthenticationDetailsProperties>
     {
         /// <summary>
@@ -46,7 +45,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Provides a compatibility shim for the AuthenticationProvisioningState structure.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [System.Obsolete("This API is no longer supported by the service. No direct replacement is available.")]
     public readonly partial struct AuthenticationProvisioningState : IEquatable<AuthenticationProvisioningState>
     {
         private readonly string _value;

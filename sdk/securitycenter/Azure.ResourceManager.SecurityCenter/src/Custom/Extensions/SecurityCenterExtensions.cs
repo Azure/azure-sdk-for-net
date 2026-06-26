@@ -143,7 +143,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. No direct replacement is available.")]
         public static AsyncPageable<SecureScoreControlDetails> GetSecureScoreControlsAsync(this SubscriptionResource subscriptionResource, SecurityScoreODataExpand? expand = default, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This API is no longer supported by the service. No direct replacement is available.");
         /// <summary>
@@ -152,7 +151,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="client">The value preserved for API compatibility.</param>
         /// <param name="id">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        [System.Obsolete("This class is obsolete and will be removed in a future release.", false)]
         public static SecurityConnectorGovernanceRuleResource GetSecurityConnectorGovernanceRuleResource(this ArmClient client, ResourceIdentifier id)
             => GetMockableSecurityCenterArmClient(client).GetSecurityConnectorGovernanceRuleResource(id);
     }
@@ -203,7 +201,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use SubscriptionResource.GetExternalSecuritySolutions() and filter by name instead.")]
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.Models.ExternalSecuritySolution> GetExternalSecuritySolution(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation ascLocation, string externalSecuritySolutionsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             => throw new System.NotSupportedException("This API is no longer supported by the service. Use SubscriptionResource.GetExternalSecuritySolutions() and filter by name instead.");
         /// <summary>
@@ -216,7 +213,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use SubscriptionResource.GetExternalSecuritySolutionsAsync() and filter by name instead.")]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.Models.ExternalSecuritySolution>> GetExternalSecuritySolutionAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation ascLocation, string externalSecuritySolutionsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             => throw new System.NotSupportedException("This API is no longer supported by the service. Use SubscriptionResource.GetExternalSecuritySolutionsAsync() and filter by name instead.");
         /// <summary>
@@ -429,7 +425,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use SubscriptionResource.GetMdeOnboardingData() instead.")]
         public static Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.Models.MdeOnboarding> GetMdeOnboardingsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use SubscriptionResource.GetMdeOnboardingData() instead."); }
         /// <summary>
         /// Provides a compatibility shim for the GetAllSecuritySolutionsReferenceDataAsync operation preserved from the previous public API surface.
@@ -438,7 +433,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use SubscriptionResource.GetSecuritySolutionsReferenceDataAsync() instead.")]
         public static Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.Models.SecuritySolutionsReferenceData> GetAllSecuritySolutionsReferenceDataAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use SubscriptionResource.GetSecuritySolutionsReferenceDataAsync() instead."); }
         /// <summary>
         /// Provides a compatibility shim for the GetAlertsAsync operation preserved from the previous public API surface.
@@ -463,7 +457,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use SubscriptionResource.GetMdeOnboardingData() instead.")]
         public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.Models.MdeOnboarding> GetMdeOnboardings(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use SubscriptionResource.GetMdeOnboardingData() instead."); }
         /// <summary>
         /// Provides a compatibility shim for the GetAllSecuritySolutionsReferenceData operation preserved from the previous public API surface.
@@ -472,7 +465,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use SubscriptionResource.GetSecuritySolutionsReferenceData() instead.")]
         public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.Models.SecuritySolutionsReferenceData> GetAllSecuritySolutionsReferenceData(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use SubscriptionResource.GetSecuritySolutionsReferenceData() instead."); }
         /// <summary>
         /// Provides a compatibility shim for the GetAlerts operation preserved from the previous public API surface.
@@ -647,7 +639,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetAdaptiveApplicationControlGroupResource(ResourceIdentifier id) instead.")]
         public static Azure.ResourceManager.SecurityCenter.AdaptiveApplicationControlGroupResource GetAdaptiveApplicationControlGroupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetAdaptiveApplicationControlGroupResource(ResourceIdentifier id) instead."); }
         /// <summary>
         /// Provides a compatibility shim for the GetAdaptiveApplicationControlGroups operation preserved from the previous public API surface.
@@ -659,7 +650,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use SubscriptionResource.GetAdaptiveApplicationControlGroups() instead.")]
         public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.AdaptiveApplicationControlGroupResource> GetAdaptiveApplicationControlGroups(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, bool? includePathRecommendations = default(bool?), bool? summary = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use SubscriptionResource.GetAdaptiveApplicationControlGroups() instead."); }
         /// <summary>
         /// Provides a compatibility shim for the GetAdaptiveApplicationControlGroupsAsync operation preserved from the previous public API surface.
@@ -671,7 +661,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use SubscriptionResource.GetAdaptiveApplicationControlGroupsAsync() instead.")]
         public static Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.AdaptiveApplicationControlGroupResource> GetAdaptiveApplicationControlGroupsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, bool? includePathRecommendations = default(bool?), bool? summary = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use SubscriptionResource.GetAdaptiveApplicationControlGroupsAsync() instead."); }
         /// <summary>
         /// Provides a compatibility shim for the GetAdaptiveNetworkHardening operation preserved from the previous public API surface.
@@ -685,7 +674,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetAdaptiveNetworkHardeningResource(ResourceIdentifier id) instead.")]
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.AdaptiveNetworkHardeningResource> GetAdaptiveNetworkHardening(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName, string adaptiveNetworkHardeningResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetAdaptiveNetworkHardeningResource(ResourceIdentifier id) instead."); }
         /// <summary>
         /// Provides a compatibility shim for the GetAdaptiveNetworkHardeningAsync operation preserved from the previous public API surface.
@@ -699,7 +687,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetAdaptiveNetworkHardeningResource(ResourceIdentifier id) instead.")]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.AdaptiveNetworkHardeningResource>> GetAdaptiveNetworkHardeningAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName, string adaptiveNetworkHardeningResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetAdaptiveNetworkHardeningResource(ResourceIdentifier id) instead."); }
         /// <summary>
         /// Provides a compatibility shim for the GetAdaptiveNetworkHardeningResource operation preserved from the previous public API surface.
@@ -709,7 +696,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetAdaptiveNetworkHardeningResource(ResourceIdentifier id) instead.")]
         public static Azure.ResourceManager.SecurityCenter.AdaptiveNetworkHardeningResource GetAdaptiveNetworkHardeningResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetAdaptiveNetworkHardeningResource(ResourceIdentifier id) instead."); }
         /// <summary>
         /// Provides a compatibility shim for the GetAdaptiveNetworkHardenings operation preserved from the previous public API surface.
@@ -721,7 +707,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. No direct collection replacement is available.")]
         public static Azure.ResourceManager.SecurityCenter.AdaptiveNetworkHardeningCollection GetAdaptiveNetworkHardenings(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName) { throw new System.NotSupportedException("This API is no longer supported by the service. No direct collection replacement is available."); }
         /// <summary>
         /// Provides a compatibility shim for the GetCustomAssessmentAutomation operation preserved from the previous public API surface.
@@ -732,7 +717,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetCustomAssessmentAutomations(ResourceIdentifier scope) instead.")]
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.CustomAssessmentAutomationResource> GetCustomAssessmentAutomation(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string customAssessmentAutomationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetCustomAssessmentAutomations(ResourceIdentifier scope) instead."); }
         /// <summary>
         /// Provides a compatibility shim for the GetCustomAssessmentAutomationAsync operation preserved from the previous public API surface.
@@ -743,7 +727,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetCustomAssessmentAutomations(ResourceIdentifier scope) instead.")]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.CustomAssessmentAutomationResource>> GetCustomAssessmentAutomationAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string customAssessmentAutomationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetCustomAssessmentAutomations(ResourceIdentifier scope) instead."); }
         /// <summary>
         /// Provides a compatibility shim for the GetCustomAssessmentAutomationResource operation preserved from the previous public API surface.
@@ -753,7 +736,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetCustomAssessmentAutomationResource(ResourceIdentifier id) instead.")]
         public static Azure.ResourceManager.SecurityCenter.CustomAssessmentAutomationResource GetCustomAssessmentAutomationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetCustomAssessmentAutomationResource(ResourceIdentifier id) instead."); }
         /// <summary>
         /// Provides a compatibility shim for the GetCustomAssessmentAutomations operation preserved from the previous public API surface.
@@ -762,7 +744,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetCustomAssessmentAutomations(ResourceIdentifier scope) instead.")]
         public static Azure.ResourceManager.SecurityCenter.CustomAssessmentAutomationCollection GetCustomAssessmentAutomations(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetCustomAssessmentAutomations(ResourceIdentifier scope) instead."); }
         /// <summary>
         /// Provides a compatibility shim for the GetCustomAssessmentAutomations operation preserved from the previous public API surface.
@@ -772,7 +753,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetCustomAssessmentAutomations(ResourceIdentifier scope) instead.")]
         public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.CustomAssessmentAutomationResource> GetCustomAssessmentAutomations(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetCustomAssessmentAutomations(ResourceIdentifier scope) instead."); }
         /// <summary>
         /// Provides a compatibility shim for the GetCustomAssessmentAutomationsAsync operation preserved from the previous public API surface.
@@ -782,7 +762,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetCustomAssessmentAutomations(ResourceIdentifier scope) instead.")]
         public static Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.CustomAssessmentAutomationResource> GetCustomAssessmentAutomationsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetCustomAssessmentAutomations(ResourceIdentifier scope) instead."); }
         /// <summary>
         /// Provides a compatibility shim for the GetCustomEntityStoreAssignment operation preserved from the previous public API surface.
@@ -793,7 +772,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetCustomEntityStoreAssignments(ResourceIdentifier scope) instead.")]
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.CustomEntityStoreAssignmentResource> GetCustomEntityStoreAssignment(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string customEntityStoreAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetCustomEntityStoreAssignments(ResourceIdentifier scope) instead."); }
         /// <summary>
         /// Provides a compatibility shim for the GetCustomEntityStoreAssignmentAsync operation preserved from the previous public API surface.
@@ -804,7 +782,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetCustomEntityStoreAssignments(ResourceIdentifier scope) instead.")]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.CustomEntityStoreAssignmentResource>> GetCustomEntityStoreAssignmentAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string customEntityStoreAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetCustomEntityStoreAssignments(ResourceIdentifier scope) instead."); }
         /// <summary>
         /// Provides a compatibility shim for the GetCustomEntityStoreAssignmentResource operation preserved from the previous public API surface.
@@ -814,7 +791,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetCustomEntityStoreAssignmentResource(ResourceIdentifier id) instead.")]
         public static Azure.ResourceManager.SecurityCenter.CustomEntityStoreAssignmentResource GetCustomEntityStoreAssignmentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetCustomEntityStoreAssignmentResource(ResourceIdentifier id) instead."); }
         /// <summary>
         /// Provides a compatibility shim for the GetCustomEntityStoreAssignments operation preserved from the previous public API surface.
@@ -823,7 +799,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetCustomEntityStoreAssignments(ResourceIdentifier scope) instead.")]
         public static Azure.ResourceManager.SecurityCenter.CustomEntityStoreAssignmentCollection GetCustomEntityStoreAssignments(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetCustomEntityStoreAssignments(ResourceIdentifier scope) instead."); }
         /// <summary>
         /// Provides a compatibility shim for the GetCustomEntityStoreAssignments operation preserved from the previous public API surface.
@@ -833,7 +808,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetCustomEntityStoreAssignments(ResourceIdentifier scope) instead.")]
         public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.CustomEntityStoreAssignmentResource> GetCustomEntityStoreAssignments(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetCustomEntityStoreAssignments(ResourceIdentifier scope) instead."); }
         /// <summary>
         /// Provides a compatibility shim for the GetCustomEntityStoreAssignmentsAsync operation preserved from the previous public API surface.
@@ -843,7 +817,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetCustomEntityStoreAssignments(ResourceIdentifier scope) instead.")]
         public static Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.CustomEntityStoreAssignmentResource> GetCustomEntityStoreAssignmentsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetCustomEntityStoreAssignments(ResourceIdentifier scope) instead."); }
         /// <summary>
         /// Provides a compatibility shim for the GetSecurityCloudConnector operation preserved from the previous public API surface.
@@ -854,7 +827,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetSecurityCloudConnectorResource(ResourceIdentifier id) instead.")]
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorResource> GetSecurityCloudConnector(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string connectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetSecurityCloudConnectorResource(ResourceIdentifier id) instead."); }
         /// <summary>
         /// Provides a compatibility shim for the GetSecurityCloudConnectorAsync operation preserved from the previous public API surface.
@@ -865,7 +837,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetSecurityCloudConnectorResource(ResourceIdentifier id) instead.")]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorResource>> GetSecurityCloudConnectorAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string connectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetSecurityCloudConnectorResource(ResourceIdentifier id) instead."); }
         /// <summary>
         /// Provides a compatibility shim for the GetSecurityCloudConnectorResource operation preserved from the previous public API surface.
@@ -875,7 +846,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetSecurityCloudConnectorResource(ResourceIdentifier id) instead.")]
         public static Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorResource GetSecurityCloudConnectorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetSecurityCloudConnectorResource(ResourceIdentifier id) instead."); }
         /// <summary>
         /// Provides a compatibility shim for the GetSecurityCloudConnectors operation preserved from the previous public API surface.
@@ -884,7 +854,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. No direct collection replacement is available.")]
         public static Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorCollection GetSecurityCloudConnectors(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw new System.NotSupportedException("This API is no longer supported by the service. No direct collection replacement is available."); }
         /// <summary>
         /// Provides a compatibility shim for the GetSoftwareInventories operation preserved from the previous public API surface.
@@ -896,7 +865,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. No direct replacement is available.")]
         public static Azure.ResourceManager.SecurityCenter.SoftwareInventoryCollection GetSoftwareInventories(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName) { throw new System.NotSupportedException("This API is no longer supported by the service. No direct replacement is available."); }
         /// <summary>
         /// Provides a compatibility shim for the GetSoftwareInventories operation preserved from the previous public API surface.
@@ -906,7 +874,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. No direct replacement is available.")]
         public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.SoftwareInventoryResource> GetSoftwareInventories(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. No direct replacement is available."); }
         /// <summary>
         /// Provides a compatibility shim for the GetSoftwareInventoriesAsync operation preserved from the previous public API surface.
@@ -916,7 +883,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. No direct replacement is available.")]
         public static Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.SoftwareInventoryResource> GetSoftwareInventoriesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. No direct replacement is available."); }
         /// <summary>
         /// Provides a compatibility shim for the GetSoftwareInventory operation preserved from the previous public API surface.
@@ -930,7 +896,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. No direct replacement is available.")]
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.SoftwareInventoryResource> GetSoftwareInventory(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName, string softwareName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. No direct replacement is available."); }
         /// <summary>
         /// Provides a compatibility shim for the GetSoftwareInventoryAsync operation preserved from the previous public API surface.
@@ -944,7 +909,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. No direct replacement is available.")]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SoftwareInventoryResource>> GetSoftwareInventoryAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName, string softwareName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. No direct replacement is available."); }
         /// <summary>
         /// Provides a compatibility shim for the GetSoftwareInventoryResource operation preserved from the previous public API surface.
@@ -954,7 +918,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. No direct replacement is available.")]
         public static Azure.ResourceManager.SecurityCenter.SoftwareInventoryResource GetSoftwareInventoryResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw new System.NotSupportedException("This API is no longer supported by the service. No direct replacement is available."); }
     }
 }

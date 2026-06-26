@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.SecurityCenter
     /// Provides a compatibility shim for the SecurityCloudConnectorData class.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [System.Obsolete("This API is no longer supported by the service. No direct replacement is available.")]
     public partial class SecurityCloudConnectorData : ResourceData, IJsonModel<SecurityCloudConnectorData>, IPersistableModel<SecurityCloudConnectorData>
     {
         private const string UnsupportedMessage = "This API is no longer supported by the service. No direct replacement is available.";

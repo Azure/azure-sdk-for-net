@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary>
     /// Provides a compatibility shim for the InformationProtectionPolicy class.
     /// </summary>
-    [Obsolete("This API is no longer supported by the service. Use InformationProtectionPolicyData instead.")]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class InformationProtectionPolicy : ResourceData, IJsonModel<InformationProtectionPolicy>, IPersistableModel<InformationProtectionPolicy>
     {

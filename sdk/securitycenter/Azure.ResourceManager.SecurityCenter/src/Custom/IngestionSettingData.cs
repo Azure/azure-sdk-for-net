@@ -14,7 +14,6 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary> Provides a compatibility shim for the IngestionSettingData class. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [System.Obsolete("This API is no longer supported by the service. No direct replacement is available.")]
     public partial class IngestionSettingData : ResourceData, IJsonModel<IngestionSettingData>, IPersistableModel<IngestionSettingData>
     {
         private const string UnsupportedMessage = "This API is no longer supported by the service. No direct replacement is available.";

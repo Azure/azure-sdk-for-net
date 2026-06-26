@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
     {
         /// <summary> Gets a collection of ingestion settings. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. No direct replacement is available.")]
         public virtual IngestionSettingCollection GetIngestionSettings() { throw new System.NotSupportedException("This API is no longer supported by the service. No direct replacement is available."); }
     }
 }

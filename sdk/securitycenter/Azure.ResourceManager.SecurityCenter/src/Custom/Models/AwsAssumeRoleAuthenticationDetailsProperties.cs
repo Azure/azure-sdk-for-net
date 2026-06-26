@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Provides a compatibility shim for the AwsAssumeRoleAuthenticationDetailsProperties class.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [System.Obsolete("This API is no longer supported by the service. No direct replacement is available.")]
     public partial class AwsAssumeRoleAuthenticationDetailsProperties : AuthenticationDetailsProperties
     {
         /// <summary>

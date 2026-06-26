@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.SecurityCenter
     /// Provides a compatibility shim for the AdaptiveNetworkHardeningCollection class.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [System.Obsolete("This API is no longer supported by the service. No direct replacement is available.")]
     public partial class AdaptiveNetworkHardeningCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.AdaptiveNetworkHardeningResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.AdaptiveNetworkHardeningResource>, System.Collections.IEnumerable
     {
         private const string UnsupportedMessage = "This API is no longer supported by the service. No direct replacement is available.";
@@ -27,7 +26,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="adaptiveNetworkHardeningResourceName">The value preserved for API compatibility.</param>
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        [System.Obsolete("This API is no longer supported by the service. No direct collection replacement is available.")]
         public virtual Azure.Response<bool> Exists(string adaptiveNetworkHardeningResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. No direct collection replacement is available."); }
         /// <summary>
         /// Provides a compatibility shim for the ExistsAsync operation preserved from the previous public API surface.
@@ -35,7 +33,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="adaptiveNetworkHardeningResourceName">The value preserved for API compatibility.</param>
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        [System.Obsolete("This API is no longer supported by the service. No direct collection replacement is available.")]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string adaptiveNetworkHardeningResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. No direct collection replacement is available."); }
         /// <summary>
         /// Provides a compatibility shim for the Get operation preserved from the previous public API surface.
@@ -43,21 +40,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="adaptiveNetworkHardeningResourceName">The value preserved for API compatibility.</param>
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        [System.Obsolete("This API is no longer supported by the service. No direct collection replacement is available.")]
         public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.AdaptiveNetworkHardeningResource> Get(string adaptiveNetworkHardeningResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. No direct collection replacement is available."); }
         /// <summary>
         /// Provides a compatibility shim for the GetAll operation preserved from the previous public API surface.
         /// </summary>
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        [System.Obsolete("This API is no longer supported by the service. No direct collection replacement is available.")]
         public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.AdaptiveNetworkHardeningResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. No direct collection replacement is available."); }
         /// <summary>
         /// Provides a compatibility shim for the GetAllAsync operation preserved from the previous public API surface.
         /// </summary>
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        [System.Obsolete("This API is no longer supported by the service. No direct collection replacement is available.")]
         public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.AdaptiveNetworkHardeningResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. No direct collection replacement is available."); }
         /// <summary>
         /// Provides a compatibility shim for the GetAsync operation preserved from the previous public API surface.
@@ -65,7 +59,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="adaptiveNetworkHardeningResourceName">The value preserved for API compatibility.</param>
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        [System.Obsolete("This API is no longer supported by the service. No direct collection replacement is available.")]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.AdaptiveNetworkHardeningResource>> GetAsync(string adaptiveNetworkHardeningResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. No direct collection replacement is available."); }
         /// <summary>
         /// Provides a compatibility shim for the GetIfExists operation preserved from the previous public API surface.
@@ -73,7 +66,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="adaptiveNetworkHardeningResourceName">The value preserved for API compatibility.</param>
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        [System.Obsolete("This API is no longer supported by the service. No direct collection replacement is available.")]
         public virtual Azure.NullableResponse<Azure.ResourceManager.SecurityCenter.AdaptiveNetworkHardeningResource> GetIfExists(string adaptiveNetworkHardeningResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. No direct collection replacement is available."); }
         /// <summary>
         /// Provides a compatibility shim for the GetIfExistsAsync operation preserved from the previous public API surface.
@@ -81,7 +73,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="adaptiveNetworkHardeningResourceName">The value preserved for API compatibility.</param>
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        [System.Obsolete("This API is no longer supported by the service. No direct collection replacement is available.")]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.SecurityCenter.AdaptiveNetworkHardeningResource>> GetIfExistsAsync(string adaptiveNetworkHardeningResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. No direct collection replacement is available."); }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SecurityCenter.AdaptiveNetworkHardeningResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.AdaptiveNetworkHardeningResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityCenter.AdaptiveNetworkHardeningResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.AdaptiveNetworkHardeningResource>.GetEnumerator() { throw new System.NotSupportedException("This API is no longer supported by the service."); }
