@@ -1,6 +1,8 @@
 agent:
   name: travel-agent-sample
   model: gpt-4.1-mini
+  config: .agent_configs/baseline
+  instruction: "You are a helpful travel assistant specializing in budget-friendly trips. Always consider budget constraints, suggest alternatives when too expensive, compare flight prices across dates, and recommend hotels within budget."
 
 dataset_file: ./datasets/smoke-core/travel-tasks.jsonl
 
