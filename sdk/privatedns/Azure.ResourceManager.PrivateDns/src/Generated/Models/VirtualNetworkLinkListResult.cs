@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.PrivateDns.Models
 {
-    /// <summary> The response to a list virtual network link to Private DNS zone operation. </summary>
+    /// <summary> The response of a VirtualNetworkLink list operation. </summary>
     internal partial class VirtualNetworkLinkListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.PrivateDns.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkLinkListResult"/>. </summary>
-        internal VirtualNetworkLinkListResult()
+        /// <param name="value"> The VirtualNetworkLink items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal VirtualNetworkLinkListResult(IEnumerable<VirtualNetworkLinkData> value)
         {
-            Value = new ChangeTrackingList<VirtualNetworkLinkData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkLinkListResult"/>. </summary>
-        /// <param name="value"> Information about the virtual network links to the Private DNS zones. </param>
-        /// <param name="nextLink"> The continuation token for the next page of results. </param>
+        /// <param name="value"> The VirtualNetworkLink items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkLinkListResult(IReadOnlyList<VirtualNetworkLinkData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualNetworkLinkListResult(IReadOnlyList<VirtualNetworkLinkData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Information about the virtual network links to the Private DNS zones. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkLinkListResult"/> for deserialization. </summary>
+        internal VirtualNetworkLinkListResult()
+        {
+        }
+
+        /// <summary> The VirtualNetworkLink items on this page. </summary>
         public IReadOnlyList<VirtualNetworkLinkData> Value { get; }
-        /// <summary> The continuation token for the next page of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

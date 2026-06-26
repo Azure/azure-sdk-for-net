@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="isAutoRegistered"> Is the record set auto-registered in the Private DNS zone through a virtual network link?. </param>
         /// <param name="aaaaRecords"> The list of AAAA records in the record set. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateDnsAaaaRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, bool? isAutoRegistered, IList<PrivateDnsAaaaRecordInfo> aaaaRecords, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, isAutoRegistered, serializedAdditionalRawData)
+        internal PrivateDnsAaaaRecordData(ResourceIdentifier id, string name, ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, bool? isAutoRegistered, IList<PrivateDnsAaaaRecordInfo> aaaaRecords, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, isAutoRegistered, serializedAdditionalRawData)
         {
             PrivateDnsAaaaRecords = aaaaRecords;
             _serializedAdditionalRawData = serializedAdditionalRawData;
