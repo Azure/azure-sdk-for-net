@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     Properties = new ModuleProperties();
                 }
-                Properties.ModuleProvisioningState = new AutomationModuleProvisioningState(value.ToString());
+                Properties.ModuleProvisioningState = value is null ? null : new AutomationModuleProvisioningState(value.Value.ToSerialString());
             }
         }
     }
