@@ -23,17 +23,13 @@ parameters:
     values:
       - file
       - area
-  - name: mcpToolsRepository
-    # Source of the MCP servers. 'self' in azure-sdk-tools; in any other repo, declare
-    # azure-sdk-tools under `resources: repositories:` and pass its alias here so the
-    # build job checks it out and builds the servers from there.
-    type: string
-    default: self
-  - name: mcpSourceRoot
-    # Path prefix to the azure-sdk-tools tree for the dotnet build. '' for `self`; set to
-    # the side-checkout subdir (e.g. 'azure-sdk-tools/') when mcpToolsRepository is an alias.
-    type: string
-    default: ''
+  - name: useCustomMcp
+    # false (default): build the standard azure-sdk-tools .NET MCP (Mock + Cli) via the
+    # shared eng/common step, which clones azure-sdk-tools automatically when the pipeline
+    # runs outside it. true: the consuming repo supplies its own MCP build/startup at
+    # eng/pipelines/templates/steps/eval-mcp-setup.yml (non-.NET servers, NPM-installed, etc.).
+    type: boolean
+    default: false
   - name: azureServiceConnection
     # Set for the live tier so shards run inside AzureCLI@2 (real DevOps). Empty = script.
     type: string
@@ -76,10 +72,15 @@ extends:
                   artifactName: mcp-servers
                   targetPath: $(Build.SourcesDirectory)/artifacts/mcp
             steps:
-              - template: /eng/common/pipelines/templates/steps/vally-build-mcp.yml
-                parameters:
-                  toolsRepository: ${{ parameters.mcpToolsRepository }}
-                  sourceRoot: ${{ parameters.mcpSourceRoot }}
+              - ${{ if parameters.useCustomMcp }}:
+                  # Consuming repo supplies its own MCP build/startup (non-.NET servers, an
+                  # NPM-installed live server, etc.). It must publish each server under
+                  # artifacts/mcp/<name> so the shards re-stage it at the expected path.
+                  - template: /eng/pipelines/templates/steps/eval-mcp-setup.yml
+              - ${{ else }}:
+                  # Default: build the azure-sdk-tools Mock + Cli .NET MCP servers (clones
+                  # azure-sdk-tools automatically when the pipeline runs outside it).
+                  - template: /eng/common/pipelines/templates/steps/vally-build-mcp.yml
 
           - job: Detect
             displayName: 'Glob eval files -> matrix'

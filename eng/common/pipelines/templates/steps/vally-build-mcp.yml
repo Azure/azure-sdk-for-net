@@ -1,43 +1,65 @@
-# Build the azure-sdk-tools MCP servers once (Mock + Cli) so every eval shard downloads
-# prebuilt DLLs instead of rebuilding them (the biggest speed win; also sidesteps the
-# MSBuild boot race when shards run in parallel — #15947). Vally runs `dotnet <dll>`, not
-# `dotnet run`, so a plain build output is enough.
+# Default MCP build for the eval CI: build the azure-sdk-tools .NET MCP servers (Mock + Cli)
+# once and publish them as one artifact every shard re-stages. This is the step the archetype
+# runs when useCustomMcp=false. Repos whose evals drive a different MCP (non-.NET, an
+# NPM-installed live server, etc.) set useCustomMcp=true and provide their own
+# eng/pipelines/templates/steps/eval-mcp-setup.yml instead.
 #
-# Both servers are always built into a shared stage root; the host job publishes that whole
-# tree as one artifact via 1ES `templateContext.outputs`, and each shard re-stages it at the
-# same path, matching the relative DLL paths the various .vally.yaml environments expect:
+# The pipeline may run from azure-sdk-tools (the MCP source is already in `self`) OR from
+# another repo (a spec/language repo) whose default checkout does NOT contain the MCP source.
+# We detect which via Build.Repository.Name at run time and shallow-clone azure-sdk-tools to a
+# temp path only when needed, so the same template works in every repo. (Build.Repository.Name
+# is runtime-only, so a `checkout` step can't be conditioned on it — hence the script clone.)
+#
+# Output layout each .vally.yaml resolves against (the whole tree ships as one artifact and
+# every shard re-stages it at the same path):
 #   - artifacts/mcp/mock  (azsdk-mock.dll)  — hermetic mock vertical + skills
 #   - artifacts/mcp/cli   (azsdk.dll)       — live tier + skills
-#
-# Default builds from `self` (azure-sdk-tools). A consuming repo that does NOT host the MCP
-# source declares azure-sdk-tools under `resources: repositories:` and passes its alias as
-# `toolsRepository` (+ `sourceRoot` = that alias's checkout subdir); the build then runs
-# against the side checkout. (A runtime Build.Repository.Name test can't gate a checkout,
-# so the caller selects the source at compile time via these two parameters.)
 
 parameters:
-  - name: toolsRepository
-    # 'self' in azure-sdk-tools; a `resources: repositories:` alias in any other repo.
-    type: string
-    default: self
-  - name: sourceRoot
-    # Path prefix to the azure-sdk-tools tree for the dotnet build. '' for `self`; set to
-    # the side-checkout subdir (e.g. 'azure-sdk-tools/') when toolsRepository is an alias.
-    type: string
-    default: ''
   - name: mcpStageRoot
     # Common parent the built servers are published from (relative to Build.SourcesDirectory).
     type: string
     default: artifacts/mcp
+  - name: toolsRepoName
+    # Build.Repository.Name value identifying the azure-sdk-tools checkout, so we skip the
+    # clone when the pipeline already runs there. Matches a bare name or "<org>/<name>".
+    type: string
+    default: azure-sdk-tools
+  - name: toolsRepoUrl
+    # Cloned only when the pipeline runs outside azure-sdk-tools. Public repo, so anonymous.
+    type: string
+    default: https://github.com/Azure/azure-sdk-tools
 
 steps:
-  - checkout: ${{ parameters.toolsRepository }}
+  - checkout: self
     fetchDepth: 1
 
+  # Resolve the azure-sdk-tools source dir: the current checkout when we already run there,
+  # otherwise a shallow clone in the agent temp dir. Exposes it as $(mcpToolsDir).
   - script: |
-      dotnet build ${{ parameters.sourceRoot }}tools/azsdk-cli/Azure.Sdk.Tools.Mock -c Release -o ${{ parameters.mcpStageRoot }}/mock --nologo
+      set -e
+      repo="$(Build.Repository.Name)"
+      toolsDir="$(Build.SourcesDirectory)"
+      case "$repo" in
+        ${{ parameters.toolsRepoName }}|*/${{ parameters.toolsRepoName }})
+          echo "Running in $repo; building the MCP from the current checkout."
+          ;;
+        *)
+          toolsDir="$(Agent.TempDirectory)/azure-sdk-tools"
+          echo "Running in $repo; cloning azure-sdk-tools into $toolsDir for the MCP build."
+          rm -rf "$toolsDir"
+          git clone --depth 1 ${{ parameters.toolsRepoUrl }} "$toolsDir"
+          ;;
+      esac
+      echo "##vso[task.setvariable variable=mcpToolsDir]$toolsDir"
+    displayName: 'Resolve azure-sdk-tools source'
+
+  - script: |
+      set -e
+      dotnet build "$(mcpToolsDir)/tools/azsdk-cli/Azure.Sdk.Tools.Mock" -c Release -o "$(Build.SourcesDirectory)/${{ parameters.mcpStageRoot }}/mock" --nologo
     displayName: 'Build MCP: Mock server'
 
   - script: |
-      dotnet build ${{ parameters.sourceRoot }}tools/azsdk-cli/Azure.Sdk.Tools.Cli -c Release -o ${{ parameters.mcpStageRoot }}/cli --nologo
+      set -e
+      dotnet build "$(mcpToolsDir)/tools/azsdk-cli/Azure.Sdk.Tools.Cli" -c Release -o "$(Build.SourcesDirectory)/${{ parameters.mcpStageRoot }}/cli" --nologo
     displayName: 'Build MCP: Cli server'
