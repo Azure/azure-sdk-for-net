@@ -7,8 +7,6 @@ import {
 } from "@azure-typespec/http-client-csharp";
 import { Diagnostic, JSONSchemaType } from "@typespec/compiler";
 
-export type ApiVersionOption = string | Record<string, string>;
-
 /**
  * Upstream diagnostic codes that are not meaningful for management plane code generation
  * and should be suppressed to avoid noisy output.
