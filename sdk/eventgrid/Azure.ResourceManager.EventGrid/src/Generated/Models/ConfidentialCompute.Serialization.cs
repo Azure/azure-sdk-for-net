@@ -123,13 +123,13 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            ConfidentialComputeMode mode = default;
+            EventGridConfidentialComputeMode mode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("mode"u8))
                 {
-                    mode = new ConfidentialComputeMode(prop.Value.GetString());
+                    mode = new EventGridConfidentialComputeMode(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

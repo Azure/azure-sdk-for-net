@@ -14,57 +14,57 @@ using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    /// <summary> The KeyEncryptionKeyIdentity. </summary>
-    public partial class KeyEncryptionKeyIdentity : IJsonModel<KeyEncryptionKeyIdentity>
+    /// <summary> The EventGridKeyEncryptionKeyIdentity. </summary>
+    public partial class EventGridKeyEncryptionKeyIdentity : IJsonModel<EventGridKeyEncryptionKeyIdentity>
     {
-        /// <summary> Initializes a new instance of <see cref="KeyEncryptionKeyIdentity"/> for deserialization. </summary>
-        internal KeyEncryptionKeyIdentity()
+        /// <summary> Initializes a new instance of <see cref="EventGridKeyEncryptionKeyIdentity"/> for deserialization. </summary>
+        internal EventGridKeyEncryptionKeyIdentity()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual KeyEncryptionKeyIdentity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual EventGridKeyEncryptionKeyIdentity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KeyEncryptionKeyIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventGridKeyEncryptionKeyIdentity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeKeyEncryptionKeyIdentity(document.RootElement, options);
+                        return DeserializeEventGridKeyEncryptionKeyIdentity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KeyEncryptionKeyIdentity)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventGridKeyEncryptionKeyIdentity)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KeyEncryptionKeyIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventGridKeyEncryptionKeyIdentity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerEventGridContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(KeyEncryptionKeyIdentity)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventGridKeyEncryptionKeyIdentity)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<KeyEncryptionKeyIdentity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EventGridKeyEncryptionKeyIdentity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KeyEncryptionKeyIdentity IPersistableModel<KeyEncryptionKeyIdentity>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EventGridKeyEncryptionKeyIdentity IPersistableModel<EventGridKeyEncryptionKeyIdentity>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<KeyEncryptionKeyIdentity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EventGridKeyEncryptionKeyIdentity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<KeyEncryptionKeyIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EventGridKeyEncryptionKeyIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KeyEncryptionKeyIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventGridKeyEncryptionKeyIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyEncryptionKeyIdentity)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EventGridKeyEncryptionKeyIdentity)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
@@ -106,37 +106,37 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KeyEncryptionKeyIdentity IJsonModel<KeyEncryptionKeyIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EventGridKeyEncryptionKeyIdentity IJsonModel<EventGridKeyEncryptionKeyIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual KeyEncryptionKeyIdentity JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual EventGridKeyEncryptionKeyIdentity JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KeyEncryptionKeyIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventGridKeyEncryptionKeyIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyEncryptionKeyIdentity)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EventGridKeyEncryptionKeyIdentity)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKeyEncryptionKeyIdentity(document.RootElement, options);
+            return DeserializeEventGridKeyEncryptionKeyIdentity(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static KeyEncryptionKeyIdentity DeserializeKeyEncryptionKeyIdentity(JsonElement element, ModelReaderWriterOptions options)
+        internal static EventGridKeyEncryptionKeyIdentity DeserializeEventGridKeyEncryptionKeyIdentity(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            KeyEncryptionIdentityType @type = default;
+            EventGridKeyEncryptionIdentityType @type = default;
             ResourceIdentifier userAssignedIdentityResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new KeyEncryptionIdentityType(prop.Value.GetString());
+                    @type = new EventGridKeyEncryptionIdentityType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("userAssignedIdentityResourceId"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new KeyEncryptionKeyIdentity(@type, userAssignedIdentityResourceId, additionalBinaryDataProperties);
+            return new EventGridKeyEncryptionKeyIdentity(@type, userAssignedIdentityResourceId, additionalBinaryDataProperties);
         }
     }
 }

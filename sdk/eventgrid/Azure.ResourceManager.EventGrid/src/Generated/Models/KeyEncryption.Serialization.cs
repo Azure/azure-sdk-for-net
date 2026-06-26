@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             writer.WritePropertyName("customerManagedKeyEncryption"u8);
             writer.WriteStartArray();
-            foreach (CustomerManagedKeyEncryption item in CustomerManagedKeyEncryption)
+            foreach (EventGridCustomerManagedKeyEncryption item in CustomerManagedKeyEncryption)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -128,16 +128,16 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            IList<CustomerManagedKeyEncryption> customerManagedKeyEncryption = default;
+            IList<EventGridCustomerManagedKeyEncryption> customerManagedKeyEncryption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("customerManagedKeyEncryption"u8))
                 {
-                    List<CustomerManagedKeyEncryption> array = new List<CustomerManagedKeyEncryption>();
+                    List<EventGridCustomerManagedKeyEncryption> array = new List<EventGridCustomerManagedKeyEncryption>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.CustomerManagedKeyEncryption.DeserializeCustomerManagedKeyEncryption(item, options));
+                        array.Add(EventGridCustomerManagedKeyEncryption.DeserializeEventGridCustomerManagedKeyEncryption(item, options));
                     }
                     customerManagedKeyEncryption = array;
                     continue;

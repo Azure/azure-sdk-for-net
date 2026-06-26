@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// Enabling this property ensures that messages are processed and stored in a Azure Confidential Compute environment.
         /// </summary>
         [WirePath("confidentialCompute.mode")]
-        public ConfidentialComputeMode? ConfidentialComputeMode
+        public EventGridConfidentialComputeMode? ConfidentialComputeMode
         {
             get
             {

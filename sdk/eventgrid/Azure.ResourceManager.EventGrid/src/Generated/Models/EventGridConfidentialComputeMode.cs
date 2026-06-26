@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// This is an immutable property set at the time of resource creation and cannot be modified later.
     /// Enabling this property ensures that messages are processed and stored in a Azure Confidential Compute environment.
     /// </summary>
-    public readonly partial struct ConfidentialComputeMode : IEquatable<ConfidentialComputeMode>
+    public readonly partial struct EventGridConfidentialComputeMode : IEquatable<EventGridConfidentialComputeMode>
     {
         private readonly string _value;
         /// <summary> Disabled. </summary>
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Enabled. </summary>
         private const string EnabledValue = "Enabled";
 
-        /// <summary> Initializes a new instance of <see cref="ConfidentialComputeMode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridConfidentialComputeMode"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ConfidentialComputeMode(string value)
+        public EventGridConfidentialComputeMode(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -36,35 +36,35 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Disabled. </summary>
-        public static ConfidentialComputeMode Disabled { get; } = new ConfidentialComputeMode(DisabledValue);
+        public static EventGridConfidentialComputeMode Disabled { get; } = new EventGridConfidentialComputeMode(DisabledValue);
 
         /// <summary> Enabled. </summary>
-        public static ConfidentialComputeMode Enabled { get; } = new ConfidentialComputeMode(EnabledValue);
+        public static EventGridConfidentialComputeMode Enabled { get; } = new EventGridConfidentialComputeMode(EnabledValue);
 
-        /// <summary> Determines if two <see cref="ConfidentialComputeMode"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="EventGridConfidentialComputeMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ConfidentialComputeMode left, ConfidentialComputeMode right) => left.Equals(right);
+        public static bool operator ==(EventGridConfidentialComputeMode left, EventGridConfidentialComputeMode right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ConfidentialComputeMode"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="EventGridConfidentialComputeMode"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ConfidentialComputeMode left, ConfidentialComputeMode right) => !left.Equals(right);
+        public static bool operator !=(EventGridConfidentialComputeMode left, EventGridConfidentialComputeMode right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ConfidentialComputeMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EventGridConfidentialComputeMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConfidentialComputeMode(string value) => new ConfidentialComputeMode(value);
+        public static implicit operator EventGridConfidentialComputeMode(string value) => new EventGridConfidentialComputeMode(value);
 
-        /// <summary> Converts a string to a <see cref="ConfidentialComputeMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EventGridConfidentialComputeMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConfidentialComputeMode?(string value) => value == null ? null : new ConfidentialComputeMode(value);
+        public static implicit operator EventGridConfidentialComputeMode?(string value) => value == null ? null : new EventGridConfidentialComputeMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ConfidentialComputeMode other && Equals(other);
+        public override bool Equals(object obj) => obj is EventGridConfidentialComputeMode other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ConfidentialComputeMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(EventGridConfidentialComputeMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

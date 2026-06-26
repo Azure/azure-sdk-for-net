@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// actively by runtime as expected. When the associated CMK becomes invalid (e.g., if it is deleted, or if versioned CMK is not current anymore), Event Grid
     /// Service will set this state to disabled to indicate that this key is not valid anymore and requires action from user.
     /// </summary>
-    public readonly partial struct KeyEncryptionKeyStatus : IEquatable<KeyEncryptionKeyStatus>
+    public readonly partial struct EventGridKeyEncryptionKeyStatus : IEquatable<EventGridKeyEncryptionKeyStatus>
     {
         private readonly string _value;
         /// <summary> Active. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Revoked. </summary>
         private const string RevokedValue = "Revoked";
 
-        /// <summary> Initializes a new instance of <see cref="KeyEncryptionKeyStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridKeyEncryptionKeyStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public KeyEncryptionKeyStatus(string value)
+        public EventGridKeyEncryptionKeyStatus(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,35 +35,35 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Active. </summary>
-        public static KeyEncryptionKeyStatus Active { get; } = new KeyEncryptionKeyStatus(ActiveValue);
+        public static EventGridKeyEncryptionKeyStatus Active { get; } = new EventGridKeyEncryptionKeyStatus(ActiveValue);
 
         /// <summary> Revoked. </summary>
-        public static KeyEncryptionKeyStatus Revoked { get; } = new KeyEncryptionKeyStatus(RevokedValue);
+        public static EventGridKeyEncryptionKeyStatus Revoked { get; } = new EventGridKeyEncryptionKeyStatus(RevokedValue);
 
-        /// <summary> Determines if two <see cref="KeyEncryptionKeyStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="EventGridKeyEncryptionKeyStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(KeyEncryptionKeyStatus left, KeyEncryptionKeyStatus right) => left.Equals(right);
+        public static bool operator ==(EventGridKeyEncryptionKeyStatus left, EventGridKeyEncryptionKeyStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="KeyEncryptionKeyStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="EventGridKeyEncryptionKeyStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(KeyEncryptionKeyStatus left, KeyEncryptionKeyStatus right) => !left.Equals(right);
+        public static bool operator !=(EventGridKeyEncryptionKeyStatus left, EventGridKeyEncryptionKeyStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="KeyEncryptionKeyStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EventGridKeyEncryptionKeyStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KeyEncryptionKeyStatus(string value) => new KeyEncryptionKeyStatus(value);
+        public static implicit operator EventGridKeyEncryptionKeyStatus(string value) => new EventGridKeyEncryptionKeyStatus(value);
 
-        /// <summary> Converts a string to a <see cref="KeyEncryptionKeyStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EventGridKeyEncryptionKeyStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KeyEncryptionKeyStatus?(string value) => value == null ? null : new KeyEncryptionKeyStatus(value);
+        public static implicit operator EventGridKeyEncryptionKeyStatus?(string value) => value == null ? null : new EventGridKeyEncryptionKeyStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is KeyEncryptionKeyStatus other && Equals(other);
+        public override bool Equals(object obj) => obj is EventGridKeyEncryptionKeyStatus other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(KeyEncryptionKeyStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(EventGridKeyEncryptionKeyStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -12,27 +12,27 @@ using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    /// <summary> The KeyEncryptionKeyIdentity. </summary>
-    public partial class KeyEncryptionKeyIdentity
+    /// <summary> The EventGridKeyEncryptionKeyIdentity. </summary>
+    public partial class EventGridKeyEncryptionKeyIdentity
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KeyEncryptionKeyIdentity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridKeyEncryptionKeyIdentity"/>. </summary>
         /// <param name="type"> The type of managed identity used. Only UserAssigned or SystemAssigned Identity are supported. </param>
-        public KeyEncryptionKeyIdentity(KeyEncryptionIdentityType @type)
+        public EventGridKeyEncryptionKeyIdentity(EventGridKeyEncryptionIdentityType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KeyEncryptionKeyIdentity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridKeyEncryptionKeyIdentity"/>. </summary>
         /// <param name="type"> The type of managed identity used. Only UserAssigned or SystemAssigned Identity are supported. </param>
         /// <param name="userAssignedIdentityResourceId">
         /// Azure Resource fully qualified Id for the user-assigned identity associated with the resource. The resource Id takes the following format:
         /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyEncryptionKeyIdentity(KeyEncryptionIdentityType @type, ResourceIdentifier userAssignedIdentityResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventGridKeyEncryptionKeyIdentity(EventGridKeyEncryptionIdentityType @type, ResourceIdentifier userAssignedIdentityResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             UserAssignedIdentityResourceId = userAssignedIdentityResourceId;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> The type of managed identity used. Only UserAssigned or SystemAssigned Identity are supported. </summary>
         [WirePath("type")]
-        public KeyEncryptionIdentityType Type { get; set; }
+        public EventGridKeyEncryptionIdentityType Type { get; set; }
 
         /// <summary>
         /// Azure Resource fully qualified Id for the user-assigned identity associated with the resource. The resource Id takes the following format:

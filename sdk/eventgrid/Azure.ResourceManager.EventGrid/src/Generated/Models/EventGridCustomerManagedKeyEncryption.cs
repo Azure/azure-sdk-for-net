@@ -12,12 +12,12 @@ using Azure.ResourceManager.EventGrid;
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> All Customer-managed key encryption properties for the resource. </summary>
-    public partial class CustomerManagedKeyEncryption
+    public partial class EventGridCustomerManagedKeyEncryption
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CustomerManagedKeyEncryption"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridCustomerManagedKeyEncryption"/>. </summary>
         /// <param name="keyEncryptionKeyUri">
         /// Key encryption key URL. This URL can be either versioned (e.g., https://contosovault.vault.azure.net/keys/contosokek/562a4bb76b524a1493a6afe8e536ee78), or unversioned (e.g.,
         /// https://contosovault.vault.azure.net/keys/contosokek. When versioned URL is used, this version of the key will be used by Event Grid Runtime even if it is rotated. It is user
@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// be used automatically.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyEncryptionKeyUri"/> is null. </exception>
-        public CustomerManagedKeyEncryption(Uri keyEncryptionKeyUri)
+        public EventGridCustomerManagedKeyEncryption(Uri keyEncryptionKeyUri)
         {
             Argument.AssertNotNull(keyEncryptionKeyUri, nameof(keyEncryptionKeyUri));
 
             KeyEncryptionKeyUri = keyEncryptionKeyUri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomerManagedKeyEncryption"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridCustomerManagedKeyEncryption"/>. </summary>
         /// <param name="keyEncryptionKeyUri">
         /// Key encryption key URL. This URL can be either versioned (e.g., https://contosovault.vault.azure.net/keys/contosokek/562a4bb76b524a1493a6afe8e536ee78), or unversioned (e.g.,
         /// https://contosovault.vault.azure.net/keys/contosokek. When versioned URL is used, this version of the key will be used by Event Grid Runtime even if it is rotated. It is user
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// will help user to mitigate the issue and re-enable the CMK key.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomerManagedKeyEncryption(Uri keyEncryptionKeyUri, KeyEncryptionKeyIdentity keyEncryptionKeyIdentity, KeyEncryptionKeyStatus? keyEncryptionKeyStatus, string keyEncryptionKeyStatusFriendlyDescription, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventGridCustomerManagedKeyEncryption(Uri keyEncryptionKeyUri, EventGridKeyEncryptionKeyIdentity keyEncryptionKeyIdentity, EventGridKeyEncryptionKeyStatus? keyEncryptionKeyStatus, string keyEncryptionKeyStatusFriendlyDescription, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyEncryptionKeyUri = keyEncryptionKeyUri;
             KeyEncryptionKeyIdentity = keyEncryptionKeyIdentity;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// When not specified, the SystemAssigned identity will be used.
         /// </summary>
         [WirePath("keyEncryptionKeyIdentity")]
-        public KeyEncryptionKeyIdentity KeyEncryptionKeyIdentity { get; set; }
+        public EventGridKeyEncryptionKeyIdentity KeyEncryptionKeyIdentity { get; set; }
 
         /// <summary>
         /// The state of the Customer Managed Key (CMK) encryption. This is a read-only property which determines if the associated key is active and valid and used
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// Service will set this state to disabled to indicate that this key is not valid anymore and requires action from user.
         /// </summary>
         [WirePath("keyEncryptionKeyStatus")]
-        public KeyEncryptionKeyStatus? KeyEncryptionKeyStatus { get; }
+        public EventGridKeyEncryptionKeyStatus? KeyEncryptionKeyStatus { get; }
 
         /// <summary>
         /// Friendly description about the Customer Managed Key (CMK) encryption state. This is a read-only property which determines why the associated key is revoked which

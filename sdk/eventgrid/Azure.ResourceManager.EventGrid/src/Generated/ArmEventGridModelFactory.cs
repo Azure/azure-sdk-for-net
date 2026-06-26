@@ -1827,7 +1827,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// </param>
         /// <param name="identity"> Identity information for the resource. </param>
         /// <returns> A new <see cref="EventGrid.SystemTopicData"/> instance for mocking. </returns>
-        public static SystemTopicData SystemTopicData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EventGridResourceProvisioningState? provisioningState = default, ResourceIdentifier source = default, string topicType = default, Guid? metricResourceId = default, IEnumerable<CustomerManagedKeyEncryption> customerManagedKeyEncryption = default, ConfidentialComputeMode? platformCapabilitiesConfidentialComputeMode = default, ManagedServiceIdentity identity = default)
+        public static SystemTopicData SystemTopicData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EventGridResourceProvisioningState? provisioningState = default, ResourceIdentifier source = default, string topicType = default, Guid? metricResourceId = default, IEnumerable<EventGridCustomerManagedKeyEncryption> customerManagedKeyEncryption = default, EventGridConfidentialComputeMode? platformCapabilitiesConfidentialComputeMode = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1843,7 +1843,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     source,
                     topicType,
                     metricResourceId,
-                    new KeyEncryption((customerManagedKeyEncryption ?? new ChangeTrackingList<CustomerManagedKeyEncryption>()).ToList(), default),
+                    new KeyEncryption((customerManagedKeyEncryption ?? new ChangeTrackingList<EventGridCustomerManagedKeyEncryption>()).ToList(), default),
                     new PlatformCapabilities(new ConfidentialCompute(platformCapabilitiesConfidentialComputeMode.GetValueOrDefault(), default), default),
                     default),
                 identity,
@@ -1869,10 +1869,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// Friendly description about the Customer Managed Key (CMK) encryption state. This is a read-only property which determines why the associated key is revoked which
         /// will help user to mitigate the issue and re-enable the CMK key.
         /// </param>
-        /// <returns> A new <see cref="Models.CustomerManagedKeyEncryption"/> instance for mocking. </returns>
-        public static CustomerManagedKeyEncryption CustomerManagedKeyEncryption(Uri keyEncryptionKeyUri = default, KeyEncryptionKeyIdentity keyEncryptionKeyIdentity = default, KeyEncryptionKeyStatus? keyEncryptionKeyStatus = default, string keyEncryptionKeyStatusFriendlyDescription = default)
+        /// <returns> A new <see cref="Models.EventGridCustomerManagedKeyEncryption"/> instance for mocking. </returns>
+        public static EventGridCustomerManagedKeyEncryption EventGridCustomerManagedKeyEncryption(Uri keyEncryptionKeyUri = default, EventGridKeyEncryptionKeyIdentity keyEncryptionKeyIdentity = default, EventGridKeyEncryptionKeyStatus? keyEncryptionKeyStatus = default, string keyEncryptionKeyStatusFriendlyDescription = default)
         {
-            return new CustomerManagedKeyEncryption(keyEncryptionKeyUri, keyEncryptionKeyIdentity, keyEncryptionKeyStatus, keyEncryptionKeyStatusFriendlyDescription, default);
+            return new EventGridCustomerManagedKeyEncryption(keyEncryptionKeyUri, keyEncryptionKeyIdentity, keyEncryptionKeyStatus, keyEncryptionKeyStatusFriendlyDescription, default);
         }
 
         /// <param name="type"> The type of managed identity used. Only UserAssigned or SystemAssigned Identity are supported. </param>
@@ -1880,10 +1880,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// Azure Resource fully qualified Id for the user-assigned identity associated with the resource. The resource Id takes the following format:
         /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
         /// </param>
-        /// <returns> A new <see cref="Models.KeyEncryptionKeyIdentity"/> instance for mocking. </returns>
-        public static KeyEncryptionKeyIdentity KeyEncryptionKeyIdentity(KeyEncryptionIdentityType @type = default, ResourceIdentifier userAssignedIdentityResourceId = default)
+        /// <returns> A new <see cref="Models.EventGridKeyEncryptionKeyIdentity"/> instance for mocking. </returns>
+        public static EventGridKeyEncryptionKeyIdentity EventGridKeyEncryptionKeyIdentity(EventGridKeyEncryptionIdentityType @type = default, ResourceIdentifier userAssignedIdentityResourceId = default)
         {
-            return new KeyEncryptionKeyIdentity(@type, userAssignedIdentityResourceId, default);
+            return new EventGridKeyEncryptionKeyIdentity(@type, userAssignedIdentityResourceId, default);
         }
 
         /// <param name="tags"> Tags of the system topic. </param>
@@ -1932,7 +1932,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="kind"> Kind of the resource. </param>
         /// <param name="extendedLocation"> Extended location of the resource. </param>
         /// <returns> A new <see cref="EventGrid.EventGridTopicData"/> instance for mocking. </returns>
-        public static EventGridTopicData EventGridTopicData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<EventGridPrivateEndpointConnectionData> privateEndpointConnections = default, EventGridTopicProvisioningState? provisioningState = default, Uri endpoint = default, PartnerTopicEventTypeInfo eventTypeInfo = default, TlsVersion? minimumTlsVersionAllowed = default, EventGridInputSchema? inputSchema = default, EventGridInputSchemaMapping inputSchemaMapping = default, string metricResourceId = default, EventGridPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<EventGridInboundIPRule> inboundIPRules = default, bool? isLocalAuthDisabled = default, DataResidencyBoundary? dataResidencyBoundary = default, IEnumerable<CustomerManagedKeyEncryption> customerManagedKeyEncryption = default, ConfidentialComputeMode? platformCapabilitiesConfidentialComputeMode = default, EventGridSku? skuName = default, ManagedServiceIdentity identity = default, ResourceKind? kind = default, ExtendedLocation extendedLocation = default)
+        public static EventGridTopicData EventGridTopicData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<EventGridPrivateEndpointConnectionData> privateEndpointConnections = default, EventGridTopicProvisioningState? provisioningState = default, Uri endpoint = default, PartnerTopicEventTypeInfo eventTypeInfo = default, TlsVersion? minimumTlsVersionAllowed = default, EventGridInputSchema? inputSchema = default, EventGridInputSchemaMapping inputSchemaMapping = default, string metricResourceId = default, EventGridPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<EventGridInboundIPRule> inboundIPRules = default, bool? isLocalAuthDisabled = default, DataResidencyBoundary? dataResidencyBoundary = default, IEnumerable<EventGridCustomerManagedKeyEncryption> customerManagedKeyEncryption = default, EventGridConfidentialComputeMode? platformCapabilitiesConfidentialComputeMode = default, EventGridSku? skuName = default, ManagedServiceIdentity identity = default, ResourceKind? kind = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1956,7 +1956,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     (inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>()).ToList(),
                     isLocalAuthDisabled,
                     dataResidencyBoundary,
-                    new KeyEncryption((customerManagedKeyEncryption ?? new ChangeTrackingList<CustomerManagedKeyEncryption>()).ToList(), default),
+                    new KeyEncryption((customerManagedKeyEncryption ?? new ChangeTrackingList<EventGridCustomerManagedKeyEncryption>()).ToList(), default),
                     new PlatformCapabilities(new ConfidentialCompute(platformCapabilitiesConfidentialComputeMode.GetValueOrDefault(), default), default),
                     default),
                 skuName is null ? default : new ResourceSku(skuName, default),

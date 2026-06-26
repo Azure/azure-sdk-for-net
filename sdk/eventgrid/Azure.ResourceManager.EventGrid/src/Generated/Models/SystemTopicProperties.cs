@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> List of all customer-managed key encryption properties for the resource. However only one key is supported at a time. </summary>
         [WirePath("encryption.customerManagedKeyEncryption")]
-        public IList<CustomerManagedKeyEncryption> CustomerManagedKeyEncryption
+        public IList<EventGridCustomerManagedKeyEncryption> CustomerManagedKeyEncryption
         {
             get
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// Enabling this property ensures that messages are processed and stored in a Azure Confidential Compute environment.
         /// </summary>
         [WirePath("platformCapabilities.confidentialCompute.mode")]
-        public ConfidentialComputeMode? PlatformCapabilitiesConfidentialComputeMode
+        public EventGridConfidentialComputeMode? PlatformCapabilitiesConfidentialComputeMode
         {
             get
             {

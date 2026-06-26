@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// This is an immutable property set at the time of resource creation and cannot be modified later.
         /// Enabling this property ensures that messages are processed and stored in a Azure Confidential Compute environment.
         /// </param>
-        public ConfidentialCompute(ConfidentialComputeMode mode)
+        public ConfidentialCompute(EventGridConfidentialComputeMode mode)
         {
             Mode = mode;
         }
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// Enabling this property ensures that messages are processed and stored in a Azure Confidential Compute environment.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConfidentialCompute(ConfidentialComputeMode mode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConfidentialCompute(EventGridConfidentialComputeMode mode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mode = mode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -50,6 +50,6 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// Enabling this property ensures that messages are processed and stored in a Azure Confidential Compute environment.
         /// </summary>
         [WirePath("mode")]
-        public ConfidentialComputeMode Mode { get; set; }
+        public EventGridConfidentialComputeMode Mode { get; set; }
     }
 }

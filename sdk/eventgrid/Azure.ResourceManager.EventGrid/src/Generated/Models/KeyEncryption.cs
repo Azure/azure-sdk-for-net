@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of <see cref="KeyEncryption"/>. </summary>
         /// <param name="customerManagedKeyEncryption"> List of all customer-managed key encryption properties for the resource. However only one key is supported at a time. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customerManagedKeyEncryption"/> is null. </exception>
-        public KeyEncryption(IEnumerable<CustomerManagedKeyEncryption> customerManagedKeyEncryption)
+        public KeyEncryption(IEnumerable<EventGridCustomerManagedKeyEncryption> customerManagedKeyEncryption)
         {
             Argument.AssertNotNull(customerManagedKeyEncryption, nameof(customerManagedKeyEncryption));
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of <see cref="KeyEncryption"/>. </summary>
         /// <param name="customerManagedKeyEncryption"> List of all customer-managed key encryption properties for the resource. However only one key is supported at a time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyEncryption(IList<CustomerManagedKeyEncryption> customerManagedKeyEncryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyEncryption(IList<EventGridCustomerManagedKeyEncryption> customerManagedKeyEncryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CustomerManagedKeyEncryption = customerManagedKeyEncryption;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> List of all customer-managed key encryption properties for the resource. However only one key is supported at a time. </summary>
         [WirePath("customerManagedKeyEncryption")]
-        public IList<CustomerManagedKeyEncryption> CustomerManagedKeyEncryption { get; }
+        public IList<EventGridCustomerManagedKeyEncryption> CustomerManagedKeyEncryption { get; }
     }
 }
