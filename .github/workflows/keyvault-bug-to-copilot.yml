@@ -29,6 +29,7 @@ jobs:
   # This job re-fetches the issue and validates the same conditions again.
   # ──────────────────────────────────────────────────────────────────
   preflight:
+    if: github.event_name != 'issues' || github.event.label.name == 'bug'
     runs-on: ubuntu-latest
     outputs:
       eligible: ${{ steps.validate.outputs.eligible }}
@@ -80,6 +81,9 @@ jobs:
             }
             if (lowerNames.includes('needs-triage')) {
               failures.push('issue is still needs-triage');
+            }
+            if (lowerNames.includes('auto-fix-attempted')) {
+              failures.push('auto-fix was already attempted');
             }
             if (serviceLabels.length !== 1) {
               failures.push(`expected exactly one service label, found ${serviceLabels.length}`);
