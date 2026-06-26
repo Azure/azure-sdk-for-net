@@ -1,0 +1,7 @@
+# Azure.Communication.CallAutomation approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# ConnectCallResult wraps a live CallConnection client and an event processor
+# rather than serializable data, so a model-factory method cannot produce a
+# functional instance.
+nowarn:AZC0035 T:Azure.Communication.CallAutomation.ConnectCallResult
