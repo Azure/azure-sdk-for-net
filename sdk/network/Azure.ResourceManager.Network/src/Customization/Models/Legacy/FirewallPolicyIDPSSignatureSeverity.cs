@@ -3,14 +3,14 @@
 
 #nullable disable
 
-using Microsoft.TypeSpec.Generator.Customizations;
+using System;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    // CUSTOM: Preserve the GA enum backing values. The generator emits contiguous
-    // values starting at 0, but this enum was previously shipped with values 1-3.
     /// <summary> Describes the severity of signature: 1 - High, 2 - Medium, 3 - Low. </summary>
-    [CodeGenType("FirewallPolicyIDPSSignatureSeverity")]
+    [Obsolete("Use FirewallPolicyIdpsSignatureSeverity instead.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public enum FirewallPolicyIDPSSignatureSeverity
     {
         /// <summary> 1. </summary>
