@@ -386,11 +386,11 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> A tool for capturing structured outputs. </summary>
-        /// <param name="outputs"> The structured outputs to capture from the model. </param>
+        /// <param name="outputDefinition"> The structured outputs to capture from the model. </param>
         /// <returns> A new <see cref="OpenAI.ResponsesCaptureStructuredOutputsTool"/> instance for mocking. </returns>
-        public static ResponsesCaptureStructuredOutputsTool ResponsesCaptureStructuredOutputsTool(ResponsesStructuredOutputDefinition outputs = default)
+        public static ResponsesCaptureStructuredOutputsTool ResponsesCaptureStructuredOutputsTool(ResponsesStructuredOutputDefinition outputDefinition = default)
         {
-            return new ResponsesCaptureStructuredOutputsTool(ToolType.CaptureStructuredOutputs, additionalBinaryDataProperties: null, outputs);
+            return new ResponsesCaptureStructuredOutputsTool(ToolType.CaptureStructuredOutputs, additionalBinaryDataProperties: null, outputDefinition);
         }
 
         /// <summary> A structured output that can be produced by the agent. </summary>
@@ -407,7 +407,7 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> An agent implementing the A2A protocol. </summary>
-        /// <param name="baseUrl"> Base URL of the agent. </param>
+        /// <param name="baseUri"> Base URL of the agent. </param>
         /// <param name="agentCardPath">
         /// The path to the agent card relative to the `base_url`.
         /// If not provided, defaults to  `/.well-known/agent-card.json`
@@ -422,12 +422,12 @@ namespace Azure.AI.Extensions.OpenAI
         /// specified by the caller (anonymous fetch).
         /// </param>
         /// <returns> A new <see cref="OpenAI.ResponsesA2APreviewTool"/> instance for mocking. </returns>
-        public static ResponsesA2APreviewTool ResponsesA2APreviewTool(Uri baseUrl = default, string agentCardPath = default, string projectConnectionId = default, bool? sendCredentialsForAgentCard = default)
+        public static ResponsesA2APreviewTool ResponsesA2APreviewTool(Uri baseUri = default, string agentCardPath = default, string projectConnectionId = default, bool? sendCredentialsForAgentCard = default)
         {
             return new ResponsesA2APreviewTool(
                 ToolType.A2aPreview,
                 additionalBinaryDataProperties: null,
-                baseUrl,
+                baseUri,
                 agentCardPath,
                 projectConnectionId,
                 sendCredentialsForAgentCard);
@@ -444,17 +444,17 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> A FabricIQ server-side tool. </summary>
         /// <param name="projectConnectionId"> The ID of the FabricIQ project connection. </param>
         /// <param name="serverLabel"> (Optional) The label of the FabricIQ MCP server to connect to. </param>
-        /// <param name="serverUrl"> (Optional) The URL of the FabricIQ MCP server. If not provided, the URL from the project connection will be used. </param>
+        /// <param name="serverUri"> (Optional) The URL of the FabricIQ MCP server. If not provided, the URL from the project connection will be used. </param>
         /// <param name="requireApproval"> (Optional) Whether the agent requires approval before executing actions. Default is always. </param>
         /// <returns> A new <see cref="OpenAI.ResponsesFabricIQPreviewTool"/> instance for mocking. </returns>
-        public static ResponsesFabricIQPreviewTool ResponsesFabricIQPreviewTool(string projectConnectionId = default, string serverLabel = default, Uri serverUrl = default, BinaryData requireApproval = default)
+        public static ResponsesFabricIQPreviewTool ResponsesFabricIQPreviewTool(string projectConnectionId = default, string serverLabel = default, Uri serverUri = default, BinaryData requireApproval = default)
         {
             return new ResponsesFabricIQPreviewTool(
                 ToolType.FabricIqPreview,
                 additionalBinaryDataProperties: null,
                 projectConnectionId,
                 serverLabel,
-                serverUrl,
+                serverUri,
                 requireApproval);
         }
 
@@ -785,7 +785,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="syntax"> The syntax of the grammar definition. One of `lark` or `regex`. </param>
         /// <param name="definition"> The grammar definition. </param>
         /// <returns> A new <see cref="OpenAI.CustomGrammarFormatParam"/> instance for mocking. </returns>
-        public static CustomGrammarFormatParam CustomGrammarFormatParam(GrammarSyntax1 syntax = default, string definition = default)
+        public static CustomGrammarFormatParam CustomGrammarFormatParam(ResponsesGrammarSyntax syntax = default, string definition = default)
         {
             return new CustomGrammarFormatParam(CustomToolParamFormatType.Grammar, additionalBinaryDataProperties: null, syntax, definition);
         }
@@ -1594,10 +1594,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="agentReference"> The agent that created the item. </param>
         /// <param name="responseId"> The response on which the item is created. </param>
         /// <param name="approvalRequestId"> The ID of the approval request being answered. </param>
-        /// <param name="approve"> Whether the request was approved. </param>
+        /// <param name="isApproved"> Whether the request was approved. </param>
         /// <param name="reason"></param>
         /// <returns> A new <see cref="OpenAI.OutputItemMcpApprovalResponseResource"/> instance for mocking. </returns>
-        public static OutputItemMcpApprovalResponseResource OutputItemMcpApprovalResponseResource(string id = default, AgentReference agentReference = default, string responseId = default, string approvalRequestId = default, bool approve = default, string reason = default)
+        public static OutputItemMcpApprovalResponseResource OutputItemMcpApprovalResponseResource(string id = default, AgentReference agentReference = default, string responseId = default, string approvalRequestId = default, bool isApproved = default, string reason = default)
         {
             return new OutputItemMcpApprovalResponseResource(
                 AgentResponseItemKind.McpApprovalResponse,
@@ -1606,7 +1606,7 @@ namespace Azure.AI.Extensions.OpenAI
                 responseId,
                 additionalBinaryDataProperties: null,
                 approvalRequestId,
-                approve,
+                isApproved,
                 reason);
         }
 

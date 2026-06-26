@@ -88,7 +88,7 @@ namespace Azure.AI.Extensions.OpenAI
                 writer.WriteNull("call_id"u8);
             }
             writer.WritePropertyName("execution"u8);
-            writer.WriteStringValue(Execution.ToSerialString());
+            writer.WriteStringValue(Execution.ToString());
             writer.WritePropertyName("arguments"u8);
 #if NET6_0_OR_GREATER
             writer.WriteRawValue(Arguments);
@@ -164,7 +164,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("execution"u8))
                 {
-                    execution = prop.Value.GetString().ToResponsesToolSearchExecutionType();
+                    execution = new ResponsesToolSearchExecutionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("arguments"u8))

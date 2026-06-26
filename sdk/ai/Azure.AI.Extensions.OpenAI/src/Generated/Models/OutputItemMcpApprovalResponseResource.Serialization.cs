@@ -79,7 +79,7 @@ namespace Azure.AI.Extensions.OpenAI
             writer.WritePropertyName("approval_request_id"u8);
             writer.WriteStringValue(ApprovalRequestId);
             writer.WritePropertyName("approve"u8);
-            writer.WriteBooleanValue(Approve);
+            writer.WriteBooleanValue(IsApproved);
             if (Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
@@ -118,7 +118,7 @@ namespace Azure.AI.Extensions.OpenAI
             string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string approvalRequestId = default;
-            bool approve = default;
+            bool isApproved = default;
             string reason = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -153,7 +153,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("approve"u8))
                 {
-                    approve = prop.Value.GetBoolean();
+                    isApproved = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("reason"u8))
@@ -178,7 +178,7 @@ namespace Azure.AI.Extensions.OpenAI
                 responseId,
                 additionalBinaryDataProperties,
                 approvalRequestId,
-                approve,
+                isApproved,
                 reason);
         }
     }

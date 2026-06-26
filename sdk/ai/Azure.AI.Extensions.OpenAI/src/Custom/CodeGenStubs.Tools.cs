@@ -44,7 +44,7 @@ namespace Azure.AI.Extensions.OpenAI;
 [CodeGenType("FunctionShellToolParamEnvironmentContainerReferenceParam")] public partial class ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam { }
 [CodeGenType("FunctionShellToolParamEnvironmentLocalEnvironmentParam")] public partial class ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam { }
 [CodeGenType("FunctionToolParam")] public partial class ResponsesFunctionToolParam { }
-[CodeGenType("GrammarSyntax")] public readonly partial struct ResponsesGrammarSyntax { }
+[CodeGenType("GrammarSyntax1")] public readonly partial struct ResponsesGrammarSyntax { }
 [CodeGenType("InlineSkillParam")] public partial class ResponsesInlineSkillParam { }
 [CodeGenType("InlineSkillSourceParam")] public partial class ResponsesInlineSkillSourceParam { }
 [CodeGenType("LocalShellToolParam")] public partial class ResponsesLocalShellToolParam { }

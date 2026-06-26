@@ -77,7 +77,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("outputs"u8);
-            writer.WriteObjectValue(Outputs, options);
+            writer.WriteObjectValue(OutputDefinition, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -107,7 +107,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ResponsesStructuredOutputDefinition outputs = default;
+            ResponsesStructuredOutputDefinition outputDefinition = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -117,7 +117,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("outputs"u8))
                 {
-                    outputs = ResponsesStructuredOutputDefinition.DeserializeResponsesStructuredOutputDefinition(prop.Value, options);
+                    outputDefinition = ResponsesStructuredOutputDefinition.DeserializeResponsesStructuredOutputDefinition(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -125,7 +125,7 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResponsesCaptureStructuredOutputsTool(@type, additionalBinaryDataProperties, outputs);
+            return new ResponsesCaptureStructuredOutputsTool(@type, additionalBinaryDataProperties, outputDefinition);
         }
     }
 }

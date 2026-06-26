@@ -11,25 +11,25 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesCaptureStructuredOutputsTool : ResponsesTool
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesCaptureStructuredOutputsTool"/>. </summary>
-        /// <param name="outputs"> The structured outputs to capture from the model. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="outputs"/> is null. </exception>
-        public ResponsesCaptureStructuredOutputsTool(ResponsesStructuredOutputDefinition outputs) : base(ToolType.CaptureStructuredOutputs)
+        /// <param name="outputDefinition"> The structured outputs to capture from the model. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="outputDefinition"/> is null. </exception>
+        public ResponsesCaptureStructuredOutputsTool(ResponsesStructuredOutputDefinition outputDefinition) : base(ToolType.CaptureStructuredOutputs)
         {
-            Argument.AssertNotNull(outputs, nameof(outputs));
+            Argument.AssertNotNull(outputDefinition, nameof(outputDefinition));
 
-            Outputs = outputs;
+            OutputDefinition = outputDefinition;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponsesCaptureStructuredOutputsTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="outputs"> The structured outputs to capture from the model. </param>
-        internal ResponsesCaptureStructuredOutputsTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponsesStructuredOutputDefinition outputs) : base(@type, additionalBinaryDataProperties)
+        /// <param name="outputDefinition"> The structured outputs to capture from the model. </param>
+        internal ResponsesCaptureStructuredOutputsTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponsesStructuredOutputDefinition outputDefinition) : base(@type, additionalBinaryDataProperties)
         {
-            Outputs = outputs;
+            OutputDefinition = outputDefinition;
         }
 
         /// <summary> The structured outputs to capture from the model. </summary>
-        public ResponsesStructuredOutputDefinition Outputs { get; set; }
+        public ResponsesStructuredOutputDefinition OutputDefinition { get; set; }
     }
 }

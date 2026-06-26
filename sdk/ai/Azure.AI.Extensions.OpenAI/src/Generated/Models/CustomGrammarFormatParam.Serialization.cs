@@ -77,7 +77,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("syntax"u8);
-            writer.WriteStringValue(Syntax.ToSerialString());
+            writer.WriteStringValue(Syntax.ToString());
             writer.WritePropertyName("definition"u8);
             writer.WriteStringValue(Definition);
         }
@@ -109,7 +109,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             CustomToolParamFormatType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            GrammarSyntax1 syntax = default;
+            ResponsesGrammarSyntax syntax = default;
             string definition = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -120,7 +120,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("syntax"u8))
                 {
-                    syntax = prop.Value.GetString().ToGrammarSyntax1();
+                    syntax = new ResponsesGrammarSyntax(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("definition"u8))
