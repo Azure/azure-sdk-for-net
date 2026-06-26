@@ -12,7 +12,7 @@ using Azure.ResourceManager.AppService;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Resource type used for verification. </summary>
-    public readonly partial struct CheckNameResourceTypes : IEquatable<CheckNameResourceTypes>
+    public readonly partial struct CheckNameResourceType : IEquatable<CheckNameResourceType>
     {
         private readonly string _value;
         private const string SiteValue = "Site";
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.AppService.Models
         private const string MicrosoftWebHostingEnvironmentsValue = "Microsoft.Web/hostingEnvironments";
         private const string MicrosoftWebPublishingUsersValue = "Microsoft.Web/publishingUsers";
 
-        /// <summary> Initializes a new instance of <see cref="CheckNameResourceTypes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckNameResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CheckNameResourceTypes(string value)
+        public CheckNameResourceType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,53 +35,53 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Gets the Site. </summary>
-        public static CheckNameResourceTypes Site { get; } = new CheckNameResourceTypes(SiteValue);
+        public static CheckNameResourceType Site { get; } = new CheckNameResourceType(SiteValue);
 
         /// <summary> Gets the Slot. </summary>
-        public static CheckNameResourceTypes Slot { get; } = new CheckNameResourceTypes(SlotValue);
+        public static CheckNameResourceType Slot { get; } = new CheckNameResourceType(SlotValue);
 
         /// <summary> Gets the HostingEnvironment. </summary>
-        public static CheckNameResourceTypes HostingEnvironment { get; } = new CheckNameResourceTypes(HostingEnvironmentValue);
+        public static CheckNameResourceType HostingEnvironment { get; } = new CheckNameResourceType(HostingEnvironmentValue);
 
         /// <summary> Gets the PublishingUser. </summary>
-        public static CheckNameResourceTypes PublishingUser { get; } = new CheckNameResourceTypes(PublishingUserValue);
+        public static CheckNameResourceType PublishingUser { get; } = new CheckNameResourceType(PublishingUserValue);
 
         /// <summary> Gets the MicrosoftWebSites. </summary>
-        public static CheckNameResourceTypes MicrosoftWebSites { get; } = new CheckNameResourceTypes(MicrosoftWebSitesValue);
+        public static CheckNameResourceType MicrosoftWebSites { get; } = new CheckNameResourceType(MicrosoftWebSitesValue);
 
         /// <summary> Gets the MicrosoftWebSitesSlots. </summary>
-        public static CheckNameResourceTypes MicrosoftWebSitesSlots { get; } = new CheckNameResourceTypes(MicrosoftWebSitesSlotsValue);
+        public static CheckNameResourceType MicrosoftWebSitesSlots { get; } = new CheckNameResourceType(MicrosoftWebSitesSlotsValue);
 
         /// <summary> Gets the MicrosoftWebHostingEnvironments. </summary>
-        public static CheckNameResourceTypes MicrosoftWebHostingEnvironments { get; } = new CheckNameResourceTypes(MicrosoftWebHostingEnvironmentsValue);
+        public static CheckNameResourceType MicrosoftWebHostingEnvironments { get; } = new CheckNameResourceType(MicrosoftWebHostingEnvironmentsValue);
 
         /// <summary> Gets the MicrosoftWebPublishingUsers. </summary>
-        public static CheckNameResourceTypes MicrosoftWebPublishingUsers { get; } = new CheckNameResourceTypes(MicrosoftWebPublishingUsersValue);
+        public static CheckNameResourceType MicrosoftWebPublishingUsers { get; } = new CheckNameResourceType(MicrosoftWebPublishingUsersValue);
 
-        /// <summary> Determines if two <see cref="CheckNameResourceTypes"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="CheckNameResourceType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(CheckNameResourceTypes left, CheckNameResourceTypes right) => left.Equals(right);
+        public static bool operator ==(CheckNameResourceType left, CheckNameResourceType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="CheckNameResourceTypes"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="CheckNameResourceType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(CheckNameResourceTypes left, CheckNameResourceTypes right) => !left.Equals(right);
+        public static bool operator !=(CheckNameResourceType left, CheckNameResourceType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="CheckNameResourceTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="CheckNameResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CheckNameResourceTypes(string value) => new CheckNameResourceTypes(value);
+        public static implicit operator CheckNameResourceType(string value) => new CheckNameResourceType(value);
 
-        /// <summary> Converts a string to a <see cref="CheckNameResourceTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="CheckNameResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CheckNameResourceTypes?(string value) => value == null ? null : new CheckNameResourceTypes(value);
+        public static implicit operator CheckNameResourceType?(string value) => value == null ? null : new CheckNameResourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is CheckNameResourceTypes other && Equals(other);
+        public override bool Equals(object obj) => obj is CheckNameResourceType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(CheckNameResourceTypes other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(CheckNameResourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

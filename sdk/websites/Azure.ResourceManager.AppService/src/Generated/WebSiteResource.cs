@@ -4703,7 +4703,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="content"> MySql migration options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<AppServiceOperation>> MigrateMySqlAsync(WaitUntil waitUntil, MigrateMySqlRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AppServiceOperation>> MigrateMySqlAsync(WaitUntil waitUntil, MigrateMySqlContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -4715,7 +4715,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateMigrateMySqlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateMySqlRequest.ToRequestContent(content), context);
+                HttpMessage message = _sitesRestClient.CreateMigrateMySqlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateMySqlContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation<AppServiceOperation> operation = new AppServiceArmOperation<AppServiceOperation>(
                     new AppServiceOperationOperationSource(),
@@ -4762,7 +4762,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="content"> MySql migration options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<AppServiceOperation> MigrateMySql(WaitUntil waitUntil, MigrateMySqlRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AppServiceOperation> MigrateMySql(WaitUntil waitUntil, MigrateMySqlContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -4774,7 +4774,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateMigrateMySqlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateMySqlRequest.ToRequestContent(content), context);
+                HttpMessage message = _sitesRestClient.CreateMigrateMySqlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateMySqlContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation<AppServiceOperation> operation = new AppServiceArmOperation<AppServiceOperation>(
                     new AppServiceOperationOperationSource(),

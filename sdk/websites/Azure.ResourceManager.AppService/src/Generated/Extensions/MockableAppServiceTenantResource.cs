@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="osTypeSelected"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationStackResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApplicationStackResource> GetAvailableStacksAsync(ProviderOsTypeSelected? osTypeSelected = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApplicationStackResource> GetAvailableStacksAsync(ProviderOSTypeSelected? osTypeSelected = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="osTypeSelected"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationStackResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApplicationStackResource> GetAvailableStacks(ProviderOsTypeSelected? osTypeSelected = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ApplicationStackResource> GetAvailableStacks(ProviderOSTypeSelected? osTypeSelected = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FunctionAppStack"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FunctionAppStack> GetFunctionAppStacksAsync(ProviderStackOsType? stackOsType = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<FunctionAppStack> GetFunctionAppStacksAsync(ProviderStackOSType? stackOsType = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FunctionAppStack"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FunctionAppStack> GetFunctionAppStacks(ProviderStackOsType? stackOsType = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<FunctionAppStack> GetFunctionAppStacks(ProviderStackOSType? stackOsType = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="FunctionAppStack"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FunctionAppStack> GetFunctionAppStacksForLocationAsync(string location, ProviderStackOsType? stackOsType = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<FunctionAppStack> GetFunctionAppStacksForLocationAsync(string location, ProviderStackOSType? stackOsType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="FunctionAppStack"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FunctionAppStack> GetFunctionAppStacksForLocation(string location, ProviderStackOsType? stackOsType = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<FunctionAppStack> GetFunctionAppStacksForLocation(string location, ProviderStackOSType? stackOsType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="WebAppStack"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebAppStack> GetWebAppStacksByLocationAsync(string location, ProviderStackOsType? stackOsType = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<WebAppStack> GetWebAppStacksByLocationAsync(string location, ProviderStackOSType? stackOsType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="WebAppStack"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebAppStack> GetWebAppStacksByLocation(string location, ProviderStackOsType? stackOsType = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<WebAppStack> GetWebAppStacksByLocation(string location, ProviderStackOSType? stackOsType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebAppStack"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebAppStack> GetWebAppStacksAsync(ProviderStackOsType? stackOsType = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<WebAppStack> GetWebAppStacksAsync(ProviderStackOSType? stackOsType = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebAppStack"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebAppStack> GetWebAppStacks(ProviderStackOsType? stackOsType = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<WebAppStack> GetWebAppStacks(ProviderStackOSType? stackOsType = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {

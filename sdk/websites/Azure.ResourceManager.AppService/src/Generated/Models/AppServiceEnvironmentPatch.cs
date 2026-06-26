@@ -14,17 +14,17 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> ARM resource for a app service environment. </summary>
-    public partial class AppServiceEnvironmentPatchContent : ResourceData
+    public partial class AppServiceEnvironmentPatch : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AppServiceEnvironmentPatchContent"/>. </summary>
-        public AppServiceEnvironmentPatchContent()
+        /// <summary> Initializes a new instance of <see cref="AppServiceEnvironmentPatch"/>. </summary>
+        public AppServiceEnvironmentPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppServiceEnvironmentPatchContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceEnvironmentPatch"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="properties"> Core resource properties. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceEnvironmentPatchContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppServiceEnvironmentProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal AppServiceEnvironmentPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppServiceEnvironmentProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Kind = kind;

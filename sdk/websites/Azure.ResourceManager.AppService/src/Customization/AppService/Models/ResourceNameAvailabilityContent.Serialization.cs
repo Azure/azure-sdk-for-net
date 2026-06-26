@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             string name = default;
-            CheckNameResourceTypes type = default;
+            CheckNameResourceType type = default;
             bool? isFqdn = default;
             string environmentId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = new CheckNameResourceTypes(property.Value.GetString());
+                    type = new CheckNameResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("isFqdn"u8))

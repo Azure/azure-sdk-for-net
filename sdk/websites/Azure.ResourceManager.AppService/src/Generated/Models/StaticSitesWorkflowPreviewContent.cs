@@ -14,17 +14,17 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Preview for the Static Site Workflow to be generated. </summary>
-    public partial class StaticSitesWorkflowPreview : ResourceData
+    public partial class StaticSitesWorkflowPreviewContent : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StaticSitesWorkflowPreview"/>. </summary>
-        public StaticSitesWorkflowPreview()
+        /// <summary> Initializes a new instance of <see cref="StaticSitesWorkflowPreviewContent"/>. </summary>
+        public StaticSitesWorkflowPreviewContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StaticSitesWorkflowPreview"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSitesWorkflowPreviewContent"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="properties"> StaticSitesWorkflowPreview resource specific properties. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSitesWorkflowPreview(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StaticSitesWorkflowPreviewProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal StaticSitesWorkflowPreviewContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StaticSitesWorkflowPreviewProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Kind = kind;

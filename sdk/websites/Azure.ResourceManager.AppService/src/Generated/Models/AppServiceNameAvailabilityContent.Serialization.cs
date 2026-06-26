@@ -15,66 +15,66 @@ using Azure.ResourceManager.AppService;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Resource name availability request content. </summary>
-    public partial class AppServiceNameAvailabilityRequest : IJsonModel<AppServiceNameAvailabilityRequest>
+    public partial class AppServiceNameAvailabilityContent : IJsonModel<AppServiceNameAvailabilityContent>
     {
-        /// <summary> Initializes a new instance of <see cref="AppServiceNameAvailabilityRequest"/> for deserialization. </summary>
-        internal AppServiceNameAvailabilityRequest()
+        /// <summary> Initializes a new instance of <see cref="AppServiceNameAvailabilityContent"/> for deserialization. </summary>
+        internal AppServiceNameAvailabilityContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AppServiceNameAvailabilityRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AppServiceNameAvailabilityContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppServiceNameAvailabilityRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppServiceNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAppServiceNameAvailabilityRequest(document.RootElement, options);
+                        return DeserializeAppServiceNameAvailabilityContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceNameAvailabilityRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceNameAvailabilityContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppServiceNameAvailabilityRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppServiceNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceNameAvailabilityRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceNameAvailabilityContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AppServiceNameAvailabilityRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AppServiceNameAvailabilityContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AppServiceNameAvailabilityRequest IPersistableModel<AppServiceNameAvailabilityRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AppServiceNameAvailabilityContent IPersistableModel<AppServiceNameAvailabilityContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AppServiceNameAvailabilityRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AppServiceNameAvailabilityContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="appServiceNameAvailabilityRequest"> The <see cref="AppServiceNameAvailabilityRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(AppServiceNameAvailabilityRequest appServiceNameAvailabilityRequest)
+        /// <param name="appServiceNameAvailabilityContent"> The <see cref="AppServiceNameAvailabilityContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(AppServiceNameAvailabilityContent appServiceNameAvailabilityContent)
         {
-            if (appServiceNameAvailabilityRequest == null)
+            if (appServiceNameAvailabilityContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(appServiceNameAvailabilityRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(appServiceNameAvailabilityContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AppServiceNameAvailabilityRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AppServiceNameAvailabilityContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppServiceNameAvailabilityRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppServiceNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceNameAvailabilityRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceNameAvailabilityContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -123,31 +123,31 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AppServiceNameAvailabilityRequest IJsonModel<AppServiceNameAvailabilityRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AppServiceNameAvailabilityContent IJsonModel<AppServiceNameAvailabilityContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AppServiceNameAvailabilityRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AppServiceNameAvailabilityContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppServiceNameAvailabilityRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppServiceNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceNameAvailabilityRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceNameAvailabilityContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAppServiceNameAvailabilityRequest(document.RootElement, options);
+            return DeserializeAppServiceNameAvailabilityContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AppServiceNameAvailabilityRequest DeserializeAppServiceNameAvailabilityRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static AppServiceNameAvailabilityContent DeserializeAppServiceNameAvailabilityContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
-            CheckNameResourceTypes @type = default;
+            CheckNameResourceType @type = default;
             bool? isFqdn = default;
             string environmentId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new CheckNameResourceTypes(prop.Value.GetString());
+                    @type = new CheckNameResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("isFqdn"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AppServiceNameAvailabilityRequest(name, @type, isFqdn, environmentId, additionalBinaryDataProperties);
+            return new AppServiceNameAvailabilityContent(name, @type, isFqdn, environmentId, additionalBinaryDataProperties);
         }
     }
 }

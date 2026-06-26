@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<ResourceNameAvailability>> CheckAppServiceNameAvailabilityAsync(ResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            AppServiceNameAvailabilityRequest nameAvailabilityContent = new AppServiceNameAvailabilityRequest(content.Name, content.ResourceType)
+            AppServiceNameAvailabilityContent nameAvailabilityContent = new AppServiceNameAvailabilityContent(content.Name, content.ResourceType)
             {
                 IsFqdn = content.IsFqdn,
                 EnvironmentId = content.EnvironmentId
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<ResourceNameAvailability> CheckAppServiceNameAvailability(ResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            AppServiceNameAvailabilityRequest nameAvailabilityContent = new AppServiceNameAvailabilityRequest(content.Name, content.ResourceType)
+            AppServiceNameAvailabilityContent nameAvailabilityContent = new AppServiceNameAvailabilityContent(content.Name, content.ResourceType)
             {
                 IsFqdn = content.IsFqdn,
                 EnvironmentId = content.EnvironmentId

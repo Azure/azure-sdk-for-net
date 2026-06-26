@@ -10,68 +10,66 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> ARM resource for a app service plan. </summary>
-    public partial class AppServicePlanPatchContent : ResourceData, IJsonModel<AppServicePlanPatchContent>
+    /// <summary> Preview for the Static Site Workflow to be generated. </summary>
+    public partial class StaticSitesWorkflowPreviewContent : ResourceData, IJsonModel<StaticSitesWorkflowPreviewContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppServicePlanPatchContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StaticSitesWorkflowPreviewContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAppServicePlanPatchContent(document.RootElement, options);
+                        return DeserializeStaticSitesWorkflowPreviewContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppServicePlanPatchContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StaticSitesWorkflowPreviewContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppServicePlanPatchContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StaticSitesWorkflowPreviewContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AppServicePlanPatchContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StaticSitesWorkflowPreviewContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AppServicePlanPatchContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<StaticSitesWorkflowPreviewContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AppServicePlanPatchContent IPersistableModel<AppServicePlanPatchContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (AppServicePlanPatchContent)PersistableModelCreateCore(data, options);
+        StaticSitesWorkflowPreviewContent IPersistableModel<StaticSitesWorkflowPreviewContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (StaticSitesWorkflowPreviewContent)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AppServicePlanPatchContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<StaticSitesWorkflowPreviewContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="appServicePlanPatchContent"> The <see cref="AppServicePlanPatchContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(AppServicePlanPatchContent appServicePlanPatchContent)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StaticSitesWorkflowPreviewContent"/> from. </param>
+        internal static StaticSitesWorkflowPreviewContent FromResponse(Response response)
         {
-            if (appServicePlanPatchContent == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(appServicePlanPatchContent, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeStaticSitesWorkflowPreviewContent(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AppServicePlanPatchContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<StaticSitesWorkflowPreviewContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,21 +80,16 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppServicePlanPatchContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StaticSitesWorkflowPreviewContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServicePlanPatchContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(StaticSitesWorkflowPreviewContent)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
-            }
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -122,24 +115,24 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AppServicePlanPatchContent IJsonModel<AppServicePlanPatchContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AppServicePlanPatchContent)JsonModelCreateCore(ref reader, options);
+        StaticSitesWorkflowPreviewContent IJsonModel<StaticSitesWorkflowPreviewContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (StaticSitesWorkflowPreviewContent)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppServicePlanPatchContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StaticSitesWorkflowPreviewContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServicePlanPatchContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(StaticSitesWorkflowPreviewContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAppServicePlanPatchContent(document.RootElement, options);
+            return DeserializeStaticSitesWorkflowPreviewContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AppServicePlanPatchContent DeserializeAppServicePlanPatchContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static StaticSitesWorkflowPreviewContent DeserializeStaticSitesWorkflowPreviewContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -149,8 +142,7 @@ namespace Azure.ResourceManager.AppService.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            AppServicePlanPatchResourceProperties properties = default;
-            ManagedServiceIdentity identity = default;
+            StaticSitesWorkflowPreviewProperties properties = default;
             string kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -193,16 +185,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    properties = AppServicePlanPatchResourceProperties.DeserializeAppServicePlanPatchResourceProperties(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("identity"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = ManagedServiceIdentity.DeserializeManagedServiceIdentity(prop.Value, options);
+                    properties = StaticSitesWorkflowPreviewProperties.DeserializeStaticSitesWorkflowPreviewProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))
@@ -215,13 +198,12 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AppServicePlanPatchContent(
+            return new StaticSitesWorkflowPreviewContent(
                 id,
                 name,
                 resourceType,
                 systemData,
                 properties,
-                identity,
                 kind,
                 additionalBinaryDataProperties);
         }

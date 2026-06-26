@@ -209,12 +209,12 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Details of the App Service plan. </param>
+        /// <param name="patch"> Details of the App Service plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<AppServicePlanResource>> UpdateAsync(AppServicePlanPatchContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<AppServicePlanResource>> UpdateAsync(AppServicePlanPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _appServicePlansClientDiagnostics.CreateScope("AppServicePlanResource.Update");
             scope.Start();
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServicePlansRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AppServicePlanPatchContent.ToRequestContent(content), context);
+                HttpMessage message = _appServicePlansRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AppServicePlanPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServicePlanData> response = Response.FromValue(AppServicePlanData.FromResponse(result), result);
                 if (response.Value == null)
@@ -261,12 +261,12 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Details of the App Service plan. </param>
+        /// <param name="patch"> Details of the App Service plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<AppServicePlanResource> Update(AppServicePlanPatchContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<AppServicePlanResource> Update(AppServicePlanPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _appServicePlansClientDiagnostics.CreateScope("AppServicePlanResource.Update");
             scope.Start();
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServicePlansRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AppServicePlanPatchContent.ToRequestContent(content), context);
+                HttpMessage message = _appServicePlansRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AppServicePlanPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServicePlanData> response = Response.FromValue(AppServicePlanData.FromResponse(result), result);
                 if (response.Value == null)

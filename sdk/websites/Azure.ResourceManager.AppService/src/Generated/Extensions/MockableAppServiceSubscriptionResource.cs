@@ -895,7 +895,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<AppServiceNameAvailabilityResult>> CheckAppServiceNameAvailabilityAsync(AppServiceNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceNameAvailabilityResult>> CheckAppServiceNameAvailabilityAsync(AppServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -907,7 +907,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WebClientRestClient.CreateCheckAppServiceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), AppServiceNameAvailabilityRequest.ToRequestContent(content), context);
+                HttpMessage message = WebClientRestClient.CreateCheckAppServiceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), AppServiceNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceNameAvailabilityResult> response = Response.FromValue(AppServiceNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -943,7 +943,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<AppServiceNameAvailabilityResult> CheckAppServiceNameAvailability(AppServiceNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceNameAvailabilityResult> CheckAppServiceNameAvailability(AppServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -955,7 +955,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WebClientRestClient.CreateCheckAppServiceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), AppServiceNameAvailabilityRequest.ToRequestContent(content), context);
+                HttpMessage message = WebClientRestClient.CreateCheckAppServiceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), AppServiceNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceNameAvailabilityResult> response = Response.FromValue(AppServiceNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1135,7 +1135,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DnlResourceNameAvailabilityResult>> CheckDnlResourceNameAvailabilityAsync(string location, DnlResourceNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DnlResourceNameAvailabilityResult>> CheckDnlResourceNameAvailabilityAsync(string location, DnlResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
@@ -1148,7 +1148,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WebClientRestClient.CreateCheckDnlResourceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, DnlResourceNameAvailabilityRequest.ToRequestContent(content), context);
+                HttpMessage message = WebClientRestClient.CreateCheckDnlResourceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, DnlResourceNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DnlResourceNameAvailabilityResult> response = Response.FromValue(DnlResourceNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1186,7 +1186,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DnlResourceNameAvailabilityResult> CheckDnlResourceNameAvailability(string location, DnlResourceNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<DnlResourceNameAvailabilityResult> CheckDnlResourceNameAvailability(string location, DnlResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
@@ -1199,7 +1199,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WebClientRestClient.CreateCheckDnlResourceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, DnlResourceNameAvailabilityRequest.ToRequestContent(content), context);
+                HttpMessage message = WebClientRestClient.CreateCheckDnlResourceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, DnlResourceNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DnlResourceNameAvailabilityResult> response = Response.FromValue(DnlResourceNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1767,7 +1767,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="osTypeSelected"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationStackResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApplicationStackResource> GetAvailableStacksOnPremAsync(ProviderOsTypeSelected? osTypeSelected = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApplicationStackResource> GetAvailableStacksOnPremAsync(ProviderOSTypeSelected? osTypeSelected = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -1796,7 +1796,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="osTypeSelected"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationStackResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApplicationStackResource> GetAvailableStacksOnPrem(ProviderOsTypeSelected? osTypeSelected = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ApplicationStackResource> GetAvailableStacksOnPrem(ProviderOSTypeSelected? osTypeSelected = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -2187,7 +2187,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<StaticSitesWorkflowPreview>> PreviewStaticSiteWorkflowAsync(string location, StaticSitesWorkflowPreviewRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StaticSitesWorkflowPreviewContent>> PreviewStaticSiteWorkflowAsync(string location, StaticSitesWorkflowPreviewRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
@@ -2202,7 +2202,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 };
                 HttpMessage message = StaticSitesOperationGroupRestClient.CreatePreviewStaticSiteWorkflowRequest(Guid.Parse(Id.SubscriptionId), location, StaticSitesWorkflowPreviewRequest.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<StaticSitesWorkflowPreview> response = Response.FromValue(StaticSitesWorkflowPreview.FromResponse(result), result);
+                Response<StaticSitesWorkflowPreviewContent> response = Response.FromValue(StaticSitesWorkflowPreviewContent.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -2238,7 +2238,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<StaticSitesWorkflowPreview> PreviewStaticSiteWorkflow(string location, StaticSitesWorkflowPreviewRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<StaticSitesWorkflowPreviewContent> PreviewStaticSiteWorkflow(string location, StaticSitesWorkflowPreviewRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
@@ -2253,7 +2253,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 };
                 HttpMessage message = StaticSitesOperationGroupRestClient.CreatePreviewStaticSiteWorkflowRequest(Guid.Parse(Id.SubscriptionId), location, StaticSitesWorkflowPreviewRequest.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<StaticSitesWorkflowPreview> response = Response.FromValue(StaticSitesWorkflowPreview.FromResponse(result), result);
+                Response<StaticSitesWorkflowPreviewContent> response = Response.FromValue(StaticSitesWorkflowPreviewContent.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

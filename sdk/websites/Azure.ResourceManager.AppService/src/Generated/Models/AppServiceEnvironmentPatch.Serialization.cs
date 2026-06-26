@@ -17,61 +17,61 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> ARM resource for a app service environment. </summary>
-    public partial class AppServiceEnvironmentPatchContent : ResourceData, IJsonModel<AppServiceEnvironmentPatchContent>
+    public partial class AppServiceEnvironmentPatch : ResourceData, IJsonModel<AppServiceEnvironmentPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppServiceEnvironmentPatchContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppServiceEnvironmentPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAppServiceEnvironmentPatchContent(document.RootElement, options);
+                        return DeserializeAppServiceEnvironmentPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceEnvironmentPatchContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceEnvironmentPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppServiceEnvironmentPatchContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppServiceEnvironmentPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceEnvironmentPatchContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceEnvironmentPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AppServiceEnvironmentPatchContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AppServiceEnvironmentPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AppServiceEnvironmentPatchContent IPersistableModel<AppServiceEnvironmentPatchContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (AppServiceEnvironmentPatchContent)PersistableModelCreateCore(data, options);
+        AppServiceEnvironmentPatch IPersistableModel<AppServiceEnvironmentPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (AppServiceEnvironmentPatch)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AppServiceEnvironmentPatchContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AppServiceEnvironmentPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="appServiceEnvironmentPatchContent"> The <see cref="AppServiceEnvironmentPatchContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(AppServiceEnvironmentPatchContent appServiceEnvironmentPatchContent)
+        /// <param name="appServiceEnvironmentPatch"> The <see cref="AppServiceEnvironmentPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(AppServiceEnvironmentPatch appServiceEnvironmentPatch)
         {
-            if (appServiceEnvironmentPatchContent == null)
+            if (appServiceEnvironmentPatch == null)
             {
                 return null;
             }
-            return RequestContent.Create(appServiceEnvironmentPatchContent, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(appServiceEnvironmentPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AppServiceEnvironmentPatchContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AppServiceEnvironmentPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppServiceEnvironmentPatchContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppServiceEnvironmentPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceEnvironmentPatchContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceEnvironmentPatch)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -117,24 +117,24 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AppServiceEnvironmentPatchContent IJsonModel<AppServiceEnvironmentPatchContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AppServiceEnvironmentPatchContent)JsonModelCreateCore(ref reader, options);
+        AppServiceEnvironmentPatch IJsonModel<AppServiceEnvironmentPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AppServiceEnvironmentPatch)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppServiceEnvironmentPatchContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppServiceEnvironmentPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceEnvironmentPatchContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceEnvironmentPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAppServiceEnvironmentPatchContent(document.RootElement, options);
+            return DeserializeAppServiceEnvironmentPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AppServiceEnvironmentPatchContent DeserializeAppServiceEnvironmentPatchContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static AppServiceEnvironmentPatch DeserializeAppServiceEnvironmentPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AppServiceEnvironmentPatchContent(
+            return new AppServiceEnvironmentPatch(
                 id,
                 name,
                 resourceType,

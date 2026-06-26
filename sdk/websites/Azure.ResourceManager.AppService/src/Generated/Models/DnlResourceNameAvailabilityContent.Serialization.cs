@@ -14,67 +14,67 @@ using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The DnlResourceNameAvailabilityRequest. </summary>
-    public partial class DnlResourceNameAvailabilityRequest : IJsonModel<DnlResourceNameAvailabilityRequest>
+    /// <summary> The DnlResourceNameAvailabilityContent. </summary>
+    public partial class DnlResourceNameAvailabilityContent : IJsonModel<DnlResourceNameAvailabilityContent>
     {
-        /// <summary> Initializes a new instance of <see cref="DnlResourceNameAvailabilityRequest"/> for deserialization. </summary>
-        internal DnlResourceNameAvailabilityRequest()
+        /// <summary> Initializes a new instance of <see cref="DnlResourceNameAvailabilityContent"/> for deserialization. </summary>
+        internal DnlResourceNameAvailabilityContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DnlResourceNameAvailabilityRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DnlResourceNameAvailabilityContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DnlResourceNameAvailabilityRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DnlResourceNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDnlResourceNameAvailabilityRequest(document.RootElement, options);
+                        return DeserializeDnlResourceNameAvailabilityContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DnlResourceNameAvailabilityRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnlResourceNameAvailabilityContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DnlResourceNameAvailabilityRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DnlResourceNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DnlResourceNameAvailabilityRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnlResourceNameAvailabilityContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DnlResourceNameAvailabilityRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DnlResourceNameAvailabilityContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DnlResourceNameAvailabilityRequest IPersistableModel<DnlResourceNameAvailabilityRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DnlResourceNameAvailabilityContent IPersistableModel<DnlResourceNameAvailabilityContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DnlResourceNameAvailabilityRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DnlResourceNameAvailabilityContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="dnlResourceNameAvailabilityRequest"> The <see cref="DnlResourceNameAvailabilityRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DnlResourceNameAvailabilityRequest dnlResourceNameAvailabilityRequest)
+        /// <param name="dnlResourceNameAvailabilityContent"> The <see cref="DnlResourceNameAvailabilityContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DnlResourceNameAvailabilityContent dnlResourceNameAvailabilityContent)
         {
-            if (dnlResourceNameAvailabilityRequest == null)
+            if (dnlResourceNameAvailabilityContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(dnlResourceNameAvailabilityRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(dnlResourceNameAvailabilityContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DnlResourceNameAvailabilityRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DnlResourceNameAvailabilityContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DnlResourceNameAvailabilityRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DnlResourceNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnlResourceNameAvailabilityRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DnlResourceNameAvailabilityContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(ResourceGroupName))
             {
@@ -123,24 +123,24 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DnlResourceNameAvailabilityRequest IJsonModel<DnlResourceNameAvailabilityRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DnlResourceNameAvailabilityContent IJsonModel<DnlResourceNameAvailabilityContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DnlResourceNameAvailabilityRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DnlResourceNameAvailabilityContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DnlResourceNameAvailabilityRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DnlResourceNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnlResourceNameAvailabilityRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DnlResourceNameAvailabilityContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDnlResourceNameAvailabilityRequest(document.RootElement, options);
+            return DeserializeDnlResourceNameAvailabilityContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DnlResourceNameAvailabilityRequest DeserializeDnlResourceNameAvailabilityRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static DnlResourceNameAvailabilityContent DeserializeDnlResourceNameAvailabilityContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppService.Models
             string resourceGroupName = default;
             string autoGeneratedDomainNameLabelScope = default;
             string name = default;
-            CheckNameResourceTypes @type = default;
+            CheckNameResourceType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new CheckNameResourceTypes(prop.Value.GetString());
+                    @type = new CheckNameResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DnlResourceNameAvailabilityRequest(resourceGroupName, autoGeneratedDomainNameLabelScope, name, @type, additionalBinaryDataProperties);
+            return new DnlResourceNameAvailabilityContent(resourceGroupName, autoGeneratedDomainNameLabelScope, name, @type, additionalBinaryDataProperties);
         }
     }
 }

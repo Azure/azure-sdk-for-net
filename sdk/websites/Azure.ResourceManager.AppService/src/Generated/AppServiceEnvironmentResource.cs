@@ -213,12 +213,12 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Configuration details of the App Service Environment. </param>
+        /// <param name="patch"> Configuration details of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<AppServiceEnvironmentResource>> UpdateAsync(AppServiceEnvironmentPatchContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<AppServiceEnvironmentResource>> UpdateAsync(AppServiceEnvironmentPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _appServiceEnvironmentResourcesClientDiagnostics.CreateScope("AppServiceEnvironmentResource.Update");
             scope.Start();
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AppServiceEnvironmentPatchContent.ToRequestContent(content), context);
+                HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AppServiceEnvironmentPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceEnvironmentData> response = Response.FromValue(AppServiceEnvironmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -265,12 +265,12 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Configuration details of the App Service Environment. </param>
+        /// <param name="patch"> Configuration details of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<AppServiceEnvironmentResource> Update(AppServiceEnvironmentPatchContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<AppServiceEnvironmentResource> Update(AppServiceEnvironmentPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _appServiceEnvironmentResourcesClientDiagnostics.CreateScope("AppServiceEnvironmentResource.Update");
             scope.Start();
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AppServiceEnvironmentPatchContent.ToRequestContent(content), context);
+                HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AppServiceEnvironmentPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceEnvironmentData> response = Response.FromValue(AppServiceEnvironmentData.FromResponse(result), result);
                 if (response.Value == null)

@@ -12,7 +12,7 @@ using Azure.ResourceManager.AppService;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary></summary>
-    public readonly partial struct ProviderOsTypeSelected : IEquatable<ProviderOsTypeSelected>
+    public readonly partial struct ProviderOSTypeSelected : IEquatable<ProviderOSTypeSelected>
     {
         private readonly string _value;
         private const string WindowsValue = "Windows";
@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.AppService.Models
         private const string LinuxFunctionsValue = "LinuxFunctions";
         private const string AllValue = "All";
 
-        /// <summary> Initializes a new instance of <see cref="ProviderOsTypeSelected"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderOSTypeSelected"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ProviderOsTypeSelected(string value)
+        public ProviderOSTypeSelected(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -32,44 +32,44 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Gets the Windows. </summary>
-        public static ProviderOsTypeSelected Windows { get; } = new ProviderOsTypeSelected(WindowsValue);
+        public static ProviderOSTypeSelected Windows { get; } = new ProviderOSTypeSelected(WindowsValue);
 
         /// <summary> Gets the Linux. </summary>
-        public static ProviderOsTypeSelected Linux { get; } = new ProviderOsTypeSelected(LinuxValue);
+        public static ProviderOSTypeSelected Linux { get; } = new ProviderOSTypeSelected(LinuxValue);
 
         /// <summary> Gets the WindowsFunctions. </summary>
-        public static ProviderOsTypeSelected WindowsFunctions { get; } = new ProviderOsTypeSelected(WindowsFunctionsValue);
+        public static ProviderOSTypeSelected WindowsFunctions { get; } = new ProviderOSTypeSelected(WindowsFunctionsValue);
 
         /// <summary> Gets the LinuxFunctions. </summary>
-        public static ProviderOsTypeSelected LinuxFunctions { get; } = new ProviderOsTypeSelected(LinuxFunctionsValue);
+        public static ProviderOSTypeSelected LinuxFunctions { get; } = new ProviderOSTypeSelected(LinuxFunctionsValue);
 
         /// <summary> Gets the All. </summary>
-        public static ProviderOsTypeSelected All { get; } = new ProviderOsTypeSelected(AllValue);
+        public static ProviderOSTypeSelected All { get; } = new ProviderOSTypeSelected(AllValue);
 
-        /// <summary> Determines if two <see cref="ProviderOsTypeSelected"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ProviderOSTypeSelected"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ProviderOsTypeSelected left, ProviderOsTypeSelected right) => left.Equals(right);
+        public static bool operator ==(ProviderOSTypeSelected left, ProviderOSTypeSelected right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ProviderOsTypeSelected"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ProviderOSTypeSelected"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ProviderOsTypeSelected left, ProviderOsTypeSelected right) => !left.Equals(right);
+        public static bool operator !=(ProviderOSTypeSelected left, ProviderOSTypeSelected right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ProviderOsTypeSelected"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ProviderOSTypeSelected"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProviderOsTypeSelected(string value) => new ProviderOsTypeSelected(value);
+        public static implicit operator ProviderOSTypeSelected(string value) => new ProviderOSTypeSelected(value);
 
-        /// <summary> Converts a string to a <see cref="ProviderOsTypeSelected"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ProviderOSTypeSelected"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProviderOsTypeSelected?(string value) => value == null ? null : new ProviderOsTypeSelected(value);
+        public static implicit operator ProviderOSTypeSelected?(string value) => value == null ? null : new ProviderOSTypeSelected(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ProviderOsTypeSelected other && Equals(other);
+        public override bool Equals(object obj) => obj is ProviderOSTypeSelected other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ProviderOsTypeSelected other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ProviderOSTypeSelected other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

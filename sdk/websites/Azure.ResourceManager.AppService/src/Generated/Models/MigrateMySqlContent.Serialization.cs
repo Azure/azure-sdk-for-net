@@ -17,61 +17,61 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> MySQL migration request. </summary>
-    public partial class MigrateMySqlRequest : ResourceData, IJsonModel<MigrateMySqlRequest>
+    public partial class MigrateMySqlContent : ResourceData, IJsonModel<MigrateMySqlContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MigrateMySqlRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MigrateMySqlContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMigrateMySqlRequest(document.RootElement, options);
+                        return DeserializeMigrateMySqlContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrateMySqlRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateMySqlContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MigrateMySqlRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MigrateMySqlContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MigrateMySqlRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateMySqlContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MigrateMySqlRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MigrateMySqlContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MigrateMySqlRequest IPersistableModel<MigrateMySqlRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => (MigrateMySqlRequest)PersistableModelCreateCore(data, options);
+        MigrateMySqlContent IPersistableModel<MigrateMySqlContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (MigrateMySqlContent)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MigrateMySqlRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MigrateMySqlContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="migrateMySqlRequest"> The <see cref="MigrateMySqlRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(MigrateMySqlRequest migrateMySqlRequest)
+        /// <param name="migrateMySqlContent"> The <see cref="MigrateMySqlContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(MigrateMySqlContent migrateMySqlContent)
         {
-            if (migrateMySqlRequest == null)
+            if (migrateMySqlContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(migrateMySqlRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(migrateMySqlContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MigrateMySqlRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MigrateMySqlContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MigrateMySqlRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MigrateMySqlContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateMySqlRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateMySqlContent)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -117,24 +117,24 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MigrateMySqlRequest IJsonModel<MigrateMySqlRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MigrateMySqlRequest)JsonModelCreateCore(ref reader, options);
+        MigrateMySqlContent IJsonModel<MigrateMySqlContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MigrateMySqlContent)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MigrateMySqlRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MigrateMySqlContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateMySqlRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateMySqlContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMigrateMySqlRequest(document.RootElement, options);
+            return DeserializeMigrateMySqlContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MigrateMySqlRequest DeserializeMigrateMySqlRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static MigrateMySqlContent DeserializeMigrateMySqlContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MigrateMySqlRequest(
+            return new MigrateMySqlContent(
                 id,
                 name,
                 resourceType,

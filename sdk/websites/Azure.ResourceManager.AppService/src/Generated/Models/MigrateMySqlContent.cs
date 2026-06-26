@@ -14,17 +14,17 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> MySQL migration request. </summary>
-    public partial class MigrateMySqlRequest : ResourceData
+    public partial class MigrateMySqlContent : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MigrateMySqlRequest"/>. </summary>
-        public MigrateMySqlRequest()
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlContent"/>. </summary>
+        public MigrateMySqlContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MigrateMySqlRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlContent"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="properties"> MigrateMySqlRequest resource specific properties. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MigrateMySqlRequest(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MigrateMySqlRequestProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal MigrateMySqlContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MigrateMySqlRequestProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Kind = kind;

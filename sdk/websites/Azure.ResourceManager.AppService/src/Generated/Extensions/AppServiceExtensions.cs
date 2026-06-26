@@ -3330,14 +3330,14 @@ namespace Azure.ResourceManager.AppService
         /// Description for Check if a resource name is available.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.CheckAppServiceNameAvailabilityAsync(AppServiceNameAvailabilityRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.CheckAppServiceNameAvailabilityAsync(AppServiceNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<AppServiceNameAvailabilityResult>> CheckAppServiceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AppServiceNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public static async Task<Response<AppServiceNameAvailabilityResult>> CheckAppServiceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AppServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -3348,14 +3348,14 @@ namespace Azure.ResourceManager.AppService
         /// Description for Check if a resource name is available.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.CheckAppServiceNameAvailability(AppServiceNameAvailabilityRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.CheckAppServiceNameAvailability(AppServiceNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<AppServiceNameAvailabilityResult> CheckAppServiceNameAvailability(this SubscriptionResource subscriptionResource, AppServiceNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public static Response<AppServiceNameAvailabilityResult> CheckAppServiceNameAvailability(this SubscriptionResource subscriptionResource, AppServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -3450,7 +3450,7 @@ namespace Azure.ResourceManager.AppService
         /// Check if a resource name is available for DNL sites.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.CheckDnlResourceNameAvailabilityAsync(string, DnlResourceNameAvailabilityRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.CheckDnlResourceNameAvailabilityAsync(string, DnlResourceNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -3458,7 +3458,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<DnlResourceNameAvailabilityResult>> CheckDnlResourceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, string location, DnlResourceNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public static async Task<Response<DnlResourceNameAvailabilityResult>> CheckDnlResourceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, string location, DnlResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -3469,7 +3469,7 @@ namespace Azure.ResourceManager.AppService
         /// Check if a resource name is available for DNL sites.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.CheckDnlResourceNameAvailability(string, DnlResourceNameAvailabilityRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.CheckDnlResourceNameAvailability(string, DnlResourceNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -3477,7 +3477,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<DnlResourceNameAvailabilityResult> CheckDnlResourceNameAvailability(this SubscriptionResource subscriptionResource, string location, DnlResourceNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public static Response<DnlResourceNameAvailabilityResult> CheckDnlResourceNameAvailability(this SubscriptionResource subscriptionResource, string location, DnlResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -3710,7 +3710,7 @@ namespace Azure.ResourceManager.AppService
         /// Description for Get available application frameworks and their versions
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAvailableStacksOnPremAsync(ProviderOsTypeSelected?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAvailableStacksOnPremAsync(ProviderOSTypeSelected?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -3718,7 +3718,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ApplicationStackResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ApplicationStackResource> GetAvailableStacksOnPremAsync(this SubscriptionResource subscriptionResource, ProviderOsTypeSelected? osTypeSelected = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ApplicationStackResource> GetAvailableStacksOnPremAsync(this SubscriptionResource subscriptionResource, ProviderOSTypeSelected? osTypeSelected = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -3729,7 +3729,7 @@ namespace Azure.ResourceManager.AppService
         /// Description for Get available application frameworks and their versions
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAvailableStacksOnPrem(ProviderOsTypeSelected?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAvailableStacksOnPrem(ProviderOSTypeSelected?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -3737,7 +3737,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ApplicationStackResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ApplicationStackResource> GetAvailableStacksOnPrem(this SubscriptionResource subscriptionResource, ProviderOsTypeSelected? osTypeSelected = default, CancellationToken cancellationToken = default)
+        public static Pageable<ApplicationStackResource> GetAvailableStacksOnPrem(this SubscriptionResource subscriptionResource, ProviderOSTypeSelected? osTypeSelected = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -3940,7 +3940,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<StaticSitesWorkflowPreview>> PreviewStaticSiteWorkflowAsync(this SubscriptionResource subscriptionResource, string location, StaticSitesWorkflowPreviewRequest content, CancellationToken cancellationToken = default)
+        public static async Task<Response<StaticSitesWorkflowPreviewContent>> PreviewStaticSiteWorkflowAsync(this SubscriptionResource subscriptionResource, string location, StaticSitesWorkflowPreviewRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -3959,7 +3959,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<StaticSitesWorkflowPreview> PreviewStaticSiteWorkflow(this SubscriptionResource subscriptionResource, string location, StaticSitesWorkflowPreviewRequest content, CancellationToken cancellationToken = default)
+        public static Response<StaticSitesWorkflowPreviewContent> PreviewStaticSiteWorkflow(this SubscriptionResource subscriptionResource, string location, StaticSitesWorkflowPreviewRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -4122,7 +4122,7 @@ namespace Azure.ResourceManager.AppService
         /// Description for Get available application frameworks and their versions
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetAvailableStacksAsync(ProviderOsTypeSelected?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetAvailableStacksAsync(ProviderOSTypeSelected?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -4130,7 +4130,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ApplicationStackResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ApplicationStackResource> GetAvailableStacksAsync(this TenantResource tenantResource, ProviderOsTypeSelected? osTypeSelected = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ApplicationStackResource> GetAvailableStacksAsync(this TenantResource tenantResource, ProviderOSTypeSelected? osTypeSelected = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -4141,7 +4141,7 @@ namespace Azure.ResourceManager.AppService
         /// Description for Get available application frameworks and their versions
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetAvailableStacks(ProviderOsTypeSelected?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetAvailableStacks(ProviderOSTypeSelected?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -4149,7 +4149,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ApplicationStackResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ApplicationStackResource> GetAvailableStacks(this TenantResource tenantResource, ProviderOsTypeSelected? osTypeSelected = default, CancellationToken cancellationToken = default)
+        public static Pageable<ApplicationStackResource> GetAvailableStacks(this TenantResource tenantResource, ProviderOSTypeSelected? osTypeSelected = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -4160,7 +4160,7 @@ namespace Azure.ResourceManager.AppService
         /// Description for Get available Function app frameworks and their versions
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetFunctionAppStacksAsync(ProviderStackOsType?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetFunctionAppStacksAsync(ProviderStackOSType?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -4168,7 +4168,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="FunctionAppStack"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<FunctionAppStack> GetFunctionAppStacksAsync(this TenantResource tenantResource, ProviderStackOsType? stackOsType = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<FunctionAppStack> GetFunctionAppStacksAsync(this TenantResource tenantResource, ProviderStackOSType? stackOsType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -4179,7 +4179,7 @@ namespace Azure.ResourceManager.AppService
         /// Description for Get available Function app frameworks and their versions
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetFunctionAppStacks(ProviderStackOsType?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetFunctionAppStacks(ProviderStackOSType?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -4187,7 +4187,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="FunctionAppStack"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<FunctionAppStack> GetFunctionAppStacks(this TenantResource tenantResource, ProviderStackOsType? stackOsType = default, CancellationToken cancellationToken = default)
+        public static Pageable<FunctionAppStack> GetFunctionAppStacks(this TenantResource tenantResource, ProviderStackOSType? stackOsType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -4198,7 +4198,7 @@ namespace Azure.ResourceManager.AppService
         /// Description for Get available Function app frameworks and their versions for location
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetFunctionAppStacksForLocationAsync(string, ProviderStackOsType?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetFunctionAppStacksForLocationAsync(string, ProviderStackOSType?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -4207,7 +4207,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="FunctionAppStack"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<FunctionAppStack> GetFunctionAppStacksForLocationAsync(this TenantResource tenantResource, string location, ProviderStackOsType? stackOsType = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<FunctionAppStack> GetFunctionAppStacksForLocationAsync(this TenantResource tenantResource, string location, ProviderStackOSType? stackOsType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -4218,7 +4218,7 @@ namespace Azure.ResourceManager.AppService
         /// Description for Get available Function app frameworks and their versions for location
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetFunctionAppStacksForLocation(string, ProviderStackOsType?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetFunctionAppStacksForLocation(string, ProviderStackOSType?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -4227,7 +4227,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="FunctionAppStack"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<FunctionAppStack> GetFunctionAppStacksForLocation(this TenantResource tenantResource, string location, ProviderStackOsType? stackOsType = default, CancellationToken cancellationToken = default)
+        public static Pageable<FunctionAppStack> GetFunctionAppStacksForLocation(this TenantResource tenantResource, string location, ProviderStackOSType? stackOsType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -4238,7 +4238,7 @@ namespace Azure.ResourceManager.AppService
         /// Description for Get available Web app frameworks and their versions for location
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetWebAppStacksByLocationAsync(string, ProviderStackOsType?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetWebAppStacksByLocationAsync(string, ProviderStackOSType?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -4247,7 +4247,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="WebAppStack"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<WebAppStack> GetWebAppStacksByLocationAsync(this TenantResource tenantResource, string location, ProviderStackOsType? stackOsType = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<WebAppStack> GetWebAppStacksByLocationAsync(this TenantResource tenantResource, string location, ProviderStackOSType? stackOsType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -4258,7 +4258,7 @@ namespace Azure.ResourceManager.AppService
         /// Description for Get available Web app frameworks and their versions for location
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetWebAppStacksByLocation(string, ProviderStackOsType?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetWebAppStacksByLocation(string, ProviderStackOSType?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -4267,7 +4267,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="WebAppStack"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<WebAppStack> GetWebAppStacksByLocation(this TenantResource tenantResource, string location, ProviderStackOsType? stackOsType = default, CancellationToken cancellationToken = default)
+        public static Pageable<WebAppStack> GetWebAppStacksByLocation(this TenantResource tenantResource, string location, ProviderStackOSType? stackOsType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -4278,7 +4278,7 @@ namespace Azure.ResourceManager.AppService
         /// Description for Get available Web app frameworks and their versions
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetWebAppStacksAsync(ProviderStackOsType?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetWebAppStacksAsync(ProviderStackOSType?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -4286,7 +4286,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="WebAppStack"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<WebAppStack> GetWebAppStacksAsync(this TenantResource tenantResource, ProviderStackOsType? stackOsType = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<WebAppStack> GetWebAppStacksAsync(this TenantResource tenantResource, ProviderStackOSType? stackOsType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -4297,7 +4297,7 @@ namespace Azure.ResourceManager.AppService
         /// Description for Get available Web app frameworks and their versions
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetWebAppStacks(ProviderStackOsType?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetWebAppStacks(ProviderStackOSType?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -4305,7 +4305,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="WebAppStack"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<WebAppStack> GetWebAppStacks(this TenantResource tenantResource, ProviderStackOsType? stackOsType = default, CancellationToken cancellationToken = default)
+        public static Pageable<WebAppStack> GetWebAppStacks(this TenantResource tenantResource, ProviderStackOSType? stackOsType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
