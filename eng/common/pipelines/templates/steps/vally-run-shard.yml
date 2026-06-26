@@ -17,7 +17,7 @@ parameters:
   - name: skillEvalDir
     # Where the pinned Vally CLI is installed from (npm ci against its lockfile).
     type: string
-    default: eng/skill-eval
+    default: eng/common/vally-eval
   - name: mcpArtifact
     type: string
     default: mcp-servers
@@ -63,7 +63,7 @@ steps:
       registryUrl: https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-tools/npm/registry/
 
   # npm ci installs @microsoft/vally-cli AND its locked transitive @github/copilot-sdk
-  # (the executor) into eng/skill-eval/node_modules — no global install needed (D9).
+  # (the executor) into eng/common/vally-eval/node_modules — no global install needed (D9).
   - script: npm ci --userconfig $(Build.SourcesDirectory)/.npmrc
     displayName: 'Install Vally CLI + copilot-sdk (pinned via lockfile)'
     workingDirectory: ${{ parameters.skillEvalDir }}
