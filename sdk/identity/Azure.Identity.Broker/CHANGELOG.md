@@ -10,8 +10,6 @@
 
 ### Other Changes
 
-- Re-added the `Microsoft.Identity.Client.KeyAttestation` package dependency.
-
 ## 1.8.0-beta.1 (2026-06-09)
 
 ### Features Added
