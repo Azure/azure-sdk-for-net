@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
-            if (Optional.IsDefined(DbType))
+            if (Optional.IsDefined(DBType))
             {
                 writer.WritePropertyName("dbType"u8);
-                writer.WriteStringValue(DbType);
+                writer.WriteStringValue(DBType);
             }
             if (Optional.IsDefined(SetParametersXmlFileUri))
             {

@@ -917,7 +917,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> IP security restrictions for main. </summary>
         [WirePath("properties.ipSecurityRestrictions")]
-        public IList<AppServiceIPSecurityRestriction> IpSecurityRestrictions
+        public IList<AppServiceIPSecurityRestriction> IPSecurityRestrictions
         {
             get
             {
@@ -925,17 +925,17 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new SiteConfigProperties();
                 }
-                return Properties.IpSecurityRestrictions;
+                return Properties.IPSecurityRestrictions;
             }
         }
 
         /// <summary> Default action for main access restriction if no rules are matched. </summary>
         [WirePath("properties.ipSecurityRestrictionsDefaultAction")]
-        public SiteDefaultAction? IpSecurityRestrictionsDefaultAction
+        public SiteDefaultAction? IPSecurityRestrictionsDefaultAction
         {
             get
             {
-                return Properties is null ? default : Properties.IpSecurityRestrictionsDefaultAction;
+                return Properties is null ? default : Properties.IPSecurityRestrictionsDefaultAction;
             }
             set
             {
@@ -943,13 +943,13 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new SiteConfigProperties();
                 }
-                Properties.IpSecurityRestrictionsDefaultAction = value;
+                Properties.IPSecurityRestrictionsDefaultAction = value;
             }
         }
 
         /// <summary> IP security restrictions for scm. </summary>
         [WirePath("properties.scmIpSecurityRestrictions")]
-        public IList<AppServiceIPSecurityRestriction> ScmIpSecurityRestrictions
+        public IList<AppServiceIPSecurityRestriction> ScmIPSecurityRestrictions
         {
             get
             {
@@ -957,17 +957,17 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new SiteConfigProperties();
                 }
-                return Properties.ScmIpSecurityRestrictions;
+                return Properties.ScmIPSecurityRestrictions;
             }
         }
 
         /// <summary> Default action for scm access restriction if no rules are matched. </summary>
         [WirePath("properties.scmIpSecurityRestrictionsDefaultAction")]
-        public SiteDefaultAction? ScmIpSecurityRestrictionsDefaultAction
+        public SiteDefaultAction? ScmIPSecurityRestrictionsDefaultAction
         {
             get
             {
-                return Properties is null ? default : Properties.ScmIpSecurityRestrictionsDefaultAction;
+                return Properties is null ? default : Properties.ScmIPSecurityRestrictionsDefaultAction;
             }
             set
             {
@@ -975,7 +975,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new SiteConfigProperties();
                 }
-                Properties.ScmIpSecurityRestrictionsDefaultAction = value;
+                Properties.ScmIPSecurityRestrictionsDefaultAction = value;
             }
         }
 

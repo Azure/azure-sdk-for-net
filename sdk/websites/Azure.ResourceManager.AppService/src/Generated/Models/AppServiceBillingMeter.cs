@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> App Service OS type meter used for. </summary>
         [WirePath("properties.osType")]
-        public string OsType
+        public string OSType
         {
             get
             {
-                return Properties is null ? default : Properties.OsType;
+                return Properties is null ? default : Properties.OSType;
             }
             set
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     Properties = new BillingMeterProperties();
                 }
-                Properties.OsType = value;
+                Properties.OSType = value;
             }
         }
 

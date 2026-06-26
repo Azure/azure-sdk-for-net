@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Resource ID of the associated App Service plan, formatted as: "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}". </summary>
         [WirePath("properties.serverFarmId")]
-        public string ServerFarmId
+        public ResourceIdentifier ServerFarmId
         {
             get
             {
@@ -744,7 +744,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
         /// </summary>
         [WirePath("properties.virtualNetworkSubnetId")]
-        public string VirtualNetworkSubnetId
+        public ResourceIdentifier VirtualNetworkSubnetId
         {
             get
             {

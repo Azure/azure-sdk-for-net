@@ -20,27 +20,27 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="FlowEndpoints"/>. </summary>
         public FlowEndpoints()
         {
-            OutgoingIpAddresses = new ChangeTrackingList<WebAppIPAddress>();
-            AccessEndpointIpAddresses = new ChangeTrackingList<WebAppIPAddress>();
+            OutgoingIPAddresses = new ChangeTrackingList<WebAppIPAddress>();
+            AccessEndpointIPAddresses = new ChangeTrackingList<WebAppIPAddress>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FlowEndpoints"/>. </summary>
-        /// <param name="outgoingIpAddresses"> The outgoing ip address. </param>
-        /// <param name="accessEndpointIpAddresses"> The access endpoint ip address. </param>
+        /// <param name="outgoingIPAddresses"> The outgoing ip address. </param>
+        /// <param name="accessEndpointIPAddresses"> The access endpoint ip address. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FlowEndpoints(IList<WebAppIPAddress> outgoingIpAddresses, IList<WebAppIPAddress> accessEndpointIpAddresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FlowEndpoints(IList<WebAppIPAddress> outgoingIPAddresses, IList<WebAppIPAddress> accessEndpointIPAddresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            OutgoingIpAddresses = outgoingIpAddresses;
-            AccessEndpointIpAddresses = accessEndpointIpAddresses;
+            OutgoingIPAddresses = outgoingIPAddresses;
+            AccessEndpointIPAddresses = accessEndpointIPAddresses;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The outgoing ip address. </summary>
         [WirePath("outgoingIpAddresses")]
-        public IList<WebAppIPAddress> OutgoingIpAddresses { get; }
+        public IList<WebAppIPAddress> OutgoingIPAddresses { get; }
 
         /// <summary> The access endpoint ip address. </summary>
         [WirePath("accessEndpointIpAddresses")]
-        public IList<WebAppIPAddress> AccessEndpointIpAddresses { get; }
+        public IList<WebAppIPAddress> AccessEndpointIPAddresses { get; }
     }
 }

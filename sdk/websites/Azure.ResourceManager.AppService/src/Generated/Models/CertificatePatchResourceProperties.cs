@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="canonicalName"> CNAME of the certificate to be issued via free certificate. </param>
         /// <param name="domainValidationMethod"> Method of domain validation for free cert. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CertificatePatchResourceProperties(string password, string friendlyName, string subjectName, IList<string> hostNames, BinaryData pfxBlob, string siteName, string selfLink, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expireOn, string thumbprintString, bool? isValid, BinaryData cerBlob, string publicKeyHash, HostingEnvironmentProfile hostingEnvironmentProfile, string keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? keyVaultSecretStatus, string serverFarmId, string canonicalName, string domainValidationMethod, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CertificatePatchResourceProperties(string password, string friendlyName, string subjectName, IList<string> hostNames, BinaryData pfxBlob, string siteName, string selfLink, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expireOn, string thumbprintString, bool? isValid, BinaryData cerBlob, string publicKeyHash, HostingEnvironmentProfile hostingEnvironmentProfile, ResourceIdentifier keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? keyVaultSecretStatus, ResourceIdentifier serverFarmId, string canonicalName, string domainValidationMethod, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Password = password;
             FriendlyName = friendlyName;
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Key Vault Csm resource Id. </summary>
         [WirePath("keyVaultId")]
-        public string KeyVaultId { get; set; }
+        public ResourceIdentifier KeyVaultId { get; set; }
 
         /// <summary> Key Vault secret name. </summary>
         [WirePath("keyVaultSecretName")]
@@ -176,7 +177,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Resource ID of the associated App Service plan, formatted as: "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}". </summary>
         [WirePath("serverFarmId")]
-        public string ServerFarmId { get; set; }
+        public ResourceIdentifier ServerFarmId { get; set; }
 
         /// <summary> CNAME of the certificate to be issued via free certificate. </summary>
         [WirePath("canonicalName")]

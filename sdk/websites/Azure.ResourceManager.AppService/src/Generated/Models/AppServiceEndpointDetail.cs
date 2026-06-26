@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -28,9 +29,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="latency"> The time in milliseconds it takes for a TCP connection to be created from the App Service Environment to this IpAddress at this Port. </param>
         /// <param name="isAccessible"> Whether it is possible to create a TCP connection from the App Service Environment to this IpAddress at this Port. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceEndpointDetail(string ipAddress, int? port, double? latency, bool? isAccessible, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppServiceEndpointDetail(IPAddress ipAddress, int? port, double? latency, bool? isAccessible, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IpAddress = ipAddress;
+            IPAddress = ipAddress;
             Port = port;
             Latency = latency;
             IsAccessible = isAccessible;
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> An IP Address that Domain Name currently resolves to. </summary>
         [WirePath("ipAddress")]
-        public string IpAddress { get; }
+        public IPAddress IPAddress { get; }
 
         /// <summary> The port an endpoint is connected to. </summary>
         [WirePath("port")]

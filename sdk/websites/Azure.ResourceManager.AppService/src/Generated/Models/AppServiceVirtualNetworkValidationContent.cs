@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The ARM Resource ID of the subnet to validate. </summary>
         [WirePath("properties.subnetResourceId")]
-        public string SubnetResourceId
+        public ResourceIdentifier SubnetResourceId
         {
             get
             {

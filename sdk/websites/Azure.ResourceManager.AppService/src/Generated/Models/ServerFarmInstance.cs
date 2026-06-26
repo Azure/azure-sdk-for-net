@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Models
         internal ServerFarmInstance(string instanceName, string ipAddress, string status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InstanceName = instanceName;
-            IpAddress = ipAddress;
+            IPAddress = ipAddress;
             Status = status;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The instance IP address. </summary>
         [WirePath("ipAddress")]
-        public string IpAddress { get; }
+        public string IPAddress { get; }
 
         /// <summary> The instance status. </summary>
         [WirePath("status")]

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="databaseConnectionResourceId"> The resource id of the database. </param>
         /// <param name="region"> The region of the database resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseConnectionResourceId"/> or <paramref name="region"/> is null. </exception>
-        public DatabaseConnectionProperties(string databaseConnectionResourceId, string region)
+        public DatabaseConnectionProperties(ResourceIdentifier databaseConnectionResourceId, string region)
         {
             Argument.AssertNotNull(databaseConnectionResourceId, nameof(databaseConnectionResourceId));
             Argument.AssertNotNull(region, nameof(region));
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="region"> The region of the database resource. </param>
         /// <param name="configurationFiles"> A list of configuration files associated with this database connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseConnectionProperties(string databaseConnectionResourceId, string connectionIdentity, string connectionString, string region, IReadOnlyList<StaticSiteDatabaseConnectionConfigurationFileOverview> configurationFiles, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatabaseConnectionProperties(ResourceIdentifier databaseConnectionResourceId, string connectionIdentity, string connectionString, string region, IReadOnlyList<StaticSiteDatabaseConnectionConfigurationFileOverview> configurationFiles, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DatabaseConnectionResourceId = databaseConnectionResourceId;
             ConnectionIdentity = connectionIdentity;
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The resource id of the database. </summary>
         [WirePath("resourceId")]
-        public string DatabaseConnectionResourceId { get; set; }
+        public ResourceIdentifier DatabaseConnectionResourceId { get; set; }
 
         /// <summary> If present, the identity is used in conjunction with connection string to connect to the database. Use of the system-assigned managed identity is indicated with the string 'SystemAssigned', while use of a user-assigned managed identity is indicated with the resource id of the managed identity resource. </summary>
         [WirePath("connectionIdentity")]

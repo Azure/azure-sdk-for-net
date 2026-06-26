@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Number of IP SSL addresses reserved for the App Service Environment. </summary>
         [WirePath("properties.ipsslAddressCount")]
-        public int? IpsslAddressCount
+        public int? IPSslAddressCount
         {
             get
             {
-                return Properties is null ? default : Properties.IpsslAddressCount;
+                return Properties is null ? default : Properties.IPSslAddressCount;
             }
             set
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     Properties = new AppServiceEnvironmentProperties();
                 }
-                Properties.IpsslAddressCount = value;
+                Properties.IPSslAddressCount = value;
             }
         }
 
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> User added ip ranges to whitelist on ASE db. </summary>
         [WirePath("properties.userWhitelistedIpRanges")]
-        public IList<string> UserWhitelistedIpRanges
+        public IList<string> UserWhitelistedIPRanges
         {
             get
             {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     Properties = new AppServiceEnvironmentProperties();
                 }
-                return Properties.UserWhitelistedIpRanges;
+                return Properties.UserWhitelistedIPRanges;
             }
         }
 

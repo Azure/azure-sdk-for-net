@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -246,10 +247,10 @@ namespace Azure.ResourceManager.AppService.Models
             BinaryData cerBlob = default;
             string publicKeyHash = default;
             HostingEnvironmentProfile hostingEnvironmentProfile = default;
-            string keyVaultId = default;
+            ResourceIdentifier keyVaultId = default;
             string keyVaultSecretName = default;
             KeyVaultSecretStatus? keyVaultSecretStatus = default;
-            string serverFarmId = default;
+            ResourceIdentifier serverFarmId = default;
             string canonicalName = default;
             string domainValidationMethod = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -372,7 +373,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("keyVaultId"u8))
                 {
-                    keyVaultId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyVaultId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("keyVaultSecretName"u8))
@@ -391,7 +396,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("serverFarmId"u8))
                 {
-                    serverFarmId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serverFarmId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("canonicalName"u8))

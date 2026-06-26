@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Private IPAddresses mapped to the remote private endpoint. </summary>
         [WirePath("properties.ipAddresses")]
-        public IList<string> IpAddresses
+        public IList<string> IPAddresses
         {
             get
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     Properties = new RemotePrivateEndpointConnectionProperties();
                 }
-                return Properties.IpAddresses;
+                return Properties.IPAddresses;
             }
         }
 

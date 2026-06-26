@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.AppService.Models
             BinaryData cerBlob = default;
             string publicKeyHash = default;
             HostingEnvironmentProfile hostingEnvironmentProfile = default;
-            string keyVaultId = default;
+            ResourceIdentifier keyVaultId = default;
             string keyVaultSecretName = default;
             KeyVaultSecretStatus? keyVaultSecretStatus = default;
-            string serverFarmId = default;
+            ResourceIdentifier serverFarmId = default;
             string canonicalName = default;
             string domainValidationMethod = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            keyVaultId = property0.Value.GetString();
+                            keyVaultId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("keyVaultSecretName"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            serverFarmId = property0.Value.GetString();
+                            serverFarmId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("canonicalName"u8))

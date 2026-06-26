@@ -374,35 +374,35 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("keyVaultReferenceIdentity"u8);
                 writer.WriteStringValue(KeyVaultReferenceIdentity);
             }
-            if (Optional.IsCollectionDefined(IpSecurityRestrictions))
+            if (Optional.IsCollectionDefined(IPSecurityRestrictions))
             {
                 writer.WritePropertyName("ipSecurityRestrictions"u8);
                 writer.WriteStartArray();
-                foreach (AppServiceIPSecurityRestriction item in IpSecurityRestrictions)
+                foreach (AppServiceIPSecurityRestriction item in IPSecurityRestrictions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IpSecurityRestrictionsDefaultAction))
+            if (Optional.IsDefined(IPSecurityRestrictionsDefaultAction))
             {
                 writer.WritePropertyName("ipSecurityRestrictionsDefaultAction"u8);
-                writer.WriteStringValue(IpSecurityRestrictionsDefaultAction.Value.ToString());
+                writer.WriteStringValue(IPSecurityRestrictionsDefaultAction.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ScmIpSecurityRestrictions))
+            if (Optional.IsCollectionDefined(ScmIPSecurityRestrictions))
             {
                 writer.WritePropertyName("scmIpSecurityRestrictions"u8);
                 writer.WriteStartArray();
-                foreach (AppServiceIPSecurityRestriction item in ScmIpSecurityRestrictions)
+                foreach (AppServiceIPSecurityRestriction item in ScmIPSecurityRestrictions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ScmIpSecurityRestrictionsDefaultAction))
+            if (Optional.IsDefined(ScmIPSecurityRestrictionsDefaultAction))
             {
                 writer.WritePropertyName("scmIpSecurityRestrictionsDefaultAction"u8);
-                writer.WriteStringValue(ScmIpSecurityRestrictionsDefaultAction.Value.ToString());
+                writer.WriteStringValue(ScmIPSecurityRestrictionsDefaultAction.Value.ToString());
             }
             if (Optional.IsDefined(AllowIPSecurityRestrictionsForScmToUseMain))
             {
@@ -587,8 +587,8 @@ namespace Azure.ResourceManager.AppService.Models
             string keyVaultReferenceIdentity = default;
             IList<AppServiceIPSecurityRestriction> ipSecurityRestrictions = default;
             SiteDefaultAction? ipSecurityRestrictionsDefaultAction = default;
-            IList<AppServiceIPSecurityRestriction> scmIpSecurityRestrictions = default;
-            SiteDefaultAction? scmIpSecurityRestrictionsDefaultAction = default;
+            IList<AppServiceIPSecurityRestriction> scmIPSecurityRestrictions = default;
+            SiteDefaultAction? scmIPSecurityRestrictionsDefaultAction = default;
             bool? allowIPSecurityRestrictionsForScmToUseMain = default;
             bool? isHttp20Enabled = default;
             int? http20ProxyFlag = default;
@@ -1080,7 +1080,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         array.Add(AppServiceIPSecurityRestriction.DeserializeAppServiceIPSecurityRestriction(item, options));
                     }
-                    scmIpSecurityRestrictions = array;
+                    scmIPSecurityRestrictions = array;
                     continue;
                 }
                 if (prop.NameEquals("scmIpSecurityRestrictionsDefaultAction"u8))
@@ -1089,7 +1089,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    scmIpSecurityRestrictionsDefaultAction = new SiteDefaultAction(prop.Value.GetString());
+                    scmIPSecurityRestrictionsDefaultAction = new SiteDefaultAction(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("scmIpSecurityRestrictionsUseMain"u8))
@@ -1290,8 +1290,8 @@ namespace Azure.ResourceManager.AppService.Models
                 keyVaultReferenceIdentity,
                 ipSecurityRestrictions ?? new ChangeTrackingList<AppServiceIPSecurityRestriction>(),
                 ipSecurityRestrictionsDefaultAction,
-                scmIpSecurityRestrictions ?? new ChangeTrackingList<AppServiceIPSecurityRestriction>(),
-                scmIpSecurityRestrictionsDefaultAction,
+                scmIPSecurityRestrictions ?? new ChangeTrackingList<AppServiceIPSecurityRestriction>(),
+                scmIPSecurityRestrictionsDefaultAction,
                 allowIPSecurityRestrictionsForScmToUseMain,
                 isHttp20Enabled,
                 http20ProxyFlag,

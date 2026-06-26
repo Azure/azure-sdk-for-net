@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Database Type. </summary>
         [WirePath("properties.dbType")]
-        public string DbType
+        public string DBType
         {
             get
             {
-                return Properties is null ? default : Properties.DbType;
+                return Properties is null ? default : Properties.DBType;
             }
             set
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     Properties = new MSDeployProperties();
                 }
-                Properties.DbType = value;
+                Properties.DBType = value;
             }
         }
 

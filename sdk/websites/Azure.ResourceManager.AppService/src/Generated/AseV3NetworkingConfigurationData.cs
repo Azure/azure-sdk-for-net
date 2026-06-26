@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.AppService
         [WirePath("kind")]
         public string Kind { get; set; }
 
-        /// <summary> Gets the WindowsOutboundIpAddresses. </summary>
+        /// <summary> Gets the WindowsOutboundIPAddresses. </summary>
         [WirePath("properties.windowsOutboundIpAddresses")]
-        public IReadOnlyList<string> WindowsOutboundIpAddresses
+        public IReadOnlyList<string> WindowsOutboundIPAddresses
         {
             get
             {
@@ -57,13 +57,13 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new AseV3NetworkingConfigurationProperties();
                 }
-                return Properties.WindowsOutboundIpAddresses;
+                return Properties.WindowsOutboundIPAddresses;
             }
         }
 
-        /// <summary> Gets the LinuxOutboundIpAddresses. </summary>
+        /// <summary> Gets the LinuxOutboundIPAddresses. </summary>
         [WirePath("properties.linuxOutboundIpAddresses")]
-        public IReadOnlyList<string> LinuxOutboundIpAddresses
+        public IReadOnlyList<string> LinuxOutboundIPAddresses
         {
             get
             {
@@ -71,13 +71,13 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new AseV3NetworkingConfigurationProperties();
                 }
-                return Properties.LinuxOutboundIpAddresses;
+                return Properties.LinuxOutboundIPAddresses;
             }
         }
 
-        /// <summary> Gets the ExternalInboundIpAddresses. </summary>
+        /// <summary> Gets the ExternalInboundIPAddresses. </summary>
         [WirePath("properties.externalInboundIpAddresses")]
-        public IReadOnlyList<string> ExternalInboundIpAddresses
+        public IReadOnlyList<string> ExternalInboundIPAddresses
         {
             get
             {
@@ -85,13 +85,13 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new AseV3NetworkingConfigurationProperties();
                 }
-                return Properties.ExternalInboundIpAddresses;
+                return Properties.ExternalInboundIPAddresses;
             }
         }
 
-        /// <summary> Gets the InternalInboundIpAddresses. </summary>
+        /// <summary> Gets the InternalInboundIPAddresses. </summary>
         [WirePath("properties.internalInboundIpAddresses")]
-        public IReadOnlyList<string> InternalInboundIpAddresses
+        public IReadOnlyList<string> InternalInboundIPAddresses
         {
             get
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new AseV3NetworkingConfigurationProperties();
                 }
-                return Properties.InternalInboundIpAddresses;
+                return Properties.InternalInboundIPAddresses;
             }
         }
 
@@ -159,11 +159,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Customer provided Inbound IP Address. Only able to be set on Ase create. </summary>
         [WirePath("properties.inboundIpAddressOverride")]
-        public string InboundIpAddressOverride
+        public string InboundIPAddressOverride
         {
             get
             {
-                return Properties is null ? default : Properties.InboundIpAddressOverride;
+                return Properties is null ? default : Properties.InboundIPAddressOverride;
             }
             set
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new AseV3NetworkingConfigurationProperties();
                 }
-                Properties.InboundIpAddressOverride = value;
+                Properties.InboundIPAddressOverride = value;
             }
         }
     }

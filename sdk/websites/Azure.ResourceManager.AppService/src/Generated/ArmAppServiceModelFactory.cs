@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="containerImagePlatform"> Platform (windows or linux). </param>
         /// <param name="appServiceEnvironment"> App Service Environment Properties. </param>
         /// <returns> A new <see cref="Models.AppServiceValidateContent"/> instance for mocking. </returns>
-        public static AppServiceValidateContent AppServiceValidateContent(string name = default, ValidateResourceType @type = default, AzureLocation location = default, string serverFarmId = default, string skuName = default, bool? needLinuxWorkers = default, bool? isSpot = default, int? capacity = default, string hostingEnvironment = default, bool? isXenon = default, string containerRegistryBaseUri = default, string containerRegistryUsername = default, string containerRegistryPassword = default, string containerImageRepository = default, string containerImageTag = default, string containerImagePlatform = default, AppServiceEnvironmentProperties appServiceEnvironment = default)
+        public static AppServiceValidateContent AppServiceValidateContent(string name = default, ValidateResourceType @type = default, AzureLocation location = default, ResourceIdentifier serverFarmId = default, string skuName = default, bool? needLinuxWorkers = default, bool? isSpot = default, int? capacity = default, string hostingEnvironment = default, bool? isXenon = default, string containerRegistryBaseUri = default, string containerRegistryUsername = default, string containerRegistryPassword = default, string containerImageRepository = default, string containerImageTag = default, string containerImagePlatform = default, AppServiceEnvironmentProperties appServiceEnvironment = default)
         {
             return new AppServiceValidateContent(name, @type, location, needLinuxWorkers is null && isSpot is null && isXenon is null ? default : new ValidateProperties(
                 default,
@@ -173,32 +173,32 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="windowsOutboundIpAddresses"> Gets the WindowsOutboundIpAddresses. </param>
-        /// <param name="linuxOutboundIpAddresses"> Gets the LinuxOutboundIpAddresses. </param>
-        /// <param name="externalInboundIpAddresses"> Gets the ExternalInboundIpAddresses. </param>
-        /// <param name="internalInboundIpAddresses"> Gets the InternalInboundIpAddresses. </param>
+        /// <param name="windowsOutboundIPAddresses"> Gets the WindowsOutboundIPAddresses. </param>
+        /// <param name="linuxOutboundIPAddresses"> Gets the LinuxOutboundIPAddresses. </param>
+        /// <param name="externalInboundIPAddresses"> Gets the ExternalInboundIPAddresses. </param>
+        /// <param name="internalInboundIPAddresses"> Gets the InternalInboundIPAddresses. </param>
         /// <param name="allowNewPrivateEndpointConnections"> Property to enable and disable new private endpoint connection creation on ASE. </param>
         /// <param name="isFtpEnabled"> Property to enable and disable FTP on ASEV3. </param>
         /// <param name="isRemoteDebugEnabled"> Property to enable and disable Remote Debug on ASEV3. </param>
-        /// <param name="inboundIpAddressOverride"> Customer provided Inbound IP Address. Only able to be set on Ase create. </param>
+        /// <param name="inboundIPAddressOverride"> Customer provided Inbound IP Address. Only able to be set on Ase create. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.AseV3NetworkingConfigurationData"/> instance for mocking. </returns>
-        public static AseV3NetworkingConfigurationData AseV3NetworkingConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> windowsOutboundIpAddresses = default, IEnumerable<string> linuxOutboundIpAddresses = default, IEnumerable<string> externalInboundIpAddresses = default, IEnumerable<string> internalInboundIpAddresses = default, bool? allowNewPrivateEndpointConnections = default, bool? isFtpEnabled = default, bool? isRemoteDebugEnabled = default, string inboundIpAddressOverride = default, string kind = default)
+        public static AseV3NetworkingConfigurationData AseV3NetworkingConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> windowsOutboundIPAddresses = default, IEnumerable<string> linuxOutboundIPAddresses = default, IEnumerable<string> externalInboundIPAddresses = default, IEnumerable<string> internalInboundIPAddresses = default, bool? allowNewPrivateEndpointConnections = default, bool? isFtpEnabled = default, bool? isRemoteDebugEnabled = default, string inboundIPAddressOverride = default, string kind = default)
         {
             return new AseV3NetworkingConfigurationData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                windowsOutboundIpAddresses is null && linuxOutboundIpAddresses is null && externalInboundIpAddresses is null && internalInboundIpAddresses is null && allowNewPrivateEndpointConnections is null && isFtpEnabled is null && isRemoteDebugEnabled is null && inboundIpAddressOverride is null ? default : new AseV3NetworkingConfigurationProperties(
-                    (windowsOutboundIpAddresses ?? new ChangeTrackingList<string>()).ToList(),
-                    (linuxOutboundIpAddresses ?? new ChangeTrackingList<string>()).ToList(),
-                    (externalInboundIpAddresses ?? new ChangeTrackingList<string>()).ToList(),
-                    (internalInboundIpAddresses ?? new ChangeTrackingList<string>()).ToList(),
+                windowsOutboundIPAddresses is null && linuxOutboundIPAddresses is null && externalInboundIPAddresses is null && internalInboundIPAddresses is null && allowNewPrivateEndpointConnections is null && isFtpEnabled is null && isRemoteDebugEnabled is null && inboundIPAddressOverride is null ? default : new AseV3NetworkingConfigurationProperties(
+                    (windowsOutboundIPAddresses ?? new ChangeTrackingList<string>()).ToList(),
+                    (linuxOutboundIPAddresses ?? new ChangeTrackingList<string>()).ToList(),
+                    (externalInboundIPAddresses ?? new ChangeTrackingList<string>()).ToList(),
+                    (internalInboundIPAddresses ?? new ChangeTrackingList<string>()).ToList(),
                     allowNewPrivateEndpointConnections,
                     isFtpEnabled,
                     isRemoteDebugEnabled,
-                    inboundIpAddressOverride,
+                    inboundIPAddressOverride,
                     default),
                 kind,
                 default);
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="subnetResourceId"> The ARM Resource ID of the subnet to validate. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.AppServiceVirtualNetworkValidationContent"/> instance for mocking. </returns>
-        public static AppServiceVirtualNetworkValidationContent AppServiceVirtualNetworkValidationContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string vnetResourceGroup = default, string vnetName = default, string vnetSubnetName = default, string subnetResourceId = default, string kind = default)
+        public static AppServiceVirtualNetworkValidationContent AppServiceVirtualNetworkValidationContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string vnetResourceGroup = default, string vnetName = default, string vnetSubnetName = default, ResourceIdentifier subnetResourceId = default, string kind = default)
         {
             return new AppServiceVirtualNetworkValidationContent(
                 id,
@@ -1037,8 +1037,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process.
         /// </param>
         /// <param name="customDomainVerificationId"> Unique identifier that verifies the custom domains assigned to the app. Customer will add this id to a txt record for verification. </param>
-        /// <param name="outboundIpAddresses"> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from tenants that site can be hosted with current settings. Read-only. </param>
-        /// <param name="possibleOutboundIpAddresses"> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from all tenants except dataComponent. Read-only. </param>
+        /// <param name="outboundIPAddresses"> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from tenants that site can be hosted with current settings. Read-only. </param>
+        /// <param name="possibleOutboundIPAddresses"> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from all tenants except dataComponent. Read-only. </param>
         /// <param name="containerSize"> Size of the function container. </param>
         /// <param name="dailyMemoryTimeQuota"> Maximum allowed daily memory-time quota (applicable on dynamic apps only). </param>
         /// <param name="suspendOn"> App suspended till in case memory-time quota is exceeded. </param>
@@ -1072,7 +1072,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="extendedLocation"> Extended Location. </param>
         /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <returns> A new <see cref="AppService.WebSiteData"/> instance for mocking. </returns>
-        public static WebSiteData WebSiteData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string state = default, IEnumerable<string> hostNames = default, string repositorySiteName = default, AppServiceUsageState? usageState = default, bool? isEnabled = default, bool? siteScopedCertificatesEnabled = default, IEnumerable<string> enabledHostNames = default, WebSiteAvailabilityState? availabilityState = default, IEnumerable<HostNameSslState> hostNameSslStates = default, string appServicePlanId = default, bool? isReserved = default, bool? isXenon = default, bool? isHyperV = default, DateTimeOffset? lastModifiedTimeUtc = default, SiteDnsConfig dnsConfiguration = default, OutboundVnetRouting outboundVnetRouting = default, SiteConfigProperties siteConfig = default, FunctionAppConfig functionAppConfig = default, AppDaprConfig daprConfig = default, AiIntegration aiIntegration = default, string workloadProfileName = default, FunctionAppResourceConfig resourceConfig = default, IEnumerable<string> trafficManagerHostNames = default, bool? isScmSiteAlsoStopped = default, string targetSwapSlot = default, HostingEnvironmentProfile hostingEnvironmentProfile = default, bool? isClientAffinityEnabled = default, bool? isClientAffinityPartitioningEnabled = default, bool? isClientAffinityProxyEnabled = default, bool? isClientCertEnabled = default, ClientCertMode? clientCertMode = default, string clientCertExclusionPaths = default, AppServiceIPMode? ipMode = default, bool? isEndToEndEncryptionEnabled = default, bool? isSshEnabled = default, bool? isHostNameDisabled = default, string customDomainVerificationId = default, string outboundIpAddresses = default, string possibleOutboundIpAddresses = default, int? containerSize = default, int? dailyMemoryTimeQuota = default, DateTimeOffset? suspendOn = default, int? maxNumberOfWorkers = default, CloningInfo cloningInfo = default, string resourceGroup = default, bool? isDefaultContainer = default, string defaultHostName = default, SlotSwapStatus slotSwapStatus = default, bool? isHttpsOnly = default, RedundancyMode? redundancyMode = default, string inProgressOperationId = default, string publicNetworkAccess = default, bool? isStorageAccountRequired = default, string keyVaultReferenceIdentity = default, AutoGeneratedDomainNameLabelScope? autoGeneratedDomainNameLabelScope = default, string virtualNetworkSubnetId = default, string managedEnvironmentId = default, string sku = default, PlatformReleaseChannel? platformReleaseChannel = default, ResourceManager.Models.ManagedServiceIdentity identity = default, Resources.Models.ExtendedLocation extendedLocation = default, string kind = default)
+        public static WebSiteData WebSiteData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string state = default, IEnumerable<string> hostNames = default, string repositorySiteName = default, AppServiceUsageState? usageState = default, bool? isEnabled = default, bool? siteScopedCertificatesEnabled = default, IEnumerable<string> enabledHostNames = default, WebSiteAvailabilityState? availabilityState = default, IEnumerable<HostNameSslState> hostNameSslStates = default, ResourceIdentifier appServicePlanId = default, bool? isReserved = default, bool? isXenon = default, bool? isHyperV = default, DateTimeOffset? lastModifiedTimeUtc = default, SiteDnsConfig dnsConfiguration = default, OutboundVnetRouting outboundVnetRouting = default, SiteConfigProperties siteConfig = default, FunctionAppConfig functionAppConfig = default, AppDaprConfig daprConfig = default, AiIntegration aiIntegration = default, string workloadProfileName = default, FunctionAppResourceConfig resourceConfig = default, IEnumerable<string> trafficManagerHostNames = default, bool? isScmSiteAlsoStopped = default, string targetSwapSlot = default, HostingEnvironmentProfile hostingEnvironmentProfile = default, bool? isClientAffinityEnabled = default, bool? isClientAffinityPartitioningEnabled = default, bool? isClientAffinityProxyEnabled = default, bool? isClientCertEnabled = default, ClientCertMode? clientCertMode = default, string clientCertExclusionPaths = default, AppServiceIPMode? ipMode = default, bool? isEndToEndEncryptionEnabled = default, bool? isSshEnabled = default, bool? isHostNameDisabled = default, string customDomainVerificationId = default, string outboundIPAddresses = default, string possibleOutboundIPAddresses = default, int? containerSize = default, int? dailyMemoryTimeQuota = default, DateTimeOffset? suspendOn = default, int? maxNumberOfWorkers = default, CloningInfo cloningInfo = default, string resourceGroup = default, bool? isDefaultContainer = default, string defaultHostName = default, SlotSwapStatus slotSwapStatus = default, bool? isHttpsOnly = default, RedundancyMode? redundancyMode = default, string inProgressOperationId = default, string publicNetworkAccess = default, bool? isStorageAccountRequired = default, string keyVaultReferenceIdentity = default, AutoGeneratedDomainNameLabelScope? autoGeneratedDomainNameLabelScope = default, ResourceIdentifier virtualNetworkSubnetId = default, string managedEnvironmentId = default, string sku = default, PlatformReleaseChannel? platformReleaseChannel = default, ResourceManager.Models.ManagedServiceIdentity identity = default, Resources.Models.ExtendedLocation extendedLocation = default, string kind = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1083,7 +1083,7 @@ namespace Azure.ResourceManager.AppService.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                state is null && hostNames is null && repositorySiteName is null && usageState is null && isEnabled is null && siteScopedCertificatesEnabled is null && enabledHostNames is null && availabilityState is null && hostNameSslStates is null && appServicePlanId is null && isReserved is null && isXenon is null && isHyperV is null && lastModifiedTimeUtc is null && dnsConfiguration is null && outboundVnetRouting is null && siteConfig is null && functionAppConfig is null && daprConfig is null && aiIntegration is null && workloadProfileName is null && resourceConfig is null && trafficManagerHostNames is null && isScmSiteAlsoStopped is null && targetSwapSlot is null && hostingEnvironmentProfile is null && isClientAffinityEnabled is null && isClientAffinityPartitioningEnabled is null && isClientAffinityProxyEnabled is null && isClientCertEnabled is null && clientCertMode is null && clientCertExclusionPaths is null && ipMode is null && isEndToEndEncryptionEnabled is null && isSshEnabled is null && isHostNameDisabled is null && customDomainVerificationId is null && outboundIpAddresses is null && possibleOutboundIpAddresses is null && containerSize is null && dailyMemoryTimeQuota is null && suspendOn is null && maxNumberOfWorkers is null && cloningInfo is null && resourceGroup is null && isDefaultContainer is null && defaultHostName is null && slotSwapStatus is null && isHttpsOnly is null && redundancyMode is null && inProgressOperationId is null && publicNetworkAccess is null && isStorageAccountRequired is null && keyVaultReferenceIdentity is null && autoGeneratedDomainNameLabelScope is null && virtualNetworkSubnetId is null && managedEnvironmentId is null && sku is null && platformReleaseChannel is null ? default : new SiteProperties(
+                state is null && hostNames is null && repositorySiteName is null && usageState is null && isEnabled is null && siteScopedCertificatesEnabled is null && enabledHostNames is null && availabilityState is null && hostNameSslStates is null && appServicePlanId is null && isReserved is null && isXenon is null && isHyperV is null && lastModifiedTimeUtc is null && dnsConfiguration is null && outboundVnetRouting is null && siteConfig is null && functionAppConfig is null && daprConfig is null && aiIntegration is null && workloadProfileName is null && resourceConfig is null && trafficManagerHostNames is null && isScmSiteAlsoStopped is null && targetSwapSlot is null && hostingEnvironmentProfile is null && isClientAffinityEnabled is null && isClientAffinityPartitioningEnabled is null && isClientAffinityProxyEnabled is null && isClientCertEnabled is null && clientCertMode is null && clientCertExclusionPaths is null && ipMode is null && isEndToEndEncryptionEnabled is null && isSshEnabled is null && isHostNameDisabled is null && customDomainVerificationId is null && outboundIPAddresses is null && possibleOutboundIPAddresses is null && containerSize is null && dailyMemoryTimeQuota is null && suspendOn is null && maxNumberOfWorkers is null && cloningInfo is null && resourceGroup is null && isDefaultContainer is null && defaultHostName is null && slotSwapStatus is null && isHttpsOnly is null && redundancyMode is null && inProgressOperationId is null && publicNetworkAccess is null && isStorageAccountRequired is null && keyVaultReferenceIdentity is null && autoGeneratedDomainNameLabelScope is null && virtualNetworkSubnetId is null && managedEnvironmentId is null && sku is null && platformReleaseChannel is null ? default : new SiteProperties(
                     state,
                     (hostNames ?? new ChangeTrackingList<string>()).ToList(),
                     repositorySiteName,
@@ -1121,8 +1121,8 @@ namespace Azure.ResourceManager.AppService.Models
                     isSshEnabled,
                     isHostNameDisabled,
                     customDomainVerificationId,
-                    outboundIpAddresses,
-                    possibleOutboundIpAddresses,
+                    outboundIPAddresses,
+                    possibleOutboundIPAddresses,
                     containerSize,
                     dailyMemoryTimeQuota,
                     suspendOn,
@@ -1823,7 +1823,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="latency"> The time in milliseconds it takes for a TCP connection to be created from the App Service Environment to this IpAddress at this Port. </param>
         /// <param name="isAccessible"> Whether it is possible to create a TCP connection from the App Service Environment to this IpAddress at this Port. </param>
         /// <returns> A new <see cref="Models.AppServiceEndpointDetail"/> instance for mocking. </returns>
-        public static AppServiceEndpointDetail AppServiceEndpointDetail(string ipAddress = default, int? port = default, double? latency = default, bool? isAccessible = default)
+        public static AppServiceEndpointDetail AppServiceEndpointDetail(IPAddress ipAddress = default, int? port = default, double? latency = default, bool? isAccessible = default)
         {
             return new AppServiceEndpointDetail(ipAddress, port, latency, isAccessible, default);
         }
@@ -2175,18 +2175,18 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="serviceIpAddress"> Main public virtual IP. </param>
         /// <param name="internalIpAddress"> Virtual Network internal IP address of the App Service Environment if it is in internal load-balancing mode. </param>
-        /// <param name="outboundIpAddresses"> IP addresses appearing on outbound connections. </param>
+        /// <param name="outboundIPAddresses"> IP addresses appearing on outbound connections. </param>
         /// <param name="virtualIPMappings"> Additional virtual IPs. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.AppServiceEnvironmentAddressData"/> instance for mocking. </returns>
-        public static AppServiceEnvironmentAddressData AppServiceEnvironmentAddressData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IPAddress serviceIpAddress = default, IPAddress internalIpAddress = default, IEnumerable<IPAddress> outboundIpAddresses = default, IEnumerable<VirtualIPMapping> virtualIPMappings = default, string kind = default)
+        public static AppServiceEnvironmentAddressData AppServiceEnvironmentAddressData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IPAddress serviceIpAddress = default, IPAddress internalIpAddress = default, IEnumerable<IPAddress> outboundIPAddresses = default, IEnumerable<VirtualIPMapping> virtualIPMappings = default, string kind = default)
         {
             return new AppServiceEnvironmentAddressData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                serviceIpAddress is null && internalIpAddress is null && outboundIpAddresses is null && virtualIPMappings is null ? default : new AddressResponseProperties(serviceIpAddress, internalIpAddress, (outboundIpAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(), (virtualIPMappings ?? new ChangeTrackingList<VirtualIPMapping>()).ToList(), default),
+                serviceIpAddress is null && internalIpAddress is null && outboundIPAddresses is null && virtualIPMappings is null ? default : new AddressResponseProperties(serviceIpAddress, internalIpAddress, (outboundIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(), (virtualIPMappings ?? new ChangeTrackingList<VirtualIPMapping>()).ToList(), default),
                 kind,
                 default);
         }
@@ -2307,7 +2307,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="identity"> Managed service identity. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.SitePatchInfo"/> instance for mocking. </returns>
-        public static SitePatchInfo SitePatchInfo(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string state = default, IEnumerable<string> hostNames = default, string repositorySiteName = default, AppServiceUsageState? usageState = default, bool? isEnabled = default, bool? siteScopedCertificatesEnabled = default, IEnumerable<string> enabledHostNames = default, WebSiteAvailabilityState? availabilityState = default, IEnumerable<HostNameSslState> hostNameSslStates = default, string serverFarmId = default, bool? isReserved = default, bool? isXenon = default, bool? isHyperV = default, DateTimeOffset? lastModifiedOn = default, SiteDnsConfig dnsConfiguration = default, SiteConfigProperties siteConfig = default, AiIntegration aiIntegration = default, IEnumerable<string> trafficManagerHostNames = default, bool? isScmSiteAlsoStopped = default, string targetSwapSlot = default, HostingEnvironmentProfile hostingEnvironmentProfile = default, bool? isClientAffinityEnabled = default, bool? isClientAffinityProxyEnabled = default, bool? isClientCertEnabled = default, ClientCertMode? clientCertMode = default, string clientCertExclusionPaths = default, bool? isHostNameDisabled = default, string customDomainVerificationId = default, string outboundIpAddresses = default, string possibleOutboundIpAddresses = default, int? containerSize = default, int? dailyMemoryTimeQuota = default, DateTimeOffset? suspendOn = default, int? maxNumberOfWorkers = default, CloningInfo cloningInfo = default, string resourceGroup = default, bool? isDefaultContainer = default, string defaultHostName = default, SlotSwapStatus slotSwapStatus = default, bool? isHttpsOnly = default, RedundancyMode? redundancyMode = default, string inProgressOperationId = default, string publicNetworkAccess = default, bool? isStorageAccountRequired = default, string keyVaultReferenceIdentity = default, string virtualNetworkSubnetId = default, ResourceManager.Models.ManagedServiceIdentity identity = default, string kind = default)
+        public static SitePatchInfo SitePatchInfo(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string state = default, IEnumerable<string> hostNames = default, string repositorySiteName = default, AppServiceUsageState? usageState = default, bool? isEnabled = default, bool? siteScopedCertificatesEnabled = default, IEnumerable<string> enabledHostNames = default, WebSiteAvailabilityState? availabilityState = default, IEnumerable<HostNameSslState> hostNameSslStates = default, ResourceIdentifier serverFarmId = default, bool? isReserved = default, bool? isXenon = default, bool? isHyperV = default, DateTimeOffset? lastModifiedOn = default, SiteDnsConfig dnsConfiguration = default, SiteConfigProperties siteConfig = default, AiIntegration aiIntegration = default, IEnumerable<string> trafficManagerHostNames = default, bool? isScmSiteAlsoStopped = default, string targetSwapSlot = default, HostingEnvironmentProfile hostingEnvironmentProfile = default, bool? isClientAffinityEnabled = default, bool? isClientAffinityProxyEnabled = default, bool? isClientCertEnabled = default, ClientCertMode? clientCertMode = default, string clientCertExclusionPaths = default, bool? isHostNameDisabled = default, string customDomainVerificationId = default, string outboundIpAddresses = default, string possibleOutboundIpAddresses = default, int? containerSize = default, int? dailyMemoryTimeQuota = default, DateTimeOffset? suspendOn = default, int? maxNumberOfWorkers = default, CloningInfo cloningInfo = default, string resourceGroup = default, bool? isDefaultContainer = default, string defaultHostName = default, SlotSwapStatus slotSwapStatus = default, bool? isHttpsOnly = default, RedundancyMode? redundancyMode = default, string inProgressOperationId = default, string publicNetworkAccess = default, bool? isStorageAccountRequired = default, string keyVaultReferenceIdentity = default, ResourceIdentifier virtualNetworkSubnetId = default, ResourceManager.Models.ManagedServiceIdentity identity = default, string kind = default)
         {
             return new SitePatchInfo(
                 id,
@@ -3634,7 +3634,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="domainValidationMethod"> Method of domain validation for free cert. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.AppCertificatePatch"/> instance for mocking. </returns>
-        public static AppCertificatePatch AppCertificatePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string password = default, string friendlyName = default, string subjectName = default, IEnumerable<string> hostNames = default, BinaryData pfxBlob = default, string siteName = default, string selfLink = default, string issuer = default, DateTimeOffset? issueOn = default, DateTimeOffset? expireOn = default, string thumbprintString = default, bool? isValid = default, BinaryData cerBlob = default, string publicKeyHash = default, HostingEnvironmentProfile hostingEnvironmentProfile = default, string keyVaultId = default, string keyVaultSecretName = default, KeyVaultSecretStatus? keyVaultSecretStatus = default, string serverFarmId = default, string canonicalName = default, string domainValidationMethod = default, string kind = default)
+        public static AppCertificatePatch AppCertificatePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string password = default, string friendlyName = default, string subjectName = default, IEnumerable<string> hostNames = default, BinaryData pfxBlob = default, string siteName = default, string selfLink = default, string issuer = default, DateTimeOffset? issueOn = default, DateTimeOffset? expireOn = default, string thumbprintString = default, bool? isValid = default, BinaryData cerBlob = default, string publicKeyHash = default, HostingEnvironmentProfile hostingEnvironmentProfile = default, ResourceIdentifier keyVaultId = default, string keyVaultSecretName = default, KeyVaultSecretStatus? keyVaultSecretStatus = default, ResourceIdentifier serverFarmId = default, string canonicalName = default, string domainValidationMethod = default, string kind = default)
         {
             return new AppCertificatePatch(
                 id,
@@ -4144,7 +4144,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
         /// <param name="isInternalLoadBalancerEnabled"> Only visible within Vnet/Subnet. </param>
         /// <param name="defaultDomain"> Default Domain Name for the cluster. </param>
-        /// <param name="staticIp"> Static IP of the KubeEnvironment. </param>
+        /// <param name="staticIP"> Static IP of the KubeEnvironment. </param>
         /// <param name="environmentType"> Type of Kubernetes Environment. Only supported for Container App Environments with value as Managed. </param>
         /// <param name="arcConfiguration">
         /// Cluster configuration which determines the ARC cluster
@@ -4157,11 +4157,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// supported
         /// </param>
         /// <param name="containerAppsConfiguration"> Cluster configuration for Container Apps Environments to configure Dapr Instrumentation Key and VNET Configuration. </param>
-        /// <param name="aksResourceID"> Gets or sets the AksResourceID. </param>
+        /// <param name="aksResourceId"> Gets or sets the AksResourceId. </param>
         /// <param name="extendedLocation"> Extended Location. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.KubeEnvironmentData"/> instance for mocking. </returns>
-        public static KubeEnvironmentData KubeEnvironmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, KubeEnvironmentProvisioningState? provisioningState = default, string deploymentErrors = default, bool? isInternalLoadBalancerEnabled = default, string defaultDomain = default, string staticIp = default, string environmentType = default, ArcConfiguration arcConfiguration = default, AppLogsConfiguration appLogsConfiguration = default, ContainerAppsConfiguration containerAppsConfiguration = default, string aksResourceID = default, ExtendedLocation extendedLocation = default, string kind = default)
+        public static KubeEnvironmentData KubeEnvironmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, KubeEnvironmentProvisioningState? provisioningState = default, string deploymentErrors = default, bool? isInternalLoadBalancerEnabled = default, string defaultDomain = default, string staticIP = default, string environmentType = default, ArcConfiguration arcConfiguration = default, AppLogsConfiguration appLogsConfiguration = default, ContainerAppsConfiguration containerAppsConfiguration = default, ResourceIdentifier aksResourceId = default, ExtendedLocation extendedLocation = default, string kind = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -4172,17 +4172,17 @@ namespace Azure.ResourceManager.AppService.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                provisioningState is null && deploymentErrors is null && isInternalLoadBalancerEnabled is null && defaultDomain is null && staticIp is null && environmentType is null && arcConfiguration is null && appLogsConfiguration is null && containerAppsConfiguration is null && aksResourceID is null ? default : new KubeEnvironmentProperties(
+                provisioningState is null && deploymentErrors is null && isInternalLoadBalancerEnabled is null && defaultDomain is null && staticIP is null && environmentType is null && arcConfiguration is null && appLogsConfiguration is null && containerAppsConfiguration is null && aksResourceId is null ? default : new KubeEnvironmentProperties(
                     provisioningState,
                     deploymentErrors,
                     isInternalLoadBalancerEnabled,
                     defaultDomain,
-                    staticIp,
+                    staticIP,
                     environmentType,
                     arcConfiguration,
                     appLogsConfiguration,
                     containerAppsConfiguration,
-                    aksResourceID,
+                    aksResourceId,
                     default),
                 extendedLocation,
                 kind,
@@ -4607,15 +4607,15 @@ namespace Azure.ResourceManager.AppService.Models
             return new FlowEndpointsConfiguration(workflow, connector, default);
         }
 
-        /// <param name="outgoingIpAddresses"> The outgoing ip address. </param>
-        /// <param name="accessEndpointIpAddresses"> The access endpoint ip address. </param>
+        /// <param name="outgoingIPAddresses"> The outgoing ip address. </param>
+        /// <param name="accessEndpointIPAddresses"> The access endpoint ip address. </param>
         /// <returns> A new <see cref="Models.FlowEndpoints"/> instance for mocking. </returns>
-        public static FlowEndpoints FlowEndpoints(IEnumerable<WebAppIPAddress> outgoingIpAddresses = default, IEnumerable<WebAppIPAddress> accessEndpointIpAddresses = default)
+        public static FlowEndpoints FlowEndpoints(IEnumerable<WebAppIPAddress> outgoingIPAddresses = default, IEnumerable<WebAppIPAddress> accessEndpointIPAddresses = default)
         {
-            outgoingIpAddresses ??= new ChangeTrackingList<WebAppIPAddress>();
-            accessEndpointIpAddresses ??= new ChangeTrackingList<WebAppIPAddress>();
+            outgoingIPAddresses ??= new ChangeTrackingList<WebAppIPAddress>();
+            accessEndpointIPAddresses ??= new ChangeTrackingList<WebAppIPAddress>();
 
-            return new FlowEndpoints((outgoingIpAddresses ?? new ChangeTrackingList<WebAppIPAddress>()).ToList(), (accessEndpointIpAddresses ?? new ChangeTrackingList<WebAppIPAddress>()).ToList(), default);
+            return new FlowEndpoints((outgoingIPAddresses ?? new ChangeTrackingList<WebAppIPAddress>()).ToList(), (accessEndpointIPAddresses ?? new ChangeTrackingList<WebAppIPAddress>()).ToList(), default);
         }
 
         /// <param name="address"> The address. </param>
@@ -4635,14 +4635,14 @@ namespace Azure.ResourceManager.AppService.Models
             return new FlowAccessControlConfiguration(triggers, contents, actions, workflowManagement, default);
         }
 
-        /// <param name="allowedCallerIpAddresses"> The allowed caller IP address ranges. </param>
+        /// <param name="allowedCallerIPAddresses"> The allowed caller IP address ranges. </param>
         /// <param name="openAuthenticationPolicyList"> Open authentication policies. </param>
         /// <returns> A new <see cref="Models.FlowAccessControlConfigurationPolicy"/> instance for mocking. </returns>
-        public static FlowAccessControlConfigurationPolicy FlowAccessControlConfigurationPolicy(IEnumerable<WebAppIPAddressRange> allowedCallerIpAddresses = default, IDictionary<string, OpenAuthenticationAccessPolicy> openAuthenticationPolicyList = default)
+        public static FlowAccessControlConfigurationPolicy FlowAccessControlConfigurationPolicy(IEnumerable<WebAppIPAddressRange> allowedCallerIPAddresses = default, IDictionary<string, OpenAuthenticationAccessPolicy> openAuthenticationPolicyList = default)
         {
-            allowedCallerIpAddresses ??= new ChangeTrackingList<WebAppIPAddressRange>();
+            allowedCallerIPAddresses ??= new ChangeTrackingList<WebAppIPAddressRange>();
 
-            return new FlowAccessControlConfigurationPolicy((allowedCallerIpAddresses ?? new ChangeTrackingList<WebAppIPAddressRange>()).ToList(), openAuthenticationPolicyList is null ? default : new OpenAuthenticationAccessPolicies(openAuthenticationPolicyList ?? new ChangeTrackingDictionary<string, OpenAuthenticationAccessPolicy>(), default), default);
+            return new FlowAccessControlConfigurationPolicy((allowedCallerIPAddresses ?? new ChangeTrackingList<WebAppIPAddressRange>()).ToList(), openAuthenticationPolicyList is null ? default : new OpenAuthenticationAccessPolicies(openAuthenticationPolicyList ?? new ChangeTrackingDictionary<string, OpenAuthenticationAccessPolicy>(), default), default);
         }
 
         /// <param name="addressRange"> The IP address range. </param>
@@ -5219,22 +5219,22 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="databaseConnectionResourceId"> The resource id of the database. </param>
+        /// <param name="resourceId"> The resource id of the database. </param>
         /// <param name="connectionIdentity"> If present, the identity is used in conjunction with connection string to connect to the database. Use of the system-assigned managed identity is indicated with the string 'SystemAssigned', while use of a user-assigned managed identity is indicated with the resource id of the managed identity resource. </param>
         /// <param name="connectionString"> The connection string to use to connect to the database. </param>
         /// <param name="region"> The region of the database resource. </param>
         /// <param name="configurationFiles"> A list of configuration files associated with this database connection. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.StaticSiteDatabaseConnectionData"/> instance for mocking. </returns>
-        public static StaticSiteDatabaseConnectionData StaticSiteDatabaseConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string databaseConnectionResourceId = default, string connectionIdentity = default, string connectionString = default, string region = default, IEnumerable<StaticSiteDatabaseConnectionConfigurationFileOverview> configurationFiles = default, string kind = default)
+        public static StaticSiteDatabaseConnectionData StaticSiteDatabaseConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier resourceId = default, string connectionIdentity = default, string connectionString = default, string region = default, IEnumerable<StaticSiteDatabaseConnectionConfigurationFileOverview> configurationFiles = default, string kind = default)
         {
             return new StaticSiteDatabaseConnectionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                databaseConnectionResourceId is null && connectionIdentity is null && connectionString is null && region is null && configurationFiles is null ? default : new DatabaseConnectionProperties(
-                    databaseConnectionResourceId,
+                connectionIdentity is null && connectionString is null && region is null && configurationFiles is null ? default : new DatabaseConnectionProperties(
+                    default,
                     connectionIdentity,
                     connectionString,
                     region,
@@ -5317,7 +5317,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="connectionString"> The connection string to use to connect to the database. </param>
         /// <param name="region"> The region of the database resource. </param>
         /// <returns> A new <see cref="Models.StaticSiteDatabaseConnectionPatchContent"/> instance for mocking. </returns>
-        public static StaticSiteDatabaseConnectionPatchContent StaticSiteDatabaseConnectionPatchContent(string databaseConnectionResourceId = default, string connectionIdentity = default, string connectionString = default, string region = default)
+        public static StaticSiteDatabaseConnectionPatchContent StaticSiteDatabaseConnectionPatchContent(ResourceIdentifier databaseConnectionResourceId = default, string connectionIdentity = default, string connectionString = default, string region = default)
         {
             return new StaticSiteDatabaseConnectionPatchContent(databaseConnectionResourceId is null && connectionIdentity is null && connectionString is null && region is null ? default : new DatabaseConnectionPatchRequestProperties(databaseConnectionResourceId, connectionIdentity, connectionString, region, default), default);
         }
@@ -6139,8 +6139,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="keyVaultReferenceIdentity"> Identity to use for Key Vault Reference authentication. </param>
         /// <param name="ipSecurityRestrictions"> IP security restrictions for main. </param>
         /// <param name="ipSecurityRestrictionsDefaultAction"> Default action for main access restriction if no rules are matched. </param>
-        /// <param name="scmIpSecurityRestrictions"> IP security restrictions for scm. </param>
-        /// <param name="scmIpSecurityRestrictionsDefaultAction"> Default action for scm access restriction if no rules are matched. </param>
+        /// <param name="scmIPSecurityRestrictions"> IP security restrictions for scm. </param>
+        /// <param name="scmIPSecurityRestrictionsDefaultAction"> Default action for scm access restriction if no rules are matched. </param>
         /// <param name="allowIPSecurityRestrictionsForScmToUseMain"> IP security restrictions for scm to use main. </param>
         /// <param name="isHttp20Enabled"> Http20Enabled: configures a web site to allow clients to connect over http2.0. </param>
         /// <param name="http20ProxyFlag"> Http20ProxyFlag: Configures a website to allow http2.0 to pass be proxied all the way to the app. 0 = disabled, 1 = pass through all http2 traffic, 2 = pass through gRPC only. </param>
@@ -6179,14 +6179,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="apiDefinitionUri"> Gets or sets the ApiDefinitionUri. </param>
         /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <returns> A new <see cref="AppService.SiteConfigData"/> instance for mocking. </returns>
-        public static SiteConfigData SiteConfigData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? numberOfWorkers = default, IEnumerable<string> defaultDocuments = default, string netFrameworkVersion = default, string phpVersion = default, string pythonVersion = default, string nodeVersion = default, string powerShellVersion = default, string linuxFxVersion = default, string windowsFxVersion = default, bool? isRequestTracingEnabled = default, DateTimeOffset? requestTracingExpirationOn = default, bool? isRemoteDebuggingEnabled = default, string remoteDebuggingVersion = default, bool? isHttpLoggingEnabled = default, bool? useManagedIdentityCreds = default, string acrUserManagedIdentityID = default, int? logsDirectorySizeLimit = default, bool? isDetailedErrorLoggingEnabled = default, string publishingUsername = default, IEnumerable<AppServiceNameValuePair> appSettings = default, IEnumerable<AppServiceNameValuePair> metadata = default, IEnumerable<ConnStringInfo> connectionStrings = default, SiteMachineKey machineKey = default, IEnumerable<HttpRequestHandlerMapping> handlerMappings = default, string documentRoot = default, ScmType? scmType = default, bool? use32BitWorkerProcess = default, bool? isWebSocketsEnabled = default, bool? isAlwaysOn = default, string javaVersion = default, string javaContainer = default, string javaContainerVersion = default, string appCommandLine = default, ManagedPipelineMode? managedPipelineMode = default, IEnumerable<VirtualApplication> virtualApplications = default, SiteLoadBalancing? loadBalancing = default, SiteLimits limits = default, bool? isAutoHealEnabled = default, AutoHealRules autoHealRules = default, string tracingOptions = default, string vnetName = default, bool? isVnetRouteAllEnabled = default, int? vnetPrivatePortsCount = default, AppServiceCorsSettings cors = default, WebAppPushSettings push = default, string autoSwapSlotName = default, bool? isLocalMySqlEnabled = default, int? managedServiceIdentityId = default, int? xManagedServiceIdentityId = default, string keyVaultReferenceIdentity = default, IEnumerable<AppServiceIPSecurityRestriction> ipSecurityRestrictions = default, SiteDefaultAction? ipSecurityRestrictionsDefaultAction = default, IEnumerable<AppServiceIPSecurityRestriction> scmIpSecurityRestrictions = default, SiteDefaultAction? scmIpSecurityRestrictionsDefaultAction = default, bool? allowIPSecurityRestrictionsForScmToUseMain = default, bool? isHttp20Enabled = default, int? http20ProxyFlag = default, AppServiceSupportedTlsVersion? minTlsVersion = default, AppServiceTlsCipherSuite? minTlsCipherSuite = default, AppServiceSupportedTlsVersion? scmMinTlsVersion = default, AppServiceFtpsState? ftpsState = default, int? preWarmedInstanceCount = default, int? functionAppScaleLimit = default, int? elasticWebAppScaleLimit = default, string healthCheckPath = default, bool? isFunctionsRuntimeScaleMonitoringEnabled = default, string websiteTimeZone = default, int? minimumElasticInstanceCount = default, IDictionary<string, AppServiceStorageAccessInfo> azureStorageAccounts = default, string publicNetworkAccess = default, IEnumerable<RampUpRule> experimentsRampUpRules = default, string apiDefinitionUriStringValue = default, string apiManagementConfigId = default, Uri apiDefinitionUri = default, string kind = default)
+        public static SiteConfigData SiteConfigData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? numberOfWorkers = default, IEnumerable<string> defaultDocuments = default, string netFrameworkVersion = default, string phpVersion = default, string pythonVersion = default, string nodeVersion = default, string powerShellVersion = default, string linuxFxVersion = default, string windowsFxVersion = default, bool? isRequestTracingEnabled = default, DateTimeOffset? requestTracingExpirationOn = default, bool? isRemoteDebuggingEnabled = default, string remoteDebuggingVersion = default, bool? isHttpLoggingEnabled = default, bool? useManagedIdentityCreds = default, string acrUserManagedIdentityID = default, int? logsDirectorySizeLimit = default, bool? isDetailedErrorLoggingEnabled = default, string publishingUsername = default, IEnumerable<AppServiceNameValuePair> appSettings = default, IEnumerable<AppServiceNameValuePair> metadata = default, IEnumerable<ConnStringInfo> connectionStrings = default, SiteMachineKey machineKey = default, IEnumerable<HttpRequestHandlerMapping> handlerMappings = default, string documentRoot = default, ScmType? scmType = default, bool? use32BitWorkerProcess = default, bool? isWebSocketsEnabled = default, bool? isAlwaysOn = default, string javaVersion = default, string javaContainer = default, string javaContainerVersion = default, string appCommandLine = default, ManagedPipelineMode? managedPipelineMode = default, IEnumerable<VirtualApplication> virtualApplications = default, SiteLoadBalancing? loadBalancing = default, SiteLimits limits = default, bool? isAutoHealEnabled = default, AutoHealRules autoHealRules = default, string tracingOptions = default, string vnetName = default, bool? isVnetRouteAllEnabled = default, int? vnetPrivatePortsCount = default, AppServiceCorsSettings cors = default, WebAppPushSettings push = default, string autoSwapSlotName = default, bool? isLocalMySqlEnabled = default, int? managedServiceIdentityId = default, int? xManagedServiceIdentityId = default, string keyVaultReferenceIdentity = default, IEnumerable<AppServiceIPSecurityRestriction> ipSecurityRestrictions = default, SiteDefaultAction? ipSecurityRestrictionsDefaultAction = default, IEnumerable<AppServiceIPSecurityRestriction> scmIPSecurityRestrictions = default, SiteDefaultAction? scmIPSecurityRestrictionsDefaultAction = default, bool? allowIPSecurityRestrictionsForScmToUseMain = default, bool? isHttp20Enabled = default, int? http20ProxyFlag = default, AppServiceSupportedTlsVersion? minTlsVersion = default, AppServiceTlsCipherSuite? minTlsCipherSuite = default, AppServiceSupportedTlsVersion? scmMinTlsVersion = default, AppServiceFtpsState? ftpsState = default, int? preWarmedInstanceCount = default, int? functionAppScaleLimit = default, int? elasticWebAppScaleLimit = default, string healthCheckPath = default, bool? isFunctionsRuntimeScaleMonitoringEnabled = default, string websiteTimeZone = default, int? minimumElasticInstanceCount = default, IDictionary<string, AppServiceStorageAccessInfo> azureStorageAccounts = default, string publicNetworkAccess = default, IEnumerable<RampUpRule> experimentsRampUpRules = default, string apiDefinitionUriStringValue = default, string apiManagementConfigId = default, Uri apiDefinitionUri = default, string kind = default)
         {
             return new SiteConfigData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                numberOfWorkers is null && defaultDocuments is null && netFrameworkVersion is null && phpVersion is null && pythonVersion is null && nodeVersion is null && powerShellVersion is null && linuxFxVersion is null && windowsFxVersion is null && isRequestTracingEnabled is null && requestTracingExpirationOn is null && isRemoteDebuggingEnabled is null && remoteDebuggingVersion is null && isHttpLoggingEnabled is null && useManagedIdentityCreds is null && acrUserManagedIdentityID is null && logsDirectorySizeLimit is null && isDetailedErrorLoggingEnabled is null && publishingUsername is null && appSettings is null && metadata is null && connectionStrings is null && machineKey is null && handlerMappings is null && documentRoot is null && scmType is null && use32BitWorkerProcess is null && isWebSocketsEnabled is null && isAlwaysOn is null && javaVersion is null && javaContainer is null && javaContainerVersion is null && appCommandLine is null && managedPipelineMode is null && virtualApplications is null && loadBalancing is null && experimentsRampUpRules is null && limits is null && isAutoHealEnabled is null && autoHealRules is null && tracingOptions is null && vnetName is null && isVnetRouteAllEnabled is null && vnetPrivatePortsCount is null && cors is null && push is null && apiDefinitionUriStringValue is null && apiManagementConfigId is null && autoSwapSlotName is null && isLocalMySqlEnabled is null && managedServiceIdentityId is null && xManagedServiceIdentityId is null && keyVaultReferenceIdentity is null && ipSecurityRestrictions is null && ipSecurityRestrictionsDefaultAction is null && scmIpSecurityRestrictions is null && scmIpSecurityRestrictionsDefaultAction is null && allowIPSecurityRestrictionsForScmToUseMain is null && isHttp20Enabled is null && http20ProxyFlag is null && minTlsVersion is null && minTlsCipherSuite is null && scmMinTlsVersion is null && ftpsState is null && preWarmedInstanceCount is null && functionAppScaleLimit is null && elasticWebAppScaleLimit is null && healthCheckPath is null && isFunctionsRuntimeScaleMonitoringEnabled is null && websiteTimeZone is null && minimumElasticInstanceCount is null && azureStorageAccounts is null && publicNetworkAccess is null ? default : new SiteConfigProperties(
+                numberOfWorkers is null && defaultDocuments is null && netFrameworkVersion is null && phpVersion is null && pythonVersion is null && nodeVersion is null && powerShellVersion is null && linuxFxVersion is null && windowsFxVersion is null && isRequestTracingEnabled is null && requestTracingExpirationOn is null && isRemoteDebuggingEnabled is null && remoteDebuggingVersion is null && isHttpLoggingEnabled is null && useManagedIdentityCreds is null && acrUserManagedIdentityID is null && logsDirectorySizeLimit is null && isDetailedErrorLoggingEnabled is null && publishingUsername is null && appSettings is null && metadata is null && connectionStrings is null && machineKey is null && handlerMappings is null && documentRoot is null && scmType is null && use32BitWorkerProcess is null && isWebSocketsEnabled is null && isAlwaysOn is null && javaVersion is null && javaContainer is null && javaContainerVersion is null && appCommandLine is null && managedPipelineMode is null && virtualApplications is null && loadBalancing is null && experimentsRampUpRules is null && limits is null && isAutoHealEnabled is null && autoHealRules is null && tracingOptions is null && vnetName is null && isVnetRouteAllEnabled is null && vnetPrivatePortsCount is null && cors is null && push is null && apiDefinitionUriStringValue is null && apiManagementConfigId is null && autoSwapSlotName is null && isLocalMySqlEnabled is null && managedServiceIdentityId is null && xManagedServiceIdentityId is null && keyVaultReferenceIdentity is null && ipSecurityRestrictions is null && ipSecurityRestrictionsDefaultAction is null && scmIPSecurityRestrictions is null && scmIPSecurityRestrictionsDefaultAction is null && allowIPSecurityRestrictionsForScmToUseMain is null && isHttp20Enabled is null && http20ProxyFlag is null && minTlsVersion is null && minTlsCipherSuite is null && scmMinTlsVersion is null && ftpsState is null && preWarmedInstanceCount is null && functionAppScaleLimit is null && elasticWebAppScaleLimit is null && healthCheckPath is null && isFunctionsRuntimeScaleMonitoringEnabled is null && websiteTimeZone is null && minimumElasticInstanceCount is null && azureStorageAccounts is null && publicNetworkAccess is null ? default : new SiteConfigProperties(
                     numberOfWorkers,
                     (defaultDocuments ?? new ChangeTrackingList<string>()).ToList(),
                     netFrameworkVersion,
@@ -6242,8 +6242,8 @@ namespace Azure.ResourceManager.AppService.Models
                     keyVaultReferenceIdentity,
                     (ipSecurityRestrictions ?? new ChangeTrackingList<AppServiceIPSecurityRestriction>()).ToList(),
                     ipSecurityRestrictionsDefaultAction,
-                    (scmIpSecurityRestrictions ?? new ChangeTrackingList<AppServiceIPSecurityRestriction>()).ToList(),
-                    scmIpSecurityRestrictionsDefaultAction,
+                    (scmIPSecurityRestrictions ?? new ChangeTrackingList<AppServiceIPSecurityRestriction>()).ToList(),
+                    scmIPSecurityRestrictionsDefaultAction,
                     allowIPSecurityRestrictionsForScmToUseMain,
                     isHttp20Enabled,
                     http20ProxyFlag,
@@ -6971,7 +6971,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isSwiftSupported"> A flag that specifies if the scale unit this Web App is on supports Swift integration. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.SwiftVirtualNetworkData"/> instance for mocking. </returns>
-        public static SwiftVirtualNetworkData SwiftVirtualNetworkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string subnetResourceId = default, bool? isSwiftSupported = default, string kind = default)
+        public static SwiftVirtualNetworkData SwiftVirtualNetworkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier subnetResourceId = default, bool? isSwiftSupported = default, string kind = default)
         {
             return new SwiftVirtualNetworkData(
                 id,
@@ -8472,7 +8472,7 @@ namespace Azure.ResourceManager.AppService.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                state is null && hostNames is null && repositorySiteName is null && usageState is null && isEnabled is null && enabledHostNames is null && availabilityState is null && hostNameSslStates is null && isReserved is null && isXenon is null && isHyperV is null && lastModifiedTimeUtc is null && dnsConfiguration is null && siteConfig is null && functionAppConfig is null && daprConfig is null && workloadProfileName is null && resourceConfig is null && trafficManagerHostNames is null && isScmSiteAlsoStopped is null && targetSwapSlot is null && hostingEnvironmentProfile is null && isClientAffinityEnabled is null && isClientCertEnabled is null && clientCertMode is null && clientCertExclusionPaths is null && ipMode is null && isEndToEndEncryptionEnabled is null && isHostNameDisabled is null && customDomainVerificationId is null && outboundIPAddresses is null && possibleOutboundIPAddresses is null && containerSize is null && dailyMemoryTimeQuota is null && suspendOn is null && maxNumberOfWorkers is null && cloningInfo is null && resourceGroup is null && isDefaultContainer is null && defaultHostName is null && slotSwapStatus is null && isHttpsOnly is null && redundancyMode is null && publicNetworkAccess is null && isStorageAccountRequired is null && keyVaultReferenceIdentity is null && autoGeneratedDomainNameLabelScope is null && managedEnvironmentId is null && sku is null ? default : new SiteProperties(
+                state is null && hostNames is null && repositorySiteName is null && usageState is null && isEnabled is null && enabledHostNames is null && availabilityState is null && hostNameSslStates is null && appServicePlanId is null && isReserved is null && isXenon is null && isHyperV is null && lastModifiedTimeUtc is null && dnsConfiguration is null && siteConfig is null && functionAppConfig is null && daprConfig is null && workloadProfileName is null && resourceConfig is null && trafficManagerHostNames is null && isScmSiteAlsoStopped is null && targetSwapSlot is null && hostingEnvironmentProfile is null && isClientAffinityEnabled is null && isClientCertEnabled is null && clientCertMode is null && clientCertExclusionPaths is null && ipMode is null && isEndToEndEncryptionEnabled is null && isHostNameDisabled is null && customDomainVerificationId is null && outboundIPAddresses is null && possibleOutboundIPAddresses is null && containerSize is null && dailyMemoryTimeQuota is null && suspendOn is null && maxNumberOfWorkers is null && cloningInfo is null && resourceGroup is null && isDefaultContainer is null && defaultHostName is null && slotSwapStatus is null && isHttpsOnly is null && redundancyMode is null && publicNetworkAccess is null && isStorageAccountRequired is null && keyVaultReferenceIdentity is null && autoGeneratedDomainNameLabelScope is null && virtualNetworkSubnetId is null && managedEnvironmentId is null && sku is null ? default : new SiteProperties(
                     state,
                     (hostNames ?? new ChangeTrackingList<string>()).ToList(),
                     repositorySiteName,
@@ -8482,7 +8482,7 @@ namespace Azure.ResourceManager.AppService.Models
                     (enabledHostNames ?? new ChangeTrackingList<string>()).ToList(),
                     availabilityState,
                     (hostNameSslStates ?? new ChangeTrackingList<HostNameSslState>()).ToList(),
-                    default,
+                    appServicePlanId,
                     isReserved,
                     isXenon,
                     isHyperV,
@@ -8528,7 +8528,7 @@ namespace Azure.ResourceManager.AppService.Models
                     isStorageAccountRequired,
                     keyVaultReferenceIdentity,
                     autoGeneratedDomainNameLabelScope,
-                    default,
+                    virtualNetworkSubnetId,
                     managedEnvironmentId,
                     sku,
                     default,
@@ -8632,7 +8632,7 @@ namespace Azure.ResourceManager.AppService.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                state is null && hostNames is null && repositorySiteName is null && usageState is null && isEnabled is null && enabledHostNames is null && availabilityState is null && hostNameSslStates is null && isReserved is null && isXenon is null && isHyperV is null && lastModifiedTimeUtc is null && dnsConfiguration is null && siteConfig is null && functionAppConfig is null && daprConfig is null && workloadProfileName is null && resourceConfig is null && trafficManagerHostNames is null && isScmSiteAlsoStopped is null && targetSwapSlot is null && hostingEnvironmentProfile is null && isClientAffinityEnabled is null && isClientCertEnabled is null && clientCertMode is null && clientCertExclusionPaths is null && isHostNameDisabled is null && customDomainVerificationId is null && outboundIPAddresses is null && possibleOutboundIPAddresses is null && containerSize is null && dailyMemoryTimeQuota is null && suspendOn is null && maxNumberOfWorkers is null && cloningInfo is null && resourceGroup is null && isDefaultContainer is null && defaultHostName is null && slotSwapStatus is null && isHttpsOnly is null && redundancyMode is null && publicNetworkAccess is null && isStorageAccountRequired is null && keyVaultReferenceIdentity is null && managedEnvironmentId is null ? default : new SiteProperties(
+                state is null && hostNames is null && repositorySiteName is null && usageState is null && isEnabled is null && enabledHostNames is null && availabilityState is null && hostNameSslStates is null && appServicePlanId is null && isReserved is null && isXenon is null && isHyperV is null && lastModifiedTimeUtc is null && dnsConfiguration is null && siteConfig is null && functionAppConfig is null && daprConfig is null && workloadProfileName is null && resourceConfig is null && trafficManagerHostNames is null && isScmSiteAlsoStopped is null && targetSwapSlot is null && hostingEnvironmentProfile is null && isClientAffinityEnabled is null && isClientCertEnabled is null && clientCertMode is null && clientCertExclusionPaths is null && isHostNameDisabled is null && customDomainVerificationId is null && outboundIPAddresses is null && possibleOutboundIPAddresses is null && containerSize is null && dailyMemoryTimeQuota is null && suspendOn is null && maxNumberOfWorkers is null && cloningInfo is null && resourceGroup is null && isDefaultContainer is null && defaultHostName is null && slotSwapStatus is null && isHttpsOnly is null && redundancyMode is null && publicNetworkAccess is null && isStorageAccountRequired is null && keyVaultReferenceIdentity is null && virtualNetworkSubnetId is null && managedEnvironmentId is null ? default : new SiteProperties(
                     state,
                     (hostNames ?? new ChangeTrackingList<string>()).ToList(),
                     repositorySiteName,
@@ -8642,7 +8642,7 @@ namespace Azure.ResourceManager.AppService.Models
                     (enabledHostNames ?? new ChangeTrackingList<string>()).ToList(),
                     availabilityState,
                     (hostNameSslStates ?? new ChangeTrackingList<HostNameSslState>()).ToList(),
-                    default,
+                    appServicePlanId,
                     isReserved,
                     isXenon,
                     isHyperV,
@@ -8688,7 +8688,7 @@ namespace Azure.ResourceManager.AppService.Models
                     isStorageAccountRequired,
                     keyVaultReferenceIdentity,
                     default,
-                    default,
+                    virtualNetworkSubnetId,
                     managedEnvironmentId,
                     default,
                     default,
@@ -9871,7 +9871,7 @@ namespace Azure.ResourceManager.AppService.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                provisioningState is null && deploymentErrors is null && isInternalLoadBalancerEnabled is null && defaultDomain is null && staticIP is null && environmentType is null && arcConfiguration is null && appLogsConfiguration is null && containerAppsConfiguration is null ? default : new KubeEnvironmentProperties(
+                provisioningState is null && deploymentErrors is null && isInternalLoadBalancerEnabled is null && defaultDomain is null && staticIP is null && environmentType is null && arcConfiguration is null && appLogsConfiguration is null && containerAppsConfiguration is null && aksResourceId is null ? default : new KubeEnvironmentProperties(
                     provisioningState,
                     deploymentErrors,
                     isInternalLoadBalancerEnabled,
@@ -9881,7 +9881,7 @@ namespace Azure.ResourceManager.AppService.Models
                     arcConfiguration,
                     appLogsConfiguration,
                     containerAppsConfiguration,
-                    default,
+                    aksResourceId,
                     default),
                 default,
                 kind,
@@ -10334,37 +10334,6 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.StaticSiteDatabaseConnectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="resourceId"> The resource id of the database. </param>
-        /// <param name="connectionIdentity"> If present, the identity is used in conjunction with connection string to connect to the database. Use of the system-assigned managed identity is indicated with the string 'SystemAssigned', while use of a user-assigned managed identity is indicated with the resource id of the managed identity resource. </param>
-        /// <param name="connectionString"> The connection string to use to connect to the database. </param>
-        /// <param name="region"> The region of the database resource. </param>
-        /// <param name="configurationFiles"> A list of configuration files associated with this database connection. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.StaticSiteDatabaseConnectionData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static StaticSiteDatabaseConnectionData StaticSiteDatabaseConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier resourceId = default, string connectionIdentity = default, string connectionString = default, string region = default, IEnumerable<StaticSiteDatabaseConnectionConfigurationFileOverview> configurationFiles = default, string kind = default)
-        {
-            return new StaticSiteDatabaseConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                connectionIdentity is null && connectionString is null && region is null && configurationFiles is null ? default : new DatabaseConnectionProperties(
-                    default,
-                    connectionIdentity,
-                    connectionString,
-                    region,
-                    (configurationFiles ?? new ChangeTrackingList<StaticSiteDatabaseConnectionConfigurationFileOverview>()).ToList(),
-                    default),
-                kind,
-                default);
-        }
-
         /// <summary> Initializes a new instance of <see cref="AppService.StaticSiteLinkedBackendData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -10385,28 +10354,6 @@ namespace Azure.ResourceManager.AppService.Models
                 resourceType,
                 systemData,
                 region is null && createdOn is null && provisioningState is null ? default : new StaticSiteLinkedBackendARMResourceProperties(default, region, createdOn, provisioningState, default),
-                kind,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AppService.SwiftVirtualNetworkData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="subnetResourceId"> The Virtual Network subnet's resource ID. This is the subnet that this Web App will join. This subnet must have a delegation to Microsoft.Web/serverFarms defined first. </param>
-        /// <param name="isSwiftSupported"> A flag that specifies if the scale unit this Web App is on supports Swift integration. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.SwiftVirtualNetworkData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SwiftVirtualNetworkData SwiftVirtualNetworkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier subnetResourceId = default, bool? isSwiftSupported = default, string kind = default)
-        {
-            return new SwiftVirtualNetworkData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                isSwiftSupported is null ? default : new SwiftVirtualNetworkProperties(default, isSwiftSupported, default),
                 kind,
                 default);
         }
@@ -10637,7 +10584,7 @@ namespace Azure.ResourceManager.AppService.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                state is null && hostNames is null && repositorySiteName is null && usageState is null && isEnabled is null && enabledHostNames is null && availabilityState is null && hostNameSslStates is null && isReserved is null && isXenon is null && isHyperV is null && lastModifiedTimeUtc is null && dnsConfiguration is null && outboundVnetRouting is null && siteConfig is null && functionAppConfig is null && daprConfig is null && workloadProfileName is null && resourceConfig is null && trafficManagerHostNames is null && isScmSiteAlsoStopped is null && targetSwapSlot is null && hostingEnvironmentProfile is null && isClientAffinityEnabled is null && isClientAffinityPartitioningEnabled is null && isClientAffinityProxyEnabled is null && isClientCertEnabled is null && clientCertMode is null && clientCertExclusionPaths is null && ipMode is null && isEndToEndEncryptionEnabled is null && isSshEnabled is null && isHostNameDisabled is null && customDomainVerificationId is null && outboundIPAddresses is null && possibleOutboundIPAddresses is null && containerSize is null && dailyMemoryTimeQuota is null && suspendOn is null && maxNumberOfWorkers is null && cloningInfo is null && resourceGroup is null && isDefaultContainer is null && defaultHostName is null && slotSwapStatus is null && isHttpsOnly is null && redundancyMode is null && publicNetworkAccess is null && isStorageAccountRequired is null && keyVaultReferenceIdentity is null && autoGeneratedDomainNameLabelScope is null && managedEnvironmentId is null && sku is null ? default : new SiteProperties(
+                state is null && hostNames is null && repositorySiteName is null && usageState is null && isEnabled is null && enabledHostNames is null && availabilityState is null && hostNameSslStates is null && appServicePlanId is null && isReserved is null && isXenon is null && isHyperV is null && lastModifiedTimeUtc is null && dnsConfiguration is null && outboundVnetRouting is null && siteConfig is null && functionAppConfig is null && daprConfig is null && workloadProfileName is null && resourceConfig is null && trafficManagerHostNames is null && isScmSiteAlsoStopped is null && targetSwapSlot is null && hostingEnvironmentProfile is null && isClientAffinityEnabled is null && isClientAffinityPartitioningEnabled is null && isClientAffinityProxyEnabled is null && isClientCertEnabled is null && clientCertMode is null && clientCertExclusionPaths is null && ipMode is null && isEndToEndEncryptionEnabled is null && isSshEnabled is null && isHostNameDisabled is null && customDomainVerificationId is null && outboundIPAddresses is null && possibleOutboundIPAddresses is null && containerSize is null && dailyMemoryTimeQuota is null && suspendOn is null && maxNumberOfWorkers is null && cloningInfo is null && resourceGroup is null && isDefaultContainer is null && defaultHostName is null && slotSwapStatus is null && isHttpsOnly is null && redundancyMode is null && publicNetworkAccess is null && isStorageAccountRequired is null && keyVaultReferenceIdentity is null && autoGeneratedDomainNameLabelScope is null && virtualNetworkSubnetId is null && managedEnvironmentId is null && sku is null ? default : new SiteProperties(
                     state,
                     (hostNames ?? new ChangeTrackingList<string>()).ToList(),
                     repositorySiteName,
@@ -10647,7 +10594,7 @@ namespace Azure.ResourceManager.AppService.Models
                     (enabledHostNames ?? new ChangeTrackingList<string>()).ToList(),
                     availabilityState,
                     (hostNameSslStates ?? new ChangeTrackingList<HostNameSslState>()).ToList(),
-                    default,
+                    appServicePlanId,
                     isReserved,
                     isXenon,
                     isHyperV,
@@ -10693,7 +10640,7 @@ namespace Azure.ResourceManager.AppService.Models
                     isStorageAccountRequired,
                     keyVaultReferenceIdentity,
                     autoGeneratedDomainNameLabelScope,
-                    default,
+                    virtualNetworkSubnetId,
                     managedEnvironmentId,
                     sku,
                     default,
@@ -11392,7 +11339,7 @@ namespace Azure.ResourceManager.AppService.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                provisioningState is null && deploymentErrors is null && isInternalLoadBalancerEnabled is null && defaultDomain is null && staticIP is null && environmentType is null && arcConfiguration is null && appLogsConfiguration is null && containerAppsConfiguration is null ? default : new KubeEnvironmentProperties(
+                provisioningState is null && deploymentErrors is null && isInternalLoadBalancerEnabled is null && defaultDomain is null && staticIP is null && environmentType is null && arcConfiguration is null && appLogsConfiguration is null && containerAppsConfiguration is null && aksResourceId is null ? default : new KubeEnvironmentProperties(
                     provisioningState,
                     deploymentErrors,
                     isInternalLoadBalancerEnabled,
@@ -11402,7 +11349,7 @@ namespace Azure.ResourceManager.AppService.Models
                     arcConfiguration,
                     appLogsConfiguration,
                     containerAppsConfiguration,
-                    default,
+                    aksResourceId,
                     default),
                 default,
                 kind,
@@ -12152,7 +12099,7 @@ namespace Azure.ResourceManager.AppService.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                state is null && hostNames is null && repositorySiteName is null && usageState is null && isEnabled is null && enabledHostNames is null && availabilityState is null && hostNameSslStates is null && isReserved is null && isXenon is null && isHyperV is null && lastModifiedTimeUtc is null && dnsConfiguration is null && outboundVnetRouting is null && siteConfig is null && functionAppConfig is null && daprConfig is null && workloadProfileName is null && resourceConfig is null && trafficManagerHostNames is null && isScmSiteAlsoStopped is null && targetSwapSlot is null && hostingEnvironmentProfile is null && isClientAffinityEnabled is null && isClientAffinityPartitioningEnabled is null && isClientAffinityProxyEnabled is null && isClientCertEnabled is null && clientCertMode is null && clientCertExclusionPaths is null && ipMode is null && isEndToEndEncryptionEnabled is null && isSshEnabled is null && isHostNameDisabled is null && customDomainVerificationId is null && outboundIPAddresses is null && possibleOutboundIPAddresses is null && containerSize is null && dailyMemoryTimeQuota is null && suspendOn is null && maxNumberOfWorkers is null && cloningInfo is null && resourceGroup is null && isDefaultContainer is null && defaultHostName is null && slotSwapStatus is null && isHttpsOnly is null && redundancyMode is null && publicNetworkAccess is null && isStorageAccountRequired is null && keyVaultReferenceIdentity is null && autoGeneratedDomainNameLabelScope is null && managedEnvironmentId is null && sku is null ? default : new SiteProperties(
+                state is null && hostNames is null && repositorySiteName is null && usageState is null && isEnabled is null && enabledHostNames is null && availabilityState is null && hostNameSslStates is null && appServicePlanId is null && isReserved is null && isXenon is null && isHyperV is null && lastModifiedTimeUtc is null && dnsConfiguration is null && outboundVnetRouting is null && siteConfig is null && functionAppConfig is null && daprConfig is null && workloadProfileName is null && resourceConfig is null && trafficManagerHostNames is null && isScmSiteAlsoStopped is null && targetSwapSlot is null && hostingEnvironmentProfile is null && isClientAffinityEnabled is null && isClientAffinityPartitioningEnabled is null && isClientAffinityProxyEnabled is null && isClientCertEnabled is null && clientCertMode is null && clientCertExclusionPaths is null && ipMode is null && isEndToEndEncryptionEnabled is null && isSshEnabled is null && isHostNameDisabled is null && customDomainVerificationId is null && outboundIPAddresses is null && possibleOutboundIPAddresses is null && containerSize is null && dailyMemoryTimeQuota is null && suspendOn is null && maxNumberOfWorkers is null && cloningInfo is null && resourceGroup is null && isDefaultContainer is null && defaultHostName is null && slotSwapStatus is null && isHttpsOnly is null && redundancyMode is null && publicNetworkAccess is null && isStorageAccountRequired is null && keyVaultReferenceIdentity is null && autoGeneratedDomainNameLabelScope is null && virtualNetworkSubnetId is null && managedEnvironmentId is null && sku is null ? default : new SiteProperties(
                     state,
                     (hostNames ?? new ChangeTrackingList<string>()).ToList(),
                     repositorySiteName,
@@ -12162,7 +12109,7 @@ namespace Azure.ResourceManager.AppService.Models
                     (enabledHostNames ?? new ChangeTrackingList<string>()).ToList(),
                     availabilityState,
                     (hostNameSslStates ?? new ChangeTrackingList<HostNameSslState>()).ToList(),
-                    default,
+                    appServicePlanId,
                     isReserved,
                     isXenon,
                     isHyperV,
@@ -12208,7 +12155,7 @@ namespace Azure.ResourceManager.AppService.Models
                     isStorageAccountRequired,
                     keyVaultReferenceIdentity,
                     autoGeneratedDomainNameLabelScope,
-                    default,
+                    virtualNetworkSubnetId,
                     managedEnvironmentId,
                     sku,
                     default,
@@ -12479,45 +12426,6 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AppServiceVirtualNetworkValidationContent"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="vnetResourceGroup">
-        /// The Resource Group of the VNET to be validated
-        ///             Serialized Name: VnetParameters.properties.vnetResourceGroup
-        /// </param>
-        /// <param name="vnetName">
-        /// The name of the VNET to be validated
-        ///             Serialized Name: VnetParameters.properties.vnetName
-        /// </param>
-        /// <param name="vnetSubnetName">
-        /// The subnet name to be validated
-        ///             Serialized Name: VnetParameters.properties.vnetSubnetName
-        /// </param>
-        /// <param name="subnetResourceId">
-        /// The ARM Resource ID of the subnet to validate
-        ///             Serialized Name: VnetParameters.properties.subnetResourceId
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: ProxyOnlyResource.kind
-        /// </param>
-        /// <returns> A new <see cref="Models.AppServiceVirtualNetworkValidationContent"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AppServiceVirtualNetworkValidationContent AppServiceVirtualNetworkValidationContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string vnetResourceGroup = default, string vnetName = default, string vnetSubnetName = default, ResourceIdentifier subnetResourceId = default, string kind = default)
-        {
-            return new AppServiceVirtualNetworkValidationContent(
-                id,
-                name,
-                resourceType,
-                systemData,
-                vnetResourceGroup is null && vnetName is null && vnetSubnetName is null ? default : new VnetParametersProperties(vnetResourceGroup, vnetName, vnetSubnetName, default, default),
-                kind,
-                default);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.AppCertificatePatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -12620,7 +12528,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                password is null && friendlyName is null && subjectName is null && hostNames is null && siteName is null && selfLink is null && issuer is null && issueOn is null && expireOn is null && thumbprintString is null && isValid is null && publicKeyHash is null && hostingEnvironmentProfile is null && keyVaultSecretName is null && keyVaultSecretStatus is null && canonicalName is null && domainValidationMethod is null ? default : new CertificatePatchResourceProperties(
+                password is null && friendlyName is null && subjectName is null && hostNames is null && siteName is null && selfLink is null && issuer is null && issueOn is null && expireOn is null && thumbprintString is null && isValid is null && publicKeyHash is null && hostingEnvironmentProfile is null && keyVaultId is null && keyVaultSecretName is null && keyVaultSecretStatus is null && serverFarmId is null && canonicalName is null && domainValidationMethod is null ? default : new CertificatePatchResourceProperties(
                     password,
                     friendlyName,
                     subjectName,
@@ -12636,10 +12544,10 @@ namespace Azure.ResourceManager.AppService.Models
                     default,
                     publicKeyHash,
                     hostingEnvironmentProfile,
-                    default,
+                    keyVaultId,
                     keyVaultSecretName,
                     keyVaultSecretStatus,
-                    default,
+                    serverFarmId,
                     canonicalName,
                     domainValidationMethod,
                     default),
@@ -12791,30 +12699,6 @@ namespace Azure.ResourceManager.AppService.Models
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 kind,
                 default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AppServiceEndpointDetail"/>. </summary>
-        /// <param name="ipAddress">
-        /// An IP Address that Domain Name currently resolves to.
-        ///             Serialized Name: EndpointDetail.ipAddress
-        /// </param>
-        /// <param name="port">
-        /// The port an endpoint is connected to.
-        ///             Serialized Name: EndpointDetail.port
-        /// </param>
-        /// <param name="latency">
-        /// The time in milliseconds it takes for a TCP connection to be created from the App Service Environment to this IpAddress at this Port.
-        ///             Serialized Name: EndpointDetail.latency
-        /// </param>
-        /// <param name="isAccessible">
-        /// Whether it is possible to create a TCP connection from the App Service Environment to this IpAddress at this Port.
-        ///             Serialized Name: EndpointDetail.isAccessible
-        /// </param>
-        /// <returns> A new <see cref="Models.AppServiceEndpointDetail"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AppServiceEndpointDetail AppServiceEndpointDetail(IPAddress ipAddress = default, int? port = default, double? latency = default, bool? isAccessible = default)
-        {
-            return new AppServiceEndpointDetail(default, port, latency, isAccessible, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.RemotePrivateEndpointConnectionARMResourceData"/>. </summary>
@@ -13606,7 +13490,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                state is null && hostNames is null && repositorySiteName is null && usageState is null && isEnabled is null && enabledHostNames is null && availabilityState is null && hostNameSslStates is null && isReserved is null && isXenon is null && isHyperV is null && lastModifiedOn is null && dnsConfiguration is null && siteConfig is null && trafficManagerHostNames is null && isScmSiteAlsoStopped is null && targetSwapSlot is null && hostingEnvironmentProfile is null && isClientAffinityEnabled is null && isClientAffinityProxyEnabled is null && isClientCertEnabled is null && clientCertMode is null && clientCertExclusionPaths is null && isHostNameDisabled is null && customDomainVerificationId is null && outboundIPAddresses is null && possibleOutboundIPAddresses is null && containerSize is null && dailyMemoryTimeQuota is null && suspendOn is null && maxNumberOfWorkers is null && cloningInfo is null && resourceGroup is null && isDefaultContainer is null && defaultHostName is null && slotSwapStatus is null && isHttpsOnly is null && redundancyMode is null && publicNetworkAccess is null && isStorageAccountRequired is null && keyVaultReferenceIdentity is null ? default : new SitePatchResourceProperties(
+                state is null && hostNames is null && repositorySiteName is null && usageState is null && isEnabled is null && enabledHostNames is null && availabilityState is null && hostNameSslStates is null && serverFarmId is null && isReserved is null && isXenon is null && isHyperV is null && lastModifiedOn is null && dnsConfiguration is null && siteConfig is null && trafficManagerHostNames is null && isScmSiteAlsoStopped is null && targetSwapSlot is null && hostingEnvironmentProfile is null && isClientAffinityEnabled is null && isClientAffinityProxyEnabled is null && isClientCertEnabled is null && clientCertMode is null && clientCertExclusionPaths is null && isHostNameDisabled is null && customDomainVerificationId is null && outboundIPAddresses is null && possibleOutboundIPAddresses is null && containerSize is null && dailyMemoryTimeQuota is null && suspendOn is null && maxNumberOfWorkers is null && cloningInfo is null && resourceGroup is null && isDefaultContainer is null && defaultHostName is null && slotSwapStatus is null && isHttpsOnly is null && redundancyMode is null && publicNetworkAccess is null && isStorageAccountRequired is null && keyVaultReferenceIdentity is null && virtualNetworkSubnetId is null ? default : new SitePatchResourceProperties(
                     state,
                     (hostNames ?? new ChangeTrackingList<string>()).ToList(),
                     repositorySiteName,
@@ -13616,7 +13500,7 @@ namespace Azure.ResourceManager.AppService.Models
                     (enabledHostNames ?? new ChangeTrackingList<string>()).ToList(),
                     availabilityState,
                     (hostNameSslStates ?? new ChangeTrackingList<HostNameSslState>()).ToList(),
-                    default,
+                    serverFarmId,
                     isReserved,
                     isXenon,
                     isHyperV,
@@ -13652,7 +13536,7 @@ namespace Azure.ResourceManager.AppService.Models
                     publicNetworkAccess,
                     isStorageAccountRequired,
                     keyVaultReferenceIdentity,
-                    default,
+                    virtualNetworkSubnetId,
                     default),
                 identity,
                 kind,
@@ -15271,7 +15155,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                isSwiftSupported is null ? default : new SwiftVirtualNetworkProperties(default, isSwiftSupported, default),
+                subnetResourceId is null && isSwiftSupported is null ? default : new SwiftVirtualNetworkProperties(subnetResourceId, isSwiftSupported, default),
                 kind,
                 default);
         }
@@ -16344,8 +16228,8 @@ namespace Azure.ResourceManager.AppService.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AppServiceValidateContent AppServiceValidateContent(string name = default, ValidateResourceType validateResourceType = default, AzureLocation location = default, ResourceIdentifier serverFarmId = default, string skuName = default, bool? needLinuxWorkers = default, bool? isSpot = default, int? capacity = default, string hostingEnvironment = default, bool? isXenon = default, Uri containerRegistryBaseUri = default, string containerRegistryUsername = default, string containerRegistryPassword = default, string containerImageRepository = default, string containerImageTag = default, string containerImagePlatform = default, AppServiceEnvironmentProperties appServiceEnvironment = default)
         {
-            return new AppServiceValidateContent(name, default, location, skuName is null && needLinuxWorkers is null && isSpot is null && capacity is null && hostingEnvironment is null && isXenon is null && containerRegistryUsername is null && containerRegistryPassword is null && containerImageRepository is null && containerImageTag is null && containerImagePlatform is null && appServiceEnvironment is null ? default : new ValidateProperties(
-                default,
+            return new AppServiceValidateContent(name, default, location, serverFarmId is null && skuName is null && needLinuxWorkers is null && isSpot is null && capacity is null && hostingEnvironment is null && isXenon is null && containerRegistryUsername is null && containerRegistryPassword is null && containerImageRepository is null && containerImageTag is null && containerImagePlatform is null && appServiceEnvironment is null ? default : new ValidateProperties(
+                serverFarmId,
                 skuName,
                 needLinuxWorkers,
                 isSpot,
@@ -16609,7 +16493,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                state is null && hostNames is null && repositorySiteName is null && usageState is null && isEnabled is null && enabledHostNames is null && availabilityState is null && hostNameSslStates is null && isReserved is null && isXenon is null && isHyperV is null && lastModifiedOn is null && dnsConfiguration is null && siteConfig is null && trafficManagerHostNames is null && isScmSiteAlsoStopped is null && targetSwapSlot is null && hostingEnvironmentProfile is null && isClientAffinityEnabled is null && isClientAffinityProxyEnabled is null && isClientCertEnabled is null && clientCertMode is null && clientCertExclusionPaths is null && isHostNameDisabled is null && customDomainVerificationId is null && outboundIPAddresses is null && possibleOutboundIPAddresses is null && containerSize is null && dailyMemoryTimeQuota is null && suspendOn is null && maxNumberOfWorkers is null && cloningInfo is null && resourceGroup is null && isDefaultContainer is null && defaultHostName is null && slotSwapStatus is null && isHttpsOnly is null && redundancyMode is null && isStorageAccountRequired is null && keyVaultReferenceIdentity is null ? default : new SitePatchResourceProperties(
+                state is null && hostNames is null && repositorySiteName is null && usageState is null && isEnabled is null && enabledHostNames is null && availabilityState is null && hostNameSslStates is null && serverFarmId is null && isReserved is null && isXenon is null && isHyperV is null && lastModifiedOn is null && dnsConfiguration is null && siteConfig is null && trafficManagerHostNames is null && isScmSiteAlsoStopped is null && targetSwapSlot is null && hostingEnvironmentProfile is null && isClientAffinityEnabled is null && isClientAffinityProxyEnabled is null && isClientCertEnabled is null && clientCertMode is null && clientCertExclusionPaths is null && isHostNameDisabled is null && customDomainVerificationId is null && outboundIPAddresses is null && possibleOutboundIPAddresses is null && containerSize is null && dailyMemoryTimeQuota is null && suspendOn is null && maxNumberOfWorkers is null && cloningInfo is null && resourceGroup is null && isDefaultContainer is null && defaultHostName is null && slotSwapStatus is null && isHttpsOnly is null && redundancyMode is null && isStorageAccountRequired is null && keyVaultReferenceIdentity is null && virtualNetworkSubnetId is null ? default : new SitePatchResourceProperties(
                     state,
                     (hostNames ?? new ChangeTrackingList<string>()).ToList(),
                     repositorySiteName,
@@ -16619,7 +16503,7 @@ namespace Azure.ResourceManager.AppService.Models
                     (enabledHostNames ?? new ChangeTrackingList<string>()).ToList(),
                     availabilityState,
                     (hostNameSslStates ?? new ChangeTrackingList<HostNameSslState>()).ToList(),
-                    default,
+                    serverFarmId,
                     isReserved,
                     isXenon,
                     isHyperV,
@@ -16655,7 +16539,7 @@ namespace Azure.ResourceManager.AppService.Models
                     default,
                     isStorageAccountRequired,
                     keyVaultReferenceIdentity,
-                    default,
+                    virtualNetworkSubnetId,
                     default),
                 identity,
                 kind,
@@ -16874,7 +16758,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                state is null && hostNames is null && repositorySiteName is null && usageState is null && isEnabled is null && enabledHostNames is null && availabilityState is null && hostNameSslStates is null && isReserved is null && isXenon is null && isHyperV is null && lastModifiedOn is null && dnsConfiguration is null && siteConfig is null && trafficManagerHostNames is null && isScmSiteAlsoStopped is null && targetSwapSlot is null && hostingEnvironmentProfile is null && isClientAffinityEnabled is null && isClientCertEnabled is null && clientCertMode is null && clientCertExclusionPaths is null && isHostNameDisabled is null && customDomainVerificationId is null && outboundIPAddresses is null && possibleOutboundIPAddresses is null && containerSize is null && dailyMemoryTimeQuota is null && suspendOn is null && maxNumberOfWorkers is null && cloningInfo is null && resourceGroup is null && isDefaultContainer is null && defaultHostName is null && slotSwapStatus is null && isHttpsOnly is null && redundancyMode is null && isStorageAccountRequired is null && keyVaultReferenceIdentity is null ? default : new SitePatchResourceProperties(
+                state is null && hostNames is null && repositorySiteName is null && usageState is null && isEnabled is null && enabledHostNames is null && availabilityState is null && hostNameSslStates is null && serverFarmId is null && isReserved is null && isXenon is null && isHyperV is null && lastModifiedOn is null && dnsConfiguration is null && siteConfig is null && trafficManagerHostNames is null && isScmSiteAlsoStopped is null && targetSwapSlot is null && hostingEnvironmentProfile is null && isClientAffinityEnabled is null && isClientCertEnabled is null && clientCertMode is null && clientCertExclusionPaths is null && isHostNameDisabled is null && customDomainVerificationId is null && outboundIPAddresses is null && possibleOutboundIPAddresses is null && containerSize is null && dailyMemoryTimeQuota is null && suspendOn is null && maxNumberOfWorkers is null && cloningInfo is null && resourceGroup is null && isDefaultContainer is null && defaultHostName is null && slotSwapStatus is null && isHttpsOnly is null && redundancyMode is null && isStorageAccountRequired is null && keyVaultReferenceIdentity is null && virtualNetworkSubnetId is null ? default : new SitePatchResourceProperties(
                     state,
                     (hostNames ?? new ChangeTrackingList<string>()).ToList(),
                     repositorySiteName,
@@ -16884,7 +16768,7 @@ namespace Azure.ResourceManager.AppService.Models
                     (enabledHostNames ?? new ChangeTrackingList<string>()).ToList(),
                     availabilityState,
                     (hostNameSslStates ?? new ChangeTrackingList<HostNameSslState>()).ToList(),
-                    default,
+                    serverFarmId,
                     isReserved,
                     isXenon,
                     isHyperV,
@@ -16920,7 +16804,7 @@ namespace Azure.ResourceManager.AppService.Models
                     default,
                     isStorageAccountRequired,
                     keyVaultReferenceIdentity,
-                    default,
+                    virtualNetworkSubnetId,
                     default),
                 identity,
                 kind,

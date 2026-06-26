@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
             BillingLocation = billingLocation;
             ShortName = shortName;
             FriendlyName = friendlyName;
-            OsType = osType;
+            OSType = osType;
             Multiplier = multiplier;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> App Service OS type meter used for. </summary>
         [WirePath("osType")]
-        public string OsType { get; set; }
+        public string OSType { get; set; }
 
         /// <summary> Meter Multiplier. </summary>
         [WirePath("multiplier")]

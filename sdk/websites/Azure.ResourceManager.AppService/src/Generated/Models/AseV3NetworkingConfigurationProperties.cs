@@ -20,50 +20,50 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="AseV3NetworkingConfigurationProperties"/>. </summary>
         public AseV3NetworkingConfigurationProperties()
         {
-            WindowsOutboundIpAddresses = new ChangeTrackingList<string>();
-            LinuxOutboundIpAddresses = new ChangeTrackingList<string>();
-            ExternalInboundIpAddresses = new ChangeTrackingList<string>();
-            InternalInboundIpAddresses = new ChangeTrackingList<string>();
+            WindowsOutboundIPAddresses = new ChangeTrackingList<string>();
+            LinuxOutboundIPAddresses = new ChangeTrackingList<string>();
+            ExternalInboundIPAddresses = new ChangeTrackingList<string>();
+            InternalInboundIPAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AseV3NetworkingConfigurationProperties"/>. </summary>
-        /// <param name="windowsOutboundIpAddresses"></param>
-        /// <param name="linuxOutboundIpAddresses"></param>
-        /// <param name="externalInboundIpAddresses"></param>
-        /// <param name="internalInboundIpAddresses"></param>
+        /// <param name="windowsOutboundIPAddresses"></param>
+        /// <param name="linuxOutboundIPAddresses"></param>
+        /// <param name="externalInboundIPAddresses"></param>
+        /// <param name="internalInboundIPAddresses"></param>
         /// <param name="allowNewPrivateEndpointConnections"> Property to enable and disable new private endpoint connection creation on ASE. </param>
         /// <param name="isFtpEnabled"> Property to enable and disable FTP on ASEV3. </param>
         /// <param name="isRemoteDebugEnabled"> Property to enable and disable Remote Debug on ASEV3. </param>
-        /// <param name="inboundIpAddressOverride"> Customer provided Inbound IP Address. Only able to be set on Ase create. </param>
+        /// <param name="inboundIPAddressOverride"> Customer provided Inbound IP Address. Only able to be set on Ase create. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AseV3NetworkingConfigurationProperties(IReadOnlyList<string> windowsOutboundIpAddresses, IReadOnlyList<string> linuxOutboundIpAddresses, IReadOnlyList<string> externalInboundIpAddresses, IReadOnlyList<string> internalInboundIpAddresses, bool? allowNewPrivateEndpointConnections, bool? isFtpEnabled, bool? isRemoteDebugEnabled, string inboundIpAddressOverride, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AseV3NetworkingConfigurationProperties(IReadOnlyList<string> windowsOutboundIPAddresses, IReadOnlyList<string> linuxOutboundIPAddresses, IReadOnlyList<string> externalInboundIPAddresses, IReadOnlyList<string> internalInboundIPAddresses, bool? allowNewPrivateEndpointConnections, bool? isFtpEnabled, bool? isRemoteDebugEnabled, string inboundIPAddressOverride, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            WindowsOutboundIpAddresses = windowsOutboundIpAddresses;
-            LinuxOutboundIpAddresses = linuxOutboundIpAddresses;
-            ExternalInboundIpAddresses = externalInboundIpAddresses;
-            InternalInboundIpAddresses = internalInboundIpAddresses;
+            WindowsOutboundIPAddresses = windowsOutboundIPAddresses;
+            LinuxOutboundIPAddresses = linuxOutboundIPAddresses;
+            ExternalInboundIPAddresses = externalInboundIPAddresses;
+            InternalInboundIPAddresses = internalInboundIPAddresses;
             AllowNewPrivateEndpointConnections = allowNewPrivateEndpointConnections;
             IsFtpEnabled = isFtpEnabled;
             IsRemoteDebugEnabled = isRemoteDebugEnabled;
-            InboundIpAddressOverride = inboundIpAddressOverride;
+            InboundIPAddressOverride = inboundIPAddressOverride;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the WindowsOutboundIpAddresses. </summary>
+        /// <summary> Gets the WindowsOutboundIPAddresses. </summary>
         [WirePath("windowsOutboundIpAddresses")]
-        public IReadOnlyList<string> WindowsOutboundIpAddresses { get; } = new ChangeTrackingList<string>();
+        public IReadOnlyList<string> WindowsOutboundIPAddresses { get; } = new ChangeTrackingList<string>();
 
-        /// <summary> Gets the LinuxOutboundIpAddresses. </summary>
+        /// <summary> Gets the LinuxOutboundIPAddresses. </summary>
         [WirePath("linuxOutboundIpAddresses")]
-        public IReadOnlyList<string> LinuxOutboundIpAddresses { get; } = new ChangeTrackingList<string>();
+        public IReadOnlyList<string> LinuxOutboundIPAddresses { get; } = new ChangeTrackingList<string>();
 
-        /// <summary> Gets the ExternalInboundIpAddresses. </summary>
+        /// <summary> Gets the ExternalInboundIPAddresses. </summary>
         [WirePath("externalInboundIpAddresses")]
-        public IReadOnlyList<string> ExternalInboundIpAddresses { get; } = new ChangeTrackingList<string>();
+        public IReadOnlyList<string> ExternalInboundIPAddresses { get; } = new ChangeTrackingList<string>();
 
-        /// <summary> Gets the InternalInboundIpAddresses. </summary>
+        /// <summary> Gets the InternalInboundIPAddresses. </summary>
         [WirePath("internalInboundIpAddresses")]
-        public IReadOnlyList<string> InternalInboundIpAddresses { get; } = new ChangeTrackingList<string>();
+        public IReadOnlyList<string> InternalInboundIPAddresses { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Property to enable and disable new private endpoint connection creation on ASE. </summary>
         [WirePath("allowNewPrivateEndpointConnections")]
@@ -79,6 +79,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Customer provided Inbound IP Address. Only able to be set on Ase create. </summary>
         [WirePath("inboundIpAddressOverride")]
-        public string InboundIpAddressOverride { get; set; }
+        public string InboundIPAddressOverride { get; set; }
     }
 }

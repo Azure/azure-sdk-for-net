@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="containerImagePlatform"> Platform (windows or linux). </param>
         /// <param name="appServiceEnvironment"> App Service Environment Properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ValidateProperties(string serverFarmId, string skuName, bool? needLinuxWorkers, bool? isSpot, int? capacity, string hostingEnvironment, bool? isXenon, string containerRegistryBaseUri, string containerRegistryUsername, string containerRegistryPassword, string containerImageRepository, string containerImageTag, string containerImagePlatform, AppServiceEnvironmentProperties appServiceEnvironment, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ValidateProperties(ResourceIdentifier serverFarmId, string skuName, bool? needLinuxWorkers, bool? isSpot, int? capacity, string hostingEnvironment, bool? isXenon, string containerRegistryBaseUri, string containerRegistryUsername, string containerRegistryPassword, string containerImageRepository, string containerImageTag, string containerImagePlatform, AppServiceEnvironmentProperties appServiceEnvironment, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServerFarmId = serverFarmId;
             SkuName = skuName;
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> ARM resource ID of an App Service plan that would host the app. </summary>
         [WirePath("serverFarmId")]
-        public string ServerFarmId { get; set; }
+        public ResourceIdentifier ServerFarmId { get; set; }
 
         /// <summary> Name of the target SKU for the App Service plan. </summary>
         [WirePath("skuName")]

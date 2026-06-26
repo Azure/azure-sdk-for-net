@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
 
             VirtualNetwork = virtualNetwork;
             ClusterSettings = new ChangeTrackingList<AppServiceNameValuePair>();
-            UserWhitelistedIpRanges = new ChangeTrackingList<string>();
+            UserWhitelistedIPRanges = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceEnvironmentProperties"/>. </summary>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="internalLoadBalancingMode"> Specifies which endpoints to serve internally in the Virtual Network for the App Service Environment. </param>
         /// <param name="multiSize"> Front-end VM size, e.g. "Medium", "Large". </param>
         /// <param name="multiRoleCount"> Number of front-end instances. </param>
-        /// <param name="ipsslAddressCount"> Number of IP SSL addresses reserved for the App Service Environment. </param>
+        /// <param name="ipSslAddressCount"> Number of IP SSL addresses reserved for the App Service Environment. </param>
         /// <param name="dnsSuffix"> DNS suffix of the App Service Environment. </param>
         /// <param name="maximumNumberOfMachines"> Maximum number of VMs in the App Service Environment. </param>
         /// <param name="frontEndScaleFactor"> Scale factor for front-ends. </param>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// (most likely because NSG blocked the incoming traffic).
         /// </param>
         /// <param name="clusterSettings"> Custom settings for changing the behavior of the App Service Environment. </param>
-        /// <param name="userWhitelistedIpRanges"> User added ip ranges to whitelist on ASE db. </param>
+        /// <param name="userWhitelistedIPRanges"> User added ip ranges to whitelist on ASE db. </param>
         /// <param name="hasLinuxWorkers"> Flag that displays whether an ASE has linux workers or not. </param>
         /// <param name="upgradePreference"> Upgrade Preference. </param>
         /// <param name="dedicatedHostCount"> Dedicated Host Count. </param>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="networkingConfiguration"> Full view of networking configuration for an ASE. </param>
         /// <param name="upgradeAvailability"> Whether an upgrade is available for this App Service Environment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceEnvironmentProperties(ProvisioningState? provisioningState, HostingEnvironmentStatus? status, AppServiceVirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipsslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? isSuspended, IList<AppServiceNameValuePair> clusterSettings, IList<string> userWhitelistedIpRanges, bool? hasLinuxWorkers, AppServiceEnvironmentUpgradePreference? upgradePreference, int? dedicatedHostCount, bool? isZoneRedundant, CustomDnsSuffixConfigurationData customDnsSuffixConfiguration, AseV3NetworkingConfigurationData networkingConfiguration, AppServiceEnvironmentUpgradeAvailability? upgradeAvailability, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppServiceEnvironmentProperties(ProvisioningState? provisioningState, HostingEnvironmentStatus? status, AppServiceVirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipSslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? isSuspended, IList<AppServiceNameValuePair> clusterSettings, IList<string> userWhitelistedIPRanges, bool? hasLinuxWorkers, AppServiceEnvironmentUpgradePreference? upgradePreference, int? dedicatedHostCount, bool? isZoneRedundant, CustomDnsSuffixConfigurationData customDnsSuffixConfiguration, AseV3NetworkingConfigurationData networkingConfiguration, AppServiceEnvironmentUpgradeAvailability? upgradeAvailability, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -62,13 +62,13 @@ namespace Azure.ResourceManager.AppService.Models
             InternalLoadBalancingMode = internalLoadBalancingMode;
             MultiSize = multiSize;
             MultiRoleCount = multiRoleCount;
-            IpsslAddressCount = ipsslAddressCount;
+            IPSslAddressCount = ipSslAddressCount;
             DnsSuffix = dnsSuffix;
             MaximumNumberOfMachines = maximumNumberOfMachines;
             FrontEndScaleFactor = frontEndScaleFactor;
             IsSuspended = isSuspended;
             ClusterSettings = clusterSettings;
-            UserWhitelistedIpRanges = userWhitelistedIpRanges;
+            UserWhitelistedIPRanges = userWhitelistedIPRanges;
             HasLinuxWorkers = hasLinuxWorkers;
             UpgradePreference = upgradePreference;
             DedicatedHostCount = dedicatedHostCount;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Number of IP SSL addresses reserved for the App Service Environment. </summary>
         [WirePath("ipsslAddressCount")]
-        public int? IpsslAddressCount { get; set; }
+        public int? IPSslAddressCount { get; set; }
 
         /// <summary> DNS suffix of the App Service Environment. </summary>
         [WirePath("dnsSuffix")]
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> User added ip ranges to whitelist on ASE db. </summary>
         [WirePath("userWhitelistedIpRanges")]
-        public IList<string> UserWhitelistedIpRanges { get; } = new ChangeTrackingList<string>();
+        public IList<string> UserWhitelistedIPRanges { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Flag that displays whether an ASE has linux workers or not. </summary>
         [WirePath("hasLinuxWorkers")]

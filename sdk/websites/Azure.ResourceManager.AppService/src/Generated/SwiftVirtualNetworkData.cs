@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> The Virtual Network subnet's resource ID. This is the subnet that this Web App will join. This subnet must have a delegation to Microsoft.Web/serverFarms defined first. </summary>
         [WirePath("properties.subnetResourceId")]
-        public string SubnetResourceId
+        public ResourceIdentifier SubnetResourceId
         {
             get
             {

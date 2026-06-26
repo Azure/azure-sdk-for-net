@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="vnetSubnetName"> The subnet name to be validated. </param>
         /// <param name="subnetResourceId"> The ARM Resource ID of the subnet to validate. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VnetParametersProperties(string vnetResourceGroup, string vnetName, string vnetSubnetName, string subnetResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VnetParametersProperties(string vnetResourceGroup, string vnetName, string vnetSubnetName, ResourceIdentifier subnetResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VnetResourceGroup = vnetResourceGroup;
             VnetName = vnetName;
@@ -51,6 +52,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The ARM Resource ID of the subnet to validate. </summary>
         [WirePath("subnetResourceId")]
-        public string SubnetResourceId { get; set; }
+        public ResourceIdentifier SubnetResourceId { get; set; }
     }
 }

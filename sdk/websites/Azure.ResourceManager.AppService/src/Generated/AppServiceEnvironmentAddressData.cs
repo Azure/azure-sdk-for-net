@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> IP addresses appearing on outbound connections. </summary>
         [WirePath("properties.outboundIpAddresses")]
-        public IList<IPAddress> OutboundIpAddresses
+        public IList<IPAddress> OutboundIPAddresses
         {
             get
             {
-                return Properties is null ? default : Properties.OutboundIpAddresses;
+                return Properties is null ? default : Properties.OutboundIPAddresses;
             }
         }
 

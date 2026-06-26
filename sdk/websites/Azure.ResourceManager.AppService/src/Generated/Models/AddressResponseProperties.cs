@@ -21,21 +21,21 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="AddressResponseProperties"/>. </summary>
         internal AddressResponseProperties()
         {
-            OutboundIpAddresses = new ChangeTrackingList<IPAddress>();
+            OutboundIPAddresses = new ChangeTrackingList<IPAddress>();
             VirtualIPMappings = new ChangeTrackingList<VirtualIPMapping>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AddressResponseProperties"/>. </summary>
         /// <param name="serviceIpAddress"> Main public virtual IP. </param>
         /// <param name="internalIpAddress"> Virtual Network internal IP address of the App Service Environment if it is in internal load-balancing mode. </param>
-        /// <param name="outboundIpAddresses"> IP addresses appearing on outbound connections. </param>
+        /// <param name="outboundIPAddresses"> IP addresses appearing on outbound connections. </param>
         /// <param name="virtualIPMappings"> Additional virtual IPs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AddressResponseProperties(IPAddress serviceIpAddress, IPAddress internalIpAddress, IList<IPAddress> outboundIpAddresses, IList<VirtualIPMapping> virtualIPMappings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AddressResponseProperties(IPAddress serviceIpAddress, IPAddress internalIpAddress, IList<IPAddress> outboundIPAddresses, IList<VirtualIPMapping> virtualIPMappings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceIpAddress = serviceIpAddress;
             InternalIpAddress = internalIpAddress;
-            OutboundIpAddresses = outboundIpAddresses;
+            OutboundIPAddresses = outboundIPAddresses;
             VirtualIPMappings = virtualIPMappings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> IP addresses appearing on outbound connections. </summary>
         [WirePath("outboundIpAddresses")]
-        public IList<IPAddress> OutboundIpAddresses { get; } = new ChangeTrackingList<IPAddress>();
+        public IList<IPAddress> OutboundIPAddresses { get; } = new ChangeTrackingList<IPAddress>();
 
         /// <summary> Additional virtual IPs. </summary>
         [WirePath("vipMappings")]

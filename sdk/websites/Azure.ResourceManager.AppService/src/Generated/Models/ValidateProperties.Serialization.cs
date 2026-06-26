@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -186,7 +187,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            string serverFarmId = default;
+            ResourceIdentifier serverFarmId = default;
             string skuName = default;
             bool? needLinuxWorkers = default;
             bool? isSpot = default;
@@ -205,7 +206,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (prop.NameEquals("serverFarmId"u8))
                 {
-                    serverFarmId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serverFarmId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("skuName"u8))

@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 throw new FormatException($"The model {nameof(FlowAccessControlConfigurationPolicy)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(AllowedCallerIpAddresses))
+            if (Optional.IsCollectionDefined(AllowedCallerIPAddresses))
             {
                 writer.WritePropertyName("allowedCallerIpAddresses"u8);
                 writer.WriteStartArray();
-                foreach (WebAppIPAddressRange item in AllowedCallerIpAddresses)
+                foreach (WebAppIPAddressRange item in AllowedCallerIPAddresses)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            IList<WebAppIPAddressRange> allowedCallerIpAddresses = default;
+            IList<WebAppIPAddressRange> allowedCallerIPAddresses = default;
             OpenAuthenticationAccessPolicies openAuthenticationPolicies = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         array.Add(WebAppIPAddressRange.DeserializeWebAppIPAddressRange(item, options));
                     }
-                    allowedCallerIpAddresses = array;
+                    allowedCallerIPAddresses = array;
                     continue;
                 }
                 if (prop.NameEquals("openAuthenticationPolicies"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FlowAccessControlConfigurationPolicy(allowedCallerIpAddresses ?? new ChangeTrackingList<WebAppIPAddressRange>(), openAuthenticationPolicies, additionalBinaryDataProperties);
+            return new FlowAccessControlConfigurationPolicy(allowedCallerIPAddresses ?? new ChangeTrackingList<WebAppIPAddressRange>(), openAuthenticationPolicies, additionalBinaryDataProperties);
         }
     }
 }

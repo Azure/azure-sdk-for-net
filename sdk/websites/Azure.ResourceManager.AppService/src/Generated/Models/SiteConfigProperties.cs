@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.AppService.Models
             ConnectionStrings = new ChangeTrackingList<ConnStringInfo>();
             HandlerMappings = new ChangeTrackingList<HttpRequestHandlerMapping>();
             VirtualApplications = new ChangeTrackingList<VirtualApplication>();
-            IpSecurityRestrictions = new ChangeTrackingList<AppServiceIPSecurityRestriction>();
-            ScmIpSecurityRestrictions = new ChangeTrackingList<AppServiceIPSecurityRestriction>();
+            IPSecurityRestrictions = new ChangeTrackingList<AppServiceIPSecurityRestriction>();
+            ScmIPSecurityRestrictions = new ChangeTrackingList<AppServiceIPSecurityRestriction>();
             AzureStorageAccounts = new ChangeTrackingDictionary<string, AppServiceStorageAccessInfo>();
         }
 
@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="keyVaultReferenceIdentity"> Identity to use for Key Vault Reference authentication. </param>
         /// <param name="ipSecurityRestrictions"> IP security restrictions for main. </param>
         /// <param name="ipSecurityRestrictionsDefaultAction"> Default action for main access restriction if no rules are matched. </param>
-        /// <param name="scmIpSecurityRestrictions"> IP security restrictions for scm. </param>
-        /// <param name="scmIpSecurityRestrictionsDefaultAction"> Default action for scm access restriction if no rules are matched. </param>
+        /// <param name="scmIPSecurityRestrictions"> IP security restrictions for scm. </param>
+        /// <param name="scmIPSecurityRestrictionsDefaultAction"> Default action for scm access restriction if no rules are matched. </param>
         /// <param name="allowIPSecurityRestrictionsForScmToUseMain"> IP security restrictions for scm to use main. </param>
         /// <param name="isHttp20Enabled"> Http20Enabled: configures a web site to allow clients to connect over http2.0. </param>
         /// <param name="http20ProxyFlag"> Http20ProxyFlag: Configures a website to allow http2.0 to pass be proxied all the way to the app. 0 = disabled, 1 = pass through all http2 traffic, 2 = pass through gRPC only. </param>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="azureStorageAccounts"> List of Azure Storage Accounts. </param>
         /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SiteConfigProperties(int? numberOfWorkers, IList<string> defaultDocuments, string netFrameworkVersion, string phpVersion, string pythonVersion, string nodeVersion, string powerShellVersion, string linuxFxVersion, string windowsFxVersion, bool? isRequestTracingEnabled, DateTimeOffset? requestTracingExpirationOn, bool? isRemoteDebuggingEnabled, string remoteDebuggingVersion, bool? isHttpLoggingEnabled, bool? useManagedIdentityCreds, string acrUserManagedIdentityID, int? logsDirectorySizeLimit, bool? isDetailedErrorLoggingEnabled, string publishingUsername, IList<AppServiceNameValuePair> appSettings, IList<AppServiceNameValuePair> metadata, IList<ConnStringInfo> connectionStrings, SiteMachineKey machineKey, IList<HttpRequestHandlerMapping> handlerMappings, string documentRoot, ScmType? scmType, bool? use32BitWorkerProcess, bool? isWebSocketsEnabled, bool? isAlwaysOn, string javaVersion, string javaContainer, string javaContainerVersion, string appCommandLine, ManagedPipelineMode? managedPipelineMode, IList<VirtualApplication> virtualApplications, SiteLoadBalancing? loadBalancing, RoutingRuleExperiments experiments, SiteLimits limits, bool? isAutoHealEnabled, AutoHealRules autoHealRules, string tracingOptions, string vnetName, bool? isVnetRouteAllEnabled, int? vnetPrivatePortsCount, AppServiceCorsSettings cors, WebAppPushSettings push, AppServiceApiDefinitionInfo apiDefinition, ApiManagementConfig apiManagementConfig, string autoSwapSlotName, bool? isLocalMySqlEnabled, int? managedServiceIdentityId, int? xManagedServiceIdentityId, string keyVaultReferenceIdentity, IList<AppServiceIPSecurityRestriction> ipSecurityRestrictions, SiteDefaultAction? ipSecurityRestrictionsDefaultAction, IList<AppServiceIPSecurityRestriction> scmIpSecurityRestrictions, SiteDefaultAction? scmIpSecurityRestrictionsDefaultAction, bool? allowIPSecurityRestrictionsForScmToUseMain, bool? isHttp20Enabled, int? http20ProxyFlag, AppServiceSupportedTlsVersion? minTlsVersion, AppServiceTlsCipherSuite? minTlsCipherSuite, AppServiceSupportedTlsVersion? scmMinTlsVersion, AppServiceFtpsState? ftpsState, int? preWarmedInstanceCount, int? functionAppScaleLimit, int? elasticWebAppScaleLimit, string healthCheckPath, bool? isFunctionsRuntimeScaleMonitoringEnabled, string websiteTimeZone, int? minimumElasticInstanceCount, IDictionary<string, AppServiceStorageAccessInfo> azureStorageAccounts, string publicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SiteConfigProperties(int? numberOfWorkers, IList<string> defaultDocuments, string netFrameworkVersion, string phpVersion, string pythonVersion, string nodeVersion, string powerShellVersion, string linuxFxVersion, string windowsFxVersion, bool? isRequestTracingEnabled, DateTimeOffset? requestTracingExpirationOn, bool? isRemoteDebuggingEnabled, string remoteDebuggingVersion, bool? isHttpLoggingEnabled, bool? useManagedIdentityCreds, string acrUserManagedIdentityID, int? logsDirectorySizeLimit, bool? isDetailedErrorLoggingEnabled, string publishingUsername, IList<AppServiceNameValuePair> appSettings, IList<AppServiceNameValuePair> metadata, IList<ConnStringInfo> connectionStrings, SiteMachineKey machineKey, IList<HttpRequestHandlerMapping> handlerMappings, string documentRoot, ScmType? scmType, bool? use32BitWorkerProcess, bool? isWebSocketsEnabled, bool? isAlwaysOn, string javaVersion, string javaContainer, string javaContainerVersion, string appCommandLine, ManagedPipelineMode? managedPipelineMode, IList<VirtualApplication> virtualApplications, SiteLoadBalancing? loadBalancing, RoutingRuleExperiments experiments, SiteLimits limits, bool? isAutoHealEnabled, AutoHealRules autoHealRules, string tracingOptions, string vnetName, bool? isVnetRouteAllEnabled, int? vnetPrivatePortsCount, AppServiceCorsSettings cors, WebAppPushSettings push, AppServiceApiDefinitionInfo apiDefinition, ApiManagementConfig apiManagementConfig, string autoSwapSlotName, bool? isLocalMySqlEnabled, int? managedServiceIdentityId, int? xManagedServiceIdentityId, string keyVaultReferenceIdentity, IList<AppServiceIPSecurityRestriction> ipSecurityRestrictions, SiteDefaultAction? ipSecurityRestrictionsDefaultAction, IList<AppServiceIPSecurityRestriction> scmIPSecurityRestrictions, SiteDefaultAction? scmIPSecurityRestrictionsDefaultAction, bool? allowIPSecurityRestrictionsForScmToUseMain, bool? isHttp20Enabled, int? http20ProxyFlag, AppServiceSupportedTlsVersion? minTlsVersion, AppServiceTlsCipherSuite? minTlsCipherSuite, AppServiceSupportedTlsVersion? scmMinTlsVersion, AppServiceFtpsState? ftpsState, int? preWarmedInstanceCount, int? functionAppScaleLimit, int? elasticWebAppScaleLimit, string healthCheckPath, bool? isFunctionsRuntimeScaleMonitoringEnabled, string websiteTimeZone, int? minimumElasticInstanceCount, IDictionary<string, AppServiceStorageAccessInfo> azureStorageAccounts, string publicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NumberOfWorkers = numberOfWorkers;
             DefaultDocuments = defaultDocuments;
@@ -177,10 +177,10 @@ namespace Azure.ResourceManager.AppService.Models
             ManagedServiceIdentityId = managedServiceIdentityId;
             XManagedServiceIdentityId = xManagedServiceIdentityId;
             KeyVaultReferenceIdentity = keyVaultReferenceIdentity;
-            IpSecurityRestrictions = ipSecurityRestrictions;
-            IpSecurityRestrictionsDefaultAction = ipSecurityRestrictionsDefaultAction;
-            ScmIpSecurityRestrictions = scmIpSecurityRestrictions;
-            ScmIpSecurityRestrictionsDefaultAction = scmIpSecurityRestrictionsDefaultAction;
+            IPSecurityRestrictions = ipSecurityRestrictions;
+            IPSecurityRestrictionsDefaultAction = ipSecurityRestrictionsDefaultAction;
+            ScmIPSecurityRestrictions = scmIPSecurityRestrictions;
+            ScmIPSecurityRestrictionsDefaultAction = scmIPSecurityRestrictionsDefaultAction;
             AllowIPSecurityRestrictionsForScmToUseMain = allowIPSecurityRestrictionsForScmToUseMain;
             IsHttp20Enabled = isHttp20Enabled;
             Http20ProxyFlag = http20ProxyFlag;
@@ -414,19 +414,19 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> IP security restrictions for main. </summary>
         [WirePath("ipSecurityRestrictions")]
-        public IList<AppServiceIPSecurityRestriction> IpSecurityRestrictions { get; } = new ChangeTrackingList<AppServiceIPSecurityRestriction>();
+        public IList<AppServiceIPSecurityRestriction> IPSecurityRestrictions { get; } = new ChangeTrackingList<AppServiceIPSecurityRestriction>();
 
         /// <summary> Default action for main access restriction if no rules are matched. </summary>
         [WirePath("ipSecurityRestrictionsDefaultAction")]
-        public SiteDefaultAction? IpSecurityRestrictionsDefaultAction { get; set; }
+        public SiteDefaultAction? IPSecurityRestrictionsDefaultAction { get; set; }
 
         /// <summary> IP security restrictions for scm. </summary>
         [WirePath("scmIpSecurityRestrictions")]
-        public IList<AppServiceIPSecurityRestriction> ScmIpSecurityRestrictions { get; } = new ChangeTrackingList<AppServiceIPSecurityRestriction>();
+        public IList<AppServiceIPSecurityRestriction> ScmIPSecurityRestrictions { get; } = new ChangeTrackingList<AppServiceIPSecurityRestriction>();
 
         /// <summary> Default action for scm access restriction if no rules are matched. </summary>
         [WirePath("scmIpSecurityRestrictionsDefaultAction")]
-        public SiteDefaultAction? ScmIpSecurityRestrictionsDefaultAction { get; set; }
+        public SiteDefaultAction? ScmIPSecurityRestrictionsDefaultAction { get; set; }
 
         /// <summary> IP security restrictions for scm to use main. </summary>
         [WirePath("scmIpSecurityRestrictionsUseMain")]

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -390,7 +391,7 @@ namespace Azure.ResourceManager.AppService.Models
             IReadOnlyList<string> enabledHostNames = default;
             WebSiteAvailabilityState? availabilityState = default;
             IList<HostNameSslState> hostNameSslStates = default;
-            string serverFarmId = default;
+            ResourceIdentifier serverFarmId = default;
             bool? isReserved = default;
             bool? isXenon = default;
             bool? isHyperV = default;
@@ -426,7 +427,7 @@ namespace Azure.ResourceManager.AppService.Models
             string publicNetworkAccess = default;
             bool? isStorageAccountRequired = default;
             string keyVaultReferenceIdentity = default;
-            string virtualNetworkSubnetId = default;
+            ResourceIdentifier virtualNetworkSubnetId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -534,7 +535,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("serverFarmId"u8))
                 {
-                    serverFarmId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serverFarmId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("reserved"u8))
@@ -826,7 +831,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("virtualNetworkSubnetId"u8))
                 {
-                    virtualNetworkSubnetId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    virtualNetworkSubnetId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

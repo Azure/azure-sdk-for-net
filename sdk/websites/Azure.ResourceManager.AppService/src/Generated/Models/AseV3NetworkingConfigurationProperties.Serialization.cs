@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 throw new FormatException($"The model {nameof(AseV3NetworkingConfigurationProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(WindowsOutboundIpAddresses))
+            if (options.Format != "W" && Optional.IsCollectionDefined(WindowsOutboundIPAddresses))
             {
                 writer.WritePropertyName("windowsOutboundIpAddresses"u8);
                 writer.WriteStartArray();
-                foreach (string item in WindowsOutboundIpAddresses)
+                foreach (string item in WindowsOutboundIPAddresses)
                 {
                     if (item == null)
                     {
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(LinuxOutboundIpAddresses))
+            if (options.Format != "W" && Optional.IsCollectionDefined(LinuxOutboundIPAddresses))
             {
                 writer.WritePropertyName("linuxOutboundIpAddresses"u8);
                 writer.WriteStartArray();
-                foreach (string item in LinuxOutboundIpAddresses)
+                foreach (string item in LinuxOutboundIPAddresses)
                 {
                     if (item == null)
                     {
@@ -104,11 +104,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ExternalInboundIpAddresses))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ExternalInboundIPAddresses))
             {
                 writer.WritePropertyName("externalInboundIpAddresses"u8);
                 writer.WriteStartArray();
-                foreach (string item in ExternalInboundIpAddresses)
+                foreach (string item in ExternalInboundIPAddresses)
                 {
                     if (item == null)
                     {
@@ -119,11 +119,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(InternalInboundIpAddresses))
+            if (options.Format != "W" && Optional.IsCollectionDefined(InternalInboundIPAddresses))
             {
                 writer.WritePropertyName("internalInboundIpAddresses"u8);
                 writer.WriteStartArray();
-                foreach (string item in InternalInboundIpAddresses)
+                foreach (string item in InternalInboundIPAddresses)
                 {
                     if (item == null)
                     {
@@ -149,10 +149,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("remoteDebugEnabled"u8);
                 writer.WriteBooleanValue(IsRemoteDebugEnabled.Value);
             }
-            if (Optional.IsDefined(InboundIpAddressOverride))
+            if (Optional.IsDefined(InboundIPAddressOverride))
             {
                 writer.WritePropertyName("inboundIpAddressOverride"u8);
-                writer.WriteStringValue(InboundIpAddressOverride);
+                writer.WriteStringValue(InboundIPAddressOverride);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -196,14 +196,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            IReadOnlyList<string> windowsOutboundIpAddresses = default;
-            IReadOnlyList<string> linuxOutboundIpAddresses = default;
-            IReadOnlyList<string> externalInboundIpAddresses = default;
-            IReadOnlyList<string> internalInboundIpAddresses = default;
+            IReadOnlyList<string> windowsOutboundIPAddresses = default;
+            IReadOnlyList<string> linuxOutboundIPAddresses = default;
+            IReadOnlyList<string> externalInboundIPAddresses = default;
+            IReadOnlyList<string> internalInboundIPAddresses = default;
             bool? allowNewPrivateEndpointConnections = default;
             bool? isFtpEnabled = default;
             bool? isRemoteDebugEnabled = default;
-            string inboundIpAddressOverride = default;
+            string inboundIPAddressOverride = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.AppService.Models
                             array.Add(item.GetString());
                         }
                     }
-                    windowsOutboundIpAddresses = array;
+                    windowsOutboundIPAddresses = array;
                     continue;
                 }
                 if (prop.NameEquals("linuxOutboundIpAddresses"u8))
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.AppService.Models
                             array.Add(item.GetString());
                         }
                     }
-                    linuxOutboundIpAddresses = array;
+                    linuxOutboundIPAddresses = array;
                     continue;
                 }
                 if (prop.NameEquals("externalInboundIpAddresses"u8))
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.AppService.Models
                             array.Add(item.GetString());
                         }
                     }
-                    externalInboundIpAddresses = array;
+                    externalInboundIPAddresses = array;
                     continue;
                 }
                 if (prop.NameEquals("internalInboundIpAddresses"u8))
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.AppService.Models
                             array.Add(item.GetString());
                         }
                     }
-                    internalInboundIpAddresses = array;
+                    internalInboundIPAddresses = array;
                     continue;
                 }
                 if (prop.NameEquals("allowNewPrivateEndpointConnections"u8))
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("inboundIpAddressOverride"u8))
                 {
-                    inboundIpAddressOverride = prop.Value.GetString();
+                    inboundIPAddressOverride = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -329,14 +329,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             return new AseV3NetworkingConfigurationProperties(
-                windowsOutboundIpAddresses ?? new ChangeTrackingList<string>(),
-                linuxOutboundIpAddresses ?? new ChangeTrackingList<string>(),
-                externalInboundIpAddresses ?? new ChangeTrackingList<string>(),
-                internalInboundIpAddresses ?? new ChangeTrackingList<string>(),
+                windowsOutboundIPAddresses ?? new ChangeTrackingList<string>(),
+                linuxOutboundIPAddresses ?? new ChangeTrackingList<string>(),
+                externalInboundIPAddresses ?? new ChangeTrackingList<string>(),
+                internalInboundIPAddresses ?? new ChangeTrackingList<string>(),
                 allowNewPrivateEndpointConnections,
                 isFtpEnabled,
                 isRemoteDebugEnabled,
-                inboundIpAddressOverride,
+                inboundIPAddressOverride,
                 additionalBinaryDataProperties);
         }
     }

@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("multiRoleCount"u8);
                 writer.WriteNumberValue(MultiRoleCount.Value);
             }
-            if (Optional.IsDefined(IpsslAddressCount))
+            if (Optional.IsDefined(IPSslAddressCount))
             {
                 writer.WritePropertyName("ipsslAddressCount"u8);
-                writer.WriteNumberValue(IpsslAddressCount.Value);
+                writer.WriteNumberValue(IPSslAddressCount.Value);
             }
             if (Optional.IsDefined(DnsSuffix))
             {
@@ -141,11 +141,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UserWhitelistedIpRanges))
+            if (Optional.IsCollectionDefined(UserWhitelistedIPRanges))
             {
                 writer.WritePropertyName("userWhitelistedIpRanges"u8);
                 writer.WriteStartArray();
-                foreach (string item in UserWhitelistedIpRanges)
+                foreach (string item in UserWhitelistedIPRanges)
                 {
                     if (item == null)
                     {
@@ -239,13 +239,13 @@ namespace Azure.ResourceManager.AppService.Models
             LoadBalancingMode? internalLoadBalancingMode = default;
             string multiSize = default;
             int? multiRoleCount = default;
-            int? ipsslAddressCount = default;
+            int? ipSslAddressCount = default;
             string dnsSuffix = default;
             int? maximumNumberOfMachines = default;
             int? frontEndScaleFactor = default;
             bool? isSuspended = default;
             IList<AppServiceNameValuePair> clusterSettings = default;
-            IList<string> userWhitelistedIpRanges = default;
+            IList<string> userWhitelistedIPRanges = default;
             bool? hasLinuxWorkers = default;
             AppServiceEnvironmentUpgradePreference? upgradePreference = default;
             int? dedicatedHostCount = default;
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    ipsslAddressCount = prop.Value.GetInt32();
+                    ipSslAddressCount = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("dnsSuffix"u8))
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.AppService.Models
                             array.Add(item.GetString());
                         }
                     }
-                    userWhitelistedIpRanges = array;
+                    userWhitelistedIPRanges = array;
                     continue;
                 }
                 if (prop.NameEquals("hasLinuxWorkers"u8))
@@ -453,13 +453,13 @@ namespace Azure.ResourceManager.AppService.Models
                 internalLoadBalancingMode,
                 multiSize,
                 multiRoleCount,
-                ipsslAddressCount,
+                ipSslAddressCount,
                 dnsSuffix,
                 maximumNumberOfMachines,
                 frontEndScaleFactor,
                 isSuspended,
                 clusterSettings ?? new ChangeTrackingList<AppServiceNameValuePair>(),
-                userWhitelistedIpRanges ?? new ChangeTrackingList<string>(),
+                userWhitelistedIPRanges ?? new ChangeTrackingList<string>(),
                 hasLinuxWorkers,
                 upgradePreference,
                 dedicatedHostCount,

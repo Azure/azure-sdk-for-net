@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            string databaseConnectionResourceId = default;
+            ResourceIdentifier databaseConnectionResourceId = default;
             string connectionIdentity = default;
             string connectionString = default;
             string region = default;
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (prop.NameEquals("resourceId"u8))
                 {
-                    databaseConnectionResourceId = prop.Value.GetString();
+                    databaseConnectionResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("connectionIdentity"u8))

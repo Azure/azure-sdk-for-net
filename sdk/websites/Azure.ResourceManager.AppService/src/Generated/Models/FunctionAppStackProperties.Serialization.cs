@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(PreferredOs))
+            if (options.Format != "W" && Optional.IsDefined(PreferredOS))
             {
                 writer.WritePropertyName("preferredOs"u8);
-                writer.WriteStringValue(PreferredOs.Value.ToSerialString());
+                writer.WriteStringValue(PreferredOS.Value.ToSerialString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppService.Models
             string displayText = default;
             string value = default;
             IReadOnlyList<FunctionAppMajorVersion> majorVersions = default;
-            StackPreferredOS? preferredOs = default;
+            StackPreferredOS? preferredOS = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    preferredOs = prop.Value.GetString().ToStackPreferredOS();
+                    preferredOS = prop.Value.GetString().ToStackPreferredOS();
                     continue;
                 }
                 if (options.Format != "W")
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FunctionAppStackProperties(displayText, value, majorVersions ?? new ChangeTrackingList<FunctionAppMajorVersion>(), preferredOs, additionalBinaryDataProperties);
+            return new FunctionAppStackProperties(displayText, value, majorVersions ?? new ChangeTrackingList<FunctionAppMajorVersion>(), preferredOS, additionalBinaryDataProperties);
         }
     }
 }

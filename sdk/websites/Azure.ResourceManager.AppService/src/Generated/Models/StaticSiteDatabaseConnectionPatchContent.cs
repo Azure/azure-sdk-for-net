@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The resource id of the database. </summary>
         [WirePath("properties.resourceId")]
-        public string DatabaseConnectionResourceId
+        public ResourceIdentifier DatabaseConnectionResourceId
         {
             get
             {

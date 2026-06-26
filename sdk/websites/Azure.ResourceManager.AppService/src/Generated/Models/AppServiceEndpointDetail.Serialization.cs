@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.ResourceManager.AppService;
 
@@ -74,10 +75,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 throw new FormatException($"The model {nameof(AppServiceEndpointDetail)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IpAddress))
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
-                writer.WriteStringValue(IpAddress);
+                writer.WriteStringValue(IPAddress.ToString());
             }
             if (Optional.IsDefined(Port))
             {
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            string ipAddress = default;
+            IPAddress ipAddress = default;
             int? port = default;
             double? latency = default;
             bool? isAccessible = default;
@@ -145,7 +146,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (prop.NameEquals("ipAddress"u8))
                 {
-                    ipAddress = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ipAddress = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("port"u8))

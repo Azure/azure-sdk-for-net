@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Key Vault Csm resource Id. </summary>
         [WirePath("properties.keyVaultId")]
-        public string KeyVaultId
+        public ResourceIdentifier KeyVaultId
         {
             get
             {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Resource ID of the associated App Service plan, formatted as: "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}". </summary>
         [WirePath("properties.serverFarmId")]
-        public string ServerFarmId
+        public ResourceIdentifier ServerFarmId
         {
             get
             {

@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> ARM resource ID of an App Service plan that would host the app. </summary>
         [WirePath("properties.serverFarmId")]
-        public string ServerFarmId
+        public ResourceIdentifier ServerFarmId
         {
             get
             {

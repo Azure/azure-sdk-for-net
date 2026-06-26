@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="RemotePrivateEndpointConnectionProperties"/>. </summary>
         public RemotePrivateEndpointConnectionProperties()
         {
-            IpAddresses = new ChangeTrackingList<string>();
+            IPAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RemotePrivateEndpointConnectionProperties"/>. </summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService.Models
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
-            IpAddresses = ipAddresses;
+            IPAddresses = ipAddresses;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Private IPAddresses mapped to the remote private endpoint. </summary>
         [WirePath("ipAddresses")]
-        public IList<string> IpAddresses { get; } = new ChangeTrackingList<string>();
+        public IList<string> IPAddresses { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Gets the Id. </summary>
         [WirePath("privateEndpoint.id")]
