@@ -10,29 +10,17 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Describes in which direction signature is being enforced: 0 - OutBound, 1 - InBound, 2 - Any, 3 - Internal, 4 - InternalOutbound, 5 - InternalInbound. </summary>
     public enum FirewallPolicyIdpsSignatureDirection
     {
-        /// <summary> Zero. </summary>
-        Zero = 0,
-        /// <summary> One. </summary>
-        One = 1,
-        /// <summary> Two. </summary>
-        Two = 2,
-        /// <summary> Three. </summary>
-        Three = 3,
-        /// <summary> Four. </summary>
-        Four = 4,
-        /// <summary> Five. </summary>
-        Five = 5,
         /// <summary> 0. </summary>
-        _0 = 0,
+        Zero,
         /// <summary> 1. </summary>
-        _1 = 1,
+        One,
         /// <summary> 2. </summary>
-        _2 = 2,
+        Two,
         /// <summary> 3. </summary>
-        _3 = 3,
+        Three,
         /// <summary> 4. </summary>
-        _4 = 4,
+        Four,
         /// <summary> 5. </summary>
-        _5 = 5
+        Five
     }
 }

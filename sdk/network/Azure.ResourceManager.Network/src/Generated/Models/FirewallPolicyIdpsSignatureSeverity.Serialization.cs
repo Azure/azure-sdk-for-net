@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.Network.Models
         {
             if (value == 1)
             {
-                return FirewallPolicyIdpsSignatureSeverity._1;
+                return FirewallPolicyIdpsSignatureSeverity.One;
             }
             if (value == 2)
             {
-                return FirewallPolicyIdpsSignatureSeverity._2;
+                return FirewallPolicyIdpsSignatureSeverity.Two;
             }
             if (value == 3)
             {
-                return FirewallPolicyIdpsSignatureSeverity._3;
+                return FirewallPolicyIdpsSignatureSeverity.Three;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FirewallPolicyIdpsSignatureSeverity value.");
         }

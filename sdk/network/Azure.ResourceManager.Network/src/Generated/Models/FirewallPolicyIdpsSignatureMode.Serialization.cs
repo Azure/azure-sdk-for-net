@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.Network.Models
         {
             if (value == 0)
             {
-                return FirewallPolicyIdpsSignatureMode._0;
+                return FirewallPolicyIdpsSignatureMode.Zero;
             }
             if (value == 1)
             {
-                return FirewallPolicyIdpsSignatureMode._1;
+                return FirewallPolicyIdpsSignatureMode.One;
             }
             if (value == 2)
             {
-                return FirewallPolicyIdpsSignatureMode._2;
+                return FirewallPolicyIdpsSignatureMode.Two;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FirewallPolicyIdpsSignatureMode value.");
         }
