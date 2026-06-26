@@ -198,6 +198,8 @@ jobs:
           mergeTestResults: true
       - template: /eng/pipelines/templates/steps/upload-dumps.yml
       - template: /eng/common/pipelines/templates/steps/upload-llm-artifacts.yml
+        parameters:
+          TestResultsGlob: '$(TestTargetFramework)*.trx'
       - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@5
         condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))
         displayName: Generate Code Coverage Reports
