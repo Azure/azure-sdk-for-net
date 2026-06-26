@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="RaiPolicyContentFilter"/>. </summary>
         /// <param name="allowedContentLevel"> Level at which content is filtered. </param>
-        /// <param name="isBlocking"> If isBlocking would occur. </param>
+        /// <param name="isBlocking"> If blocking would occur. </param>
         /// <param name="enabled"> If the ContentFilter is enabled. </param>
         /// <param name="name"> Name of ContentFilter. </param>
         /// <param name="source"> Content source to apply the Content Filters. </param>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         [WirePath("allowedContentLevel")]
         public AllowedContentLevel? AllowedContentLevel { get; set; }
 
-        /// <summary> If isBlocking would occur. </summary>
+        /// <summary> If blocking would occur. </summary>
         [WirePath("blocking")]
         public bool? IsBlocking { get; set; }
 

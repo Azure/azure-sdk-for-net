@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            VolumeDefinitionType? volumeType = default;
+            VolumeDefinitionType? definitionType = default;
             bool? readOnly = default;
             string source = default;
             string target = default;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    volumeType = new VolumeDefinitionType(prop.Value.GetString());
+                    definitionType = new VolumeDefinitionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("readOnly"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             return new VolumeDefinition(
-                volumeType,
+                definitionType,
                 readOnly,
                 source,
                 target,

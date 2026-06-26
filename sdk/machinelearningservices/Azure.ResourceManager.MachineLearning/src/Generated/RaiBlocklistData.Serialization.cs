@@ -17,7 +17,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    /// <summary> RaiBlocklistResource is a preview-only resource. </summary>
+    /// <summary> RaiBlocklistPropertiesBasicResource is a preview-only resource. </summary>
     public partial class RaiBlocklistData : ResourceData, IJsonModel<RaiBlocklistData>
     {
         /// <param name="data"> The data to parse. </param>
@@ -60,14 +60,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RaiBlocklistData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="raiBlocklistPropertiesBasicData"> The <see cref="RaiBlocklistData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(RaiBlocklistData raiBlocklistPropertiesBasicData)
+        /// <param name="raiBlocklistData"> The <see cref="RaiBlocklistData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(RaiBlocklistData raiBlocklistData)
         {
-            if (raiBlocklistPropertiesBasicData == null)
+            if (raiBlocklistData == null)
             {
                 return null;
             }
-            return RequestContent.Create(raiBlocklistPropertiesBasicData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(raiBlocklistData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RaiBlocklistData"/> from. </param>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
@@ -150,7 +150,11 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -187,7 +191,7 @@ namespace Azure.ResourceManager.MachineLearning
                 }
             }
             return new RaiBlocklistData(
-                new ResourceIdentifier(id),
+                id,
                 name,
                 resourceType,
                 systemData,

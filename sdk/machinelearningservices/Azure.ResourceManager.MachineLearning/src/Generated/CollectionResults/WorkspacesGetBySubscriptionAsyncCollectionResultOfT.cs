@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning
     internal partial class WorkspacesGetBySubscriptionAsyncCollectionResultOfT : AsyncPageable<MachineLearningWorkspaceData>
     {
         private readonly Workspaces _client;
-        private readonly Guid _subscriptionId;
+        private readonly string _subscriptionId;
         private readonly string _kind;
         private readonly string _skip;
         private readonly string _aiCapabilities;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="aiCapabilities"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public WorkspacesGetBySubscriptionAsyncCollectionResultOfT(Workspaces client, Guid subscriptionId, string kind, string skip, string aiCapabilities, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public WorkspacesGetBySubscriptionAsyncCollectionResultOfT(Workspaces client, string subscriptionId, string kind, string skip, string aiCapabilities, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

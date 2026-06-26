@@ -15,7 +15,7 @@ using Azure.ResourceManager.MachineLearning;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Customer Key vault properties. </summary>
-    public partial class KeyVaultProperties : IJsonModel<KeyVaultProperties>
+    internal partial class KeyVaultProperties : IJsonModel<KeyVaultProperties>
     {
         /// <summary> Initializes a new instance of <see cref="KeyVaultProperties"/> for deserialization. </summary>
         internal KeyVaultProperties()

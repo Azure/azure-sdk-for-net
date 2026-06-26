@@ -17,9 +17,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a RegistryDataContainer along with the instance operations that can be performed on it.
+    /// A class representing a MachineLearningRegistryDataContainer along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MachineLearningRegistryDataContainerResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MachineLearningRegistryResource"/> using the GetRegistryDataContainers method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningRegistryResource"/> using the GetMachineLearningRegistryDataContainers method.
     /// </summary>
     public partial class MachineLearningRegistryDataContainerResource : ArmResource
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MachineLearningRegistryDataContainerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string registryDataContainerApiVersion);
+            TryGetApiVersion(ResourceType, out string machineLearningRegistryDataContainerApiVersion);
             _registryDataContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
-            _registryDataContainersRestClient = new RegistryDataContainers(_registryDataContainersClientDiagnostics, Pipeline, Endpoint, registryDataContainerApiVersion ?? "2026-03-15-preview");
+            _registryDataContainersRestClient = new RegistryDataContainers(_registryDataContainersClientDiagnostics, Pipeline, Endpoint, machineLearningRegistryDataContainerApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registryDataContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _registryDataContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MachineLearningDataContainerData> response = Response.FromValue(MachineLearningDataContainerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registryDataContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _registryDataContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MachineLearningDataContainerData> response = Response.FromValue(MachineLearningDataContainerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registryDataContainersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _registryDataContainersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MachineLearningArmOperation operation = new MachineLearningArmOperation(_registryDataContainersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registryDataContainersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _registryDataContainersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MachineLearningArmOperation operation = new MachineLearningArmOperation(_registryDataContainersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Update a RegistryDataContainer.
+        /// Update a MachineLearningRegistryDataContainer.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registryDataContainersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MachineLearningDataContainerData.ToRequestContent(data), context);
+                HttpMessage message = _registryDataContainersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, MachineLearningDataContainerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MachineLearningArmOperation<MachineLearningRegistryDataContainerResource> operation = new MachineLearningArmOperation<MachineLearningRegistryDataContainerResource>(
                     new MachineLearningRegistryDataContainerResourceOperationSource(Client),
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Update a RegistryDataContainer.
+        /// Update a MachineLearningRegistryDataContainer.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registryDataContainersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MachineLearningDataContainerData.ToRequestContent(data), context);
+                HttpMessage message = _registryDataContainersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, MachineLearningDataContainerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MachineLearningArmOperation<MachineLearningRegistryDataContainerResource> operation = new MachineLearningArmOperation<MachineLearningRegistryDataContainerResource>(
                     new MachineLearningRegistryDataContainerResourceOperationSource(Client),
@@ -401,39 +401,6 @@ namespace Azure.ResourceManager.MachineLearning
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Gets a collection of RegistryDataVersions in the <see cref="MachineLearningRegistryDataContainerResource"/>. </summary>
-        /// <returns> An object representing collection of RegistryDataVersions and their operations over a MachineLearningRegistryDataVersionResource. </returns>
-        public virtual MachineLearningRegistryDataVersionCollection GetRegistryDataVersions()
-        {
-            return GetCachedClient(client => new MachineLearningRegistryDataVersionCollection(client, Id));
-        }
-
-        /// <summary> Get version. </summary>
-        /// <param name="version"> Version identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<MachineLearningRegistryDataVersionResource>> GetRegistryDataVersionAsync(string version, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-
-            return await GetRegistryDataVersions().GetAsync(version, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get version. </summary>
-        /// <param name="version"> Version identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<MachineLearningRegistryDataVersionResource> GetRegistryDataVersion(string version, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-
-            return GetRegistryDataVersions().Get(version, cancellationToken);
         }
     }
 }

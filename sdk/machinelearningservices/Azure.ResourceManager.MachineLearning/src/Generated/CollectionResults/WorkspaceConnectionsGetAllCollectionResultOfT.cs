@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning
     internal partial class WorkspaceConnectionsGetAllCollectionResultOfT : Pageable<MachineLearningWorkspaceConnectionData>
     {
         private readonly WorkspaceConnections _client;
-        private readonly Guid _subscriptionId;
+        private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _workspaceName;
         private readonly string _target;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="includeAll"> query parameter that indicates if get connection call should return both connections and datastores. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public WorkspaceConnectionsGetAllCollectionResultOfT(WorkspaceConnections client, Guid subscriptionId, string resourceGroupName, string workspaceName, string target, string category, bool? includeAll, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public WorkspaceConnectionsGetAllCollectionResultOfT(WorkspaceConnections client, string subscriptionId, string resourceGroupName, string workspaceName, string target, string category, bool? includeAll, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

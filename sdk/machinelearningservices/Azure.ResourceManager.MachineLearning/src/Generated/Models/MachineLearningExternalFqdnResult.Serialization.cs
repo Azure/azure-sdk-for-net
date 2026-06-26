@@ -15,7 +15,7 @@ using Azure.ResourceManager.MachineLearning;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningExternalFqdnResult. </summary>
-    public partial class MachineLearningExternalFqdnResult : IJsonModel<MachineLearningExternalFqdnResult>
+    internal partial class MachineLearningExternalFqdnResult : IJsonModel<MachineLearningExternalFqdnResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

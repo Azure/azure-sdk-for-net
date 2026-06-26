@@ -112,6 +112,42 @@ namespace TestProjects.Spector.Tests.Http.Payload.Pageable
         });
 
         [SpectorTest]
+        public Task ContinuationTokenResumesFromNextPage() => Test(async (host) =>
+        {
+            var client = new PageableClient(host, null);
+
+            // Capture the continuation token exposed by the first page.
+            string? firstPageToken = null;
+            await foreach (var page in client.GetServerDrivenPaginationClient().LinkAsync(new RequestContext()).AsPages())
+            {
+                firstPageToken = page.ContinuationToken;
+                break;
+            }
+
+            // The first page must expose the token needed to fetch the NEXT page. Regression test for
+            // https://github.com/Azure/azure-sdk-for-net/issues/60274, where the token pointed at the
+            // current page (or was null) rather than the next one.
+            Assert.IsNotNull(firstPageToken);
+
+            // Resuming from the captured token should return the remaining pages only (pets 3 and 4).
+            var resumedIds = new List<string>();
+            string? lastPageToken = "unset";
+            await foreach (var page in client.GetServerDrivenPaginationClient().LinkAsync(new RequestContext()).AsPages(firstPageToken))
+            {
+                lastPageToken = page.ContinuationToken;
+                var pageResult = JsonNode.Parse(page.GetRawResponse().Content.ToString())!;
+                foreach (var pet in (pageResult["pets"] as JsonArray)!)
+                {
+                    resumedIds.Add(pet!["id"]!.ToString());
+                }
+            }
+            CollectionAssert.AreEqual(new[] { "3", "4" }, resumedIds);
+
+            // The final page must expose a null continuation token to signal the end of the collection.
+            Assert.IsNull(lastPageToken);
+        });
+
+        [SpectorTest]
         public Task ConvenienceMethodNested() => Test(async (host) =>
         {
             var client = new PageableClient(host, null);
