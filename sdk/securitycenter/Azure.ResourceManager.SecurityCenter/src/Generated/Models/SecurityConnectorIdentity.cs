@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="tenantId"> The tenant ID of resource. The value must be an UUID. </param>
         /// <param name="type"> The identity type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityConnectorIdentity(Guid? principalId, Guid? tenantId, ResourceIdentityType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityConnectorIdentity(Guid? principalId, Guid? tenantId, SecurityConnectorIdentityType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrincipalId = principalId;
             TenantId = tenantId;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public Guid? TenantId { get; }
 
         /// <summary> The identity type. </summary>
-        public ResourceIdentityType? Type { get; }
+        public SecurityConnectorIdentityType? Type { get; }
     }
 }

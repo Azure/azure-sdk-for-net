@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
     /// The security connector environment data.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AwsEnvironment"/>, <see cref="GcpProjectEnvironment"/>, <see cref="GithubScopeEnvironment"/>, <see cref="AzureDevOpsScopeEnvironment"/>, <see cref="GitlabScopeEnvironmentInfo"/>, <see cref="DockerHubEnvironmentInfo"/>, and <see cref="JFrogEnvironmentInfo"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AwsEnvironment"/>, <see cref="GcpProjectEnvironment"/>, <see cref="GithubScopeEnvironment"/>, <see cref="AzureDevOpsScopeEnvironment"/>, <see cref="GitLabScopeEnvironmentInfo"/>, <see cref="DockerHubEnvironmentInfo"/>, and <see cref="JFrogEnvironmentInfo"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownSecurityConnectorEnvironment))]
     public abstract partial class SecurityConnectorEnvironment : IJsonModel<SecurityConnectorEnvironment>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     case "AzureDevOpsScope":
                         return AzureDevOpsScopeEnvironment.DeserializeAzureDevOpsScopeEnvironment(element, options);
                     case "GitlabScope":
-                        return GitlabScopeEnvironmentInfo.DeserializeGitlabScopeEnvironmentInfo(element, options);
+                        return GitLabScopeEnvironmentInfo.DeserializeGitLabScopeEnvironmentInfo(element, options);
                     case "DockerHubOrganization":
                         return DockerHubEnvironmentInfo.DeserializeDockerHubEnvironmentInfo(element, options);
                     case "JFrogArtifactory":

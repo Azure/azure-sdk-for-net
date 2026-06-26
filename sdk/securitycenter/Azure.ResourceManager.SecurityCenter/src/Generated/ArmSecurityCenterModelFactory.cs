@@ -2461,10 +2461,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new AzureDevOpsScopeEnvironment(default, default);
         }
 
-        /// <returns> A new <see cref="Models.GitlabScopeEnvironmentInfo"/> instance for mocking. </returns>
-        public static GitlabScopeEnvironmentInfo GitlabScopeEnvironmentInfo()
+        /// <returns> A new <see cref="Models.GitLabScopeEnvironmentInfo"/> instance for mocking. </returns>
+        public static GitLabScopeEnvironmentInfo GitLabScopeEnvironmentInfo()
         {
-            return new GitlabScopeEnvironmentInfo(default, default);
+            return new GitLabScopeEnvironmentInfo(default, default);
         }
 
         /// <param name="authentication"> The Docker Hub organization authentication details. </param>
@@ -2972,7 +2972,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="tenantId"> The tenant ID of resource. The value must be an UUID. </param>
         /// <param name="type"> The identity type. </param>
         /// <returns> A new <see cref="Models.SecurityConnectorIdentity"/> instance for mocking. </returns>
-        public static SecurityConnectorIdentity SecurityConnectorIdentity(Guid? principalId = default, Guid? tenantId = default, ResourceIdentityType? @type = default)
+        public static SecurityConnectorIdentity SecurityConnectorIdentity(Guid? principalId = default, Guid? tenantId = default, SecurityConnectorIdentityType? @type = default)
         {
             return new SecurityConnectorIdentity(principalId, tenantId, @type, default);
         }
@@ -4797,7 +4797,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="sensitivityThresholdLabelId"> The id of the sensitivity threshold label. Any label at or above this rank will be considered sensitive. </param>
         /// <param name="mipInformation"> Microsoft information protection built-in and custom information types, labels, and integration status. </param>
         /// <returns> A new <see cref="Models.SensitivitySettingsProperties"/> instance for mocking. </returns>
-        public static SensitivitySettingsProperties SensitivitySettingsProperties(IEnumerable<Guid> sensitiveInfoTypesIds = default, float? sensitivityThresholdLabelOrder = default, string sensitivityThresholdLabelId = default, GetSensitivitySettingsResponsePropertiesMipInformation mipInformation = default)
+        public static SensitivitySettingsProperties SensitivitySettingsProperties(IEnumerable<Guid> sensitiveInfoTypesIds = default, float? sensitivityThresholdLabelOrder = default, string sensitivityThresholdLabelId = default, SensitivitySettingsMipInformation mipInformation = default)
         {
             sensitiveInfoTypesIds ??= new ChangeTrackingList<Guid>();
 
@@ -4808,14 +4808,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="labels"> List of Microsoft information protection sensitivity labels. </param>
         /// <param name="customInfoTypes"> List of custom user-defined information types. </param>
         /// <param name="builtInInfoTypes"> List of pre-configured sensitive information types. </param>
-        /// <returns> A new <see cref="Models.GetSensitivitySettingsResponsePropertiesMipInformation"/> instance for mocking. </returns>
-        public static GetSensitivitySettingsResponsePropertiesMipInformation GetSensitivitySettingsResponsePropertiesMipInformation(MipIntegrationStatus? mipIntegrationStatus = default, IEnumerable<InformationProtectionSensitivityLabel> labels = default, IEnumerable<InfoType> customInfoTypes = default, IEnumerable<BuiltInInfoType> builtInInfoTypes = default)
+        /// <returns> A new <see cref="Models.SensitivitySettingsMipInformation"/> instance for mocking. </returns>
+        public static SensitivitySettingsMipInformation SensitivitySettingsMipInformation(MipIntegrationStatus? mipIntegrationStatus = default, IEnumerable<InformationProtectionSensitivityLabel> labels = default, IEnumerable<InfoType> customInfoTypes = default, IEnumerable<BuiltInInfoType> builtInInfoTypes = default)
         {
             labels ??= new ChangeTrackingList<InformationProtectionSensitivityLabel>();
             customInfoTypes ??= new ChangeTrackingList<InfoType>();
             builtInInfoTypes ??= new ChangeTrackingList<BuiltInInfoType>();
 
-            return new GetSensitivitySettingsResponsePropertiesMipInformation(mipIntegrationStatus, (labels ?? new ChangeTrackingList<InformationProtectionSensitivityLabel>()).ToList(), (customInfoTypes ?? new ChangeTrackingList<InfoType>()).ToList(), (builtInInfoTypes ?? new ChangeTrackingList<BuiltInInfoType>()).ToList(), default);
+            return new SensitivitySettingsMipInformation(mipIntegrationStatus, (labels ?? new ChangeTrackingList<InformationProtectionSensitivityLabel>()).ToList(), (customInfoTypes ?? new ChangeTrackingList<InfoType>()).ToList(), (builtInInfoTypes ?? new ChangeTrackingList<BuiltInInfoType>()).ToList(), default);
         }
 
         /// <param name="name"> The display name of the label. </param>

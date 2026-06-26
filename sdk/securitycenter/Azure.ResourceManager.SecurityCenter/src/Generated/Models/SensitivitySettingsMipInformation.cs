@@ -12,26 +12,26 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Microsoft information protection built-in and custom information types, labels, and integration status. </summary>
-    public partial class GetSensitivitySettingsResponsePropertiesMipInformation
+    public partial class SensitivitySettingsMipInformation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GetSensitivitySettingsResponsePropertiesMipInformation"/>. </summary>
-        internal GetSensitivitySettingsResponsePropertiesMipInformation()
+        /// <summary> Initializes a new instance of <see cref="SensitivitySettingsMipInformation"/>. </summary>
+        internal SensitivitySettingsMipInformation()
         {
             Labels = new ChangeTrackingList<InformationProtectionSensitivityLabel>();
             CustomInfoTypes = new ChangeTrackingList<InfoType>();
             BuiltInInfoTypes = new ChangeTrackingList<BuiltInInfoType>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="GetSensitivitySettingsResponsePropertiesMipInformation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SensitivitySettingsMipInformation"/>. </summary>
         /// <param name="mipIntegrationStatus"> Microsoft information protection integration status. </param>
         /// <param name="labels"> List of Microsoft information protection sensitivity labels. </param>
         /// <param name="customInfoTypes"> List of custom user-defined information types. </param>
         /// <param name="builtInInfoTypes"> List of pre-configured sensitive information types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GetSensitivitySettingsResponsePropertiesMipInformation(MipIntegrationStatus? mipIntegrationStatus, IList<InformationProtectionSensitivityLabel> labels, IList<InfoType> customInfoTypes, IList<BuiltInInfoType> builtInInfoTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SensitivitySettingsMipInformation(MipIntegrationStatus? mipIntegrationStatus, IList<InformationProtectionSensitivityLabel> labels, IList<InfoType> customInfoTypes, IList<BuiltInInfoType> builtInInfoTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MipIntegrationStatus = mipIntegrationStatus;
             Labels = labels;

@@ -11,17 +11,17 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The GitLab scope connector's environment data. </summary>
-    public partial class GitlabScopeEnvironmentInfo : SecurityConnectorEnvironment
+    public partial class GitLabScopeEnvironmentInfo : SecurityConnectorEnvironment
     {
-        /// <summary> Initializes a new instance of <see cref="GitlabScopeEnvironmentInfo"/>. </summary>
-        public GitlabScopeEnvironmentInfo() : base(EnvironmentType.GitlabScope)
+        /// <summary> Initializes a new instance of <see cref="GitLabScopeEnvironmentInfo"/>. </summary>
+        public GitLabScopeEnvironmentInfo() : base(EnvironmentType.GitlabScope)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GitlabScopeEnvironmentInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitLabScopeEnvironmentInfo"/>. </summary>
         /// <param name="environmentType"> The type of the environment data. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GitlabScopeEnvironmentInfo(EnvironmentType environmentType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(environmentType, additionalBinaryDataProperties)
+        internal GitLabScopeEnvironmentInfo(EnvironmentType environmentType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(environmentType, additionalBinaryDataProperties)
         {
         }
     }

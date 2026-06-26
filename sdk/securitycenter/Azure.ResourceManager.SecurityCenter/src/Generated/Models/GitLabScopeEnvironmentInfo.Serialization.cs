@@ -14,51 +14,51 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The GitLab scope connector's environment data. </summary>
-    public partial class GitlabScopeEnvironmentInfo : SecurityConnectorEnvironment, IJsonModel<GitlabScopeEnvironmentInfo>
+    public partial class GitLabScopeEnvironmentInfo : SecurityConnectorEnvironment, IJsonModel<GitLabScopeEnvironmentInfo>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SecurityConnectorEnvironment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GitlabScopeEnvironmentInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GitLabScopeEnvironmentInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeGitlabScopeEnvironmentInfo(document.RootElement, options);
+                        return DeserializeGitLabScopeEnvironmentInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GitlabScopeEnvironmentInfo)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GitLabScopeEnvironmentInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GitlabScopeEnvironmentInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GitLabScopeEnvironmentInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GitlabScopeEnvironmentInfo)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GitLabScopeEnvironmentInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GitlabScopeEnvironmentInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<GitLabScopeEnvironmentInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GitlabScopeEnvironmentInfo IPersistableModel<GitlabScopeEnvironmentInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => (GitlabScopeEnvironmentInfo)PersistableModelCreateCore(data, options);
+        GitLabScopeEnvironmentInfo IPersistableModel<GitLabScopeEnvironmentInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => (GitLabScopeEnvironmentInfo)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GitlabScopeEnvironmentInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GitLabScopeEnvironmentInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GitlabScopeEnvironmentInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GitLabScopeEnvironmentInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,34 +69,34 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GitlabScopeEnvironmentInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GitLabScopeEnvironmentInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GitlabScopeEnvironmentInfo)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GitLabScopeEnvironmentInfo)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GitlabScopeEnvironmentInfo IJsonModel<GitlabScopeEnvironmentInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GitlabScopeEnvironmentInfo)JsonModelCreateCore(ref reader, options);
+        GitLabScopeEnvironmentInfo IJsonModel<GitLabScopeEnvironmentInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GitLabScopeEnvironmentInfo)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SecurityConnectorEnvironment JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GitlabScopeEnvironmentInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GitLabScopeEnvironmentInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GitlabScopeEnvironmentInfo)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GitLabScopeEnvironmentInfo)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGitlabScopeEnvironmentInfo(document.RootElement, options);
+            return DeserializeGitLabScopeEnvironmentInfo(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GitlabScopeEnvironmentInfo DeserializeGitlabScopeEnvironmentInfo(JsonElement element, ModelReaderWriterOptions options)
+        internal static GitLabScopeEnvironmentInfo DeserializeGitLabScopeEnvironmentInfo(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GitlabScopeEnvironmentInfo(environmentType, additionalBinaryDataProperties);
+            return new GitLabScopeEnvironmentInfo(environmentType, additionalBinaryDataProperties);
         }
     }
 }

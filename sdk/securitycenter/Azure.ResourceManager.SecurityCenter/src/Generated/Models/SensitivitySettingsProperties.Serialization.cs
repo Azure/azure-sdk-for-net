@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             IList<Guid> sensitiveInfoTypesIds = default;
             float? sensitivityThresholdLabelOrder = default;
             string sensitivityThresholdLabelId = default;
-            GetSensitivitySettingsResponsePropertiesMipInformation mipInformation = default;
+            SensitivitySettingsMipInformation mipInformation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    mipInformation = GetSensitivitySettingsResponsePropertiesMipInformation.DeserializeGetSensitivitySettingsResponsePropertiesMipInformation(prop.Value, options);
+                    mipInformation = SensitivitySettingsMipInformation.DeserializeSensitivitySettingsMipInformation(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

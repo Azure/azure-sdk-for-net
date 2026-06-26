@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="sensitivityThresholdLabelId"> The id of the sensitivity threshold label. Any label at or above this rank will be considered sensitive. </param>
         /// <param name="mipInformation"> Microsoft information protection built-in and custom information types, labels, and integration status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SensitivitySettingsProperties(IList<Guid> sensitiveInfoTypesIds, float? sensitivityThresholdLabelOrder, string sensitivityThresholdLabelId, GetSensitivitySettingsResponsePropertiesMipInformation mipInformation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SensitivitySettingsProperties(IList<Guid> sensitiveInfoTypesIds, float? sensitivityThresholdLabelOrder, string sensitivityThresholdLabelId, SensitivitySettingsMipInformation mipInformation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SensitiveInfoTypesIds = sensitiveInfoTypesIds;
             SensitivityThresholdLabelOrder = sensitivityThresholdLabelOrder;
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public string SensitivityThresholdLabelId { get; }
 
         /// <summary> Microsoft information protection built-in and custom information types, labels, and integration status. </summary>
-        public GetSensitivitySettingsResponsePropertiesMipInformation MipInformation { get; }
+        public SensitivitySettingsMipInformation MipInformation { get; }
     }
 }

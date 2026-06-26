@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary></summary>
-    public enum ResourceIdentityType
+    public enum SecurityConnectorIdentityType
     {
         /// <summary> SystemAssigned. </summary>
         SystemAssigned

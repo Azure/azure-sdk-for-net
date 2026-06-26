@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             Guid? principalId = default;
             Guid? tenantId = default;
-            ResourceIdentityType? @type = default;
+            SecurityConnectorIdentityType? @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    @type = prop.Value.GetString().ToResourceIdentityType();
+                    @type = prop.Value.GetString().ToSecurityConnectorIdentityType();
                     continue;
                 }
                 if (options.Format != "W")
