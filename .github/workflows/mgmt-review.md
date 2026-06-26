@@ -22,6 +22,7 @@ checkout:
     .github
 inlined-imports: true
 permissions:
+  copilot-requests: write
   contents: read
   pull-requests: read
   actions: read

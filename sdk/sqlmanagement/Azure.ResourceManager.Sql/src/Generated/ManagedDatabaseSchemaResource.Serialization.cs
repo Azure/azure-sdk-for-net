@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class ManagedDatabaseSchemaResource : IJsonModel<DatabaseSchemaData>
     {
-        private static DatabaseSchemaData s_dataDeserializationInstance;
-        private static DatabaseSchemaData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DatabaseSchemaData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DatabaseSchemaData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DatabaseSchemaData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DatabaseSchemaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DatabaseSchemaData>)Data).Write(writer, options);
 
-        DatabaseSchemaData IJsonModel<DatabaseSchemaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DatabaseSchemaData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DatabaseSchemaData IJsonModel<DatabaseSchemaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DatabaseSchemaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DatabaseSchemaData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DatabaseSchemaData IPersistableModel<DatabaseSchemaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DatabaseSchemaData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<DatabaseSchemaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DatabaseSchemaData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DatabaseSchemaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

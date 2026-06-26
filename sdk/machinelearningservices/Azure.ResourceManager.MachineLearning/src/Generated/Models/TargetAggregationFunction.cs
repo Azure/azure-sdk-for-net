@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,47 +15,68 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct TargetAggregationFunction : IEquatable<TargetAggregationFunction>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="TargetAggregationFunction"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public TargetAggregationFunction(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
+        /// <summary> Represent no value set. </summary>
         private const string NoneValue = "None";
         private const string SumValue = "Sum";
         private const string MaxValue = "Max";
         private const string MinValue = "Min";
         private const string MeanValue = "Mean";
 
+        /// <summary> Initializes a new instance of <see cref="TargetAggregationFunction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public TargetAggregationFunction(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
         /// <summary> Represent no value set. </summary>
         public static TargetAggregationFunction None { get; } = new TargetAggregationFunction(NoneValue);
-        /// <summary> Sum. </summary>
+
+        /// <summary> Gets the Sum. </summary>
         public static TargetAggregationFunction Sum { get; } = new TargetAggregationFunction(SumValue);
-        /// <summary> Max. </summary>
+
+        /// <summary> Gets the Max. </summary>
         public static TargetAggregationFunction Max { get; } = new TargetAggregationFunction(MaxValue);
-        /// <summary> Min. </summary>
+
+        /// <summary> Gets the Min. </summary>
         public static TargetAggregationFunction Min { get; } = new TargetAggregationFunction(MinValue);
-        /// <summary> Mean. </summary>
+
+        /// <summary> Gets the Mean. </summary>
         public static TargetAggregationFunction Mean { get; } = new TargetAggregationFunction(MeanValue);
+
         /// <summary> Determines if two <see cref="TargetAggregationFunction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TargetAggregationFunction left, TargetAggregationFunction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TargetAggregationFunction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TargetAggregationFunction left, TargetAggregationFunction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TargetAggregationFunction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TargetAggregationFunction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TargetAggregationFunction(string value) => new TargetAggregationFunction(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TargetAggregationFunction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TargetAggregationFunction?(string value) => value == null ? null : new TargetAggregationFunction(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TargetAggregationFunction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TargetAggregationFunction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

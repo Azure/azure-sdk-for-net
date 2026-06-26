@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The SqlPrivateLinkServiceConnectionStateProperty. </summary>
     public partial class SqlPrivateLinkServiceConnectionStateProperty
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SqlPrivateLinkServiceConnectionStateProperty"/>. </summary>
         /// <param name="status"> The private link service connection status. </param>
@@ -61,26 +33,23 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <param name="actionsRequired"> The actions required for private link service connection. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlPrivateLinkServiceConnectionStateProperty(SqlPrivateLinkServiceConnectionStatus status, string description, SqlPrivateLinkServiceConnectionActionsRequired? actionsRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SqlPrivateLinkServiceConnectionStateProperty(SqlPrivateLinkServiceConnectionStatus status, string description, SqlPrivateLinkServiceConnectionActionsRequired? actionsRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Description = description;
             ActionsRequired = actionsRequired;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SqlPrivateLinkServiceConnectionStateProperty"/> for deserialization. </summary>
-        internal SqlPrivateLinkServiceConnectionStateProperty()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The private link service connection status. </summary>
         [WirePath("status")]
         public SqlPrivateLinkServiceConnectionStatus Status { get; set; }
+
         /// <summary> The private link service connection description. </summary>
         [WirePath("description")]
         public string Description { get; set; }
+
         /// <summary> The actions required for private link service connection. </summary>
         [WirePath("actionsRequired")]
         public SqlPrivateLinkServiceConnectionActionsRequired? ActionsRequired { get; }

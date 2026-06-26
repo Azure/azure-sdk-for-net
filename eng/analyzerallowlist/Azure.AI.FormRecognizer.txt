@@ -1,0 +1,7 @@
+# Azure.AI.FormRecognizer approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# Carries internal AccessToken/ResourceId/Region required to authorize a copy
+# operation; a model-factory method could only set the public properties and
+# would produce a non-functional instance.
+nowarn:AZC0035 T:Azure.AI.FormRecognizer.Training.CopyAuthorization

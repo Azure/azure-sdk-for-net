@@ -7,64 +7,39 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary> A list of service description objects with a next link. </summary>
+    /// <summary> The response of a ServicesDescription list operation. </summary>
     internal partial class ServicesDescriptionListResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServicesDescriptionListResult"/>. </summary>
-        internal ServicesDescriptionListResult()
+        /// <param name="value"> The ServicesDescription items on this page. </param>
+        internal ServicesDescriptionListResult(IEnumerable<HealthcareApisServiceData> value)
         {
-            Value = new ChangeTrackingList<HealthcareApisServiceData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServicesDescriptionListResult"/>. </summary>
-        /// <param name="nextLink"> The link used to get the next page of service description objects. </param>
-        /// <param name="value"> A list of service description objects. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServicesDescriptionListResult(string nextLink, IReadOnlyList<HealthcareApisServiceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="value"> The ServicesDescription items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ServicesDescriptionListResult(IList<HealthcareApisServiceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            NextLink = nextLink;
             Value = value;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            NextLink = nextLink;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The link used to get the next page of service description objects. </summary>
-        public string NextLink { get; }
-        /// <summary> A list of service description objects. </summary>
-        public IReadOnlyList<HealthcareApisServiceData> Value { get; }
+        /// <summary> The ServicesDescription items on this page. </summary>
+        public IList<HealthcareApisServiceData> Value { get; }
+
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

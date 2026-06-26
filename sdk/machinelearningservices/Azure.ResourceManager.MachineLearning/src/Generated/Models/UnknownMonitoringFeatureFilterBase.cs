@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Unknown version of MonitoringFeatureFilterBase. </summary>
     internal partial class UnknownMonitoringFeatureFilterBase : MonitoringFeatureFilterBase
     {
         /// <summary> Initializes a new instance of <see cref="UnknownMonitoringFeatureFilterBase"/>. </summary>
         /// <param name="filterType"> [Required] Specifies the feature filter to leverage when selecting features to calculate metrics over. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownMonitoringFeatureFilterBase(MonitoringFeatureFilterType filterType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(filterType, serializedAdditionalRawData)
-        {
-            FilterType = filterType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownMonitoringFeatureFilterBase"/> for deserialization. </summary>
-        internal UnknownMonitoringFeatureFilterBase()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownMonitoringFeatureFilterBase(MonitoringFeatureFilterType filterType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(filterType != default ? filterType : "unknown", additionalBinaryDataProperties)
         {
         }
     }

@@ -14,6 +14,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing the ManagedDatabaseRestoreDetail data model. </summary>
     public partial class ManagedDatabaseRestoreDetailData
     {
+        // Make the default ctor public to keep backwards compatibility.
+        /// <summary> Initializes a new instance of <see cref="ManagedDatabaseRestoreDetailData"/>. </summary>
+        public ManagedDatabaseRestoreDetailData()
+        {
+        }
+
         /// <summary> Percent completed. </summary>
         [Obsolete("This property is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]

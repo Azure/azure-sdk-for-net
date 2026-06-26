@@ -36,9 +36,9 @@
     "dist/**"
   ],
   "dependencies": {
-    "@azure-typespec/http-client-csharp": "1.0.0-alpha.20260613.3",
-    "@azure-typespec/http-client-csharp-mgmt": "1.0.0-alpha.20260615.2",
-    "@typespec/http-client-csharp": "1.0.0-alpha.20260612.4"
+    "@azure-typespec/http-client-csharp": "1.0.0-alpha.20260622.2",
+    "@azure-typespec/http-client-csharp-mgmt": "1.0.0-alpha.20260622.1",
+    "@typespec/http-client-csharp": "1.0.0-alpha.20260622.6"
   },
   "devDependencies": {
     "@azure-tools/typespec-autorest": "0.69.0",

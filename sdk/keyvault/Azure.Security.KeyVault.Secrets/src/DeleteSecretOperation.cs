@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.Security.KeyVault.Secrets
 {
@@ -16,24 +17,24 @@ namespace Azure.Security.KeyVault.Secrets
     {
         private static readonly TimeSpan s_defaultPollingInterval = TimeSpan.FromSeconds(2);
 
-        private readonly KeyVaultPipeline _pipeline;
+        private readonly KeyVaultSecretsClient _generated;
         private readonly OperationInternal _operationInternal;
         private readonly DeletedSecret _value;
 
-        internal DeleteSecretOperation(KeyVaultPipeline pipeline, Response<DeletedSecret> response)
+        internal DeleteSecretOperation(KeyVaultSecretsClient generated, ClientDiagnostics diagnostics, Response<DeletedSecret> response)
         {
-            _pipeline = pipeline;
+            _generated = generated ?? throw new ArgumentNullException(nameof(generated));
             _value = response.Value ?? throw new InvalidOperationException("The response does not contain a value.");
 
-            // The recoveryId is only returned if soft delete is enabled.
+            // RecoveryId is only returned when soft-delete is enabled. Without it the
+            // service performs an immediate delete and there is nothing to poll for.
             if (_value.RecoveryId is null)
             {
-                // If soft delete is not enabled, deleting is immediate so set success accordingly.
                 _operationInternal = OperationInternal.Succeeded(response.GetRawResponse());
             }
             else
             {
-                _operationInternal = new(this, _pipeline.Diagnostics, response.GetRawResponse(), nameof(DeleteSecretOperation), new[] { new KeyValuePair<string, string>("secret", _value.Name) });
+                _operationInternal = new(this, diagnostics, response.GetRawResponse(), nameof(DeleteSecretOperation), new[] { new KeyValuePair<string, string>("secret", _value.Name) });
             }
         }
 
@@ -41,7 +42,7 @@ namespace Azure.Security.KeyVault.Secrets
         protected DeleteSecretOperation() {}
 
         /// <inheritdoc/>
-        public override string Id => _value.Id.AbsoluteUri;
+        public override string Id => _value.Id?.AbsoluteUri ?? string.Empty;
 
         /// <summary>
         /// Gets the <see cref="DeletedSecret"/>.
@@ -56,6 +57,13 @@ namespace Azure.Security.KeyVault.Secrets
         public override bool HasCompleted => _operationInternal.HasCompleted;
 
         /// <inheritdoc/>
+        /// <remarks>
+        /// Always returns <see langword="true"/>. The DELETE call against Key Vault returns the
+        /// <see cref="DeletedSecret"/> immediately (the value is populated from that response),
+        /// even when soft-delete polling has not yet completed. Callers should still await
+        /// <see cref="WaitForCompletionAsync(CancellationToken)"/> before purging or recovering
+        /// the secret if soft-delete is enabled.
+        /// </remarks>
         public override bool HasValue => true;
 
         /// <inheritdoc/>
@@ -63,25 +71,11 @@ namespace Azure.Security.KeyVault.Secrets
 
         /// <inheritdoc/>
         public override Response UpdateStatus(CancellationToken cancellationToken = default)
-        {
-            if (!HasCompleted)
-            {
-                return _operationInternal.UpdateStatus(cancellationToken);
-            }
-
-            return GetRawResponse();
-        }
+            => HasCompleted ? GetRawResponse() : _operationInternal.UpdateStatus(cancellationToken);
 
         /// <inheritdoc/>
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
-        {
-            if (!HasCompleted)
-            {
-                return await _operationInternal.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
-            }
-
-            return GetRawResponse();
-        }
+            => HasCompleted ? GetRawResponse() : await _operationInternal.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
 
         /// <inheritdoc />
         public override ValueTask<Response<DeletedSecret>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
@@ -93,25 +87,22 @@ namespace Azure.Security.KeyVault.Secrets
 
         async ValueTask<OperationState> IOperation.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
+            // Soft-delete semantics: 404 -> still pending, 200 -> deleted.
+            // Use ErrorOptions.NoThrow so the protocol overload surfaces the raw Response
+            // on 404 rather than raising — the LRO maps it back to Pending below.
+            var ctx = new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow };
             Response response = async
-                ? await _pipeline.GetResponseAsync(RequestMethod.Get, cancellationToken, SecretClient.DeletedSecretsPath, _value.Name).ConfigureAwait(false)
-                : _pipeline.GetResponse(RequestMethod.Get, cancellationToken, SecretClient.DeletedSecretsPath, _value.Name);
+                ? await _generated.GetDeletedSecretAsync(_value.Name, ctx).ConfigureAwait(false)
+                : _generated.GetDeletedSecret(_value.Name, ctx);
 
-            switch (response.Status)
+            return response.Status switch
             {
-                case 200:
-                case 403: // Access denied but proof the secret was deleted.
-                    return OperationState.Success(response);
-
-                case 404:
-                    return OperationState.Pending(response);
-
-                default:
-                    return OperationState.Failure(response, new RequestFailedException(response));
-            }
+                200 or 403 => OperationState.Success(response), // 403 == access denied, but proves the secret is deleted.
+                404        => OperationState.Pending(response),
+                _          => OperationState.Failure(response, new RequestFailedException(response)),
+            };
         }
 
-        // This method is never invoked since we don't override Operation<T>.GetRehydrationToken.
         RehydrationToken IOperation.GetRehydrationToken() =>
             throw new NotSupportedException($"{nameof(GetRehydrationToken)} is not supported.");
     }
