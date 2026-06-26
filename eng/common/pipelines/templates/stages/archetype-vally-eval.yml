@@ -12,21 +12,9 @@ parameters:
     # anchor the matrix's `-e` paths are relative to. Defaults to the Vally project.
     type: string
     default: tools/azsdk-cli/Azure.Sdk.Tools.Vally
-  - name: evalScriptDir
-    type: string
-    default: eng/common/scripts/eval
-  - name: skillEvalDir
-    type: string
-    default: eng/skill-eval
-  - name: evalRoots
-    # Dirs to glob for eval files (each absolute or relative to $(Build.SourcesDirectory)).
-    # Empty = just vallyRoot. List several to collect evals scattered across folders.
-    type: object
-    default: []
   - name: evalGlobs
-    # File globs that select the *.eval.yaml files *under* each evalRoots dir (the "which
-    # files", vs evalRoots' "which dirs"). Forward-slashed, supports * ? **. Empty =
-    # collect-stimuli.js uses its built-in default (the mock tool-scenario globs).
+    # File globs that select the *.eval.yaml files under vallyRoot (forward-slashed,
+    # supports * ? **). Empty = collect-stimuli.js uses its built-in default.
     type: object
     default: []
   - name: shardBy
@@ -35,35 +23,21 @@ parameters:
     values:
       - file
       - area
-  - name: mcpArtifact
+  - name: mcpToolsRepository
+    # Source of the MCP servers. 'self' in azure-sdk-tools; in any other repo, declare
+    # azure-sdk-tools under `resources: repositories:` and pass its alias here so the
+    # build job checks it out and builds the servers from there.
     type: string
-    default: mcp-servers
-  - name: mcpStageRoot
-    # Common parent the built MCP servers are published from and re-staged into.
+    default: self
+  - name: mcpSourceRoot
+    # Path prefix to the azure-sdk-tools tree for the dotnet build. '' for `self`; set to
+    # the side-checkout subdir (e.g. 'azure-sdk-tools/') when mcpToolsRepository is an alias.
     type: string
-    default: artifacts/mcp
-  - name: mcpBuilds
-    # List of { project, outputPath } MCP servers to build once and share with shards.
-    type: object
-    default:
-      - project: tools/azsdk-cli/Azure.Sdk.Tools.Mock
-        outputPath: artifacts/mcp/mock
+    default: ''
   - name: azureServiceConnection
     # Set for the live tier so shards run inside AzureCLI@2 (real DevOps). Empty = script.
     type: string
     default: ''
-  - name: threshold
-    type: string
-    default: '0.8'
-  - name: nodeVersion
-    type: string
-    default: 22.x
-  - name: githubTokenVariable
-    type: string
-    default: azuresdk-copilot-github-pat
-  - name: maxParallel
-    type: number
-    default: 10
   - name: shardTimeoutInMinutes
     # LLM-driven shards can hang; cap well under the default agent slot.
     type: number
@@ -99,12 +73,13 @@ extends:
               outputs:
                 - output: pipelineArtifact
                   displayName: 'Publish MCP server artifact'
-                  artifactName: ${{ parameters.mcpArtifact }}
-                  targetPath: $(Build.SourcesDirectory)/${{ parameters.mcpStageRoot }}
+                  artifactName: mcp-servers
+                  targetPath: $(Build.SourcesDirectory)/artifacts/mcp
             steps:
               - template: /eng/common/pipelines/templates/steps/vally-build-mcp.yml
                 parameters:
-                  mcpBuilds: ${{ parameters.mcpBuilds }}
+                  toolsRepository: ${{ parameters.mcpToolsRepository }}
+                  sourceRoot: ${{ parameters.mcpSourceRoot }}
 
           - job: Detect
             displayName: 'Glob eval files -> matrix'
@@ -115,14 +90,11 @@ extends:
             steps:
               - template: /eng/common/pipelines/templates/steps/vally-collect-stimuli.yml
                 parameters:
-                  evalRoots: ${{ parameters.evalRoots }}
                   pathBase: $(Build.SourcesDirectory)/${{ parameters.vallyRoot }}
                   evalGlobs: ${{ parameters.evalGlobs }}
                   shardBy: ${{ parameters.shardBy }}
-                  scriptDir: ${{ parameters.evalScriptDir }}
                   outputVariableName: matrix
                   stepName: detect
-                  nodeVersion: ${{ parameters.nodeVersion }}
 
       - stage: Eval
         displayName: 'Run eval shards'
@@ -140,7 +112,7 @@ extends:
             timeoutInMinutes: ${{ parameters.shardTimeoutInMinutes }}
             strategy:
               matrix: $[ stageDependencies.Prepare.Detect.outputs['detect.matrix'] ]
-              maxParallel: ${{ parameters.maxParallel }}
+              maxParallel: 10
             # Per-leg artifacts (matrix injects $(shardName)). JUnit always; transcripts
             # only on a genuine failure. Both staged by the vally-run-shard.yml steps.
             templateContext:
@@ -159,14 +131,7 @@ extends:
               - template: /eng/common/pipelines/templates/steps/vally-run-shard.yml
                 parameters:
                   vallyRoot: ${{ parameters.vallyRoot }}
-                  scriptDir: ${{ parameters.evalScriptDir }}
-                  skillEvalDir: ${{ parameters.skillEvalDir }}
-                  mcpArtifact: ${{ parameters.mcpArtifact }}
-                  mcpStageRoot: ${{ parameters.mcpStageRoot }}
                   azureServiceConnection: ${{ parameters.azureServiceConnection }}
-                  threshold: ${{ parameters.threshold }}
-                  nodeVersion: ${{ parameters.nodeVersion }}
-                  githubTokenVariable: ${{ parameters.githubTokenVariable }}
 
       - stage: Summary
         displayName: 'Summarize results'
@@ -182,7 +147,5 @@ extends:
             steps:
               - template: /eng/common/pipelines/templates/steps/vally-summarize.yml
                 parameters:
-                  scriptDir: ${{ parameters.evalScriptDir }}
-                  nodeVersion: ${{ parameters.nodeVersion }}
                   testRunTitle: ${{ parameters.testRunTitle }}
                   failOnFailedTests: ${{ parameters.failOnFailedTests }}

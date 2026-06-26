@@ -1,30 +1,43 @@
-# Build one or more MCP servers once so every eval shard downloads prebuilt DLLs instead
-# of rebuilding them (the biggest speed win; also sidesteps the MSBuild boot race when
-# shards run in parallel — #15947). Vally runs `dotnet <dll>`, not `dotnet run`, so a
-# plain build output is enough.
+# Build the azure-sdk-tools MCP servers once (Mock + Cli) so every eval shard downloads
+# prebuilt DLLs instead of rebuilding them (the biggest speed win; also sidesteps the
+# MSBuild boot race when shards run in parallel — #15947). Vally runs `dotnet <dll>`, not
+# `dotnet run`, so a plain build output is enough.
 #
-# Each entry in `mcpBuilds` is built into its own subfolder under a common stage root; the
-# host job publishes that whole tree as one artifact via 1ES `templateContext.outputs`,
-# and each shard re-stages it at the same path, matching the relative DLL paths the various
-# .vally.yaml environments expect:
-#   - mock vertical : artifacts/mcp/mock  (azsdk-mock.dll)
-#   - skills        : artifacts/mcp/cli + artifacts/mcp/mock
-#   - live          : artifacts/mcp/cli  (azsdk.dll)
+# Both servers are always built into a shared stage root; the host job publishes that whole
+# tree as one artifact via 1ES `templateContext.outputs`, and each shard re-stages it at the
+# same path, matching the relative DLL paths the various .vally.yaml environments expect:
+#   - artifacts/mcp/mock  (azsdk-mock.dll)  — hermetic mock vertical + skills
+#   - artifacts/mcp/cli   (azsdk.dll)       — live tier + skills
+#
+# Default builds from `self` (azure-sdk-tools). A consuming repo that does NOT host the MCP
+# source declares azure-sdk-tools under `resources: repositories:` and passes its alias as
+# `toolsRepository` (+ `sourceRoot` = that alias's checkout subdir); the build then runs
+# against the side checkout. (A runtime Build.Repository.Name test can't gate a checkout,
+# so the caller selects the source at compile time via these two parameters.)
 
 parameters:
-  - name: mcpBuilds
-    # List of { project, outputPath } — outputPath is relative to $(Build.SourcesDirectory)
-    # and must sit under the stage root so it ships inside the published artifact.
-    type: object
-    default:
-      - project: tools/azsdk-cli/Azure.Sdk.Tools.Mock
-        outputPath: artifacts/mcp/mock
+  - name: toolsRepository
+    # 'self' in azure-sdk-tools; a `resources: repositories:` alias in any other repo.
+    type: string
+    default: self
+  - name: sourceRoot
+    # Path prefix to the azure-sdk-tools tree for the dotnet build. '' for `self`; set to
+    # the side-checkout subdir (e.g. 'azure-sdk-tools/') when toolsRepository is an alias.
+    type: string
+    default: ''
+  - name: mcpStageRoot
+    # Common parent the built servers are published from (relative to Build.SourcesDirectory).
+    type: string
+    default: artifacts/mcp
 
 steps:
-  - checkout: self
+  - checkout: ${{ parameters.toolsRepository }}
     fetchDepth: 1
 
-  - ${{ each build in parameters.mcpBuilds }}:
-      - script: |
-          dotnet build ${{ build.project }} -c Release -o ${{ build.outputPath }} --nologo
-        displayName: 'Build MCP: ${{ build.project }}'
+  - script: |
+      dotnet build ${{ parameters.sourceRoot }}tools/azsdk-cli/Azure.Sdk.Tools.Mock -c Release -o ${{ parameters.mcpStageRoot }}/mock --nologo
+    displayName: 'Build MCP: Mock server'
+
+  - script: |
+      dotnet build ${{ parameters.sourceRoot }}tools/azsdk-cli/Azure.Sdk.Tools.Cli -c Release -o ${{ parameters.mcpStageRoot }}/cli --nologo
+    displayName: 'Build MCP: Cli server'
