@@ -1818,11 +1818,11 @@ namespace Azure.AI.Projects.Agents
         /// <summary> In-flight progress; only populated while status is queued or in_progress. </summary>
         /// <param name="candidatesCompleted"> Number of candidates whose evaluation has completed so far. </param>
         /// <param name="bestScore"> Best score observed so far across all candidates. </param>
-        /// <param name="elapsedTime"> Wall-clock time elapsed in seconds since the job began executing. </param>
+        /// <param name="elapsedSecondsInternal"> Wall-clock time elapsed in seconds since the job began executing. </param>
         /// <returns> A new <see cref="Agents.OptimizationJobProgress"/> instance for mocking. </returns>
-        public static OptimizationJobProgress OptimizationJobProgress(int candidatesCompleted = default, double bestScore = default, double elapsedTime = default)
+        public static OptimizationJobProgress OptimizationJobProgress(int candidatesCompleted = default, double bestScore = default, double elapsedSecondsInternal = default)
         {
-            return new OptimizationJobProgress(candidatesCompleted, bestScore, elapsedTime, additionalBinaryDataProperties: null);
+            return new OptimizationJobProgress(candidatesCompleted, bestScore, elapsedSecondsInternal, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The ProjectsAgentVersionCreationOptions. </summary>

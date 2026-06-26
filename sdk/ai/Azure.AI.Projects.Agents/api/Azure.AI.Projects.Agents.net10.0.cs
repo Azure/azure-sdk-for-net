@@ -1599,7 +1599,6 @@ namespace Azure.AI.Projects.Agents
         public double BestScore { get { throw null; } }
         public int CandidatesCompleted { get { throw null; } }
         public System.TimeSpan ElapsedSeconds { get { throw null; } }
-        public double ElapsedTime { get { throw null; } }
         protected virtual Azure.AI.Projects.Agents.OptimizationJobProgress JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.Projects.Agents.OptimizationJobProgress PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1921,7 +1920,7 @@ namespace Azure.AI.Projects.Agents
         public static Azure.AI.Projects.Agents.OptimizationEvaluatorRef OptimizationEvaluatorRef(string name = null, string version = null) { throw null; }
         public static Azure.AI.Projects.Agents.OptimizationInlineDatasetInput OptimizationInlineDatasetInput(System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.OptimizationDatasetItem> items = null) { throw null; }
         public static Azure.AI.Projects.Agents.OptimizationJobInputs OptimizationJobInputs(Azure.AI.Projects.Agents.OptimizationAgentIdentifier agent = null, Azure.AI.Projects.Agents.OptimizationDatasetInput trainDataset = null, Azure.AI.Projects.Agents.OptimizationDatasetInput validationDataset = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.OptimizationEvaluatorRef> evaluators = null, Azure.AI.Projects.Agents.OptimizationOptions options = null) { throw null; }
-        public static Azure.AI.Projects.Agents.OptimizationJobProgress OptimizationJobProgress(int candidatesCompleted = 0, double bestScore = 0, double elapsedTime = 0) { throw null; }
+        public static Azure.AI.Projects.Agents.OptimizationJobProgress OptimizationJobProgress(int candidatesCompleted = 0, double bestScore = 0, double elapsedSecondsInternal = 0) { throw null; }
         public static Azure.AI.Projects.Agents.OptimizationJobResult OptimizationJobResult(string baseline = null, string best = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.OptimizationCandidate> candidates = null) { throw null; }
         public static Azure.AI.Projects.Agents.OptimizationOptions OptimizationOptions(int? maxCandidates = default(int?), System.Collections.Generic.IDictionary<string, System.BinaryData> optimizationConfig = null, string evalModel = null, string optimizationModel = null, Azure.AI.Projects.Agents.AgentsEvaluationLevel? evaluationLevel = default(Azure.AI.Projects.Agents.AgentsEvaluationLevel?)) { throw null; }
         public static Azure.AI.Projects.Agents.OptimizationReferenceDatasetInput OptimizationReferenceDatasetInput(string name = null, string version = null) { throw null; }

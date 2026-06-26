@@ -80,7 +80,7 @@ namespace Azure.AI.Projects.Agents
             writer.WritePropertyName("best_score"u8);
             writer.WriteNumberValue(BestScore);
             writer.WritePropertyName("elapsed_seconds"u8);
-            writer.WriteNumberValue(ElapsedTime);
+            writer.WriteNumberValue(ElapsedSecondsInternal);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -125,7 +125,7 @@ namespace Azure.AI.Projects.Agents
             }
             int candidatesCompleted = default;
             double bestScore = default;
-            double elapsedTime = default;
+            double elapsedSecondsInternal = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -141,7 +141,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("elapsed_seconds"u8))
                 {
-                    elapsedTime = prop.Value.GetDouble();
+                    elapsedSecondsInternal = prop.Value.GetDouble();
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,7 +149,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OptimizationJobProgress(candidatesCompleted, bestScore, elapsedTime, additionalBinaryDataProperties);
+            return new OptimizationJobProgress(candidatesCompleted, bestScore, elapsedSecondsInternal, additionalBinaryDataProperties);
         }
     }
 }
