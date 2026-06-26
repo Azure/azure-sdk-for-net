@@ -12,15 +12,13 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
-    // Compatibility experiment: removing the spec-side alternateType for Microsoft.Network.Resource
-    // makes generated FrontDoorData inherit the generated FrontDoor.Models.Resource type. The shipped
-    // SDK inherited TrackedResourceData, so this partial tests whether custom code can restore that
-    // base type without putting the alternateType back.
+    // The shipped SDK inherited TrackedResourceData. This partial restores that base type after
+    // removing the spec-side alternateType for Microsoft.Network.Resource.
     public partial class FrontDoorData : TrackedResourceData
     {
-        // The generator now honors the custom base type from this partial class, but the generated
-        // serialization method still uses "virtual". Keep the override here until the generator emits
-        // the correct modifier for customized ResourceData/TrackedResourceData base types.
+        // This method body is copied from the generated JsonModelWriteCore; the customization changes
+        // only the method modifier from "virtual" to "override" so it matches TrackedResourceData.
+        // Remove this workaround after https://github.com/Azure/azure-sdk-for-net/issues/60297 is fixed.
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
