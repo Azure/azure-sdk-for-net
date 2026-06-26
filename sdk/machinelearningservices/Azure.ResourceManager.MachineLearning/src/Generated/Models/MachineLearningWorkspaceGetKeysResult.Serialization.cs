@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ContainerRegistryCredentials))
             {
                 writer.WritePropertyName("containerRegistryCredentials"u8);
-                writer.WriteObjectValue<MachineLearningContainerRegistryCredentials>(ContainerRegistryCredentials, options);
+                writer.WriteObjectValue(ContainerRegistryCredentials, options);
             }
             if (Optional.IsDefined(NotebookAccessKeys))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (options.Format != "W" && Optional.IsDefined(UserStorageResourceId))
             {
-                writer.WritePropertyName("userStorageResourceId"u8);
+                writer.WritePropertyName("userStorageArmId"u8);
                 writer.WriteStringValue(UserStorageResourceId);
             }
             if (options.Format != "W" && Optional.IsDefined(UserStorageKey))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     notebookAccessKeys = MachineLearningWorkspaceGetNotebookKeysResult.DeserializeMachineLearningWorkspaceGetNotebookKeysResult(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("userStorageResourceId"u8))
+                if (prop.NameEquals("userStorageArmId"u8))
                 {
                     userStorageResourceId = prop.Value.GetString();
                     continue;

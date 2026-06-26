@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning
                     CancellationToken = cancellationToken
                 };
                 RequestContent content = MachineLearningSerializationHelpers.CreateEnumerableContent(customServices);
-                HttpMessage message = _computeRestClient.CreateUpdateCustomServicesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, context);
+                HttpMessage message = _computeRestClient.CreateUpdateCustomServicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning
                     CancellationToken = cancellationToken
                 };
                 RequestContent content = MachineLearningSerializationHelpers.CreateEnumerableContent(customServices);
-                HttpMessage message = _computeRestClient.CreateUpdateCustomServicesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, context);
+                HttpMessage message = _computeRestClient.CreateUpdateCustomServicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearning
                     CancellationToken = cancellationToken
                 };
                 RequestContent content = MachineLearningSerializationHelpers.CreateEnumerableContent(dataMounts);
-                HttpMessage message = _computeRestClient.CreateUpdateDataMountsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, context);
+                HttpMessage message = _computeRestClient.CreateUpdateDataMountsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.MachineLearning
                     CancellationToken = cancellationToken
                 };
                 RequestContent content = MachineLearningSerializationHelpers.CreateEnumerableContent(dataMounts);
-                HttpMessage message = _computeRestClient.CreateUpdateDataMountsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, context);
+                HttpMessage message = _computeRestClient.CreateUpdateDataMountsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)

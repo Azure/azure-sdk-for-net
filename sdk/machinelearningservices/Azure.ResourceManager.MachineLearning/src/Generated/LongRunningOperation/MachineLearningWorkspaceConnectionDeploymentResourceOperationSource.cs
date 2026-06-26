@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning
         MachineLearningWorkspaceConnectionDeploymentResource IOperationSource<MachineLearningWorkspaceConnectionDeploymentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            MachineLearningWorkspaceConnectionDeploymentData data = MachineLearningWorkspaceConnectionDeploymentData.DeserializeEndpointDeploymentResourcePropertiesBasicResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            MachineLearningWorkspaceConnectionDeploymentData data = MachineLearningWorkspaceConnectionDeploymentData.DeserializeMachineLearningWorkspaceConnectionDeploymentData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new MachineLearningWorkspaceConnectionDeploymentResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning
         async ValueTask<MachineLearningWorkspaceConnectionDeploymentResource> IOperationSource<MachineLearningWorkspaceConnectionDeploymentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            MachineLearningWorkspaceConnectionDeploymentData data = MachineLearningWorkspaceConnectionDeploymentData.DeserializeEndpointDeploymentResourcePropertiesBasicResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            MachineLearningWorkspaceConnectionDeploymentData data = MachineLearningWorkspaceConnectionDeploymentData.DeserializeMachineLearningWorkspaceConnectionDeploymentData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new MachineLearningWorkspaceConnectionDeploymentResource(_client, data);
         }
     }

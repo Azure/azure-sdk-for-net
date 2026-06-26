@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning
     internal partial class RaiBlocklistResourceAddBulkAsyncCollectionResult : AsyncPageable<RaiBlocklistItemData>
     {
         private readonly ConnectionRaiBlocklistItem _client;
-        private readonly Guid _subscriptionId;
+        private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _workspaceName;
         private readonly string _connectionName;
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning
         private readonly IEnumerable<RaiBlocklistItemBulkContent> _body;
         private readonly RequestContext _context;
 
-        public RaiBlocklistResourceAddBulkAsyncCollectionResult(ConnectionRaiBlocklistItem client, Guid subscriptionId, string resourceGroupName, string workspaceName, string connectionName, string raiBlocklistName, IEnumerable<RaiBlocklistItemBulkContent> body, RequestContext context)
+        public RaiBlocklistResourceAddBulkAsyncCollectionResult(ConnectionRaiBlocklistItem client, string subscriptionId, string resourceGroupName, string workspaceName, string connectionName, string raiBlocklistName, IEnumerable<RaiBlocklistItemBulkContent> body, RequestContext context)
             : base(context?.CancellationToken ?? default)
         {
             _client = client;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearning
             }
 
             Response response = await GetResponseAsync().ConfigureAwait(false);
-            RaiBlocklistItemArmPaginatedResult result = RaiBlocklistItemArmPaginatedResult.FromResponse(response);
+            RaiBlocklistItemPropertiesBasicResourceArmPaginatedResult result = RaiBlocklistItemPropertiesBasicResourceArmPaginatedResult.FromResponse(response);
             yield return Page<RaiBlocklistItemData>.FromValues((IReadOnlyList<RaiBlocklistItemData>)result.Value, result.NextLink?.OriginalString, response);
         }
 

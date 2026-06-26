@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    /// <summary> MachineLearningManagedNetworkSettingsResource is a preview-only resource. </summary>
+    /// <summary> ManagedNetworkSettingsPropertiesBasicResource is a preview-only resource. </summary>
     public partial class MachineLearningManagedNetworkSettingsData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

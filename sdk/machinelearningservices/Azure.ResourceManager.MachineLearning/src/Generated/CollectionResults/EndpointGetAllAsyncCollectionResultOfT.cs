@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning
     internal partial class EndpointGetAllAsyncCollectionResultOfT : AsyncPageable<MachineLearningEndpointData>
     {
         private readonly Endpoint _client;
-        private readonly Guid _subscriptionId;
+        private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _workspaceName;
         private readonly string _endpointType;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="expand"> Whether the endpoint resource will be expand to include deployment information, e.g. $expand=deployments. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public EndpointGetAllAsyncCollectionResultOfT(Endpoint client, Guid subscriptionId, string resourceGroupName, string workspaceName, string endpointType, bool? includeOnlineEndpoints, bool? includeServerlessEndpoints, bool? includeConnections, string skip, string expand, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public EndpointGetAllAsyncCollectionResultOfT(Endpoint client, string subscriptionId, string resourceGroupName, string workspaceName, string endpointType, bool? includeOnlineEndpoints, bool? includeServerlessEndpoints, bool? includeConnections, string skip, string expand, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

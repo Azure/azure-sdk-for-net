@@ -17,17 +17,17 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a OutboundRule along with the instance operations that can be performed on it.
+    /// A class representing a MachineLearningOutboundRuleBasic along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MachineLearningOutboundRuleBasicResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MachineLearningManagedNetworkSettingsResource"/> using the GetOutboundRules method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource"/> using the GetMachineLearningOutboundRuleBasics method.
     /// </summary>
     public partial class MachineLearningOutboundRuleBasicResource : ArmResource
     {
-        private readonly ClientDiagnostics _outboundRuleClientDiagnostics;
-        private readonly OutboundRule _outboundRuleRestClient;
+        private readonly ClientDiagnostics _managedNetworkSettingsRuleClientDiagnostics;
+        private readonly ManagedNetworkSettingsRule _managedNetworkSettingsRuleRestClient;
         private readonly MachineLearningOutboundRuleBasicData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/managedNetworks/outboundRules";
+        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/outboundRules";
 
         /// <summary> Initializes a new instance of MachineLearningOutboundRuleBasicResource for mocking. </summary>
         protected MachineLearningOutboundRuleBasicResource()
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MachineLearningOutboundRuleBasicResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string outboundRuleApiVersion);
-            _outboundRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
-            _outboundRuleRestClient = new OutboundRule(_outboundRuleClientDiagnostics, Pipeline, Endpoint, outboundRuleApiVersion ?? "2026-03-15-preview");
+            TryGetApiVersion(ResourceType, out string machineLearningOutboundRuleBasicApiVersion);
+            _managedNetworkSettingsRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
+            _managedNetworkSettingsRuleRestClient = new ManagedNetworkSettingsRule(_managedNetworkSettingsRuleClientDiagnostics, Pipeline, Endpoint, machineLearningOutboundRuleBasicApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 
@@ -70,18 +70,6 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="workspaceName"> The workspaceName. </param>
-        /// <param name="managedNetworkName"> The managedNetworkName. </param>
-        /// <param name="ruleName"> The ruleName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string managedNetworkName, string ruleName)
-        {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/managedNetworks/{managedNetworkName}/outboundRules/{ruleName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
         /// <param name="id"></param>
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
@@ -93,15 +81,15 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// The GET API for retrieveing a single outbound rule of the managed network associated with the machine learning workspace.
+        /// Gets an outbound rule from the managed network of a machine learning workspace.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/managedNetworks/{managedNetworkName}/outboundRules/{ruleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/outboundRules/{ruleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> OutboundRuleBasicResourceOperationGroup_Get. </description>
+        /// <description> OutboundRuleBasicResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -116,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<MachineLearningOutboundRuleBasicResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _outboundRuleClientDiagnostics.CreateScope("MachineLearningOutboundRuleBasicResource.Get");
+            using DiagnosticScope scope = _managedNetworkSettingsRuleClientDiagnostics.CreateScope("MachineLearningOutboundRuleBasicResource.Get");
             scope.Start();
             try
             {
@@ -124,7 +112,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _outboundRuleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _managedNetworkSettingsRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MachineLearningOutboundRuleBasicData> response = Response.FromValue(MachineLearningOutboundRuleBasicData.FromResponse(result), result);
                 if (response.Value == null)
@@ -141,15 +129,15 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// The GET API for retrieveing a single outbound rule of the managed network associated with the machine learning workspace.
+        /// Gets an outbound rule from the managed network of a machine learning workspace.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/managedNetworks/{managedNetworkName}/outboundRules/{ruleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/outboundRules/{ruleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> OutboundRuleBasicResourceOperationGroup_Get. </description>
+        /// <description> OutboundRuleBasicResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -164,7 +152,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<MachineLearningOutboundRuleBasicResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _outboundRuleClientDiagnostics.CreateScope("MachineLearningOutboundRuleBasicResource.Get");
+            using DiagnosticScope scope = _managedNetworkSettingsRuleClientDiagnostics.CreateScope("MachineLearningOutboundRuleBasicResource.Get");
             scope.Start();
             try
             {
@@ -172,7 +160,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _outboundRuleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _managedNetworkSettingsRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MachineLearningOutboundRuleBasicData> response = Response.FromValue(MachineLearningOutboundRuleBasicData.FromResponse(result), result);
                 if (response.Value == null)
@@ -189,15 +177,15 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// The DELETE API for deleting a single outbound rule of the managed network associated with the machine learning workspace.
+        /// Deletes an outbound rule from the managed network of a machine learning workspace.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/managedNetworks/{managedNetworkName}/outboundRules/{ruleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/outboundRules/{ruleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> OutboundRuleBasicResourceOperationGroup_Delete. </description>
+        /// <description> OutboundRuleBasicResources_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -213,7 +201,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _outboundRuleClientDiagnostics.CreateScope("MachineLearningOutboundRuleBasicResource.Delete");
+            using DiagnosticScope scope = _managedNetworkSettingsRuleClientDiagnostics.CreateScope("MachineLearningOutboundRuleBasicResource.Delete");
             scope.Start();
             try
             {
@@ -221,9 +209,9 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _outboundRuleRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _managedNetworkSettingsRuleRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MachineLearningArmOperation operation = new MachineLearningArmOperation(_outboundRuleClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                MachineLearningArmOperation operation = new MachineLearningArmOperation(_managedNetworkSettingsRuleClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -238,15 +226,15 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// The DELETE API for deleting a single outbound rule of the managed network associated with the machine learning workspace.
+        /// Deletes an outbound rule from the managed network of a machine learning workspace.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/managedNetworks/{managedNetworkName}/outboundRules/{ruleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/outboundRules/{ruleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> OutboundRuleBasicResourceOperationGroup_Delete. </description>
+        /// <description> OutboundRuleBasicResources_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -262,7 +250,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _outboundRuleClientDiagnostics.CreateScope("MachineLearningOutboundRuleBasicResource.Delete");
+            using DiagnosticScope scope = _managedNetworkSettingsRuleClientDiagnostics.CreateScope("MachineLearningOutboundRuleBasicResource.Delete");
             scope.Start();
             try
             {
@@ -270,9 +258,9 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _outboundRuleRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _managedNetworkSettingsRuleRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                MachineLearningArmOperation operation = new MachineLearningArmOperation(_outboundRuleClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                MachineLearningArmOperation operation = new MachineLearningArmOperation(_managedNetworkSettingsRuleClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -287,15 +275,15 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Update a OutboundRule.
+        /// Update a MachineLearningOutboundRuleBasic.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/managedNetworks/{managedNetworkName}/outboundRules/{ruleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/outboundRules/{ruleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> OutboundRuleBasicResourceOperationGroup_CreateOrUpdate. </description>
+        /// <description> OutboundRuleBasicResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -308,14 +296,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"></param>
+        /// <param name="data"> Outbound Rule to be created or updated in the managed network of a machine learning workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MachineLearningOutboundRuleBasicResource>> UpdateAsync(WaitUntil waitUntil, MachineLearningOutboundRuleBasicData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _outboundRuleClientDiagnostics.CreateScope("MachineLearningOutboundRuleBasicResource.Update");
+            using DiagnosticScope scope = _managedNetworkSettingsRuleClientDiagnostics.CreateScope("MachineLearningOutboundRuleBasicResource.Update");
             scope.Start();
             try
             {
@@ -323,11 +311,11 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _outboundRuleRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MachineLearningOutboundRuleBasicData.ToRequestContent(data), context);
+                HttpMessage message = _managedNetworkSettingsRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, MachineLearningOutboundRuleBasicData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MachineLearningArmOperation<MachineLearningOutboundRuleBasicResource> operation = new MachineLearningArmOperation<MachineLearningOutboundRuleBasicResource>(
                     new MachineLearningOutboundRuleBasicResourceOperationSource(Client),
-                    _outboundRuleClientDiagnostics,
+                    _managedNetworkSettingsRuleClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -346,15 +334,15 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Update a OutboundRule.
+        /// Update a MachineLearningOutboundRuleBasic.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/managedNetworks/{managedNetworkName}/outboundRules/{ruleName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/outboundRules/{ruleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> OutboundRuleBasicResourceOperationGroup_CreateOrUpdate. </description>
+        /// <description> OutboundRuleBasicResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -367,14 +355,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"></param>
+        /// <param name="data"> Outbound Rule to be created or updated in the managed network of a machine learning workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MachineLearningOutboundRuleBasicResource> Update(WaitUntil waitUntil, MachineLearningOutboundRuleBasicData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _outboundRuleClientDiagnostics.CreateScope("MachineLearningOutboundRuleBasicResource.Update");
+            using DiagnosticScope scope = _managedNetworkSettingsRuleClientDiagnostics.CreateScope("MachineLearningOutboundRuleBasicResource.Update");
             scope.Start();
             try
             {
@@ -382,11 +370,11 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _outboundRuleRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MachineLearningOutboundRuleBasicData.ToRequestContent(data), context);
+                HttpMessage message = _managedNetworkSettingsRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, MachineLearningOutboundRuleBasicData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MachineLearningArmOperation<MachineLearningOutboundRuleBasicResource> operation = new MachineLearningArmOperation<MachineLearningOutboundRuleBasicResource>(
                     new MachineLearningOutboundRuleBasicResourceOperationSource(Client),
-                    _outboundRuleClientDiagnostics,
+                    _managedNetworkSettingsRuleClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DeviceRegistry
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(ActivateBringYourOwnRootRequest))]
+    [ModelReaderWriterBuildable(typeof(ActivateBringYourOwnRootContent))]
     [ModelReaderWriterBuildable(typeof(AssetEndpointProfileListResult))]
     [ModelReaderWriterBuildable(typeof(AssetEndpointProfileStatus))]
     [ModelReaderWriterBuildable(typeof(AssetEndpointProfileStatusError))]
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DeviceRegistry
     [ModelReaderWriterBuildable(typeof(DatasetMqttDestination))]
     [ModelReaderWriterBuildable(typeof(DatasetStorageDestination))]
     [ModelReaderWriterBuildable(typeof(DeviceCredentialPolicy))]
-    [ModelReaderWriterBuildable(typeof(DeviceCredentialsRevokeRequest))]
+    [ModelReaderWriterBuildable(typeof(DeviceCredentialsRevokeContent))]
     [ModelReaderWriterBuildable(typeof(DeviceMessagingEndpoint))]
     [ModelReaderWriterBuildable(typeof(DeviceRef))]
     [ModelReaderWriterBuildable(typeof(DeviceRegistryAssetData))]

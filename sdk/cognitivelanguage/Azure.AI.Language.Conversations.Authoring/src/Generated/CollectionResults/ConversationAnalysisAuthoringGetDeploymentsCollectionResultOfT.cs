@@ -57,8 +57,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                     yield break;
                 }
                 PagedAnalyzeConversationAuthoringProjectDeployment result = (PagedAnalyzeConversationAuthoringProjectDeployment)response;
-                yield return Page<ConversationAuthoringProjectDeployment>.FromValues((IReadOnlyList<ConversationAuthoringProjectDeployment>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ConversationAuthoringProjectDeployment>.FromValues((IReadOnlyList<ConversationAuthoringProjectDeployment>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

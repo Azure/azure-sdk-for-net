@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.MachineLearning
         // Customized: preserve legacy outbound rule resource ID shape.
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string ruleName)
         {
-            const string legacyManagedNetworkName = "default";
-            return CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, legacyManagedNetworkName, ruleName);
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/outboundRules/{ruleName}";
+            return new ResourceIdentifier(resourceId);
         }
     }
 }

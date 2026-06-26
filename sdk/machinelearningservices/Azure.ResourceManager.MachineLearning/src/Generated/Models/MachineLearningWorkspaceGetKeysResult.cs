@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public MachineLearningWorkspaceGetNotebookKeysResult NotebookAccessKeys { get; }
 
         /// <summary> The arm Id key of the workspace storage. </summary>
-        [WirePath("userStorageResourceId")]
+        [WirePath("userStorageArmId")]
         public string UserStorageResourceId { get; }
 
         /// <summary> The access key of the workspace storage. </summary>

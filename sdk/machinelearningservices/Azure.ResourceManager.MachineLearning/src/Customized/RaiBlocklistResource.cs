@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning
             };
             return new AsyncPageableWrapper<RaiBlocklistItemData, RaiBlocklistItemResource>(new RaiBlocklistResourceAddBulkAsyncCollectionResult(
                 _connectionRaiBlocklistItemRestClient,
-                Guid.Parse(Id.SubscriptionId),
+                Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning
             };
             return new PageableWrapper<RaiBlocklistItemData, RaiBlocklistItemResource>(new RaiBlocklistResourceAddBulkCollectionResult(
                 _connectionRaiBlocklistItemRestClient,
-                Guid.Parse(Id.SubscriptionId),
+                Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearning
                     CancellationToken = cancellationToken
                 };
                 RequestContent content = MachineLearningSerializationHelpers.CreateStringEnumerableContent(body);
-                HttpMessage message = _connectionRaiBlocklistItemRestClient.CreateDeleteBulkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, context);
+                HttpMessage message = _connectionRaiBlocklistItemRestClient.CreateDeleteBulkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MachineLearningArmOperation operation = new MachineLearningArmOperation(_connectionRaiBlocklistItemClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearning
                     CancellationToken = cancellationToken
                 };
                 RequestContent content = MachineLearningSerializationHelpers.CreateStringEnumerableContent(body);
-                HttpMessage message = _connectionRaiBlocklistItemRestClient.CreateDeleteBulkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, context);
+                HttpMessage message = _connectionRaiBlocklistItemRestClient.CreateDeleteBulkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MachineLearningArmOperation operation = new MachineLearningArmOperation(_connectionRaiBlocklistItemClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

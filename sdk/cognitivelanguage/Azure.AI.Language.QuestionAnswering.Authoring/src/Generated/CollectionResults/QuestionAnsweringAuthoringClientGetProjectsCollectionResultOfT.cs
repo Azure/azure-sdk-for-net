@@ -54,8 +54,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     yield break;
                 }
                 PagedQuestionAnsweringProjectMetadata result = (PagedQuestionAnsweringProjectMetadata)response;
-                yield return Page<QuestionAnsweringProject>.FromValues((IReadOnlyList<QuestionAnsweringProject>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<QuestionAnsweringProject>.FromValues((IReadOnlyList<QuestionAnsweringProject>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -45,8 +45,8 @@ namespace Azure.Analytics.Defender.Easm
                     yield break;
                 }
                 PagedCisaCveResult result = (PagedCisaCveResult)response;
-                yield return Page<CisaCveResult>.FromValues((IReadOnlyList<CisaCveResult>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<CisaCveResult>.FromValues((IReadOnlyList<CisaCveResult>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning
     internal partial class CodeVersionsGetAllAsyncCollectionResultOfT : AsyncPageable<MachineLearningCodeVersionData>
     {
         private readonly CodeVersions _client;
-        private readonly Guid _subscriptionId;
+        private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _workspaceName;
         private readonly string _name;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="hashVersion"> Hash algorithm version when listing by hash. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public CodeVersionsGetAllAsyncCollectionResultOfT(CodeVersions client, Guid subscriptionId, string resourceGroupName, string workspaceName, string name, string orderBy, int? top, string skip, string hash, string hashVersion, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public CodeVersionsGetAllAsyncCollectionResultOfT(CodeVersions client, string subscriptionId, string resourceGroupName, string workspaceName, string name, string orderBy, int? top, string skip, string hash, string hashVersion, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _registriesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MachineLearningRegistryData> response = Response.FromValue(MachineLearningRegistryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _registriesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MachineLearningRegistryData> response = Response.FromValue(MachineLearningRegistryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registriesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MachineLearningRegistryPatch.ToRequestContent(patch), context);
+                HttpMessage message = _registriesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MachineLearningRegistryPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MachineLearningRegistryData> response = Response.FromValue(MachineLearningRegistryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registriesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MachineLearningRegistryPatch.ToRequestContent(patch), context);
+                HttpMessage message = _registriesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MachineLearningRegistryPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MachineLearningRegistryData> response = Response.FromValue(MachineLearningRegistryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registriesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _registriesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MachineLearningArmOperation operation = new MachineLearningArmOperation(_registriesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registriesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _registriesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MachineLearningArmOperation operation = new MachineLearningArmOperation(_registriesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registriesRestClient.CreateRemoveRegionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MachineLearningRegistryData.ToRequestContent(data), context);
+                HttpMessage message = _registriesRestClient.CreateRemoveRegionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MachineLearningRegistryData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MachineLearningArmOperation<MachineLearningRegistryResource> operation = new MachineLearningArmOperation<MachineLearningRegistryResource>(
                     new MachineLearningRegistryResourceOperationSource(Client),
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registriesRestClient.CreateRemoveRegionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MachineLearningRegistryData.ToRequestContent(data), context);
+                HttpMessage message = _registriesRestClient.CreateRemoveRegionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MachineLearningRegistryData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MachineLearningArmOperation<MachineLearningRegistryResource> operation = new MachineLearningArmOperation<MachineLearningRegistryResource>(
                     new MachineLearningRegistryResourceOperationSource(Client),
@@ -624,171 +624,6 @@ namespace Azure.ResourceManager.MachineLearning
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Gets a collection of RegistryCodeContainers in the <see cref="MachineLearningRegistryResource"/>. </summary>
-        /// <returns> An object representing collection of RegistryCodeContainers and their operations over a MachineLearningRegistryCodeContainerResource. </returns>
-        public virtual MachineLearningRegistryCodeContainerCollection GetRegistryCodeContainers()
-        {
-            return GetCachedClient(client => new MachineLearningRegistryCodeContainerCollection(client, Id));
-        }
-
-        /// <summary> Get Code container. </summary>
-        /// <param name="codeName"> Container name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="codeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="codeName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<MachineLearningRegistryCodeContainerResource>> GetRegistryCodeContainerAsync(string codeName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(codeName, nameof(codeName));
-
-            return await GetRegistryCodeContainers().GetAsync(codeName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get Code container. </summary>
-        /// <param name="codeName"> Container name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="codeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="codeName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<MachineLearningRegistryCodeContainerResource> GetRegistryCodeContainer(string codeName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(codeName, nameof(codeName));
-
-            return GetRegistryCodeContainers().Get(codeName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of RegistryComponentContainers in the <see cref="MachineLearningRegistryResource"/>. </summary>
-        /// <returns> An object representing collection of RegistryComponentContainers and their operations over a MachineLearninRegistryComponentContainerResource. </returns>
-        public virtual MachineLearninRegistryComponentContainerCollection GetRegistryComponentContainers()
-        {
-            return GetCachedClient(client => new MachineLearninRegistryComponentContainerCollection(client, Id));
-        }
-
-        /// <summary> Get container. </summary>
-        /// <param name="componentName"> Container name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<MachineLearninRegistryComponentContainerResource>> GetRegistryComponentContainerAsync(string componentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
-
-            return await GetRegistryComponentContainers().GetAsync(componentName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get container. </summary>
-        /// <param name="componentName"> Container name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<MachineLearninRegistryComponentContainerResource> GetRegistryComponentContainer(string componentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
-
-            return GetRegistryComponentContainers().Get(componentName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of RegistryDataContainers in the <see cref="MachineLearningRegistryResource"/>. </summary>
-        /// <returns> An object representing collection of RegistryDataContainers and their operations over a MachineLearningRegistryDataContainerResource. </returns>
-        public virtual MachineLearningRegistryDataContainerCollection GetRegistryDataContainers()
-        {
-            return GetCachedClient(client => new MachineLearningRegistryDataContainerCollection(client, Id));
-        }
-
-        /// <summary> Get container. </summary>
-        /// <param name="name"> Container name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<MachineLearningRegistryDataContainerResource>> GetRegistryDataContainerAsync(string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            return await GetRegistryDataContainers().GetAsync(name, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get container. </summary>
-        /// <param name="name"> Container name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<MachineLearningRegistryDataContainerResource> GetRegistryDataContainer(string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            return GetRegistryDataContainers().Get(name, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of RegistryEnvironmentContainers in the <see cref="MachineLearningRegistryResource"/>. </summary>
-        /// <returns> An object representing collection of RegistryEnvironmentContainers and their operations over a MachineLearningRegistryEnvironmentContainerResource. </returns>
-        public virtual MachineLearningRegistryEnvironmentContainerCollection GetRegistryEnvironmentContainers()
-        {
-            return GetCachedClient(client => new MachineLearningRegistryEnvironmentContainerCollection(client, Id));
-        }
-
-        /// <summary> Get container. </summary>
-        /// <param name="environmentName"> Container name. This is case-sensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<MachineLearningRegistryEnvironmentContainerResource>> GetRegistryEnvironmentContainerAsync(string environmentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
-
-            return await GetRegistryEnvironmentContainers().GetAsync(environmentName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get container. </summary>
-        /// <param name="environmentName"> Container name. This is case-sensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<MachineLearningRegistryEnvironmentContainerResource> GetRegistryEnvironmentContainer(string environmentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
-
-            return GetRegistryEnvironmentContainers().Get(environmentName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of RegistryModelContainers in the <see cref="MachineLearningRegistryResource"/>. </summary>
-        /// <returns> An object representing collection of RegistryModelContainers and their operations over a MachineLearningRegistryModelContainerResource. </returns>
-        public virtual MachineLearningRegistryModelContainerCollection GetRegistryModelContainers()
-        {
-            return GetCachedClient(client => new MachineLearningRegistryModelContainerCollection(client, Id));
-        }
-
-        /// <summary> Get container. </summary>
-        /// <param name="modelName"> Container name. This is case-sensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<MachineLearningRegistryModelContainerResource>> GetRegistryModelContainerAsync(string modelName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(modelName, nameof(modelName));
-
-            return await GetRegistryModelContainers().GetAsync(modelName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get container. </summary>
-        /// <param name="modelName"> Container name. This is case-sensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<MachineLearningRegistryModelContainerResource> GetRegistryModelContainer(string modelName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(modelName, nameof(modelName));
-
-            return GetRegistryModelContainers().Get(modelName, cancellationToken);
         }
     }
 }

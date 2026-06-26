@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary></summary>
-    internal partial class RaiBlocklistResourceOperationSource : IOperationSource<RaiBlocklistResource>
+    internal partial class RaiBlocklistItemResourceOperationSource : IOperationSource<RaiBlocklistItemResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal RaiBlocklistResourceOperationSource(ArmClient client)
+        internal RaiBlocklistItemResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        RaiBlocklistResource IOperationSource<RaiBlocklistResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        RaiBlocklistItemResource IOperationSource<RaiBlocklistItemResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            RaiBlocklistData data = RaiBlocklistData.DeserializeRaiBlocklistData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new RaiBlocklistResource(_client, data);
+            RaiBlocklistItemData data = RaiBlocklistItemData.DeserializeRaiBlocklistItemData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new RaiBlocklistItemResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<RaiBlocklistResource> IOperationSource<RaiBlocklistResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<RaiBlocklistItemResource> IOperationSource<RaiBlocklistItemResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            RaiBlocklistData data = RaiBlocklistData.DeserializeRaiBlocklistData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new RaiBlocklistResource(_client, data);
+            RaiBlocklistItemData data = RaiBlocklistItemData.DeserializeRaiBlocklistItemData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new RaiBlocklistItemResource(_client, data);
         }
     }
 }
