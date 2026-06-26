@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
     /// <summary> The language extension object. </summary>
     public partial class KustoLanguageExtension
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KustoLanguageExtension"/>. </summary>
         public KustoLanguageExtension()
@@ -53,23 +25,25 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of <see cref="KustoLanguageExtension"/>. </summary>
         /// <param name="languageExtensionName"> The language extension name. </param>
         /// <param name="languageExtensionImageName"> The language extension image name. </param>
-        /// <param name="languageExtensionCustomImageName"> The language extension custom image name. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KustoLanguageExtension(KustoLanguageExtensionName? languageExtensionName, KustoLanguageExtensionImageName? languageExtensionImageName, string languageExtensionCustomImageName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="languageExtensionCustomImageName"> The sandbox custom image name that should be enabled as the active language extension. Sandbox custom image is a cluster sub resource. When this property is set, LanguageExtensionImageName should be set to 'PythonCustomImage'. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal KustoLanguageExtension(KustoLanguageExtensionName? languageExtensionName, KustoLanguageExtensionImageName? languageExtensionImageName, string languageExtensionCustomImageName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LanguageExtensionName = languageExtensionName;
             LanguageExtensionImageName = languageExtensionImageName;
             LanguageExtensionCustomImageName = languageExtensionCustomImageName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The language extension name. </summary>
         [WirePath("languageExtensionName")]
         public KustoLanguageExtensionName? LanguageExtensionName { get; set; }
+
         /// <summary> The language extension image name. </summary>
         [WirePath("languageExtensionImageName")]
         public KustoLanguageExtensionImageName? LanguageExtensionImageName { get; set; }
-        /// <summary> The language extension custom image name. </summary>
+
+        /// <summary> The sandbox custom image name that should be enabled as the active language extension. Sandbox custom image is a cluster sub resource. When this property is set, LanguageExtensionImageName should be set to 'PythonCustomImage'. </summary>
         [WirePath("languageExtensionCustomImageName")]
         public string LanguageExtensionCustomImageName { get; set; }
     }

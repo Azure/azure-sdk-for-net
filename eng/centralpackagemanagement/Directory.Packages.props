@@ -147,7 +147,7 @@
     <PackageVersion Include="Azure.ResourceManager.ManagedServiceIdentities" Version="1.4.1" />
     <PackageVersion Include="Azure.ResourceManager.Monitor" Version="1.3.1" />
     <PackageVersion Include="Azure.ResourceManager.Network" Version="1.16.0" />
-    <PackageVersion Include="Azure.ResourceManager.OperationalInsights" Version="1.3.1" />
+    <PackageVersion Include="Azure.ResourceManager.OperationalInsights" Version="1.3.2" />
     <PackageVersion Include="Azure.ResourceManager.PostgreSql" Version="1.4.2" />
     <PackageVersion Include="Azure.ResourceManager.Redis" Version="1.5.1" />
     <PackageVersion Include="Azure.ResourceManager.ResourceGraph" Version="1.1.0" />
@@ -234,7 +234,7 @@
   <!--                  package dependencies                          -->
   <!-- ============================================================== -->
   <ItemGroup>
-    <PackageVersion Include="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20260604.1" PrivateAssets="All" />
+    <PackageVersion Include="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20260624.1" PrivateAssets="All" />
     <PackageVersion Include="coverlet.collector" Version="6.0.4" PrivateAssets="All" />
     <PackageVersion Include="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20251023.1" PrivateAssets="All" />
 

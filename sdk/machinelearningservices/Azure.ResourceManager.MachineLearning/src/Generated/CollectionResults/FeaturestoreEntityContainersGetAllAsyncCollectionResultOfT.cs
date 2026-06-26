@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning
     internal partial class FeaturestoreEntityContainersGetAllAsyncCollectionResultOfT : AsyncPageable<MachineLearningFeatureStoreEntityContainerData>
     {
         private readonly FeaturestoreEntityContainers _client;
-        private readonly Guid _subscriptionId;
+        private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _workspaceName;
         private readonly string _skip;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="createdBy"> createdBy user name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public FeaturestoreEntityContainersGetAllAsyncCollectionResultOfT(FeaturestoreEntityContainers client, Guid subscriptionId, string resourceGroupName, string workspaceName, string skip, string tags, string listViewType, int? pageSize, string name, string description, string createdBy, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public FeaturestoreEntityContainersGetAllAsyncCollectionResultOfT(FeaturestoreEntityContainers client, string subscriptionId, string resourceGroupName, string workspaceName, string skip, string tags, string listViewType, int? pageSize, string name, string description, string createdBy, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageDetails"/>. </summary>
-        /// <param name="doesExist"> Indicates if image doesExist. </param>
+        /// <param name="doesExist"> Indicates if image exists. </param>
         /// <param name="image"> Container image details. </param>
         /// <param name="vulnerabilityFindings"> Vulnerability findings details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Indicates if image doesExist. </summary>
+        /// <summary> Indicates if image exists. </summary>
         [WirePath("exists")]
         public bool? DoesExist { get; set; }
 

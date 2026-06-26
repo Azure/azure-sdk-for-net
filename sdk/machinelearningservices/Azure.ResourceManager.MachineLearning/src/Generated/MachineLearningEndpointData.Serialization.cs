@@ -17,7 +17,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    /// <summary> MachineLearningEndpointResource is a preview-only resource. </summary>
+    /// <summary> EndpointResourcePropertiesBasicResource is a preview-only resource. </summary>
     public partial class MachineLearningEndpointData : ResourceData, IJsonModel<MachineLearningEndpointData>
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointData"/> for deserialization. </summary>
@@ -155,6 +155,10 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 if (prop.NameEquals("id"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }

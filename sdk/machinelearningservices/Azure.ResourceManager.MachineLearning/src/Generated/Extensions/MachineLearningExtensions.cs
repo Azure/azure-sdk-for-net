@@ -636,18 +636,18 @@ namespace Azure.ResourceManager.MachineLearning
         /// Gets an object representing a <see cref="MachineLearningWorkspaceConnectionDeploymentResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetConnectionResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetMachineLearningWorkspaceConnectionDeploymentResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="MachineLearningWorkspaceConnectionDeploymentResource"/> object. </returns>
-        public static MachineLearningWorkspaceConnectionDeploymentResource GetConnectionResource(this ArmClient client, ResourceIdentifier id)
+        public static MachineLearningWorkspaceConnectionDeploymentResource GetMachineLearningWorkspaceConnectionDeploymentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMachineLearningArmClient(client).GetConnectionResource(id);
+            return GetMockableMachineLearningArmClient(client).GetMachineLearningWorkspaceConnectionDeploymentResource(id);
         }
 
         /// <summary>
@@ -870,36 +870,36 @@ namespace Azure.ResourceManager.MachineLearning
         /// Gets an object representing a <see cref="RaiBlocklistResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetRaiBlocklist(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetRaiBlocklistResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="RaiBlocklistResource"/> object. </returns>
-        public static RaiBlocklistResource GetRaiBlocklist(this ArmClient client, ResourceIdentifier id)
+        public static RaiBlocklistResource GetRaiBlocklistResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMachineLearningArmClient(client).GetRaiBlocklist(id);
+            return GetMockableMachineLearningArmClient(client).GetRaiBlocklistResource(id);
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="RaiBlocklistItemResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetRaiBlocklistItem(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetRaiBlocklistItemResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="RaiBlocklistItemResource"/> object. </returns>
-        public static RaiBlocklistItemResource GetRaiBlocklistItem(this ArmClient client, ResourceIdentifier id)
+        public static RaiBlocklistItemResource GetRaiBlocklistItemResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMachineLearningArmClient(client).GetRaiBlocklistItem(id);
+            return GetMockableMachineLearningArmClient(client).GetRaiBlocklistItemResource(id);
         }
 
         /// <summary>
@@ -924,54 +924,36 @@ namespace Azure.ResourceManager.MachineLearning
         /// Gets an object representing a <see cref="MachineLearningEndpointResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetMachineLearningEndpoint(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetMachineLearningEndpointResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="MachineLearningEndpointResource"/> object. </returns>
-        public static MachineLearningEndpointResource GetMachineLearningEndpoint(this ArmClient client, ResourceIdentifier id)
+        public static MachineLearningEndpointResource GetMachineLearningEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMachineLearningArmClient(client).GetMachineLearningEndpoint(id);
+            return GetMockableMachineLearningArmClient(client).GetMachineLearningEndpointResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ManagedNetworkSettingsRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ManagedNetworkOutboundRuleBasicResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetManagedNetworkSettingsRuleResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetManagedNetworkOutboundRuleBasicResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ManagedNetworkSettingsRuleResource"/> object. </returns>
-        public static ManagedNetworkSettingsRuleResource GetManagedNetworkSettingsRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedNetworkOutboundRuleBasicResource"/> object. </returns>
+        public static ManagedNetworkOutboundRuleBasicResource GetManagedNetworkOutboundRuleBasicResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMachineLearningArmClient(client).GetManagedNetworkSettingsRuleResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="MachineLearningOutboundRuleBasicResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetMachineLearningOutboundRuleBasicResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningOutboundRuleBasicResource"/> object. </returns>
-        public static MachineLearningOutboundRuleBasicResource GetMachineLearningOutboundRuleBasicResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableMachineLearningArmClient(client).GetMachineLearningOutboundRuleBasicResource(id);
+            return GetMockableMachineLearningArmClient(client).GetManagedNetworkOutboundRuleBasicResource(id);
         }
 
         /// <summary>
@@ -1181,84 +1163,10 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Gets the current usage information as well as limits for AML resources for given subscription and location.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningSubscriptionResource.GetMachineLearningUsagesAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="MachineLearningUsage"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MachineLearningUsage> GetMachineLearningUsagesAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableMachineLearningSubscriptionResource(subscriptionResource).GetMachineLearningUsagesAsync(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the current usage information as well as limits for AML resources for given subscription and location.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningSubscriptionResource.GetMachineLearningUsages(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="MachineLearningUsage"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MachineLearningUsage> GetMachineLearningUsages(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableMachineLearningSubscriptionResource(subscriptionResource).GetMachineLearningUsages(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns supported VM Sizes in a location
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningSubscriptionResource.GetMachineLearningVmSizesAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<VirtualMachineSizeListResult>> GetMachineLearningVmSizesAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableMachineLearningSubscriptionResource(subscriptionResource).GetMachineLearningVmSizesAsync(location, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns supported VM Sizes in a location
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningSubscriptionResource.GetMachineLearningVmSizes(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<VirtualMachineSizeListResult> GetMachineLearningVmSizes(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableMachineLearningSubscriptionResource(subscriptionResource).GetMachineLearningVmSizes(location, cancellationToken);
-        }
-
-        /// <summary>
         /// Update quota for each VM family in workspace.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningSubscriptionResource.UpdateAsync(string, MachineLearningQuotaUpdateContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMachineLearningSubscriptionResource.UpdateAsync(AzureLocation, MachineLearningQuotaUpdateContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1266,7 +1174,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<MachineLearningWorkspaceQuotaStatusResult>> UpdateAsync(this SubscriptionResource subscriptionResource, string location, MachineLearningQuotaUpdateContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<MachineLearningWorkspaceQuotaStatusResult>> UpdateAsync(this SubscriptionResource subscriptionResource, AzureLocation location, MachineLearningQuotaUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -1277,7 +1185,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// Update quota for each VM family in workspace.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningSubscriptionResource.Update(string, MachineLearningQuotaUpdateContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMachineLearningSubscriptionResource.Update(AzureLocation, MachineLearningQuotaUpdateContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1285,49 +1193,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<MachineLearningWorkspaceQuotaStatusResult> Update(this SubscriptionResource subscriptionResource, string location, MachineLearningQuotaUpdateContent content, CancellationToken cancellationToken = default)
+        public static Response<MachineLearningWorkspaceQuotaStatusResult> Update(this SubscriptionResource subscriptionResource, AzureLocation location, MachineLearningQuotaUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableMachineLearningSubscriptionResource(subscriptionResource).Update(location, content, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the currently assigned Workspace Quotas based on VMFamily.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningSubscriptionResource.GetMachineLearningQuotasAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="MachineLearningResourceQuota"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MachineLearningResourceQuota> GetMachineLearningQuotasAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableMachineLearningSubscriptionResource(subscriptionResource).GetMachineLearningQuotasAsync(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the currently assigned Workspace Quotas based on VMFamily.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningSubscriptionResource.GetMachineLearningQuotas(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="MachineLearningResourceQuota"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MachineLearningResourceQuota> GetMachineLearningQuotas(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableMachineLearningSubscriptionResource(subscriptionResource).GetMachineLearningQuotas(location, cancellationToken);
         }
 
         /// <summary>

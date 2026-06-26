@@ -12,7 +12,7 @@ using Azure.ResourceManager.MachineLearning;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningExternalFqdnResult. </summary>
-    public partial class MachineLearningExternalFqdnResult
+    internal partial class MachineLearningExternalFqdnResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

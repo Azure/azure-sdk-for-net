@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.RedHatOpenShift
     [ModelReaderWriterBuildable(typeof(PlatformWorkloadIdentityRoleSetList))]
     [ModelReaderWriterBuildable(typeof(PlatformWorkloadIdentityRoleSetProperties))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerRedHatOpenShiftContext : ModelReaderWriterContext
     {
     }

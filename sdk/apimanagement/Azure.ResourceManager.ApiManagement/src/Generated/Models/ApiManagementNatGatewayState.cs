@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public readonly partial struct ApiManagementNatGatewayState : IEquatable<ApiManagementNatGatewayState>
     {
         private readonly string _value;
+        /// <summary> Nat Gateway is enabled for the service. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Nat Gateway is disabled for the service. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementNatGatewayState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApiManagementNatGatewayState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
+            _value = value;
+        }
 
         /// <summary> Nat Gateway is enabled for the service. </summary>
         public static ApiManagementNatGatewayState Enabled { get; } = new ApiManagementNatGatewayState(EnabledValue);
+
         /// <summary> Nat Gateway is disabled for the service. </summary>
         public static ApiManagementNatGatewayState Disabled { get; } = new ApiManagementNatGatewayState(DisabledValue);
+
         /// <summary> Determines if two <see cref="ApiManagementNatGatewayState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApiManagementNatGatewayState left, ApiManagementNatGatewayState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApiManagementNatGatewayState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApiManagementNatGatewayState left, ApiManagementNatGatewayState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApiManagementNatGatewayState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApiManagementNatGatewayState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApiManagementNatGatewayState(string value) => new ApiManagementNatGatewayState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApiManagementNatGatewayState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApiManagementNatGatewayState?(string value) => value == null ? null : new ApiManagementNatGatewayState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApiManagementNatGatewayState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApiManagementNatGatewayState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

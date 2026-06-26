@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning
     internal partial class RegistriesGetBySubscriptionAsyncCollectionResultOfT : AsyncPageable<MachineLearningRegistryData>
     {
         private readonly Registries _client;
-        private readonly Guid _subscriptionId;
+        private readonly string _subscriptionId;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public RegistriesGetBySubscriptionAsyncCollectionResultOfT(Registries client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public RegistriesGetBySubscriptionAsyncCollectionResultOfT(Registries client, string subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

@@ -18,9 +18,9 @@ using Azure.ResourceManager.MachineLearning.Models;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a WorkspaceConnectionPropertiesV2BasicResource along with the instance operations that can be performed on it.
+    /// A class representing a MachineLearningWorkspaceConnection along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MachineLearningWorkspaceConnectionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource"/> using the GetWorkspaceConnectionPropertiesV2BasicResources method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource"/> using the GetMachineLearningWorkspaceConnections method.
     /// </summary>
     public partial class MachineLearningWorkspaceConnectionResource : ArmResource
     {
@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MachineLearningWorkspaceConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string workspaceConnectionPropertiesV2BasicResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string machineLearningWorkspaceConnectionApiVersion);
             _workspaceConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
-            _workspaceConnectionsRestClient = new WorkspaceConnections(_workspaceConnectionsClientDiagnostics, Pipeline, Endpoint, workspaceConnectionPropertiesV2BasicResourceApiVersion ?? "2026-03-15-preview");
+            _workspaceConnectionsRestClient = new WorkspaceConnections(_workspaceConnectionsClientDiagnostics, Pipeline, Endpoint, machineLearningWorkspaceConnectionApiVersion ?? "2026-03-15-preview");
             _connectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
-            _connectionRestClient = new Connection(_connectionClientDiagnostics, Pipeline, Endpoint, workspaceConnectionPropertiesV2BasicResourceApiVersion ?? "2026-03-15-preview");
+            _connectionRestClient = new Connection(_connectionClientDiagnostics, Pipeline, Endpoint, machineLearningWorkspaceConnectionApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _workspaceConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MachineLearningWorkspaceConnectionData> response = Response.FromValue(MachineLearningWorkspaceConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _workspaceConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MachineLearningWorkspaceConnectionData> response = Response.FromValue(MachineLearningWorkspaceConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="patch"> Parameters for workspace connection update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MachineLearningWorkspaceConnectionResource>> UpdateAsync(WorkspaceConnectionPropertiesV2BasicResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningWorkspaceConnectionResource>> UpdateAsync(MachineLearningWorkspaceConnectionPatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _workspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionResource.Update");
             scope.Start();
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, WorkspaceConnectionPropertiesV2BasicResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _workspaceConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, MachineLearningWorkspaceConnectionPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MachineLearningWorkspaceConnectionData> response = Response.FromValue(MachineLearningWorkspaceConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="patch"> Parameters for workspace connection update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MachineLearningWorkspaceConnectionResource> Update(WorkspaceConnectionPropertiesV2BasicResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<MachineLearningWorkspaceConnectionResource> Update(MachineLearningWorkspaceConnectionPatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _workspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionResource.Update");
             scope.Start();
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, WorkspaceConnectionPropertiesV2BasicResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _workspaceConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, MachineLearningWorkspaceConnectionPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MachineLearningWorkspaceConnectionData> response = Response.FromValue(MachineLearningWorkspaceConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _workspaceConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _workspaceConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.MachineLearning
             };
             return new ConnectionGetModelsAsyncCollectionResultOfT(
                 _connectionRestClient,
-                Guid.Parse(Id.SubscriptionId),
+                Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.MachineLearning
             };
             return new ConnectionGetModelsCollectionResultOfT(
                 _connectionRestClient,
-                Guid.Parse(Id.SubscriptionId),
+                Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceConnectionsRestClient.CreateGetSecretsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _workspaceConnectionsRestClient.CreateGetSecretsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MachineLearningWorkspaceConnectionData> response = Response.FromValue(MachineLearningWorkspaceConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceConnectionsRestClient.CreateGetSecretsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _workspaceConnectionsRestClient.CreateGetSecretsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MachineLearningWorkspaceConnectionData> response = Response.FromValue(MachineLearningWorkspaceConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceConnectionsRestClient.CreateTestConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MachineLearningWorkspaceConnectionData.ToRequestContent(data), context);
+                HttpMessage message = _workspaceConnectionsRestClient.CreateTestConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, MachineLearningWorkspaceConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MachineLearningArmOperation operation = new MachineLearningArmOperation(_workspaceConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -650,7 +650,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceConnectionsRestClient.CreateTestConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MachineLearningWorkspaceConnectionData.ToRequestContent(data), context);
+                HttpMessage message = _workspaceConnectionsRestClient.CreateTestConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, MachineLearningWorkspaceConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MachineLearningArmOperation operation = new MachineLearningArmOperation(_workspaceConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -666,9 +666,9 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
-        /// <summary> Gets a collection of Connections in the <see cref="MachineLearningWorkspaceConnectionResource"/>. </summary>
-        /// <returns> An object representing collection of Connections and their operations over a MachineLearningWorkspaceConnectionDeploymentResource. </returns>
-        public virtual MachineLearningWorkspaceConnectionDeploymentCollection GetConnections()
+        /// <summary> Gets a collection of MachineLearningWorkspaceConnectionDeployments in the <see cref="MachineLearningWorkspaceConnectionResource"/>. </summary>
+        /// <returns> An object representing collection of MachineLearningWorkspaceConnectionDeployments and their operations over a MachineLearningWorkspaceConnectionDeploymentResource. </returns>
+        public virtual MachineLearningWorkspaceConnectionDeploymentCollection GetMachineLearningWorkspaceConnectionDeployments()
         {
             return GetCachedClient(client => new MachineLearningWorkspaceConnectionDeploymentCollection(client, Id));
         }
@@ -679,11 +679,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MachineLearningWorkspaceConnectionDeploymentResource>> GetConnectionAsync(string deploymentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningWorkspaceConnectionDeploymentResource>> GetMachineLearningWorkspaceConnectionDeploymentAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            return await GetConnections().GetAsync(deploymentName, cancellationToken).ConfigureAwait(false);
+            return await GetMachineLearningWorkspaceConnectionDeployments().GetAsync(deploymentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get deployments under the Azure OpenAI connection by name. </summary>
@@ -692,11 +692,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MachineLearningWorkspaceConnectionDeploymentResource> GetConnection(string deploymentName, CancellationToken cancellationToken = default)
+        public virtual Response<MachineLearningWorkspaceConnectionDeploymentResource> GetMachineLearningWorkspaceConnectionDeployment(string deploymentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            return GetConnections().Get(deploymentName, cancellationToken);
+            return GetMachineLearningWorkspaceConnectionDeployments().Get(deploymentName, cancellationToken);
         }
 
         /// <summary> Gets a collection of RaiBlocklists in the <see cref="MachineLearningWorkspaceConnectionResource"/>. </summary>
@@ -712,7 +712,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="raiBlocklistName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="raiBlocklistName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RaiBlocklistResource>> GetRaiBlocklistResourceAsync(string raiBlocklistName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RaiBlocklistResource>> GetRaiBlocklistAsync(string raiBlocklistName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(raiBlocklistName, nameof(raiBlocklistName));
 

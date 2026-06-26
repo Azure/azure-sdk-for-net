@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    /// <summary> RaiBlocklistResource is a preview-only resource. </summary>
+    /// <summary> RaiBlocklistPropertiesBasicResource is a preview-only resource. </summary>
     public partial class RaiBlocklistData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

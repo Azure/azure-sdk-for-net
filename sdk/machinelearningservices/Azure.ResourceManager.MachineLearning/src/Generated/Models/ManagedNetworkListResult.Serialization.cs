@@ -14,7 +14,7 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Paged collection of MachineLearningManagedNetworkSettingsResource items. </summary>
+    /// <summary> Paged collection of ManagedNetworkSettingsPropertiesBasicResource items. </summary>
     internal partial class ManagedNetworkListResult : IJsonModel<ManagedNetworkListResult>
     {
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkListResult"/> for deserialization. </summary>

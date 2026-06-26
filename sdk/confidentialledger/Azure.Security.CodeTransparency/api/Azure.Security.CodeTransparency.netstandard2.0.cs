@@ -37,24 +37,68 @@ namespace Azure.Security.CodeTransparency
         public CodeTransparencyClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Security.CodeTransparency.CodeTransparencyClientOptions options) { }
         public CodeTransparencyClient(System.Uri endpoint, Azure.Security.CodeTransparency.CodeTransparencyClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        [System.ObsoleteAttribute("Use CreateEntryV09 instead.")]
+        public virtual Azure.Response CreateEntry(Azure.Core.RequestContent content, bool? waitForCommit = default(bool?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Operation<System.BinaryData> CreateEntry(Azure.WaitUntil waitUntil, System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("Use CreateEntryV09 instead.")]
+        public virtual Azure.Response<System.BinaryData> CreateEntry(System.BinaryData body, bool? waitForCommit = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("Use CreateEntryV09Async instead.")]
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateEntryAsync(Azure.Core.RequestContent content, bool? waitForCommit = default(bool?), Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateEntryAsync(Azure.WaitUntil waitUntil, System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("Use CreateEntryV09Async instead.")]
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> CreateEntryAsync(System.BinaryData body, bool? waitForCommit = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response CreateEntryV09(Azure.Core.RequestContent content, bool? waitForCommit = default(bool?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response<System.BinaryData> CreateEntryV09(System.BinaryData body, bool? waitForCommit = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateEntryV09Async(Azure.Core.RequestContent content, bool? waitForCommit = default(bool?), Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> CreateEntryV09Async(System.BinaryData body, bool? waitForCommit = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("Use GetEntryV09 instead.")]
         public virtual Azure.Response GetEntry(string entryId, Azure.RequestContext context) { throw null; }
+        [System.ObsoleteAttribute("Use GetEntryV09 instead.")]
         public virtual Azure.Response<System.BinaryData> GetEntry(string entryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("Use GetEntryV09Async instead.")]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetEntryAsync(string entryId, Azure.RequestContext context) { throw null; }
+        [System.ObsoleteAttribute("Use GetEntryV09Async instead.")]
         public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> GetEntryAsync(string entryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("Use GetEntryStatementV09 instead.")]
         public virtual Azure.Response GetEntryStatement(string entryId, Azure.RequestContext context) { throw null; }
+        [System.ObsoleteAttribute("Use GetEntryStatementV09 instead.")]
         public virtual Azure.Response<System.BinaryData> GetEntryStatement(string entryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("Use GetEntryStatementV09Async instead.")]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetEntryStatementAsync(string entryId, Azure.RequestContext context) { throw null; }
+        [System.ObsoleteAttribute("Use GetEntryStatementV09Async instead.")]
         public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> GetEntryStatementAsync(string entryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetEntryStatementV09(string entryId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response<System.BinaryData> GetEntryStatementV09(string entryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetEntryStatementV09Async(string entryId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> GetEntryStatementV09Async(string entryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetEntryV09(string entryId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response<System.BinaryData> GetEntryV09(string entryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetEntryV09Async(string entryId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> GetEntryV09Async(string entryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("Use GetOperationV09 instead.")]
         public virtual Azure.Response GetOperation(string operationId, Azure.RequestContext context) { throw null; }
+        [System.ObsoleteAttribute("Use GetOperationV09 instead.")]
         public virtual Azure.Response<System.BinaryData> GetOperation(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("Use GetOperationV09Async instead.")]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetOperationAsync(string operationId, Azure.RequestContext context) { throw null; }
+        [System.ObsoleteAttribute("Use GetOperationV09Async instead.")]
         public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> GetOperationAsync(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetOperationV09(string operationId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response<System.BinaryData> GetOperationV09(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetOperationV09Async(string operationId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> GetOperationV09Async(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetPublicKeys(Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Security.CodeTransparency.JwksDocument> GetPublicKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetPublicKeysAsync(Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.CodeTransparency.JwksDocument>> GetPublicKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetScittKey(string kid, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response<System.BinaryData> GetScittKey(string kid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetScittKeyAsync(string kid, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> GetScittKeyAsync(string kid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetScittKeys(Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response<System.BinaryData> GetScittKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetScittKeysAsync(Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> GetScittKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetTransparencyConfigCbor(Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<System.BinaryData> GetTransparencyConfigCbor(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTransparencyConfigCborAsync(Azure.RequestContext context) { throw null; }
@@ -73,13 +117,13 @@ namespace Azure.Security.CodeTransparency
     }
     public partial class CodeTransparencyClientOptions : Azure.Core.ClientOptions
     {
-        public CodeTransparencyClientOptions(Azure.Security.CodeTransparency.CodeTransparencyClientOptions.ServiceVersion version = Azure.Security.CodeTransparency.CodeTransparencyClientOptions.ServiceVersion.V2025_01_31_Preview) { }
+        public CodeTransparencyClientOptions(Azure.Security.CodeTransparency.CodeTransparencyClientOptions.ServiceVersion version = Azure.Security.CodeTransparency.CodeTransparencyClientOptions.ServiceVersion.V2026_03_26) { }
         public double CacheTTLSeconds { get { throw null; } set { } }
         public string IdentityClientEndpoint { get { throw null; } set { } }
         public virtual Azure.Security.CodeTransparency.CodeTransparencyCertificateClient CreateCertificateClient() { throw null; }
         public enum ServiceVersion
         {
-            V2025_01_31_Preview = 1,
+            V2026_03_26 = 1,
         }
     }
     public partial class CodeTransparencyClientSettings : System.ClientModel.Primitives.ClientSettings
