@@ -14,17 +14,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class AmlTokenComputeIdentity : MonitorComputeIdentityBase
     {
         /// <summary> Initializes a new instance of <see cref="AmlTokenComputeIdentity"/>. </summary>
-        public AmlTokenComputeIdentity()
+        public AmlTokenComputeIdentity() : base(MonitorComputeIdentityType.AmlToken)
         {
-            ComputeIdentityType = MonitorComputeIdentityType.AmlToken;
         }
 
         /// <summary> Initializes a new instance of <see cref="AmlTokenComputeIdentity"/>. </summary>
         /// <param name="computeIdentityType"> [Required] Specifies the type of identity to use within the monitoring jobs. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AmlTokenComputeIdentity(MonitorComputeIdentityType computeIdentityType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(computeIdentityType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AmlTokenComputeIdentity(MonitorComputeIdentityType computeIdentityType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(computeIdentityType, additionalBinaryDataProperties)
         {
-            ComputeIdentityType = computeIdentityType;
         }
     }
 }

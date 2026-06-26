@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Kusto
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.Kusto
     /// </summary>
     public partial class KustoClusterPrincipalAssignmentCollection : ArmCollection, IEnumerable<KustoClusterPrincipalAssignmentResource>, IAsyncEnumerable<KustoClusterPrincipalAssignmentResource>
     {
-        private readonly ClientDiagnostics _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics;
-        private readonly ClusterPrincipalAssignmentsRestOperations _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsRestClient;
+        private readonly ClientDiagnostics _clusterPrincipalAssignmentsClientDiagnostics;
+        private readonly ClusterPrincipalAssignments _clusterPrincipalAssignmentsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="KustoClusterPrincipalAssignmentCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of KustoClusterPrincipalAssignmentCollection for mocking. </summary>
         protected KustoClusterPrincipalAssignmentCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="KustoClusterPrincipalAssignmentCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoClusterPrincipalAssignmentCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal KustoClusterPrincipalAssignmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", KustoClusterPrincipalAssignmentResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(KustoClusterPrincipalAssignmentResource.ResourceType, out string kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsApiVersion);
-            _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsRestClient = new ClusterPrincipalAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(KustoClusterPrincipalAssignmentResource.ResourceType, out string kustoClusterPrincipalAssignmentApiVersion);
+            _clusterPrincipalAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", KustoClusterPrincipalAssignmentResource.ResourceType.Namespace, Diagnostics);
+            _clusterPrincipalAssignmentsRestClient = new ClusterPrincipalAssignments(_clusterPrincipalAssignmentsClientDiagnostics, Pipeline, Endpoint, kustoClusterPrincipalAssignmentApiVersion ?? "2025-02-14");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != KustoClusterResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, KustoClusterResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, KustoClusterResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create a Kusto cluster principalAssignment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/principalAssignments/{principalAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/principalAssignments/{principalAssignmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ClusterPrincipalAssignments_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ClusterPrincipalAssignments_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoClusterPrincipalAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
         /// <param name="data"> The Kusto cluster principalAssignment's parameters supplied for the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<KustoClusterPrincipalAssignmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string principalAssignmentName, KustoClusterPrincipalAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(principalAssignmentName, nameof(principalAssignmentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics.CreateScope("KustoClusterPrincipalAssignmentCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _clusterPrincipalAssignmentsClientDiagnostics.CreateScope("KustoClusterPrincipalAssignmentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, principalAssignmentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new KustoArmOperation<KustoClusterPrincipalAssignmentResource>(new KustoClusterPrincipalAssignmentOperationSource(Client), _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics, Pipeline, _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, principalAssignmentName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _clusterPrincipalAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, principalAssignmentName, KustoClusterPrincipalAssignmentData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                KustoArmOperation<KustoClusterPrincipalAssignmentResource> operation = new KustoArmOperation<KustoClusterPrincipalAssignmentResource>(
+                    new KustoClusterPrincipalAssignmentResourceOperationSource(Client),
+                    _clusterPrincipalAssignmentsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.Kusto
         /// Create a Kusto cluster principalAssignment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/principalAssignments/{principalAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/principalAssignments/{principalAssignmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ClusterPrincipalAssignments_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ClusterPrincipalAssignments_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoClusterPrincipalAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
         /// <param name="data"> The Kusto cluster principalAssignment's parameters supplied for the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<KustoClusterPrincipalAssignmentResource> CreateOrUpdate(WaitUntil waitUntil, string principalAssignmentName, KustoClusterPrincipalAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(principalAssignmentName, nameof(principalAssignmentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics.CreateScope("KustoClusterPrincipalAssignmentCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _clusterPrincipalAssignmentsClientDiagnostics.CreateScope("KustoClusterPrincipalAssignmentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, principalAssignmentName, data, cancellationToken);
-                var operation = new KustoArmOperation<KustoClusterPrincipalAssignmentResource>(new KustoClusterPrincipalAssignmentOperationSource(Client), _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics, Pipeline, _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, principalAssignmentName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _clusterPrincipalAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, principalAssignmentName, KustoClusterPrincipalAssignmentData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                KustoArmOperation<KustoClusterPrincipalAssignmentResource> operation = new KustoArmOperation<KustoClusterPrincipalAssignmentResource>(
+                    new KustoClusterPrincipalAssignmentResourceOperationSource(Client),
+                    _clusterPrincipalAssignmentsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.Kusto
         /// Gets a Kusto cluster principalAssignment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/principalAssignments/{principalAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/principalAssignments/{principalAssignmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ClusterPrincipalAssignments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ClusterPrincipalAssignments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoClusterPrincipalAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<KustoClusterPrincipalAssignmentResource>> GetAsync(string principalAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(principalAssignmentName, nameof(principalAssignmentName));
 
-            using var scope = _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics.CreateScope("KustoClusterPrincipalAssignmentCollection.Get");
+            using DiagnosticScope scope = _clusterPrincipalAssignmentsClientDiagnostics.CreateScope("KustoClusterPrincipalAssignmentCollection.Get");
             scope.Start();
             try
             {
-                var response = await _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, principalAssignmentName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _clusterPrincipalAssignmentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, principalAssignmentName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<KustoClusterPrincipalAssignmentData> response = Response.FromValue(KustoClusterPrincipalAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new KustoClusterPrincipalAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.Kusto
         /// Gets a Kusto cluster principalAssignment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/principalAssignments/{principalAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/principalAssignments/{principalAssignmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ClusterPrincipalAssignments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ClusterPrincipalAssignments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoClusterPrincipalAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<KustoClusterPrincipalAssignmentResource> Get(string principalAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(principalAssignmentName, nameof(principalAssignmentName));
 
-            using var scope = _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics.CreateScope("KustoClusterPrincipalAssignmentCollection.Get");
+            using DiagnosticScope scope = _clusterPrincipalAssignmentsClientDiagnostics.CreateScope("KustoClusterPrincipalAssignmentCollection.Get");
             scope.Start();
             try
             {
-                var response = _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, principalAssignmentName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _clusterPrincipalAssignmentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, principalAssignmentName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<KustoClusterPrincipalAssignmentData> response = Response.FromValue(KustoClusterPrincipalAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new KustoClusterPrincipalAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,49 +272,50 @@ namespace Azure.ResourceManager.Kusto
         /// Lists all Kusto cluster principalAssignments.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/principalAssignments</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/principalAssignments. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ClusterPrincipalAssignments_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ClusterPrincipalAssignments_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoClusterPrincipalAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KustoClusterPrincipalAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KustoClusterPrincipalAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoClusterPrincipalAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new KustoClusterPrincipalAssignmentResource(Client, KustoClusterPrincipalAssignmentData.DeserializeKustoClusterPrincipalAssignmentData(e)), _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics, Pipeline, "KustoClusterPrincipalAssignmentCollection.GetAll", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<KustoClusterPrincipalAssignmentData, KustoClusterPrincipalAssignmentResource>(new ClusterPrincipalAssignmentsGetAllAsyncCollectionResultOfT(
+                _clusterPrincipalAssignmentsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "KustoClusterPrincipalAssignmentCollection.GetAll"), data => new KustoClusterPrincipalAssignmentResource(Client, data));
         }
 
         /// <summary>
         /// Lists all Kusto cluster principalAssignments.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/principalAssignments</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/principalAssignments. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ClusterPrincipalAssignments_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ClusterPrincipalAssignments_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoClusterPrincipalAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,44 +323,67 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> A collection of <see cref="KustoClusterPrincipalAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoClusterPrincipalAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new KustoClusterPrincipalAssignmentResource(Client, KustoClusterPrincipalAssignmentData.DeserializeKustoClusterPrincipalAssignmentData(e)), _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics, Pipeline, "KustoClusterPrincipalAssignmentCollection.GetAll", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<KustoClusterPrincipalAssignmentData, KustoClusterPrincipalAssignmentResource>(new ClusterPrincipalAssignmentsGetAllCollectionResultOfT(
+                _clusterPrincipalAssignmentsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "KustoClusterPrincipalAssignmentCollection.GetAll"), data => new KustoClusterPrincipalAssignmentResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/principalAssignments/{principalAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/principalAssignments/{principalAssignmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ClusterPrincipalAssignments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ClusterPrincipalAssignments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoClusterPrincipalAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string principalAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(principalAssignmentName, nameof(principalAssignmentName));
 
-            using var scope = _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics.CreateScope("KustoClusterPrincipalAssignmentCollection.Exists");
+            using DiagnosticScope scope = _clusterPrincipalAssignmentsClientDiagnostics.CreateScope("KustoClusterPrincipalAssignmentCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, principalAssignmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _clusterPrincipalAssignmentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, principalAssignmentName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<KustoClusterPrincipalAssignmentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(KustoClusterPrincipalAssignmentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((KustoClusterPrincipalAssignmentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -344,36 +397,50 @@ namespace Azure.ResourceManager.Kusto
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/principalAssignments/{principalAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/principalAssignments/{principalAssignmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ClusterPrincipalAssignments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ClusterPrincipalAssignments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoClusterPrincipalAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string principalAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(principalAssignmentName, nameof(principalAssignmentName));
 
-            using var scope = _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics.CreateScope("KustoClusterPrincipalAssignmentCollection.Exists");
+            using DiagnosticScope scope = _clusterPrincipalAssignmentsClientDiagnostics.CreateScope("KustoClusterPrincipalAssignmentCollection.Exists");
             scope.Start();
             try
             {
-                var response = _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, principalAssignmentName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _clusterPrincipalAssignmentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, principalAssignmentName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<KustoClusterPrincipalAssignmentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(KustoClusterPrincipalAssignmentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((KustoClusterPrincipalAssignmentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,38 +454,54 @@ namespace Azure.ResourceManager.Kusto
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/principalAssignments/{principalAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/principalAssignments/{principalAssignmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ClusterPrincipalAssignments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ClusterPrincipalAssignments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoClusterPrincipalAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<KustoClusterPrincipalAssignmentResource>> GetIfExistsAsync(string principalAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(principalAssignmentName, nameof(principalAssignmentName));
 
-            using var scope = _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics.CreateScope("KustoClusterPrincipalAssignmentCollection.GetIfExists");
+            using DiagnosticScope scope = _clusterPrincipalAssignmentsClientDiagnostics.CreateScope("KustoClusterPrincipalAssignmentCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, principalAssignmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _clusterPrincipalAssignmentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, principalAssignmentName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<KustoClusterPrincipalAssignmentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(KustoClusterPrincipalAssignmentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((KustoClusterPrincipalAssignmentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<KustoClusterPrincipalAssignmentResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new KustoClusterPrincipalAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -432,38 +515,54 @@ namespace Azure.ResourceManager.Kusto
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/principalAssignments/{principalAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/principalAssignments/{principalAssignmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ClusterPrincipalAssignments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ClusterPrincipalAssignments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoClusterPrincipalAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<KustoClusterPrincipalAssignmentResource> GetIfExists(string principalAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(principalAssignmentName, nameof(principalAssignmentName));
 
-            using var scope = _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics.CreateScope("KustoClusterPrincipalAssignmentCollection.GetIfExists");
+            using DiagnosticScope scope = _clusterPrincipalAssignmentsClientDiagnostics.CreateScope("KustoClusterPrincipalAssignmentCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, principalAssignmentName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _clusterPrincipalAssignmentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, principalAssignmentName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<KustoClusterPrincipalAssignmentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(KustoClusterPrincipalAssignmentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((KustoClusterPrincipalAssignmentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<KustoClusterPrincipalAssignmentResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new KustoClusterPrincipalAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -483,6 +582,7 @@ namespace Azure.ResourceManager.Kusto
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<KustoClusterPrincipalAssignmentResource> IAsyncEnumerable<KustoClusterPrincipalAssignmentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -77,7 +77,6 @@
 # Client Libraries
 ####################
 
-
 # PRLabel: %AI Agents
 /sdk/agentserver/    @ankitbko @RaviPidaparthi @vangarp
 
@@ -119,9 +118,6 @@
 
 # PRLabel: %Azure Projects
 /sdk/cloudmachine/    @KrzysztofCwalina
-
-# AzureSdkOwners: @KrzysztofCwalina
-# ServiceLabel: %Azure Projects
 
 # PRLabel: %Azure Stack
 /sdk/azurestack*/    @bganapa @rakku-ms
@@ -280,14 +276,14 @@
 # ServiceOwners: @Aashish93-stack @abhinav-ghai @efriesner @johngallardo @Satya-Kolluri @sjiherzig
 
 # PRLabel: %EngSys
-/sdk/template/    @danieljurek @weshaggard
+/sdk/template/    @danieljurek
 
 # PRLabel: %EngSys
 /sdk/template/Azure.Template/    @danieljurek
 
-# AzureSdkOwners: @danieljurek @weshaggard
+# AzureSdkOwners: @danieljurek
 # ServiceLabel: %EngSys
-# ServiceOwners: @danieljurek @weshaggard
+# ServiceOwners: @danieljurek
 
 # PRLabel: %Event Grid
 /sdk/eventgrid/    @Kishp01 @rajeshka @shankarsama
@@ -1186,7 +1182,7 @@
 /sdk/workloadorchestration/Azure.ResourceManager.*/                @ArcturusZhang @ArthurMa1978
 
 # ######## Eng Sys ########
-/eng/                                                              @hallipr @weshaggard @benbp
+/eng/                                                              @danieljurek @benbp
 /eng/common/                                                       @Azure/azure-sdk-eng
 /eng/mgmt/                                                         @ArthurMa1978 @m-nash
 /eng/apicompatbaselines/                                           @Azure/azure-sdk-write-net-core @jsquire
@@ -1194,7 +1190,7 @@
 # Add owners for notifications for specific pipelines
 /eng/pipelines/aggregate-reports.yml                               @jsquire
 /eng/common/pipelines/codeowners-linter.yml                        @jsquire
-/eng/pipelines/docindex.yml                                        @danieljurek @hallipr @weshaggard @benbp
+/eng/pipelines/docindex.yml                                        @danieljurek @hallipr @benbp
 
 # Add owners for package dependency changes
 /eng/centralpackagemanagement                                           @Azure/azure-sdk-write-net-core @jsquire
@@ -1246,16 +1242,13 @@
 /.github/copilot-instructions.md                                   @jsquire @m-redding @praveenkuttappan @maririos
 /.github/skills/                                                   @azure/azsdk-cli @m-nash @jsquire
 
-# PRLabel: %EngSys
-/sdk/template/                                                     @hallipr @weshaggard @benbp @jsquire
-
 ###########################
 # Repository configuration
 ###########################
 
 # Common repository-wide assets and configuration
 /.config/                                                          @jsquire @Azure/azure-sdk-write-net-core
-/.config/1espt/                                                    @benbp @weshaggard
+/.config/1espt/                                                    @benbp
 /.vscode/                                                          @jsquire @m-redding
 /.devcontainer/                                                    @jsquire @m-redding
 /doc/                                                              @jsquire
@@ -1276,5 +1269,5 @@
 /sdk/**/.gitattributes                                             @jsquire @m-redding
 
 # Add owners for NPM configuration
-/**/package.json                                                   @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @christothes @ArcturusZhang @ArthurMa1978
-/**/package-lock.json                                              @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @christothes
+/**/package.json                                                   @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @ArcturusZhang @ArthurMa1978 @mikeharder
+/**/package-lock.json                                              @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @mikeharder

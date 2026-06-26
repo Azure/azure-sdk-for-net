@@ -265,6 +265,51 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
         return items;
     }
 
+    [RecordedTest]
+    [TestCase(true, true)]
+    [TestCase(true, false)]
+    [TestCase(false, true)]
+    [TestCase(false, false)]
+    public async Task TestGetResponse(bool useProjects, bool storeResponse)
+    {
+        ProjectResponsesClient oaiClient;
+        if (useProjects)
+        {
+            AIProjectClient projectClient = GetTestProjectClient();
+            oaiClient = projectClient.GetProjectOpenAIClient().GetProjectResponsesClientForModel(TestEnvironment.FOUNDRY_MODEL_NAME);
+        }
+        else
+        {
+            oaiClient = GetTestProjectOpenAIClient().GetProjectResponsesClientForModel(TestEnvironment.FOUNDRY_MODEL_NAME);
+        }
+        CreateResponseOptions options = new()
+        {
+            InputItems = {ResponseItem.CreateUserMessageItem("Hello, tell me a joke.")},
+            StoredOutputEnabled = storeResponse
+        };
+        ResponseResult result = await oaiClient.CreateResponseAsync(options);
+        Assert.That(result.Error, Is.Null, $"Error code: {result.Error?.Code}, {result.Error?.Message}");
+        Assert.That(result.OutputItems, Has.Count.GreaterThan(0));
+        if (storeResponse)
+        {
+            result = await oaiClient.GetResponseAsync(result.Id);
+            Assert.That(result.Error, Is.Null, $"Error code: {result.Error?.Code}, {result.Error?.Message}");
+            Assert.That(result.OutputItems, Has.Count.GreaterThan(0));
+        }
+        else
+        {
+            try
+            {
+                await oaiClient.GetResponseAsync(result.Id);
+                Assert.Fail("Expected GetResponseAsync to fail when StoredOutputEnabled=false.");
+            }
+            catch (ClientResultException e)
+            {
+                Assert.That(e.Status, Is.EqualTo(404));
+            }
+        }
+    }
+
     [TearDown]
     public override void Cleanup()
     {

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct SyncMemberDbType : IEquatable<SyncMemberDbType>
     {
         private readonly string _value;
+        /// <summary> AzureSqlDatabase. </summary>
+        private const string AzureSqlDatabaseValue = "AzureSqlDatabase";
+        /// <summary> SqlServerDatabase. </summary>
+        private const string SqlServerDatabaseValue = "SqlServerDatabase";
 
         /// <summary> Initializes a new instance of <see cref="SyncMemberDbType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SyncMemberDbType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AzureSqlDatabaseValue = "AzureSqlDatabase";
-        private const string SqlServerDatabaseValue = "SqlServerDatabase";
+            _value = value;
+        }
 
         /// <summary> AzureSqlDatabase. </summary>
         public static SyncMemberDbType AzureSqlDatabase { get; } = new SyncMemberDbType(AzureSqlDatabaseValue);
+
         /// <summary> SqlServerDatabase. </summary>
         public static SyncMemberDbType SqlServerDatabase { get; } = new SyncMemberDbType(SqlServerDatabaseValue);
+
         /// <summary> Determines if two <see cref="SyncMemberDbType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SyncMemberDbType left, SyncMemberDbType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SyncMemberDbType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SyncMemberDbType left, SyncMemberDbType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SyncMemberDbType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SyncMemberDbType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SyncMemberDbType(string value) => new SyncMemberDbType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SyncMemberDbType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SyncMemberDbType?(string value) => value == null ? null : new SyncMemberDbType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SyncMemberDbType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SyncMemberDbType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

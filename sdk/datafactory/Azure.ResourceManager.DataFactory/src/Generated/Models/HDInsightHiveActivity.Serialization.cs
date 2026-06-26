@@ -7,17 +7,61 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
-using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class HDInsightHiveActivity : IUtf8JsonSerializable, IJsonModel<HDInsightHiveActivity>
+    /// <summary> HDInsight Hive activity type. </summary>
+    public partial class HDInsightHiveActivity : ExecutionActivity, IJsonModel<HDInsightHiveActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightHiveActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="HDInsightHiveActivity"/> for deserialization. </summary>
+        internal HDInsightHiveActivity()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override PipelineActivity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HDInsightHiveActivity>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHDInsightHiveActivity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HDInsightHiveActivity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HDInsightHiveActivity>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HDInsightHiveActivity)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HDInsightHiveActivity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HDInsightHiveActivity IPersistableModel<HDInsightHiveActivity>.Create(BinaryData data, ModelReaderWriterOptions options) => (HDInsightHiveActivity)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HDInsightHiveActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HDInsightHiveActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,426 +73,31 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HDInsightHiveActivity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HDInsightHiveActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HDInsightHiveActivity)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("typeProperties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(StorageLinkedServices))
-            {
-                writer.WritePropertyName("storageLinkedServices"u8);
-                writer.WriteStartArray();
-                foreach (var item in StorageLinkedServices)
-                {
-                    JsonSerializer.Serialize(writer, item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Arguments))
-            {
-                writer.WritePropertyName("arguments"u8);
-                writer.WriteStartArray();
-                foreach (var item in Arguments)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(GetDebugInfo))
-            {
-                writer.WritePropertyName("getDebugInfo"u8);
-                writer.WriteStringValue(GetDebugInfo.Value.ToString());
-            }
-            if (Optional.IsDefined(ScriptPath))
-            {
-                writer.WritePropertyName("scriptPath"u8);
-                JsonSerializer.Serialize(writer, ScriptPath);
-            }
-            if (Optional.IsDefined(ScriptLinkedService))
-            {
-                writer.WritePropertyName("scriptLinkedService"u8);
-                JsonSerializer.Serialize(writer, ScriptLinkedService);
-            }
-            if (Optional.IsCollectionDefined(Defines))
-            {
-                writer.WritePropertyName("defines"u8);
-                writer.WriteStartObject();
-                foreach (var item in Defines)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsCollectionDefined(Variables))
-            {
-                writer.WritePropertyName("variables"u8);
-                writer.WriteStartObject();
-                foreach (var item in Variables)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(QueryTimeout))
-            {
-                writer.WritePropertyName("queryTimeout"u8);
-                writer.WriteNumberValue(QueryTimeout.Value);
-            }
-            writer.WriteEndObject();
-            foreach (var item in AdditionalProperties)
-            {
-                writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
+            writer.WriteObjectValue(TypeProperties, options);
         }
 
-        HDInsightHiveActivity IJsonModel<HDInsightHiveActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HDInsightHiveActivity IJsonModel<HDInsightHiveActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HDInsightHiveActivity)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override PipelineActivity JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HDInsightHiveActivity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HDInsightHiveActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HDInsightHiveActivity)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHDInsightHiveActivity(document.RootElement, options);
         }
-
-        internal static HDInsightHiveActivity DeserializeHDInsightHiveActivity(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            DataFactoryLinkedServiceReference linkedServiceName = default;
-            PipelineActivityPolicy policy = default;
-            string name = default;
-            string type = default;
-            string description = default;
-            PipelineActivityState? state = default;
-            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
-            IList<PipelineActivityDependency> dependsOn = default;
-            IList<PipelineActivityUserProperty> userProperties = default;
-            IList<DataFactoryLinkedServiceReference> storageLinkedServices = default;
-            IList<BinaryData> arguments = default;
-            HDInsightActivityDebugInfoOptionSetting? getDebugInfo = default;
-            DataFactoryElement<string> scriptPath = default;
-            DataFactoryLinkedServiceReference scriptLinkedService = default;
-            IDictionary<string, BinaryData> defines = default;
-            IDictionary<string, BinaryData> variables = default;
-            int? queryTimeout = default;
-            IDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("linkedServiceName"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("policy"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("description"u8))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("state"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    state = new PipelineActivityState(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("onInactiveMarkAs"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    onInactiveMarkAs = new ActivityOnInactiveMarkAs(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("dependsOn"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item, options));
-                    }
-                    dependsOn = array;
-                    continue;
-                }
-                if (property.NameEquals("userProperties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item, options));
-                    }
-                    userProperties = array;
-                    continue;
-                }
-                if (property.NameEquals("typeProperties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("storageLinkedServices"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<DataFactoryLinkedServiceReference> array = new List<DataFactoryLinkedServiceReference>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(item.GetRawText()));
-                            }
-                            storageLinkedServices = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("arguments"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<BinaryData> array = new List<BinaryData>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(BinaryData.FromString(item.GetRawText()));
-                                }
-                            }
-                            arguments = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("getDebugInfo"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            getDebugInfo = new HDInsightActivityDebugInfoOptionSetting(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("scriptPath"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            scriptPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("scriptLinkedService"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            scriptLinkedService = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("defines"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                if (property1.Value.ValueKind == JsonValueKind.Null)
-                                {
-                                    dictionary.Add(property1.Name, null);
-                                }
-                                else
-                                {
-                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
-                                }
-                            }
-                            defines = dictionary;
-                            continue;
-                        }
-                        if (property0.NameEquals("variables"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                if (property1.Value.ValueKind == JsonValueKind.Null)
-                                {
-                                    dictionary.Add(property1.Name, null);
-                                }
-                                else
-                                {
-                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
-                                }
-                            }
-                            variables = dictionary;
-                            continue;
-                        }
-                        if (property0.NameEquals("queryTimeout"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            queryTimeout = property0.Value.GetInt32();
-                            continue;
-                        }
-                    }
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-            }
-            additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightHiveActivity(
-                name,
-                type,
-                description,
-                state,
-                onInactiveMarkAs,
-                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
-                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
-                additionalProperties,
-                linkedServiceName,
-                policy,
-                storageLinkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>(),
-                arguments ?? new ChangeTrackingList<BinaryData>(),
-                getDebugInfo,
-                scriptPath,
-                scriptLinkedService,
-                defines ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                variables ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                queryTimeout);
-        }
-
-        BinaryData IPersistableModel<HDInsightHiveActivity>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HDInsightHiveActivity>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HDInsightHiveActivity)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        HDInsightHiveActivity IPersistableModel<HDInsightHiveActivity>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HDInsightHiveActivity>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeHDInsightHiveActivity(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HDInsightHiveActivity)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<HDInsightHiveActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

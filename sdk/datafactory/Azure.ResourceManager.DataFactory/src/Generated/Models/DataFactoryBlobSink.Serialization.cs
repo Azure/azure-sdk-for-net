@@ -9,15 +9,56 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFactoryBlobSink : IUtf8JsonSerializable, IJsonModel<DataFactoryBlobSink>
+    /// <summary> A copy activity Azure Blob sink. </summary>
+    public partial class DataFactoryBlobSink : CopySink, IJsonModel<DataFactoryBlobSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryBlobSink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CopySink PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataFactoryBlobSink>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataFactoryBlobSink(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryBlobSink)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataFactoryBlobSink>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryBlobSink)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataFactoryBlobSink>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataFactoryBlobSink IPersistableModel<DataFactoryBlobSink>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataFactoryBlobSink)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataFactoryBlobSink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataFactoryBlobSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,35 +70,34 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryBlobSink>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataFactoryBlobSink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataFactoryBlobSink)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(BlobWriterOverwriteFiles))
             {
                 writer.WritePropertyName("blobWriterOverwriteFiles"u8);
-                JsonSerializer.Serialize(writer, BlobWriterOverwriteFiles);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(BlobWriterOverwriteFiles, options);
             }
             if (Optional.IsDefined(BlobWriterDateTimeFormat))
             {
                 writer.WritePropertyName("blobWriterDateTimeFormat"u8);
-                JsonSerializer.Serialize(writer, BlobWriterDateTimeFormat);
+                writer.WriteObjectValue<DataFactoryElement<string>>(BlobWriterDateTimeFormat, options);
             }
             if (Optional.IsDefined(BlobWriterAddHeader))
             {
                 writer.WritePropertyName("blobWriterAddHeader"u8);
-                JsonSerializer.Serialize(writer, BlobWriterAddHeader);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(BlobWriterAddHeader, options);
             }
             if (Optional.IsDefined(CopyBehavior))
             {
                 writer.WritePropertyName("copyBehavior"u8);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(CopyBehavior);
+                writer.WriteRawValue(CopyBehavior);
 #else
-                using (JsonDocument document = JsonDocument.Parse(CopyBehavior, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(CopyBehavior))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -67,176 +107,131 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
-                foreach (var item in Metadata)
+                foreach (DataFactoryMetadataItemInfo item in Metadata)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            foreach (var item in AdditionalProperties)
-            {
-                writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
         }
 
-        DataFactoryBlobSink IJsonModel<DataFactoryBlobSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataFactoryBlobSink IJsonModel<DataFactoryBlobSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DataFactoryBlobSink)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CopySink JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryBlobSink>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataFactoryBlobSink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataFactoryBlobSink)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataFactoryBlobSink(document.RootElement, options);
         }
 
-        internal static DataFactoryBlobSink DeserializeDataFactoryBlobSink(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataFactoryBlobSink DeserializeDataFactoryBlobSink(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DataFactoryElement<bool> blobWriterOverwriteFiles = default;
-            DataFactoryElement<string> blobWriterDateTimeFormat = default;
-            DataFactoryElement<bool> blobWriterAddHeader = default;
-            BinaryData copyBehavior = default;
-            IList<DataFactoryMetadataItemInfo> metadata = default;
-            string type = default;
+            string copySinkType = "BlobSink";
             DataFactoryElement<int> writeBatchSize = default;
             DataFactoryElement<string> writeBatchTimeout = default;
             DataFactoryElement<int> sinkRetryCount = default;
             DataFactoryElement<string> sinkRetryWait = default;
             DataFactoryElement<int> maxConcurrentConnections = default;
             DataFactoryElement<bool> disableMetricsCollection = default;
-            IDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            DataFactoryElement<bool> blobWriterOverwriteFiles = default;
+            DataFactoryElement<string> blobWriterDateTimeFormat = default;
+            DataFactoryElement<bool> blobWriterAddHeader = default;
+            BinaryData copyBehavior = default;
+            IList<DataFactoryMetadataItemInfo> metadata = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("blobWriterOverwriteFiles"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    copySinkType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("writeBatchSize"u8))
+                {
+                    ReadWriteBatchSize(prop, ref writeBatchSize);
+                    continue;
+                }
+                if (prop.NameEquals("writeBatchTimeout"u8))
+                {
+                    ReadWriteBatchTimeout(prop, ref writeBatchTimeout);
+                    continue;
+                }
+                if (prop.NameEquals("sinkRetryCount"u8))
+                {
+                    ReadSinkRetryCount(prop, ref sinkRetryCount);
+                    continue;
+                }
+                if (prop.NameEquals("sinkRetryWait"u8))
+                {
+                    ReadSinkRetryWait(prop, ref sinkRetryWait);
+                    continue;
+                }
+                if (prop.NameEquals("maxConcurrentConnections"u8))
+                {
+                    ReadMaxConcurrentConnections(prop, ref maxConcurrentConnections);
+                    continue;
+                }
+                if (prop.NameEquals("disableMetricsCollection"u8))
+                {
+                    ReadDisableMetricsCollection(prop, ref disableMetricsCollection);
+                    continue;
+                }
+                if (prop.NameEquals("blobWriterOverwriteFiles"u8))
+                {
+                    ReadBlobWriterOverwriteFiles(prop, ref blobWriterOverwriteFiles);
+                    continue;
+                }
+                if (prop.NameEquals("blobWriterDateTimeFormat"u8))
+                {
+                    ReadBlobWriterDateTimeFormat(prop, ref blobWriterDateTimeFormat);
+                    continue;
+                }
+                if (prop.NameEquals("blobWriterAddHeader"u8))
+                {
+                    ReadBlobWriterAddHeader(prop, ref blobWriterAddHeader);
+                    continue;
+                }
+                if (prop.NameEquals("copyBehavior"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    blobWriterOverwriteFiles = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
+                    copyBehavior = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("blobWriterDateTimeFormat"u8))
+                if (prop.NameEquals("metadata"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    blobWriterDateTimeFormat = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("blobWriterAddHeader"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    blobWriterAddHeader = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("copyBehavior"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    copyBehavior = BinaryData.FromString(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("metadata"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DataFactoryMetadataItemInfo> array = new List<DataFactoryMetadataItemInfo>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DataFactoryMetadataItemInfo.DeserializeDataFactoryMetadataItemInfo(item, options));
                     }
                     metadata = array;
                     continue;
                 }
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("writeBatchSize"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    writeBatchSize = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("writeBatchTimeout"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    writeBatchTimeout = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("sinkRetryCount"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sinkRetryCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("sinkRetryWait"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sinkRetryWait = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("maxConcurrentConnections"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    maxConcurrentConnections = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("disableMetricsCollection"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    disableMetricsCollection = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            additionalProperties = additionalPropertiesDictionary;
             return new DataFactoryBlobSink(
-                type,
+                copySinkType,
                 writeBatchSize,
                 writeBatchTimeout,
                 sinkRetryCount,
@@ -250,36 +245,5 @@ namespace Azure.ResourceManager.DataFactory.Models
                 copyBehavior,
                 metadata ?? new ChangeTrackingList<DataFactoryMetadataItemInfo>());
         }
-
-        BinaryData IPersistableModel<DataFactoryBlobSink>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryBlobSink>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataFactoryBlobSink)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DataFactoryBlobSink IPersistableModel<DataFactoryBlobSink>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryBlobSink>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDataFactoryBlobSink(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataFactoryBlobSink)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DataFactoryBlobSink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -9,15 +9,56 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class CosmosDBSqlApiSource : IUtf8JsonSerializable, IJsonModel<CosmosDBSqlApiSource>
+    /// <summary> A copy activity Azure CosmosDB (SQL API) Collection source. </summary>
+    public partial class CosmosDBSqlApiSource : CopyActivitySource, IJsonModel<CosmosDBSqlApiSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBSqlApiSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CopyActivitySource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CosmosDBSqlApiSource>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCosmosDBSqlApiSource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CosmosDBSqlApiSource)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CosmosDBSqlApiSource>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CosmosDBSqlApiSource)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CosmosDBSqlApiSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CosmosDBSqlApiSource IPersistableModel<CosmosDBSqlApiSource>.Create(BinaryData data, ModelReaderWriterOptions options) => (CosmosDBSqlApiSource)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CosmosDBSqlApiSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CosmosDBSqlApiSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,52 +70,39 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBSqlApiSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CosmosDBSqlApiSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CosmosDBSqlApiSource)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
-                JsonSerializer.Serialize(writer, Query);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Query, options);
             }
             if (Optional.IsDefined(PageSize))
             {
                 writer.WritePropertyName("pageSize"u8);
-                JsonSerializer.Serialize(writer, PageSize);
+                writer.WriteObjectValue<DataFactoryElement<int>>(PageSize, options);
             }
             if (Optional.IsDefined(PreferredRegions))
             {
                 writer.WritePropertyName("preferredRegions"u8);
-                JsonSerializer.Serialize(writer, PreferredRegions);
+                writer.WriteObjectValue<DataFactoryElement<IList<string>>>(PreferredRegions, options);
             }
             if (Optional.IsDefined(DetectDatetime))
             {
                 writer.WritePropertyName("detectDatetime"u8);
-                JsonSerializer.Serialize(writer, DetectDatetime);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(DetectDatetime, options);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {
                 writer.WritePropertyName("additionalColumns"u8);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(AdditionalColumns);
+                writer.WriteRawValue(AdditionalColumns);
 #else
-                using (JsonDocument document = JsonDocument.Parse(AdditionalColumns, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
-            foreach (var item in AdditionalProperties)
-            {
-                writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(AdditionalColumns))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -82,131 +110,102 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
         }
 
-        CosmosDBSqlApiSource IJsonModel<CosmosDBSqlApiSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CosmosDBSqlApiSource IJsonModel<CosmosDBSqlApiSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CosmosDBSqlApiSource)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CopyActivitySource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBSqlApiSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CosmosDBSqlApiSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CosmosDBSqlApiSource)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCosmosDBSqlApiSource(document.RootElement, options);
         }
 
-        internal static CosmosDBSqlApiSource DeserializeCosmosDBSqlApiSource(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CosmosDBSqlApiSource DeserializeCosmosDBSqlApiSource(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string copySourceType = "CosmosDbSqlApiSource";
+            DataFactoryElement<int> sourceRetryCount = default;
+            DataFactoryElement<string> sourceRetryWait = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DataFactoryElement<string> query = default;
             DataFactoryElement<int> pageSize = default;
             DataFactoryElement<IList<string>> preferredRegions = default;
             DataFactoryElement<bool> detectDatetime = default;
             BinaryData additionalColumns = default;
-            string type = default;
-            DataFactoryElement<int> sourceRetryCount = default;
-            DataFactoryElement<string> sourceRetryWait = default;
-            DataFactoryElement<int> maxConcurrentConnections = default;
-            DataFactoryElement<bool> disableMetricsCollection = default;
-            IDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("query"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    copySourceType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("sourceRetryCount"u8))
+                {
+                    ReadSourceRetryCount(prop, ref sourceRetryCount);
+                    continue;
+                }
+                if (prop.NameEquals("sourceRetryWait"u8))
+                {
+                    ReadSourceRetryWait(prop, ref sourceRetryWait);
+                    continue;
+                }
+                if (prop.NameEquals("maxConcurrentConnections"u8))
+                {
+                    ReadMaxConcurrentConnections(prop, ref maxConcurrentConnections);
+                    continue;
+                }
+                if (prop.NameEquals("disableMetricsCollection"u8))
+                {
+                    ReadDisableMetricsCollection(prop, ref disableMetricsCollection);
+                    continue;
+                }
+                if (prop.NameEquals("query"u8))
+                {
+                    ReadQuery(prop, ref query);
+                    continue;
+                }
+                if (prop.NameEquals("pageSize"u8))
+                {
+                    ReadPageSize(prop, ref pageSize);
+                    continue;
+                }
+                if (prop.NameEquals("preferredRegions"u8))
+                {
+                    ReadPreferredRegions(prop, ref preferredRegions);
+                    continue;
+                }
+                if (prop.NameEquals("detectDatetime"u8))
+                {
+                    ReadDetectDatetime(prop, ref detectDatetime);
+                    continue;
+                }
+                if (prop.NameEquals("additionalColumns"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    query = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    additionalColumns = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("pageSize"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    pageSize = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("preferredRegions"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    preferredRegions = JsonSerializer.Deserialize<DataFactoryElement<IList<string>>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("detectDatetime"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    detectDatetime = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("additionalColumns"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    additionalColumns = BinaryData.FromString(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("sourceRetryCount"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sourceRetryCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("sourceRetryWait"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sourceRetryWait = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("maxConcurrentConnections"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    maxConcurrentConnections = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("disableMetricsCollection"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    disableMetricsCollection = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            additionalProperties = additionalPropertiesDictionary;
             return new CosmosDBSqlApiSource(
-                type,
+                copySourceType,
                 sourceRetryCount,
                 sourceRetryWait,
                 maxConcurrentConnections,
@@ -218,36 +217,5 @@ namespace Azure.ResourceManager.DataFactory.Models
                 detectDatetime,
                 additionalColumns);
         }
-
-        BinaryData IPersistableModel<CosmosDBSqlApiSource>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBSqlApiSource>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CosmosDBSqlApiSource)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CosmosDBSqlApiSource IPersistableModel<CosmosDBSqlApiSource>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBSqlApiSource>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCosmosDBSqlApiSource(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CosmosDBSqlApiSource)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CosmosDBSqlApiSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

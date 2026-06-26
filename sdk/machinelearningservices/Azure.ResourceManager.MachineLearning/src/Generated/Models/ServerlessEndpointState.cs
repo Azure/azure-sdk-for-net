@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct ServerlessEndpointState : IEquatable<ServerlessEndpointState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ServerlessEndpointState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ServerlessEndpointState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnknownValue = "Unknown";
         private const string CreatingValue = "Creating";
         private const string DeletingValue = "Deleting";
@@ -32,41 +25,73 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string CreationFailedValue = "CreationFailed";
         private const string DeletionFailedValue = "DeletionFailed";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerlessEndpointState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ServerlessEndpointState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Unknown. </summary>
         public static ServerlessEndpointState Unknown { get; } = new ServerlessEndpointState(UnknownValue);
-        /// <summary> Creating. </summary>
+
+        /// <summary> Gets the Creating. </summary>
         public static ServerlessEndpointState Creating { get; } = new ServerlessEndpointState(CreatingValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static ServerlessEndpointState Deleting { get; } = new ServerlessEndpointState(DeletingValue);
-        /// <summary> Suspending. </summary>
+
+        /// <summary> Gets the Suspending. </summary>
         public static ServerlessEndpointState Suspending { get; } = new ServerlessEndpointState(SuspendingValue);
-        /// <summary> Reinstating. </summary>
+
+        /// <summary> Gets the Reinstating. </summary>
         public static ServerlessEndpointState Reinstating { get; } = new ServerlessEndpointState(ReinstatingValue);
-        /// <summary> Online. </summary>
+
+        /// <summary> Gets the Online. </summary>
         public static ServerlessEndpointState Online { get; } = new ServerlessEndpointState(OnlineValue);
-        /// <summary> Suspended. </summary>
+
+        /// <summary> Gets the Suspended. </summary>
         public static ServerlessEndpointState Suspended { get; } = new ServerlessEndpointState(SuspendedValue);
-        /// <summary> CreationFailed. </summary>
+
+        /// <summary> Gets the CreationFailed. </summary>
         public static ServerlessEndpointState CreationFailed { get; } = new ServerlessEndpointState(CreationFailedValue);
-        /// <summary> DeletionFailed. </summary>
+
+        /// <summary> Gets the DeletionFailed. </summary>
         public static ServerlessEndpointState DeletionFailed { get; } = new ServerlessEndpointState(DeletionFailedValue);
+
         /// <summary> Determines if two <see cref="ServerlessEndpointState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServerlessEndpointState left, ServerlessEndpointState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServerlessEndpointState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServerlessEndpointState left, ServerlessEndpointState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServerlessEndpointState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServerlessEndpointState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServerlessEndpointState(string value) => new ServerlessEndpointState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServerlessEndpointState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServerlessEndpointState?(string value) => value == null ? null : new ServerlessEndpointState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServerlessEndpointState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServerlessEndpointState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -5,7 +5,7 @@
 namespace OpenAI
 {
     /// <summary></summary>
-    internal enum WebSearchToolSearchContextSize
+    public enum WebSearchToolSearchContextSize
     {
         /// <summary> Low. </summary>
         Low,

@@ -55,8 +55,8 @@ namespace Azure.Analytics.Defender.Easm
                     yield break;
                 }
                 PagedPolicy result = (PagedPolicy)response;
-                yield return Page<EasmPolicy>.FromValues((IReadOnlyList<EasmPolicy>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EasmPolicy>.FromValues((IReadOnlyList<EasmPolicy>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -28,18 +28,18 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="ipConfigurations"> IPConfigurations - A list of IPConfigurations of the network interface. </param>
         /// <param name="macAddress"> MacAddress - The MAC address of the network interface. </param>
         /// <param name="dnsSettings"> DNS Settings for the interface. </param>
-        /// <param name="createFromLocal"> Boolean indicating whether this is a existing local network interface or if one should be created. </param>
+        /// <param name="isCreatingFromLocal"> Boolean indicating whether this is a existing local network interface or if one should be created. </param>
         /// <param name="provisioningState"> Provisioning state of the network interface. </param>
         /// <param name="status"> The observed state of network interfaces. </param>
         /// <param name="networkSecurityGroup"> NetworkSecurityGroup - Network Security Group attached to the network interface. </param>
         /// <param name="isSdnPoliciesBypassed"> This setting is applicable only when SDN is supported and enabled in the environment. Indicates whether SDN policies should be bypassed for this network interface. By default, SDN is enabled. Set this value to true only if you want to disable SDN for the network interface. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmNetworkInterfaceProperties(IList<HciVmIPConfiguration> ipConfigurations, string macAddress, HciVmInterfaceDnsSettings dnsSettings, bool? createFromLocal, HciVmProvisioningState? provisioningState, HciVmNetworkInterfaceStatus status, NetworkSecurityGroupArmReference networkSecurityGroup, bool? isSdnPoliciesBypassed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciVmNetworkInterfaceProperties(IList<HciVmIPConfiguration> ipConfigurations, string macAddress, HciVmInterfaceDnsSettings dnsSettings, bool? isCreatingFromLocal, HciVmProvisioningState? provisioningState, HciVmNetworkInterfaceStatus status, NetworkSecurityGroupArmReference networkSecurityGroup, bool? isSdnPoliciesBypassed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IPConfigurations = ipConfigurations;
             MacAddress = macAddress;
             DnsSettings = dnsSettings;
-            CreateFromLocal = createFromLocal;
+            IsCreatingFromLocal = isCreatingFromLocal;
             ProvisioningState = provisioningState;
             Status = status;
             NetworkSecurityGroup = networkSecurityGroup;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         internal HciVmInterfaceDnsSettings DnsSettings { get; set; }
 
         /// <summary> Boolean indicating whether this is a existing local network interface or if one should be created. </summary>
-        public bool? CreateFromLocal { get; set; }
+        public bool? IsCreatingFromLocal { get; set; }
 
         /// <summary> Provisioning state of the network interface. </summary>
         public HciVmProvisioningState? ProvisioningState { get; }
