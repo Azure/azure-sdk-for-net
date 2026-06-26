@@ -20,11 +20,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmFrontDoorModelFactory
     {
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="friendlyName"> A friendly name for the frontDoor. </param>
         /// <param name="routingRules"> Routing rules associated with this Front Door. </param>
         /// <param name="loadBalancingSettings"> Load balancing settings associated with this Front Door instance. </param>
@@ -40,33 +35,24 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="rulesEngines"> Rules Engine Configurations available to routing rules. </param>
         /// <param name="extendedProperties"> Key-Value pair representing additional properties for frontdoor. </param>
         /// <returns> A new <see cref="FrontDoor.FrontDoorData"/> instance for mocking. </returns>
-        public static FrontDoorData FrontDoorData(ResourceIdentifier id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, string friendlyName = default, IEnumerable<RoutingRuleData> routingRules = default, IEnumerable<FrontDoorLoadBalancingSettingsData> loadBalancingSettings = default, IEnumerable<FrontDoorHealthProbeSettingsData> healthProbeSettings = default, IEnumerable<FrontDoorBackendPool> backendPools = default, IEnumerable<FrontendEndpointData> frontendEndpoints = default, BackendPoolsSettings backendPoolsSettings = default, FrontDoorEnabledState? enabledState = default, FrontDoorResourceState? resourceState = default, string provisioningState = default, string cname = default, string frontdoorId = default, IEnumerable<FrontDoorRulesEngineData> rulesEngines = default, IReadOnlyDictionary<string, string> extendedProperties = default)
+        public static FrontDoorData FrontDoorData(string friendlyName = default, IEnumerable<RoutingRuleData> routingRules = default, IEnumerable<FrontDoorLoadBalancingSettingsData> loadBalancingSettings = default, IEnumerable<FrontDoorHealthProbeSettingsData> healthProbeSettings = default, IEnumerable<FrontDoorBackendPool> backendPools = default, IEnumerable<FrontendEndpointData> frontendEndpoints = default, BackendPoolsSettings backendPoolsSettings = default, FrontDoorEnabledState? enabledState = default, FrontDoorResourceState? resourceState = default, string provisioningState = default, string cname = default, string frontdoorId = default, IEnumerable<FrontDoorRulesEngineData> rulesEngines = default, IReadOnlyDictionary<string, string> extendedProperties = default)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new FrontDoorData(
-                id,
-                name,
-                @type,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+            return new FrontDoorData(friendlyName is null && routingRules is null && loadBalancingSettings is null && healthProbeSettings is null && backendPools is null && frontendEndpoints is null && backendPoolsSettings is null && enabledState is null && resourceState is null && provisioningState is null && cname is null && frontdoorId is null && rulesEngines is null && extendedProperties is null ? default : new FrontDoorProperties(
+                friendlyName,
+                (routingRules ?? new ChangeTrackingList<RoutingRuleData>()).ToList(),
+                (loadBalancingSettings ?? new ChangeTrackingList<FrontDoorLoadBalancingSettingsData>()).ToList(),
+                (healthProbeSettings ?? new ChangeTrackingList<FrontDoorHealthProbeSettingsData>()).ToList(),
+                (backendPools ?? new ChangeTrackingList<FrontDoorBackendPool>()).ToList(),
+                (frontendEndpoints ?? new ChangeTrackingList<FrontendEndpointData>()).ToList(),
+                backendPoolsSettings,
+                enabledState,
                 default,
-                friendlyName is null && routingRules is null && loadBalancingSettings is null && healthProbeSettings is null && backendPools is null && frontendEndpoints is null && backendPoolsSettings is null && enabledState is null && resourceState is null && provisioningState is null && cname is null && frontdoorId is null && rulesEngines is null && extendedProperties is null ? default : new FrontDoorProperties(
-                    friendlyName,
-                    (routingRules ?? new ChangeTrackingList<RoutingRuleData>()).ToList(),
-                    (loadBalancingSettings ?? new ChangeTrackingList<FrontDoorLoadBalancingSettingsData>()).ToList(),
-                    (healthProbeSettings ?? new ChangeTrackingList<FrontDoorHealthProbeSettingsData>()).ToList(),
-                    (backendPools ?? new ChangeTrackingList<FrontDoorBackendPool>()).ToList(),
-                    (frontendEndpoints ?? new ChangeTrackingList<FrontendEndpointData>()).ToList(),
-                    backendPoolsSettings,
-                    enabledState,
-                    default,
-                    resourceState,
-                    provisioningState,
-                    cname,
-                    frontdoorId,
-                    (rulesEngines ?? new ChangeTrackingList<FrontDoorRulesEngineData>()).ToList(),
-                    extendedProperties ?? new ChangeTrackingDictionary<string, string>()));
+                resourceState,
+                provisioningState,
+                cname,
+                frontdoorId,
+                (rulesEngines ?? new ChangeTrackingList<FrontDoorRulesEngineData>()).ToList(),
+                extendedProperties ?? new ChangeTrackingDictionary<string, string>()), default);
         }
 
         /// <param name="id"> Resource ID. </param>
@@ -1020,29 +1006,22 @@ namespace Azure.ResourceManager.FrontDoor.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static FrontDoorData FrontDoorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string friendlyName = default, IEnumerable<RoutingRuleData> routingRules = default, IEnumerable<FrontDoorLoadBalancingSettingsData> loadBalancingSettings = default, IEnumerable<FrontDoorHealthProbeSettingsData> healthProbeSettings = default, IEnumerable<FrontDoorBackendPool> backendPools = default, IEnumerable<FrontendEndpointData> frontendEndpoints = default, BackendPoolsSettings backendPoolsSettings = default, FrontDoorEnabledState? enabledState = default, FrontDoorResourceState? resourceState = default, string provisioningState = default, string cname = default, string frontdoorId = default, IEnumerable<FrontDoorRulesEngineData> rulesEngines = default, IReadOnlyDictionary<string, string> extendedProperties = default)
         {
-            return new FrontDoorData(
-                id,
-                name,
+            return new FrontDoorData(friendlyName is null && routingRules is null && loadBalancingSettings is null && healthProbeSettings is null && backendPools is null && frontendEndpoints is null && backendPoolsSettings is null && enabledState is null && resourceState is null && provisioningState is null && cname is null && frontdoorId is null && rulesEngines is null && extendedProperties is null ? default : new FrontDoorProperties(
+                friendlyName,
+                (routingRules ?? new ChangeTrackingList<RoutingRuleData>()).ToList(),
+                (loadBalancingSettings ?? new ChangeTrackingList<FrontDoorLoadBalancingSettingsData>()).ToList(),
+                (healthProbeSettings ?? new ChangeTrackingList<FrontDoorHealthProbeSettingsData>()).ToList(),
+                (backendPools ?? new ChangeTrackingList<FrontDoorBackendPool>()).ToList(),
+                (frontendEndpoints ?? new ChangeTrackingList<FrontendEndpointData>()).ToList(),
+                backendPoolsSettings,
+                enabledState,
                 default,
-                default,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                friendlyName is null && routingRules is null && loadBalancingSettings is null && healthProbeSettings is null && backendPools is null && frontendEndpoints is null && backendPoolsSettings is null && enabledState is null && resourceState is null && provisioningState is null && cname is null && frontdoorId is null && rulesEngines is null && extendedProperties is null ? default : new FrontDoorProperties(
-                    friendlyName,
-                    (routingRules ?? new ChangeTrackingList<RoutingRuleData>()).ToList(),
-                    (loadBalancingSettings ?? new ChangeTrackingList<FrontDoorLoadBalancingSettingsData>()).ToList(),
-                    (healthProbeSettings ?? new ChangeTrackingList<FrontDoorHealthProbeSettingsData>()).ToList(),
-                    (backendPools ?? new ChangeTrackingList<FrontDoorBackendPool>()).ToList(),
-                    (frontendEndpoints ?? new ChangeTrackingList<FrontendEndpointData>()).ToList(),
-                    backendPoolsSettings,
-                    enabledState,
-                    default,
-                    resourceState,
-                    provisioningState,
-                    cname,
-                    frontdoorId,
-                    (rulesEngines ?? new ChangeTrackingList<FrontDoorRulesEngineData>()).ToList(),
-                    extendedProperties ?? new ChangeTrackingDictionary<string, string>()));
+                resourceState,
+                provisioningState,
+                cname,
+                frontdoorId,
+                (rulesEngines ?? new ChangeTrackingList<FrontDoorRulesEngineData>()).ToList(),
+                extendedProperties ?? new ChangeTrackingDictionary<string, string>()), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
