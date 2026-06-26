@@ -10,7 +10,7 @@ using Azure.AI.Extensions.OpenAI;
 using OpenAI;
 using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAIExternal
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     internal partial class InternalOutputMessageContentOutputTextContent : InternalOutputMessageContent, IJsonModel<InternalOutputMessageContentOutputTextContent>
     {

@@ -5,18 +5,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.Extensions.OpenAI;
-using OpenAI;
-using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAIExternal
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Move. </summary>
-    internal partial class MoveParam : InternalComputerAction
+    internal partial class MoveParam : ComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="MoveParam"/>. </summary>
         /// <param name="x"> The x-coordinate to move to. </param>
         /// <param name="y"> The y-coordinate to move to. </param>
-        internal MoveParam(long x, long y) : base("move")
+        internal MoveParam(long x, long y) : base(ComputerActionType.Move)
         {
             X = x;
             Y = y;
@@ -29,7 +27,7 @@ namespace Azure.AI.Extensions.OpenAIExternal
         /// <param name="x"> The x-coordinate to move to. </param>
         /// <param name="y"> The y-coordinate to move to. </param>
         /// <param name="keys"></param>
-        internal MoveParam(ComputerCallActionKind @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long x, long y, IList<string> keys) : base(@type, additionalBinaryDataProperties)
+        internal MoveParam(ComputerActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long x, long y, IList<string> keys) : base(@type, additionalBinaryDataProperties)
         {
             X = x;
             Y = y;

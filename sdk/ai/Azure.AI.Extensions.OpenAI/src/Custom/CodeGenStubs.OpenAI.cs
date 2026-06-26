@@ -24,28 +24,28 @@ namespace OpenAI;
 [CodeGenType("ComparisonFilterType")] internal readonly partial struct ComparisonFilterType { }
 [CodeGenType("CompoundFilter")] internal partial class InternalCompoundFilter { }
 [CodeGenType("CompoundFilterType")] internal readonly partial struct CompoundFilterType { }
-[CodeGenType("ComputerAction")] internal partial class InternalComputerAction { }
-[CodeGenType("ComputerActionClick")] internal partial class InternalComputerActionClick { }
-[CodeGenType("ComputerActionClickButton")] internal readonly partial struct ComputerActionClickButton { }
-[CodeGenType("ComputerActionDoubleClick")] internal partial class InternalComputerActionDoubleClick { }
-[CodeGenType("ComputerActionDrag")] internal partial class InternalComputerActionDrag { }
-[CodeGenType("ComputerActionKeyPress")] internal partial class InternalComputerActionKeyPress { }
-[CodeGenType("ComputerActionMove")] internal partial class InternalComputerActionMove { }
-[CodeGenType("ComputerActionScreenshot")] internal partial class InternalComputerActionScreenshot { }
-[CodeGenType("ComputerActionScroll")] internal partial class InternalComputerActionScroll { }
-[CodeGenType("ComputerActionTypeKeys")] internal partial class InternalComputerActionTypeKeys { }
-[CodeGenType("ComputerActionWait")] internal partial class InternalComputerActionWait { }
-[CodeGenType("ComputerToolCallItemParam")] internal partial class InternalComputerToolCallItemParam { }
-[CodeGenType("ComputerToolCallItemResource")] internal partial class InternalComputerToolCallItemResource { }
-[CodeGenType("ComputerToolCallItemResourceStatus")] internal readonly partial struct ComputerToolCallItemResourceStatus { }
-[CodeGenType("ComputerToolCallOutputItemOutput")] internal partial class InternalComputerToolCallOutputItemOutput { }
-[CodeGenType("ComputerToolCallOutputItemOutputComputerScreenshot")] internal partial class InternalComputerToolCallOutputItemOutputComputerScreenshot { }
-[CodeGenType("ComputerToolCallOutputItemParam")] internal partial class InternalComputerToolCallOutputItemParam { }
-[CodeGenType("ComputerToolCallOutputItemResource")] internal partial class InternalComputerToolCallOutputItemResource { }
-[CodeGenType("ComputerToolCallOutputItemResourceStatus")] internal readonly partial struct ComputerToolCallOutputItemResourceStatus { }
-[CodeGenType("ComputerToolCallSafetyCheck")] internal partial class InternalComputerToolCallSafetyCheck { }
-[CodeGenType("ComputerUsePreviewTool")] internal partial class InternalComputerUsePreviewTool { }
-[CodeGenType("ComputerUsePreviewToolEnvironment")] internal readonly partial struct ComputerUsePreviewToolEnvironment { }
+//[CodeGenType("ComputerAction")] internal partial class InternalComputerAction { }
+//[CodeGenType("ComputerActionClick")] internal partial class InternalComputerActionClick { }
+//[CodeGenType("ComputerActionClickButton")] internal readonly partial struct ComputerActionClickButton { }
+//[CodeGenType("ComputerActionDoubleClick")] internal partial class InternalComputerActionDoubleClick { }
+//[CodeGenType("ComputerActionDrag")] internal partial class InternalComputerActionDrag { }
+//[CodeGenType("ComputerActionKeyPress")] internal partial class InternalComputerActionKeyPress { }
+//[CodeGenType("ComputerActionMove")] internal partial class InternalComputerActionMove { }
+//[CodeGenType("ComputerActionScreenshot")] internal partial class InternalComputerActionScreenshot { }
+//[CodeGenType("ComputerActionScroll")] internal partial class InternalComputerActionScroll { }
+//[CodeGenType("ComputerActionTypeKeys")] internal partial class InternalComputerActionTypeKeys { }
+//[CodeGenType("ComputerActionWait")] internal partial class InternalComputerActionWait { }
+//[CodeGenType("ComputerToolCallItemParam")] internal partial class InternalComputerToolCallItemParam { }
+//[CodeGenType("ComputerToolCallItemResource")] internal partial class InternalComputerToolCallItemResource { }
+//[CodeGenType("ComputerToolCallItemResourceStatus")] internal readonly partial struct ComputerToolCallItemResourceStatus { }
+//[CodeGenType("ComputerToolCallOutputItemOutput")] internal partial class InternalComputerToolCallOutputItemOutput { }
+//[CodeGenType("ComputerToolCallOutputItemOutputComputerScreenshot")] internal partial class InternalComputerToolCallOutputItemOutputComputerScreenshot { }
+//[CodeGenType("ComputerToolCallOutputItemParam")] internal partial class InternalComputerToolCallOutputItemParam { }
+//[CodeGenType("ComputerToolCallOutputItemResource")] internal partial class InternalComputerToolCallOutputItemResource { }
+//[CodeGenType("ComputerToolCallOutputItemResourceStatus")] internal readonly partial struct ComputerToolCallOutputItemResourceStatus { }
+//[CodeGenType("ComputerToolCallSafetyCheck")] internal partial class InternalComputerToolCallSafetyCheck { }
+//[CodeGenType("ComputerUsePreviewTool")] internal partial class InternalComputerUsePreviewTool { }
+//[CodeGenType("ComputerUsePreviewToolEnvironment")] internal readonly partial struct ComputerUsePreviewToolEnvironment { }
 [CodeGenType("Coordinate")] internal partial class InternalCoordinate { }
 [CodeGenType("EasyInputMessage")] internal partial class InternalEasyInputMessage { }
 [CodeGenType("FileSearchTool")] internal partial class InternalFileSearchTool { }
@@ -53,7 +53,6 @@ namespace OpenAI;
 [CodeGenType("FileSearchToolCallItemParamResult")] internal partial class InternalFileSearchToolCallItemParamResult { }
 [CodeGenType("FileSearchToolCallItemResource")] internal partial class InternalFileSearchToolCallItemResource { }
 [CodeGenType("FileSearchToolCallItemResourceStatus")] internal readonly partial struct FileSearchToolCallItemResourceStatus { }
-[CodeGenType("FunctionTool")] internal partial class InternalFunctionTool { }
 [CodeGenType("FunctionToolCallItemParam")] internal partial class InternalFunctionToolCallItemParam { }
 [CodeGenType("FunctionToolCallItemResource")] internal partial class InternalFunctionToolCallItemResource { }
 [CodeGenType("FunctionToolCallItemResourceStatus")] internal readonly partial struct FunctionToolCallItemResourceStatus { }

@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using Azure.AI.Extensions.OpenAI;
 
-namespace Azure.AI.Extensions.OpenAIExternal
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Input text. </summary>
     internal partial class InputContentInputTextContent : InputContent

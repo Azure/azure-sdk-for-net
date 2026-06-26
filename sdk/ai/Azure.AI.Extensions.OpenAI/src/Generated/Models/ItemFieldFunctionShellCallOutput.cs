@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.AI.Extensions.OpenAIExternal
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Shell call output. </summary>
     internal partial class ItemFieldFunctionShellCallOutput : ItemField

@@ -3,7 +3,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure.AI.Extensions.OpenAIExternal;
+using Azure.AI.Extensions.OpenAI.Internal;
 using OpenAI;
 using OpenAI.Responses;
 
@@ -46,6 +46,7 @@ namespace Azure.AI.Extensions.OpenAI
     [ModelReaderWriterBuildable(typeof(ClickParam))]
     [ModelReaderWriterBuildable(typeof(CompactResource))]
     [ModelReaderWriterBuildable(typeof(CompactResponseMethodPublicBody))]
+    [ModelReaderWriterBuildable(typeof(ComputerAction))]
     [ModelReaderWriterBuildable(typeof(ComputerCallSafetyCheck))]
     [ModelReaderWriterBuildable(typeof(ComputerScreenshotContent))]
     [ModelReaderWriterBuildable(typeof(ComputerScreenshotImage))]
@@ -114,12 +115,11 @@ namespace Azure.AI.Extensions.OpenAI
     [ModelReaderWriterBuildable(typeof(InternalAgentResponseError))]
     [ModelReaderWriterBuildable(typeof(InternalApplyPatchFileOperation))]
     [ModelReaderWriterBuildable(typeof(InternalApproximateLocation))]
-    [ModelReaderWriterBuildable(typeof(OpenAIExternal.InternalCodeInterpreterOutputImage))]
-    [ModelReaderWriterBuildable(typeof(OpenAIExternal.InternalCodeInterpreterOutputLogs))]
+    [ModelReaderWriterBuildable(typeof(Internal.InternalCodeInterpreterOutputImage))]
+    [ModelReaderWriterBuildable(typeof(Internal.InternalCodeInterpreterOutputLogs))]
     [ModelReaderWriterBuildable(typeof(InternalCodeInterpreterTool))]
-    [ModelReaderWriterBuildable(typeof(OpenAIExternal.InternalComparisonFilter))]
-    [ModelReaderWriterBuildable(typeof(OpenAIExternal.InternalCompoundFilter))]
-    [ModelReaderWriterBuildable(typeof(InternalComputerAction))]
+    [ModelReaderWriterBuildable(typeof(Internal.InternalComparisonFilter))]
+    [ModelReaderWriterBuildable(typeof(Internal.InternalCompoundFilter))]
     [ModelReaderWriterBuildable(typeof(InternalEasyInputMessage))]
     [ModelReaderWriterBuildable(typeof(InternalFunctionAndCustomToolCallOutput))]
     [ModelReaderWriterBuildable(typeof(InternalImageGenTool))]
@@ -144,9 +144,9 @@ namespace Azure.AI.Extensions.OpenAI
     [ModelReaderWriterBuildable(typeof(InternalToolChoiceParam))]
     [ModelReaderWriterBuildable(typeof(InternalTopLogProb))]
     [ModelReaderWriterBuildable(typeof(InternalVectorStoreFileAttributes))]
-    [ModelReaderWriterBuildable(typeof(OpenAIExternal.InternalWebSearchActionFind))]
-    [ModelReaderWriterBuildable(typeof(OpenAIExternal.InternalWebSearchActionOpenPage))]
-    [ModelReaderWriterBuildable(typeof(OpenAIExternal.InternalWebSearchActionSearch))]
+    [ModelReaderWriterBuildable(typeof(Internal.InternalWebSearchActionFind))]
+    [ModelReaderWriterBuildable(typeof(Internal.InternalWebSearchActionOpenPage))]
+    [ModelReaderWriterBuildable(typeof(Internal.InternalWebSearchActionSearch))]
     [ModelReaderWriterBuildable(typeof(InternalWebSearchPreviewTool))]
     [ModelReaderWriterBuildable(typeof(ItemField))]
     [ModelReaderWriterBuildable(typeof(ItemFieldApplyPatchToolCall))]
@@ -197,7 +197,7 @@ namespace Azure.AI.Extensions.OpenAI
     [ModelReaderWriterBuildable(typeof(OpenApiToolCallOutput))]
     [ModelReaderWriterBuildable(typeof(OutputMessageContentRefusalContent))]
     [ModelReaderWriterBuildable(typeof(ProceduralMemoryItem))]
-    [ModelReaderWriterBuildable(typeof(OpenAIExternal.ProjectConversation))]
+    [ModelReaderWriterBuildable(typeof(ProjectConversation))]
     [ModelReaderWriterBuildable(typeof(ProjectConversationCreationOptions))]
     [ModelReaderWriterBuildable(typeof(ProjectConversationUpdateOptions))]
     [ModelReaderWriterBuildable(typeof(Prompt))]

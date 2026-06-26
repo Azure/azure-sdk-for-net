@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.Extensions.OpenAI;
 
-namespace Azure.AI.Extensions.OpenAIExternal
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Shell tool call output. </summary>
     internal partial class InputItemFunctionShellCallOutputItemParam : InputItem

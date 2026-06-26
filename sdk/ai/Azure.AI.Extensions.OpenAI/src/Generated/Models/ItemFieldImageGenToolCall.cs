@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Extensions.OpenAIExternal
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Image generation call. </summary>
     internal partial class ItemFieldImageGenToolCall : ItemField

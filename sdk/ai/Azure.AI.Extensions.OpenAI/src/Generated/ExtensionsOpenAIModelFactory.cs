@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.Extensions.OpenAIExternal;
+using Azure.AI.Extensions.OpenAI.Internal;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
@@ -40,7 +40,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary>
         /// The input format for the custom tool. Default is unconstrained text.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.ResponsesCustomTextFormatParam"/> and <see cref="OpenAIExternal.CustomGrammarFormatParam"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.ResponsesCustomTextFormatParam"/> and <see cref="Internal.CustomGrammarFormatParam"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="OpenAI.ResponsesCustomToolParamFormat"/> instance for mocking. </returns>
@@ -59,7 +59,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Grammar format. </summary>
         /// <param name="syntax"> The syntax of the grammar definition. One of `lark` or `regex`. </param>
         /// <param name="definition"> The grammar definition. </param>
-        /// <returns> A new <see cref="OpenAIExternal.CustomGrammarFormatParam"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Internal.CustomGrammarFormatParam"/> instance for mocking. </returns>
         public static CustomGrammarFormatParam CustomGrammarFormatParam(ResponsesGrammarSyntax syntax = default, string definition = default)
         {
             return new CustomGrammarFormatParam(CustomToolParamFormatType.Grammar, additionalBinaryDataProperties: null, syntax, definition);
@@ -69,7 +69,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="name"> The name of the skill. </param>
         /// <param name="description"> The description of the skill. </param>
         /// <param name="path"> The path to the directory containing the skill. </param>
-        /// <returns> A new <see cref="OpenAIExternal.LocalSkillParam"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Internal.LocalSkillParam"/> instance for mocking. </returns>
         public static LocalSkillParam LocalSkillParam(string name = default, string description = default, string path = default)
         {
             return new LocalSkillParam(name, description, path, additionalBinaryDataProperties: null);
@@ -769,7 +769,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.ResponsesSkillReferenceParam"/> and <see cref="OpenAI.ResponsesInlineSkillParam"/>.
         /// </summary>
         /// <param name="type"></param>
-        /// <returns> A new <see cref="OpenAIExternal.ContainerSkill"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Internal.ContainerSkill"/> instance for mocking. </returns>
         public static ContainerSkill ContainerSkill(string @type = default)
         {
             return new UnknownContainerSkill(new ContainerSkillType(@type), additionalBinaryDataProperties: null);
@@ -841,6 +841,21 @@ namespace Azure.AI.Extensions.OpenAI
         public static ResponsesToolSearchToolParam ResponsesToolSearchToolParam(ToolSearchExecutionType? execution = default, string description = default, ResponsesEmptyModelParam parameters = default)
         {
             return new ResponsesToolSearchToolParam("tool_search", execution, description, parameters, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The ProjectConversation. </summary>
+        /// <param name="id"> The unique ID of the conversation. </param>
+        /// <param name="metadata">
+        /// Set of 16 key-value pairs that can be attached to an object. This can be         useful for storing additional information about the object in a structured         format, and querying for objects via API or the dashboard.
+        ///   Keys are strings with a maximum length of 64 characters. Values are strings         with a maximum length of 512 characters.
+        /// </param>
+        /// <param name="createdAt"> The time at which the conversation was created, measured in seconds since the Unix epoch. </param>
+        /// <returns> A new <see cref="OpenAI.ProjectConversation"/> instance for mocking. </returns>
+        public static ProjectConversation ProjectConversation(string id = default, IDictionary<string, string> metadata = default, DateTimeOffset createdAt = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ProjectConversation(id, "conversation", metadata, createdAt, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The AgentReference. </summary>

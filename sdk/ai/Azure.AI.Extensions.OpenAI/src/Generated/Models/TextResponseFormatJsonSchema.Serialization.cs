@@ -9,7 +9,7 @@ using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
 using OpenAI;
 
-namespace Azure.AI.Extensions.OpenAIExternal
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> JSON schema. </summary>
     internal partial class TextResponseFormatJsonSchema : TextResponseFormatConfiguration, IJsonModel<TextResponseFormatJsonSchema>

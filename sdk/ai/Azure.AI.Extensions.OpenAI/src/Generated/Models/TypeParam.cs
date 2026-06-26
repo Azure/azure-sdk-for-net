@@ -4,17 +4,15 @@
 
 using System;
 using System.Collections.Generic;
-using OpenAI;
-using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAIExternal
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Type. </summary>
-    internal partial class TypeParam : InternalComputerAction
+    internal partial class TypeParam : ComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="TypeParam"/>. </summary>
         /// <param name="text"> The text to type. </param>
-        internal TypeParam(string text) : base("type")
+        internal TypeParam(string text) : base(ComputerActionType.Type)
         {
             Text = text;
         }
@@ -23,7 +21,7 @@ namespace Azure.AI.Extensions.OpenAIExternal
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="text"> The text to type. </param>
-        internal TypeParam(ComputerCallActionKind @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text) : base(@type, additionalBinaryDataProperties)
+        internal TypeParam(ComputerActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text) : base(@type, additionalBinaryDataProperties)
         {
             Text = text;
         }

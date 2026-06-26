@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
 
-namespace Azure.AI.Extensions.OpenAIExternal
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Prompt Variables. </summary>
     internal partial class ResponsePromptVariables : IJsonModel<ResponsePromptVariables>

@@ -9,7 +9,7 @@ using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
 using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAIExternal
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Apply patch tool call. </summary>
     internal partial class ItemFieldApplyPatchToolCall : ItemField, IJsonModel<ItemFieldApplyPatchToolCall>

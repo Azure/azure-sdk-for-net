@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Extensions.OpenAIExternal
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Specific shell tool choice. </summary>
     internal partial class SpecificFunctionShellParam : InternalToolChoiceParam

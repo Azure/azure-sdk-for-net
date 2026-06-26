@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
 
-namespace Azure.AI.Extensions.OpenAIExternal
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Specific shell tool choice. </summary>
     internal partial class SpecificFunctionShellParam : InternalToolChoiceParam, IJsonModel<SpecificFunctionShellParam>

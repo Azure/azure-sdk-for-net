@@ -5,20 +5,18 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.Extensions.OpenAI;
-using OpenAI;
-using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAIExternal
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Scroll. </summary>
-    internal partial class ScrollParam : InternalComputerAction
+    internal partial class ScrollParam : ComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="ScrollParam"/>. </summary>
         /// <param name="x"> The x-coordinate where the scroll occurred. </param>
         /// <param name="y"> The y-coordinate where the scroll occurred. </param>
         /// <param name="scrollX"> The horizontal scroll distance. </param>
         /// <param name="scrollY"> The vertical scroll distance. </param>
-        internal ScrollParam(long x, long y, long scrollX, long scrollY) : base("scroll")
+        internal ScrollParam(long x, long y, long scrollX, long scrollY) : base(ComputerActionType.Scroll)
         {
             X = x;
             Y = y;
@@ -35,7 +33,7 @@ namespace Azure.AI.Extensions.OpenAIExternal
         /// <param name="scrollX"> The horizontal scroll distance. </param>
         /// <param name="scrollY"> The vertical scroll distance. </param>
         /// <param name="keys"></param>
-        internal ScrollParam(ComputerCallActionKind @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long x, long y, long scrollX, long scrollY, IList<string> keys) : base(@type, additionalBinaryDataProperties)
+        internal ScrollParam(ComputerActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long x, long y, long scrollX, long scrollY, IList<string> keys) : base(@type, additionalBinaryDataProperties)
         {
             X = x;
             Y = y;

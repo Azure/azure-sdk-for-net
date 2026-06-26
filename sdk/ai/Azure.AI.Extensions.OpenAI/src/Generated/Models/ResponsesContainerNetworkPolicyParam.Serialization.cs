@@ -5,7 +5,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.AI.Extensions.OpenAIExternal;
+using Azure.AI.Extensions.OpenAI.Internal;
 
 namespace Azure.AI.Extensions.OpenAI
 {

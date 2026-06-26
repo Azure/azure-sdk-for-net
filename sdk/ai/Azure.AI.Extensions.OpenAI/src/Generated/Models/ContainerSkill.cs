@@ -5,11 +5,11 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Extensions.OpenAIExternal
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary>
     /// The ContainerSkill.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.ResponsesSkillReferenceParam"/> and <see cref="OpenAI.ResponsesInlineSkillParam"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponsesSkillReferenceParam"/> and <see cref="ResponsesInlineSkillParam"/>.
     /// </summary>
     public abstract partial class ContainerSkill
     {

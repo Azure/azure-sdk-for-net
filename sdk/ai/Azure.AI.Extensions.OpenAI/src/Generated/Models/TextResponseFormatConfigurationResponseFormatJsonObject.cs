@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Extensions.OpenAIExternal
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> JSON object. </summary>
     internal partial class TextResponseFormatConfigurationResponseFormatJsonObject : TextResponseFormatConfiguration

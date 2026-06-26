@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Extensions.OpenAIExternal
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Shell call timeout outcome. </summary>
     internal partial class FunctionShellCallOutputTimeoutOutcome : FunctionShellCallOutputOutcome

@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.Extensions.OpenAIExternal;
+using Azure.AI.Extensions.OpenAI.Internal;
 
 namespace Azure.AI.Extensions.OpenAI
 {

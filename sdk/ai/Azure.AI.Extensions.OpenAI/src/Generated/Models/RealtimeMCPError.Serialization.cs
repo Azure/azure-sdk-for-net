@@ -7,7 +7,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
 
-namespace Azure.AI.Extensions.OpenAIExternal
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary>
     /// The RealtimeMCPError.

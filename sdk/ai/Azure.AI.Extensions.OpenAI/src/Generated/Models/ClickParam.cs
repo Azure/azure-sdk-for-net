@@ -5,19 +5,17 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.Extensions.OpenAI;
-using OpenAI;
-using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAIExternal
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Click. </summary>
-    internal partial class ClickParam : InternalComputerAction
+    internal partial class ClickParam : ComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="ClickParam"/>. </summary>
         /// <param name="button"> Indicates which mouse button was pressed during the click. One of `left`, `right`, `wheel`, `back`, or `forward`. </param>
         /// <param name="x"> The x-coordinate where the click occurred. </param>
         /// <param name="y"> The y-coordinate where the click occurred. </param>
-        internal ClickParam(ClickButtonType button, long x, long y) : base("click")
+        internal ClickParam(ClickButtonType button, long x, long y) : base(ComputerActionType.Click)
         {
             Button = button;
             X = x;
@@ -32,7 +30,7 @@ namespace Azure.AI.Extensions.OpenAIExternal
         /// <param name="x"> The x-coordinate where the click occurred. </param>
         /// <param name="y"> The y-coordinate where the click occurred. </param>
         /// <param name="keys"></param>
-        internal ClickParam(ComputerCallActionKind @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ClickButtonType button, long x, long y, IList<string> keys) : base(@type, additionalBinaryDataProperties)
+        internal ClickParam(ComputerActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ClickButtonType button, long x, long y, IList<string> keys) : base(@type, additionalBinaryDataProperties)
         {
             Button = button;
             X = x;

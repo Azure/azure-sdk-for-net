@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.AI.Extensions.OpenAIExternal
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Web search tool call. </summary>
     internal partial class ItemFieldWebSearchToolCall : ItemField

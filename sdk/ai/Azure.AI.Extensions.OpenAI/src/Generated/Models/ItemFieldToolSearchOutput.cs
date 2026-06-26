@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAIExternal
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> The ItemFieldToolSearchOutput. </summary>
     internal partial class ItemFieldToolSearchOutput : ItemField

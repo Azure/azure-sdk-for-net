@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
 
-namespace Azure.AI.Extensions.OpenAIExternal
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Shell call exit outcome. </summary>
     internal partial class FunctionShellCallOutputExitOutcome : FunctionShellCallOutputOutcome, IJsonModel<FunctionShellCallOutputExitOutcome>

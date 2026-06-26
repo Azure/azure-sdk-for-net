@@ -6,10 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.Extensions.OpenAI;
-using OpenAI;
 using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAIExternal
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Computer tool call. </summary>
     internal partial class InputItemComputerToolCall : InputItem
@@ -31,7 +30,7 @@ namespace Azure.AI.Extensions.OpenAIExternal
 
             Id = id;
             CallId = callId;
-            Actions = new ChangeTrackingList<InternalComputerAction>();
+            Actions = new ChangeTrackingList<ComputerAction>();
             PendingSafetyChecks = pendingSafetyChecks.ToList();
             Status = status;
         }
@@ -48,7 +47,7 @@ namespace Azure.AI.Extensions.OpenAIExternal
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        internal InputItemComputerToolCall(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, InternalComputerAction action, IList<InternalComputerAction> actions, IList<ComputerCallSafetyCheck> pendingSafetyChecks, InputItemComputerToolCallStatus status) : base(@type, additionalBinaryDataProperties)
+        internal InputItemComputerToolCall(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, ComputerAction action, IList<ComputerAction> actions, IList<ComputerCallSafetyCheck> pendingSafetyChecks, InputItemComputerToolCallStatus status) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             CallId = callId;
@@ -65,10 +64,10 @@ namespace Azure.AI.Extensions.OpenAIExternal
         public string CallId { get; set; }
 
         /// <summary> Gets or sets the Action. </summary>
-        public InternalComputerAction Action { get; set; }
+        public ComputerAction Action { get; set; }
 
         /// <summary> Gets the Actions. </summary>
-        public IList<InternalComputerAction> Actions { get; }
+        public IList<ComputerAction> Actions { get; }
 
         /// <summary> The pending safety checks for the computer call. </summary>
         public IList<ComputerCallSafetyCheck> PendingSafetyChecks { get; }

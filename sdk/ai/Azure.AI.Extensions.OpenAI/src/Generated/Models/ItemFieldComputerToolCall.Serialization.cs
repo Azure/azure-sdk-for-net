@@ -7,10 +7,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
-using OpenAI;
 using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAIExternal
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Computer tool call. </summary>
     internal partial class ItemFieldComputerToolCall : ItemField, IJsonModel<ItemFieldComputerToolCall>
@@ -92,7 +91,7 @@ namespace Azure.AI.Extensions.OpenAIExternal
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
-                foreach (InternalComputerAction item in Actions)
+                foreach (ComputerAction item in Actions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -143,8 +142,8 @@ namespace Azure.AI.Extensions.OpenAIExternal
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string callId = default;
-            InternalComputerAction action = default;
-            IList<InternalComputerAction> actions = default;
+            ComputerAction action = default;
+            IList<ComputerAction> actions = default;
             IList<ComputerCallSafetyCheck> pendingSafetyChecks = default;
             InputItemComputerToolCallStatus status = default;
             foreach (var prop in element.EnumerateObject())
@@ -170,7 +169,7 @@ namespace Azure.AI.Extensions.OpenAIExternal
                     {
                         continue;
                     }
-                    action = InternalComputerAction.DeserializeInternalComputerAction(prop.Value, options);
+                    action = ComputerAction.DeserializeComputerAction(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("actions"u8))
@@ -179,10 +178,10 @@ namespace Azure.AI.Extensions.OpenAIExternal
                     {
                         continue;
                     }
-                    List<InternalComputerAction> array = new List<InternalComputerAction>();
+                    List<ComputerAction> array = new List<ComputerAction>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(InternalComputerAction.DeserializeInternalComputerAction(item, options));
+                        array.Add(ComputerAction.DeserializeComputerAction(item, options));
                     }
                     actions = array;
                     continue;
@@ -220,7 +219,7 @@ namespace Azure.AI.Extensions.OpenAIExternal
                 id,
                 callId,
                 action,
-                actions ?? new ChangeTrackingList<InternalComputerAction>(),
+                actions ?? new ChangeTrackingList<ComputerAction>(),
                 pendingSafetyChecks,
                 status);
         }

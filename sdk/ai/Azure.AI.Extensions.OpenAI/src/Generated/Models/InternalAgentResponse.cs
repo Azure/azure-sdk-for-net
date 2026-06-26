@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
-using Azure.AI.Extensions.OpenAIExternal;
+using Azure.AI.Extensions.OpenAI.Internal;
 using OpenAI.Responses;
 
 namespace OpenAI

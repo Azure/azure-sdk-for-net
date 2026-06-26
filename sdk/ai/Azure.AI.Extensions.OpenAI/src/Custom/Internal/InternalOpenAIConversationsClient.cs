@@ -8,6 +8,6 @@ using System.Threading;
 
 namespace Azure.AI.Extensions.OpenAI;
 
-[CodeGenSuppress("CreateConversation", typeof(InternalMetadataContainer), typeof(IEnumerable<InputItem>), typeof(CancellationToken))]
-[CodeGenSuppress("CreateConversationAsync", typeof(InternalMetadataContainer), typeof(IEnumerable<InputItem>), typeof(CancellationToken))]
+[CodeGenSuppress("CreateConversation", typeof(InternalMetadataContainer), typeof(IEnumerable<Internal.InputItem>), typeof(CancellationToken))]
+[CodeGenSuppress("CreateConversationAsync", typeof(InternalMetadataContainer), typeof(IEnumerable<Internal.InputItem>), typeof(CancellationToken))]
 internal partial class Conversations { }

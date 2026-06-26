@@ -18,7 +18,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="internalMetadata"></param>
         /// <param name="items"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectConversationCreationOptions(OpenAI.InternalMetadataContainer internalMetadata, IList<ResponseItem> items, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectConversationCreationOptions(InternalMetadataContainer internalMetadata, IList<ResponseItem> items, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InternalMetadata = internalMetadata;
             Items = items;

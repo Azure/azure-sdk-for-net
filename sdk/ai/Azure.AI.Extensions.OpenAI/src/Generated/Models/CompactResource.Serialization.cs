@@ -10,7 +10,7 @@ using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
 using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAIExternal
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> The compacted response object. </summary>
     internal partial class CompactResource : IJsonModel<CompactResource>

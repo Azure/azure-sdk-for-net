@@ -6,13 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.Extensions.OpenAI;
-using OpenAI;
-using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAIExternal
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Drag. </summary>
-    internal partial class DragParam : InternalComputerAction
+    internal partial class DragParam : ComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="DragParam"/>. </summary>
         /// <param name="path">
@@ -24,7 +22,7 @@ namespace Azure.AI.Extensions.OpenAIExternal
         ///   ]
         ///   ```
         /// </param>
-        internal DragParam(IEnumerable<CoordParam> path) : base("drag")
+        internal DragParam(IEnumerable<CoordParam> path) : base(ComputerActionType.Drag)
         {
             Path = path.ToList();
             Keys = new ChangeTrackingList<string>();
@@ -43,7 +41,7 @@ namespace Azure.AI.Extensions.OpenAIExternal
         ///   ```
         /// </param>
         /// <param name="keys"></param>
-        internal DragParam(ComputerCallActionKind @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<CoordParam> path, IList<string> keys) : base(@type, additionalBinaryDataProperties)
+        internal DragParam(ComputerActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<CoordParam> path, IList<string> keys) : base(@type, additionalBinaryDataProperties)
         {
             Path = path;
             Keys = keys;

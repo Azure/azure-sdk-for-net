@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Extensions.OpenAIExternal
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary>
     /// Labels an `assistant` message as intermediate commentary (`commentary`) or the final answer (`final_answer`).

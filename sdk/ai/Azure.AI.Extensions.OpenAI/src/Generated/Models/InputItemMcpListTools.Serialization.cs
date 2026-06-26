@@ -9,7 +9,7 @@ using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
 using OpenAI;
 
-namespace Azure.AI.Extensions.OpenAIExternal
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> MCP list tools. </summary>
     internal partial class InputItemMcpListTools : InputItem, IJsonModel<InputItemMcpListTools>

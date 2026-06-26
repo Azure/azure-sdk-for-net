@@ -4,7 +4,7 @@
 
 using System;
 
-namespace Azure.AI.Extensions.OpenAIExternal
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     internal static partial class MCPToolConnectorIdExtensions
     {

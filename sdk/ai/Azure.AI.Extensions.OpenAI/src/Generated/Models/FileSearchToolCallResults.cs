@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using OpenAI;
 
-namespace Azure.AI.Extensions.OpenAIExternal
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> The FileSearchToolCallResults. </summary>
     internal partial class FileSearchToolCallResults

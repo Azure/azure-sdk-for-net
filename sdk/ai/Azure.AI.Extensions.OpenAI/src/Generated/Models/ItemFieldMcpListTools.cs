@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using OpenAI;
 
-namespace Azure.AI.Extensions.OpenAIExternal
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> MCP list tools. </summary>
     internal partial class ItemFieldMcpListTools : ItemField

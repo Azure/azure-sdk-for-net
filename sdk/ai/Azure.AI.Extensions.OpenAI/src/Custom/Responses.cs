@@ -8,7 +8,7 @@
 //using System.Threading.Tasks;
 //using Azure.AI.Extensions.OpenAI.Models;
 
-//namespace Azure.AI.Extensions.OpenAI;
+//namespace Azure.AI.Extensions.OpenAI
 
 //public partial class Responses
 //{

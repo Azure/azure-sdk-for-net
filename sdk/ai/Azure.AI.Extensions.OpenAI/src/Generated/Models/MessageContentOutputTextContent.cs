@@ -8,7 +8,7 @@ using System.Linq;
 using OpenAI;
 using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAIExternal
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Output text. </summary>
     internal partial class MessageContentOutputTextContent : InternalMessageContent

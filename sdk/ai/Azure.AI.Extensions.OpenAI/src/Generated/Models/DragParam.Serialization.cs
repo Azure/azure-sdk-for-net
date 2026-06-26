@@ -7,13 +7,11 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
-using OpenAI;
-using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAIExternal
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Drag. </summary>
-    internal partial class DragParam : InternalComputerAction, IJsonModel<DragParam>
+    internal partial class DragParam : ComputerAction, IJsonModel<DragParam>
     {
         /// <summary> Initializes a new instance of <see cref="DragParam"/> for deserialization. </summary>
         internal DragParam()
@@ -22,7 +20,7 @@ namespace Azure.AI.Extensions.OpenAIExternal
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalComputerAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ComputerAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DragParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -109,7 +107,7 @@ namespace Azure.AI.Extensions.OpenAIExternal
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalComputerAction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ComputerAction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DragParam>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -128,7 +126,7 @@ namespace Azure.AI.Extensions.OpenAIExternal
             {
                 return null;
             }
-            ComputerCallActionKind @type = "drag";
+            ComputerActionType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<CoordParam> path = default;
             IList<string> keys = default;
@@ -136,7 +134,7 @@ namespace Azure.AI.Extensions.OpenAIExternal
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ComputerCallActionKind(prop.Value.GetInt32());
+                    @type = new ComputerActionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("path"u8))

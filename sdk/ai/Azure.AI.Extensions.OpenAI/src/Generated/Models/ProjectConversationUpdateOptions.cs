@@ -16,7 +16,7 @@ namespace Azure.AI.Extensions.OpenAI
         ///   Keys are strings with a maximum length of 64 characters. Values are strings         with a maximum length of 512 characters.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectConversationUpdateOptions(OpenAI.InternalMetadataContainer internalMetadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectConversationUpdateOptions(InternalMetadataContainer internalMetadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InternalMetadata = internalMetadata;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

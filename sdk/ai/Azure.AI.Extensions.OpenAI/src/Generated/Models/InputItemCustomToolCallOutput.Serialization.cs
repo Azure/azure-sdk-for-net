@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
 
-namespace Azure.AI.Extensions.OpenAIExternal
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Custom tool call output. </summary>
     internal partial class InputItemCustomToolCallOutput : InputItem, IJsonModel<InputItemCustomToolCallOutput>

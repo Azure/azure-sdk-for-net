@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
 
-namespace Azure.AI.Extensions.OpenAIExternal
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Realtime MCP protocol error. </summary>
     internal partial class RealtimeMCPProtocolError : RealtimeMCPError, IJsonModel<RealtimeMCPProtocolError>

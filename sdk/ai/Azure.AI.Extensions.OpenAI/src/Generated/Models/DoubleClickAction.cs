@@ -5,19 +5,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenAI;
-using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAIExternal
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> DoubleClick. </summary>
-    internal partial class DoubleClickAction : InternalComputerAction
+    internal partial class DoubleClickAction : ComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="DoubleClickAction"/>. </summary>
         /// <param name="x"> The x-coordinate where the double click occurred. </param>
         /// <param name="y"> The y-coordinate where the double click occurred. </param>
         /// <param name="keys"></param>
-        internal DoubleClickAction(long x, long y, IEnumerable<string> keys) : base("double_click")
+        internal DoubleClickAction(long x, long y, IEnumerable<string> keys) : base(ComputerActionType.DoubleClick)
         {
             X = x;
             Y = y;
@@ -30,7 +28,7 @@ namespace Azure.AI.Extensions.OpenAIExternal
         /// <param name="x"> The x-coordinate where the double click occurred. </param>
         /// <param name="y"> The y-coordinate where the double click occurred. </param>
         /// <param name="keys"></param>
-        internal DoubleClickAction(ComputerCallActionKind @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long x, long y, IList<string> keys) : base(@type, additionalBinaryDataProperties)
+        internal DoubleClickAction(ComputerActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long x, long y, IList<string> keys) : base(@type, additionalBinaryDataProperties)
         {
             X = x;
             Y = y;
