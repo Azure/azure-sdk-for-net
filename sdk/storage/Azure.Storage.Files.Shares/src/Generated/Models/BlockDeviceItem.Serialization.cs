@@ -15,34 +15,35 @@ using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class FileItem : IPersistableModel<FileItem>, IXmlSerializable
+    /// <summary> A listed block device item. </summary>
+    internal partial class BlockDeviceItem : IPersistableModel<BlockDeviceItem>, IXmlSerializable
     {
-        /// <summary> Initializes a new instance of <see cref="FileItem"/> for deserialization. </summary>
-        internal FileItem()
+        /// <summary> Initializes a new instance of <see cref="BlockDeviceItem"/> for deserialization. </summary>
+        internal BlockDeviceItem()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FileItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BlockDeviceItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FileItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BlockDeviceItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "X":
                     using (Stream dataStream = data.ToStream())
                     {
-                        return DeserializeFileItem(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
+                        return DeserializeBlockDeviceItem(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FileItem)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlockDeviceItem)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FileItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BlockDeviceItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "X":
@@ -50,7 +51,7 @@ namespace Azure.Storage.Files.Shares.Models
                     {
                         using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
                         {
-                            WriteXml(writer, options, "File");
+                            WriteXml(writer, options, "BlockDevice");
                         }
                         if (stream.Position > int.MaxValue)
                         {
@@ -62,19 +63,19 @@ namespace Azure.Storage.Files.Shares.Models
                         }
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FileItem)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlockDeviceItem)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FileItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BlockDeviceItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FileItem IPersistableModel<FileItem>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BlockDeviceItem IPersistableModel<BlockDeviceItem>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FileItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
+        string IPersistableModel<BlockDeviceItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
 
         /// <param name="writer"> The XML writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -98,10 +99,10 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         internal virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FileItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BlockDeviceItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "X")
             {
-                throw new FormatException($"The model {nameof(FileItem)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BlockDeviceItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartElement("Name");
@@ -116,35 +117,29 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteStartElement("Properties");
             writer.WriteObjectValue(Properties, options);
             writer.WriteEndElement();
-            if (Optional.IsDefined(Attributes))
-            {
-                writer.WriteStartElement("Attributes");
-                writer.WriteValue(Attributes);
-                writer.WriteEndElement();
-            }
-            if (Optional.IsDefined(PermissionKey))
-            {
-                writer.WriteStartElement("PermissionKey");
-                writer.WriteValue(PermissionKey);
-                writer.WriteEndElement();
-            }
             if (Optional.IsDefined(LinkCount))
             {
                 writer.WriteStartElement("LinkCount");
                 writer.WriteValue(LinkCount.Value);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(FileType))
+            if (Optional.IsDefined(DeviceMajor))
             {
-                writer.WriteStartElement("FileType");
-                writer.WriteValue(FileType.Value.ToString());
+                writer.WriteStartElement("DeviceMajor");
+                writer.WriteValue(DeviceMajor.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(DeviceMinor))
+            {
+                writer.WriteStartElement("DeviceMinor");
+                writer.WriteValue(DeviceMinor.Value);
                 writer.WriteEndElement();
             }
         }
 
         /// <param name="element"> The xml element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FileItem DeserializeFileItem(XElement element, ModelReaderWriterOptions options)
+        internal static BlockDeviceItem DeserializeBlockDeviceItem(XElement element, ModelReaderWriterOptions options)
         {
             if (element == null)
             {
@@ -154,10 +149,9 @@ namespace Azure.Storage.Files.Shares.Models
             StringEncoded name = default;
             string fileId = default;
             FileProperty properties = default;
-            string attributes = default;
-            string permissionKey = default;
             long? linkCount = default;
-            NfsFileType? fileType = default;
+            long? deviceMajor = default;
+            long? deviceMinor = default;
 
             foreach (var child in element.Elements())
             {
@@ -177,35 +171,29 @@ namespace Azure.Storage.Files.Shares.Models
                     properties = FileProperty.DeserializeFileProperty(child, options);
                     continue;
                 }
-                if (localName == "Attributes")
-                {
-                    attributes = (string)child;
-                    continue;
-                }
-                if (localName == "PermissionKey")
-                {
-                    permissionKey = (string)child;
-                    continue;
-                }
                 if (localName == "LinkCount")
                 {
                     linkCount = (long?)child;
                     continue;
                 }
-                if (localName == "FileType")
+                if (localName == "DeviceMajor")
                 {
-                    fileType = new NfsFileType((string)child);
+                    deviceMajor = (long?)child;
+                    continue;
+                }
+                if (localName == "DeviceMinor")
+                {
+                    deviceMinor = (long?)child;
                     continue;
                 }
             }
-            return new FileItem(
+            return new BlockDeviceItem(
                 name,
                 fileId,
                 properties,
-                attributes,
-                permissionKey,
                 linkCount,
-                fileType);
+                deviceMajor,
+                deviceMinor);
         }
 
         /// <param name="writer"> The XML writer. </param>

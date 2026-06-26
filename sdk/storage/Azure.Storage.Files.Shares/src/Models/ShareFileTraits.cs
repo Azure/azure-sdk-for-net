@@ -19,23 +19,50 @@ namespace Azure.Storage.Files.Shares.Models
 
         /// <summary>
         /// Indicates that timestamps should be included.
+        /// Supported for SMB in version 2020-04-08 and above.
+        /// Supported for NFS in version 2026-12-06 and above.
         /// </summary>
         Timestamps = 1,
 
         /// <summary>
         /// Indicates that ETag should be included.
+        /// Supported for SMB in version 2020-04-08 and above.
+        /// Supported for NFS in version 2026-12-06 and above.
         /// </summary>
         ETag = 2,
 
         /// <summary>
         /// Indicates that attributes should be included.
+        /// Supported for SMB in version 2020-04-08 and above. Not applicable to NFS shares.
         /// </summary>
         Attributes = 4,
 
         /// <summary>
         /// Indicates that permission key should be included.
+        /// Supported for SMB in version 2020-04-08 and above. Not applicable to NFS shares.
         /// </summary>
         PermissionKey = 8,
+
+        /// <summary>
+        /// Indicates that permission information should be included
+        /// Only applicable to NFS shares.
+        /// Supported in version 2026-12-06 and above.
+        /// </summary>
+        Permissions = 16,
+
+        /// <summary>
+        /// Indicates that the count of hard links should be included.
+        /// Only applicable to NFS shares.
+        /// Supported in version 2026-12-06 and above.
+        /// </summary>
+        LinkCount = 32,
+
+        /// <summary>
+        /// Indicates that NFS-style attributes should be included.
+        /// Only applicable to NFS shares.
+        /// Supported in version 2026-12-06 and above.
+        /// </summary>
+        NfsAttributes = 64,
 
         /// <summary>
         /// Flag specifying that all traits should be included.
