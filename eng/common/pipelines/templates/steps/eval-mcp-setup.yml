@@ -1,0 +1,32 @@
+# Repo-provided MCP setup for the eval CI — the override the archetype runs when
+# useCustomMcp=true. Each consuming repo (or language team) copies/edits this to build or
+# install whatever MCP server(s) its evals drive: a different .NET build, a Java/Maven
+# server, an NPM-installed live server, etc.
+#
+# If you just need the standard azure-sdk-tools MCP, leave useCustomMcp=false and use the
+# default at eng/common/pipelines/templates/steps/vally-build-mcp.yml instead — this file is
+# only for repos whose MCP differs from that.
+#
+# Contract: publish each server's build/install output under
+# $(Build.SourcesDirectory)/artifacts/mcp/<name>. The BuildMcp job ships that whole tree as
+# the `mcp-servers` artifact and every shard re-stages it at the same path, so <name> and the
+# layout must match the relative DLL/exe paths this repo's .vally.yaml environments resolve
+# against. Mock is optional — provide one only if the repo's hermetic evals need it.
+
+parameters:
+  - name: mcpStageRoot
+    # Common parent the built/installed servers are published from (relative to Build.SourcesDirectory).
+    type: string
+    default: artifacts/mcp
+
+steps:
+  - checkout: self
+    fetchDepth: 1
+
+  # EXAMPLE: build the live azsdk-cli MCP from this repo. Replace the body with your own
+  # server's build or install — e.g. `npm ci` + `npm exec`, or a Java/Maven build — keeping
+  # the output under $(Build.SourcesDirectory)/${{ parameters.mcpStageRoot }}/<name>.
+  - script: |
+      set -e
+      dotnet build tools/azsdk-cli/Azure.Sdk.Tools.Cli -c Release -o "$(Build.SourcesDirectory)/${{ parameters.mcpStageRoot }}/cli" --nologo
+    displayName: 'Build MCP: live server (example — replace me)'
