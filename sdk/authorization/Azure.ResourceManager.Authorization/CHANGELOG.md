@@ -5,7 +5,7 @@
 ### Features Added
 
 - Added support for creating, updating, and deleting deny assignments. `DenyAssignmentCollection` now exposes `CreateOrUpdate`/`CreateOrUpdateAsync` and `DenyAssignmentResource` now exposes `Update`/`UpdateAsync` and `Delete`/`DeleteAsync`, generated from the `2024-07-01-preview` deny assignment API.
-- Added the `DenyAssignmentEffect` property (`Enforced`/`Audit`) and the read-only `Condition`, `ConditionVersion`, `CreatedOn`, `UpdatedOn`, `CreatedBy`, and `UpdatedBy` properties to `DenyAssignmentData`.
+- Added the writable `DenyAssignmentEffect` (`Enforced`/`Audit`), `Condition`, and `ConditionVersion` properties, and the read-only `CreatedOn`, `UpdatedOn`, `CreatedBy`, and `UpdatedBy` properties to `DenyAssignmentData`.
 
 ### Breaking Changes
 
