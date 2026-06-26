@@ -7,6 +7,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
+    // EventTypeInfo is a two-level flatten (properties.partnerTopicInfo.eventTypeInfo) beyond what the
+    // single-level @@flattenProperty decorator can express; the generated member is suppressed and reshaped.
     [CodeGenSuppress("EventTypeInfo")]
     public partial class PartnerNamespaceChannelPatch
     {

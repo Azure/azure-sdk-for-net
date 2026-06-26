@@ -15,6 +15,8 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
+    // Custom model serialization paired with the GA-compat TrackedResource shape (see PartnerConfigurationData.cs):
+    // the generated serializer is replaced to round-trip the customized property layout.
     public partial class PartnerConfigurationData : IJsonModel<PartnerConfigurationData>
     {
         /// <summary> Initializes a new instance of <see cref="PartnerConfigurationData"/> for deserialization. </summary>

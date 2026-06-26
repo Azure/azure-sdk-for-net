@@ -18,6 +18,8 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.EventGrid
 {
     /// <summary> Represents an Event Grid topic private link resource. </summary>
+    // GA-compat private-link surface: the generator emits one generic PrivateLinkResources group; main exposes
+    // typed per-resource (Domain/Topic/PartnerNamespace) collections/resources. Rationale: PrivateLinkResourceCompat.cs.
     public partial class EventGridTopicPrivateLinkResource : ArmResource, IJsonModel<EventGridPrivateLinkResourceData>, IPersistableModel<EventGridPrivateLinkResourceData>
     {
         private readonly EventGridPrivateLinkResourceData _data;

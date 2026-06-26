@@ -7,6 +7,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
+    // IdSourceField/TopicSourceField/EventTimeSourceField are two-level flattens (properties.<field>.sourceField)
+    // that the single-level @@flattenProperty decorator cannot express; generated members are suppressed and reshaped.
     [CodeGenSuppress("IdSourceField")]
     [CodeGenSuppress("TopicSourceField")]
     [CodeGenSuppress("EventTimeSourceField")]

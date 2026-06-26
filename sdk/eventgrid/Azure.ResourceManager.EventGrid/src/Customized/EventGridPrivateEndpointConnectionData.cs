@@ -9,6 +9,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.EventGrid
 {
+    // PrivateEndpointId is a two-level flatten (properties.privateEndpoint.id) that the single-level
+    // @@flattenProperty decorator in the spec cannot express; CodeGenMember rebinds it to main's GA shape.
     public partial class EventGridPrivateEndpointConnectionData
     {
         /// <summary> The Id of the private endpoint. </summary>

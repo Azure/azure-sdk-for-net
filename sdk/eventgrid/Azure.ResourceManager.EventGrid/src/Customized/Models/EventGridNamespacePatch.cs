@@ -8,24 +8,13 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
+    // TopicsCustomDomains is a two-level flatten (properties.topicsConfiguration.customDomains) that the
+    // single-level @@flattenProperty decorator in the spec cannot express, so it is reshaped here to match
+    // main's GA surface. (InboundIPRules is intentionally NOT customized here: the spec's @@flattenProperty +
+    // @@clientName already generate it identically.)
     [CodeGenSuppress("TopicsCustomDomains")]
     public partial class EventGridNamespacePatch
     {
-        /// <summary> This can be used to restrict traffic from specific IPs instead of all IPs. </summary>
-        [WirePath("properties.inboundIpRules")]
-        public IList<EventGridInboundIPRule> InboundIPRules
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new NamespaceUpdateParameterProperties();
-                }
-
-                return Properties.InboundIPRules;
-            }
-        }
-
         /// <summary> Gets the custom domains for namespace topics. </summary>
         [WirePath("properties.topicsConfiguration.customDomains")]
         public IList<CustomDomainConfiguration> TopicsCustomDomains

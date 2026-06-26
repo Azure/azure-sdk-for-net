@@ -11,6 +11,8 @@ using Azure;
 
 namespace Azure.ResourceManager.EventGrid
 {
+    // GA-compat private-link surface: the generator emits one generic PrivateLinkResources group; main exposes
+    // typed per-resource (Domain/Topic/PartnerNamespace) collections/resources. Rationale: PrivateLinkResourceCompat.cs.
     public partial class EventGridDomainPrivateEndpointConnectionCollection : IEnumerable<EventGridDomainPrivateEndpointConnectionResource>, IAsyncEnumerable<EventGridDomainPrivateEndpointConnectionResource>
     {
         /// <summary> Get all private endpoint connections under this Event Grid domain. </summary>

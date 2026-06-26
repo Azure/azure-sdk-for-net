@@ -15,6 +15,8 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
+    // Custom model serialization paired with the GA-compat flattened model surface: the generated serializer
+    // is replaced to round-trip the customized property layout.
     public partial class DomainTopicData : IJsonModel<DomainTopicData>
     {
         /// <summary> Initializes a new instance of <see cref="DomainTopicData"/> for deserialization. </summary>

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -29,5 +30,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             Endpoint = endpoint;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The URL that represents the endpoint of the destination of an event subscription. </summary>
+        [WirePath("endpointUrl")]
+        public Uri Endpoint { get; }
     }
 }

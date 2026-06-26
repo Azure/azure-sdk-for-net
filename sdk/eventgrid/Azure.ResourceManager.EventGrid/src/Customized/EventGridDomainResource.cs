@@ -15,6 +15,8 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventGrid
 {
+    // Tag add/remove/set helpers: the new mgmt generator does not emit the standard ARM tag operation
+    // methods for this resource, so they are hand-authored here to preserve main's GA tag surface.
     public partial class EventGridDomainResource
     {
         /// <summary> Add a tag to the resource. </summary>

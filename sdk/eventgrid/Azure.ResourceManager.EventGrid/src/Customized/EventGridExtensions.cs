@@ -12,6 +12,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.EventGrid
 {
+    // The generator emits these extension methods under names/shapes that differ from main's GA surface
+    // (GetByResource / GetEventSubscriptions / GetAll / Reconcile). They are suppressed and re-exposed under
+    // the GA method names, including the data-returning (...Data) list variants the generator does not produce.
     [CodeGenSuppress("GetByResource", typeof(ArmClient), typeof(ResourceIdentifier), typeof(string), typeof(int?), typeof(CancellationToken))]
     [CodeGenSuppress("GetByResourceAsync", typeof(ArmClient), typeof(ResourceIdentifier), typeof(string), typeof(int?), typeof(CancellationToken))]
     [CodeGenSuppress("Get", typeof(ResourceGroupResource), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]

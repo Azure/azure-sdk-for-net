@@ -7,6 +7,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Mocking
 {
+    // GA-compat private-link surface: the generator emits one generic PrivateLinkResources group; main exposes
+    // typed per-resource (Domain/Topic/PartnerNamespace) collections/resources. Rationale: PrivateLinkResourceCompat.cs.
     public partial class MockableEventGridArmClient
     {
         /// <summary> Gets a specific private link resource. </summary>

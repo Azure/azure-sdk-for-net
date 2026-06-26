@@ -18,6 +18,8 @@ using Azure.ResourceManager.EventGrid.Mocking;
 namespace Azure.ResourceManager.EventGrid
 {
     /// <summary> Represents a collection of Event Grid topic private link resources. </summary>
+    // GA-compat private-link surface: the generator emits one generic PrivateLinkResources group; main exposes
+    // typed per-resource (Domain/Topic/PartnerNamespace) collections/resources. Rationale: PrivateLinkResourceCompat.cs.
     public partial class EventGridTopicPrivateLinkResourceCollection : ArmCollection, IAsyncEnumerable<EventGridTopicPrivateLinkResource>, IEnumerable<EventGridTopicPrivateLinkResource>
     {
         private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;

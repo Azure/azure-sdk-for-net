@@ -15,6 +15,8 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventGrid
 {
+    // Tag add/remove/set helpers (generator emits none for this resource) plus typed private-link resource
+    // accessors, both hand-authored to preserve main's GA surface.
     public partial class PartnerNamespaceResource
     {
         /// <summary> Gets a collection of PartnerNamespacePrivateLinkResources in the PartnerNamespace. </summary>
