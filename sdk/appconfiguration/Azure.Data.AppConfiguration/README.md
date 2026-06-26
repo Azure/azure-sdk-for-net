@@ -227,7 +227,7 @@ Create or overwrite a feature flag by calling `SetFeatureFlag`. The simplest ove
 
 ```C# Snippet:SetFeatureFlag
 string endpoint = "<endpoint>";
-var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
+var client = new FeatureFlagClient(new Uri(endpoint), new DefaultAzureCredential());
 FeatureFlag flag = client.SetFeatureFlag("some_feature", enabled: true);
 Console.WriteLine($"Feature flag '{flag.Name}' is enabled: {flag.Enabled}");
 ```
@@ -238,7 +238,7 @@ Retrieve a previously stored feature flag by calling `GetFeatureFlag`. This snip
 
 ```C# Snippet:GetFeatureFlag
 string endpoint = "<endpoint>";
-var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
+var client = new FeatureFlagClient(new Uri(endpoint), new DefaultAzureCredential());
 FeatureFlag flag = client.GetFeatureFlag("some_feature");
 Console.WriteLine($"Feature flag '{flag.Name}' is enabled: {flag.Enabled}");
 ```
@@ -249,7 +249,7 @@ Retrieve all feature flags that match a filter by calling `GetFeatureFlags` with
 
 ```C# Snippet:GetFeatureFlags
 string endpoint = "<endpoint>";
-var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
+var client = new FeatureFlagClient(new Uri(endpoint), new DefaultAzureCredential());
 var selector = new FeatureFlagSelector { NameFilter = "some_*" };
 foreach (FeatureFlag flag in client.GetFeatureFlags(selector))
 {
@@ -263,7 +263,7 @@ Delete an existing feature flag by calling `DeleteFeatureFlag`. This snippet ass
 
 ```C# Snippet:DeleteFeatureFlag
 string endpoint = "<endpoint>";
-var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
+var client = new FeatureFlagClient(new Uri(endpoint), new DefaultAzureCredential());
 client.DeleteFeatureFlag("some_feature");
 ```
 

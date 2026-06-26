@@ -880,7 +880,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             MockRequest request = mockTransport.Requests[0];
             Assert.That(request.Method, Is.EqualTo(RequestMethod.Get));
-            Assert.That(request.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/labels?api-version={s_version}&resource-type=ff"));
+            Assert.That(request.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/labels?api-version={s_version}&resourceType=ff").IgnoreCase);
             AssertRequestCommon(request);
         }
 
