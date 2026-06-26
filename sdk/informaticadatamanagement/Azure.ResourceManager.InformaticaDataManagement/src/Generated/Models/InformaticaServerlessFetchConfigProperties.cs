@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.InformaticaDataManagement;
 
 namespace Azure.ResourceManager.InformaticaDataManagement.Models
 {
@@ -20,6 +21,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <summary> Initializes a new instance of <see cref="InformaticaServerlessFetchConfigProperties"/>. </summary>
         internal InformaticaServerlessFetchConfigProperties()
         {
+            ServerlessRuntimeDataDisks = new ChangeTrackingList<ServerlessRuntimeDataDisk>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InformaticaServerlessFetchConfigProperties"/>. </summary>
@@ -28,6 +30,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="advancedCustomProperties"> Advanced custom properties. </param>
         /// <param name="supplementaryFileLocation"> Supplementary File location. </param>
+        /// <param name="serverlessRuntimeDataDisks"> Serverless runtime data disks. </param>
         /// <param name="platform"> Serverless Account Platform. </param>
         /// <param name="tags"> Tags for the resource. </param>
         /// <param name="vnet"> virtual network. </param>
@@ -38,13 +41,14 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <param name="region"> region name for the runtime environment. </param>
         /// <param name="serverlessArmResourceId"> Serverless Arm Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InformaticaServerlessFetchConfigProperties(string subnet, string applicationType, string resourceGroupName, string advancedCustomProperties, string supplementaryFileLocation, string platform, string tags, string vnet, string executionTimeout, string computeUnits, Guid? tenantId, string subscriptionId, string region, ResourceIdentifier serverlessArmResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InformaticaServerlessFetchConfigProperties(string subnet, string applicationType, string resourceGroupName, string advancedCustomProperties, string supplementaryFileLocation, IList<ServerlessRuntimeDataDisk> serverlessRuntimeDataDisks, string platform, string tags, string vnet, string executionTimeout, string computeUnits, Guid? tenantId, string subscriptionId, string region, ResourceIdentifier serverlessArmResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Subnet = subnet;
             ApplicationType = applicationType;
             ResourceGroupName = resourceGroupName;
             AdvancedCustomProperties = advancedCustomProperties;
             SupplementaryFileLocation = supplementaryFileLocation;
+            ServerlessRuntimeDataDisks = serverlessRuntimeDataDisks;
             Platform = platform;
             Tags = tags;
             Vnet = vnet;
@@ -71,6 +75,9 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
 
         /// <summary> Supplementary File location. </summary>
         public string SupplementaryFileLocation { get; }
+
+        /// <summary> Serverless runtime data disks. </summary>
+        public IList<ServerlessRuntimeDataDisk> ServerlessRuntimeDataDisks { get; }
 
         /// <summary> Serverless Account Platform. </summary>
         public string Platform { get; }

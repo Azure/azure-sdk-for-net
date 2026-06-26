@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.InformaticaDataManagement;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.InformaticaDataManagement.Models
 {
@@ -24,15 +25,20 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="InformaticaOrganizationPatch"/>. </summary>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> Patchable PropertieInformaticaOrganizationPropertiesUpdates of the Organization observability resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InformaticaOrganizationPatch(IDictionary<string, string> tags, InformaticaOrganizationPropertiesUpdate properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InformaticaOrganizationPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, InformaticaOrganizationPropertiesUpdate properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Identity = identity;
             Tags = tags;
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }

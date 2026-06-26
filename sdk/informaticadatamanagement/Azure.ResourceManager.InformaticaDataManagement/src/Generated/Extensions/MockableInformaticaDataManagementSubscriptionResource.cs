@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using Azure;
 using Azure.Core;
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
 
         private ClientDiagnostics OrganizationsClientDiagnostics => _organizationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.InformaticaDataManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Organizations OrganizationsRestClient => _organizationsRestClient ??= new Organizations(OrganizationsClientDiagnostics, Pipeline, Endpoint, "2024-05-08");
+        private Organizations OrganizationsRestClient => _organizationsRestClient ??= new Organizations(OrganizationsClientDiagnostics, Pipeline, Endpoint, "2025-11-27");
 
         /// <summary>
         /// List InformaticaOrganizationResource resources by subscription ID
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
+        /// <description> 2025-11-27. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<InformaticaOrganizationData, InformaticaOrganizationResource>(new OrganizationsGetBySubscriptionAsyncCollectionResultOfT(OrganizationsRestClient, Id.SubscriptionId, context, "MockableInformaticaDataManagementSubscriptionResource.GetInformaticaOrganizations"), data => new InformaticaOrganizationResource(Client, data));
+            return new AsyncPageableWrapper<InformaticaOrganizationData, InformaticaOrganizationResource>(new OrganizationsGetBySubscriptionAsyncCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableInformaticaDataManagementSubscriptionResource.GetInformaticaOrganizations"), data => new InformaticaOrganizationResource(Client, data));
         }
 
         /// <summary>
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
+        /// <description> 2025-11-27. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<InformaticaOrganizationData, InformaticaOrganizationResource>(new OrganizationsGetBySubscriptionCollectionResultOfT(OrganizationsRestClient, Id.SubscriptionId, context, "MockableInformaticaDataManagementSubscriptionResource.GetInformaticaOrganizations"), data => new InformaticaOrganizationResource(Client, data));
+            return new PageableWrapper<InformaticaOrganizationData, InformaticaOrganizationResource>(new OrganizationsGetBySubscriptionCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableInformaticaDataManagementSubscriptionResource.GetInformaticaOrganizations"), data => new InformaticaOrganizationResource(Client, data));
         }
     }
 }

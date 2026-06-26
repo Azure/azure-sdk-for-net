@@ -84,6 +84,11 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 writer.WritePropertyName("marketplaceSubscriptionId"u8);
                 writer.WriteStringValue(MarketplaceSubscriptionId);
             }
+            if (options.Format != "W" && Optional.IsDefined(MarketplaceSubscriptionStatus))
+            {
+                writer.WritePropertyName("marketplaceSubscriptionStatus"u8);
+                writer.WriteStringValue(MarketplaceSubscriptionStatus.Value.ToString());
+            }
             writer.WritePropertyName("offerDetails"u8);
             writer.WriteObjectValue(OfferDetails, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -129,6 +134,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 return null;
             }
             string marketplaceSubscriptionId = default;
+            MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default;
             InformaticaOfferDetails offerDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -136,6 +142,15 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 if (prop.NameEquals("marketplaceSubscriptionId"u8))
                 {
                     marketplaceSubscriptionId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("marketplaceSubscriptionStatus"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    marketplaceSubscriptionStatus = new MarketplaceSubscriptionStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("offerDetails"u8))
@@ -148,7 +163,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InformaticaMarketplaceDetails(marketplaceSubscriptionId, offerDetails, additionalBinaryDataProperties);
+            return new InformaticaMarketplaceDetails(marketplaceSubscriptionId, marketplaceSubscriptionStatus, offerDetails, additionalBinaryDataProperties);
         }
     }
 }

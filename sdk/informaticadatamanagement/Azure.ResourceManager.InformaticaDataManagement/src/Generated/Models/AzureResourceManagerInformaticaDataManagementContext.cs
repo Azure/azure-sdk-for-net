@@ -49,11 +49,13 @@ namespace Azure.ResourceManager.InformaticaDataManagement
     [ModelReaderWriterBuildable(typeof(InformaticaUserDetails))]
     [ModelReaderWriterBuildable(typeof(InformaticaUserDetailsUpdate))]
     [ModelReaderWriterBuildable(typeof(LinkOrganization))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServerlessConfigProperties))]
     [ModelReaderWriterBuildable(typeof(ServerlessMetadataResponse))]
     [ModelReaderWriterBuildable(typeof(ServerlessRuntimeConfigProperties))]
     [ModelReaderWriterBuildable(typeof(ServerlessRuntimeConfigPropertiesUpdate))]
+    [ModelReaderWriterBuildable(typeof(ServerlessRuntimeDataDisk))]
     [ModelReaderWriterBuildable(typeof(ServerlessRuntimeDependency))]
     [ModelReaderWriterBuildable(typeof(ServerlessRuntimeNetworkProfile))]
     [ModelReaderWriterBuildable(typeof(ServerlessRuntimeNetworkProfileUpdate))]
@@ -62,6 +64,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
     [ModelReaderWriterBuildable(typeof(ServerlessRuntimeUserContextProperties))]
     [ModelReaderWriterBuildable(typeof(ServerlessRuntimeUserContextPropertiesUpdate))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerInformaticaDataManagementContext : ModelReaderWriterContext
     {
     }
