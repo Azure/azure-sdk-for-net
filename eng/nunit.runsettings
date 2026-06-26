@@ -19,10 +19,10 @@
 		<!-- <Parameter name="DisableAutoRecording" value="true" /> -->
 
 		<!-- Change the test mode -->
-		<!-- <Parameter name="TestMode" value="Record" /> -->
+		<Parameter name="TestMode" value="Live" />
 
 		<!-- Enable running Fiddler -->
-		<!-- <Parameter name="EnableFiddler" value="true" /> -->
+		<Parameter name="EnableFiddler" value="true" />
 	</TestRunParameters>
 
 </RunSettings>
