@@ -1089,7 +1089,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <param name="resourceId"> The Azure Resource Id that represents the endpoint of a Partner Destination of an event subscription. </param>
         /// <returns> A new <see cref="Models.PartnerEventSubscriptionDestination"/> instance for mocking. </returns>
-        public static PartnerEventSubscriptionDestination PartnerEventSubscriptionDestination(ResourceIdentifier resourceId = default)
+        public static PartnerEventSubscriptionDestination PartnerEventSubscriptionDestination(string resourceId = default)
         {
             return new PartnerEventSubscriptionDestination(default, default, resourceId is null ? default : new PartnerEventSubscriptionDestinationProperties(resourceId, default));
         }
@@ -1135,9 +1135,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="userAssignedIdentity"> The user identity associated with the resource. </param>
         /// <param name="federatedClientId"> The Multi-Tenant Microsoft Entra ID Application where the Federated Identity Credential (FIC) is associated with. </param>
         /// <returns> A new <see cref="Models.EventSubscriptionIdentity"/> instance for mocking. </returns>
-        public static EventSubscriptionIdentity EventSubscriptionIdentity(EventSubscriptionIdentityType? identityType = default, string userAssignedIdentity = default, string federatedClientId = default)
+        public static EventSubscriptionIdentity EventSubscriptionIdentity(EventSubscriptionIdentityType? identityType = default, string userAssignedIdentity = default, Guid? federatedClientId = default)
         {
-            return new EventSubscriptionIdentity(identityType, userAssignedIdentity, federatedClientId is null ? default : new FederatedIdentityCredentialInfo(federatedClientId, default), default);
+            return new EventSubscriptionIdentity(identityType, userAssignedIdentity, federatedClientId is null ? default : new FederatedIdentityCredentialInfo(federatedClientId.GetValueOrDefault(), default), default);
         }
 
         /// <param name="subjectBeginsWith">
@@ -1746,7 +1746,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <param name="fullyQualifiedArmId"> Fully Qualified Arm id for network security perimeter profile access rule. </param>
         /// <param name="name"> Name for nsp access rule. </param>
-        /// <param name="type"> nsp access rule type. </param>
+        /// <param name="networkSecurityPerimeterProfileAccessRuleType"> nsp access rule type. </param>
         /// <param name="direction"> NSP access rule direction. </param>
         /// <param name="addressPrefixes"> Address prefixes. </param>
         /// <param name="subscriptions"> List of subscriptions. </param>
@@ -1755,9 +1755,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="emailAddresses"> List of email addresses. </param>
         /// <param name="phoneNumbers"> List of phone numbers. </param>
         /// <returns> A new <see cref="Models.NetworkSecurityPerimeterProfileAccessRule"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterProfileAccessRule NetworkSecurityPerimeterProfileAccessRule(string fullyQualifiedArmId = default, string name = default, string @type = default, NetworkSecurityPerimeterProfileAccessRuleDirection? direction = default, IEnumerable<string> addressPrefixes = default, IEnumerable<NetworkSecurityPerimeterSubscription> subscriptions = default, IEnumerable<NetworkSecurityPerimeterInfo> networkSecurityPerimeters = default, IEnumerable<string> fullyQualifiedDomainNames = default, IEnumerable<string> emailAddresses = default, IEnumerable<string> phoneNumbers = default)
+        public static NetworkSecurityPerimeterProfileAccessRule NetworkSecurityPerimeterProfileAccessRule(string fullyQualifiedArmId = default, string name = default, string networkSecurityPerimeterProfileAccessRuleType = default, NetworkSecurityPerimeterProfileAccessRuleDirection? direction = default, IEnumerable<string> addressPrefixes = default, IEnumerable<NetworkSecurityPerimeterSubscription> subscriptions = default, IEnumerable<NetworkSecurityPerimeterInfo> networkSecurityPerimeters = default, IEnumerable<string> fullyQualifiedDomainNames = default, IEnumerable<string> emailAddresses = default, IEnumerable<string> phoneNumbers = default)
         {
-            return new NetworkSecurityPerimeterProfileAccessRule(fullyQualifiedArmId, name, @type, direction is null && addressPrefixes is null && subscriptions is null && networkSecurityPerimeters is null && fullyQualifiedDomainNames is null && emailAddresses is null && phoneNumbers is null ? default : new NetworkSecurityPerimeterProfileAccessRuleProperties(
+            return new NetworkSecurityPerimeterProfileAccessRule(fullyQualifiedArmId, name, networkSecurityPerimeterProfileAccessRuleType, direction is null && addressPrefixes is null && subscriptions is null && networkSecurityPerimeters is null && fullyQualifiedDomainNames is null && emailAddresses is null && phoneNumbers is null ? default : new NetworkSecurityPerimeterProfileAccessRuleProperties(
                 direction,
                 (addressPrefixes ?? new ChangeTrackingList<string>()).ToList(),
                 (subscriptions ?? new ChangeTrackingList<NetworkSecurityPerimeterSubscription>()).ToList(),

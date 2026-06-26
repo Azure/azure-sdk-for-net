@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(NetworkSecurityPerimeterProfileAccessRuleType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(NetworkSecurityPerimeterProfileAccessRuleType);
             }
             if (Optional.IsDefined(Properties))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             string fullyQualifiedArmId = default;
             string name = default;
-            string @type = default;
+            string networkSecurityPerimeterProfileAccessRuleType = default;
             NetworkSecurityPerimeterProfileAccessRuleProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    networkSecurityPerimeterProfileAccessRuleType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NetworkSecurityPerimeterProfileAccessRule(fullyQualifiedArmId, name, @type, properties, additionalBinaryDataProperties);
+            return new NetworkSecurityPerimeterProfileAccessRule(fullyQualifiedArmId, name, networkSecurityPerimeterProfileAccessRuleType, properties, additionalBinaryDataProperties);
         }
     }
 }

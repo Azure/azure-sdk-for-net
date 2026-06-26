@@ -123,13 +123,13 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            string federatedClientId = default;
+            Guid federatedClientId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("federatedClientId"u8))
                 {
-                    federatedClientId = prop.Value.GetString();
+                    federatedClientId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

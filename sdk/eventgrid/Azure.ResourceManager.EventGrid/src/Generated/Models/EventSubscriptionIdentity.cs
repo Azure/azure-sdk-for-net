@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> The Multi-Tenant Microsoft Entra ID Application where the Federated Identity Credential (FIC) is associated with. </summary>
         [WirePath("federatedIdentityCredentialInfo.federatedClientId")]
-        public string FederatedClientId
+        public Guid? FederatedClientId
         {
             get
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             set
             {
-                FederatedIdentityCredentialInfo = new FederatedIdentityCredentialInfo(value);
+                FederatedIdentityCredentialInfo = value.HasValue ? new FederatedIdentityCredentialInfo(value.Value) : default;
             }
         }
     }

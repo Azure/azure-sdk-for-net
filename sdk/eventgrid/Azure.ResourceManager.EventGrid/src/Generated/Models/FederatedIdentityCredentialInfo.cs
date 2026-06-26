@@ -19,18 +19,15 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Initializes a new instance of <see cref="FederatedIdentityCredentialInfo"/>. </summary>
         /// <param name="federatedClientId"> The Multi-Tenant Microsoft Entra ID Application where the Federated Identity Credential (FIC) is associated with. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="federatedClientId"/> is null. </exception>
-        public FederatedIdentityCredentialInfo(string federatedClientId)
+        public FederatedIdentityCredentialInfo(Guid federatedClientId)
         {
-            Argument.AssertNotNull(federatedClientId, nameof(federatedClientId));
-
             FederatedClientId = federatedClientId;
         }
 
         /// <summary> Initializes a new instance of <see cref="FederatedIdentityCredentialInfo"/>. </summary>
         /// <param name="federatedClientId"> The Multi-Tenant Microsoft Entra ID Application where the Federated Identity Credential (FIC) is associated with. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FederatedIdentityCredentialInfo(string federatedClientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FederatedIdentityCredentialInfo(Guid federatedClientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FederatedClientId = federatedClientId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -38,6 +35,6 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> The Multi-Tenant Microsoft Entra ID Application where the Federated Identity Credential (FIC) is associated with. </summary>
         [WirePath("federatedClientId")]
-        public string FederatedClientId { get; set; }
+        public Guid FederatedClientId { get; set; }
     }
 }

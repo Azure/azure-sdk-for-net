@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterProfileAccessRule"/>. </summary>
         /// <param name="fullyQualifiedArmId"> Fully Qualified Arm id for network security perimeter profile access rule. </param>
         /// <param name="name"> Name for nsp access rule. </param>
-        /// <param name="type"> nsp access rule type. </param>
+        /// <param name="networkSecurityPerimeterProfileAccessRuleType"> nsp access rule type. </param>
         /// <param name="properties"> NSP access rule properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterProfileAccessRule(string fullyQualifiedArmId, string name, string @type, NetworkSecurityPerimeterProfileAccessRuleProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkSecurityPerimeterProfileAccessRule(string fullyQualifiedArmId, string name, string networkSecurityPerimeterProfileAccessRuleType, NetworkSecurityPerimeterProfileAccessRuleProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FullyQualifiedArmId = fullyQualifiedArmId;
             Name = name;
-            Type = @type;
+            NetworkSecurityPerimeterProfileAccessRuleType = networkSecurityPerimeterProfileAccessRuleType;
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> nsp access rule type. </summary>
         [WirePath("type")]
-        public string Type { get; set; }
+        public string NetworkSecurityPerimeterProfileAccessRuleType { get; set; }
 
         /// <summary> NSP access rule properties. </summary>
         [WirePath("properties")]
