@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isMercurial"> &lt;code&gt;true&lt;/code&gt; for a Mercurial repository; &lt;code&gt;false&lt;/code&gt; for a Git repository. </param>
         /// <param name="gitHubActionConfiguration"> If GitHub Action is selected, than the associated configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SiteSourceControlProperties(string repoUri, string branch, bool? isManualIntegration, bool? isGitHubAction, bool? isDeploymentRollbackEnabled, bool? isMercurial, GitHubActionConfiguration gitHubActionConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SiteSourceControlProperties(Uri repoUri, string branch, bool? isManualIntegration, bool? isGitHubAction, bool? isDeploymentRollbackEnabled, bool? isMercurial, GitHubActionConfiguration gitHubActionConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RepoUri = repoUri;
             Branch = branch;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Repository or source control URL. </summary>
         [WirePath("repoUrl")]
-        public string RepoUri { get; set; }
+        public Uri RepoUri { get; set; }
 
         /// <summary> Name of branch to use for deployment. </summary>
         [WirePath("branch")]

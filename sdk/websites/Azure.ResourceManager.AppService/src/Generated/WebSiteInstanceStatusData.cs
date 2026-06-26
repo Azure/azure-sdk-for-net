@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Link to the GetStatusApi in Kudu. </summary>
         [WirePath("properties.statusUrl")]
-        public string StatusUri
+        public Uri StatusUri
         {
             get
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Link to the Diagnose and Solve Portal. </summary>
         [WirePath("properties.detectorUrl")]
-        public string DetectorUri
+        public Uri DetectorUri
         {
             get
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Link to the console to web app instance. </summary>
         [WirePath("properties.consoleUrl")]
-        public string ConsoleUri
+        public Uri ConsoleUri
         {
             get
             {

@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(BiztalkUri))
             {
                 writer.WritePropertyName("biztalkUri"u8);
-                writer.WriteStringValue(BiztalkUri);
+                writer.WriteStringValue(BiztalkUri.AbsoluteUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppService.Models
             string resourceConnectionString = default;
             string hostname = default;
             int? port = default;
-            string biztalkUri = default;
+            Uri biztalkUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -186,7 +186,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("biztalkUri"u8))
                 {
-                    biztalkUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    biztalkUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")

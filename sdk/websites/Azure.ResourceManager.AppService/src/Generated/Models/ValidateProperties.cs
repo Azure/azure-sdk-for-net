@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="containerImagePlatform"> Platform (windows or linux). </param>
         /// <param name="appServiceEnvironment"> App Service Environment Properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ValidateProperties(ResourceIdentifier serverFarmId, string skuName, bool? needLinuxWorkers, bool? isSpot, int? capacity, string hostingEnvironment, bool? isXenon, string containerRegistryBaseUri, string containerRegistryUsername, string containerRegistryPassword, string containerImageRepository, string containerImageTag, string containerImagePlatform, AppServiceEnvironmentProperties appServiceEnvironment, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ValidateProperties(ResourceIdentifier serverFarmId, string skuName, bool? needLinuxWorkers, bool? isSpot, int? capacity, string hostingEnvironment, bool? isXenon, Uri containerRegistryBaseUri, string containerRegistryUsername, string containerRegistryPassword, string containerImageRepository, string containerImageTag, string containerImagePlatform, AppServiceEnvironmentProperties appServiceEnvironment, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServerFarmId = serverFarmId;
             SkuName = skuName;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Base URL of the container registry. </summary>
         [WirePath("containerRegistryBaseUrl")]
-        public string ContainerRegistryBaseUri { get; set; }
+        public Uri ContainerRegistryBaseUri { get; set; }
 
         /// <summary> Username for to access the container registry. </summary>
         [WirePath("containerRegistryUsername")]

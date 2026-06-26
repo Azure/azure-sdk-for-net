@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> URL for the zipped app content. </summary>
         [WirePath("properties.appZipUrl")]
-        public string AppZipUri
+        public Uri AppZipUri
         {
             get
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> URL for the zipped api content. </summary>
         [WirePath("properties.apiZipUrl")]
-        public string ApiZipUri
+        public Uri ApiZipUri
         {
             get
             {

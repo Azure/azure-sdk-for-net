@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="BackupRequestProperties"/>. </summary>
         /// <param name="storageAccountUri"> SAS URL to the container. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountUri"/> is null. </exception>
-        public BackupRequestProperties(string storageAccountUri)
+        public BackupRequestProperties(Uri storageAccountUri)
         {
             Argument.AssertNotNull(storageAccountUri, nameof(storageAccountUri));
 
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="backupSchedule"> Schedule for the backup if it is executed periodically. </param>
         /// <param name="databases"> Databases included in the backup. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupRequestProperties(string backupName, bool? isEnabled, string storageAccountUri, WebAppBackupSchedule backupSchedule, IList<AppServiceDatabaseBackupSetting> databases, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupRequestProperties(string backupName, bool? isEnabled, Uri storageAccountUri, WebAppBackupSchedule backupSchedule, IList<AppServiceDatabaseBackupSetting> databases, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BackupName = backupName;
             IsEnabled = isEnabled;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> SAS URL to the container. </summary>
         [WirePath("storageAccountUrl")]
-        public string StorageAccountUri { get; set; }
+        public Uri StorageAccountUri { get; set; }
 
         /// <summary> Schedule for the backup if it is executed periodically. </summary>
         [WirePath("backupSchedule")]

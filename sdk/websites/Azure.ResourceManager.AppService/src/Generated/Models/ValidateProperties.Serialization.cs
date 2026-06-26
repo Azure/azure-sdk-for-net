@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(ContainerRegistryBaseUri))
             {
                 writer.WritePropertyName("containerRegistryBaseUrl"u8);
-                writer.WriteStringValue(ContainerRegistryBaseUri);
+                writer.WriteStringValue(ContainerRegistryBaseUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ContainerRegistryUsername))
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.AppService.Models
             int? capacity = default;
             string hostingEnvironment = default;
             bool? isXenon = default;
-            string containerRegistryBaseUri = default;
+            Uri containerRegistryBaseUri = default;
             string containerRegistryUsername = default;
             string containerRegistryPassword = default;
             string containerImageRepository = default;
@@ -261,7 +261,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("containerRegistryBaseUrl"u8))
                 {
-                    containerRegistryBaseUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    containerRegistryBaseUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("containerRegistryUsername"u8))

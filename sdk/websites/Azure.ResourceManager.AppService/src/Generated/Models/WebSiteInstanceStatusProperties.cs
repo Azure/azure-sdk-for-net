@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="containers"> Dictionary of &lt;ContainerInfo&gt;. </param>
         /// <param name="physicalZone"> The physical zone that the instance is in. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebSiteInstanceStatusProperties(SiteRuntimeState? state, string statusUri, string detectorUri, string consoleUri, string healthCheckUrlString, IDictionary<string, ContainerInfo> containers, string physicalZone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebSiteInstanceStatusProperties(SiteRuntimeState? state, Uri statusUri, Uri detectorUri, Uri consoleUri, string healthCheckUrlString, IDictionary<string, ContainerInfo> containers, string physicalZone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             StatusUri = statusUri;
@@ -50,15 +50,15 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Link to the GetStatusApi in Kudu. </summary>
         [WirePath("statusUrl")]
-        public string StatusUri { get; set; }
+        public Uri StatusUri { get; set; }
 
         /// <summary> Link to the Diagnose and Solve Portal. </summary>
         [WirePath("detectorUrl")]
-        public string DetectorUri { get; set; }
+        public Uri DetectorUri { get; set; }
 
         /// <summary> Link to the console to web app instance. </summary>
         [WirePath("consoleUrl")]
-        public string ConsoleUri { get; set; }
+        public Uri ConsoleUri { get; set; }
 
         /// <summary> Link to the console to web app instance. </summary>
         [WirePath("healthCheckUrl")]

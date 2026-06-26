@@ -107,27 +107,27 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(ExtensionUri))
             {
                 writer.WritePropertyName("extension_url"u8);
-                writer.WriteStringValue(ExtensionUri);
+                writer.WriteStringValue(ExtensionUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ProjectUri))
             {
                 writer.WritePropertyName("project_url"u8);
-                writer.WriteStringValue(ProjectUri);
+                writer.WriteStringValue(ProjectUri.AbsoluteUri);
             }
             if (Optional.IsDefined(IconUri))
             {
                 writer.WritePropertyName("icon_url"u8);
-                writer.WriteStringValue(IconUri);
+                writer.WriteStringValue(IconUri.AbsoluteUri);
             }
             if (Optional.IsDefined(LicenseUri))
             {
                 writer.WritePropertyName("license_url"u8);
-                writer.WriteStringValue(LicenseUri);
+                writer.WriteStringValue(LicenseUri.AbsoluteUri);
             }
             if (Optional.IsDefined(FeedUri))
             {
                 writer.WritePropertyName("feed_url"u8);
-                writer.WriteStringValue(FeedUri);
+                writer.WriteStringValue(FeedUri.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(Authors))
             {
@@ -232,11 +232,11 @@ namespace Azure.ResourceManager.AppService.Models
             string summary = default;
             string description = default;
             string version = default;
-            string extensionUri = default;
-            string projectUri = default;
-            string iconUri = default;
-            string licenseUri = default;
-            string feedUri = default;
+            Uri extensionUri = default;
+            Uri projectUri = default;
+            Uri iconUri = default;
+            Uri licenseUri = default;
+            Uri feedUri = default;
             IList<string> authors = default;
             string installerCommandLineParams = default;
             DateTimeOffset? publishedOn = default;
@@ -285,27 +285,47 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("extension_url"u8))
                 {
-                    extensionUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    extensionUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("project_url"u8))
                 {
-                    projectUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    projectUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("icon_url"u8))
                 {
-                    iconUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    iconUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("license_url"u8))
                 {
-                    licenseUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    licenseUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("feed_url"u8))
                 {
-                    feedUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    feedUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("authors"u8))

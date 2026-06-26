@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="publishingPasswordHashSalt"> Password hash salt used for publishing. </param>
         /// <param name="scmUri"> Url of SCM site. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UserProperties(string publishingUserName, string publishingPassword, string publishingPasswordHash, string publishingPasswordHashSalt, string scmUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UserProperties(string publishingUserName, string publishingPassword, string publishingPasswordHash, string publishingPasswordHashSalt, Uri scmUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublishingUserName = publishingUserName;
             PublishingPassword = publishingPassword;
@@ -62,6 +62,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Url of SCM site. </summary>
         [WirePath("scmUri")]
-        public string ScmUri { get; set; }
+        public Uri ScmUri { get; set; }
     }
 }

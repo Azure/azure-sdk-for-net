@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <param name="name"> Resource name to verify. </param>
-        /// <param name="type"> Resource type used for verification. </param>
+        /// <param name="validateResourceType"> Resource type used for verification. </param>
         /// <param name="location"> Expected location of the resource. </param>
         /// <param name="serverFarmId"> ARM resource ID of an App Service plan that would host the app. </param>
         /// <param name="skuName"> Name of the target SKU for the App Service plan. </param>
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="containerImagePlatform"> Platform (windows or linux). </param>
         /// <param name="appServiceEnvironment"> App Service Environment Properties. </param>
         /// <returns> A new <see cref="Models.AppServiceValidateContent"/> instance for mocking. </returns>
-        public static AppServiceValidateContent AppServiceValidateContent(string name = default, ValidateResourceType @type = default, AzureLocation location = default, ResourceIdentifier serverFarmId = default, string skuName = default, bool? needLinuxWorkers = default, bool? isSpot = default, int? capacity = default, string hostingEnvironment = default, bool? isXenon = default, string containerRegistryBaseUri = default, string containerRegistryUsername = default, string containerRegistryPassword = default, string containerImageRepository = default, string containerImageTag = default, string containerImagePlatform = default, AppServiceEnvironmentProperties appServiceEnvironment = default)
+        public static AppServiceValidateContent AppServiceValidateContent(string name = default, ValidateResourceType validateResourceType = default, AzureLocation location = default, ResourceIdentifier serverFarmId = default, string skuName = default, bool? needLinuxWorkers = default, bool? isSpot = default, int? capacity = default, string hostingEnvironment = default, bool? isXenon = default, Uri containerRegistryBaseUri = default, string containerRegistryUsername = default, string containerRegistryPassword = default, string containerImageRepository = default, string containerImageTag = default, string containerImagePlatform = default, AppServiceEnvironmentProperties appServiceEnvironment = default)
         {
-            return new AppServiceValidateContent(name, @type, location, needLinuxWorkers is null && isSpot is null && isXenon is null ? default : new ValidateProperties(
+            return new AppServiceValidateContent(name, default, location, needLinuxWorkers is null && isSpot is null && isXenon is null ? default : new ValidateProperties(
                 default,
                 default,
                 needLinuxWorkers,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="keyVaultReferenceIdentity"> The user-assigned identity to use for resolving the key vault certificate reference. If not specified, the system-assigned ASE identity will be used if available. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.CustomDnsSuffixConfigurationData"/> instance for mocking. </returns>
-        public static CustomDnsSuffixConfigurationData CustomDnsSuffixConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CustomDnsSuffixProvisioningState? provisioningState = default, string provisioningDetails = default, string dnsSuffix = default, string certificateUri = default, string keyVaultReferenceIdentity = default, string kind = default)
+        public static CustomDnsSuffixConfigurationData CustomDnsSuffixConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CustomDnsSuffixProvisioningState? provisioningState = default, string provisioningDetails = default, string dnsSuffix = default, Uri certificateUri = default, string keyVaultReferenceIdentity = default, string kind = default)
         {
             return new CustomDnsSuffixConfigurationData(
                 id,
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="multiplier"> Meter Multiplier. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.AppServiceBillingMeter"/> instance for mocking. </returns>
-        public static AppServiceBillingMeter AppServiceBillingMeter(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Guid? meterId = default, string billingLocation = default, string shortName = default, string friendlyName = default, string osType = default, double? multiplier = default, string kind = default)
+        public static AppServiceBillingMeter AppServiceBillingMeter(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Guid? meterId = default, AzureLocation? billingLocation = default, string shortName = default, string friendlyName = default, string osType = default, double? multiplier = default, string kind = default)
         {
             return new AppServiceBillingMeter(
                 id,
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="marketplaceOffer"> Marketplace offer. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.PremierAddOnOffer"/> instance for mocking. </returns>
-        public static PremierAddOnOffer PremierAddOnOffer(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string sku = default, string product = default, string vendor = default, bool? isPromoCodeRequired = default, int? quota = default, AppServicePlanRestriction? webHostingPlanRestrictions = default, string privacyPolicyUri = default, string legalTermsUri = default, string marketplacePublisher = default, string marketplaceOffer = default, string kind = default)
+        public static PremierAddOnOffer PremierAddOnOffer(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string sku = default, string product = default, string vendor = default, bool? isPromoCodeRequired = default, int? quota = default, AppServicePlanRestriction? webHostingPlanRestrictions = default, Uri privacyPolicyUri = default, Uri legalTermsUri = default, string marketplacePublisher = default, string marketplaceOffer = default, string kind = default)
         {
             return new PremierAddOnOffer(
                 id,
@@ -1072,7 +1072,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="extendedLocation"> Extended Location. </param>
         /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <returns> A new <see cref="AppService.WebSiteData"/> instance for mocking. </returns>
-        public static WebSiteData WebSiteData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string state = default, IEnumerable<string> hostNames = default, string repositorySiteName = default, AppServiceUsageState? usageState = default, bool? isEnabled = default, bool? siteScopedCertificatesEnabled = default, IEnumerable<string> enabledHostNames = default, WebSiteAvailabilityState? availabilityState = default, IEnumerable<HostNameSslState> hostNameSslStates = default, ResourceIdentifier appServicePlanId = default, bool? isReserved = default, bool? isXenon = default, bool? isHyperV = default, DateTimeOffset? lastModifiedTimeUtc = default, SiteDnsConfig dnsConfiguration = default, OutboundVnetRouting outboundVnetRouting = default, SiteConfigProperties siteConfig = default, FunctionAppConfig functionAppConfig = default, AppDaprConfig daprConfig = default, AiIntegration aiIntegration = default, string workloadProfileName = default, FunctionAppResourceConfig resourceConfig = default, IEnumerable<string> trafficManagerHostNames = default, bool? isScmSiteAlsoStopped = default, string targetSwapSlot = default, HostingEnvironmentProfile hostingEnvironmentProfile = default, bool? isClientAffinityEnabled = default, bool? isClientAffinityPartitioningEnabled = default, bool? isClientAffinityProxyEnabled = default, bool? isClientCertEnabled = default, ClientCertMode? clientCertMode = default, string clientCertExclusionPaths = default, AppServiceIPMode? ipMode = default, bool? isEndToEndEncryptionEnabled = default, bool? isSshEnabled = default, bool? isHostNameDisabled = default, string customDomainVerificationId = default, string outboundIPAddresses = default, string possibleOutboundIPAddresses = default, int? containerSize = default, int? dailyMemoryTimeQuota = default, DateTimeOffset? suspendOn = default, int? maxNumberOfWorkers = default, CloningInfo cloningInfo = default, string resourceGroup = default, bool? isDefaultContainer = default, string defaultHostName = default, SlotSwapStatus slotSwapStatus = default, bool? isHttpsOnly = default, RedundancyMode? redundancyMode = default, string inProgressOperationId = default, string publicNetworkAccess = default, bool? isStorageAccountRequired = default, string keyVaultReferenceIdentity = default, AutoGeneratedDomainNameLabelScope? autoGeneratedDomainNameLabelScope = default, ResourceIdentifier virtualNetworkSubnetId = default, string managedEnvironmentId = default, string sku = default, PlatformReleaseChannel? platformReleaseChannel = default, ResourceManager.Models.ManagedServiceIdentity identity = default, Resources.Models.ExtendedLocation extendedLocation = default, string kind = default)
+        public static WebSiteData WebSiteData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string state = default, IEnumerable<string> hostNames = default, string repositorySiteName = default, AppServiceUsageState? usageState = default, bool? isEnabled = default, bool? siteScopedCertificatesEnabled = default, IEnumerable<string> enabledHostNames = default, WebSiteAvailabilityState? availabilityState = default, IEnumerable<HostNameSslState> hostNameSslStates = default, ResourceIdentifier appServicePlanId = default, bool? isReserved = default, bool? isXenon = default, bool? isHyperV = default, DateTimeOffset? lastModifiedTimeUtc = default, SiteDnsConfig dnsConfiguration = default, OutboundVnetRouting outboundVnetRouting = default, SiteConfigProperties siteConfig = default, FunctionAppConfig functionAppConfig = default, AppDaprConfig daprConfig = default, AiIntegration aiIntegration = default, string workloadProfileName = default, FunctionAppResourceConfig resourceConfig = default, IEnumerable<string> trafficManagerHostNames = default, bool? isScmSiteAlsoStopped = default, string targetSwapSlot = default, HostingEnvironmentProfile hostingEnvironmentProfile = default, bool? isClientAffinityEnabled = default, bool? isClientAffinityPartitioningEnabled = default, bool? isClientAffinityProxyEnabled = default, bool? isClientCertEnabled = default, ClientCertMode? clientCertMode = default, string clientCertExclusionPaths = default, AppServiceIPMode? ipMode = default, bool? isEndToEndEncryptionEnabled = default, bool? isSshEnabled = default, bool? isHostNameDisabled = default, string customDomainVerificationId = default, string outboundIPAddresses = default, string possibleOutboundIPAddresses = default, int? containerSize = default, int? dailyMemoryTimeQuota = default, DateTimeOffset? suspendOn = default, int? maxNumberOfWorkers = default, CloningInfo cloningInfo = default, string resourceGroup = default, bool? isDefaultContainer = default, string defaultHostName = default, SlotSwapStatus slotSwapStatus = default, bool? isHttpsOnly = default, RedundancyMode? redundancyMode = default, Guid? inProgressOperationId = default, string publicNetworkAccess = default, bool? isStorageAccountRequired = default, string keyVaultReferenceIdentity = default, AutoGeneratedDomainNameLabelScope? autoGeneratedDomainNameLabelScope = default, ResourceIdentifier virtualNetworkSubnetId = default, string managedEnvironmentId = default, string sku = default, PlatformReleaseChannel? platformReleaseChannel = default, ResourceManager.Models.ManagedServiceIdentity identity = default, Resources.Models.ExtendedLocation extendedLocation = default, string kind = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2078,7 +2078,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="forwardLink"> Forward link to an external document associated with the rule. Applicable to dynamic rule only. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.RecommendationRuleData"/> instance for mocking. </returns>
-        public static RecommendationRuleData RecommendationRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string recommendationName = default, string displayName = default, string message = default, string recommendationId = default, string description = default, string actionName = default, NotificationLevel? level = default, RecommendationChannel? channels = default, IEnumerable<string> categoryTags = default, bool? isDynamic = default, string extensionName = default, string bladeName = default, string forwardLink = default, string kind = default)
+        public static RecommendationRuleData RecommendationRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string recommendationName = default, string displayName = default, string message = default, Guid? recommendationId = default, string description = default, string actionName = default, NotificationLevel? level = default, RecommendationChannel? channels = default, IEnumerable<string> categoryTags = default, bool? isDynamic = default, string extensionName = default, string bladeName = default, string forwardLink = default, string kind = default)
         {
             return new RecommendationRuleData(
                 id,
@@ -2133,7 +2133,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="forwardLink"> Forward link to an external document associated with the rule. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.AppServiceRecommendation"/> instance for mocking. </returns>
-        public static AppServiceRecommendation AppServiceRecommendation(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? createdOn = default, string recommendationId = default, ResourceIdentifier resourceId = default, ResourceScopeType? resourceScope = default, string ruleName = default, string displayName = default, string message = default, NotificationLevel? level = default, RecommendationChannel? channels = default, IEnumerable<string> categoryTags = default, string actionName = default, int? enabled = default, IEnumerable<string> states = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, DateTimeOffset? nextNotificationOn = default, DateTimeOffset? notificationExpirationOn = default, DateTimeOffset? notifiedOn = default, double? score = default, bool? isDynamic = default, string extensionName = default, string bladeName = default, string forwardLink = default, string kind = default)
+        public static AppServiceRecommendation AppServiceRecommendation(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? createdOn = default, Guid? recommendationId = default, ResourceIdentifier resourceId = default, ResourceScopeType? resourceScope = default, string ruleName = default, string displayName = default, string message = default, NotificationLevel? level = default, RecommendationChannel? channels = default, IEnumerable<string> categoryTags = default, string actionName = default, int? enabled = default, IEnumerable<string> states = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, DateTimeOffset? nextNotificationOn = default, DateTimeOffset? notificationExpirationOn = default, DateTimeOffset? notifiedOn = default, double? score = default, bool? isDynamic = default, string extensionName = default, string bladeName = default, string forwardLink = default, string kind = default)
         {
             return new AppServiceRecommendation(
                 id,
@@ -2277,8 +2277,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="clientCertExclusionPaths"> client certificate authentication comma-separated exclusion paths. </param>
         /// <param name="isHostNameDisabled"> &lt;code&gt;true&lt;/code&gt; to disable the public hostnames of the app; otherwise, &lt;code&gt;false&lt;/code&gt;.\n If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process. </param>
         /// <param name="customDomainVerificationId"> Unique identifier that verifies the custom domains assigned to the app. Customer will add this id to a txt record for verification. </param>
-        /// <param name="outboundIpAddresses"> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from tenants that site can be hosted with current settings. Read-only. </param>
-        /// <param name="possibleOutboundIpAddresses"> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from all tenants except dataComponent. Read-only. </param>
+        /// <param name="outboundIPAddresses"> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from tenants that site can be hosted with current settings. Read-only. </param>
+        /// <param name="possibleOutboundIPAddresses"> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from all tenants except dataComponent. Read-only. </param>
         /// <param name="containerSize"> Size of the function container. </param>
         /// <param name="dailyMemoryTimeQuota"> Maximum allowed daily memory-time quota (applicable on dynamic apps only). </param>
         /// <param name="suspendOn"> App suspended till in case memory-time quota is exceeded. </param>
@@ -2307,14 +2307,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="identity"> Managed service identity. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.SitePatchInfo"/> instance for mocking. </returns>
-        public static SitePatchInfo SitePatchInfo(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string state = default, IEnumerable<string> hostNames = default, string repositorySiteName = default, AppServiceUsageState? usageState = default, bool? isEnabled = default, bool? siteScopedCertificatesEnabled = default, IEnumerable<string> enabledHostNames = default, WebSiteAvailabilityState? availabilityState = default, IEnumerable<HostNameSslState> hostNameSslStates = default, ResourceIdentifier serverFarmId = default, bool? isReserved = default, bool? isXenon = default, bool? isHyperV = default, DateTimeOffset? lastModifiedOn = default, SiteDnsConfig dnsConfiguration = default, SiteConfigProperties siteConfig = default, AiIntegration aiIntegration = default, IEnumerable<string> trafficManagerHostNames = default, bool? isScmSiteAlsoStopped = default, string targetSwapSlot = default, HostingEnvironmentProfile hostingEnvironmentProfile = default, bool? isClientAffinityEnabled = default, bool? isClientAffinityProxyEnabled = default, bool? isClientCertEnabled = default, ClientCertMode? clientCertMode = default, string clientCertExclusionPaths = default, bool? isHostNameDisabled = default, string customDomainVerificationId = default, string outboundIpAddresses = default, string possibleOutboundIpAddresses = default, int? containerSize = default, int? dailyMemoryTimeQuota = default, DateTimeOffset? suspendOn = default, int? maxNumberOfWorkers = default, CloningInfo cloningInfo = default, string resourceGroup = default, bool? isDefaultContainer = default, string defaultHostName = default, SlotSwapStatus slotSwapStatus = default, bool? isHttpsOnly = default, RedundancyMode? redundancyMode = default, string inProgressOperationId = default, string publicNetworkAccess = default, bool? isStorageAccountRequired = default, string keyVaultReferenceIdentity = default, ResourceIdentifier virtualNetworkSubnetId = default, ResourceManager.Models.ManagedServiceIdentity identity = default, string kind = default)
+        public static SitePatchInfo SitePatchInfo(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string state = default, IEnumerable<string> hostNames = default, string repositorySiteName = default, AppServiceUsageState? usageState = default, bool? isEnabled = default, bool? siteScopedCertificatesEnabled = default, IEnumerable<string> enabledHostNames = default, WebSiteAvailabilityState? availabilityState = default, IEnumerable<HostNameSslState> hostNameSslStates = default, ResourceIdentifier serverFarmId = default, bool? isReserved = default, bool? isXenon = default, bool? isHyperV = default, DateTimeOffset? lastModifiedOn = default, SiteDnsConfig dnsConfiguration = default, SiteConfigProperties siteConfig = default, AiIntegration aiIntegration = default, IEnumerable<string> trafficManagerHostNames = default, bool? isScmSiteAlsoStopped = default, string targetSwapSlot = default, HostingEnvironmentProfile hostingEnvironmentProfile = default, bool? isClientAffinityEnabled = default, bool? isClientAffinityProxyEnabled = default, bool? isClientCertEnabled = default, ClientCertMode? clientCertMode = default, string clientCertExclusionPaths = default, bool? isHostNameDisabled = default, string customDomainVerificationId = default, string outboundIPAddresses = default, string possibleOutboundIPAddresses = default, int? containerSize = default, int? dailyMemoryTimeQuota = default, DateTimeOffset? suspendOn = default, int? maxNumberOfWorkers = default, CloningInfo cloningInfo = default, string resourceGroup = default, bool? isDefaultContainer = default, string defaultHostName = default, SlotSwapStatus slotSwapStatus = default, bool? isHttpsOnly = default, RedundancyMode? redundancyMode = default, Guid? inProgressOperationId = default, string publicNetworkAccess = default, bool? isStorageAccountRequired = default, string keyVaultReferenceIdentity = default, ResourceIdentifier virtualNetworkSubnetId = default, ResourceManager.Models.ManagedServiceIdentity identity = default, string kind = default)
         {
             return new SitePatchInfo(
                 id,
                 name,
                 resourceType,
                 systemData,
-                state is null && hostNames is null && repositorySiteName is null && usageState is null && isEnabled is null && siteScopedCertificatesEnabled is null && enabledHostNames is null && availabilityState is null && hostNameSslStates is null && serverFarmId is null && isReserved is null && isXenon is null && isHyperV is null && lastModifiedOn is null && dnsConfiguration is null && siteConfig is null && aiIntegration is null && trafficManagerHostNames is null && isScmSiteAlsoStopped is null && targetSwapSlot is null && hostingEnvironmentProfile is null && isClientAffinityEnabled is null && isClientAffinityProxyEnabled is null && isClientCertEnabled is null && clientCertMode is null && clientCertExclusionPaths is null && isHostNameDisabled is null && customDomainVerificationId is null && outboundIpAddresses is null && possibleOutboundIpAddresses is null && containerSize is null && dailyMemoryTimeQuota is null && suspendOn is null && maxNumberOfWorkers is null && cloningInfo is null && resourceGroup is null && isDefaultContainer is null && defaultHostName is null && slotSwapStatus is null && isHttpsOnly is null && redundancyMode is null && inProgressOperationId is null && publicNetworkAccess is null && isStorageAccountRequired is null && keyVaultReferenceIdentity is null && virtualNetworkSubnetId is null ? default : new SitePatchResourceProperties(
+                state is null && hostNames is null && repositorySiteName is null && usageState is null && isEnabled is null && siteScopedCertificatesEnabled is null && enabledHostNames is null && availabilityState is null && hostNameSslStates is null && serverFarmId is null && isReserved is null && isXenon is null && isHyperV is null && lastModifiedOn is null && dnsConfiguration is null && siteConfig is null && aiIntegration is null && trafficManagerHostNames is null && isScmSiteAlsoStopped is null && targetSwapSlot is null && hostingEnvironmentProfile is null && isClientAffinityEnabled is null && isClientAffinityProxyEnabled is null && isClientCertEnabled is null && clientCertMode is null && clientCertExclusionPaths is null && isHostNameDisabled is null && customDomainVerificationId is null && outboundIPAddresses is null && possibleOutboundIPAddresses is null && containerSize is null && dailyMemoryTimeQuota is null && suspendOn is null && maxNumberOfWorkers is null && cloningInfo is null && resourceGroup is null && isDefaultContainer is null && defaultHostName is null && slotSwapStatus is null && isHttpsOnly is null && redundancyMode is null && inProgressOperationId is null && publicNetworkAccess is null && isStorageAccountRequired is null && keyVaultReferenceIdentity is null && virtualNetworkSubnetId is null ? default : new SitePatchResourceProperties(
                     state,
                     (hostNames ?? new ChangeTrackingList<string>()).ToList(),
                     repositorySiteName,
@@ -2343,8 +2343,8 @@ namespace Azure.ResourceManager.AppService.Models
                     clientCertExclusionPaths,
                     isHostNameDisabled,
                     customDomainVerificationId,
-                    outboundIpAddresses,
-                    possibleOutboundIpAddresses,
+                    outboundIPAddresses,
+                    possibleOutboundIPAddresses,
                     containerSize,
                     dailyMemoryTimeQuota,
                     suspendOn,
@@ -2427,7 +2427,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="databases"> Databases included in the backup. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.WebAppBackupInfo"/> instance for mocking. </returns>
-        public static WebAppBackupInfo WebAppBackupInfo(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string backupName = default, bool? isEnabled = default, string storageAccountUri = default, WebAppBackupSchedule backupSchedule = default, IEnumerable<AppServiceDatabaseBackupSetting> databases = default, string kind = default)
+        public static WebAppBackupInfo WebAppBackupInfo(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string backupName = default, bool? isEnabled = default, Uri storageAccountUri = default, WebAppBackupSchedule backupSchedule = default, IEnumerable<AppServiceDatabaseBackupSetting> databases = default, string kind = default)
         {
             return new WebAppBackupInfo(
                 id,
@@ -2497,7 +2497,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="websiteSizeInBytes"> Size of the original web app which has been backed up. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.WebAppBackupData"/> instance for mocking. </returns>
-        public static WebAppBackupData WebAppBackupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? backupId = default, string storageAccountUri = default, string blobName = default, string backupName = default, WebAppBackupStatus? status = default, long? sizeInBytes = default, DateTimeOffset? createdOn = default, string log = default, IEnumerable<AppServiceDatabaseBackupSetting> databases = default, bool? isScheduled = default, DateTimeOffset? lastRestoreOn = default, DateTimeOffset? finishedOn = default, string correlationId = default, long? websiteSizeInBytes = default, string kind = default)
+        public static WebAppBackupData WebAppBackupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? backupId = default, Uri storageAccountUri = default, string blobName = default, string backupName = default, WebAppBackupStatus? status = default, long? sizeInBytes = default, DateTimeOffset? createdOn = default, string log = default, IEnumerable<AppServiceDatabaseBackupSetting> databases = default, bool? isScheduled = default, DateTimeOffset? lastRestoreOn = default, DateTimeOffset? finishedOn = default, string correlationId = default, long? websiteSizeInBytes = default, string kind = default)
         {
             return new WebAppBackupData(
                 id,
@@ -2817,7 +2817,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="scmUri"> Url of SCM site. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.PublishingUserData"/> instance for mocking. </returns>
-        public static PublishingUserData PublishingUserData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string publishingUserName = default, string publishingPassword = default, string publishingPasswordHash = default, string publishingPasswordHashSalt = default, string scmUri = default, string kind = default)
+        public static PublishingUserData PublishingUserData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string publishingUserName = default, string publishingPassword = default, string publishingPasswordHash = default, string publishingPasswordHashSalt = default, Uri scmUri = default, string kind = default)
         {
             return new PublishingUserData(
                 id,
@@ -2852,7 +2852,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="hostingEnvironment"> App Service Environment name, if needed (only when restoring an app to an App Service Environment). </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.RestoreRequestInfo"/> instance for mocking. </returns>
-        public static RestoreRequestInfo RestoreRequestInfo(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string storageAccountUri = default, string blobName = default, bool? canOverwrite = default, string siteName = default, IEnumerable<AppServiceDatabaseBackupSetting> databases = default, bool? ignoreConflictingHostNames = default, bool? ignoreDatabases = default, string appServicePlan = default, BackupRestoreOperationType? operationType = default, bool? adjustConnectionStrings = default, string hostingEnvironment = default, string kind = default)
+        public static RestoreRequestInfo RestoreRequestInfo(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Uri storageAccountUri = default, string blobName = default, bool? canOverwrite = default, string siteName = default, IEnumerable<AppServiceDatabaseBackupSetting> databases = default, bool? ignoreConflictingHostNames = default, bool? ignoreDatabases = default, string appServicePlan = default, BackupRestoreOperationType? operationType = default, bool? adjustConnectionStrings = default, string hostingEnvironment = default, string kind = default)
         {
             return new RestoreRequestInfo(
                 id,
@@ -2913,7 +2913,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="serviceBusSuffix"> The suffix for the service bus endpoint. By default this is .servicebus.windows.net. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.HybridConnectionData"/> instance for mocking. </returns>
-        public static HybridConnectionData HybridConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string serviceBusNamespace = default, string relayName = default, string relayArmId = default, string hostname = default, int? port = default, string sendKeyName = default, string sendKeyValue = default, string serviceBusSuffix = default, string kind = default)
+        public static HybridConnectionData HybridConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string serviceBusNamespace = default, string relayName = default, ResourceIdentifier relayArmId = default, string hostname = default, int? port = default, string sendKeyName = default, string sendKeyValue = default, string serviceBusSuffix = default, string kind = default)
         {
             return new HybridConnectionData(
                 id,
@@ -2946,7 +2946,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="biztalkUri"> Gets or sets the BiztalkUri. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.RelayServiceConnectionEntityData"/> instance for mocking. </returns>
-        public static RelayServiceConnectionEntityData RelayServiceConnectionEntityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string entityName = default, string entityConnectionString = default, string resourceConnectionString = default, string hostname = default, int? port = default, string biztalkUri = default, string kind = default)
+        public static RelayServiceConnectionEntityData RelayServiceConnectionEntityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string entityName = default, string entityConnectionString = default, string resourceConnectionString = default, string hostname = default, int? port = default, Uri biztalkUri = default, string kind = default)
         {
             return new RelayServiceConnectionEntityData(
                 id,
@@ -3528,7 +3528,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="vpnPackageUri"> The URI where the VPN package can be downloaded. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.AppServiceVirtualNetworkGatewayData"/> instance for mocking. </returns>
-        public static AppServiceVirtualNetworkGatewayData AppServiceVirtualNetworkGatewayData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string vnetName = default, string vpnPackageUri = default, string kind = default)
+        public static AppServiceVirtualNetworkGatewayData AppServiceVirtualNetworkGatewayData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string vnetName = default, Uri vpnPackageUri = default, string kind = default)
         {
             return new AppServiceVirtualNetworkGatewayData(
                 id,
@@ -4253,7 +4253,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
         /// <param name="isInternalLoadBalancerEnabled"> Only visible within Vnet/Subnet. </param>
         /// <param name="defaultDomain"> Default Domain Name for the cluster. </param>
-        /// <param name="staticIp"> Static IP of the KubeEnvironment. </param>
+        /// <param name="staticIP"> Static IP of the KubeEnvironment. </param>
         /// <param name="arcConfiguration">
         /// Cluster configuration which determines the ARC cluster
         /// components types. Eg: Choosing between BuildService kind,
@@ -4265,26 +4265,26 @@ namespace Azure.ResourceManager.AppService.Models
         /// supported
         /// </param>
         /// <param name="containerAppsConfiguration"> Cluster configuration for Container Apps Environments to configure Dapr Instrumentation Key and VNET Configuration. </param>
-        /// <param name="aksResourceID"> Gets or sets the AksResourceID. </param>
+        /// <param name="aksResourceId"> Gets or sets the AksResourceId. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.KubeEnvironmentPatch"/> instance for mocking. </returns>
-        public static KubeEnvironmentPatch KubeEnvironmentPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, KubeEnvironmentProvisioningState? provisioningState = default, string deploymentErrors = default, bool? isInternalLoadBalancerEnabled = default, string defaultDomain = default, string staticIp = default, ArcConfiguration arcConfiguration = default, AppLogsConfiguration appLogsConfiguration = default, ContainerAppsConfiguration containerAppsConfiguration = default, string aksResourceID = default, string kind = default)
+        public static KubeEnvironmentPatch KubeEnvironmentPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, KubeEnvironmentProvisioningState? provisioningState = default, string deploymentErrors = default, bool? isInternalLoadBalancerEnabled = default, string defaultDomain = default, string staticIP = default, ArcConfiguration arcConfiguration = default, AppLogsConfiguration appLogsConfiguration = default, ContainerAppsConfiguration containerAppsConfiguration = default, ResourceIdentifier aksResourceId = default, string kind = default)
         {
             return new KubeEnvironmentPatch(
                 id,
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && deploymentErrors is null && isInternalLoadBalancerEnabled is null && defaultDomain is null && staticIp is null && arcConfiguration is null && appLogsConfiguration is null && containerAppsConfiguration is null && aksResourceID is null ? default : new KubeEnvironmentPatchResourceProperties(
+                provisioningState is null && deploymentErrors is null && isInternalLoadBalancerEnabled is null && defaultDomain is null && staticIP is null && arcConfiguration is null && appLogsConfiguration is null && containerAppsConfiguration is null && aksResourceId is null ? default : new KubeEnvironmentPatchResourceProperties(
                     provisioningState,
                     deploymentErrors,
                     isInternalLoadBalancerEnabled,
                     defaultDomain,
-                    staticIp,
+                    staticIP,
                     arcConfiguration,
                     appLogsConfiguration,
                     containerAppsConfiguration,
-                    aksResourceID,
+                    aksResourceId,
                     default),
                 kind,
                 default);
@@ -4766,7 +4766,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="sku"> Description of a SKU for a scalable resource. </param>
         /// <param name="identity"> Managed service identity. </param>
         /// <returns> A new <see cref="AppService.StaticSiteData"/> instance for mocking. </returns>
-        public static StaticSiteData StaticSiteData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string defaultHostname = default, string repositoryUri = default, string branch = default, IEnumerable<string> customDomains = default, string repositoryToken = default, StaticSiteBuildProperties buildProperties = default, IEnumerable<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections = default, StagingEnvironmentPolicy? stagingEnvironmentPolicy = default, bool? allowConfigFileUpdates = default, StaticSiteTemplate templateProperties = default, string contentDistributionEndpoint = default, string keyVaultReferenceIdentity = default, IEnumerable<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = default, IEnumerable<StaticSiteLinkedBackendInfo> linkedBackends = default, string provider = default, EnterpriseGradeCdnStatus? enterpriseGradeCdnStatus = default, string publicNetworkAccess = default, IEnumerable<StaticSiteDatabaseConnectionOverview> databaseConnections = default, string kind = default, AppServiceSkuDescription sku = default, ManagedServiceIdentity identity = default)
+        public static StaticSiteData StaticSiteData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string defaultHostname = default, Uri repositoryUri = default, string branch = default, IEnumerable<string> customDomains = default, string repositoryToken = default, StaticSiteBuildProperties buildProperties = default, IEnumerable<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections = default, StagingEnvironmentPolicy? stagingEnvironmentPolicy = default, bool? allowConfigFileUpdates = default, StaticSiteTemplate templateProperties = default, string contentDistributionEndpoint = default, string keyVaultReferenceIdentity = default, IEnumerable<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = default, IEnumerable<StaticSiteLinkedBackendInfo> linkedBackends = default, string provider = default, EnterpriseGradeCdnStatus? enterpriseGradeCdnStatus = default, string publicNetworkAccess = default, IEnumerable<StaticSiteDatabaseConnectionOverview> databaseConnections = default, string kind = default, AppServiceSkuDescription sku = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -4822,7 +4822,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="publicNetworkAccess"> State indicating whether public traffic are allowed or not for a static web app. Allowed Values: 'Enabled', 'Disabled' or an empty string. </param>
         /// <param name="databaseConnections"> Database connections for the static site. </param>
         /// <returns> A new <see cref="Models.StaticSiteProperties"/> instance for mocking. </returns>
-        public static StaticSiteProperties StaticSiteProperties(string defaultHostname = default, string repositoryUri = default, string branch = default, IEnumerable<string> customDomains = default, string repositoryToken = default, StaticSiteBuildProperties buildProperties = default, IEnumerable<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections = default, StagingEnvironmentPolicy? stagingEnvironmentPolicy = default, bool? allowConfigFileUpdates = default, StaticSiteTemplate templateProperties = default, string contentDistributionEndpoint = default, string keyVaultReferenceIdentity = default, IEnumerable<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = default, IEnumerable<StaticSiteLinkedBackendInfo> linkedBackends = default, string provider = default, EnterpriseGradeCdnStatus? enterpriseGradeCdnStatus = default, string publicNetworkAccess = default, IEnumerable<StaticSiteDatabaseConnectionOverview> databaseConnections = default)
+        public static StaticSiteProperties StaticSiteProperties(string defaultHostname = default, Uri repositoryUri = default, string branch = default, IEnumerable<string> customDomains = default, string repositoryToken = default, StaticSiteBuildProperties buildProperties = default, IEnumerable<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections = default, StagingEnvironmentPolicy? stagingEnvironmentPolicy = default, bool? allowConfigFileUpdates = default, StaticSiteTemplate templateProperties = default, string contentDistributionEndpoint = default, string keyVaultReferenceIdentity = default, IEnumerable<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = default, IEnumerable<StaticSiteLinkedBackendInfo> linkedBackends = default, string provider = default, EnterpriseGradeCdnStatus? enterpriseGradeCdnStatus = default, string publicNetworkAccess = default, IEnumerable<StaticSiteDatabaseConnectionOverview> databaseConnections = default)
         {
             customDomains ??= new ChangeTrackingList<string>();
             privateEndpointConnections ??= new ChangeTrackingList<ResponseMessageEnvelopeRemotePrivateEndpointConnection>();
@@ -5052,7 +5052,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="databaseConnections"> Database connections for the static site. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.StaticSitePatch"/> instance for mocking. </returns>
-        public static StaticSitePatch StaticSitePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string defaultHostname = default, string repositoryUri = default, string branch = default, IEnumerable<string> customDomains = default, string repositoryToken = default, StaticSiteBuildProperties buildProperties = default, IEnumerable<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections = default, StagingEnvironmentPolicy? stagingEnvironmentPolicy = default, bool? allowConfigFileUpdates = default, StaticSiteTemplate templateProperties = default, string contentDistributionEndpoint = default, string keyVaultReferenceIdentity = default, IEnumerable<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = default, IEnumerable<StaticSiteLinkedBackendInfo> linkedBackends = default, string provider = default, EnterpriseGradeCdnStatus? enterpriseGradeCdnStatus = default, string publicNetworkAccess = default, IEnumerable<StaticSiteDatabaseConnectionOverview> databaseConnections = default, string kind = default)
+        public static StaticSitePatch StaticSitePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string defaultHostname = default, Uri repositoryUri = default, string branch = default, IEnumerable<string> customDomains = default, string repositoryToken = default, StaticSiteBuildProperties buildProperties = default, IEnumerable<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections = default, StagingEnvironmentPolicy? stagingEnvironmentPolicy = default, bool? allowConfigFileUpdates = default, StaticSiteTemplate templateProperties = default, string contentDistributionEndpoint = default, string keyVaultReferenceIdentity = default, IEnumerable<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = default, IEnumerable<StaticSiteLinkedBackendInfo> linkedBackends = default, string provider = default, EnterpriseGradeCdnStatus? enterpriseGradeCdnStatus = default, string publicNetworkAccess = default, IEnumerable<StaticSiteDatabaseConnectionOverview> databaseConnections = default, string kind = default)
         {
             return new StaticSitePatch(
                 id,
@@ -5142,7 +5142,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="invitationUri"> The url for the invitation link. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.StaticSiteUserInvitationResult"/> instance for mocking. </returns>
-        public static StaticSiteUserInvitationResult StaticSiteUserInvitationResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? expiresOn = default, string invitationUri = default, string kind = default)
+        public static StaticSiteUserInvitationResult StaticSiteUserInvitationResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? expiresOn = default, Uri invitationUri = default, string kind = default)
         {
             return new StaticSiteUserInvitationResult(
                 id,
@@ -5233,8 +5233,8 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                connectionIdentity is null && connectionString is null && region is null && configurationFiles is null ? default : new DatabaseConnectionProperties(
-                    default,
+                resourceId is null && connectionIdentity is null && connectionString is null && region is null && configurationFiles is null ? default : new DatabaseConnectionProperties(
+                    resourceId,
                     connectionIdentity,
                     connectionString,
                     region,
@@ -5255,7 +5255,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="functionLanguage"> The language of the api content, if it exists. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.StaticSiteZipDeployment"/> instance for mocking. </returns>
-        public static StaticSiteZipDeployment StaticSiteZipDeployment(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string appZipUri = default, string apiZipUri = default, string deploymentTitle = default, string provider = default, string functionLanguage = default, string kind = default)
+        public static StaticSiteZipDeployment StaticSiteZipDeployment(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Uri appZipUri = default, Uri apiZipUri = default, string deploymentTitle = default, string provider = default, string functionLanguage = default, string kind = default)
         {
             return new StaticSiteZipDeployment(
                 id,
@@ -5312,14 +5312,14 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <param name="databaseConnectionResourceId"> The resource id of the database. </param>
+        /// <param name="resourceId"> The resource id of the database. </param>
         /// <param name="connectionIdentity"> If present, the identity is used in conjunction with connection string to connect to the database. Use of the system-assigned managed identity is indicated with the string 'SystemAssigned', while use of a user-assigned managed identity is indicated with the resource id of the managed identity resource. </param>
         /// <param name="connectionString"> The connection string to use to connect to the database. </param>
         /// <param name="region"> The region of the database resource. </param>
         /// <returns> A new <see cref="Models.StaticSiteDatabaseConnectionPatchContent"/> instance for mocking. </returns>
-        public static StaticSiteDatabaseConnectionPatchContent StaticSiteDatabaseConnectionPatchContent(ResourceIdentifier databaseConnectionResourceId = default, string connectionIdentity = default, string connectionString = default, string region = default)
+        public static StaticSiteDatabaseConnectionPatchContent StaticSiteDatabaseConnectionPatchContent(ResourceIdentifier resourceId = default, string connectionIdentity = default, string connectionString = default, string region = default)
         {
-            return new StaticSiteDatabaseConnectionPatchContent(databaseConnectionResourceId is null && connectionIdentity is null && connectionString is null && region is null ? default : new DatabaseConnectionPatchRequestProperties(databaseConnectionResourceId, connectionIdentity, connectionString, region, default), default);
+            return new StaticSiteDatabaseConnectionPatchContent(resourceId is null && connectionIdentity is null && connectionString is null && region is null ? default : new DatabaseConnectionPatchRequestProperties(resourceId, connectionIdentity, connectionString, region, default), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -5333,7 +5333,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="secretState"> State indicating if basic auth has a secret and what type it is. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.StaticSiteBasicAuthPropertyData"/> instance for mocking. </returns>
-        public static StaticSiteBasicAuthPropertyData StaticSiteBasicAuthPropertyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string password = default, string secretUri = default, string applicableEnvironmentsMode = default, IEnumerable<string> environments = default, string secretState = default, string kind = default)
+        public static StaticSiteBasicAuthPropertyData StaticSiteBasicAuthPropertyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string password = default, Uri secretUri = default, string applicableEnvironmentsMode = default, IEnumerable<string> environments = default, string secretState = default, string kind = default)
         {
             return new StaticSiteBasicAuthPropertyData(
                 id,
@@ -5409,7 +5409,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="provisioningState"> The provisioning state of the linking process. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.StaticSiteLinkedBackendData"/> instance for mocking. </returns>
-        public static StaticSiteLinkedBackendData StaticSiteLinkedBackendData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string backendResourceId = default, string region = default, DateTimeOffset? createdOn = default, string provisioningState = default, string kind = default)
+        public static StaticSiteLinkedBackendData StaticSiteLinkedBackendData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier backendResourceId = default, string region = default, DateTimeOffset? createdOn = default, string provisioningState = default, string kind = default)
         {
             return new StaticSiteLinkedBackendData(
                 id,
@@ -6102,7 +6102,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="remoteDebuggingVersion"> Remote debugging version. </param>
         /// <param name="isHttpLoggingEnabled"> &lt;code&gt;true&lt;/code&gt; if HTTP logging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="useManagedIdentityCreds"> Flag to use Managed Identity Creds for ACR pull. </param>
-        /// <param name="acrUserManagedIdentityID"> If using user managed identity, the user managed identity ClientId. </param>
+        /// <param name="acrUserManagedIdentityId"> If using user managed identity, the user managed identity ClientId. </param>
         /// <param name="logsDirectorySizeLimit"> HTTP logs directory size limit. </param>
         /// <param name="isDetailedErrorLoggingEnabled"> &lt;code&gt;true&lt;/code&gt; if detailed error logging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="publishingUsername"> Publishing user name. </param>
@@ -6179,14 +6179,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="apiDefinitionUri"> Gets or sets the ApiDefinitionUri. </param>
         /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <returns> A new <see cref="AppService.SiteConfigData"/> instance for mocking. </returns>
-        public static SiteConfigData SiteConfigData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? numberOfWorkers = default, IEnumerable<string> defaultDocuments = default, string netFrameworkVersion = default, string phpVersion = default, string pythonVersion = default, string nodeVersion = default, string powerShellVersion = default, string linuxFxVersion = default, string windowsFxVersion = default, bool? isRequestTracingEnabled = default, DateTimeOffset? requestTracingExpirationOn = default, bool? isRemoteDebuggingEnabled = default, string remoteDebuggingVersion = default, bool? isHttpLoggingEnabled = default, bool? useManagedIdentityCreds = default, string acrUserManagedIdentityID = default, int? logsDirectorySizeLimit = default, bool? isDetailedErrorLoggingEnabled = default, string publishingUsername = default, IEnumerable<AppServiceNameValuePair> appSettings = default, IEnumerable<AppServiceNameValuePair> metadata = default, IEnumerable<ConnStringInfo> connectionStrings = default, SiteMachineKey machineKey = default, IEnumerable<HttpRequestHandlerMapping> handlerMappings = default, string documentRoot = default, ScmType? scmType = default, bool? use32BitWorkerProcess = default, bool? isWebSocketsEnabled = default, bool? isAlwaysOn = default, string javaVersion = default, string javaContainer = default, string javaContainerVersion = default, string appCommandLine = default, ManagedPipelineMode? managedPipelineMode = default, IEnumerable<VirtualApplication> virtualApplications = default, SiteLoadBalancing? loadBalancing = default, SiteLimits limits = default, bool? isAutoHealEnabled = default, AutoHealRules autoHealRules = default, string tracingOptions = default, string vnetName = default, bool? isVnetRouteAllEnabled = default, int? vnetPrivatePortsCount = default, AppServiceCorsSettings cors = default, WebAppPushSettings push = default, string autoSwapSlotName = default, bool? isLocalMySqlEnabled = default, int? managedServiceIdentityId = default, int? xManagedServiceIdentityId = default, string keyVaultReferenceIdentity = default, IEnumerable<AppServiceIPSecurityRestriction> ipSecurityRestrictions = default, SiteDefaultAction? ipSecurityRestrictionsDefaultAction = default, IEnumerable<AppServiceIPSecurityRestriction> scmIPSecurityRestrictions = default, SiteDefaultAction? scmIPSecurityRestrictionsDefaultAction = default, bool? allowIPSecurityRestrictionsForScmToUseMain = default, bool? isHttp20Enabled = default, int? http20ProxyFlag = default, AppServiceSupportedTlsVersion? minTlsVersion = default, AppServiceTlsCipherSuite? minTlsCipherSuite = default, AppServiceSupportedTlsVersion? scmMinTlsVersion = default, AppServiceFtpsState? ftpsState = default, int? preWarmedInstanceCount = default, int? functionAppScaleLimit = default, int? elasticWebAppScaleLimit = default, string healthCheckPath = default, bool? isFunctionsRuntimeScaleMonitoringEnabled = default, string websiteTimeZone = default, int? minimumElasticInstanceCount = default, IDictionary<string, AppServiceStorageAccessInfo> azureStorageAccounts = default, string publicNetworkAccess = default, IEnumerable<RampUpRule> experimentsRampUpRules = default, string apiDefinitionUriStringValue = default, string apiManagementConfigId = default, Uri apiDefinitionUri = default, string kind = default)
+        public static SiteConfigData SiteConfigData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? numberOfWorkers = default, IEnumerable<string> defaultDocuments = default, string netFrameworkVersion = default, string phpVersion = default, string pythonVersion = default, string nodeVersion = default, string powerShellVersion = default, string linuxFxVersion = default, string windowsFxVersion = default, bool? isRequestTracingEnabled = default, DateTimeOffset? requestTracingExpirationOn = default, bool? isRemoteDebuggingEnabled = default, string remoteDebuggingVersion = default, bool? isHttpLoggingEnabled = default, bool? useManagedIdentityCreds = default, string acrUserManagedIdentityId = default, int? logsDirectorySizeLimit = default, bool? isDetailedErrorLoggingEnabled = default, string publishingUsername = default, IEnumerable<AppServiceNameValuePair> appSettings = default, IEnumerable<AppServiceNameValuePair> metadata = default, IEnumerable<ConnStringInfo> connectionStrings = default, SiteMachineKey machineKey = default, IEnumerable<HttpRequestHandlerMapping> handlerMappings = default, string documentRoot = default, ScmType? scmType = default, bool? use32BitWorkerProcess = default, bool? isWebSocketsEnabled = default, bool? isAlwaysOn = default, string javaVersion = default, string javaContainer = default, string javaContainerVersion = default, string appCommandLine = default, ManagedPipelineMode? managedPipelineMode = default, IEnumerable<VirtualApplication> virtualApplications = default, SiteLoadBalancing? loadBalancing = default, SiteLimits limits = default, bool? isAutoHealEnabled = default, AutoHealRules autoHealRules = default, string tracingOptions = default, string vnetName = default, bool? isVnetRouteAllEnabled = default, int? vnetPrivatePortsCount = default, AppServiceCorsSettings cors = default, WebAppPushSettings push = default, string autoSwapSlotName = default, bool? isLocalMySqlEnabled = default, int? managedServiceIdentityId = default, int? xManagedServiceIdentityId = default, string keyVaultReferenceIdentity = default, IEnumerable<AppServiceIPSecurityRestriction> ipSecurityRestrictions = default, SiteDefaultAction? ipSecurityRestrictionsDefaultAction = default, IEnumerable<AppServiceIPSecurityRestriction> scmIPSecurityRestrictions = default, SiteDefaultAction? scmIPSecurityRestrictionsDefaultAction = default, bool? allowIPSecurityRestrictionsForScmToUseMain = default, bool? isHttp20Enabled = default, int? http20ProxyFlag = default, AppServiceSupportedTlsVersion? minTlsVersion = default, AppServiceTlsCipherSuite? minTlsCipherSuite = default, AppServiceSupportedTlsVersion? scmMinTlsVersion = default, AppServiceFtpsState? ftpsState = default, int? preWarmedInstanceCount = default, int? functionAppScaleLimit = default, int? elasticWebAppScaleLimit = default, string healthCheckPath = default, bool? isFunctionsRuntimeScaleMonitoringEnabled = default, string websiteTimeZone = default, int? minimumElasticInstanceCount = default, IDictionary<string, AppServiceStorageAccessInfo> azureStorageAccounts = default, string publicNetworkAccess = default, IEnumerable<RampUpRule> experimentsRampUpRules = default, string apiDefinitionUriStringValue = default, string apiManagementConfigId = default, Uri apiDefinitionUri = default, string kind = default)
         {
             return new SiteConfigData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                numberOfWorkers is null && defaultDocuments is null && netFrameworkVersion is null && phpVersion is null && pythonVersion is null && nodeVersion is null && powerShellVersion is null && linuxFxVersion is null && windowsFxVersion is null && isRequestTracingEnabled is null && requestTracingExpirationOn is null && isRemoteDebuggingEnabled is null && remoteDebuggingVersion is null && isHttpLoggingEnabled is null && useManagedIdentityCreds is null && acrUserManagedIdentityID is null && logsDirectorySizeLimit is null && isDetailedErrorLoggingEnabled is null && publishingUsername is null && appSettings is null && metadata is null && connectionStrings is null && machineKey is null && handlerMappings is null && documentRoot is null && scmType is null && use32BitWorkerProcess is null && isWebSocketsEnabled is null && isAlwaysOn is null && javaVersion is null && javaContainer is null && javaContainerVersion is null && appCommandLine is null && managedPipelineMode is null && virtualApplications is null && loadBalancing is null && experimentsRampUpRules is null && limits is null && isAutoHealEnabled is null && autoHealRules is null && tracingOptions is null && vnetName is null && isVnetRouteAllEnabled is null && vnetPrivatePortsCount is null && cors is null && push is null && apiDefinitionUriStringValue is null && apiManagementConfigId is null && autoSwapSlotName is null && isLocalMySqlEnabled is null && managedServiceIdentityId is null && xManagedServiceIdentityId is null && keyVaultReferenceIdentity is null && ipSecurityRestrictions is null && ipSecurityRestrictionsDefaultAction is null && scmIPSecurityRestrictions is null && scmIPSecurityRestrictionsDefaultAction is null && allowIPSecurityRestrictionsForScmToUseMain is null && isHttp20Enabled is null && http20ProxyFlag is null && minTlsVersion is null && minTlsCipherSuite is null && scmMinTlsVersion is null && ftpsState is null && preWarmedInstanceCount is null && functionAppScaleLimit is null && elasticWebAppScaleLimit is null && healthCheckPath is null && isFunctionsRuntimeScaleMonitoringEnabled is null && websiteTimeZone is null && minimumElasticInstanceCount is null && azureStorageAccounts is null && publicNetworkAccess is null ? default : new SiteConfigProperties(
+                numberOfWorkers is null && defaultDocuments is null && netFrameworkVersion is null && phpVersion is null && pythonVersion is null && nodeVersion is null && powerShellVersion is null && linuxFxVersion is null && windowsFxVersion is null && isRequestTracingEnabled is null && requestTracingExpirationOn is null && isRemoteDebuggingEnabled is null && remoteDebuggingVersion is null && isHttpLoggingEnabled is null && useManagedIdentityCreds is null && acrUserManagedIdentityId is null && logsDirectorySizeLimit is null && isDetailedErrorLoggingEnabled is null && publishingUsername is null && appSettings is null && metadata is null && connectionStrings is null && machineKey is null && handlerMappings is null && documentRoot is null && scmType is null && use32BitWorkerProcess is null && isWebSocketsEnabled is null && isAlwaysOn is null && javaVersion is null && javaContainer is null && javaContainerVersion is null && appCommandLine is null && managedPipelineMode is null && virtualApplications is null && loadBalancing is null && experimentsRampUpRules is null && limits is null && isAutoHealEnabled is null && autoHealRules is null && tracingOptions is null && vnetName is null && isVnetRouteAllEnabled is null && vnetPrivatePortsCount is null && cors is null && push is null && apiDefinitionUriStringValue is null && apiManagementConfigId is null && autoSwapSlotName is null && isLocalMySqlEnabled is null && managedServiceIdentityId is null && xManagedServiceIdentityId is null && keyVaultReferenceIdentity is null && ipSecurityRestrictions is null && ipSecurityRestrictionsDefaultAction is null && scmIPSecurityRestrictions is null && scmIPSecurityRestrictionsDefaultAction is null && allowIPSecurityRestrictionsForScmToUseMain is null && isHttp20Enabled is null && http20ProxyFlag is null && minTlsVersion is null && minTlsCipherSuite is null && scmMinTlsVersion is null && ftpsState is null && preWarmedInstanceCount is null && functionAppScaleLimit is null && elasticWebAppScaleLimit is null && healthCheckPath is null && isFunctionsRuntimeScaleMonitoringEnabled is null && websiteTimeZone is null && minimumElasticInstanceCount is null && azureStorageAccounts is null && publicNetworkAccess is null ? default : new SiteConfigProperties(
                     numberOfWorkers,
                     (defaultDocuments ?? new ChangeTrackingList<string>()).ToList(),
                     netFrameworkVersion,
@@ -6202,7 +6202,7 @@ namespace Azure.ResourceManager.AppService.Models
                     remoteDebuggingVersion,
                     isHttpLoggingEnabled,
                     useManagedIdentityCreds,
-                    acrUserManagedIdentityID,
+                    acrUserManagedIdentityId,
                     logsDirectorySizeLimit,
                     isDetailedErrorLoggingEnabled,
                     publishingUsername,
@@ -6301,7 +6301,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="settings"> Job settings. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.ContinuousWebJobData"/> instance for mocking. </returns>
-        public static ContinuousWebJobData ContinuousWebJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ContinuousWebJobStatus? status = default, string detailedStatus = default, string logUri = default, string runCommand = default, string uri = default, string extraInfoUri = default, WebJobType? webJobType = default, string error = default, bool? isUsingSdk = default, IDictionary<string, BinaryData> settings = default, string kind = default)
+        public static ContinuousWebJobData ContinuousWebJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ContinuousWebJobStatus? status = default, string detailedStatus = default, Uri logUri = default, string runCommand = default, Uri uri = default, Uri extraInfoUri = default, WebJobType? webJobType = default, string error = default, bool? isUsingSdk = default, IDictionary<string, BinaryData> settings = default, string kind = default)
         {
             return new ContinuousWebJobData(
                 id,
@@ -6654,7 +6654,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="physicalZone"> The physical zone that the instance is in. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.WebSiteInstanceStatusData"/> instance for mocking. </returns>
-        public static WebSiteInstanceStatusData WebSiteInstanceStatusData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SiteRuntimeState? state = default, string statusUri = default, string detectorUri = default, string consoleUri = default, string healthCheckUrlString = default, IDictionary<string, ContainerInfo> containers = default, string physicalZone = default, string kind = default)
+        public static WebSiteInstanceStatusData WebSiteInstanceStatusData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SiteRuntimeState? state = default, Uri statusUri = default, Uri detectorUri = default, Uri consoleUri = default, string healthCheckUrlString = default, IDictionary<string, ContainerInfo> containers = default, string physicalZone = default, string kind = default)
         {
             return new WebSiteInstanceStatusData(
                 id,
@@ -7194,7 +7194,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="comment"> Site Extension comment. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.SiteExtensionInfoData"/> instance for mocking. </returns>
-        public static SiteExtensionInfoData SiteExtensionInfoData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string extensionId = default, string title = default, SiteExtensionType? extensionType = default, string summary = default, string description = default, string version = default, string extensionUri = default, string projectUri = default, string iconUri = default, string licenseUri = default, string feedUri = default, IEnumerable<string> authors = default, string installerCommandLineParams = default, DateTimeOffset? publishedOn = default, int? downloadCount = default, bool? localIsLatestVersion = default, string localPath = default, DateTimeOffset? installedOn = default, string provisioningState = default, string comment = default, string kind = default)
+        public static SiteExtensionInfoData SiteExtensionInfoData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string extensionId = default, string title = default, SiteExtensionType? extensionType = default, string summary = default, string description = default, string version = default, Uri extensionUri = default, Uri projectUri = default, Uri iconUri = default, Uri licenseUri = default, Uri feedUri = default, IEnumerable<string> authors = default, string installerCommandLineParams = default, DateTimeOffset? publishedOn = default, int? downloadCount = default, bool? localIsLatestVersion = default, string localPath = default, DateTimeOffset? installedOn = default, string provisioningState = default, string comment = default, string kind = default)
         {
             return new SiteExtensionInfoData(
                 id,
@@ -7240,7 +7240,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="gitHubActionConfiguration"> If GitHub Action is selected, than the associated configuration. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.SiteSourceControlData"/> instance for mocking. </returns>
-        public static SiteSourceControlData SiteSourceControlData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string repoUri = default, string branch = default, bool? isManualIntegration = default, bool? isGitHubAction = default, bool? isDeploymentRollbackEnabled = default, bool? isMercurial = default, GitHubActionConfiguration gitHubActionConfiguration = default, string kind = default)
+        public static SiteSourceControlData SiteSourceControlData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Uri repoUri = default, string branch = default, bool? isManualIntegration = default, bool? isGitHubAction = default, bool? isDeploymentRollbackEnabled = default, bool? isMercurial = default, GitHubActionConfiguration gitHubActionConfiguration = default, string kind = default)
         {
             return new SiteSourceControlData(
                 id,
@@ -7306,7 +7306,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="settings"> Job settings. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.TriggeredWebJobData"/> instance for mocking. </returns>
-        public static TriggeredWebJobData TriggeredWebJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, TriggeredJobRun latestRun = default, string historyUri = default, string schedulerLogsUri = default, string runCommand = default, string uri = default, string extraInfoUri = default, WebJobType? webJobType = default, string error = default, bool? isUsingSdk = default, string publicNetworkAccess = default, bool? isStorageAccountRequired = default, IDictionary<string, BinaryData> settings = default, string kind = default)
+        public static TriggeredWebJobData TriggeredWebJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, TriggeredJobRun latestRun = default, Uri historyUri = default, Uri schedulerLogsUri = default, string runCommand = default, Uri uri = default, Uri extraInfoUri = default, WebJobType? webJobType = default, string error = default, bool? isUsingSdk = default, string publicNetworkAccess = default, bool? isStorageAccountRequired = default, IDictionary<string, BinaryData> settings = default, string kind = default)
         {
             return new TriggeredWebJobData(
                 id,
@@ -7392,7 +7392,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="settings"> Job settings. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.WebJobData"/> instance for mocking. </returns>
-        public static WebJobData WebJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string runCommand = default, string uri = default, string extraInfoUri = default, WebJobType? webJobType = default, string error = default, bool? isUsingSdk = default, IDictionary<string, BinaryData> settings = default, string kind = default)
+        public static WebJobData WebJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string runCommand = default, Uri uri = default, Uri extraInfoUri = default, WebJobType? webJobType = default, string error = default, bool? isUsingSdk = default, IDictionary<string, BinaryData> settings = default, string kind = default)
         {
             return new WebJobData(
                 id,
@@ -8343,7 +8343,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="buildProperties"> Build properties to configure on the repository. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.StaticSitesWorkflowPreviewRequest"/> instance for mocking. </returns>
-        public static StaticSitesWorkflowPreviewRequest StaticSitesWorkflowPreviewRequest(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string repositoryUri = default, string branch = default, StaticSiteBuildProperties buildProperties = default, string kind = default)
+        public static StaticSitesWorkflowPreviewRequest StaticSitesWorkflowPreviewRequest(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Uri repositoryUri = default, string branch = default, StaticSiteBuildProperties buildProperties = default, string kind = default)
         {
             return new StaticSitesWorkflowPreviewRequest(
                 id,
@@ -8472,7 +8472,7 @@ namespace Azure.ResourceManager.AppService.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                state is null && hostNames is null && repositorySiteName is null && usageState is null && isEnabled is null && enabledHostNames is null && availabilityState is null && hostNameSslStates is null && appServicePlanId is null && isReserved is null && isXenon is null && isHyperV is null && lastModifiedTimeUtc is null && dnsConfiguration is null && siteConfig is null && functionAppConfig is null && daprConfig is null && workloadProfileName is null && resourceConfig is null && trafficManagerHostNames is null && isScmSiteAlsoStopped is null && targetSwapSlot is null && hostingEnvironmentProfile is null && isClientAffinityEnabled is null && isClientCertEnabled is null && clientCertMode is null && clientCertExclusionPaths is null && ipMode is null && isEndToEndEncryptionEnabled is null && isHostNameDisabled is null && customDomainVerificationId is null && outboundIPAddresses is null && possibleOutboundIPAddresses is null && containerSize is null && dailyMemoryTimeQuota is null && suspendOn is null && maxNumberOfWorkers is null && cloningInfo is null && resourceGroup is null && isDefaultContainer is null && defaultHostName is null && slotSwapStatus is null && isHttpsOnly is null && redundancyMode is null && publicNetworkAccess is null && isStorageAccountRequired is null && keyVaultReferenceIdentity is null && autoGeneratedDomainNameLabelScope is null && virtualNetworkSubnetId is null && managedEnvironmentId is null && sku is null ? default : new SiteProperties(
+                state is null && hostNames is null && repositorySiteName is null && usageState is null && isEnabled is null && enabledHostNames is null && availabilityState is null && hostNameSslStates is null && appServicePlanId is null && isReserved is null && isXenon is null && isHyperV is null && lastModifiedTimeUtc is null && dnsConfiguration is null && siteConfig is null && functionAppConfig is null && daprConfig is null && workloadProfileName is null && resourceConfig is null && trafficManagerHostNames is null && isScmSiteAlsoStopped is null && targetSwapSlot is null && hostingEnvironmentProfile is null && isClientAffinityEnabled is null && isClientCertEnabled is null && clientCertMode is null && clientCertExclusionPaths is null && ipMode is null && isEndToEndEncryptionEnabled is null && isHostNameDisabled is null && customDomainVerificationId is null && outboundIPAddresses is null && possibleOutboundIPAddresses is null && containerSize is null && dailyMemoryTimeQuota is null && suspendOn is null && maxNumberOfWorkers is null && cloningInfo is null && resourceGroup is null && isDefaultContainer is null && defaultHostName is null && slotSwapStatus is null && isHttpsOnly is null && redundancyMode is null && inProgressOperationId is null && publicNetworkAccess is null && isStorageAccountRequired is null && keyVaultReferenceIdentity is null && autoGeneratedDomainNameLabelScope is null && virtualNetworkSubnetId is null && managedEnvironmentId is null && sku is null ? default : new SiteProperties(
                     state,
                     (hostNames ?? new ChangeTrackingList<string>()).ToList(),
                     repositorySiteName,
@@ -8523,7 +8523,7 @@ namespace Azure.ResourceManager.AppService.Models
                     slotSwapStatus,
                     isHttpsOnly,
                     redundancyMode,
-                    default,
+                    inProgressOperationId,
                     publicNetworkAccess,
                     isStorageAccountRequired,
                     keyVaultReferenceIdentity,
@@ -8632,7 +8632,7 @@ namespace Azure.ResourceManager.AppService.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                state is null && hostNames is null && repositorySiteName is null && usageState is null && isEnabled is null && enabledHostNames is null && availabilityState is null && hostNameSslStates is null && appServicePlanId is null && isReserved is null && isXenon is null && isHyperV is null && lastModifiedTimeUtc is null && dnsConfiguration is null && siteConfig is null && functionAppConfig is null && daprConfig is null && workloadProfileName is null && resourceConfig is null && trafficManagerHostNames is null && isScmSiteAlsoStopped is null && targetSwapSlot is null && hostingEnvironmentProfile is null && isClientAffinityEnabled is null && isClientCertEnabled is null && clientCertMode is null && clientCertExclusionPaths is null && isHostNameDisabled is null && customDomainVerificationId is null && outboundIPAddresses is null && possibleOutboundIPAddresses is null && containerSize is null && dailyMemoryTimeQuota is null && suspendOn is null && maxNumberOfWorkers is null && cloningInfo is null && resourceGroup is null && isDefaultContainer is null && defaultHostName is null && slotSwapStatus is null && isHttpsOnly is null && redundancyMode is null && publicNetworkAccess is null && isStorageAccountRequired is null && keyVaultReferenceIdentity is null && virtualNetworkSubnetId is null && managedEnvironmentId is null ? default : new SiteProperties(
+                state is null && hostNames is null && repositorySiteName is null && usageState is null && isEnabled is null && enabledHostNames is null && availabilityState is null && hostNameSslStates is null && appServicePlanId is null && isReserved is null && isXenon is null && isHyperV is null && lastModifiedTimeUtc is null && dnsConfiguration is null && siteConfig is null && functionAppConfig is null && daprConfig is null && workloadProfileName is null && resourceConfig is null && trafficManagerHostNames is null && isScmSiteAlsoStopped is null && targetSwapSlot is null && hostingEnvironmentProfile is null && isClientAffinityEnabled is null && isClientCertEnabled is null && clientCertMode is null && clientCertExclusionPaths is null && isHostNameDisabled is null && customDomainVerificationId is null && outboundIPAddresses is null && possibleOutboundIPAddresses is null && containerSize is null && dailyMemoryTimeQuota is null && suspendOn is null && maxNumberOfWorkers is null && cloningInfo is null && resourceGroup is null && isDefaultContainer is null && defaultHostName is null && slotSwapStatus is null && isHttpsOnly is null && redundancyMode is null && inProgressOperationId is null && publicNetworkAccess is null && isStorageAccountRequired is null && keyVaultReferenceIdentity is null && virtualNetworkSubnetId is null && managedEnvironmentId is null ? default : new SiteProperties(
                     state,
                     (hostNames ?? new ChangeTrackingList<string>()).ToList(),
                     repositorySiteName,
@@ -8683,7 +8683,7 @@ namespace Azure.ResourceManager.AppService.Models
                     slotSwapStatus,
                     isHttpsOnly,
                     redundancyMode,
-                    default,
+                    inProgressOperationId,
                     publicNetworkAccess,
                     isStorageAccountRequired,
                     keyVaultReferenceIdentity,
@@ -9472,11 +9472,11 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                state is null && healthCheckUrlString is null && containers is null ? default : new WebSiteInstanceStatusProperties(
+                state is null && statusUri is null && detectorUri is null && consoleUri is null && healthCheckUrlString is null && containers is null ? default : new WebSiteInstanceStatusProperties(
                     state,
-                    default,
-                    default,
-                    default,
+                    statusUri,
+                    detectorUri,
+                    consoleUri,
                     healthCheckUrlString,
                     containers ?? new ChangeTrackingDictionary<string, ContainerInfo>(),
                     default,
@@ -9590,28 +9590,6 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.AppServiceVirtualNetworkGatewayData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="vnetName"> The Virtual Network name. </param>
-        /// <param name="vpnPackageUri"> The URI where the VPN package can be downloaded. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.AppServiceVirtualNetworkGatewayData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AppServiceVirtualNetworkGatewayData AppServiceVirtualNetworkGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string vnetName, Uri vpnPackageUri, string kind = default)
-        {
-            return new AppServiceVirtualNetworkGatewayData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                vnetName is null ? default : new VnetGatewayProperties(vnetName, default, default),
-                kind,
-                default);
-        }
-
         /// <summary> Initializes a new instance of <see cref="AppService.AppServiceWorkerPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -9682,78 +9660,6 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.ContinuousWebJobData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="status"> Job status. </param>
-        /// <param name="detailedStatus"> Detailed status. </param>
-        /// <param name="logUri"> Log URL. </param>
-        /// <param name="runCommand"> Run command. </param>
-        /// <param name="uri"> Job URL. </param>
-        /// <param name="extraInfoUri"> Extra Info URL. </param>
-        /// <param name="webJobType"> Job type. </param>
-        /// <param name="error"> Error information. </param>
-        /// <param name="isUsingSdk"> Using SDK?. </param>
-        /// <param name="settings"> Job settings. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.ContinuousWebJobData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContinuousWebJobData ContinuousWebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContinuousWebJobStatus? status, string detailedStatus = default, Uri logUri = default, string runCommand = default, Uri uri = default, Uri extraInfoUri = default, WebJobType? webJobType = default, string error = default, bool? isUsingSdk = default, IDictionary<string, BinaryData> settings = default, string kind = default)
-        {
-            return new ContinuousWebJobData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                status is null && detailedStatus is null && runCommand is null && webJobType is null && error is null && isUsingSdk is null && settings is null ? default : new ContinuousWebJobProperties(
-                    status,
-                    detailedStatus,
-                    default,
-                    runCommand,
-                    default,
-                    default,
-                    webJobType,
-                    error,
-                    isUsingSdk,
-                    settings ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                    default),
-                kind,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AppService.CustomDnsSuffixConfigurationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"></param>
-        /// <param name="provisioningDetails"></param>
-        /// <param name="dnsSuffix"> The default custom domain suffix to use for all sites deployed on the ASE. </param>
-        /// <param name="certificateUri"> The URL referencing the Azure Key Vault certificate secret that should be used as the default SSL/TLS certificate for sites with the custom domain suffix. </param>
-        /// <param name="keyVaultReferenceIdentity"> The user-assigned identity to use for resolving the key vault certificate reference. If not specified, the system-assigned ASE identity will be used if available. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.CustomDnsSuffixConfigurationData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CustomDnsSuffixConfigurationData CustomDnsSuffixConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CustomDnsSuffixProvisioningState? provisioningState, string provisioningDetails = default, string dnsSuffix = default, Uri certificateUri = default, string keyVaultReferenceIdentity = default, string kind = default)
-        {
-            return new CustomDnsSuffixConfigurationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState is null && provisioningDetails is null && dnsSuffix is null && keyVaultReferenceIdentity is null ? default : new CustomDnsSuffixConfigurationProperties(
-                    provisioningState,
-                    provisioningDetails,
-                    dnsSuffix,
-                    default,
-                    keyVaultReferenceIdentity,
-                    default),
-                kind,
-                default);
-        }
-
         /// <summary> Initializes a new instance of <see cref="AppService.ApiKeyVaultReferenceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -9788,46 +9694,6 @@ namespace Azure.ResourceManager.AppService.Models
                     details,
                     source,
                     activeVersion,
-                    default),
-                kind,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AppService.HybridConnectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="serviceBusNamespace"> The name of the Service Bus namespace. </param>
-        /// <param name="relayName"> The name of the Service Bus relay. </param>
-        /// <param name="relayArmId"> The ARM URI to the Service Bus relay. </param>
-        /// <param name="hostname"> The hostname of the endpoint. </param>
-        /// <param name="port"> The port of the endpoint. </param>
-        /// <param name="sendKeyName"> The name of the Service Bus key which has Send permissions. This is used to authenticate to Service Bus. </param>
-        /// <param name="sendKeyValue">
-        /// The value of the Service Bus key. This is used to authenticate to Service Bus. In ARM this key will not be returned
-        ///             normally, use the POST /listKeys API instead.
-        /// </param>
-        /// <param name="serviceBusSuffix"> The suffix for the service bus endpoint. By default this is .servicebus.windows.net. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.HybridConnectionData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HybridConnectionData HybridConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string serviceBusNamespace = default, string relayName = default, ResourceIdentifier relayArmId = default, string hostname = default, int? port = default, string sendKeyName = default, string sendKeyValue = default, string serviceBusSuffix = default, string kind = default)
-        {
-            return new HybridConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                serviceBusNamespace is null && relayName is null && hostname is null && port is null && sendKeyName is null && sendKeyValue is null && serviceBusSuffix is null ? default : new HybridConnectionProperties(
-                    serviceBusNamespace,
-                    relayName,
-                    default,
-                    hostname,
-                    port,
-                    sendKeyName,
-                    sendKeyValue,
-                    serviceBusSuffix,
                     default),
                 kind,
                 default);
@@ -10004,120 +9870,6 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.PublishingUserData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="publishingUserName"> Username used for publishing. </param>
-        /// <param name="publishingPassword"> Password used for publishing. </param>
-        /// <param name="publishingPasswordHash"> Password hash used for publishing. </param>
-        /// <param name="publishingPasswordHashSalt"> Password hash salt used for publishing. </param>
-        /// <param name="scmUri"> Url of SCM site. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.PublishingUserData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PublishingUserData PublishingUserData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string publishingUserName = default, string publishingPassword = default, string publishingPasswordHash = default, string publishingPasswordHashSalt = default, Uri scmUri = default, string kind = default)
-        {
-            return new PublishingUserData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                publishingUserName is null && publishingPassword is null && publishingPasswordHash is null && publishingPasswordHashSalt is null ? default : new UserProperties(
-                    publishingUserName,
-                    publishingPassword,
-                    publishingPasswordHash,
-                    publishingPasswordHashSalt,
-                    default,
-                    default),
-                kind,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AppService.RecommendationRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="recommendationName"> Unique name of the rule. </param>
-        /// <param name="displayName"> UI friendly name of the rule. </param>
-        /// <param name="message"> Localized name of the rule (Good for UI). </param>
-        /// <param name="recommendationId">
-        /// Recommendation ID of an associated recommendation object tied to the rule, if exists.
-        ///             If such an object doesn't exist, it is set to null.
-        /// </param>
-        /// <param name="description"> Localized detailed description of the rule. </param>
-        /// <param name="actionName"> Name of action that is recommended by this rule in string. </param>
-        /// <param name="level"> Level of impact indicating how critical this rule is. </param>
-        /// <param name="channels"> List of available channels that this rule applies. </param>
-        /// <param name="categoryTags"> The list of category tags that this recommendation rule belongs to. </param>
-        /// <param name="isDynamic"> True if this is associated with a dynamically added rule. </param>
-        /// <param name="extensionName"> Extension name of the portal if exists. Applicable to dynamic rule only. </param>
-        /// <param name="bladeName"> Deep link to a blade on the portal. Applicable to dynamic rule only. </param>
-        /// <param name="forwardLink"> Forward link to an external document associated with the rule. Applicable to dynamic rule only. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.RecommendationRuleData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RecommendationRuleData RecommendationRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string recommendationName = default, string displayName = default, string message = default, Guid? recommendationId = default, string description = default, string actionName = default, NotificationLevel? level = default, RecommendationChannel? channels = default, IEnumerable<string> categoryTags = default, bool? isDynamic = default, string extensionName = default, string bladeName = default, string forwardLink = default, string kind = default)
-        {
-            return new RecommendationRuleData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                recommendationName is null && displayName is null && message is null && description is null && actionName is null && level is null && channels is null && categoryTags is null && isDynamic is null && extensionName is null && bladeName is null && forwardLink is null ? default : new RecommendationRuleProperties(
-                    recommendationName,
-                    displayName,
-                    message,
-                    default,
-                    description,
-                    actionName,
-                    level,
-                    channels,
-                    (categoryTags ?? new ChangeTrackingList<string>()).ToList(),
-                    isDynamic,
-                    extensionName,
-                    bladeName,
-                    forwardLink,
-                    default),
-                kind,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AppService.RelayServiceConnectionEntityData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="entityName"></param>
-        /// <param name="entityConnectionString"></param>
-        /// <param name="resourceConnectionString"></param>
-        /// <param name="hostname"></param>
-        /// <param name="port"></param>
-        /// <param name="biztalkUri"></param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.RelayServiceConnectionEntityData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RelayServiceConnectionEntityData RelayServiceConnectionEntityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string entityName = default, string entityConnectionString = default, string resourceConnectionString = default, string hostname = default, int? port = default, Uri biztalkUri = default, string kind = default)
-        {
-            return new RelayServiceConnectionEntityData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                entityName is null && entityConnectionString is null && resourceConnectionString is null && hostname is null && port is null ? default : new RelayServiceConnectionEntityProperties(
-                    entityName,
-                    entityConnectionString,
-                    resourceConnectionString,
-                    hostname,
-                    port,
-                    default,
-                    default),
-                kind,
-                default);
-        }
-
         /// <summary> Initializes a new instance of <see cref="AppService.RemotePrivateEndpointConnectionARMResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -10138,133 +9890,6 @@ namespace Azure.ResourceManager.AppService.Models
                 resourceType,
                 systemData,
                 provisioningState is null && privateLinkServiceConnectionState is null ? default : new RemotePrivateEndpointConnectionARMResourceProperties(provisioningState, default, privateLinkServiceConnectionState, default, default),
-                kind,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AppService.SiteExtensionInfoData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="extensionId"> Site extension ID. </param>
-        /// <param name="title"></param>
-        /// <param name="extensionType"> Site extension type. </param>
-        /// <param name="summary"> Summary description. </param>
-        /// <param name="description"> Detailed description. </param>
-        /// <param name="version"> Version information. </param>
-        /// <param name="extensionUri"> Extension URL. </param>
-        /// <param name="projectUri"> Project URL. </param>
-        /// <param name="iconUri"> Icon URL. </param>
-        /// <param name="licenseUri"> License URL. </param>
-        /// <param name="feedUri"> Feed URL. </param>
-        /// <param name="authors"> List of authors. </param>
-        /// <param name="installerCommandLineParams"> Installer command line parameters. </param>
-        /// <param name="publishedOn"> Published timestamp. </param>
-        /// <param name="downloadCount"> Count of downloads. </param>
-        /// <param name="localIsLatestVersion"> &lt;code&gt;true&lt;/code&gt; if the local version is the latest version; &lt;code&gt;false&lt;/code&gt; otherwise. </param>
-        /// <param name="localPath"> Local path. </param>
-        /// <param name="installedOn"> Installed timestamp. </param>
-        /// <param name="provisioningState"> Provisioning state. </param>
-        /// <param name="comment"> Site Extension comment. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.SiteExtensionInfoData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SiteExtensionInfoData SiteExtensionInfoData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string extensionId = default, string title = default, SiteExtensionType? extensionType = default, string summary = default, string description = default, string version = default, Uri extensionUri = default, Uri projectUri = default, Uri iconUri = default, Uri licenseUri = default, Uri feedUri = default, IEnumerable<string> authors = default, string installerCommandLineParams = default, DateTimeOffset? publishedOn = default, int? downloadCount = default, bool? localIsLatestVersion = default, string localPath = default, DateTimeOffset? installedOn = default, string provisioningState = default, string comment = default, string kind = default)
-        {
-            return new SiteExtensionInfoData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                extensionId is null && title is null && extensionType is null && summary is null && description is null && version is null && authors is null && installerCommandLineParams is null && publishedOn is null && downloadCount is null && localIsLatestVersion is null && localPath is null && installedOn is null && provisioningState is null && comment is null ? default : new SiteExtensionInfoProperties(
-                    extensionId,
-                    title,
-                    extensionType,
-                    summary,
-                    description,
-                    version,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    (authors ?? new ChangeTrackingList<string>()).ToList(),
-                    installerCommandLineParams,
-                    publishedOn,
-                    downloadCount,
-                    localIsLatestVersion,
-                    localPath,
-                    installedOn,
-                    provisioningState,
-                    comment,
-                    default),
-                kind,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AppService.SiteSourceControlData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="repoUri"> Repository or source control URL. </param>
-        /// <param name="branch"> Name of branch to use for deployment. </param>
-        /// <param name="isManualIntegration"> &lt;code&gt;true&lt;/code&gt; to limit to manual integration; &lt;code&gt;false&lt;/code&gt; to enable continuous integration (which configures webhooks into online repos like GitHub). </param>
-        /// <param name="isGitHubAction"> &lt;code&gt;true&lt;/code&gt; if this is deployed via GitHub action. </param>
-        /// <param name="isDeploymentRollbackEnabled"> &lt;code&gt;true&lt;/code&gt; to enable deployment rollback; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="isMercurial"> &lt;code&gt;true&lt;/code&gt; for a Mercurial repository; &lt;code&gt;false&lt;/code&gt; for a Git repository. </param>
-        /// <param name="gitHubActionConfiguration"> If GitHub Action is selected, than the associated configuration. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.SiteSourceControlData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SiteSourceControlData SiteSourceControlData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Uri repoUri = default, string branch = default, bool? isManualIntegration = default, bool? isGitHubAction = default, bool? isDeploymentRollbackEnabled = default, bool? isMercurial = default, GitHubActionConfiguration gitHubActionConfiguration = default, string kind = default)
-        {
-            return new SiteSourceControlData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                branch is null && isManualIntegration is null && isGitHubAction is null && isDeploymentRollbackEnabled is null && isMercurial is null && gitHubActionConfiguration is null ? default : new SiteSourceControlProperties(
-                    default,
-                    branch,
-                    isManualIntegration,
-                    isGitHubAction,
-                    isDeploymentRollbackEnabled,
-                    isMercurial,
-                    gitHubActionConfiguration,
-                    default),
-                kind,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AppService.StaticSiteBasicAuthPropertyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="password"> The password for basic auth. </param>
-        /// <param name="secretUri"> Url to the secret in Key Vault. </param>
-        /// <param name="applicableEnvironmentsMode"> State indicating if basic auth is enabled and for what environments it is active. </param>
-        /// <param name="environments"> The list of enabled environments for Basic Auth if ApplicableEnvironmentsMode is set to SpecifiedEnvironments. </param>
-        /// <param name="secretState"> State indicating if basic auth has a secret and what type it is. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.StaticSiteBasicAuthPropertyData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static StaticSiteBasicAuthPropertyData StaticSiteBasicAuthPropertyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string password = default, Uri secretUri = default, string applicableEnvironmentsMode = default, IEnumerable<string> environments = default, string secretState = default, string kind = default)
-        {
-            return new StaticSiteBasicAuthPropertyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                password is null && applicableEnvironmentsMode is null && environments is null && secretState is null ? default : new StaticSiteBasicAuthPropertyProperties(
-                    password,
-                    default,
-                    applicableEnvironmentsMode,
-                    (environments ?? new ChangeTrackingList<string>()).ToList(),
-                    secretState,
-                    default),
                 kind,
                 default);
         }
@@ -10308,9 +9933,9 @@ namespace Azure.ResourceManager.AppService.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                defaultHostname is null && branch is null && customDomains is null && repositoryToken is null && buildProperties is null && privateEndpointConnections is null && stagingEnvironmentPolicy is null && allowConfigFileUpdates is null && templateProperties is null && contentDistributionEndpoint is null && keyVaultReferenceIdentity is null && userProvidedFunctionApps is null && linkedBackends is null && provider is null && enterpriseGradeCdnStatus is null && publicNetworkAccess is null && databaseConnections is null ? default : new StaticSiteProperties(
+                defaultHostname is null && repositoryUri is null && branch is null && customDomains is null && repositoryToken is null && buildProperties is null && privateEndpointConnections is null && stagingEnvironmentPolicy is null && allowConfigFileUpdates is null && templateProperties is null && contentDistributionEndpoint is null && keyVaultReferenceIdentity is null && userProvidedFunctionApps is null && linkedBackends is null && provider is null && enterpriseGradeCdnStatus is null && publicNetworkAccess is null && databaseConnections is null ? default : new StaticSiteProperties(
                     defaultHostname,
-                    default,
+                    repositoryUri,
                     branch,
                     (customDomains ?? new ChangeTrackingList<string>()).ToList(),
                     repositoryToken,
@@ -10331,159 +9956,6 @@ namespace Azure.ResourceManager.AppService.Models
                 kind,
                 sku,
                 default,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AppService.StaticSiteLinkedBackendData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="backendResourceId"> The resource id of the backend linked to the static site. </param>
-        /// <param name="region"> The region of the backend linked to the static site. </param>
-        /// <param name="createdOn"> The date and time on which the backend was linked to the static site. </param>
-        /// <param name="provisioningState"> The provisioning state of the linking process. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.StaticSiteLinkedBackendData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static StaticSiteLinkedBackendData StaticSiteLinkedBackendData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier backendResourceId = default, string region = default, DateTimeOffset? createdOn = default, string provisioningState = default, string kind = default)
-        {
-            return new StaticSiteLinkedBackendData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                region is null && createdOn is null && provisioningState is null ? default : new StaticSiteLinkedBackendARMResourceProperties(default, region, createdOn, provisioningState, default),
-                kind,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AppService.TriggeredWebJobData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="latestRun"> Latest job run information. </param>
-        /// <param name="historyUri"> History URL. </param>
-        /// <param name="schedulerLogsUri"> Scheduler Logs URL. </param>
-        /// <param name="runCommand"> Run command. </param>
-        /// <param name="uri"> Job URL. </param>
-        /// <param name="extraInfoUri"> Extra Info URL. </param>
-        /// <param name="webJobType"> Job type. </param>
-        /// <param name="error"> Error information. </param>
-        /// <param name="isUsingSdk"> Using SDK?. </param>
-        /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled' or an empty string. </param>
-        /// <param name="isStorageAccountRequired"> Checks if Customer provided storage account is required. </param>
-        /// <param name="settings"> Job settings. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.TriggeredWebJobData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static TriggeredWebJobData TriggeredWebJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, TriggeredJobRun latestRun = default, Uri historyUri = default, Uri schedulerLogsUri = default, string runCommand = default, Uri uri = default, Uri extraInfoUri = default, WebJobType? webJobType = default, string error = default, bool? isUsingSdk = default, string publicNetworkAccess = default, bool? isStorageAccountRequired = default, IDictionary<string, BinaryData> settings = default, string kind = default)
-        {
-            return new TriggeredWebJobData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                latestRun is null && runCommand is null && webJobType is null && error is null && isUsingSdk is null && publicNetworkAccess is null && isStorageAccountRequired is null && settings is null ? default : new TriggeredWebJobProperties(
-                    latestRun,
-                    default,
-                    default,
-                    runCommand,
-                    default,
-                    default,
-                    webJobType,
-                    error,
-                    isUsingSdk,
-                    publicNetworkAccess,
-                    isStorageAccountRequired,
-                    settings ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                    default),
-                kind,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AppService.WebAppBackupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="backupId"> Id of the backup. </param>
-        /// <param name="storageAccountUri"> SAS URL for the storage account container which contains this backup. </param>
-        /// <param name="blobName"> Name of the blob which contains data for this backup. </param>
-        /// <param name="backupName"> Name of this backup. </param>
-        /// <param name="status"> Backup status. </param>
-        /// <param name="sizeInBytes"> Size of the backup in bytes. </param>
-        /// <param name="createdOn"> Timestamp of the backup creation. </param>
-        /// <param name="log"> Details regarding this backup. Might contain an error message. </param>
-        /// <param name="databases"> List of databases included in the backup. </param>
-        /// <param name="isScheduled"> True if this backup has been created due to a schedule being triggered. </param>
-        /// <param name="lastRestoreOn"> Timestamp of a last restore operation which used this backup. </param>
-        /// <param name="finishedOn"> Timestamp when this backup finished. </param>
-        /// <param name="correlationId"> Unique correlation identifier. Please use this along with the timestamp while communicating with Azure support. </param>
-        /// <param name="websiteSizeInBytes"> Size of the original web app which has been backed up. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.WebAppBackupData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static WebAppBackupData WebAppBackupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? backupId = default, Uri storageAccountUri = default, string blobName = default, string backupName = default, WebAppBackupStatus? status = default, long? sizeInBytes = default, DateTimeOffset? createdOn = default, string log = default, IEnumerable<AppServiceDatabaseBackupSetting> databases = default, bool? isScheduled = default, DateTimeOffset? lastRestoreOn = default, DateTimeOffset? finishedOn = default, string correlationId = default, long? websiteSizeInBytes = default, string kind = default)
-        {
-            return new WebAppBackupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                backupId is null && blobName is null && backupName is null && status is null && sizeInBytes is null && createdOn is null && log is null && databases is null && isScheduled is null && lastRestoreOn is null && finishedOn is null && correlationId is null && websiteSizeInBytes is null ? default : new BackupItemProperties(
-                    backupId,
-                    default,
-                    blobName,
-                    backupName,
-                    status,
-                    sizeInBytes,
-                    createdOn,
-                    log,
-                    (databases ?? new ChangeTrackingList<AppServiceDatabaseBackupSetting>()).ToList(),
-                    isScheduled,
-                    lastRestoreOn,
-                    finishedOn,
-                    correlationId,
-                    websiteSizeInBytes,
-                    default),
-                kind,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AppService.WebJobData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="runCommand"> Run command. </param>
-        /// <param name="uri"> Job URL. </param>
-        /// <param name="extraInfoUri"> Extra Info URL. </param>
-        /// <param name="webJobType"> Job type. </param>
-        /// <param name="error"> Error information. </param>
-        /// <param name="isUsingSdk"> Using SDK?. </param>
-        /// <param name="settings"> Job settings. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.WebJobData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static WebJobData WebJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string runCommand = default, Uri uri = default, Uri extraInfoUri = default, WebJobType? webJobType = default, string error = default, bool? isUsingSdk = default, IDictionary<string, BinaryData> settings = default, string kind = default)
-        {
-            return new WebJobData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                runCommand is null && webJobType is null && error is null && isUsingSdk is null && settings is null ? default : new WebJobProperties(
-                    runCommand,
-                    default,
-                    default,
-                    webJobType,
-                    error,
-                    isUsingSdk,
-                    settings ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                    default),
-                kind,
                 default);
         }
 
@@ -10584,7 +10056,7 @@ namespace Azure.ResourceManager.AppService.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                state is null && hostNames is null && repositorySiteName is null && usageState is null && isEnabled is null && enabledHostNames is null && availabilityState is null && hostNameSslStates is null && appServicePlanId is null && isReserved is null && isXenon is null && isHyperV is null && lastModifiedTimeUtc is null && dnsConfiguration is null && outboundVnetRouting is null && siteConfig is null && functionAppConfig is null && daprConfig is null && workloadProfileName is null && resourceConfig is null && trafficManagerHostNames is null && isScmSiteAlsoStopped is null && targetSwapSlot is null && hostingEnvironmentProfile is null && isClientAffinityEnabled is null && isClientAffinityPartitioningEnabled is null && isClientAffinityProxyEnabled is null && isClientCertEnabled is null && clientCertMode is null && clientCertExclusionPaths is null && ipMode is null && isEndToEndEncryptionEnabled is null && isSshEnabled is null && isHostNameDisabled is null && customDomainVerificationId is null && outboundIPAddresses is null && possibleOutboundIPAddresses is null && containerSize is null && dailyMemoryTimeQuota is null && suspendOn is null && maxNumberOfWorkers is null && cloningInfo is null && resourceGroup is null && isDefaultContainer is null && defaultHostName is null && slotSwapStatus is null && isHttpsOnly is null && redundancyMode is null && publicNetworkAccess is null && isStorageAccountRequired is null && keyVaultReferenceIdentity is null && autoGeneratedDomainNameLabelScope is null && virtualNetworkSubnetId is null && managedEnvironmentId is null && sku is null ? default : new SiteProperties(
+                state is null && hostNames is null && repositorySiteName is null && usageState is null && isEnabled is null && enabledHostNames is null && availabilityState is null && hostNameSslStates is null && appServicePlanId is null && isReserved is null && isXenon is null && isHyperV is null && lastModifiedTimeUtc is null && dnsConfiguration is null && outboundVnetRouting is null && siteConfig is null && functionAppConfig is null && daprConfig is null && workloadProfileName is null && resourceConfig is null && trafficManagerHostNames is null && isScmSiteAlsoStopped is null && targetSwapSlot is null && hostingEnvironmentProfile is null && isClientAffinityEnabled is null && isClientAffinityPartitioningEnabled is null && isClientAffinityProxyEnabled is null && isClientCertEnabled is null && clientCertMode is null && clientCertExclusionPaths is null && ipMode is null && isEndToEndEncryptionEnabled is null && isSshEnabled is null && isHostNameDisabled is null && customDomainVerificationId is null && outboundIPAddresses is null && possibleOutboundIPAddresses is null && containerSize is null && dailyMemoryTimeQuota is null && suspendOn is null && maxNumberOfWorkers is null && cloningInfo is null && resourceGroup is null && isDefaultContainer is null && defaultHostName is null && slotSwapStatus is null && isHttpsOnly is null && redundancyMode is null && inProgressOperationId is null && publicNetworkAccess is null && isStorageAccountRequired is null && keyVaultReferenceIdentity is null && autoGeneratedDomainNameLabelScope is null && virtualNetworkSubnetId is null && managedEnvironmentId is null && sku is null ? default : new SiteProperties(
                     state,
                     (hostNames ?? new ChangeTrackingList<string>()).ToList(),
                     repositorySiteName,
@@ -10635,7 +10107,7 @@ namespace Azure.ResourceManager.AppService.Models
                     slotSwapStatus,
                     isHttpsOnly,
                     redundancyMode,
-                    default,
+                    inProgressOperationId,
                     publicNetworkAccess,
                     isStorageAccountRequired,
                     keyVaultReferenceIdentity,
@@ -10647,41 +10119,6 @@ namespace Azure.ResourceManager.AppService.Models
                     default),
                 identity,
                 extendedLocation,
-                kind,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AppService.WebSiteInstanceStatusData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="state"></param>
-        /// <param name="statusUri"> Link to the GetStatusApi in Kudu. </param>
-        /// <param name="detectorUri"> Link to the Diagnose and Solve Portal. </param>
-        /// <param name="consoleUri"> Link to the console to web app instance. </param>
-        /// <param name="healthCheckUrlString"> Link to the console to web app instance. </param>
-        /// <param name="containers"> Dictionary of &lt;ContainerInfo&gt;. </param>
-        /// <param name="physicalZone"> The physical zone that the instance is in. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.WebSiteInstanceStatusData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static WebSiteInstanceStatusData WebSiteInstanceStatusData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SiteRuntimeState? state = default, Uri statusUri = default, Uri detectorUri = default, Uri consoleUri = default, string healthCheckUrlString = default, IDictionary<string, ContainerInfo> containers = default, string physicalZone = default, string kind = default)
-        {
-            return new WebSiteInstanceStatusData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                state is null && healthCheckUrlString is null && containers is null && physicalZone is null ? default : new WebSiteInstanceStatusProperties(
-                    state,
-                    default,
-                    default,
-                    default,
-                    healthCheckUrlString,
-                    containers ?? new ChangeTrackingDictionary<string, ContainerInfo>(),
-                    physicalZone,
-                    default),
                 kind,
                 default);
         }
@@ -10747,12 +10184,12 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                publishingUserName is null && publishingPassword is null && publishingPasswordHash is null && publishingPasswordHashSalt is null ? default : new UserProperties(
+                publishingUserName is null && publishingPassword is null && publishingPasswordHash is null && publishingPasswordHashSalt is null && scmUri is null ? default : new UserProperties(
                     publishingUserName,
                     publishingPassword,
                     publishingPasswordHash,
                     publishingPasswordHashSalt,
-                    default,
+                    scmUri,
                     default),
                 kind,
                 default);
@@ -10793,60 +10230,6 @@ namespace Azure.ResourceManager.AppService.Models
                 resourceType,
                 systemData,
                 token is null && tokenSecret is null && refreshToken is null && expireOn is null ? default : new SourceControlProperties(token, tokenSecret, refreshToken, expireOn, default),
-                kind,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AppServiceBillingMeter"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="meterId">
-        /// Meter GUID onboarded in Commerce
-        ///             Serialized Name: BillingMeter.properties.meterId
-        /// </param>
-        /// <param name="billingLocation">
-        /// Azure Location of billable resource
-        ///             Serialized Name: BillingMeter.properties.billingLocation
-        /// </param>
-        /// <param name="shortName">
-        /// Short Name from App Service Azure pricing Page
-        ///             Serialized Name: BillingMeter.properties.shortName
-        /// </param>
-        /// <param name="friendlyName">
-        /// Friendly name of the meter
-        ///             Serialized Name: BillingMeter.properties.friendlyName
-        /// </param>
-        /// <param name="osType">
-        /// App Service OS type meter used for
-        ///             Serialized Name: BillingMeter.properties.osType
-        /// </param>
-        /// <param name="multiplier">
-        /// Meter Multiplier
-        ///             Serialized Name: BillingMeter.properties.multiplier
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: ProxyOnlyResource.kind
-        /// </param>
-        /// <returns> A new <see cref="Models.AppServiceBillingMeter"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AppServiceBillingMeter AppServiceBillingMeter(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Guid? meterId = default, AzureLocation? billingLocation = default, string shortName = default, string friendlyName = default, string osType = default, double? multiplier = default, string kind = default)
-        {
-            return new AppServiceBillingMeter(
-                id,
-                name,
-                resourceType,
-                systemData,
-                meterId is null && shortName is null && friendlyName is null && osType is null && multiplier is null ? default : new BillingMeterProperties(
-                    meterId,
-                    default,
-                    shortName,
-                    friendlyName,
-                    osType,
-                    multiplier,
-                    default),
                 kind,
                 default);
         }
@@ -11080,11 +10463,11 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && provisioningDetails is null && dnsSuffix is null && keyVaultReferenceIdentity is null ? default : new CustomDnsSuffixConfigurationProperties(
+                provisioningState is null && provisioningDetails is null && dnsSuffix is null && certificateUri is null && keyVaultReferenceIdentity is null ? default : new CustomDnsSuffixConfigurationProperties(
                     provisioningState,
                     provisioningDetails,
                     dnsSuffix,
-                    default,
+                    certificateUri,
                     keyVaultReferenceIdentity,
                     default),
                 kind,
@@ -11387,219 +10770,6 @@ namespace Azure.ResourceManager.AppService.Models
                 resourceType,
                 systemData,
                 default,
-                kind,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PremierAddOnOffer"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="sku">
-        /// Premier add on SKU.
-        ///             Serialized Name: PremierAddOnOffer.properties.sku
-        /// </param>
-        /// <param name="product">
-        /// Premier add on offer Product.
-        ///             Serialized Name: PremierAddOnOffer.properties.product
-        /// </param>
-        /// <param name="vendor">
-        /// Premier add on offer Vendor.
-        ///             Serialized Name: PremierAddOnOffer.properties.vendor
-        /// </param>
-        /// <param name="isPromoCodeRequired">
-        /// &lt;code&gt;true&lt;/code&gt; if promotion code is required; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        ///             Serialized Name: PremierAddOnOffer.properties.promoCodeRequired
-        /// </param>
-        /// <param name="quota">
-        /// Premier add on offer Quota.
-        ///             Serialized Name: PremierAddOnOffer.properties.quota
-        /// </param>
-        /// <param name="webHostingPlanRestrictions">
-        /// App Service plans this offer is restricted to.
-        ///             Serialized Name: PremierAddOnOffer.properties.webHostingPlanRestrictions
-        /// </param>
-        /// <param name="privacyPolicyUri">
-        /// Privacy policy URL.
-        ///             Serialized Name: PremierAddOnOffer.properties.privacyPolicyUrl
-        /// </param>
-        /// <param name="legalTermsUri">
-        /// Legal terms URL.
-        ///             Serialized Name: PremierAddOnOffer.properties.legalTermsUrl
-        /// </param>
-        /// <param name="marketplacePublisher">
-        /// Marketplace publisher.
-        ///             Serialized Name: PremierAddOnOffer.properties.marketplacePublisher
-        /// </param>
-        /// <param name="marketplaceOffer">
-        /// Marketplace offer.
-        ///             Serialized Name: PremierAddOnOffer.properties.marketplaceOffer
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: ProxyOnlyResource.kind
-        /// </param>
-        /// <returns> A new <see cref="Models.PremierAddOnOffer"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PremierAddOnOffer PremierAddOnOffer(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string sku = default, string product = default, string vendor = default, bool? isPromoCodeRequired = default, int? quota = default, AppServicePlanRestriction? webHostingPlanRestrictions = default, Uri privacyPolicyUri = default, Uri legalTermsUri = default, string marketplacePublisher = default, string marketplaceOffer = default, string kind = default)
-        {
-            return new PremierAddOnOffer(
-                id,
-                name,
-                resourceType,
-                systemData,
-                sku is null && product is null && vendor is null && isPromoCodeRequired is null && quota is null && webHostingPlanRestrictions is null && marketplacePublisher is null && marketplaceOffer is null ? default : new PremierAddOnOfferProperties(
-                    sku,
-                    product,
-                    vendor,
-                    isPromoCodeRequired,
-                    quota,
-                    webHostingPlanRestrictions,
-                    default,
-                    default,
-                    marketplacePublisher,
-                    marketplaceOffer,
-                    default),
-                kind,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AppServiceRecommendation"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="createdOn">
-        /// Timestamp when this instance was created.
-        ///             Serialized Name: Recommendation.properties.creationTime
-        /// </param>
-        /// <param name="recommendationId">
-        /// A GUID value that each recommendation object is associated with.
-        ///             Serialized Name: Recommendation.properties.recommendationId
-        /// </param>
-        /// <param name="resourceId">
-        /// Full ARM resource ID string that this recommendation object is associated with.
-        ///             Serialized Name: Recommendation.properties.resourceId
-        /// </param>
-        /// <param name="resourceScope">
-        /// Name of a resource type this recommendation applies, e.g. Subscription, ServerFarm, Site.
-        ///             Serialized Name: Recommendation.properties.resourceScope
-        /// </param>
-        /// <param name="ruleName">
-        /// Unique name of the rule.
-        ///             Serialized Name: Recommendation.properties.ruleName
-        /// </param>
-        /// <param name="displayName">
-        /// UI friendly name of the rule (may not be unique).
-        ///             Serialized Name: Recommendation.properties.displayName
-        /// </param>
-        /// <param name="message">
-        /// Recommendation text.
-        ///             Serialized Name: Recommendation.properties.message
-        /// </param>
-        /// <param name="level">
-        /// Level indicating how critical this recommendation can impact.
-        ///             Serialized Name: Recommendation.properties.level
-        /// </param>
-        /// <param name="channels">
-        /// List of channels that this recommendation can apply.
-        ///             Serialized Name: Recommendation.properties.channels
-        /// </param>
-        /// <param name="categoryTags">
-        /// The list of category tags that this recommendation belongs to.
-        ///             Serialized Name: Recommendation.properties.categoryTags
-        /// </param>
-        /// <param name="actionName">
-        /// Name of action recommended by this object.
-        ///             Serialized Name: Recommendation.properties.actionName
-        /// </param>
-        /// <param name="enabled">
-        /// True if this recommendation is still valid (i.e. "actionable"). False if it is invalid.
-        ///             Serialized Name: Recommendation.properties.enabled
-        /// </param>
-        /// <param name="states">
-        /// The list of states of this recommendation. If it's null then it should be considered "Active".
-        ///             Serialized Name: Recommendation.properties.states
-        /// </param>
-        /// <param name="startOn">
-        /// The beginning time in UTC of a range that the recommendation refers to.
-        ///             Serialized Name: Recommendation.properties.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// The end time in UTC of a range that the recommendation refers to.
-        ///             Serialized Name: Recommendation.properties.endTime
-        /// </param>
-        /// <param name="nextNotificationOn">
-        /// When to notify this recommendation next in UTC. Null means that this will never be notified anymore.
-        ///             Serialized Name: Recommendation.properties.nextNotificationTime
-        /// </param>
-        /// <param name="notificationExpirationOn">
-        /// Date and time in UTC when this notification expires.
-        ///             Serialized Name: Recommendation.properties.notificationExpirationTime
-        /// </param>
-        /// <param name="notifiedOn">
-        /// Last timestamp in UTC this instance was actually notified. Null means that this recommendation hasn't been notified yet.
-        ///             Serialized Name: Recommendation.properties.notifiedTime
-        /// </param>
-        /// <param name="score">
-        /// A metric value measured by the rule.
-        ///             Serialized Name: Recommendation.properties.score
-        /// </param>
-        /// <param name="isDynamic">
-        /// True if this is associated with a dynamically added rule
-        ///             Serialized Name: Recommendation.properties.isDynamic
-        /// </param>
-        /// <param name="extensionName">
-        /// Extension name of the portal if exists.
-        ///             Serialized Name: Recommendation.properties.extensionName
-        /// </param>
-        /// <param name="bladeName">
-        /// Deep link to a blade on the portal.
-        ///             Serialized Name: Recommendation.properties.bladeName
-        /// </param>
-        /// <param name="forwardLink">
-        /// Forward link to an external document associated with the rule.
-        ///             Serialized Name: Recommendation.properties.forwardLink
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: ProxyOnlyResource.kind
-        /// </param>
-        /// <returns> A new <see cref="Models.AppServiceRecommendation"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AppServiceRecommendation AppServiceRecommendation(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? createdOn = default, Guid? recommendationId = default, ResourceIdentifier resourceId = default, ResourceScopeType? resourceScope = default, string ruleName = default, string displayName = default, string message = default, NotificationLevel? level = default, RecommendationChannel? channels = default, IEnumerable<string> categoryTags = default, string actionName = default, int? enabled = default, IEnumerable<string> states = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, DateTimeOffset? nextNotificationOn = default, DateTimeOffset? notificationExpirationOn = default, DateTimeOffset? notifiedOn = default, double? score = default, bool? isDynamic = default, string extensionName = default, string bladeName = default, string forwardLink = default, string kind = default)
-        {
-            return new AppServiceRecommendation(
-                id,
-                name,
-                resourceType,
-                systemData,
-                createdOn is null && resourceId is null && resourceScope is null && ruleName is null && displayName is null && message is null && level is null && channels is null && categoryTags is null && actionName is null && enabled is null && states is null && startOn is null && endOn is null && nextNotificationOn is null && notificationExpirationOn is null && notifiedOn is null && score is null && isDynamic is null && extensionName is null && bladeName is null && forwardLink is null ? default : new RecommendationProperties(
-                    createdOn,
-                    default,
-                    resourceId,
-                    resourceScope,
-                    ruleName,
-                    displayName,
-                    message,
-                    level,
-                    channels,
-                    (categoryTags ?? new ChangeTrackingList<string>()).ToList(),
-                    actionName,
-                    enabled,
-                    (states ?? new ChangeTrackingList<string>()).ToList(),
-                    startOn,
-                    endOn,
-                    nextNotificationOn,
-                    notificationExpirationOn,
-                    notifiedOn,
-                    score,
-                    isDynamic,
-                    extensionName,
-                    bladeName,
-                    forwardLink,
-                    default),
                 kind,
                 default);
         }
@@ -12099,7 +11269,7 @@ namespace Azure.ResourceManager.AppService.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                state is null && hostNames is null && repositorySiteName is null && usageState is null && isEnabled is null && enabledHostNames is null && availabilityState is null && hostNameSslStates is null && appServicePlanId is null && isReserved is null && isXenon is null && isHyperV is null && lastModifiedTimeUtc is null && dnsConfiguration is null && outboundVnetRouting is null && siteConfig is null && functionAppConfig is null && daprConfig is null && workloadProfileName is null && resourceConfig is null && trafficManagerHostNames is null && isScmSiteAlsoStopped is null && targetSwapSlot is null && hostingEnvironmentProfile is null && isClientAffinityEnabled is null && isClientAffinityPartitioningEnabled is null && isClientAffinityProxyEnabled is null && isClientCertEnabled is null && clientCertMode is null && clientCertExclusionPaths is null && ipMode is null && isEndToEndEncryptionEnabled is null && isSshEnabled is null && isHostNameDisabled is null && customDomainVerificationId is null && outboundIPAddresses is null && possibleOutboundIPAddresses is null && containerSize is null && dailyMemoryTimeQuota is null && suspendOn is null && maxNumberOfWorkers is null && cloningInfo is null && resourceGroup is null && isDefaultContainer is null && defaultHostName is null && slotSwapStatus is null && isHttpsOnly is null && redundancyMode is null && publicNetworkAccess is null && isStorageAccountRequired is null && keyVaultReferenceIdentity is null && autoGeneratedDomainNameLabelScope is null && virtualNetworkSubnetId is null && managedEnvironmentId is null && sku is null ? default : new SiteProperties(
+                state is null && hostNames is null && repositorySiteName is null && usageState is null && isEnabled is null && enabledHostNames is null && availabilityState is null && hostNameSslStates is null && appServicePlanId is null && isReserved is null && isXenon is null && isHyperV is null && lastModifiedTimeUtc is null && dnsConfiguration is null && outboundVnetRouting is null && siteConfig is null && functionAppConfig is null && daprConfig is null && workloadProfileName is null && resourceConfig is null && trafficManagerHostNames is null && isScmSiteAlsoStopped is null && targetSwapSlot is null && hostingEnvironmentProfile is null && isClientAffinityEnabled is null && isClientAffinityPartitioningEnabled is null && isClientAffinityProxyEnabled is null && isClientCertEnabled is null && clientCertMode is null && clientCertExclusionPaths is null && ipMode is null && isEndToEndEncryptionEnabled is null && isSshEnabled is null && isHostNameDisabled is null && customDomainVerificationId is null && outboundIPAddresses is null && possibleOutboundIPAddresses is null && containerSize is null && dailyMemoryTimeQuota is null && suspendOn is null && maxNumberOfWorkers is null && cloningInfo is null && resourceGroup is null && isDefaultContainer is null && defaultHostName is null && slotSwapStatus is null && isHttpsOnly is null && redundancyMode is null && inProgressOperationId is null && publicNetworkAccess is null && isStorageAccountRequired is null && keyVaultReferenceIdentity is null && autoGeneratedDomainNameLabelScope is null && virtualNetworkSubnetId is null && managedEnvironmentId is null && sku is null ? default : new SiteProperties(
                     state,
                     (hostNames ?? new ChangeTrackingList<string>()).ToList(),
                     repositorySiteName,
@@ -12150,7 +11320,7 @@ namespace Azure.ResourceManager.AppService.Models
                     slotSwapStatus,
                     isHttpsOnly,
                     redundancyMode,
-                    default,
+                    inProgressOperationId,
                     publicNetworkAccess,
                     isStorageAccountRequired,
                     keyVaultReferenceIdentity,
@@ -12268,9 +11438,9 @@ namespace Azure.ResourceManager.AppService.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                defaultHostname is null && branch is null && customDomains is null && repositoryToken is null && buildProperties is null && privateEndpointConnections is null && stagingEnvironmentPolicy is null && allowConfigFileUpdates is null && templateProperties is null && contentDistributionEndpoint is null && keyVaultReferenceIdentity is null && userProvidedFunctionApps is null && linkedBackends is null && provider is null && enterpriseGradeCdnStatus is null && publicNetworkAccess is null && databaseConnections is null ? default : new StaticSiteProperties(
+                defaultHostname is null && repositoryUri is null && branch is null && customDomains is null && repositoryToken is null && buildProperties is null && privateEndpointConnections is null && stagingEnvironmentPolicy is null && allowConfigFileUpdates is null && templateProperties is null && contentDistributionEndpoint is null && keyVaultReferenceIdentity is null && userProvidedFunctionApps is null && linkedBackends is null && provider is null && enterpriseGradeCdnStatus is null && publicNetworkAccess is null && databaseConnections is null ? default : new StaticSiteProperties(
                     defaultHostname,
-                    default,
+                    repositoryUri,
                     branch,
                     (customDomains ?? new ChangeTrackingList<string>()).ToList(),
                     repositoryToken,
@@ -12824,11 +11994,11 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                recommendationName is null && displayName is null && message is null && description is null && actionName is null && level is null && channels is null && categoryTags is null && isDynamic is null && extensionName is null && bladeName is null && forwardLink is null ? default : new RecommendationRuleProperties(
+                recommendationName is null && displayName is null && message is null && recommendationId is null && description is null && actionName is null && level is null && channels is null && categoryTags is null && isDynamic is null && extensionName is null && bladeName is null && forwardLink is null ? default : new RecommendationRuleProperties(
                     recommendationName,
                     displayName,
                     message,
-                    default,
+                    recommendationId,
                     description,
                     actionName,
                     level,
@@ -12838,76 +12008,6 @@ namespace Azure.ResourceManager.AppService.Models
                     extensionName,
                     bladeName,
                     forwardLink,
-                    default),
-                kind,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KubeEnvironmentPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState">
-        /// Provisioning state of the Kubernetes Environment.
-        ///             Serialized Name: KubeEnvironmentPatchResource.properties.provisioningState
-        /// </param>
-        /// <param name="deploymentErrors">
-        /// Any errors that occurred during deployment or deployment validation
-        ///             Serialized Name: KubeEnvironmentPatchResource.properties.deploymentErrors
-        /// </param>
-        /// <param name="isInternalLoadBalancerEnabled">
-        /// Only visible within Vnet/Subnet
-        ///             Serialized Name: KubeEnvironmentPatchResource.properties.internalLoadBalancerEnabled
-        /// </param>
-        /// <param name="defaultDomain">
-        /// Default Domain Name for the cluster
-        ///             Serialized Name: KubeEnvironmentPatchResource.properties.defaultDomain
-        /// </param>
-        /// <param name="staticIP">
-        /// Static IP of the KubeEnvironment
-        ///             Serialized Name: KubeEnvironmentPatchResource.properties.staticIp
-        /// </param>
-        /// <param name="arcConfiguration">
-        /// Cluster configuration which determines the ARC cluster
-        ///             components types. Eg: Choosing between BuildService kind,
-        ///             FrontEnd Service ArtifactsStorageType etc.
-        ///             Serialized Name: KubeEnvironmentPatchResource.properties.arcConfiguration
-        /// </param>
-        /// <param name="appLogsConfiguration">
-        /// Cluster configuration which enables the log daemon to export
-        ///             app logs to a destination. Currently only "log-analytics" is
-        ///             supported
-        ///             Serialized Name: KubeEnvironmentPatchResource.properties.appLogsConfiguration
-        /// </param>
-        /// <param name="containerAppsConfiguration">
-        /// Cluster configuration for Container Apps Environments to configure Dapr Instrumentation Key and VNET Configuration
-        ///             Serialized Name: KubeEnvironmentPatchResource.properties.containerAppsConfiguration
-        /// </param>
-        /// <param name="aksResourceId"> Serialized Name: KubeEnvironmentPatchResource.properties.aksResourceID. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: ProxyOnlyResource.kind
-        /// </param>
-        /// <returns> A new <see cref="Models.KubeEnvironmentPatch"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static KubeEnvironmentPatch KubeEnvironmentPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, KubeEnvironmentProvisioningState? provisioningState = default, string deploymentErrors = default, bool? isInternalLoadBalancerEnabled = default, string defaultDomain = default, string staticIP = default, ArcConfiguration arcConfiguration = default, AppLogsConfiguration appLogsConfiguration = default, ContainerAppsConfiguration containerAppsConfiguration = default, ResourceIdentifier aksResourceId = default, string kind = default)
-        {
-            return new KubeEnvironmentPatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState is null && deploymentErrors is null && isInternalLoadBalancerEnabled is null && defaultDomain is null && staticIP is null && arcConfiguration is null && appLogsConfiguration is null && containerAppsConfiguration is null ? default : new KubeEnvironmentPatchResourceProperties(
-                    provisioningState,
-                    deploymentErrors,
-                    isInternalLoadBalancerEnabled,
-                    defaultDomain,
-                    staticIP,
-                    arcConfiguration,
-                    appLogsConfiguration,
-                    containerAppsConfiguration,
-                    default,
                     default),
                 kind,
                 default);
@@ -13110,10 +12210,10 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                serviceBusNamespace is null && relayName is null && hostname is null && port is null && sendKeyName is null && sendKeyValue is null && serviceBusSuffix is null ? default : new HybridConnectionProperties(
+                serviceBusNamespace is null && relayName is null && relayArmId is null && hostname is null && port is null && sendKeyName is null && sendKeyValue is null && serviceBusSuffix is null ? default : new HybridConnectionProperties(
                     serviceBusNamespace,
                     relayName,
-                    default,
+                    relayArmId,
                     hostname,
                     port,
                     sendKeyName,
@@ -13280,7 +12380,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                vnetName is null ? default : new VnetGatewayProperties(vnetName, default, default),
+                vnetName is null && vpnPackageUri is null ? default : new VnetGatewayProperties(vnetName, vpnPackageUri, default),
                 kind,
                 default);
         }
@@ -13490,7 +12590,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                state is null && hostNames is null && repositorySiteName is null && usageState is null && isEnabled is null && enabledHostNames is null && availabilityState is null && hostNameSslStates is null && serverFarmId is null && isReserved is null && isXenon is null && isHyperV is null && lastModifiedOn is null && dnsConfiguration is null && siteConfig is null && trafficManagerHostNames is null && isScmSiteAlsoStopped is null && targetSwapSlot is null && hostingEnvironmentProfile is null && isClientAffinityEnabled is null && isClientAffinityProxyEnabled is null && isClientCertEnabled is null && clientCertMode is null && clientCertExclusionPaths is null && isHostNameDisabled is null && customDomainVerificationId is null && outboundIPAddresses is null && possibleOutboundIPAddresses is null && containerSize is null && dailyMemoryTimeQuota is null && suspendOn is null && maxNumberOfWorkers is null && cloningInfo is null && resourceGroup is null && isDefaultContainer is null && defaultHostName is null && slotSwapStatus is null && isHttpsOnly is null && redundancyMode is null && publicNetworkAccess is null && isStorageAccountRequired is null && keyVaultReferenceIdentity is null && virtualNetworkSubnetId is null ? default : new SitePatchResourceProperties(
+                state is null && hostNames is null && repositorySiteName is null && usageState is null && isEnabled is null && enabledHostNames is null && availabilityState is null && hostNameSslStates is null && serverFarmId is null && isReserved is null && isXenon is null && isHyperV is null && lastModifiedOn is null && dnsConfiguration is null && siteConfig is null && trafficManagerHostNames is null && isScmSiteAlsoStopped is null && targetSwapSlot is null && hostingEnvironmentProfile is null && isClientAffinityEnabled is null && isClientAffinityProxyEnabled is null && isClientCertEnabled is null && clientCertMode is null && clientCertExclusionPaths is null && isHostNameDisabled is null && customDomainVerificationId is null && outboundIPAddresses is null && possibleOutboundIPAddresses is null && containerSize is null && dailyMemoryTimeQuota is null && suspendOn is null && maxNumberOfWorkers is null && cloningInfo is null && resourceGroup is null && isDefaultContainer is null && defaultHostName is null && slotSwapStatus is null && isHttpsOnly is null && redundancyMode is null && inProgressOperationId is null && publicNetworkAccess is null && isStorageAccountRequired is null && keyVaultReferenceIdentity is null && virtualNetworkSubnetId is null ? default : new SitePatchResourceProperties(
                     state,
                     (hostNames ?? new ChangeTrackingList<string>()).ToList(),
                     repositorySiteName,
@@ -13532,7 +12632,7 @@ namespace Azure.ResourceManager.AppService.Models
                     slotSwapStatus,
                     isHttpsOnly,
                     redundancyMode,
-                    default,
+                    inProgressOperationId,
                     publicNetworkAccess,
                     isStorageAccountRequired,
                     keyVaultReferenceIdentity,
@@ -13622,55 +12722,6 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.WebAppBackupInfo"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="backupName">
-        /// Name of the backup.
-        ///             Serialized Name: BackupRequest.properties.backupName
-        /// </param>
-        /// <param name="isEnabled">
-        /// True if the backup schedule is enabled (must be included in that case), false if the backup schedule should be disabled.
-        ///             Serialized Name: BackupRequest.properties.enabled
-        /// </param>
-        /// <param name="storageAccountUri">
-        /// SAS URL to the container.
-        ///             Serialized Name: BackupRequest.properties.storageAccountUrl
-        /// </param>
-        /// <param name="backupSchedule">
-        /// Schedule for the backup if it is executed periodically.
-        ///             Serialized Name: BackupRequest.properties.backupSchedule
-        /// </param>
-        /// <param name="databases">
-        /// Databases included in the backup.
-        ///             Serialized Name: BackupRequest.properties.databases
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: ProxyOnlyResource.kind
-        /// </param>
-        /// <returns> A new <see cref="Models.WebAppBackupInfo"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static WebAppBackupInfo WebAppBackupInfo(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string backupName = default, bool? isEnabled = default, Uri storageAccountUri = default, WebAppBackupSchedule backupSchedule = default, IEnumerable<AppServiceDatabaseBackupSetting> databases = default, string kind = default)
-        {
-            return new WebAppBackupInfo(
-                id,
-                name,
-                resourceType,
-                systemData,
-                backupName is null && isEnabled is null && backupSchedule is null && databases is null ? default : new BackupRequestProperties(
-                    backupName,
-                    isEnabled,
-                    default,
-                    backupSchedule,
-                    (databases ?? new ChangeTrackingList<AppServiceDatabaseBackupSetting>()).ToList(),
-                    default),
-                kind,
-                default);
-        }
-
         /// <summary> Initializes a new instance of <see cref="AppService.WebAppBackupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -13745,9 +12796,9 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                backupId is null && blobName is null && backupName is null && status is null && sizeInBytes is null && createdOn is null && log is null && databases is null && isScheduled is null && lastRestoreOn is null && finishedOn is null && correlationId is null && websiteSizeInBytes is null ? default : new BackupItemProperties(
+                backupId is null && storageAccountUri is null && blobName is null && backupName is null && status is null && sizeInBytes is null && createdOn is null && log is null && databases is null && isScheduled is null && lastRestoreOn is null && finishedOn is null && correlationId is null && websiteSizeInBytes is null ? default : new BackupItemProperties(
                     backupId,
-                    default,
+                    storageAccountUri,
                     blobName,
                     backupName,
                     status,
@@ -13760,85 +12811,6 @@ namespace Azure.ResourceManager.AppService.Models
                     finishedOn,
                     correlationId,
                     websiteSizeInBytes,
-                    default),
-                kind,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RestoreRequestInfo"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="storageAccountUri">
-        /// SAS URL to the container.
-        ///             Serialized Name: RestoreRequest.properties.storageAccountUrl
-        /// </param>
-        /// <param name="blobName">
-        /// Name of a blob which contains the backup.
-        ///             Serialized Name: RestoreRequest.properties.blobName
-        /// </param>
-        /// <param name="canOverwrite">
-        /// &lt;code&gt;true&lt;/code&gt; if the restore operation can overwrite target app; otherwise, &lt;code&gt;false&lt;/code&gt;. &lt;code&gt;true&lt;/code&gt; is needed if trying to restore over an existing app.
-        ///             Serialized Name: RestoreRequest.properties.overwrite
-        /// </param>
-        /// <param name="siteName">
-        /// Name of an app.
-        ///             Serialized Name: RestoreRequest.properties.siteName
-        /// </param>
-        /// <param name="databases">
-        /// Collection of databases which should be restored. This list has to match the list of databases included in the backup.
-        ///             Serialized Name: RestoreRequest.properties.databases
-        /// </param>
-        /// <param name="ignoreConflictingHostNames">
-        /// Changes a logic when restoring an app with custom domains. &lt;code&gt;true&lt;/code&gt; to remove custom domains automatically. If &lt;code&gt;false&lt;/code&gt;, custom domains are added to \nthe app's object when it is being restored, but that might fail due to conflicts during the operation.
-        ///             Serialized Name: RestoreRequest.properties.ignoreConflictingHostNames
-        /// </param>
-        /// <param name="ignoreDatabases">
-        /// Ignore the databases and only restore the site content
-        ///             Serialized Name: RestoreRequest.properties.ignoreDatabases
-        /// </param>
-        /// <param name="appServicePlan">
-        /// Specify app service plan that will own restored site.
-        ///             Serialized Name: RestoreRequest.properties.appServicePlan
-        /// </param>
-        /// <param name="operationType">
-        /// Operation type.
-        ///             Serialized Name: RestoreRequest.properties.operationType
-        /// </param>
-        /// <param name="adjustConnectionStrings">
-        /// &lt;code&gt;true&lt;/code&gt; if SiteConfig.ConnectionStrings should be set in new app; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        ///             Serialized Name: RestoreRequest.properties.adjustConnectionStrings
-        /// </param>
-        /// <param name="hostingEnvironment">
-        /// App Service Environment name, if needed (only when restoring an app to an App Service Environment).
-        ///             Serialized Name: RestoreRequest.properties.hostingEnvironment
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: ProxyOnlyResource.kind
-        /// </param>
-        /// <returns> A new <see cref="Models.RestoreRequestInfo"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RestoreRequestInfo RestoreRequestInfo(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Uri storageAccountUri = default, string blobName = default, bool? canOverwrite = default, string siteName = default, IEnumerable<AppServiceDatabaseBackupSetting> databases = default, bool? ignoreConflictingHostNames = default, bool? ignoreDatabases = default, string appServicePlan = default, BackupRestoreOperationType? operationType = default, bool? adjustConnectionStrings = default, string hostingEnvironment = default, string kind = default)
-        {
-            return new RestoreRequestInfo(
-                id,
-                name,
-                resourceType,
-                systemData,
-                blobName is null && canOverwrite is null && siteName is null && databases is null && ignoreConflictingHostNames is null && ignoreDatabases is null && appServicePlan is null && operationType is null && adjustConnectionStrings is null && hostingEnvironment is null ? default : new RestoreRequestProperties(
-                    default,
-                    blobName,
-                    canOverwrite.GetValueOrDefault(),
-                    siteName,
-                    (databases ?? new ChangeTrackingList<AppServiceDatabaseBackupSetting>()).ToList(),
-                    ignoreConflictingHostNames,
-                    ignoreDatabases,
-                    appServicePlan,
-                    operationType,
-                    adjustConnectionStrings,
-                    hostingEnvironment,
                     default),
                 kind,
                 default);
@@ -14048,13 +13020,13 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                status is null && detailedStatus is null && runCommand is null && webJobType is null && error is null && isUsingSdk is null && settings is null ? default : new ContinuousWebJobProperties(
+                status is null && detailedStatus is null && logUri is null && runCommand is null && uri is null && extraInfoUri is null && webJobType is null && error is null && isUsingSdk is null && settings is null ? default : new ContinuousWebJobProperties(
                     status,
                     detailedStatus,
-                    default,
+                    logUri,
                     runCommand,
-                    default,
-                    default,
+                    uri,
+                    extraInfoUri,
                     webJobType,
                     error,
                     isUsingSdk,
@@ -14678,13 +13650,13 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                entityName is null && entityConnectionString is null && resourceConnectionString is null && hostname is null && port is null ? default : new RelayServiceConnectionEntityProperties(
+                entityName is null && entityConnectionString is null && resourceConnectionString is null && hostname is null && port is null && biztalkUri is null ? default : new RelayServiceConnectionEntityProperties(
                     entityName,
                     entityConnectionString,
                     resourceConnectionString,
                     hostname,
                     port,
-                    default,
+                    biztalkUri,
                     default),
                 kind,
                 default);
@@ -14733,11 +13705,11 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                state is null && healthCheckUrlString is null && containers is null && physicalZone is null ? default : new WebSiteInstanceStatusProperties(
+                state is null && statusUri is null && detectorUri is null && consoleUri is null && healthCheckUrlString is null && containers is null && physicalZone is null ? default : new WebSiteInstanceStatusProperties(
                     state,
-                    default,
-                    default,
-                    default,
+                    statusUri,
+                    detectorUri,
+                    consoleUri,
                     healthCheckUrlString,
                     containers ?? new ChangeTrackingDictionary<string, ContainerInfo>(),
                     physicalZone,
@@ -15449,18 +14421,18 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                extensionId is null && title is null && extensionType is null && summary is null && description is null && version is null && authors is null && installerCommandLineParams is null && publishedOn is null && downloadCount is null && localIsLatestVersion is null && localPath is null && installedOn is null && provisioningState is null && comment is null ? default : new SiteExtensionInfoProperties(
+                extensionId is null && title is null && extensionType is null && summary is null && description is null && version is null && extensionUri is null && projectUri is null && iconUri is null && licenseUri is null && feedUri is null && authors is null && installerCommandLineParams is null && publishedOn is null && downloadCount is null && localIsLatestVersion is null && localPath is null && installedOn is null && provisioningState is null && comment is null ? default : new SiteExtensionInfoProperties(
                     extensionId,
                     title,
                     extensionType,
                     summary,
                     description,
                     version,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                    extensionUri,
+                    projectUri,
+                    iconUri,
+                    licenseUri,
+                    feedUri,
                     (authors ?? new ChangeTrackingList<string>()).ToList(),
                     installerCommandLineParams,
                     publishedOn,
@@ -15521,8 +14493,8 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                branch is null && isManualIntegration is null && isGitHubAction is null && isDeploymentRollbackEnabled is null && isMercurial is null && gitHubActionConfiguration is null ? default : new SiteSourceControlProperties(
-                    default,
+                repoUri is null && branch is null && isManualIntegration is null && isGitHubAction is null && isDeploymentRollbackEnabled is null && isMercurial is null && gitHubActionConfiguration is null ? default : new SiteSourceControlProperties(
+                    repoUri,
                     branch,
                     isManualIntegration,
                     isGitHubAction,
@@ -15600,13 +14572,13 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                latestRun is null && runCommand is null && webJobType is null && error is null && isUsingSdk is null && publicNetworkAccess is null && isStorageAccountRequired is null && settings is null ? default : new TriggeredWebJobProperties(
+                latestRun is null && historyUri is null && schedulerLogsUri is null && runCommand is null && uri is null && extraInfoUri is null && webJobType is null && error is null && isUsingSdk is null && publicNetworkAccess is null && isStorageAccountRequired is null && settings is null ? default : new TriggeredWebJobProperties(
                     latestRun,
-                    default,
-                    default,
+                    historyUri,
+                    schedulerLogsUri,
                     runCommand,
-                    default,
-                    default,
+                    uri,
+                    extraInfoUri,
                     webJobType,
                     error,
                     isUsingSdk,
@@ -15691,128 +14663,14 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                runCommand is null && webJobType is null && error is null && isUsingSdk is null && settings is null ? default : new WebJobProperties(
+                runCommand is null && uri is null && extraInfoUri is null && webJobType is null && error is null && isUsingSdk is null && settings is null ? default : new WebJobProperties(
                     runCommand,
-                    default,
-                    default,
+                    uri,
+                    extraInfoUri,
                     webJobType,
                     error,
                     isUsingSdk,
                     settings ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                    default),
-                kind,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.StaticSitePatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="defaultHostname">
-        /// The default autogenerated hostname for the static site.
-        ///             Serialized Name: StaticSitePatchResource.properties.defaultHostname
-        /// </param>
-        /// <param name="repositoryUri">
-        /// URL for the repository of the static site.
-        ///             Serialized Name: StaticSitePatchResource.properties.repositoryUrl
-        /// </param>
-        /// <param name="branch">
-        /// The target branch in the repository.
-        ///             Serialized Name: StaticSitePatchResource.properties.branch
-        /// </param>
-        /// <param name="customDomains">
-        /// The custom domains associated with this static site.
-        ///             Serialized Name: StaticSitePatchResource.properties.customDomains
-        /// </param>
-        /// <param name="repositoryToken">
-        /// A user's github repository token. This is used to setup the Github Actions workflow file and API secrets.
-        ///             Serialized Name: StaticSitePatchResource.properties.repositoryToken
-        /// </param>
-        /// <param name="buildProperties">
-        /// Build properties to configure on the repository.
-        ///             Serialized Name: StaticSitePatchResource.properties.buildProperties
-        /// </param>
-        /// <param name="privateEndpointConnections">
-        /// Private endpoint connections
-        ///             Serialized Name: StaticSitePatchResource.properties.privateEndpointConnections
-        /// </param>
-        /// <param name="stagingEnvironmentPolicy">
-        /// State indicating whether staging environments are allowed or not allowed for a static web app.
-        ///             Serialized Name: StaticSitePatchResource.properties.stagingEnvironmentPolicy
-        /// </param>
-        /// <param name="allowConfigFileUpdates">
-        /// &lt;code&gt;false&lt;/code&gt; if config file is locked for this static web app; otherwise, &lt;code&gt;true&lt;/code&gt;.
-        ///             Serialized Name: StaticSitePatchResource.properties.allowConfigFileUpdates
-        /// </param>
-        /// <param name="templateProperties">
-        /// Template options for generating a new repository.
-        ///             Serialized Name: StaticSitePatchResource.properties.templateProperties
-        /// </param>
-        /// <param name="contentDistributionEndpoint">
-        /// The content distribution endpoint for the static site.
-        ///             Serialized Name: StaticSitePatchResource.properties.contentDistributionEndpoint
-        /// </param>
-        /// <param name="keyVaultReferenceIdentity">
-        /// Identity to use for Key Vault Reference authentication.
-        ///             Serialized Name: StaticSitePatchResource.properties.keyVaultReferenceIdentity
-        /// </param>
-        /// <param name="userProvidedFunctionApps">
-        /// User provided function apps registered with the static site
-        ///             Serialized Name: StaticSitePatchResource.properties.userProvidedFunctionApps
-        /// </param>
-        /// <param name="linkedBackends">
-        /// Backends linked to the static side
-        ///             Serialized Name: StaticSitePatchResource.properties.linkedBackends
-        /// </param>
-        /// <param name="provider">
-        /// The provider that submitted the last deployment to the primary environment of the static site.
-        ///             Serialized Name: StaticSitePatchResource.properties.provider
-        /// </param>
-        /// <param name="enterpriseGradeCdnStatus">
-        /// State indicating the status of the enterprise grade CDN serving traffic to the static web app.
-        ///             Serialized Name: StaticSitePatchResource.properties.enterpriseGradeCdnStatus
-        /// </param>
-        /// <param name="publicNetworkAccess">
-        /// State indicating whether public traffic are allowed or not for a static web app. Allowed Values: 'Enabled', 'Disabled' or an empty string.
-        ///             Serialized Name: StaticSitePatchResource.properties.publicNetworkAccess
-        /// </param>
-        /// <param name="databaseConnections">
-        /// Database connections for the static site
-        ///             Serialized Name: StaticSitePatchResource.properties.databaseConnections
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: ProxyOnlyResource.kind
-        /// </param>
-        /// <returns> A new <see cref="Models.StaticSitePatch"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static StaticSitePatch StaticSitePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string defaultHostname = default, Uri repositoryUri = default, string branch = default, IEnumerable<string> customDomains = default, string repositoryToken = default, StaticSiteBuildProperties buildProperties = default, IEnumerable<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections = default, StagingEnvironmentPolicy? stagingEnvironmentPolicy = default, bool? allowConfigFileUpdates = default, StaticSiteTemplate templateProperties = default, string contentDistributionEndpoint = default, string keyVaultReferenceIdentity = default, IEnumerable<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = default, IEnumerable<StaticSiteLinkedBackendInfo> linkedBackends = default, string provider = default, EnterpriseGradeCdnStatus? enterpriseGradeCdnStatus = default, string publicNetworkAccess = default, IEnumerable<StaticSiteDatabaseConnectionOverview> databaseConnections = default, string kind = default)
-        {
-            return new StaticSitePatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                defaultHostname is null && branch is null && customDomains is null && repositoryToken is null && buildProperties is null && privateEndpointConnections is null && stagingEnvironmentPolicy is null && allowConfigFileUpdates is null && templateProperties is null && contentDistributionEndpoint is null && keyVaultReferenceIdentity is null && userProvidedFunctionApps is null && linkedBackends is null && provider is null && enterpriseGradeCdnStatus is null && publicNetworkAccess is null && databaseConnections is null ? default : new StaticSiteProperties(
-                    defaultHostname,
-                    default,
-                    branch,
-                    (customDomains ?? new ChangeTrackingList<string>()).ToList(),
-                    repositoryToken,
-                    buildProperties,
-                    (privateEndpointConnections ?? new ChangeTrackingList<ResponseMessageEnvelopeRemotePrivateEndpointConnection>()).ToList(),
-                    stagingEnvironmentPolicy,
-                    allowConfigFileUpdates,
-                    templateProperties,
-                    contentDistributionEndpoint,
-                    keyVaultReferenceIdentity,
-                    (userProvidedFunctionApps ?? new ChangeTrackingList<StaticSiteUserProvidedFunctionAppData>()).ToList(),
-                    (linkedBackends ?? new ChangeTrackingList<StaticSiteLinkedBackendInfo>()).ToList(),
-                    provider,
-                    enterpriseGradeCdnStatus,
-                    publicNetworkAccess,
-                    (databaseConnections ?? new ChangeTrackingList<StaticSiteDatabaseConnectionOverview>()).ToList(),
                     default),
                 kind,
                 default);
@@ -15856,9 +14714,9 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                password is null && applicableEnvironmentsMode is null && environments is null && secretState is null ? default : new StaticSiteBasicAuthPropertyProperties(
+                password is null && secretUri is null && applicableEnvironmentsMode is null && environments is null && secretState is null ? default : new StaticSiteBasicAuthPropertyProperties(
                     password,
-                    default,
+                    secretUri,
                     applicableEnvironmentsMode,
                     (environments ?? new ChangeTrackingList<string>()).ToList(),
                     secretState,
@@ -15979,8 +14837,8 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                connectionIdentity is null && connectionString is null && region is null && configurationFiles is null ? default : new DatabaseConnectionProperties(
-                    default,
+                resourceId is null && connectionIdentity is null && connectionString is null && region is null && configurationFiles is null ? default : new DatabaseConnectionProperties(
+                    resourceId,
                     connectionIdentity,
                     connectionString,
                     region,
@@ -16024,87 +14882,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                region is null && createdOn is null && provisioningState is null ? default : new StaticSiteLinkedBackendARMResourceProperties(default, region, createdOn, provisioningState, default),
-                kind,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.StaticSiteZipDeployment"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="appZipUri">
-        /// URL for the zipped app content
-        ///             Serialized Name: StaticSiteZipDeploymentARMResource.properties.appZipUrl
-        /// </param>
-        /// <param name="apiZipUri">
-        /// URL for the zipped api content
-        ///             Serialized Name: StaticSiteZipDeploymentARMResource.properties.apiZipUrl
-        /// </param>
-        /// <param name="deploymentTitle">
-        /// A title to label the deployment
-        ///             Serialized Name: StaticSiteZipDeploymentARMResource.properties.deploymentTitle
-        /// </param>
-        /// <param name="provider">
-        /// The provider submitting this deployment
-        ///             Serialized Name: StaticSiteZipDeploymentARMResource.properties.provider
-        /// </param>
-        /// <param name="functionLanguage">
-        /// The language of the api content, if it exists
-        ///             Serialized Name: StaticSiteZipDeploymentARMResource.properties.functionLanguage
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: ProxyOnlyResource.kind
-        /// </param>
-        /// <returns> A new <see cref="Models.StaticSiteZipDeployment"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static StaticSiteZipDeployment StaticSiteZipDeployment(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Uri appZipUri = default, Uri apiZipUri = default, string deploymentTitle = default, string provider = default, string functionLanguage = default, string kind = default)
-        {
-            return new StaticSiteZipDeployment(
-                id,
-                name,
-                resourceType,
-                systemData,
-                deploymentTitle is null && provider is null && functionLanguage is null ? default : new StaticSiteZipDeploymentProperties(
-                    default,
-                    default,
-                    deploymentTitle,
-                    provider,
-                    functionLanguage,
-                    default),
-                kind,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.StaticSiteUserInvitationResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="expiresOn">
-        /// The expiration time of the invitation
-        ///             Serialized Name: StaticSiteUserInvitationResponseResource.properties.expiresOn
-        /// </param>
-        /// <param name="invitationUri">
-        /// The url for the invitation link
-        ///             Serialized Name: StaticSiteUserInvitationResponseResource.properties.invitationUrl
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: ProxyOnlyResource.kind
-        /// </param>
-        /// <returns> A new <see cref="Models.StaticSiteUserInvitationResult"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static StaticSiteUserInvitationResult StaticSiteUserInvitationResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? expiresOn = default, Uri invitationUri = default, string kind = default)
-        {
-            return new StaticSiteUserInvitationResult(
-                id,
-                name,
-                resourceType,
-                systemData,
-                expiresOn is null ? default : new StaticSiteUserInvitationResponseResourceProperties(expiresOn, default, default),
+                backendResourceId is null && region is null && createdOn is null && provisioningState is null ? default : new StaticSiteLinkedBackendARMResourceProperties(backendResourceId, region, createdOn, provisioningState, default),
                 kind,
                 default);
         }
@@ -16153,97 +14931,6 @@ namespace Azure.ResourceManager.AppService.Models
                     default),
                 kind,
                 default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AppServiceValidateContent"/>. </summary>
-        /// <param name="name">
-        /// Resource name to verify.
-        ///             Serialized Name: ValidateRequest.name
-        /// </param>
-        /// <param name="validateResourceType">
-        /// Resource type used for verification.
-        ///             Serialized Name: ValidateRequest.type
-        /// </param>
-        /// <param name="location">
-        /// Expected location of the resource.
-        ///             Serialized Name: ValidateRequest.location
-        /// </param>
-        /// <param name="serverFarmId">
-        /// ARM resource ID of an App Service plan that would host the app.
-        ///             Serialized Name: ValidateRequest.properties.serverFarmId
-        /// </param>
-        /// <param name="skuName">
-        /// Name of the target SKU for the App Service plan.
-        ///             Serialized Name: ValidateRequest.properties.skuName
-        /// </param>
-        /// <param name="needLinuxWorkers">
-        /// &lt;code&gt;true&lt;/code&gt; if App Service plan is for Linux workers; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        ///             Serialized Name: ValidateRequest.properties.needLinuxWorkers
-        /// </param>
-        /// <param name="isSpot">
-        /// &lt;code&gt;true&lt;/code&gt; if App Service plan is for Spot instances; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        ///             Serialized Name: ValidateRequest.properties.isSpot
-        /// </param>
-        /// <param name="capacity">
-        /// Target capacity of the App Service plan (number of VMs).
-        ///             Serialized Name: ValidateRequest.properties.capacity
-        /// </param>
-        /// <param name="hostingEnvironment">
-        /// Name of App Service Environment where app or App Service plan should be created.
-        ///             Serialized Name: ValidateRequest.properties.hostingEnvironment
-        /// </param>
-        /// <param name="isXenon">
-        /// &lt;code&gt;true&lt;/code&gt; if App Service plan is running as a windows container
-        ///             Serialized Name: ValidateRequest.properties.isXenon
-        /// </param>
-        /// <param name="containerRegistryBaseUri">
-        /// Base URL of the container registry
-        ///             Serialized Name: ValidateRequest.properties.containerRegistryBaseUrl
-        /// </param>
-        /// <param name="containerRegistryUsername">
-        /// Username for to access the container registry
-        ///             Serialized Name: ValidateRequest.properties.containerRegistryUsername
-        /// </param>
-        /// <param name="containerRegistryPassword">
-        /// Password for to access the container registry
-        ///             Serialized Name: ValidateRequest.properties.containerRegistryPassword
-        /// </param>
-        /// <param name="containerImageRepository">
-        /// Repository name (image name)
-        ///             Serialized Name: ValidateRequest.properties.containerImageRepository
-        /// </param>
-        /// <param name="containerImageTag">
-        /// Image tag
-        ///             Serialized Name: ValidateRequest.properties.containerImageTag
-        /// </param>
-        /// <param name="containerImagePlatform">
-        /// Platform (windows or linux)
-        ///             Serialized Name: ValidateRequest.properties.containerImagePlatform
-        /// </param>
-        /// <param name="appServiceEnvironment">
-        /// App Service Environment Properties
-        ///             Serialized Name: ValidateRequest.properties.appServiceEnvironment
-        /// </param>
-        /// <returns> A new <see cref="Models.AppServiceValidateContent"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AppServiceValidateContent AppServiceValidateContent(string name = default, ValidateResourceType validateResourceType = default, AzureLocation location = default, ResourceIdentifier serverFarmId = default, string skuName = default, bool? needLinuxWorkers = default, bool? isSpot = default, int? capacity = default, string hostingEnvironment = default, bool? isXenon = default, Uri containerRegistryBaseUri = default, string containerRegistryUsername = default, string containerRegistryPassword = default, string containerImageRepository = default, string containerImageTag = default, string containerImagePlatform = default, AppServiceEnvironmentProperties appServiceEnvironment = default)
-        {
-            return new AppServiceValidateContent(name, default, location, serverFarmId is null && skuName is null && needLinuxWorkers is null && isSpot is null && capacity is null && hostingEnvironment is null && isXenon is null && containerRegistryUsername is null && containerRegistryPassword is null && containerImageRepository is null && containerImageTag is null && containerImagePlatform is null && appServiceEnvironment is null ? default : new ValidateProperties(
-                serverFarmId,
-                skuName,
-                needLinuxWorkers,
-                isSpot,
-                capacity,
-                hostingEnvironment,
-                isXenon,
-                default,
-                containerRegistryUsername,
-                containerRegistryPassword,
-                containerImageRepository,
-                containerImageTag,
-                containerImagePlatform,
-                appServiceEnvironment,
-                default), default);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.AppServicePlanData"/>. </summary>
@@ -16493,7 +15180,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                state is null && hostNames is null && repositorySiteName is null && usageState is null && isEnabled is null && enabledHostNames is null && availabilityState is null && hostNameSslStates is null && serverFarmId is null && isReserved is null && isXenon is null && isHyperV is null && lastModifiedOn is null && dnsConfiguration is null && siteConfig is null && trafficManagerHostNames is null && isScmSiteAlsoStopped is null && targetSwapSlot is null && hostingEnvironmentProfile is null && isClientAffinityEnabled is null && isClientAffinityProxyEnabled is null && isClientCertEnabled is null && clientCertMode is null && clientCertExclusionPaths is null && isHostNameDisabled is null && customDomainVerificationId is null && outboundIPAddresses is null && possibleOutboundIPAddresses is null && containerSize is null && dailyMemoryTimeQuota is null && suspendOn is null && maxNumberOfWorkers is null && cloningInfo is null && resourceGroup is null && isDefaultContainer is null && defaultHostName is null && slotSwapStatus is null && isHttpsOnly is null && redundancyMode is null && isStorageAccountRequired is null && keyVaultReferenceIdentity is null && virtualNetworkSubnetId is null ? default : new SitePatchResourceProperties(
+                state is null && hostNames is null && repositorySiteName is null && usageState is null && isEnabled is null && enabledHostNames is null && availabilityState is null && hostNameSslStates is null && serverFarmId is null && isReserved is null && isXenon is null && isHyperV is null && lastModifiedOn is null && dnsConfiguration is null && siteConfig is null && trafficManagerHostNames is null && isScmSiteAlsoStopped is null && targetSwapSlot is null && hostingEnvironmentProfile is null && isClientAffinityEnabled is null && isClientAffinityProxyEnabled is null && isClientCertEnabled is null && clientCertMode is null && clientCertExclusionPaths is null && isHostNameDisabled is null && customDomainVerificationId is null && outboundIPAddresses is null && possibleOutboundIPAddresses is null && containerSize is null && dailyMemoryTimeQuota is null && suspendOn is null && maxNumberOfWorkers is null && cloningInfo is null && resourceGroup is null && isDefaultContainer is null && defaultHostName is null && slotSwapStatus is null && isHttpsOnly is null && redundancyMode is null && inProgressOperationId is null && isStorageAccountRequired is null && keyVaultReferenceIdentity is null && virtualNetworkSubnetId is null ? default : new SitePatchResourceProperties(
                     state,
                     (hostNames ?? new ChangeTrackingList<string>()).ToList(),
                     repositorySiteName,
@@ -16535,7 +15222,7 @@ namespace Azure.ResourceManager.AppService.Models
                     slotSwapStatus,
                     isHttpsOnly,
                     redundancyMode,
-                    default,
+                    inProgressOperationId,
                     default,
                     isStorageAccountRequired,
                     keyVaultReferenceIdentity,
@@ -16758,7 +15445,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                state is null && hostNames is null && repositorySiteName is null && usageState is null && isEnabled is null && enabledHostNames is null && availabilityState is null && hostNameSslStates is null && serverFarmId is null && isReserved is null && isXenon is null && isHyperV is null && lastModifiedOn is null && dnsConfiguration is null && siteConfig is null && trafficManagerHostNames is null && isScmSiteAlsoStopped is null && targetSwapSlot is null && hostingEnvironmentProfile is null && isClientAffinityEnabled is null && isClientCertEnabled is null && clientCertMode is null && clientCertExclusionPaths is null && isHostNameDisabled is null && customDomainVerificationId is null && outboundIPAddresses is null && possibleOutboundIPAddresses is null && containerSize is null && dailyMemoryTimeQuota is null && suspendOn is null && maxNumberOfWorkers is null && cloningInfo is null && resourceGroup is null && isDefaultContainer is null && defaultHostName is null && slotSwapStatus is null && isHttpsOnly is null && redundancyMode is null && isStorageAccountRequired is null && keyVaultReferenceIdentity is null && virtualNetworkSubnetId is null ? default : new SitePatchResourceProperties(
+                state is null && hostNames is null && repositorySiteName is null && usageState is null && isEnabled is null && enabledHostNames is null && availabilityState is null && hostNameSslStates is null && serverFarmId is null && isReserved is null && isXenon is null && isHyperV is null && lastModifiedOn is null && dnsConfiguration is null && siteConfig is null && trafficManagerHostNames is null && isScmSiteAlsoStopped is null && targetSwapSlot is null && hostingEnvironmentProfile is null && isClientAffinityEnabled is null && isClientCertEnabled is null && clientCertMode is null && clientCertExclusionPaths is null && isHostNameDisabled is null && customDomainVerificationId is null && outboundIPAddresses is null && possibleOutboundIPAddresses is null && containerSize is null && dailyMemoryTimeQuota is null && suspendOn is null && maxNumberOfWorkers is null && cloningInfo is null && resourceGroup is null && isDefaultContainer is null && defaultHostName is null && slotSwapStatus is null && isHttpsOnly is null && redundancyMode is null && inProgressOperationId is null && isStorageAccountRequired is null && keyVaultReferenceIdentity is null && virtualNetworkSubnetId is null ? default : new SitePatchResourceProperties(
                     state,
                     (hostNames ?? new ChangeTrackingList<string>()).ToList(),
                     repositorySiteName,
@@ -16800,7 +15487,7 @@ namespace Azure.ResourceManager.AppService.Models
                     slotSwapStatus,
                     isHttpsOnly,
                     redundancyMode,
-                    default,
+                    inProgressOperationId,
                     default,
                     isStorageAccountRequired,
                     keyVaultReferenceIdentity,

@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(InProgressOperationId))
             {
                 writer.WritePropertyName("inProgressOperationId"u8);
-                writer.WriteStringValue(InProgressOperationId);
+                writer.WriteStringValue(InProgressOperationId.Value);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.AppService.Models
             SlotSwapStatus slotSwapStatus = default;
             bool? isHttpsOnly = default;
             RedundancyMode? redundancyMode = default;
-            string inProgressOperationId = default;
+            Guid? inProgressOperationId = default;
             string publicNetworkAccess = default;
             bool? isStorageAccountRequired = default;
             string keyVaultReferenceIdentity = default;
@@ -962,7 +962,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("inProgressOperationId"u8))
                 {
-                    inProgressOperationId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    inProgressOperationId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("publicNetworkAccess"u8))

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(BillingLocation))
             {
                 writer.WritePropertyName("billingLocation"u8);
-                writer.WriteStringValue(BillingLocation);
+                writer.WriteStringValue(BillingLocation.Value);
             }
             if (Optional.IsDefined(ShortName))
             {
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             Guid? meterId = default;
-            string billingLocation = default;
+            AzureLocation? billingLocation = default;
             string shortName = default;
             string friendlyName = default;
             string osType = default;
@@ -166,7 +167,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("billingLocation"u8))
                 {
-                    billingLocation = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    billingLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("shortName"u8))

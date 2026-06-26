@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Repository or source control URL. </summary>
         [WirePath("properties.repoUrl")]
-        public string RepoUri
+        public Uri RepoUri
         {
             get
             {

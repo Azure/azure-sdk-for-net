@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="port"></param>
         /// <param name="biztalkUri"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RelayServiceConnectionEntityProperties(string entityName, string entityConnectionString, string resourceConnectionString, string hostname, int? port, string biztalkUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RelayServiceConnectionEntityProperties(string entityName, string entityConnectionString, string resourceConnectionString, string hostname, int? port, Uri biztalkUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EntityName = entityName;
             EntityConnectionString = entityConnectionString;
@@ -63,6 +63,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Gets or sets the BiztalkUri. </summary>
         [WirePath("biztalkUri")]
-        public string BiztalkUri { get; set; }
+        public Uri BiztalkUri { get; set; }
     }
 }

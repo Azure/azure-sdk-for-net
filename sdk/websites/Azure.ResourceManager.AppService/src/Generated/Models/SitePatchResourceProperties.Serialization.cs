@@ -250,15 +250,15 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("customDomainVerificationId"u8);
                 writer.WriteStringValue(CustomDomainVerificationId);
             }
-            if (options.Format != "W" && Optional.IsDefined(OutboundIpAddresses))
+            if (options.Format != "W" && Optional.IsDefined(OutboundIPAddresses))
             {
                 writer.WritePropertyName("outboundIpAddresses"u8);
-                writer.WriteStringValue(OutboundIpAddresses);
+                writer.WriteStringValue(OutboundIPAddresses);
             }
-            if (options.Format != "W" && Optional.IsDefined(PossibleOutboundIpAddresses))
+            if (options.Format != "W" && Optional.IsDefined(PossibleOutboundIPAddresses))
             {
                 writer.WritePropertyName("possibleOutboundIpAddresses"u8);
-                writer.WriteStringValue(PossibleOutboundIpAddresses);
+                writer.WriteStringValue(PossibleOutboundIPAddresses);
             }
             if (Optional.IsDefined(ContainerSize))
             {
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(InProgressOperationId))
             {
                 writer.WritePropertyName("inProgressOperationId"u8);
-                writer.WriteStringValue(InProgressOperationId);
+                writer.WriteStringValue(InProgressOperationId.Value);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -410,8 +410,8 @@ namespace Azure.ResourceManager.AppService.Models
             string clientCertExclusionPaths = default;
             bool? isHostNameDisabled = default;
             string customDomainVerificationId = default;
-            string outboundIpAddresses = default;
-            string possibleOutboundIpAddresses = default;
+            string outboundIPAddresses = default;
+            string possibleOutboundIPAddresses = default;
             int? containerSize = default;
             int? dailyMemoryTimeQuota = default;
             DateTimeOffset? suspendOn = default;
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.AppService.Models
             SlotSwapStatus slotSwapStatus = default;
             bool? isHttpsOnly = default;
             RedundancyMode? redundancyMode = default;
-            string inProgressOperationId = default;
+            Guid? inProgressOperationId = default;
             string publicNetworkAccess = default;
             bool? isStorageAccountRequired = default;
             string keyVaultReferenceIdentity = default;
@@ -706,12 +706,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("outboundIpAddresses"u8))
                 {
-                    outboundIpAddresses = prop.Value.GetString();
+                    outboundIPAddresses = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("possibleOutboundIpAddresses"u8))
                 {
-                    possibleOutboundIpAddresses = prop.Value.GetString();
+                    possibleOutboundIPAddresses = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("containerSize"u8))
@@ -807,7 +807,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("inProgressOperationId"u8))
                 {
-                    inProgressOperationId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    inProgressOperationId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("publicNetworkAccess"u8))
@@ -872,8 +876,8 @@ namespace Azure.ResourceManager.AppService.Models
                 clientCertExclusionPaths,
                 isHostNameDisabled,
                 customDomainVerificationId,
-                outboundIpAddresses,
-                possibleOutboundIpAddresses,
+                outboundIPAddresses,
+                possibleOutboundIPAddresses,
                 containerSize,
                 dailyMemoryTimeQuota,
                 suspendOn,

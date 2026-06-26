@@ -852,7 +852,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Specifies an operation id if this site has a pending operation. </summary>
         [WirePath("properties.inProgressOperationId")]
-        public string InProgressOperationId
+        public Guid? InProgressOperationId
         {
             get
             {

@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> The resource id of the database. </summary>
         [WirePath("properties.resourceId")]
-        public ResourceIdentifier DatabaseConnectionResourceId
+        public ResourceIdentifier ResourceId
         {
             get
             {
-                return Properties is null ? default : Properties.DatabaseConnectionResourceId;
+                return Properties is null ? default : Properties.ResourceId;
             }
             set
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new DatabaseConnectionProperties();
                 }
-                Properties.DatabaseConnectionResourceId = value;
+                Properties.ResourceId = value;
             }
         }
 

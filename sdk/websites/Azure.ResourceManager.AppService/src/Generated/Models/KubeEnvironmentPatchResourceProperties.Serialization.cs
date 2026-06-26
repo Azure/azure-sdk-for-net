@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -94,10 +95,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("defaultDomain"u8);
                 writer.WriteStringValue(DefaultDomain);
             }
-            if (Optional.IsDefined(StaticIp))
+            if (Optional.IsDefined(StaticIP))
             {
                 writer.WritePropertyName("staticIp"u8);
-                writer.WriteStringValue(StaticIp);
+                writer.WriteStringValue(StaticIP);
             }
             if (Optional.IsDefined(ArcConfiguration))
             {
@@ -114,10 +115,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("containerAppsConfiguration"u8);
                 writer.WriteObjectValue(ContainerAppsConfiguration, options);
             }
-            if (Optional.IsDefined(AksResourceID))
+            if (Optional.IsDefined(AksResourceId))
             {
                 writer.WritePropertyName("aksResourceID"u8);
-                writer.WriteStringValue(AksResourceID);
+                writer.WriteStringValue(AksResourceId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -165,11 +166,11 @@ namespace Azure.ResourceManager.AppService.Models
             string deploymentErrors = default;
             bool? isInternalLoadBalancerEnabled = default;
             string defaultDomain = default;
-            string staticIp = default;
+            string staticIP = default;
             ArcConfiguration arcConfiguration = default;
             AppLogsConfiguration appLogsConfiguration = default;
             ContainerAppsConfiguration containerAppsConfiguration = default;
-            string aksResourceID = default;
+            ResourceIdentifier aksResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -203,7 +204,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("staticIp"u8))
                 {
-                    staticIp = prop.Value.GetString();
+                    staticIP = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("arcConfiguration"u8))
@@ -235,7 +236,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("aksResourceID"u8))
                 {
-                    aksResourceID = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    aksResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -248,11 +253,11 @@ namespace Azure.ResourceManager.AppService.Models
                 deploymentErrors,
                 isInternalLoadBalancerEnabled,
                 defaultDomain,
-                staticIp,
+                staticIP,
                 arcConfiguration,
                 appLogsConfiguration,
                 containerAppsConfiguration,
-                aksResourceID,
+                aksResourceId,
                 additionalBinaryDataProperties);
         }
     }

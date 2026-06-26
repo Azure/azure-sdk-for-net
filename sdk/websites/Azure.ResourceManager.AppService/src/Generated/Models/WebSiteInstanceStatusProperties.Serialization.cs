@@ -82,17 +82,17 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(StatusUri))
             {
                 writer.WritePropertyName("statusUrl"u8);
-                writer.WriteStringValue(StatusUri);
+                writer.WriteStringValue(StatusUri.AbsoluteUri);
             }
             if (Optional.IsDefined(DetectorUri))
             {
                 writer.WritePropertyName("detectorUrl"u8);
-                writer.WriteStringValue(DetectorUri);
+                writer.WriteStringValue(DetectorUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ConsoleUri))
             {
                 writer.WritePropertyName("consoleUrl"u8);
-                writer.WriteStringValue(ConsoleUri);
+                writer.WriteStringValue(ConsoleUri.AbsoluteUri);
             }
             if (Optional.IsDefined(HealthCheckUrlString))
             {
@@ -158,9 +158,9 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             SiteRuntimeState? state = default;
-            string statusUri = default;
-            string detectorUri = default;
-            string consoleUri = default;
+            Uri statusUri = default;
+            Uri detectorUri = default;
+            Uri consoleUri = default;
             string healthCheckUrlString = default;
             IDictionary<string, ContainerInfo> containers = default;
             string physicalZone = default;
@@ -178,17 +178,29 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("statusUrl"u8))
                 {
-                    statusUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    statusUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("detectorUrl"u8))
                 {
-                    detectorUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    detectorUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("consoleUrl"u8))
                 {
-                    consoleUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    consoleUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("healthCheckUrl"u8))

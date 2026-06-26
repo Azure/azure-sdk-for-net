@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Log URL. </summary>
         [WirePath("properties.log_url")]
-        public string LogUri
+        public Uri LogUri
         {
             get
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Job URL. </summary>
         [WirePath("properties.url")]
-        public string Uri
+        public Uri Uri
         {
             get
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Extra Info URL. </summary>
         [WirePath("properties.extra_info_url")]
-        public string ExtraInfoUri
+        public Uri ExtraInfoUri
         {
             get
             {

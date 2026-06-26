@@ -501,21 +501,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from tenants that site can be hosted with current settings. Read-only. </summary>
         [WirePath("properties.outboundIpAddresses")]
-        public string OutboundIpAddresses
+        public string OutboundIPAddresses
         {
             get
             {
-                return Properties is null ? default : Properties.OutboundIpAddresses;
+                return Properties is null ? default : Properties.OutboundIPAddresses;
             }
         }
 
         /// <summary> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from all tenants except dataComponent. Read-only. </summary>
         [WirePath("properties.possibleOutboundIpAddresses")]
-        public string PossibleOutboundIpAddresses
+        public string PossibleOutboundIPAddresses
         {
             get
             {
-                return Properties is null ? default : Properties.PossibleOutboundIpAddresses;
+                return Properties is null ? default : Properties.PossibleOutboundIPAddresses;
             }
         }
 
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Specifies an operation id if this site has a pending operation. </summary>
         [WirePath("properties.inProgressOperationId")]
-        public string InProgressOperationId
+        public Guid? InProgressOperationId
         {
             get
             {

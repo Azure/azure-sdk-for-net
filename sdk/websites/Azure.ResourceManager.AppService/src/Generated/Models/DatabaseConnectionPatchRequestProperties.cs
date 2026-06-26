@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DatabaseConnectionPatchRequestProperties"/>. </summary>
-        /// <param name="databaseConnectionResourceId"> The resource id of the database. </param>
+        /// <param name="resourceId"> The resource id of the database. </param>
         /// <param name="connectionIdentity"> If present, the identity is used in conjunction with connection string to connect to the database. Use of the system-assigned managed identity is indicated with the string 'SystemAssigned', while use of a user-assigned managed identity is indicated with the resource id of the managed identity resource. </param>
         /// <param name="connectionString"> The connection string to use to connect to the database. </param>
         /// <param name="region"> The region of the database resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseConnectionPatchRequestProperties(ResourceIdentifier databaseConnectionResourceId, string connectionIdentity, string connectionString, string region, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatabaseConnectionPatchRequestProperties(ResourceIdentifier resourceId, string connectionIdentity, string connectionString, string region, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            DatabaseConnectionResourceId = databaseConnectionResourceId;
+            ResourceId = resourceId;
             ConnectionIdentity = connectionIdentity;
             ConnectionString = connectionString;
             Region = region;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The resource id of the database. </summary>
         [WirePath("resourceId")]
-        public ResourceIdentifier DatabaseConnectionResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
 
         /// <summary> If present, the identity is used in conjunction with connection string to connect to the database. Use of the system-assigned managed identity is indicated with the string 'SystemAssigned', while use of a user-assigned managed identity is indicated with the resource id of the managed identity resource. </summary>
         [WirePath("connectionIdentity")]

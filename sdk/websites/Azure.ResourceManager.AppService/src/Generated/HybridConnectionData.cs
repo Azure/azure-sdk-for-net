@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> The ARM URI to the Service Bus relay. </summary>
         [WirePath("properties.relayArmUri")]
-        public string RelayArmId
+        public ResourceIdentifier RelayArmId
         {
             get
             {

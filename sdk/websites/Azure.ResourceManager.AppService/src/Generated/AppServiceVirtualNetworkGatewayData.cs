@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> The URI where the VPN package can be downloaded. </summary>
         [WirePath("properties.vpnPackageUri")]
-        public string VpnPackageUri
+        public Uri VpnPackageUri
         {
             get
             {

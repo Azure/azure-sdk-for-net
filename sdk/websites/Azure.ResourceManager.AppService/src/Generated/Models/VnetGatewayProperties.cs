@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="VnetGatewayProperties"/>. </summary>
         /// <param name="vpnPackageUri"> The URI where the VPN package can be downloaded. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnPackageUri"/> is null. </exception>
-        public VnetGatewayProperties(string vpnPackageUri)
+        public VnetGatewayProperties(Uri vpnPackageUri)
         {
             Argument.AssertNotNull(vpnPackageUri, nameof(vpnPackageUri));
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="vnetName"> The Virtual Network name. </param>
         /// <param name="vpnPackageUri"> The URI where the VPN package can be downloaded. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VnetGatewayProperties(string vnetName, string vpnPackageUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VnetGatewayProperties(string vnetName, Uri vpnPackageUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VnetName = vnetName;
             VpnPackageUri = vpnPackageUri;
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The URI where the VPN package can be downloaded. </summary>
         [WirePath("vpnPackageUri")]
-        public string VpnPackageUri { get; set; }
+        public Uri VpnPackageUri { get; set; }
     }
 }

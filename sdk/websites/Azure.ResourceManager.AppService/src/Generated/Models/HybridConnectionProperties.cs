@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="serviceBusSuffix"> The suffix for the service bus endpoint. By default this is .servicebus.windows.net. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HybridConnectionProperties(string serviceBusNamespace, string relayName, string relayArmId, string hostname, int? port, string sendKeyName, string sendKeyValue, string serviceBusSuffix, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HybridConnectionProperties(string serviceBusNamespace, string relayName, ResourceIdentifier relayArmId, string hostname, int? port, string sendKeyName, string sendKeyValue, string serviceBusSuffix, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceBusNamespace = serviceBusNamespace;
             RelayName = relayName;
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The ARM URI to the Service Bus relay. </summary>
         [WirePath("relayArmUri")]
-        public string RelayArmId { get; set; }
+        public ResourceIdentifier RelayArmId { get; set; }
 
         /// <summary> The hostname of the endpoint. </summary>
         [WirePath("hostname")]

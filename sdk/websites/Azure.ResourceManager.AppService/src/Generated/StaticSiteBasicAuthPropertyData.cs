@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Url to the secret in Key Vault. </summary>
         [WirePath("properties.secretUrl")]
-        public string SecretUri
+        public Uri SecretUri
         {
             get
             {

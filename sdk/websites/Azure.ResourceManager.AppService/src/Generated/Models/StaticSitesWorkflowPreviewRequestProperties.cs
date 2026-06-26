@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="branch"> The target branch in the repository. </param>
         /// <param name="buildProperties"> Build properties to configure on the repository. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSitesWorkflowPreviewRequestProperties(string repositoryUri, string branch, StaticSiteBuildProperties buildProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StaticSitesWorkflowPreviewRequestProperties(Uri repositoryUri, string branch, StaticSiteBuildProperties buildProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RepositoryUri = repositoryUri;
             Branch = branch;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> URL for the repository of the static site. </summary>
         [WirePath("repositoryUrl")]
-        public string RepositoryUri { get; set; }
+        public Uri RepositoryUri { get; set; }
 
         /// <summary> The target branch in the repository. </summary>
         [WirePath("branch")]

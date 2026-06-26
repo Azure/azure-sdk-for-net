@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> The URL referencing the Azure Key Vault certificate secret that should be used as the default SSL/TLS certificate for sites with the custom domain suffix. </summary>
         [WirePath("properties.certificateUrl")]
-        public string CertificateUri
+        public Uri CertificateUri
         {
             get
             {

@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Extension URL. </summary>
         [WirePath("properties.extension_url")]
-        public string ExtensionUri
+        public Uri ExtensionUri
         {
             get
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Project URL. </summary>
         [WirePath("properties.project_url")]
-        public string ProjectUri
+        public Uri ProjectUri
         {
             get
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Icon URL. </summary>
         [WirePath("properties.icon_url")]
-        public string IconUri
+        public Uri IconUri
         {
             get
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> License URL. </summary>
         [WirePath("properties.license_url")]
-        public string LicenseUri
+        public Uri LicenseUri
         {
             get
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Feed URL. </summary>
         [WirePath("properties.feed_url")]
-        public string FeedUri
+        public Uri FeedUri
         {
             get
             {

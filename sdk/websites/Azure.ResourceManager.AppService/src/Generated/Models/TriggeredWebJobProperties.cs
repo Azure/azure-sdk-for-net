@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isStorageAccountRequired"> Checks if Customer provided storage account is required. </param>
         /// <param name="settings"> Job settings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TriggeredWebJobProperties(TriggeredJobRun latestRun, string historyUri, string schedulerLogsUri, string runCommand, string uri, string extraInfoUri, WebJobType? webJobType, string error, bool? isUsingSdk, string publicNetworkAccess, bool? isStorageAccountRequired, IDictionary<string, BinaryData> settings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TriggeredWebJobProperties(TriggeredJobRun latestRun, Uri historyUri, Uri schedulerLogsUri, string runCommand, Uri uri, Uri extraInfoUri, WebJobType? webJobType, string error, bool? isUsingSdk, string publicNetworkAccess, bool? isStorageAccountRequired, IDictionary<string, BinaryData> settings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LatestRun = latestRun;
             HistoryUri = historyUri;
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> History URL. </summary>
         [WirePath("history_url")]
-        public string HistoryUri { get; set; }
+        public Uri HistoryUri { get; set; }
 
         /// <summary> Scheduler Logs URL. </summary>
         [WirePath("scheduler_logs_url")]
-        public string SchedulerLogsUri { get; set; }
+        public Uri SchedulerLogsUri { get; set; }
 
         /// <summary> Run command. </summary>
         [WirePath("run_command")]
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Job URL. </summary>
         [WirePath("url")]
-        public string Uri { get; set; }
+        public Uri Uri { get; set; }
 
         /// <summary> Extra Info URL. </summary>
         [WirePath("extra_info_url")]
-        public string ExtraInfoUri { get; set; }
+        public Uri ExtraInfoUri { get; set; }
 
         /// <summary> Job type. </summary>
         [WirePath("web_job_type")]

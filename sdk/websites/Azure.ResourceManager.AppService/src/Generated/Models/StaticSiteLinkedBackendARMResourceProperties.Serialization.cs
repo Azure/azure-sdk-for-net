@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            string backendResourceId = default;
+            ResourceIdentifier backendResourceId = default;
             string region = default;
             DateTimeOffset? createdOn = default;
             string provisioningState = default;
@@ -145,7 +146,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (prop.NameEquals("backendResourceId"u8))
                 {
-                    backendResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    backendResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("region"u8))

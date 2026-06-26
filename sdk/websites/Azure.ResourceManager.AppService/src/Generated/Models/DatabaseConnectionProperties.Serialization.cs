@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppService.Models
                 throw new FormatException($"The model {nameof(DatabaseConnectionProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("resourceId"u8);
-            writer.WriteStringValue(DatabaseConnectionResourceId);
+            writer.WriteStringValue(ResourceId);
             if (Optional.IsDefined(ConnectionIdentity))
             {
                 writer.WritePropertyName("connectionIdentity"u8);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            ResourceIdentifier databaseConnectionResourceId = default;
+            ResourceIdentifier resourceId = default;
             string connectionIdentity = default;
             string connectionString = default;
             string region = default;
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (prop.NameEquals("resourceId"u8))
                 {
-                    databaseConnectionResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("connectionIdentity"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             return new DatabaseConnectionProperties(
-                databaseConnectionResourceId,
+                resourceId,
                 connectionIdentity,
                 connectionString,
                 region,

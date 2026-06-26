@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="environments"> The list of enabled environments for Basic Auth if ApplicableEnvironmentsMode is set to SpecifiedEnvironments. </param>
         /// <param name="secretState"> State indicating if basic auth has a secret and what type it is. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteBasicAuthPropertyProperties(string password, string secretUri, string applicableEnvironmentsMode, IList<string> environments, string secretState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StaticSiteBasicAuthPropertyProperties(string password, Uri secretUri, string applicableEnvironmentsMode, IList<string> environments, string secretState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Password = password;
             SecretUri = secretUri;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Url to the secret in Key Vault. </summary>
         [WirePath("secretUrl")]
-        public string SecretUri { get; set; }
+        public Uri SecretUri { get; set; }
 
         /// <summary> State indicating if basic auth is enabled and for what environments it is active. </summary>
         [WirePath("applicableEnvironmentsMode")]

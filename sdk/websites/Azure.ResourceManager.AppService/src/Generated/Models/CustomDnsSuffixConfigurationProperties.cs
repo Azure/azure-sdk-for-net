@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="certificateUri"> The URL referencing the Azure Key Vault certificate secret that should be used as the default SSL/TLS certificate for sites with the custom domain suffix. </param>
         /// <param name="keyVaultReferenceIdentity"> The user-assigned identity to use for resolving the key vault certificate reference. If not specified, the system-assigned ASE identity will be used if available. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomDnsSuffixConfigurationProperties(CustomDnsSuffixProvisioningState? provisioningState, string provisioningDetails, string dnsSuffix, string certificateUri, string keyVaultReferenceIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomDnsSuffixConfigurationProperties(CustomDnsSuffixProvisioningState? provisioningState, string provisioningDetails, string dnsSuffix, Uri certificateUri, string keyVaultReferenceIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ProvisioningDetails = provisioningDetails;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The URL referencing the Azure Key Vault certificate secret that should be used as the default SSL/TLS certificate for sites with the custom domain suffix. </summary>
         [WirePath("certificateUrl")]
-        public string CertificateUri { get; set; }
+        public Uri CertificateUri { get; set; }
 
         /// <summary> The user-assigned identity to use for resolving the key vault certificate reference. If not specified, the system-assigned ASE identity will be used if available. </summary>
         [WirePath("keyVaultReferenceIdentity")]

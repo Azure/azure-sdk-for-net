@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> A GUID value that each recommendation object is associated with. </summary>
         [WirePath("properties.recommendationId")]
-        public string RecommendationId
+        public Guid? RecommendationId
         {
             get
             {

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(StorageAccountUri))
             {
                 writer.WritePropertyName("storageAccountUrl"u8);
-                writer.WriteStringValue(StorageAccountUri);
+                writer.WriteStringValue(StorageAccountUri.AbsoluteUri);
             }
             if (options.Format != "W" && Optional.IsDefined(BlobName))
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             int? backupId = default;
-            string storageAccountUri = default;
+            Uri storageAccountUri = default;
             string blobName = default;
             string backupName = default;
             WebAppBackupStatus? status = default;
@@ -219,7 +219,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("storageAccountUrl"u8))
                 {
-                    storageAccountUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageAccountUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("blobName"u8))

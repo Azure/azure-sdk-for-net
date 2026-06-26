@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStringValue(VnetName);
             }
             writer.WritePropertyName("vpnPackageUri"u8);
-            writer.WriteStringValue(VpnPackageUri);
+            writer.WriteStringValue(VpnPackageUri.AbsoluteUri);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             string vnetName = default;
-            string vpnPackageUri = default;
+            Uri vpnPackageUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("vpnPackageUri"u8))
                 {
-                    vpnPackageUri = prop.Value.GetString();
+                    vpnPackageUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")

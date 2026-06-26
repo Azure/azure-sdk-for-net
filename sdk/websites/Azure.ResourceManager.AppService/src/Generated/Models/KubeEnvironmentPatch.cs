@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Static IP of the KubeEnvironment. </summary>
         [WirePath("properties.staticIp")]
-        public string StaticIp
+        public string StaticIP
         {
             get
             {
-                return Properties is null ? default : Properties.StaticIp;
+                return Properties is null ? default : Properties.StaticIP;
             }
             set
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     Properties = new KubeEnvironmentPatchResourceProperties();
                 }
-                Properties.StaticIp = value;
+                Properties.StaticIP = value;
             }
         }
 
@@ -175,13 +175,13 @@ namespace Azure.ResourceManager.AppService.Models
             }
         }
 
-        /// <summary> Gets or sets the AksResourceID. </summary>
+        /// <summary> Gets or sets the AksResourceId. </summary>
         [WirePath("properties.aksResourceID")]
-        public string AksResourceID
+        public ResourceIdentifier AksResourceId
         {
             get
             {
-                return Properties is null ? default : Properties.AksResourceID;
+                return Properties is null ? default : Properties.AksResourceId;
             }
             set
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     Properties = new KubeEnvironmentPatchResourceProperties();
                 }
-                Properties.AksResourceID = value;
+                Properties.AksResourceId = value;
             }
         }
     }

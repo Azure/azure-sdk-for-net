@@ -107,12 +107,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(PrivacyPolicyUri))
             {
                 writer.WritePropertyName("privacyPolicyUrl"u8);
-                writer.WriteStringValue(PrivacyPolicyUri);
+                writer.WriteStringValue(PrivacyPolicyUri.AbsoluteUri);
             }
             if (Optional.IsDefined(LegalTermsUri))
             {
                 writer.WritePropertyName("legalTermsUrl"u8);
-                writer.WriteStringValue(LegalTermsUri);
+                writer.WriteStringValue(LegalTermsUri.AbsoluteUri);
             }
             if (Optional.IsDefined(MarketplacePublisher))
             {
@@ -172,8 +172,8 @@ namespace Azure.ResourceManager.AppService.Models
             bool? isPromoCodeRequired = default;
             int? quota = default;
             AppServicePlanRestriction? webHostingPlanRestrictions = default;
-            string privacyPolicyUri = default;
-            string legalTermsUri = default;
+            Uri privacyPolicyUri = default;
+            Uri legalTermsUri = default;
             string marketplacePublisher = default;
             string marketplaceOffer = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -223,12 +223,20 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("privacyPolicyUrl"u8))
                 {
-                    privacyPolicyUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    privacyPolicyUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("legalTermsUrl"u8))
                 {
-                    legalTermsUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    legalTermsUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("marketplacePublisher"u8))

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The url for the invitation link. </summary>
         [WirePath("properties.invitationUrl")]
-        public string InvitationUri
+        public Uri InvitationUri
         {
             get
             {

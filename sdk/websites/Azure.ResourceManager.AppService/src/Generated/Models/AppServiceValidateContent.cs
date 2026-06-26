@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Base URL of the container registry. </summary>
         [WirePath("properties.containerRegistryBaseUrl")]
-        public string ContainerRegistryBaseUri
+        public Uri ContainerRegistryBaseUri
         {
             get
             {

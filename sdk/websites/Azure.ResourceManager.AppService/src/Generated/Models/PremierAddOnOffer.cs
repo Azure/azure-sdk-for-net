@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Privacy policy URL. </summary>
         [WirePath("properties.privacyPolicyUrl")]
-        public string PrivacyPolicyUri
+        public Uri PrivacyPolicyUri
         {
             get
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Legal terms URL. </summary>
         [WirePath("properties.legalTermsUrl")]
-        public string LegalTermsUri
+        public Uri LegalTermsUri
         {
             get
             {

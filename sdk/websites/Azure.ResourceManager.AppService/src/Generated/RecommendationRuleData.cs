@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppService
         /// If such an object doesn't exist, it is set to null.
         /// </summary>
         [WirePath("properties.recommendationId")]
-        public string RecommendationId
+        public Guid? RecommendationId
         {
             get
             {

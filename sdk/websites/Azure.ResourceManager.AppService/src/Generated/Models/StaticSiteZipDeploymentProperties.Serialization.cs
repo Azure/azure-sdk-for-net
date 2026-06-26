@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(AppZipUri))
             {
                 writer.WritePropertyName("appZipUrl"u8);
-                writer.WriteStringValue(AppZipUri);
+                writer.WriteStringValue(AppZipUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ApiZipUri))
             {
                 writer.WritePropertyName("apiZipUrl"u8);
-                writer.WriteStringValue(ApiZipUri);
+                writer.WriteStringValue(ApiZipUri.AbsoluteUri);
             }
             if (Optional.IsDefined(DeploymentTitle))
             {
@@ -141,8 +141,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            string appZipUri = default;
-            string apiZipUri = default;
+            Uri appZipUri = default;
+            Uri apiZipUri = default;
             string deploymentTitle = default;
             string provider = default;
             string functionLanguage = default;
@@ -151,12 +151,20 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (prop.NameEquals("appZipUrl"u8))
                 {
-                    appZipUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    appZipUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("apiZipUrl"u8))
                 {
-                    apiZipUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    apiZipUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("deploymentTitle"u8))

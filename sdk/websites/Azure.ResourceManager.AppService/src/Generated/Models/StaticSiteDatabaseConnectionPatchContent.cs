@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The resource id of the database. </summary>
         [WirePath("properties.resourceId")]
-        public ResourceIdentifier DatabaseConnectionResourceId
+        public ResourceIdentifier ResourceId
         {
             get
             {
-                return Properties is null ? default : Properties.DatabaseConnectionResourceId;
+                return Properties is null ? default : Properties.ResourceId;
             }
             set
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     Properties = new DatabaseConnectionPatchRequestProperties();
                 }
-                Properties.DatabaseConnectionResourceId = value;
+                Properties.ResourceId = value;
             }
         }
 

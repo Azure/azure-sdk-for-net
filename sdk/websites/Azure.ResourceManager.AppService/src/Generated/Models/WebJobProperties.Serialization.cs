@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Uri);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(ExtraInfoUri))
             {
                 writer.WritePropertyName("extra_info_url"u8);
-                writer.WriteStringValue(ExtraInfoUri);
+                writer.WriteStringValue(ExtraInfoUri.AbsoluteUri);
             }
             if (Optional.IsDefined(WebJobType))
             {
@@ -170,8 +170,8 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             string runCommand = default;
-            string uri = default;
-            string extraInfoUri = default;
+            Uri uri = default;
+            Uri extraInfoUri = default;
             WebJobType? webJobType = default;
             string error = default;
             bool? isUsingSdk = default;
@@ -186,12 +186,20 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("url"u8))
                 {
-                    uri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("extra_info_url"u8))
                 {
-                    extraInfoUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    extraInfoUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("web_job_type"u8))

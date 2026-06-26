@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> The resource id of the backend linked to the static site. </summary>
         [WirePath("properties.backendResourceId")]
-        public string BackendResourceId
+        public ResourceIdentifier BackendResourceId
         {
             get
             {

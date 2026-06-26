@@ -159,10 +159,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("acrUseManagedIdentityCreds"u8);
                 writer.WriteBooleanValue(UseManagedIdentityCreds.Value);
             }
-            if (Optional.IsDefined(AcrUserManagedIdentityID))
+            if (Optional.IsDefined(AcrUserManagedIdentityId))
             {
                 writer.WritePropertyName("acrUserManagedIdentityID"u8);
-                writer.WriteStringValue(AcrUserManagedIdentityID);
+                writer.WriteStringValue(AcrUserManagedIdentityId);
             }
             if (Optional.IsDefined(LogsDirectorySizeLimit))
             {
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.AppService.Models
             string remoteDebuggingVersion = default;
             bool? isHttpLoggingEnabled = default;
             bool? useManagedIdentityCreds = default;
-            string acrUserManagedIdentityID = default;
+            string acrUserManagedIdentityId = default;
             int? logsDirectorySizeLimit = default;
             bool? isDetailedErrorLoggingEnabled = default;
             string publishingUsername = default;
@@ -725,7 +725,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("acrUserManagedIdentityID"u8))
                 {
-                    acrUserManagedIdentityID = prop.Value.GetString();
+                    acrUserManagedIdentityId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("logsDirectorySizeLimit"u8))
@@ -1250,7 +1250,7 @@ namespace Azure.ResourceManager.AppService.Models
                 remoteDebuggingVersion,
                 isHttpLoggingEnabled,
                 useManagedIdentityCreds,
-                acrUserManagedIdentityID,
+                acrUserManagedIdentityId,
                 logsDirectorySizeLimit,
                 isDetailedErrorLoggingEnabled,
                 publishingUsername,

@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 throw new FormatException($"The model {nameof(DatabaseConnectionPatchRequestProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(DatabaseConnectionResourceId))
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
-                writer.WriteStringValue(DatabaseConnectionResourceId);
+                writer.WriteStringValue(ResourceId);
             }
             if (Optional.IsDefined(ConnectionIdentity))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            ResourceIdentifier databaseConnectionResourceId = default;
+            ResourceIdentifier resourceId = default;
             string connectionIdentity = default;
             string connectionString = default;
             string region = default;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    databaseConnectionResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("connectionIdentity"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DatabaseConnectionPatchRequestProperties(databaseConnectionResourceId, connectionIdentity, connectionString, region, additionalBinaryDataProperties);
+            return new DatabaseConnectionPatchRequestProperties(resourceId, connectionIdentity, connectionString, region, additionalBinaryDataProperties);
         }
     }
 }

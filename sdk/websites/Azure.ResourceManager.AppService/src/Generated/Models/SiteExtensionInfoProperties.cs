@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="comment"> Site Extension comment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SiteExtensionInfoProperties(string extensionId, string title, SiteExtensionType? extensionType, string summary, string description, string version, string extensionUri, string projectUri, string iconUri, string licenseUri, string feedUri, IList<string> authors, string installerCommandLineParams, DateTimeOffset? publishedOn, int? downloadCount, bool? localIsLatestVersion, string localPath, DateTimeOffset? installedOn, string provisioningState, string comment, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SiteExtensionInfoProperties(string extensionId, string title, SiteExtensionType? extensionType, string summary, string description, string version, Uri extensionUri, Uri projectUri, Uri iconUri, Uri licenseUri, Uri feedUri, IList<string> authors, string installerCommandLineParams, DateTimeOffset? publishedOn, int? downloadCount, bool? localIsLatestVersion, string localPath, DateTimeOffset? installedOn, string provisioningState, string comment, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExtensionId = extensionId;
             Title = title;
@@ -96,23 +96,23 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Extension URL. </summary>
         [WirePath("extension_url")]
-        public string ExtensionUri { get; set; }
+        public Uri ExtensionUri { get; set; }
 
         /// <summary> Project URL. </summary>
         [WirePath("project_url")]
-        public string ProjectUri { get; set; }
+        public Uri ProjectUri { get; set; }
 
         /// <summary> Icon URL. </summary>
         [WirePath("icon_url")]
-        public string IconUri { get; set; }
+        public Uri IconUri { get; set; }
 
         /// <summary> License URL. </summary>
         [WirePath("license_url")]
-        public string LicenseUri { get; set; }
+        public Uri LicenseUri { get; set; }
 
         /// <summary> Feed URL. </summary>
         [WirePath("feed_url")]
-        public string FeedUri { get; set; }
+        public Uri FeedUri { get; set; }
 
         /// <summary> List of authors. </summary>
         [WirePath("authors")]

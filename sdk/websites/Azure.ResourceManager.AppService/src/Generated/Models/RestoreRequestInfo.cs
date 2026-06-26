@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> SAS URL to the container. </summary>
         [WirePath("properties.storageAccountUrl")]
-        public string StorageAccountUri
+        public Uri StorageAccountUri
         {
             get
             {

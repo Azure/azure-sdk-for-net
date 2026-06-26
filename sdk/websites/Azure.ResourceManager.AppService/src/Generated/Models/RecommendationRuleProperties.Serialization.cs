@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(RecommendationId))
             {
                 writer.WritePropertyName("recommendationId"u8);
-                writer.WriteStringValue(RecommendationId);
+                writer.WriteStringValue(RecommendationId.Value);
             }
             if (Optional.IsDefined(Description))
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.AppService.Models
             string recommendationName = default;
             string displayName = default;
             string message = default;
-            string recommendationId = default;
+            Guid? recommendationId = default;
             string description = default;
             string actionName = default;
             NotificationLevel? level = default;
@@ -224,7 +224,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("recommendationId"u8))
                 {
-                    recommendationId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recommendationId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("description"u8))

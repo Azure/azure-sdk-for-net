@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isUsingSdk"> Using SDK?. </param>
         /// <param name="settings"> Job settings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContinuousWebJobProperties(ContinuousWebJobStatus? status, string detailedStatus, string logUri, string runCommand, string uri, string extraInfoUri, WebJobType? webJobType, string error, bool? isUsingSdk, IDictionary<string, BinaryData> settings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContinuousWebJobProperties(ContinuousWebJobStatus? status, string detailedStatus, Uri logUri, string runCommand, Uri uri, Uri extraInfoUri, WebJobType? webJobType, string error, bool? isUsingSdk, IDictionary<string, BinaryData> settings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             DetailedStatus = detailedStatus;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Log URL. </summary>
         [WirePath("log_url")]
-        public string LogUri { get; set; }
+        public Uri LogUri { get; set; }
 
         /// <summary> Run command. </summary>
         [WirePath("run_command")]
@@ -69,11 +69,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Job URL. </summary>
         [WirePath("url")]
-        public string Uri { get; set; }
+        public Uri Uri { get; set; }
 
         /// <summary> Extra Info URL. </summary>
         [WirePath("extra_info_url")]
-        public string ExtraInfoUri { get; set; }
+        public Uri ExtraInfoUri { get; set; }
 
         /// <summary> Job type. </summary>
         [WirePath("web_job_type")]

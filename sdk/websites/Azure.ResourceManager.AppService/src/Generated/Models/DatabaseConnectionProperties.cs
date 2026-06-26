@@ -19,29 +19,29 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DatabaseConnectionProperties"/>. </summary>
-        /// <param name="databaseConnectionResourceId"> The resource id of the database. </param>
+        /// <param name="resourceId"> The resource id of the database. </param>
         /// <param name="region"> The region of the database resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="databaseConnectionResourceId"/> or <paramref name="region"/> is null. </exception>
-        public DatabaseConnectionProperties(ResourceIdentifier databaseConnectionResourceId, string region)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="region"/> is null. </exception>
+        public DatabaseConnectionProperties(ResourceIdentifier resourceId, string region)
         {
-            Argument.AssertNotNull(databaseConnectionResourceId, nameof(databaseConnectionResourceId));
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
             Argument.AssertNotNull(region, nameof(region));
 
-            DatabaseConnectionResourceId = databaseConnectionResourceId;
+            ResourceId = resourceId;
             Region = region;
             ConfigurationFiles = new ChangeTrackingList<StaticSiteDatabaseConnectionConfigurationFileOverview>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DatabaseConnectionProperties"/>. </summary>
-        /// <param name="databaseConnectionResourceId"> The resource id of the database. </param>
+        /// <param name="resourceId"> The resource id of the database. </param>
         /// <param name="connectionIdentity"> If present, the identity is used in conjunction with connection string to connect to the database. Use of the system-assigned managed identity is indicated with the string 'SystemAssigned', while use of a user-assigned managed identity is indicated with the resource id of the managed identity resource. </param>
         /// <param name="connectionString"> The connection string to use to connect to the database. </param>
         /// <param name="region"> The region of the database resource. </param>
         /// <param name="configurationFiles"> A list of configuration files associated with this database connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseConnectionProperties(ResourceIdentifier databaseConnectionResourceId, string connectionIdentity, string connectionString, string region, IReadOnlyList<StaticSiteDatabaseConnectionConfigurationFileOverview> configurationFiles, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatabaseConnectionProperties(ResourceIdentifier resourceId, string connectionIdentity, string connectionString, string region, IReadOnlyList<StaticSiteDatabaseConnectionConfigurationFileOverview> configurationFiles, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            DatabaseConnectionResourceId = databaseConnectionResourceId;
+            ResourceId = resourceId;
             ConnectionIdentity = connectionIdentity;
             ConnectionString = connectionString;
             Region = region;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The resource id of the database. </summary>
         [WirePath("resourceId")]
-        public ResourceIdentifier DatabaseConnectionResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
 
         /// <summary> If present, the identity is used in conjunction with connection string to connect to the database. Use of the system-assigned managed identity is indicated with the string 'SystemAssigned', while use of a user-assigned managed identity is indicated with the resource id of the managed identity resource. </summary>
         [WirePath("connectionIdentity")]

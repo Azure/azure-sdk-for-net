@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> URL for the repository of the static site. </summary>
         [WirePath("properties.repositoryUrl")]
-        public string RepositoryUri
+        public Uri RepositoryUri
         {
             get
             {

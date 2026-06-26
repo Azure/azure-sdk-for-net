@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="storageAccountUri"> SAS URL to the container. </param>
         /// <param name="canOverwrite"> &lt;code&gt;true&lt;/code&gt; if the restore operation can overwrite target app; otherwise, &lt;code&gt;false&lt;/code&gt;. &lt;code&gt;true&lt;/code&gt; is needed if trying to restore over an existing app. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountUri"/> is null. </exception>
-        public RestoreRequestProperties(string storageAccountUri, bool canOverwrite)
+        public RestoreRequestProperties(Uri storageAccountUri, bool canOverwrite)
         {
             Argument.AssertNotNull(storageAccountUri, nameof(storageAccountUri));
 
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="adjustConnectionStrings"> &lt;code&gt;true&lt;/code&gt; if SiteConfig.ConnectionStrings should be set in new app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="hostingEnvironment"> App Service Environment name, if needed (only when restoring an app to an App Service Environment). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestoreRequestProperties(string storageAccountUri, string blobName, bool canOverwrite, string siteName, IList<AppServiceDatabaseBackupSetting> databases, bool? ignoreConflictingHostNames, bool? ignoreDatabases, string appServicePlan, BackupRestoreOperationType? operationType, bool? adjustConnectionStrings, string hostingEnvironment, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestoreRequestProperties(Uri storageAccountUri, string blobName, bool canOverwrite, string siteName, IList<AppServiceDatabaseBackupSetting> databases, bool? ignoreConflictingHostNames, bool? ignoreDatabases, string appServicePlan, BackupRestoreOperationType? operationType, bool? adjustConnectionStrings, string hostingEnvironment, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageAccountUri = storageAccountUri;
             BlobName = blobName;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> SAS URL to the container. </summary>
         [WirePath("storageAccountUrl")]
-        public string StorageAccountUri { get; set; }
+        public Uri StorageAccountUri { get; set; }
 
         /// <summary> Name of a blob which contains the backup. </summary>
         [WirePath("blobName")]

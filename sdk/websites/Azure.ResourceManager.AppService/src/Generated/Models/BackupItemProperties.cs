@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="correlationId"> Unique correlation identifier. Please use this along with the timestamp while communicating with Azure support. </param>
         /// <param name="websiteSizeInBytes"> Size of the original web app which has been backed up. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupItemProperties(int? backupId, string storageAccountUri, string blobName, string backupName, WebAppBackupStatus? status, long? sizeInBytes, DateTimeOffset? createdOn, string log, IReadOnlyList<AppServiceDatabaseBackupSetting> databases, bool? isScheduled, DateTimeOffset? lastRestoreOn, DateTimeOffset? finishedOn, string correlationId, long? websiteSizeInBytes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupItemProperties(int? backupId, Uri storageAccountUri, string blobName, string backupName, WebAppBackupStatus? status, long? sizeInBytes, DateTimeOffset? createdOn, string log, IReadOnlyList<AppServiceDatabaseBackupSetting> databases, bool? isScheduled, DateTimeOffset? lastRestoreOn, DateTimeOffset? finishedOn, string correlationId, long? websiteSizeInBytes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BackupId = backupId;
             StorageAccountUri = storageAccountUri;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> SAS URL for the storage account container which contains this backup. </summary>
         [WirePath("storageAccountUrl")]
-        public string StorageAccountUri { get; }
+        public Uri StorageAccountUri { get; }
 
         /// <summary> Name of the blob which contains data for this backup. </summary>
         [WirePath("blobName")]

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="osType"> App Service OS type meter used for. </param>
         /// <param name="multiplier"> Meter Multiplier. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BillingMeterProperties(Guid? meterId, string billingLocation, string shortName, string friendlyName, string osType, double? multiplier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BillingMeterProperties(Guid? meterId, AzureLocation? billingLocation, string shortName, string friendlyName, string osType, double? multiplier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MeterId = meterId;
             BillingLocation = billingLocation;
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Azure Location of billable resource. </summary>
         [WirePath("billingLocation")]
-        public string BillingLocation { get; set; }
+        public AzureLocation? BillingLocation { get; set; }
 
         /// <summary> Short Name from App Service Azure pricing Page. </summary>
         [WirePath("shortName")]

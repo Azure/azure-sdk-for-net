@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(RecommendationId))
             {
                 writer.WritePropertyName("recommendationId"u8);
-                writer.WriteStringValue(RecommendationId);
+                writer.WriteStringValue(RecommendationId.Value);
             }
             if (Optional.IsDefined(ResourceId))
             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             DateTimeOffset? createdOn = default;
-            string recommendationId = default;
+            Guid? recommendationId = default;
             ResourceIdentifier resourceId = default;
             ResourceScopeType? resourceScope = default;
             string ruleName = default;
@@ -289,7 +289,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("recommendationId"u8))
                 {
-                    recommendationId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recommendationId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("resourceId"u8))

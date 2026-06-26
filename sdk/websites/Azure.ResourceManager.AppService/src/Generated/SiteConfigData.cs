@@ -315,11 +315,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> If using user managed identity, the user managed identity ClientId. </summary>
         [WirePath("properties.acrUserManagedIdentityID")]
-        public string AcrUserManagedIdentityID
+        public string AcrUserManagedIdentityId
         {
             get
             {
-                return Properties is null ? default : Properties.AcrUserManagedIdentityID;
+                return Properties is null ? default : Properties.AcrUserManagedIdentityId;
             }
             set
             {
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new SiteConfigProperties();
                 }
-                Properties.AcrUserManagedIdentityID = value;
+                Properties.AcrUserManagedIdentityId = value;
             }
         }
 

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> History URL. </summary>
         [WirePath("properties.history_url")]
-        public string HistoryUri
+        public Uri HistoryUri
         {
             get
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Scheduler Logs URL. </summary>
         [WirePath("properties.scheduler_logs_url")]
-        public string SchedulerLogsUri
+        public Uri SchedulerLogsUri
         {
             get
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Job URL. </summary>
         [WirePath("properties.url")]
-        public string Uri
+        public Uri Uri
         {
             get
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Extra Info URL. </summary>
         [WirePath("properties.extra_info_url")]
-        public string ExtraInfoUri
+        public Uri ExtraInfoUri
         {
             get
             {

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="createdOn"> The date and time on which the backend was linked to the static site. </param>
         /// <param name="provisioningState"> The provisioning state of the linking process. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteLinkedBackendARMResourceProperties(string backendResourceId, string region, DateTimeOffset? createdOn, string provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StaticSiteLinkedBackendARMResourceProperties(ResourceIdentifier backendResourceId, string region, DateTimeOffset? createdOn, string provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BackendResourceId = backendResourceId;
             Region = region;
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The resource id of the backend linked to the static site. </summary>
         [WirePath("backendResourceId")]
-        public string BackendResourceId { get; set; }
+        public ResourceIdentifier BackendResourceId { get; set; }
 
         /// <summary> The region of the backend linked to the static site. </summary>
         [WirePath("region")]

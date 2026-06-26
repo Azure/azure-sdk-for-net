@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(SecretUri))
             {
                 writer.WritePropertyName("secretUrl"u8);
-                writer.WriteStringValue(SecretUri);
+                writer.WriteStringValue(SecretUri.AbsoluteUri);
             }
             writer.WritePropertyName("applicableEnvironmentsMode"u8);
             writer.WriteStringValue(ApplicableEnvironmentsMode);
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             string password = default;
-            string secretUri = default;
+            Uri secretUri = default;
             string applicableEnvironmentsMode = default;
             IList<string> environments = default;
             string secretState = default;
@@ -168,7 +168,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("secretUrl"u8))
                 {
-                    secretUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    secretUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("applicableEnvironmentsMode"u8))

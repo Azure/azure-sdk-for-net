@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(InvitationUri))
             {
                 writer.WritePropertyName("invitationUrl"u8);
-                writer.WriteStringValue(InvitationUri);
+                writer.WriteStringValue(InvitationUri.AbsoluteUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             DateTimeOffset? expiresOn = default;
-            string invitationUri = default;
+            Uri invitationUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("invitationUrl"u8))
                 {
-                    invitationUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    invitationUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")

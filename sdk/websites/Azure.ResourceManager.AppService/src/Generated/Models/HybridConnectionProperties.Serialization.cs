@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -158,7 +159,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             string serviceBusNamespace = default;
             string relayName = default;
-            string relayArmId = default;
+            ResourceIdentifier relayArmId = default;
             string hostname = default;
             int? port = default;
             string sendKeyName = default;
@@ -179,7 +180,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("relayArmUri"u8))
                 {
-                    relayArmId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    relayArmId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("hostname"u8))

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="expiresOn"> The expiration time of the invitation. </param>
         /// <param name="invitationUri"> The url for the invitation link. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteUserInvitationResponseResourceProperties(DateTimeOffset? expiresOn, string invitationUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StaticSiteUserInvitationResponseResourceProperties(DateTimeOffset? expiresOn, Uri invitationUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExpiresOn = expiresOn;
             InvitationUri = invitationUri;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The url for the invitation link. </summary>
         [WirePath("invitationUrl")]
-        public string InvitationUri { get; }
+        public Uri InvitationUri { get; }
     }
 }

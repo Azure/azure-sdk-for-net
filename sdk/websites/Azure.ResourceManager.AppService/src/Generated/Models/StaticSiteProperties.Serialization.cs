@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(RepositoryUri))
             {
                 writer.WritePropertyName("repositoryUrl"u8);
-                writer.WriteStringValue(RepositoryUri);
+                writer.WriteStringValue(RepositoryUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Branch))
             {
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             string defaultHostname = default;
-            string repositoryUri = default;
+            Uri repositoryUri = default;
             string branch = default;
             IReadOnlyList<string> customDomains = default;
             string repositoryToken = default;
@@ -264,7 +264,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("repositoryUrl"u8))
                 {
-                    repositoryUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    repositoryUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("branch"u8))

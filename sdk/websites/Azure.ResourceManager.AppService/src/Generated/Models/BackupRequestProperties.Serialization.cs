@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             writer.WritePropertyName("storageAccountUrl"u8);
-            writer.WriteStringValue(StorageAccountUri);
+            writer.WriteStringValue(StorageAccountUri.AbsoluteUri);
             if (Optional.IsDefined(BackupSchedule))
             {
                 writer.WritePropertyName("backupSchedule"u8);
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             string backupName = default;
             bool? isEnabled = default;
-            string storageAccountUri = default;
+            Uri storageAccountUri = default;
             WebAppBackupSchedule backupSchedule = default;
             IList<AppServiceDatabaseBackupSetting> databases = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("storageAccountUrl"u8))
                 {
-                    storageAccountUri = prop.Value.GetString();
+                    storageAccountUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("backupSchedule"u8))

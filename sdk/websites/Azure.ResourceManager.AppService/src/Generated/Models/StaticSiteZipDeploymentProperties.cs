@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="provider"> The provider submitting this deployment. </param>
         /// <param name="functionLanguage"> The language of the api content, if it exists. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteZipDeploymentProperties(string appZipUri, string apiZipUri, string deploymentTitle, string provider, string functionLanguage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StaticSiteZipDeploymentProperties(Uri appZipUri, Uri apiZipUri, string deploymentTitle, string provider, string functionLanguage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AppZipUri = appZipUri;
             ApiZipUri = apiZipUri;
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> URL for the zipped app content. </summary>
         [WirePath("appZipUrl")]
-        public string AppZipUri { get; set; }
+        public Uri AppZipUri { get; set; }
 
         /// <summary> URL for the zipped api content. </summary>
         [WirePath("apiZipUrl")]
-        public string ApiZipUri { get; set; }
+        public Uri ApiZipUri { get; set; }
 
         /// <summary> A title to label the deployment. </summary>
         [WirePath("deploymentTitle")]

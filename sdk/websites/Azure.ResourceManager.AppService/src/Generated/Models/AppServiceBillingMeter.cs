@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Azure Location of billable resource. </summary>
         [WirePath("properties.billingLocation")]
-        public string BillingLocation
+        public AzureLocation? BillingLocation
         {
             get
             {

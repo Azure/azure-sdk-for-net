@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="marketplacePublisher"> Marketplace publisher. </param>
         /// <param name="marketplaceOffer"> Marketplace offer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PremierAddOnOfferProperties(string sku, string product, string vendor, bool? isPromoCodeRequired, int? quota, AppServicePlanRestriction? webHostingPlanRestrictions, string privacyPolicyUri, string legalTermsUri, string marketplacePublisher, string marketplaceOffer, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PremierAddOnOfferProperties(string sku, string product, string vendor, bool? isPromoCodeRequired, int? quota, AppServicePlanRestriction? webHostingPlanRestrictions, Uri privacyPolicyUri, Uri legalTermsUri, string marketplacePublisher, string marketplaceOffer, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
             Product = product;
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Privacy policy URL. </summary>
         [WirePath("privacyPolicyUrl")]
-        public string PrivacyPolicyUri { get; set; }
+        public Uri PrivacyPolicyUri { get; set; }
 
         /// <summary> Legal terms URL. </summary>
         [WirePath("legalTermsUrl")]
-        public string LegalTermsUri { get; set; }
+        public Uri LegalTermsUri { get; set; }
 
         /// <summary> Marketplace publisher. </summary>
         [WirePath("marketplacePublisher")]

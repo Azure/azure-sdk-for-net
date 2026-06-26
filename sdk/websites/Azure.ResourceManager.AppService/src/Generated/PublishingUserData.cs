@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Url of SCM site. </summary>
         [WirePath("properties.scmUri")]
-        public string ScmUri
+        public Uri ScmUri
         {
             get
             {

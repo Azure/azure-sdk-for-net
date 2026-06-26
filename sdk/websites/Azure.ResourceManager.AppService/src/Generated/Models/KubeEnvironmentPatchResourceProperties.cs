@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
         /// <param name="isInternalLoadBalancerEnabled"> Only visible within Vnet/Subnet. </param>
         /// <param name="defaultDomain"> Default Domain Name for the cluster. </param>
-        /// <param name="staticIp"> Static IP of the KubeEnvironment. </param>
+        /// <param name="staticIP"> Static IP of the KubeEnvironment. </param>
         /// <param name="arcConfiguration">
         /// Cluster configuration which determines the ARC cluster
         /// components types. Eg: Choosing between BuildService kind,
@@ -39,19 +40,19 @@ namespace Azure.ResourceManager.AppService.Models
         /// supported
         /// </param>
         /// <param name="containerAppsConfiguration"> Cluster configuration for Container Apps Environments to configure Dapr Instrumentation Key and VNET Configuration. </param>
-        /// <param name="aksResourceID"></param>
+        /// <param name="aksResourceId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KubeEnvironmentPatchResourceProperties(KubeEnvironmentProvisioningState? provisioningState, string deploymentErrors, bool? isInternalLoadBalancerEnabled, string defaultDomain, string staticIp, ArcConfiguration arcConfiguration, AppLogsConfiguration appLogsConfiguration, ContainerAppsConfiguration containerAppsConfiguration, string aksResourceID, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KubeEnvironmentPatchResourceProperties(KubeEnvironmentProvisioningState? provisioningState, string deploymentErrors, bool? isInternalLoadBalancerEnabled, string defaultDomain, string staticIP, ArcConfiguration arcConfiguration, AppLogsConfiguration appLogsConfiguration, ContainerAppsConfiguration containerAppsConfiguration, ResourceIdentifier aksResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             DeploymentErrors = deploymentErrors;
             IsInternalLoadBalancerEnabled = isInternalLoadBalancerEnabled;
             DefaultDomain = defaultDomain;
-            StaticIp = staticIp;
+            StaticIP = staticIP;
             ArcConfiguration = arcConfiguration;
             AppLogsConfiguration = appLogsConfiguration;
             ContainerAppsConfiguration = containerAppsConfiguration;
-            AksResourceID = aksResourceID;
+            AksResourceId = aksResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Static IP of the KubeEnvironment. </summary>
         [WirePath("staticIp")]
-        public string StaticIp { get; set; }
+        public string StaticIP { get; set; }
 
         /// <summary>
         /// Cluster configuration which determines the ARC cluster
@@ -95,8 +96,8 @@ namespace Azure.ResourceManager.AppService.Models
         [WirePath("containerAppsConfiguration")]
         public ContainerAppsConfiguration ContainerAppsConfiguration { get; set; }
 
-        /// <summary> Gets or sets the AksResourceID. </summary>
+        /// <summary> Gets or sets the AksResourceId. </summary>
         [WirePath("aksResourceID")]
-        public string AksResourceID { get; set; }
+        public ResourceIdentifier AksResourceId { get; set; }
     }
 }

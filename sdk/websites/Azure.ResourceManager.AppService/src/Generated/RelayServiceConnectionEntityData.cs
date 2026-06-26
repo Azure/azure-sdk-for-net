@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets or sets the BiztalkUri. </summary>
         [WirePath("properties.biztalkUri")]
-        public string BiztalkUri
+        public Uri BiztalkUri
         {
             get
             {

@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(ScmUri))
             {
                 writer.WritePropertyName("scmUri"u8);
-                writer.WriteStringValue(ScmUri);
+                writer.WriteStringValue(ScmUri.AbsoluteUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService.Models
             string publishingPassword = default;
             string publishingPasswordHash = default;
             string publishingPasswordHashSalt = default;
-            string scmUri = default;
+            Uri scmUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -173,7 +173,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("scmUri"u8))
                 {
-                    scmUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scmUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")

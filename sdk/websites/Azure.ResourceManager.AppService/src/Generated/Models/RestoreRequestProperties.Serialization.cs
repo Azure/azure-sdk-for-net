@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService.Models
                 throw new FormatException($"The model {nameof(RestoreRequestProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("storageAccountUrl"u8);
-            writer.WriteStringValue(StorageAccountUri);
+            writer.WriteStringValue(StorageAccountUri.AbsoluteUri);
             if (Optional.IsDefined(BlobName))
             {
                 writer.WritePropertyName("blobName"u8);
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            string storageAccountUri = default;
+            Uri storageAccountUri = default;
             string blobName = default;
             bool canOverwrite = default;
             string siteName = default;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (prop.NameEquals("storageAccountUrl"u8))
                 {
-                    storageAccountUri = prop.Value.GetString();
+                    storageAccountUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("blobName"u8))

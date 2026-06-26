@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> SAS URL for the storage account container which contains this backup. </summary>
         [WirePath("properties.storageAccountUrl")]
-        public string StorageAccountUri
+        public Uri StorageAccountUri
         {
             get
             {
