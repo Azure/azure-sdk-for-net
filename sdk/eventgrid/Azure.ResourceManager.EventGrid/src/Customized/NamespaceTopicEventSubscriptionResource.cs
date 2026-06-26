@@ -12,8 +12,10 @@ using Azure.ResourceManager.EventGrid.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    // Tag add/remove/set helpers: the new mgmt generator does not emit the standard ARM tag operation
-    // methods for this resource, so they are hand-authored here to preserve main's GA tag surface.
+    // Tag add/remove/set helpers: unlike the tracked EventGrid resources, this resource's PATCH does return
+    // content, but its tags live at properties.tags (nested). The generator only recognizes a top-level "tags"
+    // property when deciding whether to emit the standard ARM tag operations, so it skips them for this nested
+    // layout. They are hand-authored here to preserve main's GA tag surface.
     public partial class NamespaceTopicEventSubscriptionResource
     {
         /// <summary> Adds a tag to the resource. </summary>

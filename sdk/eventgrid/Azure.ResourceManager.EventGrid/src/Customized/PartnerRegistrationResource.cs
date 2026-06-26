@@ -12,8 +12,12 @@ using Azure.ResourceManager.EventGrid.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    // Tag add/remove/set helpers: the new mgmt generator does not emit the standard ARM tag operation
-    // methods for this resource, so they are hand-authored here to preserve main's GA tag surface.
+    // Tag add/remove/set helpers: the new mgmt generator only emits the standard ARM tag operations when the
+    // resource's Update (PATCH) returns the resource body. This resource's PATCH is modeled as returning no
+    // content (Update -> non-generic ArmOperation), so the generator skips the tag helpers and deliberately
+    // does not fall back to PUT. They are hand-authored here to preserve main's GA tag surface. GA's Update is
+    // likewise a non-generic ArmOperation, so the no-content modeling cannot be changed in TypeSpec without
+    // breaking the Update return-type parity.
     public partial class PartnerRegistrationResource
     {
         /// <summary> Adds a tag to the resource. </summary>

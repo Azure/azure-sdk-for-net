@@ -15,8 +15,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    // Tag add/remove/set helpers (generator emits none for this resource) plus typed private-link resource
-    // accessors, both hand-authored to preserve main's GA surface.
+    // Tag add/remove/set helpers plus typed private-link resource accessors, hand-authored to preserve main's
+    // GA surface. The generator omits the tag helpers because this resource's Update (PATCH) is modeled as
+    // returning no content (Update -> non-generic ArmOperation): it only emits the standard ARM tag operations
+    // for a content-returning PATCH and deliberately will not fall back to PUT. GA's Update is likewise a
+    // non-generic ArmOperation, so the modeling cannot change in TypeSpec without breaking parity.
     public partial class PartnerNamespaceResource
     {
         /// <summary> Gets a collection of PartnerNamespacePrivateLinkResources in the PartnerNamespace. </summary>
