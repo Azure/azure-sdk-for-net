@@ -5,13 +5,11 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.PrivateDns.Models
 {
@@ -35,7 +33,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
         /// <param name="privateDnsProvisioningState"> The provisioning state of the resource. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="internalId"> Private zone internal Id. </param>
         /// <returns> A new <see cref="PrivateDns.PrivateDnsZoneData"/> instance for mocking. </returns>
-        public static PrivateDnsZoneData PrivateDnsZoneData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, long? maxNumberOfRecords = null, long? numberOfRecords = null, long? maxNumberOfVirtualNetworkLinks = null, long? numberOfVirtualNetworkLinks = null, long? maxNumberOfVirtualNetworkLinksWithRegistration = null, long? numberOfVirtualNetworkLinksWithRegistration = null, PrivateDnsProvisioningState? privateDnsProvisioningState = null, string internalId = null)
+        public static PrivateDnsZoneData PrivateDnsZoneData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, long? maxNumberOfRecords = null, long? numberOfRecords = null, long? maxNumberOfVirtualNetworkLinks = null, long? numberOfVirtualNetworkLinks = null, long? maxNumberOfVirtualNetworkLinksWithRegistration = null, long? numberOfVirtualNetworkLinksWithRegistration = null, PrivateDnsProvisioningState? privateDnsProvisioningState = null, string internalId = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -72,7 +70,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
         /// <param name="virtualNetworkLinkState"> The status of the virtual network link to the Private DNS zone. Possible values are 'InProgress' and 'Done'. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="privateDnsProvisioningState"> The provisioning state of the resource. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <returns> A new <see cref="PrivateDns.VirtualNetworkLinkData"/> instance for mocking. </returns>
-        public static VirtualNetworkLinkData VirtualNetworkLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, ResourceIdentifier virtualNetworkId = null, bool? registrationEnabled = null, PrivateDnsResolutionPolicy? privateDnsResolutionPolicy = null, VirtualNetworkLinkState? virtualNetworkLinkState = null, PrivateDnsProvisioningState? privateDnsProvisioningState = null)
+        public static VirtualNetworkLinkData VirtualNetworkLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, ResourceIdentifier virtualNetworkId = null, bool? registrationEnabled = null, PrivateDnsResolutionPolicy? privateDnsResolutionPolicy = null, VirtualNetworkLinkState? virtualNetworkLinkState = null, PrivateDnsProvisioningState? privateDnsProvisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -92,27 +90,6 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PrivateDnsResourceReferenceResult"/>. </summary>
-        /// <param name="privateDnsResourceReferences"> The result of private dns resource reference request. A list of private dns resource references for each of the azure resource in the request. </param>
-        /// <returns> A new <see cref="Models.PrivateDnsResourceReferenceResult"/> instance for mocking. </returns>
-        public static PrivateDnsResourceReferenceResult PrivateDnsResourceReferenceResult(IEnumerable<PrivateDnsResourceReference> privateDnsResourceReferences = null)
-        {
-            privateDnsResourceReferences ??= new List<PrivateDnsResourceReference>();
-
-            return new PrivateDnsResourceReferenceResult(privateDnsResourceReferences?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PrivateDnsResourceReference"/>. </summary>
-        /// <param name="privateDnsResources"> A list of private DNS record sets that reference the target resource. </param>
-        /// <param name="targetResourceId"> A reference to an azure resource from where the private DNS resource value is taken. </param>
-        /// <returns> A new <see cref="Models.PrivateDnsResourceReference"/> instance for mocking. </returns>
-        public static PrivateDnsResourceReference PrivateDnsResourceReference(IEnumerable<WritableSubResource> privateDnsResources = null, ResourceIdentifier targetResourceId = null)
-        {
-            privateDnsResources ??= new List<WritableSubResource>();
-
-            return new PrivateDnsResourceReference(privateDnsResources?.ToList(), targetResourceId != null ? ResourceManagerModelFactory.WritableSubResource(targetResourceId) : null, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.PrivateDns.VirtualNetworkLinkData" />. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -127,7 +104,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
         /// <param name="privateDnsProvisioningState"> The provisioning state of the resource. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <returns> A new <see cref="T:Azure.ResourceManager.PrivateDns.VirtualNetworkLinkData" /> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VirtualNetworkLinkData VirtualNetworkLinkData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ResourceIdentifier virtualNetworkId, bool? registrationEnabled, VirtualNetworkLinkState? virtualNetworkLinkState, PrivateDnsProvisioningState? privateDnsProvisioningState)
+        public static VirtualNetworkLinkData VirtualNetworkLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ResourceIdentifier virtualNetworkId, bool? registrationEnabled, VirtualNetworkLinkState? virtualNetworkLinkState, PrivateDnsProvisioningState? privateDnsProvisioningState)
         {
             return VirtualNetworkLinkData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, etag: etag, virtualNetworkId: virtualNetworkId, registrationEnabled: registrationEnabled, privateDnsResolutionPolicy: default, virtualNetworkLinkState: virtualNetworkLinkState, privateDnsProvisioningState: privateDnsProvisioningState);
         }

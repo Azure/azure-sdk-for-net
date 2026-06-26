@@ -7,11 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.PrivateDns.Models
 {
-    /// <summary> The response of a RecordSet list operation. </summary>
+    /// <summary> The response to a record set list operation. </summary>
     internal partial class PrivateDnsRecordListResult
     {
         /// <summary>
@@ -47,34 +46,25 @@ namespace Azure.ResourceManager.PrivateDns.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PrivateDnsRecordListResult"/>. </summary>
-        /// <param name="value"> The RecordSet items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal PrivateDnsRecordListResult(IEnumerable<PrivateDnsRecordData> value)
+        internal PrivateDnsRecordListResult()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
+            Value = new ChangeTrackingList<PrivateDnsRecordData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateDnsRecordListResult"/>. </summary>
-        /// <param name="value"> The RecordSet items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value"> Information about the record sets in the response. </param>
+        /// <param name="nextLink"> The continuation token for the next page of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateDnsRecordListResult(IReadOnlyList<PrivateDnsRecordData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PrivateDnsRecordListResult(IReadOnlyList<PrivateDnsRecordData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateDnsRecordListResult"/> for deserialization. </summary>
-        internal PrivateDnsRecordListResult()
-        {
-        }
-
-        /// <summary> The RecordSet items on this page. </summary>
+        /// <summary> Information about the record sets in the response. </summary>
         public IReadOnlyList<PrivateDnsRecordData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> The continuation token for the next page of results. </summary>
+        public string NextLink { get; }
     }
 }

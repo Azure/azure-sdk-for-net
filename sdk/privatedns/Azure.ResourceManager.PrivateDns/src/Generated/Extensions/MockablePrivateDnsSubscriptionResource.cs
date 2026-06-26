@@ -5,13 +5,10 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
-using System.Threading.Tasks;
 using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.PrivateDns.Models;
 
 namespace Azure.ResourceManager.PrivateDns.Mocking
 {
@@ -20,8 +17,6 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
     {
         private ClientDiagnostics _privateDnsZonePrivateZonesClientDiagnostics;
         private PrivateZonesRestOperations _privateDnsZonePrivateZonesRestClient;
-        private ClientDiagnostics _privateDnsResourceReferenceClientDiagnostics;
-        private PrivateDnsResourceReferenceRestOperations _privateDnsResourceReferenceRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockablePrivateDnsSubscriptionResource"/> class for mocking. </summary>
         protected MockablePrivateDnsSubscriptionResource()
@@ -37,8 +32,6 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
 
         private ClientDiagnostics PrivateDnsZonePrivateZonesClientDiagnostics => _privateDnsZonePrivateZonesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PrivateDns", PrivateDnsZoneResource.ResourceType.Namespace, Diagnostics);
         private PrivateZonesRestOperations PrivateDnsZonePrivateZonesRestClient => _privateDnsZonePrivateZonesRestClient ??= new PrivateZonesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PrivateDnsZoneResource.ResourceType));
-        private ClientDiagnostics PrivateDnsResourceReferenceClientDiagnostics => _privateDnsResourceReferenceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PrivateDns", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private PrivateDnsResourceReferenceRestOperations PrivateDnsResourceReferenceRestClient => _privateDnsResourceReferenceRestClient ??= new PrivateDnsResourceReferenceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -59,7 +52,7 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2026-06-01-preview</description>
+        /// <description>2024-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -90,7 +83,7 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2026-06-01-preview</description>
+        /// <description>2024-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -106,82 +99,6 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
             HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateDnsZonePrivateZonesRestClient.CreateListRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PrivateDnsZonePrivateZonesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PrivateDnsZoneResource(Client, PrivateDnsZoneData.DeserializePrivateDnsZoneData(e)), PrivateDnsZonePrivateZonesClientDiagnostics, Pipeline, "MockablePrivateDnsSubscriptionResource.GetPrivateDnsZones", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns the private DNS zone records specified by the referencing targetResourceIds.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/getPrivateDnsResourceReference</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateDnsResourceReference_GetByTargetResources</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-06-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<PrivateDnsResourceReferenceResult>> GetByTargetResourcesPrivateDnsResourceReferenceAsync(PrivateDnsResourceReferenceContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = PrivateDnsResourceReferenceClientDiagnostics.CreateScope("MockablePrivateDnsSubscriptionResource.GetByTargetResourcesPrivateDnsResourceReference");
-            scope.Start();
-            try
-            {
-                var response = await PrivateDnsResourceReferenceRestClient.GetByTargetResourcesAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Returns the private DNS zone records specified by the referencing targetResourceIds.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/getPrivateDnsResourceReference</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateDnsResourceReference_GetByTargetResources</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-06-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<PrivateDnsResourceReferenceResult> GetByTargetResourcesPrivateDnsResourceReference(PrivateDnsResourceReferenceContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = PrivateDnsResourceReferenceClientDiagnostics.CreateScope("MockablePrivateDnsSubscriptionResource.GetByTargetResourcesPrivateDnsResourceReference");
-            scope.Start();
-            try
-            {
-                var response = PrivateDnsResourceReferenceRestClient.GetByTargetResources(Id.SubscriptionId, content, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }
