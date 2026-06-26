@@ -1089,7 +1089,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <param name="resourceId"> The Azure Resource Id that represents the endpoint of a Partner Destination of an event subscription. </param>
         /// <returns> A new <see cref="Models.PartnerEventSubscriptionDestination"/> instance for mocking. </returns>
-        public static PartnerEventSubscriptionDestination PartnerEventSubscriptionDestination(string resourceId = default)
+        public static PartnerEventSubscriptionDestination PartnerEventSubscriptionDestination(ResourceIdentifier resourceId = default)
         {
             return new PartnerEventSubscriptionDestination(default, default, resourceId is null ? default : new PartnerEventSubscriptionDestinationProperties(resourceId, default));
         }
