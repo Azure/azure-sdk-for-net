@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary>
         /// Initializes a new instance of the <see cref="SoftwareInventoryCollection"/> type for compatibility with the previous public API surface.
         /// </summary>
-        protected SoftwareInventoryCollection() { throw new System.NotSupportedException(UnsupportedMessage); }
+        protected SoftwareInventoryCollection() { }
         /// <summary>
         /// Provides a compatibility shim for the Exists operation preserved from the previous public API surface.
         /// </summary>

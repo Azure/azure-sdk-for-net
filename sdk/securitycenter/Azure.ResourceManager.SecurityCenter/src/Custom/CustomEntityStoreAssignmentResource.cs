@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomEntityStoreAssignmentResource"/> type for compatibility with the previous public API surface.
         /// </summary>
-        protected CustomEntityStoreAssignmentResource() { throw new System.NotSupportedException(UnsupportedMessage); }
+        protected CustomEntityStoreAssignmentResource() { }
         /// <summary>
         /// Gets the Data value preserved from the previous public API surface.
         /// </summary>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomEntityStoreAssignmentCollection"/> type for compatibility with the previous public API surface.
         /// </summary>
-        protected CustomEntityStoreAssignmentCollection() { throw new System.NotSupportedException(UnsupportedMessage); }
+        protected CustomEntityStoreAssignmentCollection() { }
         /// <summary>
         /// Provides a compatibility shim for the CreateOrUpdate operation preserved from the previous public API surface.
         /// </summary>

@@ -66,6 +66,61 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         public virtual Pageable<SecurityAlertData> GetAlerts(CancellationToken cancellationToken = default)
             => new SubscriptionAlertsPageable(this, cancellationToken);
 
+        /// <summary> Gets adaptive application control groups for this subscription. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<AdaptiveApplicationControlGroupResource> GetAdaptiveApplicationControlGroups(bool? includePathRecommendations = default, bool? summary = default, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("This API is no longer supported by the service. Use SubscriptionResource.GetAdaptiveApplicationControlGroups() instead.");
+
+        /// <summary> Gets adaptive application control groups for this subscription. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<AdaptiveApplicationControlGroupResource> GetAdaptiveApplicationControlGroupsAsync(bool? includePathRecommendations = default, bool? summary = default, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("This API is no longer supported by the service. Use SubscriptionResource.GetAdaptiveApplicationControlGroupsAsync() instead.");
+
+        /// <summary> Gets custom assessment automations for this subscription. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<CustomAssessmentAutomationResource> GetCustomAssessmentAutomations(CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetCustomAssessmentAutomations(ResourceIdentifier scope) instead.");
+
+        /// <summary> Gets custom assessment automations for this subscription. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<CustomAssessmentAutomationResource> GetCustomAssessmentAutomationsAsync(CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetCustomAssessmentAutomations(ResourceIdentifier scope) instead.");
+
+        /// <summary> Gets custom entity store assignments for this subscription. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<CustomEntityStoreAssignmentResource> GetCustomEntityStoreAssignments(CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetCustomEntityStoreAssignments(ResourceIdentifier scope) instead.");
+
+        /// <summary> Gets custom entity store assignments for this subscription. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<CustomEntityStoreAssignmentResource> GetCustomEntityStoreAssignmentsAsync(CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetCustomEntityStoreAssignments(ResourceIdentifier scope) instead.");
+
+        /// <summary> Gets a security cloud connector for this subscription. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<SecurityCloudConnectorResource> GetSecurityCloudConnector(string connectorName, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetSecurityCloudConnectorResource(ResourceIdentifier id) instead.");
+
+        /// <summary> Gets a security cloud connector for this subscription. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Task<Response<SecurityCloudConnectorResource>> GetSecurityCloudConnectorAsync(string connectorName, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetSecurityCloudConnectorResource(ResourceIdentifier id) instead.");
+
+        /// <summary> Gets security cloud connectors for this subscription. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual SecurityCloudConnectorCollection GetSecurityCloudConnectors()
+            => throw new NotSupportedException("This API is no longer supported by the service. No direct collection replacement is available.");
+
+        /// <summary> Gets software inventories for this subscription. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<SoftwareInventoryResource> GetSoftwareInventories(CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("This API is no longer supported by the service. No direct replacement is available.");
+
+        /// <summary> Gets software inventories for this subscription. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<SoftwareInventoryResource> GetSoftwareInventoriesAsync(CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("This API is no longer supported by the service. No direct replacement is available.");
+
         /// <summary> Gets a Security Center location for this subscription. </summary>
         public virtual Response<SecurityCenterLocationResource> GetSecurityCenterLocation(AzureLocation ascLocation, CancellationToken cancellationToken = default)
             => GetSecurityCenterLocation(ascLocation.ToString(), cancellationToken);

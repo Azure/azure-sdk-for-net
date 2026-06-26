@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary>
         /// Initializes a new instance of the <see cref="SoftwareInventoryResource"/> type for compatibility with the previous public API surface.
         /// </summary>
-        protected SoftwareInventoryResource() { throw new System.NotSupportedException(UnsupportedMessage); }
+        protected SoftwareInventoryResource() { }
         /// <summary>
         /// Gets the Data value preserved from the previous public API surface.
         /// </summary>

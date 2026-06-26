@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomAssessmentAutomationCollection"/> type for compatibility with the previous public API surface.
         /// </summary>
-        protected CustomAssessmentAutomationCollection() { throw new System.NotSupportedException(UnsupportedMessage); }
+        protected CustomAssessmentAutomationCollection() { }
         /// <summary>
         /// Provides a compatibility shim for the CreateOrUpdate operation preserved from the previous public API surface.
         /// </summary>

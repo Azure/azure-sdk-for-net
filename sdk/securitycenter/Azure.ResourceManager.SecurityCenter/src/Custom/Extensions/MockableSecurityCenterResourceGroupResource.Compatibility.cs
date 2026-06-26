@@ -58,6 +58,76 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         public virtual ServerVulnerabilityAssessmentCollection GetServerVulnerabilityAssessments(string resourceNamespace, string resourceType, string resourceName)
             => new ServerVulnerabilityAssessmentCollection(Client, CreateExtendedResourceIdentifier(Id, resourceNamespace, resourceType, resourceName));
 
+        /// <summary> Gets an adaptive network hardening compatibility resource. </summary>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Response<AdaptiveNetworkHardeningResource> GetAdaptiveNetworkHardening(string resourceNamespace, string resourceType, string resourceName, string adaptiveNetworkHardeningResourceName, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetAdaptiveNetworkHardeningResource(ResourceIdentifier id) instead.");
+
+        /// <summary> Gets an adaptive network hardening compatibility resource. </summary>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Task<Response<AdaptiveNetworkHardeningResource>> GetAdaptiveNetworkHardeningAsync(string resourceNamespace, string resourceType, string resourceName, string adaptiveNetworkHardeningResourceName, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetAdaptiveNetworkHardeningResource(ResourceIdentifier id) instead.");
+
+        /// <summary> Gets an adaptive network hardening compatibility collection. </summary>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual AdaptiveNetworkHardeningCollection GetAdaptiveNetworkHardenings(string resourceNamespace, string resourceType, string resourceName)
+            => throw new NotSupportedException("This API is no longer supported by the service. No direct collection replacement is available.");
+
+        /// <summary> Gets a custom assessment automation compatibility resource. </summary>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Response<CustomAssessmentAutomationResource> GetCustomAssessmentAutomation(string customAssessmentAutomationName, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetCustomAssessmentAutomations(ResourceIdentifier scope) instead.");
+
+        /// <summary> Gets a custom assessment automation compatibility resource. </summary>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Task<Response<CustomAssessmentAutomationResource>> GetCustomAssessmentAutomationAsync(string customAssessmentAutomationName, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetCustomAssessmentAutomations(ResourceIdentifier scope) instead.");
+
+        /// <summary> Gets a custom assessment automation compatibility collection. </summary>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual CustomAssessmentAutomationCollection GetCustomAssessmentAutomations()
+            => throw new NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetCustomAssessmentAutomations(ResourceIdentifier scope) instead.");
+
+        /// <summary> Gets a custom entity store assignment compatibility resource. </summary>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Response<CustomEntityStoreAssignmentResource> GetCustomEntityStoreAssignment(string customEntityStoreAssignmentName, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetCustomEntityStoreAssignments(ResourceIdentifier scope) instead.");
+
+        /// <summary> Gets a custom entity store assignment compatibility resource. </summary>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Task<Response<CustomEntityStoreAssignmentResource>> GetCustomEntityStoreAssignmentAsync(string customEntityStoreAssignmentName, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetCustomEntityStoreAssignments(ResourceIdentifier scope) instead.");
+
+        /// <summary> Gets a custom entity store assignment compatibility collection. </summary>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual CustomEntityStoreAssignmentCollection GetCustomEntityStoreAssignments()
+            => throw new NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetCustomEntityStoreAssignments(ResourceIdentifier scope) instead.");
+
+        /// <summary> Gets a software inventory compatibility collection. </summary>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual SoftwareInventoryCollection GetSoftwareInventories(string resourceNamespace, string resourceType, string resourceName)
+            => throw new NotSupportedException("This API is no longer supported by the service. No direct replacement is available.");
+
+        /// <summary> Gets a software inventory compatibility resource. </summary>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Response<SoftwareInventoryResource> GetSoftwareInventory(string resourceNamespace, string resourceType, string resourceName, string softwareName, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("This API is no longer supported by the service. No direct replacement is available.");
+
+        /// <summary> Gets a software inventory compatibility resource. </summary>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Task<Response<SoftwareInventoryResource>> GetSoftwareInventoryAsync(string resourceNamespace, string resourceType, string resourceName, string softwareName, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("This API is no longer supported by the service. No direct replacement is available.");
+
+        /// <summary> Gets an external security solution compatibility model. </summary>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Task<Response<ExternalSecuritySolution>> GetExternalSecuritySolutionAsync(AzureLocation ascLocation, string externalSecuritySolutionsName, CancellationToken cancellationToken = default)
+            => GetAsync(ascLocation, externalSecuritySolutionsName, cancellationToken);
+
+        /// <summary> Gets an external security solution compatibility model. </summary>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Response<ExternalSecuritySolution> GetExternalSecuritySolution(AzureLocation ascLocation, string externalSecuritySolutionsName, CancellationToken cancellationToken = default)
+            => Get(ascLocation, externalSecuritySolutionsName, cancellationToken);
+
         /// <summary> Gets an allowed connection compatibility model. </summary>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. </param>
         /// <param name="connectionType"> The allowed connection type. </param>
