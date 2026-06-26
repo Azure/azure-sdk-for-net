@@ -7,7 +7,14 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    // Preserve the pre-migration model factory overloads for abstract compat models.
+    // These seven types are abstract, polymorphic base models whose discriminator enum
+    // (StaticRoutingEnrichmentType, EndpointType, FilterOperatorType, etc.) is internal.
+    // For each one the generator emits a public ArmEventGridModelFactory overload that takes
+    // the internal discriminator type as a parameter. Because that type is not public, the
+    // generated signature is malformed (it renders as "global::.<Type>") and fails to compile
+    // (CS1001). The CodeGenSuppress attributes below remove those broken generated overloads,
+    // and the replacement methods expose valid public factories that accept a string
+    // discriminator and return the Unknown* fallback subtype instead of leaking the internal enum.
     [CodeGenSuppress("StaticRoutingEnrichment", typeof(string), typeof(StaticRoutingEnrichmentType))]
     [CodeGenSuppress("EventGridInputSchemaMapping", typeof(InputSchemaMappingType))]
     [CodeGenSuppress("EventSubscriptionDestination", typeof(EndpointType))]
