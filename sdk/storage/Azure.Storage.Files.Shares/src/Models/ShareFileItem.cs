@@ -58,7 +58,7 @@ namespace Azure.Storage.Files.Shares.Models
         public long? LinkCount { get; }
 
         /// <summary>
-        /// Gets the NFS file type for this item.
+        /// Gets the NFS file type for this item, intended to be used only for NFS shares.
         /// Applicable to all item types in NFS shares: files, directories,
         /// symbolic links, block devices, character devices, FIFOs, and sockets.
         /// Supported in version 2026-12-06 and above.

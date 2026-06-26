@@ -961,7 +961,7 @@ namespace Azure.Storage.Files.Shares
                 permissionKey: directoryItem.PermissionKey,
                 fileSize: null,
                 linkCount: directoryItem.LinkCount,
-                fileType: directoryItem.Attributes == null ? NfsFileType.Directory : (NfsFileType?)null,
+                fileType: NfsFileType.Directory,
                 linkText: null,
                 deviceMajor: null,
                 deviceMinor: null);
@@ -983,7 +983,7 @@ namespace Azure.Storage.Files.Shares
                 permissionKey: fileItem.PermissionKey,
                 fileSize: fileItem.Properties.ContentLength,
                 linkCount: fileItem.LinkCount,
-                fileType: fileItem.Attributes == null ? NfsFileType.Regular : (NfsFileType?)null,
+                fileType: NfsFileType.Regular,
                 linkText: null,
                 deviceMajor: null,
                 deviceMinor: null);

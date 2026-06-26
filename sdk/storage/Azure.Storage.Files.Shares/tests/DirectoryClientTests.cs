@@ -956,7 +956,6 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // NFS-only fields stay null on SMB
             Assert.IsNull(fileItem.LinkCount);
-            Assert.IsNull(fileItem.FileType);
             Assert.IsNull(fileItem.Properties.Owner);
             Assert.IsNull(fileItem.Properties.Group);
             Assert.IsNull(fileItem.Properties.FileMode);
@@ -974,7 +973,6 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsNotNull(dirItem.Properties.ETag);
 
             Assert.IsNull(dirItem.LinkCount);
-            Assert.IsNull(dirItem.FileType);
             Assert.IsNull(dirItem.Properties.Owner);
             Assert.IsNull(dirItem.Properties.Group);
             Assert.IsNull(dirItem.Properties.FileMode);
