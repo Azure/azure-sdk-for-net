@@ -4,7 +4,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -46,66 +45,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets JIT network access policies across all Security Center locations for this resource group. </summary>
         public virtual Pageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPolicies(CancellationToken cancellationToken = default)
             => GetJitNetworkAccessPoliciesByResourceGroup(cancellationToken);
-
-        private sealed class ResourceGroupAlertsPageable : Pageable<SecurityAlertData>
-        {
-            private readonly SubscriptionResource _subscriptionResource;
-            private readonly MockableSecurityCenterResourceGroupResource _resourceGroupResource;
-            private readonly CancellationToken _cancellationToken;
-
-            public ResourceGroupAlertsPageable(SubscriptionResource subscriptionResource, MockableSecurityCenterResourceGroupResource resourceGroupResource, CancellationToken cancellationToken)
-            {
-                _subscriptionResource = subscriptionResource;
-                _resourceGroupResource = resourceGroupResource;
-                _cancellationToken = cancellationToken;
-            }
-
-            public override IEnumerable<Page<SecurityAlertData>> AsPages(string continuationToken = null, int? pageSizeHint = null)
-            {
-                foreach (SecurityCenterLocationResource location in _subscriptionResource.GetSecurityCenterLocations().GetAll(_cancellationToken))
-                {
-                    foreach (Page<ResourceGroupSecurityAlertResource> page in _resourceGroupResource.GetResourceGroupSecurityAlerts(location.Id.Name).GetAll(_cancellationToken).AsPages(continuationToken, pageSizeHint))
-                    {
-                        List<SecurityAlertData> values = new List<SecurityAlertData>();
-                        foreach (ResourceGroupSecurityAlertResource alert in page.Values)
-                        {
-                            values.Add(alert.Data);
-                        }
-                        yield return Page<SecurityAlertData>.FromValues(values, page.ContinuationToken, page.GetRawResponse());
-                    }
-                }
-            }
-        }
-
-        private sealed class ResourceGroupAlertsAsyncPageable : AsyncPageable<SecurityAlertData>
-        {
-            private readonly SubscriptionResource _subscriptionResource;
-            private readonly MockableSecurityCenterResourceGroupResource _resourceGroupResource;
-            private readonly CancellationToken _cancellationToken;
-
-            public ResourceGroupAlertsAsyncPageable(SubscriptionResource subscriptionResource, MockableSecurityCenterResourceGroupResource resourceGroupResource, CancellationToken cancellationToken)
-            {
-                _subscriptionResource = subscriptionResource;
-                _resourceGroupResource = resourceGroupResource;
-                _cancellationToken = cancellationToken;
-            }
-
-            public override async IAsyncEnumerable<Page<SecurityAlertData>> AsPages(string continuationToken = null, int? pageSizeHint = null)
-            {
-                await foreach (SecurityCenterLocationResource location in _subscriptionResource.GetSecurityCenterLocations().GetAllAsync(_cancellationToken).ConfigureAwait(false))
-                {
-                    await foreach (Page<ResourceGroupSecurityAlertResource> page in _resourceGroupResource.GetResourceGroupSecurityAlerts(location.Id.Name).GetAllAsync(_cancellationToken).AsPages(continuationToken, pageSizeHint).ConfigureAwait(false))
-                    {
-                        List<SecurityAlertData> values = new List<SecurityAlertData>();
-                        foreach (ResourceGroupSecurityAlertResource alert in page.Values)
-                        {
-                            values.Add(alert.Data);
-                        }
-                        yield return Page<SecurityAlertData>.FromValues(values, page.ContinuationToken, page.GetRawResponse());
-                    }
-                }
-            }
-        }
 
         /// <summary> Gets a server vulnerability assessment on an extended resource. </summary>
         public virtual Task<Response<ServerVulnerabilityAssessmentResource>> GetServerVulnerabilityAssessmentAsync(string resourceNamespace, string resourceType, string resourceName, CancellationToken cancellationToken = default)

@@ -4,7 +4,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text.Json;
 using System.Threading;
@@ -18,62 +17,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
 {
     public partial class MockableSecurityCenterSubscriptionResource
     {
-        private sealed class SubscriptionAlertsPageable : Pageable<SecurityAlertData>
-        {
-            private readonly MockableSecurityCenterSubscriptionResource _subscriptionResource;
-            private readonly CancellationToken _cancellationToken;
-
-            public SubscriptionAlertsPageable(MockableSecurityCenterSubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            {
-                _subscriptionResource = subscriptionResource;
-                _cancellationToken = cancellationToken;
-            }
-
-            public override IEnumerable<Page<SecurityAlertData>> AsPages(string continuationToken = null, int? pageSizeHint = null)
-            {
-                foreach (SecurityCenterLocationResource location in _subscriptionResource.GetSecurityCenterLocations().GetAll(_cancellationToken))
-                {
-                    foreach (Page<SubscriptionSecurityAlertResource> page in location.GetSubscriptionSecurityAlerts().GetAll(_cancellationToken).AsPages(continuationToken, pageSizeHint))
-                    {
-                        List<SecurityAlertData> values = new List<SecurityAlertData>();
-                        foreach (SubscriptionSecurityAlertResource alert in page.Values)
-                        {
-                            values.Add(alert.Data);
-                        }
-                        yield return Page<SecurityAlertData>.FromValues(values, page.ContinuationToken, page.GetRawResponse());
-                    }
-                }
-            }
-        }
-
-        private sealed class SubscriptionAlertsAsyncPageable : AsyncPageable<SecurityAlertData>
-        {
-            private readonly MockableSecurityCenterSubscriptionResource _subscriptionResource;
-            private readonly CancellationToken _cancellationToken;
-
-            public SubscriptionAlertsAsyncPageable(MockableSecurityCenterSubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            {
-                _subscriptionResource = subscriptionResource;
-                _cancellationToken = cancellationToken;
-            }
-
-            public override async IAsyncEnumerable<Page<SecurityAlertData>> AsPages(string continuationToken = null, int? pageSizeHint = null)
-            {
-                await foreach (SecurityCenterLocationResource location in _subscriptionResource.GetSecurityCenterLocations().GetAllAsync(_cancellationToken).ConfigureAwait(false))
-                {
-                    await foreach (Page<SubscriptionSecurityAlertResource> page in location.GetSubscriptionSecurityAlerts().GetAllAsync(_cancellationToken).AsPages(continuationToken, pageSizeHint).ConfigureAwait(false))
-                    {
-                        List<SecurityAlertData> values = new List<SecurityAlertData>();
-                        foreach (SubscriptionSecurityAlertResource alert in page.Values)
-                        {
-                            values.Add(alert.Data);
-                        }
-                        yield return Page<SecurityAlertData>.FromValues(values, page.ContinuationToken, page.GetRawResponse());
-                    }
-                }
-            }
-        }
-
         private ClientDiagnostics _mdeOnboardingsClientDiagnostics;
         private MdeOnboardings _mdeOnboardingsRestClient;
 
