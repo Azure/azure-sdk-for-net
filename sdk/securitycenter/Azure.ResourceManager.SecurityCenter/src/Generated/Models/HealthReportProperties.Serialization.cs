@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             SecurityCloudResourceDetails resourceDetails = default;
-            EnvironmentDetails environmentDetails = default;
+            SecurityConnectorEnvironmentDetails environmentDetails = default;
             HealthDataClassification healthDataClassification = default;
             HealthReportStatus status = default;
             IList<string> affectedDefendersPlans = default;
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    environmentDetails = EnvironmentDetails.DeserializeEnvironmentDetails(prop.Value, options);
+                    environmentDetails = SecurityConnectorEnvironmentDetails.DeserializeSecurityConnectorEnvironmentDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("healthDataClassification"u8))

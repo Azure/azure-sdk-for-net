@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="reportAdditionalData"> Additional data for the given health report, this field can include more details on the resource and the health scenario. </param>
         /// <param name="issues"> A collection of the issues in the report. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HealthReportProperties(SecurityCloudResourceDetails resourceDetails, EnvironmentDetails environmentDetails, HealthDataClassification healthDataClassification, HealthReportStatus status, IList<string> affectedDefendersPlans, IList<string> affectedDefendersSubPlans, IReadOnlyDictionary<string, string> reportAdditionalData, IList<SecurityHealthIssue> issues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HealthReportProperties(SecurityCloudResourceDetails resourceDetails, SecurityConnectorEnvironmentDetails environmentDetails, HealthDataClassification healthDataClassification, HealthReportStatus status, IList<string> affectedDefendersPlans, IList<string> affectedDefendersSubPlans, IReadOnlyDictionary<string, string> reportAdditionalData, IList<SecurityHealthIssue> issues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceDetails = resourceDetails;
             EnvironmentDetails = environmentDetails;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public SecurityCloudResourceDetails ResourceDetails { get; }
 
         /// <summary> The environment details of the resource. </summary>
-        public EnvironmentDetails EnvironmentDetails { get; }
+        public SecurityConnectorEnvironmentDetails EnvironmentDetails { get; }
 
         /// <summary> The classification of the health report. </summary>
         public HealthDataClassification HealthDataClassification { get; }

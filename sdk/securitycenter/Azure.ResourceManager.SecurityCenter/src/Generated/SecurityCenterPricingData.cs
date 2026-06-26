@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> If set to "False", it allows the descendants of this scope to override the pricing configuration set on this scope (allows setting inherited="False"). If set to "True", it prevents overrides and forces this pricing configuration on all the descendants of this scope. This field is only available for subscription-level pricing. </summary>
-        public Enforce? Enforce
+        public SecurityPolicyEnforce? Enforce
         {
             get
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Optional. List of extensions offered under a plan. </summary>
-        public IList<Extension> Extensions
+        public IList<SecurityConnectorExtension> Extensions
         {
             get
             {

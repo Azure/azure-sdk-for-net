@@ -1,4 +1,4 @@
 directory: specification/security/resource-manager/Microsoft.Security/Security
-commit: 56a16bb5e49b86694086f3d460ed72b9a05f0a0b
+commit: 5159577565eadf79635a9c64eb9547db4a81dc73
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

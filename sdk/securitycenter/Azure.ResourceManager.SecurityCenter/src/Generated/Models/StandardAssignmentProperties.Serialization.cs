@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             string displayName = default;
             string description = default;
             AssignedStandardItem assignedStandard = default;
-            Effect? effect = default;
+            SecurityCenterEffect? effect = default;
             IList<string> excludedScopes = default;
             DateTimeOffset? expiresOn = default;
             StandardAssignmentExemptionInfo exemptionData = default;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    effect = new Effect(prop.Value.GetString());
+                    effect = new SecurityCenterEffect(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("excludedScopes"u8))

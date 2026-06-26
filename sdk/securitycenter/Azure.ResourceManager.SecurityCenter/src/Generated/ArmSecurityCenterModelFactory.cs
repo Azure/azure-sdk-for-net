@@ -720,7 +720,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="reportAdditionalData"> Additional data for the given health report, this field can include more details on the resource and the health scenario. </param>
         /// <param name="issues"> A collection of the issues in the report. </param>
         /// <returns> A new <see cref="SecurityCenter.HealthReportData"/> instance for mocking. </returns>
-        public static HealthReportData HealthReportData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SecurityCloudResourceDetails resourceDetails = default, EnvironmentDetails environmentDetails = default, HealthDataClassification healthDataClassification = default, HealthReportStatus status = default, IEnumerable<string> affectedDefendersPlans = default, IEnumerable<string> affectedDefendersSubPlans = default, IReadOnlyDictionary<string, string> reportAdditionalData = default, IEnumerable<SecurityHealthIssue> issues = default)
+        public static HealthReportData HealthReportData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SecurityCloudResourceDetails resourceDetails = default, SecurityConnectorEnvironmentDetails environmentDetails = default, HealthDataClassification healthDataClassification = default, HealthReportStatus status = default, IEnumerable<string> affectedDefendersPlans = default, IEnumerable<string> affectedDefendersSubPlans = default, IReadOnlyDictionary<string, string> reportAdditionalData = default, IEnumerable<SecurityHealthIssue> issues = default)
         {
             return new HealthReportData(
                 id,
@@ -754,10 +754,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="organizationalHierarchyId"> The organizational hierarchy id of the connector (in case of Azure - the subscription Id, in case of MC - the organizational hierarchyId id). </param>
         /// <param name="subscriptionId"> The subscription Id. </param>
         /// <param name="tenantId"> The tenant Id. </param>
-        /// <returns> A new <see cref="Models.EnvironmentDetails"/> instance for mocking. </returns>
-        public static EnvironmentDetails EnvironmentDetails(ResourceIdentifier nativeResourceId = default, string environmentHierarchyId = default, string organizationalHierarchyId = default, string subscriptionId = default, string tenantId = default)
+        /// <returns> A new <see cref="Models.SecurityConnectorEnvironmentDetails"/> instance for mocking. </returns>
+        public static SecurityConnectorEnvironmentDetails SecurityConnectorEnvironmentDetails(ResourceIdentifier nativeResourceId = default, string environmentHierarchyId = default, string organizationalHierarchyId = default, string subscriptionId = default, string tenantId = default)
         {
-            return new EnvironmentDetails(
+            return new SecurityConnectorEnvironmentDetails(
                 nativeResourceId,
                 environmentHierarchyId,
                 organizationalHierarchyId,
@@ -1515,7 +1515,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="isDeprecated"> Optional. True if the plan is deprecated. If there are replacing plans they will appear in `replacedBy` property. </param>
         /// <param name="replacedBy"> Optional. List of plans that replace this plan. This property exists only if this plan is deprecated. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityCenterPricingData"/> instance for mocking. </returns>
-        public static SecurityCenterPricingData SecurityCenterPricingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SecurityCenterPricingTier? pricingTier = default, string subPlan = default, TimeSpan? freeTrialRemainingTime = default, DateTimeOffset? enablementOn = default, Enforce? enforce = default, Inherited? inherited = default, string inheritedFrom = default, ResourcesCoverageStatus? resourcesCoverageStatus = default, IEnumerable<Extension> extensions = default, bool? isDeprecated = default, IEnumerable<string> replacedBy = default)
+        public static SecurityCenterPricingData SecurityCenterPricingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SecurityCenterPricingTier? pricingTier = default, string subPlan = default, TimeSpan? freeTrialRemainingTime = default, DateTimeOffset? enablementOn = default, SecurityPolicyEnforce? enforce = default, Inherited? inherited = default, string inheritedFrom = default, ResourcesCoverageStatus? resourcesCoverageStatus = default, IEnumerable<SecurityConnectorExtension> extensions = default, bool? isDeprecated = default, IEnumerable<string> replacedBy = default)
         {
             return new SecurityCenterPricingData(
                 id,
@@ -1531,7 +1531,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     inherited,
                     inheritedFrom,
                     resourcesCoverageStatus,
-                    (extensions ?? new ChangeTrackingList<Extension>()).ToList(),
+                    (extensions ?? new ChangeTrackingList<SecurityConnectorExtension>()).ToList(),
                     isDeprecated,
                     (replacedBy ?? new ChangeTrackingList<string>()).ToList(),
                     default),
@@ -1542,12 +1542,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="isEnabled"> Indicates whether the extension is enabled. </param>
         /// <param name="additionalExtensionProperties"> Property values associated with the extension. </param>
         /// <param name="operationStatus"> Optional. A status describing the success/failure of the extension's enablement/disablement operation. </param>
-        /// <returns> A new <see cref="Models.Extension"/> instance for mocking. </returns>
-        public static Extension Extension(string name = default, IsEnabled isEnabled = default, IDictionary<string, BinaryData> additionalExtensionProperties = default, SecurityCenterOperationStatus operationStatus = default)
+        /// <returns> A new <see cref="Models.SecurityConnectorExtension"/> instance for mocking. </returns>
+        public static SecurityConnectorExtension SecurityConnectorExtension(string name = default, SecurityCenterExtensionIsEnabled isEnabled = default, IDictionary<string, BinaryData> additionalExtensionProperties = default, SecurityCenterOperationStatus operationStatus = default)
         {
             additionalExtensionProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new Extension(name, isEnabled, additionalExtensionProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), operationStatus, default);
+            return new SecurityConnectorExtension(name, isEnabled, additionalExtensionProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), operationStatus, default);
         }
 
         /// <param name="code"> The operation status code. </param>
@@ -3340,7 +3340,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="metadata"> The standard assignment metadata. </param>
         /// <param name="assignedStandardId"> Full resourceId of the Microsoft.Security/standard object. </param>
         /// <returns> A new <see cref="SecurityCenter.StandardAssignmentData"/> instance for mocking. </returns>
-        public static StandardAssignmentData StandardAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string description = default, Effect? effect = default, IEnumerable<string> excludedScopes = default, DateTimeOffset? expiresOn = default, StandardAssignmentExemptionInfo exemptionData = default, StandardAssignmentAttestationInfo attestationData = default, StandardAssignmentMetadata metadata = default, string assignedStandardId = default)
+        public static StandardAssignmentData StandardAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string description = default, SecurityCenterEffect? effect = default, IEnumerable<string> excludedScopes = default, DateTimeOffset? expiresOn = default, StandardAssignmentExemptionInfo exemptionData = default, StandardAssignmentAttestationInfo attestationData = default, StandardAssignmentMetadata metadata = default, string assignedStandardId = default)
         {
             return new StandardAssignmentData(
                 id,
@@ -3364,7 +3364,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="exemptionCategory"> Exemption category of this assignment. </param>
         /// <param name="assessmentKey"> Unique key to a security assessment object. </param>
         /// <returns> A new <see cref="Models.StandardAssignmentExemptionInfo"/> instance for mocking. </returns>
-        public static StandardAssignmentExemptionInfo StandardAssignmentExemptionInfo(ExemptionCategory? exemptionCategory = default, string assessmentKey = default)
+        public static StandardAssignmentExemptionInfo StandardAssignmentExemptionInfo(SecurityExemptionCategory? exemptionCategory = default, string assessmentKey = default)
         {
             return new StandardAssignmentExemptionInfo(exemptionCategory, assessmentKey is null ? default : new AssignedAssessmentItem(assessmentKey, default), default);
         }

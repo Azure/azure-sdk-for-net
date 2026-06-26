@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="exemptionCategory"> Exemption category of this assignment. </param>
         /// <param name="assignedAssessment"> Component item with key as applied to this standard assignment over the given scope. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StandardAssignmentExemptionInfo(ExemptionCategory? exemptionCategory, AssignedAssessmentItem assignedAssessment, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StandardAssignmentExemptionInfo(SecurityExemptionCategory? exemptionCategory, AssignedAssessmentItem assignedAssessment, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExemptionCategory = exemptionCategory;
             AssignedAssessment = assignedAssessment;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Exemption category of this assignment. </summary>
-        public ExemptionCategory? ExemptionCategory { get; set; }
+        public SecurityExemptionCategory? ExemptionCategory { get; set; }
 
         /// <summary> Component item with key as applied to this standard assignment over the given scope. </summary>
         internal AssignedAssessmentItem AssignedAssessment { get; set; }

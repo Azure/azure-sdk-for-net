@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> The environment details of the resource. </summary>
-        public EnvironmentDetails EnvironmentDetails
+        public SecurityConnectorEnvironmentDetails EnvironmentDetails
         {
             get
             {

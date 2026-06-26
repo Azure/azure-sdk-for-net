@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="attestationData"> Additional data about assignment that has Attest effect. </param>
         /// <param name="metadata"> The standard assignment metadata. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StandardAssignmentProperties(string displayName, string description, AssignedStandardItem assignedStandard, Effect? effect, IList<string> excludedScopes, DateTimeOffset? expiresOn, StandardAssignmentExemptionInfo exemptionData, StandardAssignmentAttestationInfo attestationData, StandardAssignmentMetadata metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StandardAssignmentProperties(string displayName, string description, AssignedStandardItem assignedStandard, SecurityCenterEffect? effect, IList<string> excludedScopes, DateTimeOffset? expiresOn, StandardAssignmentExemptionInfo exemptionData, StandardAssignmentAttestationInfo attestationData, StandardAssignmentMetadata metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Description = description;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         internal AssignedStandardItem AssignedStandard { get; set; }
 
         /// <summary> Expected effect of this assignment (Audit/Exempt/Attest). </summary>
-        public Effect? Effect { get; set; }
+        public SecurityCenterEffect? Effect { get; set; }
 
         /// <summary> Excluded scopes, filter out the descendants of the scope (on management scopes). </summary>
         public IList<string> ExcludedScopes { get; } = new ChangeTrackingList<string>();

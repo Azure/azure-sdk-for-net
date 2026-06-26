@@ -12,7 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Indicates whether the extension is enabled. </summary>
-    public readonly partial struct IsEnabled : IEquatable<IsEnabled>
+    public readonly partial struct SecurityCenterExtensionIsEnabled : IEquatable<SecurityCenterExtensionIsEnabled>
     {
         private readonly string _value;
         /// <summary> Indicates the extension is enabled. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Indicates the extension is disabled. </summary>
         private const string FalseValue = "False";
 
-        /// <summary> Initializes a new instance of <see cref="IsEnabled"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterExtensionIsEnabled"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public IsEnabled(string value)
+        public SecurityCenterExtensionIsEnabled(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Indicates the extension is enabled. </summary>
-        public static IsEnabled True { get; } = new IsEnabled(TrueValue);
+        public static SecurityCenterExtensionIsEnabled True { get; } = new SecurityCenterExtensionIsEnabled(TrueValue);
 
         /// <summary> Indicates the extension is disabled. </summary>
-        public static IsEnabled False { get; } = new IsEnabled(FalseValue);
+        public static SecurityCenterExtensionIsEnabled False { get; } = new SecurityCenterExtensionIsEnabled(FalseValue);
 
-        /// <summary> Determines if two <see cref="IsEnabled"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="SecurityCenterExtensionIsEnabled"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(IsEnabled left, IsEnabled right) => left.Equals(right);
+        public static bool operator ==(SecurityCenterExtensionIsEnabled left, SecurityCenterExtensionIsEnabled right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="IsEnabled"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="SecurityCenterExtensionIsEnabled"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(IsEnabled left, IsEnabled right) => !left.Equals(right);
+        public static bool operator !=(SecurityCenterExtensionIsEnabled left, SecurityCenterExtensionIsEnabled right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="IsEnabled"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SecurityCenterExtensionIsEnabled"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IsEnabled(string value) => new IsEnabled(value);
+        public static implicit operator SecurityCenterExtensionIsEnabled(string value) => new SecurityCenterExtensionIsEnabled(value);
 
-        /// <summary> Converts a string to a <see cref="IsEnabled"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SecurityCenterExtensionIsEnabled"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IsEnabled?(string value) => value == null ? null : new IsEnabled(value);
+        public static implicit operator SecurityCenterExtensionIsEnabled?(string value) => value == null ? null : new SecurityCenterExtensionIsEnabled(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is IsEnabled other && Equals(other);
+        public override bool Equals(object obj) => obj is SecurityCenterExtensionIsEnabled other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(IsEnabled other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SecurityCenterExtensionIsEnabled other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

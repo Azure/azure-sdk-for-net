@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Expected effect of this assignment (Audit/Exempt/Attest). </summary>
-        public Effect? Effect
+        public SecurityCenterEffect? Effect
         {
             get
             {

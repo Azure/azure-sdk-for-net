@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public PricingProperties(SecurityCenterPricingTier pricingTier)
         {
             PricingTier = pricingTier;
-            Extensions = new ChangeTrackingList<Extension>();
+            Extensions = new ChangeTrackingList<SecurityConnectorExtension>();
             ReplacedBy = new ChangeTrackingList<string>();
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="isDeprecated"> Optional. True if the plan is deprecated. If there are replacing plans they will appear in `replacedBy` property. </param>
         /// <param name="replacedBy"> Optional. List of plans that replace this plan. This property exists only if this plan is deprecated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PricingProperties(SecurityCenterPricingTier pricingTier, string subPlan, TimeSpan? freeTrialRemainingTime, DateTimeOffset? enablementOn, Enforce? enforce, Inherited? inherited, string inheritedFrom, ResourcesCoverageStatus? resourcesCoverageStatus, IList<Extension> extensions, bool? isDeprecated, IReadOnlyList<string> replacedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PricingProperties(SecurityCenterPricingTier pricingTier, string subPlan, TimeSpan? freeTrialRemainingTime, DateTimeOffset? enablementOn, SecurityPolicyEnforce? enforce, Inherited? inherited, string inheritedFrom, ResourcesCoverageStatus? resourcesCoverageStatus, IList<SecurityConnectorExtension> extensions, bool? isDeprecated, IReadOnlyList<string> replacedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PricingTier = pricingTier;
             SubPlan = subPlan;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public DateTimeOffset? EnablementOn { get; }
 
         /// <summary> If set to "False", it allows the descendants of this scope to override the pricing configuration set on this scope (allows setting inherited="False"). If set to "True", it prevents overrides and forces this pricing configuration on all the descendants of this scope. This field is only available for subscription-level pricing. </summary>
-        public Enforce? Enforce { get; set; }
+        public SecurityPolicyEnforce? Enforce { get; set; }
 
         /// <summary> "inherited" = "True" indicates that the current scope inherits its pricing configuration from its parent. The ID of the parent scope that provides the inherited configuration is displayed in the "inheritedFrom" field. On the other hand, "inherited" = "False" indicates that the current scope has its own pricing configuration explicitly set, and does not inherit from its parent. This field is read only and available only for resource-level pricing. </summary>
         public Inherited? Inherited { get; }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public ResourcesCoverageStatus? ResourcesCoverageStatus { get; }
 
         /// <summary> Optional. List of extensions offered under a plan. </summary>
-        public IList<Extension> Extensions { get; } = new ChangeTrackingList<Extension>();
+        public IList<SecurityConnectorExtension> Extensions { get; } = new ChangeTrackingList<SecurityConnectorExtension>();
 
         /// <summary> Optional. True if the plan is deprecated. If there are replacing plans they will appear in `replacedBy` property. </summary>
         public bool? IsDeprecated { get; }

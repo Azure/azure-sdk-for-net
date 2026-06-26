@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            ExemptionCategory? exemptionCategory = default;
+            SecurityExemptionCategory? exemptionCategory = default;
             AssignedAssessmentItem assignedAssessment = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    exemptionCategory = new ExemptionCategory(prop.Value.GetString());
+                    exemptionCategory = new SecurityExemptionCategory(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("assignedAssessment"u8))

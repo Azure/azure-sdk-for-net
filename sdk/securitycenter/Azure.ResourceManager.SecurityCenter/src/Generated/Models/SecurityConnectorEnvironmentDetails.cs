@@ -12,24 +12,24 @@ using Azure.Core;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The environment details of the resource. </summary>
-    public partial class EnvironmentDetails
+    public partial class SecurityConnectorEnvironmentDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EnvironmentDetails"/>. </summary>
-        internal EnvironmentDetails()
+        /// <summary> Initializes a new instance of <see cref="SecurityConnectorEnvironmentDetails"/>. </summary>
+        internal SecurityConnectorEnvironmentDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EnvironmentDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityConnectorEnvironmentDetails"/>. </summary>
         /// <param name="nativeResourceId"> The native resource id of the resource (in case of Azure - the resource Id, in case of MC - the native resource id). </param>
         /// <param name="environmentHierarchyId"> The hierarchy id of the connector (in case of Azure - the subscription Id, in case of MC - the hierarchyId id). </param>
         /// <param name="organizationalHierarchyId"> The organizational hierarchy id of the connector (in case of Azure - the subscription Id, in case of MC - the organizational hierarchyId id). </param>
         /// <param name="subscriptionId"> The subscription Id. </param>
         /// <param name="tenantId"> The tenant Id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EnvironmentDetails(ResourceIdentifier nativeResourceId, string environmentHierarchyId, string organizationalHierarchyId, string subscriptionId, string tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityConnectorEnvironmentDetails(ResourceIdentifier nativeResourceId, string environmentHierarchyId, string organizationalHierarchyId, string subscriptionId, string tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NativeResourceId = nativeResourceId;
             EnvironmentHierarchyId = environmentHierarchyId;

@@ -12,7 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Expected effect of this assignment (Audit/Exempt/Attest). </summary>
-    public readonly partial struct Effect : IEquatable<Effect>
+    public readonly partial struct SecurityCenterEffect : IEquatable<SecurityCenterEffect>
     {
         private readonly string _value;
         /// <summary> Audit. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Attest. </summary>
         private const string AttestValue = "Attest";
 
-        /// <summary> Initializes a new instance of <see cref="Effect"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterEffect"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Effect(string value)
+        public SecurityCenterEffect(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Audit. </summary>
-        public static Effect Audit { get; } = new Effect(AuditValue);
+        public static SecurityCenterEffect Audit { get; } = new SecurityCenterEffect(AuditValue);
 
         /// <summary> Exempt. </summary>
-        public static Effect Exempt { get; } = new Effect(ExemptValue);
+        public static SecurityCenterEffect Exempt { get; } = new SecurityCenterEffect(ExemptValue);
 
         /// <summary> Attest. </summary>
-        public static Effect Attest { get; } = new Effect(AttestValue);
+        public static SecurityCenterEffect Attest { get; } = new SecurityCenterEffect(AttestValue);
 
-        /// <summary> Determines if two <see cref="Effect"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="SecurityCenterEffect"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(Effect left, Effect right) => left.Equals(right);
+        public static bool operator ==(SecurityCenterEffect left, SecurityCenterEffect right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="Effect"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="SecurityCenterEffect"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(Effect left, Effect right) => !left.Equals(right);
+        public static bool operator !=(SecurityCenterEffect left, SecurityCenterEffect right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="Effect"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SecurityCenterEffect"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Effect(string value) => new Effect(value);
+        public static implicit operator SecurityCenterEffect(string value) => new SecurityCenterEffect(value);
 
-        /// <summary> Converts a string to a <see cref="Effect"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SecurityCenterEffect"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Effect?(string value) => value == null ? null : new Effect(value);
+        public static implicit operator SecurityCenterEffect?(string value) => value == null ? null : new SecurityCenterEffect(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is Effect other && Equals(other);
+        public override bool Equals(object obj) => obj is SecurityCenterEffect other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(Effect other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SecurityCenterEffect other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

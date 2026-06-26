@@ -12,7 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> If set to "False", it allows the descendants of this scope to override the pricing configuration set on this scope (allows setting inherited="False"). If set to "True", it prevents overrides and forces this pricing configuration on all the descendants of this scope. This field is only available for subscription-level pricing. </summary>
-    public readonly partial struct Enforce : IEquatable<Enforce>
+    public readonly partial struct SecurityPolicyEnforce : IEquatable<SecurityPolicyEnforce>
     {
         private readonly string _value;
         /// <summary> Allows the descendants of this scope to override the pricing configuration set on this scope (allows setting inherited="False"). </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Prevents overrides and forces the current scope's pricing configuration to all descendants. </summary>
         private const string TrueValue = "True";
 
-        /// <summary> Initializes a new instance of <see cref="Enforce"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityPolicyEnforce"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Enforce(string value)
+        public SecurityPolicyEnforce(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Allows the descendants of this scope to override the pricing configuration set on this scope (allows setting inherited="False"). </summary>
-        public static Enforce False { get; } = new Enforce(FalseValue);
+        public static SecurityPolicyEnforce False { get; } = new SecurityPolicyEnforce(FalseValue);
 
         /// <summary> Prevents overrides and forces the current scope's pricing configuration to all descendants. </summary>
-        public static Enforce True { get; } = new Enforce(TrueValue);
+        public static SecurityPolicyEnforce True { get; } = new SecurityPolicyEnforce(TrueValue);
 
-        /// <summary> Determines if two <see cref="Enforce"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="SecurityPolicyEnforce"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(Enforce left, Enforce right) => left.Equals(right);
+        public static bool operator ==(SecurityPolicyEnforce left, SecurityPolicyEnforce right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="Enforce"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="SecurityPolicyEnforce"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(Enforce left, Enforce right) => !left.Equals(right);
+        public static bool operator !=(SecurityPolicyEnforce left, SecurityPolicyEnforce right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="Enforce"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SecurityPolicyEnforce"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Enforce(string value) => new Enforce(value);
+        public static implicit operator SecurityPolicyEnforce(string value) => new SecurityPolicyEnforce(value);
 
-        /// <summary> Converts a string to a <see cref="Enforce"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SecurityPolicyEnforce"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Enforce?(string value) => value == null ? null : new Enforce(value);
+        public static implicit operator SecurityPolicyEnforce?(string value) => value == null ? null : new SecurityPolicyEnforce(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is Enforce other && Equals(other);
+        public override bool Equals(object obj) => obj is SecurityPolicyEnforce other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(Enforce other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SecurityPolicyEnforce other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

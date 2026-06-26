@@ -12,7 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Exemption category of this assignment. </summary>
-    public readonly partial struct ExemptionCategory : IEquatable<ExemptionCategory>
+    public readonly partial struct SecurityExemptionCategory : IEquatable<SecurityExemptionCategory>
     {
         private readonly string _value;
         /// <summary> waiver. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> mitigated. </summary>
         private const string MitigatedValue = "mitigated";
 
-        /// <summary> Initializes a new instance of <see cref="ExemptionCategory"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityExemptionCategory"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ExemptionCategory(string value)
+        public SecurityExemptionCategory(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> waiver. </summary>
-        public static ExemptionCategory Waiver { get; } = new ExemptionCategory(WaiverValue);
+        public static SecurityExemptionCategory Waiver { get; } = new SecurityExemptionCategory(WaiverValue);
 
         /// <summary> mitigated. </summary>
-        public static ExemptionCategory Mitigated { get; } = new ExemptionCategory(MitigatedValue);
+        public static SecurityExemptionCategory Mitigated { get; } = new SecurityExemptionCategory(MitigatedValue);
 
-        /// <summary> Determines if two <see cref="ExemptionCategory"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="SecurityExemptionCategory"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ExemptionCategory left, ExemptionCategory right) => left.Equals(right);
+        public static bool operator ==(SecurityExemptionCategory left, SecurityExemptionCategory right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ExemptionCategory"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="SecurityExemptionCategory"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ExemptionCategory left, ExemptionCategory right) => !left.Equals(right);
+        public static bool operator !=(SecurityExemptionCategory left, SecurityExemptionCategory right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ExemptionCategory"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SecurityExemptionCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExemptionCategory(string value) => new ExemptionCategory(value);
+        public static implicit operator SecurityExemptionCategory(string value) => new SecurityExemptionCategory(value);
 
-        /// <summary> Converts a string to a <see cref="ExemptionCategory"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SecurityExemptionCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExemptionCategory?(string value) => value == null ? null : new ExemptionCategory(value);
+        public static implicit operator SecurityExemptionCategory?(string value) => value == null ? null : new SecurityExemptionCategory(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ExemptionCategory other && Equals(other);
+        public override bool Equals(object obj) => obj is SecurityExemptionCategory other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ExemptionCategory other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SecurityExemptionCategory other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

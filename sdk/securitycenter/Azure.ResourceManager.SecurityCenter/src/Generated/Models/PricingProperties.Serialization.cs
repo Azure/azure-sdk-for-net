@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
-                foreach (Extension item in Extensions)
+                foreach (SecurityConnectorExtension item in Extensions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -192,11 +192,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             string subPlan = default;
             TimeSpan? freeTrialRemainingTime = default;
             DateTimeOffset? enablementOn = default;
-            Enforce? enforce = default;
+            SecurityPolicyEnforce? enforce = default;
             Inherited? inherited = default;
             string inheritedFrom = default;
             ResourcesCoverageStatus? resourcesCoverageStatus = default;
-            IList<Extension> extensions = default;
+            IList<SecurityConnectorExtension> extensions = default;
             bool? isDeprecated = default;
             IReadOnlyList<string> replacedBy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    enforce = new Enforce(prop.Value.GetString());
+                    enforce = new SecurityPolicyEnforce(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("inherited"u8))
@@ -268,10 +268,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<Extension> array = new List<Extension>();
+                    List<SecurityConnectorExtension> array = new List<SecurityConnectorExtension>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Extension.DeserializeExtension(item, options));
+                        array.Add(SecurityConnectorExtension.DeserializeSecurityConnectorExtension(item, options));
                     }
                     extensions = array;
                     continue;
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 inherited,
                 inheritedFrom,
                 resourcesCoverageStatus,
-                extensions ?? new ChangeTrackingList<Extension>(),
+                extensions ?? new ChangeTrackingList<SecurityConnectorExtension>(),
                 isDeprecated,
                 replacedBy ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
