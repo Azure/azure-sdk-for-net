@@ -1,0 +1,9 @@
+# Azure.AI.Language.QuestionAnswering.Authoring approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# These names intentionally mirror the GA'd legacy
+# Azure.AI.Language.QuestionAnswering authoring surface so customers migrating to
+# this split-out package keep source compatibility; the two packages are never
+# referenced together.
+nowarn:AZC0034 T:Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringClient
+nowarn:AZC0034 T:Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringProject

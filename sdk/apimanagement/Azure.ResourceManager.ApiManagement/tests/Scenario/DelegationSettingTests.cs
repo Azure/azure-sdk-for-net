@@ -67,14 +67,8 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             var portalDelegationSettingsParams = new ApiManagementPortalDelegationSettingData()
             {
-                Subscriptions = new SubscriptionDelegationSettingProperties()
-                {
-                    IsSubscriptionDelegationEnabled = true,
-                },
-                UserRegistration = new RegistrationDelegationSettingProperties()
-                {
-                    IsUserRegistrationDelegationEnabled = true,
-                },
+                IsSubscriptionDelegationEnabled = true,
+                IsUserRegistrationDelegationEnabled = true,
                 Uri = new Uri(urlParameter),
                 ValidationKey = "Sanitized"
             };
@@ -83,21 +77,21 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.AreEqual(urlParameter, portalDelegationSettings.Data.Uri.ToString());
             //validation key is generated brand new on playback mode and hence validation fails
             Assert.AreEqual(portalDelegationSettingsParams.ValidationKey, portalDelegationSettings.Data.ValidationKey);
-            Assert.IsTrue(portalDelegationSettings.Data.UserRegistration.IsUserRegistrationDelegationEnabled);
-            Assert.IsTrue(portalDelegationSettings.Data.Subscriptions.IsSubscriptionDelegationEnabled);
+            Assert.IsTrue(portalDelegationSettings.Data.IsUserRegistrationDelegationEnabled);
+            Assert.IsTrue(portalDelegationSettings.Data.IsSubscriptionDelegationEnabled);
 
             // update the delegation settings
             var data = portalDelegationSettings.Data;
-            data.Subscriptions.IsSubscriptionDelegationEnabled = false;
-            data.UserRegistration.IsUserRegistrationDelegationEnabled = false;
+            data.IsSubscriptionDelegationEnabled = false;
+            data.IsUserRegistrationDelegationEnabled = false;
 
             await portalDelegationSettings.UpdateAsync(ETag.All, data);
             portalDelegationSettings = await portalDelegationSettings.GetAsync();
             Assert.NotNull(portalDelegationSettings);
             //Assert.IsNull(portalDelegationSettings.Data.Uri.ToString());
             Assert.IsNull(portalDelegationSettings.Data.ValidationKey);
-            Assert.IsFalse(portalDelegationSettings.Data.UserRegistration.IsUserRegistrationDelegationEnabled);
-            Assert.IsFalse(portalDelegationSettings.Data.Subscriptions.IsSubscriptionDelegationEnabled);
+            Assert.IsFalse(portalDelegationSettings.Data.IsUserRegistrationDelegationEnabled);
+            Assert.IsFalse(portalDelegationSettings.Data.IsSubscriptionDelegationEnabled);
         }
     }
 }

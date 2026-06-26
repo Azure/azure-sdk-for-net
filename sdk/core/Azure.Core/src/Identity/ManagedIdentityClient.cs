@@ -72,9 +72,24 @@ namespace Azure.Identity
         public async ValueTask<AccessToken> AuthenticateAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
         {
             AuthenticationResult result;
+
+            MSAL.ManagedIdentityCapabilities capabilities;
+            try
+            {
 #pragma warning disable AZC0106 // Non-public asynchronous method needs 'async' parameter.
-            MSAL.ManagedIdentityCapabilities capabilities = await _msalManagedIdentityClient.GetManagedIdentityCapabilitiesCoreAsync(async, context, cancellationToken).ConfigureAwait(false);
+                capabilities = await _msalManagedIdentityClient.GetManagedIdentityCapabilitiesCoreAsync(async, context, cancellationToken).ConfigureAwait(false);
 #pragma warning restore AZC0106 // Non-public asynchronous method needs 'async' parameter.
+            }
+            catch (CredentialUnavailableException)
+            {
+                throw;
+            }
+            catch (Exception e) when (_isChainedCredential && e is not OperationCanceledException)
+            {
+                // IMDS probing can fail on hosts without a managed identity. When chained, surface a CredentialUnavailableException so the chain continues.
+                AzureIdentityEventSource.Singleton.ImdsEndpointUnavailable(ImdsManagedIdentityProbeSource.GetImdsUri(), e);
+                throw new CredentialUnavailableException(MsiUnavailableError, e);
+            }
 
             AzureIdentityEventSource.Singleton.ManagedIdentityCredentialSelected(capabilities.Source.ToString(), _options.ManagedIdentityId.ToString());
 

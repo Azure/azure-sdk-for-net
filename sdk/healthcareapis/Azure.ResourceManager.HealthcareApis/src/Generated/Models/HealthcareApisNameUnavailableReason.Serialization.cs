@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 {
     internal static partial class HealthcareApisNameUnavailableReasonExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this HealthcareApisNameUnavailableReason value) => value switch
         {
             HealthcareApisNameUnavailableReason.Invalid => "Invalid",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HealthcareApisNameUnavailableReason value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static HealthcareApisNameUnavailableReason ToHealthcareApisNameUnavailableReason(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid")) return HealthcareApisNameUnavailableReason.Invalid;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AlreadyExists")) return HealthcareApisNameUnavailableReason.AlreadyExists;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid"))
+            {
+                return HealthcareApisNameUnavailableReason.Invalid;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AlreadyExists"))
+            {
+                return HealthcareApisNameUnavailableReason.AlreadyExists;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HealthcareApisNameUnavailableReason value.");
         }
     }

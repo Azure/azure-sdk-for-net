@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,57 +15,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningServicePrincipalDatastoreCredentials : MachineLearningDatastoreCredentials
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>. </summary>
-        /// <param name="tenantId"> [Required] ID of the tenant to which the service principal belongs. </param>
-        /// <param name="clientId"> [Required] Service principal client ID. </param>
-        /// <param name="secrets"> [Required] Service principal secrets. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secrets"/> is null. </exception>
-        public MachineLearningServicePrincipalDatastoreCredentials(Guid tenantId, Guid clientId, MachineLearningServicePrincipalDatastoreSecrets secrets)
-        {
-            Argument.AssertNotNull(secrets, nameof(secrets));
-
-            TenantId = tenantId;
-            ClientId = clientId;
-            Secrets = secrets;
-            CredentialsType = CredentialsType.ServicePrincipal;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>. </summary>
         /// <param name="credentialsType"> [Required] Credential type used to authentication with storage. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="authorityUri"> Authority URL used for authentication. </param>
-        /// <param name="resourceUri"> Resource the service principal has access to. </param>
-        /// <param name="tenantId"> [Required] ID of the tenant to which the service principal belongs. </param>
         /// <param name="clientId"> [Required] Service principal client ID. </param>
+        /// <param name="resourceUri"> Resource the service principal has access to. </param>
         /// <param name="secrets"> [Required] Service principal secrets. </param>
-        internal MachineLearningServicePrincipalDatastoreCredentials(CredentialsType credentialsType, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri authorityUri, Uri resourceUri, Guid tenantId, Guid clientId, MachineLearningServicePrincipalDatastoreSecrets secrets) : base(credentialsType, serializedAdditionalRawData)
+        /// <param name="tenantId"> [Required] ID of the tenant to which the service principal belongs. </param>
+        internal MachineLearningServicePrincipalDatastoreCredentials(CredentialsType credentialsType, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri authorityUri, Guid clientId, Uri resourceUri, MachineLearningServicePrincipalDatastoreSecrets secrets, Guid tenantId) : base(credentialsType, additionalBinaryDataProperties)
         {
             AuthorityUri = authorityUri;
-            ResourceUri = resourceUri;
-            TenantId = tenantId;
             ClientId = clientId;
+            ResourceUri = resourceUri;
             Secrets = secrets;
-            CredentialsType = credentialsType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningServicePrincipalDatastoreCredentials"/> for deserialization. </summary>
-        internal MachineLearningServicePrincipalDatastoreCredentials()
-        {
+            TenantId = tenantId;
         }
 
         /// <summary> Authority URL used for authentication. </summary>
         [WirePath("authorityUrl")]
         public Uri AuthorityUri { get; set; }
-        /// <summary> Resource the service principal has access to. </summary>
-        [WirePath("resourceUrl")]
-        public Uri ResourceUri { get; set; }
-        /// <summary> [Required] ID of the tenant to which the service principal belongs. </summary>
-        [WirePath("tenantId")]
-        public Guid TenantId { get; set; }
+
         /// <summary> [Required] Service principal client ID. </summary>
         [WirePath("clientId")]
         public Guid ClientId { get; set; }
+
+        /// <summary> Resource the service principal has access to. </summary>
+        [WirePath("resourceUrl")]
+        public Uri ResourceUri { get; set; }
+
         /// <summary> [Required] Service principal secrets. </summary>
         [WirePath("secrets")]
         public MachineLearningServicePrincipalDatastoreSecrets Secrets { get; set; }
+
+        /// <summary> [Required] ID of the tenant to which the service principal belongs. </summary>
+        [WirePath("tenantId")]
+        public Guid TenantId { get; set; }
     }
 }
