@@ -29,17 +29,22 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="InformaticaMarketplaceDetails"/>. </summary>
         /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. </param>
+        /// <param name="marketplaceSubscriptionStatus"> Marketplace subscription status of a resource. </param>
         /// <param name="offerDetails"> Marketplace offer details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InformaticaMarketplaceDetails(string marketplaceSubscriptionId, InformaticaOfferDetails offerDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InformaticaMarketplaceDetails(string marketplaceSubscriptionId, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, InformaticaOfferDetails offerDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MarketplaceSubscriptionId = marketplaceSubscriptionId;
+            MarketplaceSubscriptionStatus = marketplaceSubscriptionStatus;
             OfferDetails = offerDetails;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Marketplace Subscription Id. </summary>
         public string MarketplaceSubscriptionId { get; set; }
+
+        /// <summary> Marketplace subscription status of a resource. </summary>
+        public MarketplaceSubscriptionStatus? MarketplaceSubscriptionStatus { get; }
 
         /// <summary> Marketplace offer details. </summary>
         public InformaticaOfferDetails OfferDetails { get; set; }

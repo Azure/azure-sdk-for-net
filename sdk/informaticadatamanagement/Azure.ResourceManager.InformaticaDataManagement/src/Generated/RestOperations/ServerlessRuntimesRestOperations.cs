@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string organizationName, string serverlessRuntimeName, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string organizationName, string serverlessRuntimeName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Informatica.DataManagement/organizations/", false);
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string organizationName, string serverlessRuntimeName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string organizationName, string serverlessRuntimeName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Informatica.DataManagement/organizations/", false);
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string organizationName, string serverlessRuntimeName, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string organizationName, string serverlessRuntimeName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Informatica.DataManagement/organizations/", false);
@@ -114,12 +114,12 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             return message;
         }
 
-        internal HttpMessage CreateGetByInformaticaOrganizationResourceRequest(string subscriptionId, string resourceGroupName, string organizationName, RequestContext context)
+        internal HttpMessage CreateGetByInformaticaOrganizationResourceRequest(Guid subscriptionId, string resourceGroupName, string organizationName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Informatica.DataManagement/organizations/", false);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             return message;
         }
 
-        internal HttpMessage CreateNextGetByInformaticaOrganizationResourceRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string organizationName, RequestContext context)
+        internal HttpMessage CreateNextGetByInformaticaOrganizationResourceRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string organizationName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -160,12 +160,12 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             return message;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string organizationName, string serverlessRuntimeName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string resourceGroupName, string organizationName, string serverlessRuntimeName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Informatica.DataManagement/organizations/", false);
@@ -186,12 +186,12 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             return message;
         }
 
-        internal HttpMessage CreateCheckDependenciesRequest(string subscriptionId, string resourceGroupName, string organizationName, string serverlessRuntimeName, RequestContext context)
+        internal HttpMessage CreateCheckDependenciesRequest(Guid subscriptionId, string resourceGroupName, string organizationName, string serverlessRuntimeName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Informatica.DataManagement/organizations/", false);
@@ -211,12 +211,12 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             return message;
         }
 
-        internal HttpMessage CreateStartFailedServerlessRuntimeRequest(string subscriptionId, string resourceGroupName, string organizationName, string serverlessRuntimeName, RequestContext context)
+        internal HttpMessage CreateStartFailedServerlessRuntimeRequest(Guid subscriptionId, string resourceGroupName, string organizationName, string serverlessRuntimeName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Informatica.DataManagement/organizations/", false);
@@ -235,12 +235,12 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             return message;
         }
 
-        internal HttpMessage CreateGetServerlessResourceByIdRequest(string subscriptionId, string resourceGroupName, string organizationName, string serverlessRuntimeName, RequestContext context)
+        internal HttpMessage CreateGetServerlessResourceByIdRequest(Guid subscriptionId, string resourceGroupName, string organizationName, string serverlessRuntimeName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Informatica.DataManagement/organizations/", false);

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         {
             TryGetApiVersion(InformaticaOrganizationResource.ResourceType, out string informaticaOrganizationApiVersion);
             _organizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.InformaticaDataManagement", InformaticaOrganizationResource.ResourceType.Namespace, Diagnostics);
-            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Endpoint, informaticaOrganizationApiVersion ?? "2024-05-08");
+            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Endpoint, informaticaOrganizationApiVersion ?? "2025-11-27");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
+        /// <description> 2025-11-27. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, InformaticaOrganizationData.ToRequestContent(data), context);
+                HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, InformaticaOrganizationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 InformaticaDataManagementArmOperation<InformaticaOrganizationResource> operation = new InformaticaDataManagementArmOperation<InformaticaOrganizationResource>(
                     new InformaticaOrganizationResourceOperationSource(Client),
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
+        /// <description> 2025-11-27. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, InformaticaOrganizationData.ToRequestContent(data), context);
+                HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, InformaticaOrganizationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 InformaticaDataManagementArmOperation<InformaticaOrganizationResource> operation = new InformaticaDataManagementArmOperation<InformaticaOrganizationResource>(
                     new InformaticaOrganizationResourceOperationSource(Client),
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
+        /// <description> 2025-11-27. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, context);
+                HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<InformaticaOrganizationData> response = Response.FromValue(InformaticaOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
+        /// <description> 2025-11-27. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, context);
+                HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<InformaticaOrganizationData> response = Response.FromValue(InformaticaOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
+        /// <description> 2025-11-27. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<InformaticaOrganizationData, InformaticaOrganizationResource>(new OrganizationsGetByResourceGroupAsyncCollectionResultOfT(_organizationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "InformaticaOrganizationCollection.GetAll"), data => new InformaticaOrganizationResource(Client, data));
+            return new AsyncPageableWrapper<InformaticaOrganizationData, InformaticaOrganizationResource>(new OrganizationsGetByResourceGroupAsyncCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "InformaticaOrganizationCollection.GetAll"), data => new InformaticaOrganizationResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
+        /// <description> 2025-11-27. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<InformaticaOrganizationData, InformaticaOrganizationResource>(new OrganizationsGetByResourceGroupCollectionResultOfT(_organizationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "InformaticaOrganizationCollection.GetAll"), data => new InformaticaOrganizationResource(Client, data));
+            return new PageableWrapper<InformaticaOrganizationData, InformaticaOrganizationResource>(new OrganizationsGetByResourceGroupCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "InformaticaOrganizationCollection.GetAll"), data => new InformaticaOrganizationResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
+        /// <description> 2025-11-27. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, context);
+                HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<InformaticaOrganizationData> response = default;
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
+        /// <description> 2025-11-27. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, context);
+                HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<InformaticaOrganizationData> response = default;
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
+        /// <description> 2025-11-27. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, context);
+                HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<InformaticaOrganizationData> response = default;
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
+        /// <description> 2025-11-27. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, context);
+                HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<InformaticaOrganizationData> response = default;

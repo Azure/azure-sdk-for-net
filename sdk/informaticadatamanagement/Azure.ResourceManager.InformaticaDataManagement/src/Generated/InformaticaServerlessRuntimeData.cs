@@ -30,14 +30,19 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InformaticaServerlessRuntimeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, InformaticaServerlessRuntimeProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal InformaticaServerlessRuntimeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, InformaticaServerlessRuntimeProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            Identity = identity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
         public InformaticaServerlessRuntimeProperties Properties { get; set; }
+
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

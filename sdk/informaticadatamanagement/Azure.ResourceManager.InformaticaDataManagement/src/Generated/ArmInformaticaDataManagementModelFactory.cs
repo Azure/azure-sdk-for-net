@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -26,8 +27,9 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="InformaticaDataManagement.InformaticaOrganizationData"/> instance for mocking. </returns>
-        public static InformaticaOrganizationData InformaticaOrganizationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, InformaticaOrganizationProperties properties = default)
+        public static InformaticaOrganizationData InformaticaOrganizationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, InformaticaOrganizationProperties properties = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -39,6 +41,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                identity,
                 default);
         }
 
@@ -72,11 +75,12 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         }
 
         /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. </param>
+        /// <param name="marketplaceSubscriptionStatus"> Marketplace subscription status of a resource. </param>
         /// <param name="offerDetails"> Marketplace offer details. </param>
         /// <returns> A new <see cref="Models.InformaticaMarketplaceDetails"/> instance for mocking. </returns>
-        public static InformaticaMarketplaceDetails InformaticaMarketplaceDetails(string marketplaceSubscriptionId = default, InformaticaOfferDetails offerDetails = default)
+        public static InformaticaMarketplaceDetails InformaticaMarketplaceDetails(string marketplaceSubscriptionId = default, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default, InformaticaOfferDetails offerDetails = default)
         {
-            return new InformaticaMarketplaceDetails(marketplaceSubscriptionId, offerDetails, default);
+            return new InformaticaMarketplaceDetails(marketplaceSubscriptionId, marketplaceSubscriptionStatus, offerDetails, default);
         }
 
         /// <param name="publisherId"> Id of the product publisher. </param>
@@ -134,14 +138,15 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 default);
         }
 
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> Patchable PropertieInformaticaOrganizationPropertiesUpdates of the Organization observability resource. </param>
         /// <returns> A new <see cref="Models.InformaticaOrganizationPatch"/> instance for mocking. </returns>
-        public static InformaticaOrganizationPatch InformaticaOrganizationPatch(IDictionary<string, string> tags = default, InformaticaOrganizationPropertiesUpdate properties = default)
+        public static InformaticaOrganizationPatch InformaticaOrganizationPatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, InformaticaOrganizationPropertiesUpdate properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new InformaticaOrganizationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+            return new InformaticaOrganizationPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
         /// <param name="informaticaOrganizationProperties"> Informatica Organization properties. </param>
@@ -162,11 +167,12 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         }
 
         /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. </param>
+        /// <param name="marketplaceSubscriptionStatus"> Marketplace subscription status of a resource. </param>
         /// <param name="offerDetails"> Marketplace offer details. </param>
         /// <returns> A new <see cref="Models.InformaticaMarketplaceDetailsUpdate"/> instance for mocking. </returns>
-        public static InformaticaMarketplaceDetailsUpdate InformaticaMarketplaceDetailsUpdate(string marketplaceSubscriptionId = default, InformaticaOfferDetailsUpdate offerDetails = default)
+        public static InformaticaMarketplaceDetailsUpdate InformaticaMarketplaceDetailsUpdate(string marketplaceSubscriptionId = default, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default, InformaticaOfferDetailsUpdate offerDetails = default)
         {
-            return new InformaticaMarketplaceDetailsUpdate(marketplaceSubscriptionId, offerDetails, default);
+            return new InformaticaMarketplaceDetailsUpdate(marketplaceSubscriptionId, marketplaceSubscriptionStatus, offerDetails, default);
         }
 
         /// <param name="publisherId"> Id of the product publisher. </param>
@@ -366,6 +372,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="advancedCustomProperties"> Advanced custom properties. </param>
         /// <param name="supplementaryFileLocation"> Supplementary File location. </param>
+        /// <param name="serverlessRuntimeDataDisks"> Serverless runtime data disks. </param>
         /// <param name="platform"> Serverless Account Platform. </param>
         /// <param name="tags"> Tags for the resource. </param>
         /// <param name="vnet"> virtual network. </param>
@@ -376,14 +383,17 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <param name="region"> region name for the runtime environment. </param>
         /// <param name="serverlessArmResourceId"> Serverless Arm Resource ID. </param>
         /// <returns> A new <see cref="Models.InformaticaServerlessFetchConfigProperties"/> instance for mocking. </returns>
-        public static InformaticaServerlessFetchConfigProperties InformaticaServerlessFetchConfigProperties(string subnet = default, string applicationType = default, string resourceGroupName = default, string advancedCustomProperties = default, string supplementaryFileLocation = default, string platform = default, string tags = default, string vnet = default, string executionTimeout = default, string computeUnits = default, Guid? tenantId = default, string subscriptionId = default, string region = default, ResourceIdentifier serverlessArmResourceId = default)
+        public static InformaticaServerlessFetchConfigProperties InformaticaServerlessFetchConfigProperties(string subnet = default, string applicationType = default, string resourceGroupName = default, string advancedCustomProperties = default, string supplementaryFileLocation = default, IEnumerable<ServerlessRuntimeDataDisk> serverlessRuntimeDataDisks = default, string platform = default, string tags = default, string vnet = default, string executionTimeout = default, string computeUnits = default, Guid? tenantId = default, string subscriptionId = default, string region = default, ResourceIdentifier serverlessArmResourceId = default)
         {
+            serverlessRuntimeDataDisks ??= new ChangeTrackingList<ServerlessRuntimeDataDisk>();
+
             return new InformaticaServerlessFetchConfigProperties(
                 subnet,
                 applicationType,
                 resourceGroupName,
                 advancedCustomProperties,
                 supplementaryFileLocation,
+                (serverlessRuntimeDataDisks ?? new ChangeTrackingList<ServerlessRuntimeDataDisk>()).ToList(),
                 platform,
                 tags,
                 vnet,
@@ -396,13 +406,31 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 default);
         }
 
+        /// <param name="type"> Type of the data disk. </param>
+        /// <param name="serverHostOrIpAddress"> Server Host or IP Address. </param>
+        /// <param name="sourceMount"> Source mount point. </param>
+        /// <param name="targetMount"> Target mount point. </param>
+        /// <param name="mountOptions"> Mount options. </param>
+        /// <returns> A new <see cref="Models.ServerlessRuntimeDataDisk"/> instance for mocking. </returns>
+        public static ServerlessRuntimeDataDisk ServerlessRuntimeDataDisk(string @type = default, string serverHostOrIpAddress = default, string sourceMount = default, string targetMount = default, string mountOptions = default)
+        {
+            return new ServerlessRuntimeDataDisk(
+                @type,
+                serverHostOrIpAddress,
+                sourceMount,
+                targetMount,
+                mountOptions,
+                default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="InformaticaDataManagement.InformaticaServerlessRuntimeData"/> instance for mocking. </returns>
-        public static InformaticaServerlessRuntimeData InformaticaServerlessRuntimeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, InformaticaServerlessRuntimeProperties properties = default)
+        public static InformaticaServerlessRuntimeData InformaticaServerlessRuntimeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, InformaticaServerlessRuntimeProperties properties = default, ManagedServiceIdentity identity = default)
         {
             return new InformaticaServerlessRuntimeData(
                 id,
@@ -410,6 +438,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 resourceType,
                 systemData,
                 properties,
+                identity,
                 default);
         }
 
@@ -423,13 +452,15 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <param name="networkInterfaceConfiguration"> Network Interface Configuration Profile. </param>
         /// <param name="advancedCustomProperties"> String KV pairs indicating Advanced custom properties. </param>
         /// <param name="supplementaryFileLocation"> Supplementary file location. </param>
+        /// <param name="serverlessRuntimeDataDisks"> Serverless runtime data disks. </param>
         /// <param name="serverlessRuntimeConfig"> Serverless config properties. </param>
         /// <param name="serverlessRuntimeTags"> Serverless Runtime Tags. </param>
         /// <param name="userContextToken"> User context token for OBO flow. </param>
         /// <returns> A new <see cref="Models.InformaticaServerlessRuntimeProperties"/> instance for mocking. </returns>
-        public static InformaticaServerlessRuntimeProperties InformaticaServerlessRuntimeProperties(InformaticaProvisioningState? provisioningState = default, string description = default, InformaticaPlatformType? platform = default, InformaticaApplicationType? applicationType = default, string computeUnits = default, string executionTimeout = default, string serverlessAccountLocation = default, InformaticaNetworkInterfaceConfiguration networkInterfaceConfiguration = default, IEnumerable<AdvancedCustomProperties> advancedCustomProperties = default, string supplementaryFileLocation = default, ServerlessRuntimeConfigProperties serverlessRuntimeConfig = default, IEnumerable<ServerlessRuntimeTag> serverlessRuntimeTags = default, string userContextToken = default)
+        public static InformaticaServerlessRuntimeProperties InformaticaServerlessRuntimeProperties(InformaticaProvisioningState? provisioningState = default, string description = default, InformaticaPlatformType? platform = default, InformaticaApplicationType? applicationType = default, string computeUnits = default, string executionTimeout = default, string serverlessAccountLocation = default, InformaticaNetworkInterfaceConfiguration networkInterfaceConfiguration = default, IEnumerable<AdvancedCustomProperties> advancedCustomProperties = default, string supplementaryFileLocation = default, IEnumerable<ServerlessRuntimeDataDisk> serverlessRuntimeDataDisks = default, ServerlessRuntimeConfigProperties serverlessRuntimeConfig = default, IEnumerable<ServerlessRuntimeTag> serverlessRuntimeTags = default, string userContextToken = default)
         {
             advancedCustomProperties ??= new ChangeTrackingList<AdvancedCustomProperties>();
+            serverlessRuntimeDataDisks ??= new ChangeTrackingList<ServerlessRuntimeDataDisk>();
             serverlessRuntimeTags ??= new ChangeTrackingList<ServerlessRuntimeTag>();
 
             return new InformaticaServerlessRuntimeProperties(
@@ -443,6 +474,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 networkInterfaceConfiguration is null ? default : new ServerlessRuntimeNetworkProfile(networkInterfaceConfiguration, default),
                 (advancedCustomProperties ?? new ChangeTrackingList<AdvancedCustomProperties>()).ToList(),
                 supplementaryFileLocation,
+                (serverlessRuntimeDataDisks ?? new ChangeTrackingList<ServerlessRuntimeDataDisk>()).ToList(),
                 serverlessRuntimeConfig,
                 (serverlessRuntimeTags ?? new ChangeTrackingList<ServerlessRuntimeTag>()).ToList(),
                 userContextToken is null ? default : new ServerlessRuntimeUserContextProperties(userContextToken, default),
@@ -474,11 +506,12 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             return new ServerlessRuntimeTag(name, value, default);
         }
 
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="properties"> Patchable PropertieInformaticaOrganizationPropertiesUpdates of the Organization observability resource. </param>
         /// <returns> A new <see cref="Models.InformaticaServerlessRuntimePatch"/> instance for mocking. </returns>
-        public static InformaticaServerlessRuntimePatch InformaticaServerlessRuntimePatch(ServerlessRuntimePropertiesUpdate properties = default)
+        public static InformaticaServerlessRuntimePatch InformaticaServerlessRuntimePatch(ManagedServiceIdentity identity = default, ServerlessRuntimePropertiesUpdate properties = default)
         {
-            return new InformaticaServerlessRuntimePatch(properties, default);
+            return new InformaticaServerlessRuntimePatch(identity, properties, default);
         }
 
         /// <param name="description"> description of the serverless runtime. </param>
@@ -490,13 +523,15 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <param name="networkInterfaceConfiguration"> Network Interface Configuration Profile Update. </param>
         /// <param name="advancedCustomProperties"> String KV pairs indicating Advanced custom properties. </param>
         /// <param name="supplementaryFileLocation"> Supplementary file location. </param>
+        /// <param name="serverlessRuntimeDataDisks"> Serverless runtime data disks. </param>
         /// <param name="serverlessRuntimeConfig"> Serverless config properties. </param>
         /// <param name="serverlessRuntimeTags"> Serverless Runtime Tags. </param>
         /// <param name="userContextToken"> User context token for OBO flow. </param>
         /// <returns> A new <see cref="Models.ServerlessRuntimePropertiesUpdate"/> instance for mocking. </returns>
-        public static ServerlessRuntimePropertiesUpdate ServerlessRuntimePropertiesUpdate(string description = default, InformaticaPlatformType? platform = default, InformaticaApplicationType? applicationType = default, string computeUnits = default, string executionTimeout = default, string serverlessAccountLocation = default, InformaticaNetworkInterfaceConfigurationUpdate networkInterfaceConfiguration = default, IEnumerable<AdvancedCustomProperties> advancedCustomProperties = default, string supplementaryFileLocation = default, ServerlessRuntimeConfigPropertiesUpdate serverlessRuntimeConfig = default, IEnumerable<ServerlessRuntimeTag> serverlessRuntimeTags = default, string userContextToken = default)
+        public static ServerlessRuntimePropertiesUpdate ServerlessRuntimePropertiesUpdate(string description = default, InformaticaPlatformType? platform = default, InformaticaApplicationType? applicationType = default, string computeUnits = default, string executionTimeout = default, string serverlessAccountLocation = default, InformaticaNetworkInterfaceConfigurationUpdate networkInterfaceConfiguration = default, IEnumerable<AdvancedCustomProperties> advancedCustomProperties = default, string supplementaryFileLocation = default, IEnumerable<ServerlessRuntimeDataDisk> serverlessRuntimeDataDisks = default, ServerlessRuntimeConfigPropertiesUpdate serverlessRuntimeConfig = default, IEnumerable<ServerlessRuntimeTag> serverlessRuntimeTags = default, string userContextToken = default)
         {
             advancedCustomProperties ??= new ChangeTrackingList<AdvancedCustomProperties>();
+            serverlessRuntimeDataDisks ??= new ChangeTrackingList<ServerlessRuntimeDataDisk>();
             serverlessRuntimeTags ??= new ChangeTrackingList<ServerlessRuntimeTag>();
 
             return new ServerlessRuntimePropertiesUpdate(
@@ -509,6 +544,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 networkInterfaceConfiguration is null ? default : new ServerlessRuntimeNetworkProfileUpdate(networkInterfaceConfiguration, default),
                 (advancedCustomProperties ?? new ChangeTrackingList<AdvancedCustomProperties>()).ToList(),
                 supplementaryFileLocation,
+                (serverlessRuntimeDataDisks ?? new ChangeTrackingList<ServerlessRuntimeDataDisk>()).ToList(),
                 serverlessRuntimeConfig,
                 (serverlessRuntimeTags ?? new ChangeTrackingList<ServerlessRuntimeTag>()).ToList(),
                 userContextToken is null ? default : new ServerlessRuntimeUserContextPropertiesUpdate(userContextToken, default),
@@ -562,6 +598,166 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 documentType,
                 description,
                 lastUpdatedTime,
+                default);
+        }
+
+        /// <summary> An Organization Resource by Informatica. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="InformaticaDataManagement.InformaticaOrganizationData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static InformaticaOrganizationData InformaticaOrganizationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, InformaticaOrganizationProperties properties = default)
+        {
+            return new InformaticaOrganizationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default,
+                default);
+        }
+
+        /// <summary> The template for adding optional properties. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> Patchable PropertieInformaticaOrganizationPropertiesUpdates of the Organization observability resource. </param>
+        /// <returns> A new <see cref="Models.InformaticaOrganizationPatch"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static InformaticaOrganizationPatch InformaticaOrganizationPatch(IDictionary<string, string> tags = default, InformaticaOrganizationPropertiesUpdate properties = default)
+        {
+            return new InformaticaOrganizationPatch(default, tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+        }
+
+        /// <summary> InfaServerlessFetchConfigProperties for the fetch all serverless API as received from informatica API response. </summary>
+        /// <param name="subnet"> subnet name. </param>
+        /// <param name="applicationType"> applicationType name. </param>
+        /// <param name="resourceGroupName"> Resource group name. </param>
+        /// <param name="advancedCustomProperties"> Advanced custom properties. </param>
+        /// <param name="supplementaryFileLocation"> Supplementary File location. </param>
+        /// <param name="platform"> Serverless Account Platform. </param>
+        /// <param name="tags"> Tags for the resource. </param>
+        /// <param name="vnet"> virtual network. </param>
+        /// <param name="executionTimeout"> Execution timeout. </param>
+        /// <param name="computeUnits"> Compute Units. </param>
+        /// <param name="tenantId"> Tenant ID. </param>
+        /// <param name="subscriptionId"> subscription ID. </param>
+        /// <param name="region"> region name for the runtime environment. </param>
+        /// <param name="serverlessArmResourceId"> Serverless Arm Resource ID. </param>
+        /// <returns> A new <see cref="Models.InformaticaServerlessFetchConfigProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static InformaticaServerlessFetchConfigProperties InformaticaServerlessFetchConfigProperties(string subnet = default, string applicationType = default, string resourceGroupName = default, string advancedCustomProperties = default, string supplementaryFileLocation = default, string platform = default, string tags = default, string vnet = default, string executionTimeout = default, string computeUnits = default, Guid? tenantId = default, string subscriptionId = default, string region = default, ResourceIdentifier serverlessArmResourceId = default)
+        {
+            return new InformaticaServerlessFetchConfigProperties(
+                subnet,
+                applicationType,
+                resourceGroupName,
+                advancedCustomProperties,
+                supplementaryFileLocation,
+                default,
+                platform,
+                tags,
+                vnet,
+                executionTimeout,
+                computeUnits,
+                tenantId,
+                subscriptionId,
+                region,
+                serverlessArmResourceId,
+                default);
+        }
+
+        /// <summary> A Serverless Runtime environment  resource by Informatica. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="InformaticaDataManagement.InformaticaServerlessRuntimeData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static InformaticaServerlessRuntimeData InformaticaServerlessRuntimeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, InformaticaServerlessRuntimeProperties properties = default)
+        {
+            return new InformaticaServerlessRuntimeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default,
+                default);
+        }
+
+        /// <param name="provisioningState"> Provisioning State of the resource. </param>
+        /// <param name="description"> description of the serverless runtime. </param>
+        /// <param name="platform"> Platform type of the Serverless Runtime. </param>
+        /// <param name="applicationType"> Application type of the Serverless Runtime environment. </param>
+        /// <param name="computeUnits"> Compute units of the serverless runtime. </param>
+        /// <param name="executionTimeout"> Serverless Execution timeout. </param>
+        /// <param name="serverlessAccountLocation"> Serverless account creation location. </param>
+        /// <param name="networkInterfaceConfiguration"> Network Interface Configuration Profile. </param>
+        /// <param name="advancedCustomProperties"> String KV pairs indicating Advanced custom properties. </param>
+        /// <param name="supplementaryFileLocation"> Supplementary file location. </param>
+        /// <param name="serverlessRuntimeConfig"> Serverless config properties. </param>
+        /// <param name="serverlessRuntimeTags"> Serverless Runtime Tags. </param>
+        /// <param name="userContextToken"> User context token for OBO flow. </param>
+        /// <returns> A new <see cref="Models.InformaticaServerlessRuntimeProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static InformaticaServerlessRuntimeProperties InformaticaServerlessRuntimeProperties(InformaticaProvisioningState? provisioningState = default, string description = default, InformaticaPlatformType? platform = default, InformaticaApplicationType? applicationType = default, string computeUnits = default, string executionTimeout = default, string serverlessAccountLocation = default, InformaticaNetworkInterfaceConfiguration networkInterfaceConfiguration = default, IEnumerable<AdvancedCustomProperties> advancedCustomProperties = default, string supplementaryFileLocation = default, ServerlessRuntimeConfigProperties serverlessRuntimeConfig = default, IEnumerable<ServerlessRuntimeTag> serverlessRuntimeTags = default, string userContextToken = default)
+        {
+            return new InformaticaServerlessRuntimeProperties(
+                provisioningState,
+                description,
+                platform,
+                applicationType,
+                computeUnits,
+                executionTimeout,
+                serverlessAccountLocation,
+                networkInterfaceConfiguration is null ? default : new ServerlessRuntimeNetworkProfile(networkInterfaceConfiguration, default),
+                (advancedCustomProperties ?? new ChangeTrackingList<AdvancedCustomProperties>()).ToList(),
+                supplementaryFileLocation,
+                default,
+                serverlessRuntimeConfig,
+                (serverlessRuntimeTags ?? new ChangeTrackingList<ServerlessRuntimeTag>()).ToList(),
+                userContextToken is null ? default : new ServerlessRuntimeUserContextProperties(userContextToken, default),
+                default);
+        }
+
+        /// <param name="description"> description of the serverless runtime. </param>
+        /// <param name="platform"> Platform type of the Serverless Runtime. </param>
+        /// <param name="applicationType"> Application type of the Serverless Runtime environment. </param>
+        /// <param name="computeUnits"> Compute units of the serverless runtime. </param>
+        /// <param name="executionTimeout"> Serverless Execution timeout. </param>
+        /// <param name="serverlessAccountLocation"> Serverless account creation location. </param>
+        /// <param name="networkInterfaceConfiguration"> Network Interface Configuration Profile Update. </param>
+        /// <param name="advancedCustomProperties"> String KV pairs indicating Advanced custom properties. </param>
+        /// <param name="supplementaryFileLocation"> Supplementary file location. </param>
+        /// <param name="serverlessRuntimeConfig"> Serverless config properties. </param>
+        /// <param name="serverlessRuntimeTags"> Serverless Runtime Tags. </param>
+        /// <param name="userContextToken"> User context token for OBO flow. </param>
+        /// <returns> A new <see cref="Models.ServerlessRuntimePropertiesUpdate"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ServerlessRuntimePropertiesUpdate ServerlessRuntimePropertiesUpdate(string description = default, InformaticaPlatformType? platform = default, InformaticaApplicationType? applicationType = default, string computeUnits = default, string executionTimeout = default, string serverlessAccountLocation = default, InformaticaNetworkInterfaceConfigurationUpdate networkInterfaceConfiguration = default, IEnumerable<AdvancedCustomProperties> advancedCustomProperties = default, string supplementaryFileLocation = default, ServerlessRuntimeConfigPropertiesUpdate serverlessRuntimeConfig = default, IEnumerable<ServerlessRuntimeTag> serverlessRuntimeTags = default, string userContextToken = default)
+        {
+            return new ServerlessRuntimePropertiesUpdate(
+                description,
+                platform,
+                applicationType,
+                computeUnits,
+                executionTimeout,
+                serverlessAccountLocation,
+                networkInterfaceConfiguration is null ? default : new ServerlessRuntimeNetworkProfileUpdate(networkInterfaceConfiguration, default),
+                (advancedCustomProperties ?? new ChangeTrackingList<AdvancedCustomProperties>()).ToList(),
+                supplementaryFileLocation,
+                default,
+                serverlessRuntimeConfig,
+                (serverlessRuntimeTags ?? new ChangeTrackingList<ServerlessRuntimeTag>()).ToList(),
+                userContextToken is null ? default : new ServerlessRuntimeUserContextPropertiesUpdate(userContextToken, default),
                 default);
         }
     }
