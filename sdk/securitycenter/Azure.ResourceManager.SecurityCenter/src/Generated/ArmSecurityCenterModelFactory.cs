@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="additionalProperties"></param>
         /// <param name="bundles"> Bundles list. </param>
-        /// <returns> A new <see cref="Models.AlertSimulatorBundlesRequestProperties"/> instance for mocking. </returns>
-        public static AlertSimulatorBundlesRequestProperties AlertSimulatorBundlesRequestProperties(IDictionary<string, BinaryData> additionalProperties = default, IEnumerable<BundleType> bundles = default)
+        /// <returns> A new <see cref="Models.SecurityAlertSimulatorBundlesRequestProperties"/> instance for mocking. </returns>
+        public static SecurityAlertSimulatorBundlesRequestProperties SecurityAlertSimulatorBundlesRequestProperties(IDictionary<string, BinaryData> additionalProperties = default, IEnumerable<SecurityAlertSimulatorBundleType> bundles = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-            bundles ??= new ChangeTrackingList<BundleType>();
+            bundles ??= new ChangeTrackingList<SecurityAlertSimulatorBundleType>();
 
-            return new AlertSimulatorBundlesRequestProperties(default, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), (bundles ?? new ChangeTrackingList<BundleType>()).ToList());
+            return new SecurityAlertSimulatorBundlesRequestProperties(default, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), (bundles ?? new ChangeTrackingList<SecurityAlertSimulatorBundleType>()).ToList());
         }
 
         /// <param name="field"> The alert entity type to suppress by. </param>

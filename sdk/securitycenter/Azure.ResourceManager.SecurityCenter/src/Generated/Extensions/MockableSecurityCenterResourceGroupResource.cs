@@ -881,7 +881,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <param name="connectionType"> The type of allowed connections (Internal, External). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SecurityCenterAllowedConnectionResource>> GetSecurityCenterAllowedConnectionAsync(AzureLocation ascLocation, ConnectionType connectionType, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityCenterAllowedConnectionResource>> GetSecurityCenterAllowedConnectionAsync(AzureLocation ascLocation, SecurityCenterConnectionType connectionType, CancellationToken cancellationToken = default)
         {
             return await GetSecurityCenterAllowedConnections().GetAsync(ascLocation, connectionType, cancellationToken).ConfigureAwait(false);
         }
@@ -907,7 +907,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <param name="connectionType"> The type of allowed connections (Internal, External). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<SecurityCenterAllowedConnectionResource> GetSecurityCenterAllowedConnection(AzureLocation ascLocation, ConnectionType connectionType, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityCenterAllowedConnectionResource> GetSecurityCenterAllowedConnection(AzureLocation ascLocation, SecurityCenterConnectionType connectionType, CancellationToken cancellationToken = default)
         {
             return GetSecurityCenterAllowedConnections().Get(ascLocation, connectionType, cancellationToken);
         }

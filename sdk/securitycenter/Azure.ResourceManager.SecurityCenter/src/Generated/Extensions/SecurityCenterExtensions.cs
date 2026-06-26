@@ -3056,7 +3056,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Gets the list of all possible traffic between resources for the subscription and location, based on connection type.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetSecurityCenterAllowedConnectionAsync(AzureLocation, ConnectionType, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetSecurityCenterAllowedConnectionAsync(AzureLocation, SecurityCenterConnectionType, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -3065,7 +3065,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SecurityCenterAllowedConnectionResource>> GetSecurityCenterAllowedConnectionAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, ConnectionType connectionType, CancellationToken cancellationToken = default)
+        public static async Task<Response<SecurityCenterAllowedConnectionResource>> GetSecurityCenterAllowedConnectionAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, SecurityCenterConnectionType connectionType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -3076,7 +3076,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Gets the list of all possible traffic between resources for the subscription and location, based on connection type.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetSecurityCenterAllowedConnection(AzureLocation, ConnectionType, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetSecurityCenterAllowedConnection(AzureLocation, SecurityCenterConnectionType, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -3085,7 +3085,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SecurityCenterAllowedConnectionResource> GetSecurityCenterAllowedConnection(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, ConnectionType connectionType, CancellationToken cancellationToken = default)
+        public static Response<SecurityCenterAllowedConnectionResource> GetSecurityCenterAllowedConnection(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, SecurityCenterConnectionType connectionType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 

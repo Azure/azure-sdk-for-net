@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 switch (discriminator.GetString())
                 {
                     case "Bundles":
-                        return AlertSimulatorBundlesRequestProperties.DeserializeAlertSimulatorBundlesRequestProperties(element, options);
+                        return SecurityAlertSimulatorBundlesRequestProperties.DeserializeSecurityAlertSimulatorBundlesRequestProperties(element, options);
                 }
             }
             return UnknownSecurityAlertSimulatorRequestProperties.DeserializeUnknownSecurityAlertSimulatorRequestProperties(element, options);
