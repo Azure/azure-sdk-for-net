@@ -2,7 +2,7 @@
 # once and publish them as one artifact every shard re-stages. This is the step the archetype
 # runs when useCustomMcp=false. Repos whose evals drive a different MCP (non-.NET, an
 # NPM-installed live server, etc.) set useCustomMcp=true and provide their own
-# eng/pipelines/templates/steps/eval-mcp-setup.yml instead.
+# eng/common/pipelines/templates/steps/eval-mcp-setup.yml instead.
 #
 # The pipeline may run from azure-sdk-tools (the MCP source is already in `self`) OR from
 # another repo (a spec/language repo) whose default checkout does NOT contain the MCP source.

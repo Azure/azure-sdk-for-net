@@ -1,5 +1,5 @@
 # Repo-provided MCP setup for the eval CI — the override the archetype runs when
-# useCustomMcp=true. Each consuming repo (or language team) copies/edits this to build or
+# useCustomMcp=true. Each consuming repo (or language team) customizes this to build or
 # install whatever MCP server(s) its evals drive: a different .NET build, a Java/Maven
 # server, an NPM-installed live server, etc.
 #

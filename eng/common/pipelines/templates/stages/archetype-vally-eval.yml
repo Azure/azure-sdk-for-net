@@ -27,7 +27,7 @@ parameters:
     # false (default): build the standard azure-sdk-tools .NET MCP (Mock + Cli) via the
     # shared eng/common step, which clones azure-sdk-tools automatically when the pipeline
     # runs outside it. true: the consuming repo supplies its own MCP build/startup at
-    # eng/pipelines/templates/steps/eval-mcp-setup.yml (non-.NET servers, NPM-installed, etc.).
+    # eng/common/pipelines/templates/steps/eval-mcp-setup.yml (non-.NET servers, NPM-installed, etc.).
     type: boolean
     default: false
   - name: azureServiceConnection
@@ -76,7 +76,7 @@ extends:
                   # Consuming repo supplies its own MCP build/startup (non-.NET servers, an
                   # NPM-installed live server, etc.). It must publish each server under
                   # artifacts/mcp/<name> so the shards re-stage it at the expected path.
-                  - template: /eng/pipelines/templates/steps/eval-mcp-setup.yml
+                  - template: /eng/common/pipelines/templates/steps/eval-mcp-setup.yml
               - ${{ else }}:
                   # Default: build the azure-sdk-tools Mock + Cli .NET MCP servers (clones
                   # azure-sdk-tools automatically when the pipeline runs outside it).
