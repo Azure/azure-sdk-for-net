@@ -54,7 +54,7 @@ public partial class AgentOptimizationClient
         {
             return ModelReaderWriter.Read<CandidateDeployConfig>(
                 BinaryData.FromString(rawConfig),
-                options: null,
+                ModelReaderWriterOptions.Json,
                 AzureAIAgentServerOptimizationContext.Default);
         }
 
