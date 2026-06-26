@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> Target worker tier assigned to the App Service plan. </summary>
         [WirePath("properties.workerTierName")]

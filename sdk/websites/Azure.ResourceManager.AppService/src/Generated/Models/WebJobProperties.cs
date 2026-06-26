@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebJobProperties"/>. </summary>
-        internal WebJobProperties()
+        public WebJobProperties()
         {
             Settings = new ChangeTrackingDictionary<string, BinaryData>();
         }
@@ -47,27 +47,27 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Run command. </summary>
         [WirePath("run_command")]
-        public string RunCommand { get; }
+        public string RunCommand { get; set; }
 
         /// <summary> Job URL. </summary>
         [WirePath("url")]
-        public string Uri { get; }
+        public string Uri { get; set; }
 
         /// <summary> Extra Info URL. </summary>
         [WirePath("extra_info_url")]
-        public string ExtraInfoUri { get; }
+        public string ExtraInfoUri { get; set; }
 
         /// <summary> Job type. </summary>
         [WirePath("web_job_type")]
-        public WebJobType? WebJobType { get; }
+        public WebJobType? WebJobType { get; set; }
 
         /// <summary> Error information. </summary>
         [WirePath("error")]
-        public string Error { get; }
+        public string Error { get; set; }
 
         /// <summary> Using SDK?. </summary>
         [WirePath("using_sdk")]
-        public bool? IsUsingSdk { get; }
+        public bool? IsUsingSdk { get; set; }
 
         /// <summary>
         /// Job settings.

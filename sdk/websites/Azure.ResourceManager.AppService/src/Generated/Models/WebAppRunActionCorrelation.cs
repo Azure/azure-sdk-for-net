@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class WebAppRunActionCorrelation : WebAppRunCorrelation
     {
         /// <summary> Initializes a new instance of <see cref="WebAppRunActionCorrelation"/>. </summary>
-        internal WebAppRunActionCorrelation()
+        public WebAppRunActionCorrelation()
         {
         }
 
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The action tracking identifier. </summary>
         [WirePath("actionTrackingId")]
-        public string ActionTrackingId { get; }
+        public string ActionTrackingId { get; set; }
     }
 }

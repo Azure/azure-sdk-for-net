@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> URL for the zipped app content. </summary>
         [WirePath("properties.appZipUrl")]

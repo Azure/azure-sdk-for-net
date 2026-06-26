@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerInfo"/>. </summary>
-        internal ContainerInfo()
+        public ContainerInfo()
         {
         }
 
@@ -45,36 +45,36 @@ namespace Azure.ResourceManager.AppService.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the CurrentTimeStamp. </summary>
+        /// <summary> Gets or sets the CurrentTimeStamp. </summary>
         [WirePath("currentTimeStamp")]
-        public DateTimeOffset? CurrentTimeStamp { get; }
+        public DateTimeOffset? CurrentTimeStamp { get; set; }
 
-        /// <summary> Gets the PreviousTimeStamp. </summary>
+        /// <summary> Gets or sets the PreviousTimeStamp. </summary>
         [WirePath("previousTimeStamp")]
-        public DateTimeOffset? PreviousTimeStamp { get; }
+        public DateTimeOffset? PreviousTimeStamp { get; set; }
 
-        /// <summary> Gets the CurrentCpuStats. </summary>
+        /// <summary> Gets or sets the CurrentCpuStats. </summary>
         [WirePath("currentCpuStats")]
-        public ContainerCpuStatistics CurrentCpuStats { get; }
+        public ContainerCpuStatistics CurrentCpuStats { get; set; }
 
-        /// <summary> Gets the PreviousCpuStats. </summary>
+        /// <summary> Gets or sets the PreviousCpuStats. </summary>
         [WirePath("previousCpuStats")]
-        public ContainerCpuStatistics PreviousCpuStats { get; }
+        public ContainerCpuStatistics PreviousCpuStats { get; set; }
 
-        /// <summary> Gets the MemoryStats. </summary>
+        /// <summary> Gets or sets the MemoryStats. </summary>
         [WirePath("memoryStats")]
-        public ContainerMemoryStatistics MemoryStats { get; }
+        public ContainerMemoryStatistics MemoryStats { get; set; }
 
-        /// <summary> Gets the Name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         [WirePath("name")]
-        public string Name { get; }
+        public string Name { get; set; }
 
-        /// <summary> Gets the Id. </summary>
+        /// <summary> Gets or sets the Id. </summary>
         [WirePath("id")]
-        public string Id { get; }
+        public string Id { get; set; }
 
-        /// <summary> Gets the Eth0. </summary>
+        /// <summary> Gets or sets the Eth0. </summary>
         [WirePath("eth0")]
-        public ContainerNetworkInterfaceStatistics Eth0 { get; }
+        public ContainerNetworkInterfaceStatistics Eth0 { get; set; }
     }
 }

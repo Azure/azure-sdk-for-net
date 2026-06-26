@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkFeatureData"/>. </summary>
-        internal NetworkFeatureData()
+        public NetworkFeatureData()
         {
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> NetworkFeatures resource specific properties. </summary>
         [WirePath("properties")]
-        internal NetworkFeatureProperties Properties { get; }
+        internal NetworkFeatureProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> The Virtual Network name. </summary>
         [WirePath("properties.virtualNetworkName")]
@@ -73,7 +73,11 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties is null ? default : Properties.HybridConnections;
+                if (Properties is null)
+                {
+                    Properties = new NetworkFeatureProperties();
+                }
+                return Properties.HybridConnections;
             }
         }
 
@@ -83,7 +87,11 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties is null ? default : Properties.HybridConnectionsV2;
+                if (Properties is null)
+                {
+                    Properties = new NetworkFeatureProperties();
+                }
+                return Properties.HybridConnectionsV2;
             }
         }
     }

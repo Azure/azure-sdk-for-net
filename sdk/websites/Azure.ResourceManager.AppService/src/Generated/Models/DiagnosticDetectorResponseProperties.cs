@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticDetectorResponseProperties"/>. </summary>
-        internal DiagnosticDetectorResponseProperties()
+        public DiagnosticDetectorResponseProperties()
         {
             Metrics = new ChangeTrackingList<DiagnosticMetricSet>();
             AbnormalTimePeriods = new ChangeTrackingList<DetectorAbnormalTimePeriod>();
@@ -50,19 +50,19 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Start time of the period. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartOn { get; set; }
 
         /// <summary> End time of the period. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndOn { get; set; }
 
         /// <summary> Flag representing Issue was detected. </summary>
         [WirePath("issueDetected")]
-        public bool? IssueDetected { get; }
+        public bool? IssueDetected { get; set; }
 
         /// <summary> Detector's definition. </summary>
         [WirePath("detectorDefinition")]
-        public DetectorDefinition DetectorDefinition { get; }
+        public DetectorDefinition DetectorDefinition { get; set; }
 
         /// <summary> Metrics provided by the detector. </summary>
         [WirePath("metrics")]
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Meta Data. </summary>
         [WirePath("responseMetaData")]
-        internal DetectorMetadata ResponseMetaData { get; }
+        internal DetectorMetadata ResponseMetaData { get; set; }
 
         /// <summary> Source of the Data. </summary>
         [WirePath("responseMetaData.dataSource")]
@@ -87,6 +87,14 @@ namespace Azure.ResourceManager.AppService.Models
             get
             {
                 return ResponseMetaData is null ? default : ResponseMetaData.DataSource;
+            }
+            set
+            {
+                if (ResponseMetaData is null)
+                {
+                    ResponseMetaData = new DetectorMetadata();
+                }
+                ResponseMetaData.DataSource = value;
             }
         }
     }

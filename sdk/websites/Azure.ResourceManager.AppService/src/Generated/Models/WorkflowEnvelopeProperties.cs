@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowEnvelopeProperties"/>. </summary>
-        internal WorkflowEnvelopeProperties()
+        public WorkflowEnvelopeProperties()
         {
             Files = new ChangeTrackingDictionary<string, BinaryData>();
         }
@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Gets or sets the state of the workflow. </summary>
         [WirePath("flowState")]
-        public WorkflowState? FlowState { get; }
+        public WorkflowState? FlowState { get; set; }
 
         /// <summary> Gets or sets workflow health. </summary>
         [WirePath("health")]
-        public WorkflowHealth Health { get; }
+        public WorkflowHealth Health { get; set; }
     }
 }

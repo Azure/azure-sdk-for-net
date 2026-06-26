@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteBuildARMResourceProperties"/>. </summary>
-        internal StaticSiteBuildARMResourceProperties()
+        public StaticSiteBuildARMResourceProperties()
         {
             UserProvidedFunctionApps = new ChangeTrackingList<StaticSiteUserProvidedFunctionAppData>();
             LinkedBackends = new ChangeTrackingList<StaticSiteLinkedBackendInfo>();

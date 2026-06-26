@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticDetectorResponse"/>. </summary>
-        internal DiagnosticDetectorResponse()
+        public DiagnosticDetectorResponse()
         {
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> DiagnosticDetectorResponse resource specific properties. </summary>
         [WirePath("properties")]
-        internal DiagnosticDetectorResponseProperties Properties { get; }
+        internal DiagnosticDetectorResponseProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> Start time of the period. </summary>
         [WirePath("properties.startTime")]
@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.AppService.Models
             get
             {
                 return Properties is null ? default : Properties.StartOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticDetectorResponseProperties();
+                }
+                Properties.StartOn = value;
             }
         }
 
@@ -65,6 +73,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return Properties is null ? default : Properties.EndOn;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticDetectorResponseProperties();
+                }
+                Properties.EndOn = value;
+            }
         }
 
         /// <summary> Flag representing Issue was detected. </summary>
@@ -74,6 +90,14 @@ namespace Azure.ResourceManager.AppService.Models
             get
             {
                 return Properties is null ? default : Properties.IssueDetected;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticDetectorResponseProperties();
+                }
+                Properties.IssueDetected = value;
             }
         }
 
@@ -85,6 +109,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return Properties is null ? default : Properties.DetectorDefinition;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticDetectorResponseProperties();
+                }
+                Properties.DetectorDefinition = value;
+            }
         }
 
         /// <summary> Metrics provided by the detector. </summary>
@@ -93,7 +125,11 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties is null ? default : Properties.Metrics;
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticDetectorResponseProperties();
+                }
+                return Properties.Metrics;
             }
         }
 
@@ -103,7 +139,11 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties is null ? default : Properties.AbnormalTimePeriods;
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticDetectorResponseProperties();
+                }
+                return Properties.AbnormalTimePeriods;
             }
         }
 
@@ -113,7 +153,11 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties is null ? default : Properties.Data;
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticDetectorResponseProperties();
+                }
+                return Properties.Data;
             }
         }
 
@@ -124,6 +168,14 @@ namespace Azure.ResourceManager.AppService.Models
             get
             {
                 return Properties is null ? default : Properties.DataSource;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticDetectorResponseProperties();
+                }
+                Properties.DataSource = value;
             }
         }
     }

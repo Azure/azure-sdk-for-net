@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CustomHostnameAnalysisResultProperties"/>. </summary>
-        internal CustomHostnameAnalysisResultProperties()
+        public CustomHostnameAnalysisResultProperties()
         {
             CNameRecords = new ChangeTrackingList<string>();
             TxtRecords = new ChangeTrackingList<string>();

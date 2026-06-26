@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebAppBackupData"/>. </summary>
-        internal WebAppBackupData()
+        public WebAppBackupData()
         {
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> BackupItem resource specific properties. </summary>
         [WirePath("properties")]
-        internal BackupItemProperties Properties { get; }
+        internal BackupItemProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> Id of the backup. </summary>
         [WirePath("properties.id")]
@@ -133,7 +133,11 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties is null ? default : Properties.Databases;
+                if (Properties is null)
+                {
+                    Properties = new BackupItemProperties();
+                }
+                return Properties.Databases;
             }
         }
 

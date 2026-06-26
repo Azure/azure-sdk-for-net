@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebAppRequestHistoryProperties"/>. </summary>
-        internal WebAppRequestHistoryProperties()
+        public WebAppRequestHistoryProperties()
         {
         }
 
@@ -39,18 +39,18 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The time the request started. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartOn { get; set; }
 
         /// <summary> The time the request ended. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndOn { get; set; }
 
         /// <summary> The request. </summary>
         [WirePath("request")]
-        public WebAppRequest Request { get; }
+        public WebAppRequest Request { get; set; }
 
         /// <summary> The response. </summary>
         [WirePath("response")]
-        public WebAppResponse Response { get; }
+        public WebAppResponse Response { get; set; }
     }
 }

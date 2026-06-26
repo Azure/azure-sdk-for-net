@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
     internal partial class WorkflowRunActionRepetitionProperties : OperationResult
     {
         /// <summary> Initializes a new instance of <see cref="WorkflowRunActionRepetitionProperties"/>. </summary>
-        internal WorkflowRunActionRepetitionProperties()
+        public WorkflowRunActionRepetitionProperties()
         {
             RepetitionIndexes = new ChangeTrackingList<WorkflowRunActionRepetitionIndex>();
         }

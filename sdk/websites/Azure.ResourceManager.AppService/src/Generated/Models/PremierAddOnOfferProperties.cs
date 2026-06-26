@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PremierAddOnOfferProperties"/>. </summary>
-        internal PremierAddOnOfferProperties()
+        public PremierAddOnOfferProperties()
         {
         }
 
@@ -51,42 +51,42 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Premier add on SKU. </summary>
         [WirePath("sku")]
-        public string Sku { get; }
+        public string Sku { get; set; }
 
         /// <summary> Premier add on offer Product. </summary>
         [WirePath("product")]
-        public string Product { get; }
+        public string Product { get; set; }
 
         /// <summary> Premier add on offer Vendor. </summary>
         [WirePath("vendor")]
-        public string Vendor { get; }
+        public string Vendor { get; set; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if promotion code is required; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("promoCodeRequired")]
-        public bool? IsPromoCodeRequired { get; }
+        public bool? IsPromoCodeRequired { get; set; }
 
         /// <summary> Premier add on offer Quota. </summary>
         [WirePath("quota")]
-        public int? Quota { get; }
+        public int? Quota { get; set; }
 
         /// <summary> App Service plans this offer is restricted to. </summary>
         [WirePath("webHostingPlanRestrictions")]
-        public AppServicePlanRestriction? WebHostingPlanRestrictions { get; }
+        public AppServicePlanRestriction? WebHostingPlanRestrictions { get; set; }
 
         /// <summary> Privacy policy URL. </summary>
         [WirePath("privacyPolicyUrl")]
-        public string PrivacyPolicyUri { get; }
+        public string PrivacyPolicyUri { get; set; }
 
         /// <summary> Legal terms URL. </summary>
         [WirePath("legalTermsUrl")]
-        public string LegalTermsUri { get; }
+        public string LegalTermsUri { get; set; }
 
         /// <summary> Marketplace publisher. </summary>
         [WirePath("marketplacePublisher")]
-        public string MarketplacePublisher { get; }
+        public string MarketplacePublisher { get; set; }
 
         /// <summary> Marketplace offer. </summary>
         [WirePath("marketplaceOffer")]
-        public string MarketplaceOffer { get; }
+        public string MarketplaceOffer { get; set; }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticCategoryData"/>. </summary>
-        internal DiagnosticCategoryData()
+        public DiagnosticCategoryData()
         {
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> DiagnosticCategory resource specific properties. </summary>
         [WirePath("properties")]
-        internal DiagnosticCategoryProperties Properties { get; }
+        internal DiagnosticCategoryProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> Description of the diagnostic category. </summary>
         [WirePath("properties.description")]

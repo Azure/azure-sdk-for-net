@@ -347,8 +347,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="customHostname"> Gets the CustomHostname. </param>
-        /// <param name="region"> Gets the Region. </param>
+        /// <param name="customHostname"> Gets or sets the CustomHostname. </param>
+        /// <param name="region"> Gets or sets the Region. </param>
         /// <param name="siteResourceIds"> Gets the SiteResourceIds. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.CustomHostnameSites"/> instance for mocking. </returns>
@@ -5939,15 +5939,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="reference"> Gets the Reference. </param>
-        /// <param name="status"> Gets the Status. </param>
-        /// <param name="vaultName"> Gets the VaultName. </param>
-        /// <param name="secretName"> Gets the SecretName. </param>
-        /// <param name="secretVersion"> Gets the SecretVersion. </param>
+        /// <param name="reference"> Gets or sets the Reference. </param>
+        /// <param name="status"> Gets or sets the Status. </param>
+        /// <param name="vaultName"> Gets or sets the VaultName. </param>
+        /// <param name="secretName"> Gets or sets the SecretName. </param>
+        /// <param name="secretVersion"> Gets or sets the SecretVersion. </param>
         /// <param name="identity"> Managed service identity. </param>
-        /// <param name="details"> Gets the Details. </param>
-        /// <param name="source"> Gets the Source. </param>
-        /// <param name="activeVersion"> Gets the ActiveVersion. </param>
+        /// <param name="details"> Gets or sets the Details. </param>
+        /// <param name="source"> Gets or sets the Source. </param>
+        /// <param name="activeVersion"> Gets or sets the ActiveVersion. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.ApiKeyVaultReferenceData"/> instance for mocking. </returns>
         public static ApiKeyVaultReferenceData ApiKeyVaultReferenceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string reference = default, ResolveStatus? status = default, string vaultName = default, string secretName = default, string secretVersion = default, ManagedServiceIdentity identity = default, string details = default, ConfigReferenceSource? source = default, string activeVersion = default, string kind = default)
@@ -6645,7 +6645,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="state"> Gets the State. </param>
+        /// <param name="state"> Gets or sets the State. </param>
         /// <param name="statusUri"> Link to the GetStatusApi in Kudu. </param>
         /// <param name="detectorUri"> Link to the Diagnose and Solve Portal. </param>
         /// <param name="consoleUri"> Link to the console to web app instance. </param>
@@ -7173,7 +7173,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="extensionId"> Site extension ID. </param>
-        /// <param name="title"> Gets the Title. </param>
+        /// <param name="title"> Gets or sets the Title. </param>
         /// <param name="extensionType"> Site extension type. </param>
         /// <param name="summary"> Summary description. </param>
         /// <param name="description"> Detailed description. </param>
@@ -7674,7 +7674,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="outputsLink"> Gets the link to outputs. </param>
         /// <param name="trackedProperties"> Gets the tracked properties. </param>
         /// <param name="retryHistory"> Gets the retry histories. </param>
-        /// <param name="iterationCount"> Gets the IterationCount. </param>
+        /// <param name="iterationCount"> Gets or sets the IterationCount. </param>
         /// <param name="repetitionIndexes"> The repetition indexes. </param>
         /// <returns> A new <see cref="AppService.WorkflowRunActionRepetitionDefinitionData"/> instance for mocking. </returns>
         public static WorkflowRunActionRepetitionDefinitionData WorkflowRunActionRepetitionDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, WebAppRunActionCorrelation correlation = default, WorkflowStatus? status = default, string code = default, BinaryData error = default, string trackingId = default, BinaryData inputs = default, WebAppContentLink inputsLink = default, BinaryData outputs = default, WebAppContentLink outputsLink = default, BinaryData trackedProperties = default, IEnumerable<WebAppRetryHistory> retryHistory = default, int? iterationCount = default, IEnumerable<WorkflowRunActionRepetitionIndex> repetitionIndexes = default)

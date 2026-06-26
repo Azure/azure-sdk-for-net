@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataProviderMetadata"/>. </summary>
-        internal DataProviderMetadata()
+        public DataProviderMetadata()
         {
             PropertyBag = new ChangeTrackingList<DataProviderKeyValuePair>();
         }
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.AppService.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the ProviderName. </summary>
+        /// <summary> Gets or sets the ProviderName. </summary>
         [WirePath("providerName")]
-        public string ProviderName { get; }
+        public string ProviderName { get; set; }
 
         /// <summary> Settings for the data provider. </summary>
         [WirePath("propertyBag")]

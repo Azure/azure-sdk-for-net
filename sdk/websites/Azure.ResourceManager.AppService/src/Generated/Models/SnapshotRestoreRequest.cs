@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> Point in time in which the app restore should be done, formatted as a DateTime string. </summary>
         [WirePath("properties.snapshotTime")]

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowVersionProperties"/>. </summary>
-        internal WorkflowVersionProperties()
+        public WorkflowVersionProperties()
         {
             Parameters = new ChangeTrackingDictionary<string, WorkflowContent>();
         }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The state. </summary>
         [WirePath("state")]
-        public WorkflowState? State { get; }
+        public WorkflowState? State { get; set; }
 
         /// <summary> Gets the version. </summary>
         [WirePath("version")]
@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The endpoints configuration. </summary>
         [WirePath("endpointsConfiguration")]
-        public FlowEndpointsConfiguration EndpointsConfiguration { get; }
+        public FlowEndpointsConfiguration EndpointsConfiguration { get; set; }
 
         /// <summary> The access control configuration. </summary>
         [WirePath("accessControl")]
-        public FlowAccessControlConfiguration AccessControl { get; }
+        public FlowAccessControlConfiguration AccessControl { get; set; }
 
         /// <summary> The sku. </summary>
         [WirePath("sku")]
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The integration account. </summary>
         [WirePath("integrationAccount")]
-        public WorkflowResourceReference IntegrationAccount { get; }
+        public WorkflowResourceReference IntegrationAccount { get; set; }
 
         /// <summary>
         /// The definition.
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </para>
         /// </summary>
         [WirePath("definition")]
-        public BinaryData Definition { get; }
+        public BinaryData Definition { get; set; }
 
         /// <summary> The parameters. </summary>
         [WirePath("parameters")]

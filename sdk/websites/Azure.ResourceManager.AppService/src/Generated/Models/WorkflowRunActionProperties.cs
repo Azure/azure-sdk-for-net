@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRunActionProperties"/>. </summary>
-        internal WorkflowRunActionProperties()
+        public WorkflowRunActionProperties()
         {
             RetryHistory = new ChangeTrackingList<WebAppRetryHistory>();
         }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The correlation properties. </summary>
         [WirePath("correlation")]
-        public WebAppRunActionCorrelation Correlation { get; }
+        public WebAppRunActionCorrelation Correlation { get; set; }
 
         /// <summary> Gets the link to inputs. </summary>
         [WirePath("inputsLink")]

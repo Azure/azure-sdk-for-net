@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="QueryUtterancesResult"/>. </summary>
-        internal QueryUtterancesResult()
+        public QueryUtterancesResult()
         {
         }
 
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> A sample utterance. </summary>
         [WirePath("sampleUtterance")]
-        public SampleUtterance SampleUtterance { get; }
+        public SampleUtterance SampleUtterance { get; set; }
 
         /// <summary> Score of a sample utterance. </summary>
         [WirePath("score")]
-        public float? Score { get; }
+        public float? Score { get; set; }
     }
 }

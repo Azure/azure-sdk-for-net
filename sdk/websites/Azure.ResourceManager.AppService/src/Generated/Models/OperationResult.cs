@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
     internal partial class OperationResult : OperationResultProperties
     {
         /// <summary> Initializes a new instance of <see cref="OperationResult"/>. </summary>
-        internal OperationResult()
+        public OperationResult()
         {
             RetryHistory = new ChangeTrackingList<WebAppRetryHistory>();
         }
@@ -152,8 +152,8 @@ namespace Azure.ResourceManager.AppService.Models
         [WirePath("retryHistory")]
         public IList<WebAppRetryHistory> RetryHistory { get; } = new ChangeTrackingList<WebAppRetryHistory>();
 
-        /// <summary> Gets the IterationCount. </summary>
+        /// <summary> Gets or sets the IterationCount. </summary>
         [WirePath("iterationCount")]
-        public int? IterationCount { get; }
+        public int? IterationCount { get; set; }
     }
 }

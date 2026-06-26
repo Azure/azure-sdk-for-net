@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebSiteAnalysisDefinitionData"/>. </summary>
-        internal WebSiteAnalysisDefinitionData()
+        public WebSiteAnalysisDefinitionData()
         {
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> AnalysisDefinition resource specific properties. </summary>
         [WirePath("properties")]
-        internal AnalysisDefinitionProperties Properties { get; }
+        internal AnalysisDefinitionProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> Description of the Analysis. </summary>
         [WirePath("properties.description")]

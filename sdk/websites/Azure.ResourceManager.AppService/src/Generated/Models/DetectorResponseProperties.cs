@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DetectorResponseProperties"/>. </summary>
-        internal DetectorResponseProperties()
+        public DetectorResponseProperties()
         {
             Dataset = new ChangeTrackingList<DiagnosticDataset>();
             DataProvidersMetadata = new ChangeTrackingList<DataProviderMetadata>();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> metadata for the detector. </summary>
         [WirePath("metadata")]
-        public DetectorInfo Metadata { get; }
+        public DetectorInfo Metadata { get; set; }
 
         /// <summary> Data Set. </summary>
         [WirePath("dataset")]
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Indicates status of the most severe insight. </summary>
         [WirePath("status")]
-        public AppServiceStatusInfo Status { get; }
+        public AppServiceStatusInfo Status { get; set; }
 
         /// <summary> Additional configuration for different data providers to be used by the UI. </summary>
         [WirePath("dataProvidersMetadata")]
@@ -59,6 +59,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Suggested utterances where the detector can be applicable. </summary>
         [WirePath("suggestedUtterances")]
-        public QueryUtterancesResults SuggestedUtterances { get; }
+        public QueryUtterancesResults SuggestedUtterances { get; set; }
     }
 }

@@ -8,12 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary></summary>
-    public partial class SiteInstanceProcessResource : ArmResource, IJsonModel<ProcessInfoData>
+    public partial class SiteInstanceProcessResource : IJsonModel<ProcessInfoData>
     {
         private static IJsonModel<ProcessInfoData> s_dataDeserializationInstance;
 

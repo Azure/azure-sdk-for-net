@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VnetValidationTestFailureProperties"/>. </summary>
-        internal VnetValidationTestFailureProperties()
+        public VnetValidationTestFailureProperties()
         {
         }
 
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The name of the test that failed. </summary>
         [WirePath("testName")]
-        public string TestName { get; }
+        public string TestName { get; set; }
 
         /// <summary> The details of what caused the failure, e.g. the blocking rule name, etc. </summary>
         [WirePath("details")]
-        public string Details { get; }
+        public string Details { get; set; }
     }
 }

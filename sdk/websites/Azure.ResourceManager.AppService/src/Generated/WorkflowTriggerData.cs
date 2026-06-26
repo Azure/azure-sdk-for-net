@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowTriggerData"/>. </summary>
-        internal WorkflowTriggerData()
+        public WorkflowTriggerData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> The workflow trigger properties. </summary>
         [WirePath("properties")]
-        internal WorkflowTriggerProperties Properties { get; }
+        internal WorkflowTriggerProperties Properties { get; set; }
 
         /// <summary> Gets the provisioning state. </summary>
         [WirePath("properties.provisioningState")]

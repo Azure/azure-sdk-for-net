@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticDataset"/>. </summary>
-        internal DiagnosticDataset()
+        public DiagnosticDataset()
         {
         }
 
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Data in table form. </summary>
         [WirePath("table")]
-        public DataTableResponseObject Table { get; }
+        public DataTableResponseObject Table { get; set; }
 
         /// <summary> Properties that describe how the table should be rendered. </summary>
         [WirePath("renderingProperties")]
-        public DiagnosticDataRendering RenderingProperties { get; }
+        public DiagnosticDataRendering RenderingProperties { get; set; }
     }
 }

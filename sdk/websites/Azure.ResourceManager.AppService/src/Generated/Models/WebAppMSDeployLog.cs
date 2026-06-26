@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebAppMSDeployLog"/>. </summary>
-        internal WebAppMSDeployLog()
+        public WebAppMSDeployLog()
         {
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> MSDeployLog resource specific properties. </summary>
         [WirePath("properties")]
-        internal MSDeployLogProperties Properties { get; }
+        internal MSDeployLogProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> List of log entry messages. </summary>
         [WirePath("properties.entries")]
@@ -53,7 +53,11 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties is null ? default : Properties.Entries;
+                if (Properties is null)
+                {
+                    Properties = new MSDeployLogProperties();
+                }
+                return Properties.Entries;
             }
         }
     }

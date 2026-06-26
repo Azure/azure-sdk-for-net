@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageMigrationResult"/>. </summary>
-        internal StorageMigrationResult()
+        public StorageMigrationResult()
         {
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> StorageMigrationResponse resource specific properties. </summary>
         [WirePath("properties")]
-        internal StorageMigrationProperties Properties { get; }
+        internal StorageMigrationProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> When server starts the migration process, it will return an operation ID identifying that particular migration operation. </summary>
         [WirePath("properties.operationId")]

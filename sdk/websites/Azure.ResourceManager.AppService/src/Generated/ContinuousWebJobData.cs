@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContinuousWebJobData"/>. </summary>
-        internal ContinuousWebJobData()
+        public ContinuousWebJobData()
         {
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> ContinuousWebJob resource specific properties. </summary>
         [WirePath("properties")]
-        internal ContinuousWebJobProperties Properties { get; }
+        internal ContinuousWebJobProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> Job status. </summary>
         [WirePath("properties.status")]
@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.Status;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContinuousWebJobProperties();
+                }
+                Properties.Status = value;
             }
         }
 
@@ -65,6 +73,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.DetailedStatus;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContinuousWebJobProperties();
+                }
+                Properties.DetailedStatus = value;
+            }
         }
 
         /// <summary> Log URL. </summary>
@@ -74,6 +90,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.LogUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContinuousWebJobProperties();
+                }
+                Properties.LogUri = value;
             }
         }
 
@@ -85,6 +109,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.RunCommand;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContinuousWebJobProperties();
+                }
+                Properties.RunCommand = value;
+            }
         }
 
         /// <summary> Job URL. </summary>
@@ -94,6 +126,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.Uri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContinuousWebJobProperties();
+                }
+                Properties.Uri = value;
             }
         }
 
@@ -105,6 +145,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.ExtraInfoUri;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContinuousWebJobProperties();
+                }
+                Properties.ExtraInfoUri = value;
+            }
         }
 
         /// <summary> Job type. </summary>
@@ -114,6 +162,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.WebJobType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContinuousWebJobProperties();
+                }
+                Properties.WebJobType = value;
             }
         }
 
@@ -125,6 +181,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.Error;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContinuousWebJobProperties();
+                }
+                Properties.Error = value;
+            }
         }
 
         /// <summary> Using SDK?. </summary>
@@ -135,6 +199,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.IsUsingSdk;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContinuousWebJobProperties();
+                }
+                Properties.IsUsingSdk = value;
+            }
         }
 
         /// <summary> Job settings. </summary>
@@ -143,7 +215,11 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties is null ? default : Properties.Settings;
+                if (Properties is null)
+                {
+                    Properties = new ContinuousWebJobProperties();
+                }
+                return Properties.Settings;
             }
         }
     }

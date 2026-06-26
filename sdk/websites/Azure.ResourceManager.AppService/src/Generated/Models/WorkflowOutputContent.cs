@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class WorkflowOutputContent : WorkflowContent
     {
         /// <summary> Initializes a new instance of <see cref="WorkflowOutputContent"/>. </summary>
-        internal WorkflowOutputContent()
+        public WorkflowOutputContent()
         {
         }
 

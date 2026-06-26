@@ -58,17 +58,17 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class ApiKeyVaultReferenceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.ApiKeyVaultReferenceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.ApiKeyVaultReferenceData>
     {
-        internal ApiKeyVaultReferenceData() { }
-        public string ActiveVersion { get { throw null; } }
-        public string Details { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.ManagedServiceIdentity Identity { get { throw null; } }
-        public string Kind { get { throw null; } }
-        public string Reference { get { throw null; } }
-        public string SecretName { get { throw null; } }
-        public string SecretVersion { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.ConfigReferenceSource? Source { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.ResolveStatus? Status { get { throw null; } }
-        public string VaultName { get { throw null; } }
+        public ApiKeyVaultReferenceData() { }
+        public string ActiveVersion { get { throw null; } set { } }
+        public string Details { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
+        public string Reference { get { throw null; } set { } }
+        public string SecretName { get { throw null; } set { } }
+        public string SecretVersion { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.ConfigReferenceSource? Source { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.ResolveStatus? Status { get { throw null; } set { } }
+        public string VaultName { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -299,13 +299,13 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class AppServiceDetectorData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.AppServiceDetectorData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.AppServiceDetectorData>
     {
-        internal AppServiceDetectorData() { }
+        public AppServiceDetectorData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.DataProviderMetadata> DataProvidersMetadata { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.DiagnosticDataset> Dataset { get { throw null; } }
-        public string Kind { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.DetectorInfo Metadata { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.AppServiceStatusInfo Status { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.QueryUtterancesResults SuggestedUtterances { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.DetectorInfo Metadata { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.AppServiceStatusInfo Status { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.QueryUtterancesResults SuggestedUtterances { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1274,18 +1274,18 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class ContinuousWebJobData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.ContinuousWebJobData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.ContinuousWebJobData>
     {
-        internal ContinuousWebJobData() { }
-        public string DetailedStatus { get { throw null; } }
-        public string Error { get { throw null; } }
-        public string ExtraInfoUri { get { throw null; } }
-        public bool? IsUsingSdk { get { throw null; } }
-        public string Kind { get { throw null; } }
-        public string LogUri { get { throw null; } }
-        public string RunCommand { get { throw null; } }
+        public ContinuousWebJobData() { }
+        public string DetailedStatus { get { throw null; } set { } }
+        public string Error { get { throw null; } set { } }
+        public string ExtraInfoUri { get { throw null; } set { } }
+        public bool? IsUsingSdk { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
+        public string LogUri { get { throw null; } set { } }
+        public string RunCommand { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Settings { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.ContinuousWebJobStatus? Status { get { throw null; } }
-        public string Uri { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.WebJobType? WebJobType { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.ContinuousWebJobStatus? Status { get { throw null; } set { } }
+        public string Uri { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.WebJobType? WebJobType { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1477,13 +1477,13 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class DeletedSiteData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.DeletedSiteData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.DeletedSiteData>
     {
-        internal DeletedSiteData() { }
+        public DeletedSiteData() { }
         public int? DeletedSiteId { get { throw null; } }
         public string DeletedSiteKind { get { throw null; } }
         public string DeletedSiteName { get { throw null; } }
         public string DeletedTimestamp { get { throw null; } }
         public string GeoRegionName { get { throw null; } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public string ResourceGroup { get { throw null; } }
         public string Slot { get { throw null; } }
         public string Subscription { get { throw null; } }
@@ -1516,11 +1516,11 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class DetectorDefinitionResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.DetectorDefinitionResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.DetectorDefinitionResourceData>
     {
-        internal DetectorDefinitionResourceData() { }
+        public DetectorDefinitionResourceData() { }
         public string Description { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public bool? IsEnabled { get { throw null; } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public double? Rank { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1534,9 +1534,9 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class DiagnosticCategoryData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.DiagnosticCategoryData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.DiagnosticCategoryData>
     {
-        internal DiagnosticCategoryData() { }
+        public DiagnosticCategoryData() { }
         public string Description { get { throw null; } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1838,9 +1838,9 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class HybridConnectionLimitData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.HybridConnectionLimitData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.HybridConnectionLimitData>
     {
-        internal HybridConnectionLimitData() { }
+        public HybridConnectionLimitData() { }
         public int? Current { get { throw null; } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public int? Maximum { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1964,9 +1964,9 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class MigrateMySqlStatusData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.MigrateMySqlStatusData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.MigrateMySqlStatusData>
     {
-        internal MigrateMySqlStatusData() { }
+        public MigrateMySqlStatusData() { }
         public bool? IsLocalMySqlEnabled { get { throw null; } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.AppServiceOperationStatus? MigrationOperationStatus { get { throw null; } }
         public string OperationId { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1996,11 +1996,11 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class MSDeployStatusData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.MSDeployStatusData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.MSDeployStatusData>
     {
-        internal MSDeployStatusData() { }
+        public MSDeployStatusData() { }
         public string Deployer { get { throw null; } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
         public bool? IsComplete { get { throw null; } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.MSDeployProvisioningState? ProvisioningState { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2025,10 +2025,10 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class NetworkFeatureData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.NetworkFeatureData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.NetworkFeatureData>
     {
-        internal NetworkFeatureData() { }
+        public NetworkFeatureData() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.RelayServiceConnectionEntityData> HybridConnections { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.HybridConnectionData> HybridConnectionsV2 { get { throw null; } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkProperties VirtualNetworkConnection { get { throw null; } }
         public string VirtualNetworkName { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2093,45 +2093,45 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class ProcessInfoData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.ProcessInfoData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.ProcessInfoData>
     {
-        internal ProcessInfoData() { }
+        public ProcessInfoData() { }
         public System.Collections.Generic.IList<string> Children { get { throw null; } }
-        public string CommandLine { get { throw null; } }
-        public string DeploymentName { get { throw null; } }
-        public string Description { get { throw null; } }
+        public string CommandLine { get { throw null; } set { } }
+        public string DeploymentName { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> EnvironmentVariables { get { throw null; } }
-        public string FileName { get { throw null; } }
-        public int? HandleCount { get { throw null; } }
-        public string Href { get { throw null; } }
+        public string FileName { get { throw null; } set { } }
+        public int? HandleCount { get { throw null; } set { } }
+        public string Href { get { throw null; } set { } }
         public int? Identifier { get { throw null; } }
-        public double? IisProfileTimeoutInSeconds { get { throw null; } }
-        public bool? IsIisProfileRunning { get { throw null; } }
-        public bool? IsProfileRunning { get { throw null; } }
-        public bool? IsScmSite { get { throw null; } }
-        public bool? IsWebjob { get { throw null; } }
-        public string Kind { get { throw null; } }
-        public string Minidump { get { throw null; } }
-        public int? ModuleCount { get { throw null; } }
+        public double? IisProfileTimeoutInSeconds { get { throw null; } set { } }
+        public bool? IsIisProfileRunning { get { throw null; } set { } }
+        public bool? IsProfileRunning { get { throw null; } set { } }
+        public bool? IsScmSite { get { throw null; } set { } }
+        public bool? IsWebjob { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
+        public string Minidump { get { throw null; } set { } }
+        public int? ModuleCount { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.ProcessModuleInfoData> Modules { get { throw null; } }
-        public long? NonPagedSystemMemory { get { throw null; } }
+        public long? NonPagedSystemMemory { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> OpenFileHandles { get { throw null; } }
-        public long? PagedMemory { get { throw null; } }
-        public long? PagedSystemMemory { get { throw null; } }
-        public string Parent { get { throw null; } }
-        public long? PeakPagedMemory { get { throw null; } }
-        public long? PeakVirtualMemory { get { throw null; } }
-        public long? PeakWorkingSet { get { throw null; } }
-        public long? PrivateMemory { get { throw null; } }
-        public string PrivilegedCpuTime { get { throw null; } }
+        public long? PagedMemory { get { throw null; } set { } }
+        public long? PagedSystemMemory { get { throw null; } set { } }
+        public string Parent { get { throw null; } set { } }
+        public long? PeakPagedMemory { get { throw null; } set { } }
+        public long? PeakVirtualMemory { get { throw null; } set { } }
+        public long? PeakWorkingSet { get { throw null; } set { } }
+        public long? PrivateMemory { get { throw null; } set { } }
+        public string PrivilegedCpuTime { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.WebAppProcessThreadInfo> ProcessThreads { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
-        public int? ThreadCount { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
+        public int? ThreadCount { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.ProcessThreadInfo> Threads { get { throw null; } }
-        public System.DateTimeOffset? TimeStamp { get { throw null; } }
-        public string TotalCpuTime { get { throw null; } }
-        public string UserCpuTime { get { throw null; } }
-        public string UserName { get { throw null; } }
-        public long? VirtualMemory { get { throw null; } }
-        public long? WorkingSet { get { throw null; } }
+        public System.DateTimeOffset? TimeStamp { get { throw null; } set { } }
+        public string TotalCpuTime { get { throw null; } set { } }
+        public string UserCpuTime { get { throw null; } set { } }
+        public string UserName { get { throw null; } set { } }
+        public long? VirtualMemory { get { throw null; } set { } }
+        public long? WorkingSet { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2144,19 +2144,19 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class ProcessModuleInfoData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.ProcessModuleInfoData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.ProcessModuleInfoData>
     {
-        internal ProcessModuleInfoData() { }
-        public string BaseAddress { get { throw null; } }
-        public string FileDescription { get { throw null; } }
-        public string FileName { get { throw null; } }
-        public string FilePath { get { throw null; } }
-        public string FileVersion { get { throw null; } }
-        public string Href { get { throw null; } }
-        public bool? IsDebug { get { throw null; } }
-        public string Kind { get { throw null; } }
-        public string Language { get { throw null; } }
-        public int? ModuleMemorySize { get { throw null; } }
-        public string Product { get { throw null; } }
-        public string ProductVersion { get { throw null; } }
+        public ProcessModuleInfoData() { }
+        public string BaseAddress { get { throw null; } set { } }
+        public string FileDescription { get { throw null; } set { } }
+        public string FileName { get { throw null; } set { } }
+        public string FilePath { get { throw null; } set { } }
+        public string FileVersion { get { throw null; } set { } }
+        public string Href { get { throw null; } set { } }
+        public bool? IsDebug { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
+        public string Language { get { throw null; } set { } }
+        public int? ModuleMemorySize { get { throw null; } set { } }
+        public string Product { get { throw null; } set { } }
+        public string ProductVersion { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2224,21 +2224,21 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class RecommendationRuleData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.RecommendationRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.RecommendationRuleData>
     {
-        internal RecommendationRuleData() { }
-        public string ActionName { get { throw null; } }
-        public string BladeName { get { throw null; } }
+        public RecommendationRuleData() { }
+        public string ActionName { get { throw null; } set { } }
+        public string BladeName { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> CategoryTags { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.RecommendationChannel? Channels { get { throw null; } }
-        public string Description { get { throw null; } }
-        public string DisplayName { get { throw null; } }
-        public string ExtensionName { get { throw null; } }
-        public string ForwardLink { get { throw null; } }
-        public bool? IsDynamic { get { throw null; } }
-        public string Kind { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.NotificationLevel? Level { get { throw null; } }
-        public string Message { get { throw null; } }
-        public string RecommendationId { get { throw null; } }
-        public string RecommendationName { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.RecommendationChannel? Channels { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public string DisplayName { get { throw null; } set { } }
+        public string ExtensionName { get { throw null; } set { } }
+        public string ForwardLink { get { throw null; } set { } }
+        public bool? IsDynamic { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.NotificationLevel? Level { get { throw null; } set { } }
+        public string Message { get { throw null; } set { } }
+        public string RecommendationId { get { throw null; } set { } }
+        public string RecommendationName { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2289,10 +2289,10 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class ResourceHealthMetadataData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.ResourceHealthMetadataData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.ResourceHealthMetadataData>
     {
-        internal ResourceHealthMetadataData() { }
-        public string Category { get { throw null; } }
-        public bool? IsSignalAvailable { get { throw null; } }
-        public string Kind { get { throw null; } }
+        public ResourceHealthMetadataData() { }
+        public string Category { get { throw null; } set { } }
+        public bool? IsSignalAvailable { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2842,28 +2842,28 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class SiteExtensionInfoData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.SiteExtensionInfoData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SiteExtensionInfoData>
     {
-        internal SiteExtensionInfoData() { }
+        public SiteExtensionInfoData() { }
         public System.Collections.Generic.IList<string> Authors { get { throw null; } }
-        public string Comment { get { throw null; } }
-        public string Description { get { throw null; } }
-        public int? DownloadCount { get { throw null; } }
-        public string ExtensionId { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.SiteExtensionType? ExtensionType { get { throw null; } }
-        public string ExtensionUri { get { throw null; } }
-        public string FeedUri { get { throw null; } }
-        public string IconUri { get { throw null; } }
-        public System.DateTimeOffset? InstalledOn { get { throw null; } }
-        public string InstallerCommandLineParams { get { throw null; } }
-        public string Kind { get { throw null; } }
-        public string LicenseUri { get { throw null; } }
-        public bool? LocalIsLatestVersion { get { throw null; } }
-        public string LocalPath { get { throw null; } }
-        public string ProjectUri { get { throw null; } }
-        public string ProvisioningState { get { throw null; } }
-        public System.DateTimeOffset? PublishedOn { get { throw null; } }
-        public string Summary { get { throw null; } }
-        public string Title { get { throw null; } }
-        public string Version { get { throw null; } }
+        public string Comment { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public int? DownloadCount { get { throw null; } set { } }
+        public string ExtensionId { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.SiteExtensionType? ExtensionType { get { throw null; } set { } }
+        public string ExtensionUri { get { throw null; } set { } }
+        public string FeedUri { get { throw null; } set { } }
+        public string IconUri { get { throw null; } set { } }
+        public System.DateTimeOffset? InstalledOn { get { throw null; } set { } }
+        public string InstallerCommandLineParams { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
+        public string LicenseUri { get { throw null; } set { } }
+        public bool? LocalIsLatestVersion { get { throw null; } set { } }
+        public string LocalPath { get { throw null; } set { } }
+        public string ProjectUri { get { throw null; } set { } }
+        public string ProvisioningState { get { throw null; } set { } }
+        public System.DateTimeOffset? PublishedOn { get { throw null; } set { } }
+        public string Summary { get { throw null; } set { } }
+        public string Title { get { throw null; } set { } }
+        public string Version { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4415,12 +4415,12 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class StaticSiteBuildData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.StaticSiteBuildData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.StaticSiteBuildData>
     {
-        internal StaticSiteBuildData() { }
+        public StaticSiteBuildData() { }
         public string BuildId { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.StaticSiteDatabaseConnectionOverview> DatabaseConnections { get { throw null; } }
         public string Hostname { get { throw null; } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.StaticSiteLinkedBackendInfo> LinkedBackends { get { throw null; } }
         public string PullRequestTitle { get { throw null; } }
@@ -4625,11 +4625,11 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class StaticSiteCustomDomainOverviewData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.StaticSiteCustomDomainOverviewData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.StaticSiteCustomDomainOverviewData>
     {
-        internal StaticSiteCustomDomainOverviewData() { }
+        public StaticSiteCustomDomainOverviewData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string DomainName { get { throw null; } }
         public string ErrorMessage { get { throw null; } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.CustomDomainStatus? Status { get { throw null; } }
         public string ValidationToken { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5036,8 +5036,8 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class TriggeredJobHistoryData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.TriggeredJobHistoryData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.TriggeredJobHistoryData>
     {
-        internal TriggeredJobHistoryData() { }
-        public string Kind { get { throw null; } }
+        public TriggeredJobHistoryData() { }
+        public string Kind { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.TriggeredJobRun> Runs { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -5051,20 +5051,20 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class TriggeredWebJobData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.TriggeredWebJobData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.TriggeredWebJobData>
     {
-        internal TriggeredWebJobData() { }
-        public string Error { get { throw null; } }
-        public string ExtraInfoUri { get { throw null; } }
-        public string HistoryUri { get { throw null; } }
-        public bool? IsStorageAccountRequired { get { throw null; } }
-        public bool? IsUsingSdk { get { throw null; } }
-        public string Kind { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.TriggeredJobRun LatestRun { get { throw null; } }
-        public string PublicNetworkAccess { get { throw null; } }
-        public string RunCommand { get { throw null; } }
-        public string SchedulerLogsUri { get { throw null; } }
+        public TriggeredWebJobData() { }
+        public string Error { get { throw null; } set { } }
+        public string ExtraInfoUri { get { throw null; } set { } }
+        public string HistoryUri { get { throw null; } set { } }
+        public bool? IsStorageAccountRequired { get { throw null; } set { } }
+        public bool? IsUsingSdk { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.TriggeredJobRun LatestRun { get { throw null; } set { } }
+        public string PublicNetworkAccess { get { throw null; } set { } }
+        public string RunCommand { get { throw null; } set { } }
+        public string SchedulerLogsUri { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Settings { get { throw null; } }
-        public string Uri { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.WebJobType? WebJobType { get { throw null; } }
+        public string Uri { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.WebJobType? WebJobType { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5077,7 +5077,7 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class WebAppBackupData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WebAppBackupData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WebAppBackupData>
     {
-        internal WebAppBackupData() { }
+        public WebAppBackupData() { }
         public int? BackupId { get { throw null; } }
         public string BackupName { get { throw null; } }
         public string BlobName { get { throw null; } }
@@ -5086,7 +5086,7 @@ namespace Azure.ResourceManager.AppService
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.AppServiceDatabaseBackupSetting> Databases { get { throw null; } }
         public System.DateTimeOffset? FinishedOn { get { throw null; } }
         public bool? IsScheduled { get { throw null; } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public System.DateTimeOffset? LastRestoreOn { get { throw null; } }
         public string Log { get { throw null; } }
         public long? SizeInBytes { get { throw null; } }
@@ -5143,8 +5143,8 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class WebAppRequestHistoryData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WebAppRequestHistoryData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WebAppRequestHistoryData>
     {
-        internal WebAppRequestHistoryData() { }
-        public Azure.ResourceManager.AppService.Models.WebAppRequestHistoryProperties Properties { get { throw null; } }
+        public WebAppRequestHistoryData(Azure.Core.AzureLocation location) { }
+        public Azure.ResourceManager.AppService.Models.WebAppRequestHistoryProperties Properties { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5172,15 +5172,15 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class WebJobData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WebJobData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WebJobData>
     {
-        internal WebJobData() { }
-        public string Error { get { throw null; } }
-        public string ExtraInfoUri { get { throw null; } }
-        public bool? IsUsingSdk { get { throw null; } }
-        public string Kind { get { throw null; } }
-        public string RunCommand { get { throw null; } }
+        public WebJobData() { }
+        public string Error { get { throw null; } set { } }
+        public string ExtraInfoUri { get { throw null; } set { } }
+        public bool? IsUsingSdk { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
+        public string RunCommand { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Settings { get { throw null; } }
-        public string Uri { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.WebJobType? WebJobType { get { throw null; } }
+        public string Uri { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.WebJobType? WebJobType { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5193,9 +5193,9 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class WebSiteAnalysisDefinitionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WebSiteAnalysisDefinitionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WebSiteAnalysisDefinitionData>
     {
-        internal WebSiteAnalysisDefinitionData() { }
+        public WebSiteAnalysisDefinitionData() { }
         public string Description { get { throw null; } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5497,17 +5497,17 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class WebSiteInstanceStatusData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WebSiteInstanceStatusData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WebSiteInstanceStatusData>
     {
-        internal WebSiteInstanceStatusData() { }
-        public string ConsoleUri { get { throw null; } }
+        public WebSiteInstanceStatusData() { }
+        public string ConsoleUri { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.AppService.Models.ContainerInfo> Containers { get { throw null; } }
-        public string DetectorUri { get { throw null; } }
+        public string DetectorUri { get { throw null; } set { } }
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release, please use `HealthCheckUriString` instead", false)]
         public System.Uri HealthCheckUri { get { throw null; } set { } }
-        public string HealthCheckUrlString { get { throw null; } }
-        public string Kind { get { throw null; } }
-        public string PhysicalZone { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.SiteRuntimeState? State { get { throw null; } }
-        public string StatusUri { get { throw null; } }
+        public string HealthCheckUrlString { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
+        public string PhysicalZone { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.SiteRuntimeState? State { get { throw null; } set { } }
+        public string StatusUri { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -6699,10 +6699,10 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class WorkflowEnvelopeData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowEnvelopeData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowEnvelopeData>
     {
-        internal WorkflowEnvelopeData() { }
-        public string Kind { get { throw null; } }
-        public string Location { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.WorkflowEnvelopeProperties Properties { get { throw null; } }
+        public WorkflowEnvelopeData() { }
+        public string Kind { get { throw null; } set { } }
+        public string Location { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.WorkflowEnvelopeProperties Properties { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -6730,9 +6730,9 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class WorkflowRunActionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowRunActionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowRunActionData>
     {
-        internal WorkflowRunActionData() { }
+        public WorkflowRunActionData() { }
         public string Code { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.WebAppRunActionCorrelation Correlation { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.WebAppRunActionCorrelation Correlation { get { throw null; } set { } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
         public System.BinaryData Error { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.WebAppContentLink InputsLink { get { throw null; } }
@@ -6769,20 +6769,20 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class WorkflowRunActionRepetitionDefinitionData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowRunActionRepetitionDefinitionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowRunActionRepetitionDefinitionData>
     {
-        internal WorkflowRunActionRepetitionDefinitionData() { }
-        public string Code { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.WebAppRunActionCorrelation Correlation { get { throw null; } }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
-        public System.BinaryData Error { get { throw null; } }
+        public WorkflowRunActionRepetitionDefinitionData(Azure.Core.AzureLocation location) { }
+        public string Code { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.WebAppRunActionCorrelation Correlation { get { throw null; } set { } }
+        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
+        public System.BinaryData Error { get { throw null; } set { } }
         public System.BinaryData Inputs { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.WebAppContentLink InputsLink { get { throw null; } }
-        public int? IterationCount { get { throw null; } }
+        public int? IterationCount { get { throw null; } set { } }
         public System.BinaryData Outputs { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.WebAppContentLink OutputsLink { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.WorkflowRunActionRepetitionIndex> RepetitionIndexes { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.WebAppRetryHistory> RetryHistory { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.WorkflowStatus? Status { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.WorkflowStatus? Status { get { throw null; } set { } }
         public System.BinaryData TrackedProperties { get { throw null; } }
         public string TrackingId { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -6885,9 +6885,9 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class WorkflowRunData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowRunData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowRunData>
     {
-        internal WorkflowRunData() { }
+        public WorkflowRunData() { }
         public string Code { get { throw null; } }
-        public string CorrelationClientTrackingId { get { throw null; } }
+        public string CorrelationClientTrackingId { get { throw null; } set { } }
         public string CorrelationId { get { throw null; } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
         public System.BinaryData Error { get { throw null; } }
@@ -6945,7 +6945,7 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class WorkflowTriggerData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowTriggerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowTriggerData>
     {
-        internal WorkflowTriggerData() { }
+        public WorkflowTriggerData() { }
         public System.DateTimeOffset? ChangedOn { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.DateTimeOffset? LastExecutionOn { get { throw null; } }
@@ -6982,9 +6982,9 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class WorkflowTriggerHistoryData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowTriggerHistoryData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowTriggerHistoryData>
     {
-        internal WorkflowTriggerHistoryData() { }
+        public WorkflowTriggerHistoryData() { }
         public string Code { get { throw null; } }
-        public string CorrelationClientTrackingId { get { throw null; } }
+        public string CorrelationClientTrackingId { get { throw null; } set { } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
         public System.BinaryData Error { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.WebAppContentLink InputsLink { get { throw null; } }
@@ -7063,18 +7063,18 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class WorkflowVersionData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowVersionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowVersionData>
     {
-        internal WorkflowVersionData() { }
-        public Azure.ResourceManager.AppService.Models.FlowAccessControlConfiguration AccessControl { get { throw null; } }
+        public WorkflowVersionData(Azure.Core.AzureLocation location) { }
+        public Azure.ResourceManager.AppService.Models.FlowAccessControlConfiguration AccessControl { get { throw null; } set { } }
         public string AccessEndpoint { get { throw null; } }
         public System.DateTimeOffset? ChangedOn { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public System.BinaryData Definition { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.FlowEndpointsConfiguration EndpointsConfiguration { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.WorkflowResourceReference IntegrationAccount { get { throw null; } }
+        public System.BinaryData Definition { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.FlowEndpointsConfiguration EndpointsConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.WorkflowResourceReference IntegrationAccount { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.AppService.Models.WorkflowContent> Parameters { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.WorkflowProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.WorkflowSku Sku { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.WorkflowState? State { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.WorkflowState? State { get { throw null; } set { } }
         public string Version { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -7432,11 +7432,11 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class AbnormalTimePeriod : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AbnormalTimePeriod>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AbnormalTimePeriod>
     {
-        internal AbnormalTimePeriod() { }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
+        public AbnormalTimePeriod() { }
+        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.DetectorAbnormalTimePeriod> Events { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.DiagnosticSolution> Solutions { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.AbnormalTimePeriod JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppService.Models.AbnormalTimePeriod PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7479,12 +7479,12 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class AnalysisDetectorEvidences : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AnalysisDetectorEvidences>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AnalysisDetectorEvidences>
     {
-        internal AnalysisDetectorEvidences() { }
+        public AnalysisDetectorEvidences() { }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.AppServiceNameValuePair>> Data { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.DetectorDataSource DataSource { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.DetectorDefinition DetectorDefinition { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.DetectorDataSource DataSource { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.DetectorDefinition DetectorDefinition { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.DiagnosticMetricSet> Metrics { get { throw null; } }
-        public string Source { get { throw null; } }
+        public string Source { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.AnalysisDetectorEvidences JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppService.Models.AnalysisDetectorEvidences PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7511,7 +7511,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string KeyVaultId { get { throw null; } set { } }
         public string KeyVaultSecretName { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.KeyVaultSecretStatus? KeyVaultSecretStatus { get { throw null; } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
         public System.BinaryData PfxBlob { get { throw null; } set { } }
         public string PublicKeyHash { get { throw null; } }
@@ -7604,13 +7604,13 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class ApplicationStack : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ApplicationStack>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ApplicationStack>
     {
-        internal ApplicationStack() { }
-        public string Dependency { get { throw null; } }
-        public string Display { get { throw null; } }
+        public ApplicationStack() { }
+        public string Dependency { get { throw null; } set { } }
+        public string Display { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.ApplicationStack> Frameworks { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.ApplicationStack> IsDeprecated { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.StackMajorVersion> MajorVersions { get { throw null; } }
-        public string StackName { get { throw null; } }
+        public string StackName { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.ApplicationStack JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppService.Models.ApplicationStack PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7623,14 +7623,14 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class ApplicationStackResource : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ApplicationStackResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ApplicationStackResource>
     {
-        internal ApplicationStackResource() { }
-        public string Dependency { get { throw null; } }
-        public string Display { get { throw null; } }
+        public ApplicationStackResource() { }
+        public string Dependency { get { throw null; } set { } }
+        public string Display { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.ApplicationStack> Frameworks { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.ApplicationStack> IsDeprecated { get { throw null; } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.StackMajorVersion> MajorVersions { get { throw null; } }
-        public string StackName { get { throw null; } }
+        public string StackName { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7806,14 +7806,14 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class AppServiceAseRegion : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AppServiceAseRegion>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AppServiceAseRegion>
     {
-        internal AppServiceAseRegion() { }
+        public AppServiceAseRegion() { }
         public System.Collections.Generic.IList<string> AvailableOS { get { throw null; } }
         public System.Collections.Generic.IList<string> AvailableSku { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public bool? IsDedicatedHostEnabled { get { throw null; } }
         public bool? IsStandard { get { throw null; } }
         public bool? IsZoneRedundantEnabled { get { throw null; } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7826,14 +7826,14 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class AppServiceBillingMeter : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AppServiceBillingMeter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AppServiceBillingMeter>
     {
-        internal AppServiceBillingMeter() { }
-        public string BillingLocation { get { throw null; } }
-        public string FriendlyName { get { throw null; } }
-        public string Kind { get { throw null; } }
-        public System.Guid? MeterId { get { throw null; } }
-        public double? Multiplier { get { throw null; } }
-        public string OsType { get { throw null; } }
-        public string ShortName { get { throw null; } }
+        public AppServiceBillingMeter() { }
+        public string BillingLocation { get { throw null; } set { } }
+        public string FriendlyName { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
+        public System.Guid? MeterId { get { throw null; } set { } }
+        public double? Multiplier { get { throw null; } set { } }
+        public string OsType { get { throw null; } set { } }
+        public string ShortName { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7994,7 +7994,7 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class AppServiceConfigurationDictionary : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary>
     {
         public AppServiceConfigurationDictionary() { }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Properties { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -8201,7 +8201,7 @@ namespace Azure.ResourceManager.AppService.Models
         public int? IpsslAddressCount { get { throw null; } set { } }
         public bool? IsSuspended { get { throw null; } }
         public bool? IsZoneRedundant { get { throw null; } set { } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public int? MaximumNumberOfMachines { get { throw null; } }
         public int? MultiRoleCount { get { throw null; } }
         public string MultiSize { get { throw null; } set { } }
@@ -8344,10 +8344,10 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class AppServiceGeoRegion : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AppServiceGeoRegion>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AppServiceGeoRegion>
     {
-        internal AppServiceGeoRegion() { }
+        public AppServiceGeoRegion() { }
         public string Description { get { throw null; } }
         public string DisplayName { get { throw null; } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public string OrgDomain { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -8645,7 +8645,7 @@ namespace Azure.ResourceManager.AppService.Models
         public bool? IsSpot { get { throw null; } set { } }
         public bool? IsXenon { get { throw null; } set { } }
         public bool? IsZoneRedundant { get { throw null; } set { } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.KubeEnvironmentProfile KubeEnvironmentProfile { get { throw null; } set { } }
         public int? MaximumElasticWorkerCount { get { throw null; } set { } }
         public int? MaximumNumberOfWorkers { get { throw null; } }
@@ -8735,30 +8735,30 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class AppServiceRecommendation : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AppServiceRecommendation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AppServiceRecommendation>
     {
-        internal AppServiceRecommendation() { }
-        public string ActionName { get { throw null; } }
-        public string BladeName { get { throw null; } }
+        public AppServiceRecommendation() { }
+        public string ActionName { get { throw null; } set { } }
+        public string BladeName { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> CategoryTags { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.RecommendationChannel? Channels { get { throw null; } }
-        public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public string DisplayName { get { throw null; } }
-        public int? Enabled { get { throw null; } }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
-        public string ExtensionName { get { throw null; } }
-        public string ForwardLink { get { throw null; } }
-        public bool? IsDynamic { get { throw null; } }
-        public string Kind { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.NotificationLevel? Level { get { throw null; } }
-        public string Message { get { throw null; } }
-        public System.DateTimeOffset? NextNotificationOn { get { throw null; } }
-        public System.DateTimeOffset? NotificationExpirationOn { get { throw null; } }
-        public System.DateTimeOffset? NotifiedOn { get { throw null; } }
-        public string RecommendationId { get { throw null; } }
-        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.ResourceScopeType? ResourceScope { get { throw null; } }
-        public string RuleName { get { throw null; } }
-        public double? Score { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.RecommendationChannel? Channels { get { throw null; } set { } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
+        public string DisplayName { get { throw null; } set { } }
+        public int? Enabled { get { throw null; } set { } }
+        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
+        public string ExtensionName { get { throw null; } set { } }
+        public string ForwardLink { get { throw null; } set { } }
+        public bool? IsDynamic { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.NotificationLevel? Level { get { throw null; } set { } }
+        public string Message { get { throw null; } set { } }
+        public System.DateTimeOffset? NextNotificationOn { get { throw null; } set { } }
+        public System.DateTimeOffset? NotificationExpirationOn { get { throw null; } set { } }
+        public System.DateTimeOffset? NotifiedOn { get { throw null; } set { } }
+        public string RecommendationId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.ResourceScopeType? ResourceScope { get { throw null; } set { } }
+        public string RuleName { get { throw null; } set { } }
+        public double? Score { get { throw null; } set { } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> States { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -8891,9 +8891,9 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class AppServiceStatusInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AppServiceStatusInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AppServiceStatusInfo>
     {
-        internal AppServiceStatusInfo() { }
-        public string Message { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.DetectorInsightStatus? StatusId { get { throw null; } }
+        public AppServiceStatusInfo() { }
+        public string Message { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.DetectorInsightStatus? StatusId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.AppServiceStatusInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppService.Models.AppServiceStatusInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -9061,11 +9061,11 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class AppServiceUsage : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AppServiceUsage>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AppServiceUsage>
     {
-        internal AppServiceUsage() { }
+        public AppServiceUsage() { }
         public Azure.ResourceManager.AppService.Models.ComputeModeOption? ComputeMode { get { throw null; } }
         public long? CurrentValue { get { throw null; } }
         public string DisplayName { get { throw null; } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public long? Limit { get { throw null; } }
         public System.DateTimeOffset? NextResetOn { get { throw null; } }
         public string ResourceName { get { throw null; } }
@@ -9207,7 +9207,7 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class AppServiceVirtualNetworkValidationContent : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkValidationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkValidationContent>
     {
         public AppServiceVirtualNetworkValidationContent() { }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public string SubnetResourceId { get { throw null; } set { } }
         public string VnetName { get { throw null; } set { } }
         public string VnetResourceGroup { get { throw null; } set { } }
@@ -9224,8 +9224,8 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class AppSnapshot : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AppSnapshot>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AppSnapshot>
     {
-        internal AppSnapshot() { }
-        public string Kind { get { throw null; } }
+        public AppSnapshot() { }
+        public string Kind { get { throw null; } set { } }
         public string Time { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -9913,7 +9913,7 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class AzureStoragePropertyDictionary : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AzureStoragePropertyDictionary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AzureStoragePropertyDictionary>
     {
         public AzureStoragePropertyDictionary() { }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.AppService.Models.AppServiceStorageAccessInfo> Properties { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -10129,7 +10129,7 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class ConnectionStringDictionary : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ConnectionStringDictionary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ConnectionStringDictionary>
     {
         public ConnectionStringDictionary() { }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.AppService.Models.ConnStringValueTypePair> Properties { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -10207,11 +10207,11 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class ContainerCpuStatistics : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ContainerCpuStatistics>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ContainerCpuStatistics>
     {
-        internal ContainerCpuStatistics() { }
-        public Azure.ResourceManager.AppService.Models.ContainerCpuUsage CpuUsage { get { throw null; } }
-        public int? OnlineCpuCount { get { throw null; } }
-        public long? SystemCpuUsage { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.ContainerThrottlingInfo ThrottlingData { get { throw null; } }
+        public ContainerCpuStatistics() { }
+        public Azure.ResourceManager.AppService.Models.ContainerCpuUsage CpuUsage { get { throw null; } set { } }
+        public int? OnlineCpuCount { get { throw null; } set { } }
+        public long? SystemCpuUsage { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.ContainerThrottlingInfo ThrottlingData { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.ContainerCpuStatistics JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppService.Models.ContainerCpuStatistics PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10224,11 +10224,11 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class ContainerCpuUsage : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ContainerCpuUsage>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ContainerCpuUsage>
     {
-        internal ContainerCpuUsage() { }
-        public long? KernelModeUsage { get { throw null; } }
+        public ContainerCpuUsage() { }
+        public long? KernelModeUsage { get { throw null; } set { } }
         public System.Collections.Generic.IList<long> PerCpuUsage { get { throw null; } }
-        public long? TotalUsage { get { throw null; } }
-        public long? UserModeUsage { get { throw null; } }
+        public long? TotalUsage { get { throw null; } set { } }
+        public long? UserModeUsage { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.ContainerCpuUsage JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppService.Models.ContainerCpuUsage PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10241,15 +10241,15 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class ContainerInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ContainerInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ContainerInfo>
     {
-        internal ContainerInfo() { }
-        public Azure.ResourceManager.AppService.Models.ContainerCpuStatistics CurrentCpuStats { get { throw null; } }
-        public System.DateTimeOffset? CurrentTimeStamp { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.ContainerNetworkInterfaceStatistics Eth0 { get { throw null; } }
-        public string Id { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.ContainerMemoryStatistics MemoryStats { get { throw null; } }
-        public string Name { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.ContainerCpuStatistics PreviousCpuStats { get { throw null; } }
-        public System.DateTimeOffset? PreviousTimeStamp { get { throw null; } }
+        public ContainerInfo() { }
+        public Azure.ResourceManager.AppService.Models.ContainerCpuStatistics CurrentCpuStats { get { throw null; } set { } }
+        public System.DateTimeOffset? CurrentTimeStamp { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.ContainerNetworkInterfaceStatistics Eth0 { get { throw null; } set { } }
+        public string Id { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.ContainerMemoryStatistics MemoryStats { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.ContainerCpuStatistics PreviousCpuStats { get { throw null; } set { } }
+        public System.DateTimeOffset? PreviousTimeStamp { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.ContainerInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppService.Models.ContainerInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10262,10 +10262,10 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class ContainerMemoryStatistics : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ContainerMemoryStatistics>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ContainerMemoryStatistics>
     {
-        internal ContainerMemoryStatistics() { }
-        public long? Limit { get { throw null; } }
-        public long? MaxUsage { get { throw null; } }
-        public long? Usage { get { throw null; } }
+        public ContainerMemoryStatistics() { }
+        public long? Limit { get { throw null; } set { } }
+        public long? MaxUsage { get { throw null; } set { } }
+        public long? Usage { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.ContainerMemoryStatistics JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppService.Models.ContainerMemoryStatistics PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10278,15 +10278,15 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class ContainerNetworkInterfaceStatistics : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ContainerNetworkInterfaceStatistics>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ContainerNetworkInterfaceStatistics>
     {
-        internal ContainerNetworkInterfaceStatistics() { }
-        public long? RxBytes { get { throw null; } }
-        public long? RxDropped { get { throw null; } }
-        public long? RxErrors { get { throw null; } }
-        public long? RxPackets { get { throw null; } }
-        public long? TxBytes { get { throw null; } }
-        public long? TxDropped { get { throw null; } }
-        public long? TxErrors { get { throw null; } }
-        public long? TxPackets { get { throw null; } }
+        public ContainerNetworkInterfaceStatistics() { }
+        public long? RxBytes { get { throw null; } set { } }
+        public long? RxDropped { get { throw null; } set { } }
+        public long? RxErrors { get { throw null; } set { } }
+        public long? RxPackets { get { throw null; } set { } }
+        public long? TxBytes { get { throw null; } set { } }
+        public long? TxDropped { get { throw null; } set { } }
+        public long? TxErrors { get { throw null; } set { } }
+        public long? TxPackets { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.ContainerNetworkInterfaceStatistics JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppService.Models.ContainerNetworkInterfaceStatistics PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10299,10 +10299,10 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class ContainerThrottlingInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ContainerThrottlingInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ContainerThrottlingInfo>
     {
-        internal ContainerThrottlingInfo() { }
-        public int? Periods { get { throw null; } }
-        public int? ThrottledPeriods { get { throw null; } }
-        public int? ThrottledTime { get { throw null; } }
+        public ContainerThrottlingInfo() { }
+        public int? Periods { get { throw null; } set { } }
+        public int? ThrottledPeriods { get { throw null; } set { } }
+        public int? ThrottledTime { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.ContainerThrottlingInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppService.Models.ContainerThrottlingInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10460,7 +10460,7 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class CustomHostnameAnalysisResult : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.CustomHostnameAnalysisResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.CustomHostnameAnalysisResult>
     {
-        internal CustomHostnameAnalysisResult() { }
+        public CustomHostnameAnalysisResult() { }
         public System.Collections.Generic.IList<string> AlternateCNameRecords { get { throw null; } }
         public System.Collections.Generic.IList<string> AlternateTxtRecords { get { throw null; } }
         public System.Collections.Generic.IList<string> ARecords { get { throw null; } }
@@ -10471,7 +10471,7 @@ namespace Azure.ResourceManager.AppService.Models
         public bool? HasConflictAcrossSubscription { get { throw null; } }
         public bool? HasConflictOnScaleUnit { get { throw null; } }
         public bool? IsHostnameAlreadyVerified { get { throw null; } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> TxtRecords { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -10490,10 +10490,10 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class CustomHostnameSites : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.CustomHostnameSites>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.CustomHostnameSites>
     {
-        internal CustomHostnameSites() { }
-        public string CustomHostname { get { throw null; } }
-        public string Kind { get { throw null; } }
-        public string Region { get { throw null; } }
+        public CustomHostnameSites() { }
+        public string CustomHostname { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
+        public string Region { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.AppServiceIdentifierData> SiteResourceIds { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -10538,9 +10538,9 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class DataProviderMetadata : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.DataProviderMetadata>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DataProviderMetadata>
     {
-        internal DataProviderMetadata() { }
+        public DataProviderMetadata() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.DataProviderKeyValuePair> PropertyBag { get { throw null; } }
-        public string ProviderName { get { throw null; } }
+        public string ProviderName { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.DataProviderMetadata JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppService.Models.DataProviderMetadata PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10553,10 +10553,10 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class DataTableResponseColumn : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.DataTableResponseColumn>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DataTableResponseColumn>
     {
-        internal DataTableResponseColumn() { }
-        public string ColumnName { get { throw null; } }
-        public string ColumnType { get { throw null; } }
-        public string DataType { get { throw null; } }
+        public DataTableResponseColumn() { }
+        public string ColumnName { get { throw null; } set { } }
+        public string ColumnType { get { throw null; } set { } }
+        public string DataType { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.DataTableResponseColumn JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppService.Models.DataTableResponseColumn PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10569,10 +10569,10 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class DataTableResponseObject : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.DataTableResponseObject>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DataTableResponseObject>
     {
-        internal DataTableResponseObject() { }
+        public DataTableResponseObject() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.DataTableResponseColumn> Columns { get { throw null; } }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<string>> Rows { get { throw null; } }
-        public string TableName { get { throw null; } }
+        public string TableName { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.DataTableResponseObject JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppService.Models.DataTableResponseObject PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10617,7 +10617,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public DeletedAppRestoreContent() { }
         public Azure.Core.ResourceIdentifier DeletedSiteId { get { throw null; } set { } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public bool? RecoverConfiguration { get { throw null; } set { } }
         public string SnapshotTime { get { throw null; } set { } }
         public bool? UseDRSecondary { get { throw null; } set { } }
@@ -10661,15 +10661,15 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class DetectorAbnormalTimePeriod : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.DetectorAbnormalTimePeriod>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DetectorAbnormalTimePeriod>
     {
-        internal DetectorAbnormalTimePeriod() { }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
-        public string Message { get { throw null; } }
+        public DetectorAbnormalTimePeriod() { }
+        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
+        public string Message { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.AppServiceNameValuePair>> MetaData { get { throw null; } }
-        public double? Priority { get { throw null; } }
+        public double? Priority { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.DiagnosticSolution> Solutions { get { throw null; } }
-        public string Source { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.DetectorIssueType? Type { get { throw null; } }
+        public string Source { get { throw null; } set { } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.DetectorIssueType? Type { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.DetectorAbnormalTimePeriod JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppService.Models.DetectorAbnormalTimePeriod PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10682,7 +10682,7 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class DetectorDataSource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.DetectorDataSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DetectorDataSource>
     {
-        internal DetectorDataSource() { }
+        public DetectorDataSource() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.AppServiceNameValuePair> DataSourceUri { get { throw null; } }
         public System.Collections.Generic.IList<string> Instructions { get { throw null; } }
         protected virtual Azure.ResourceManager.AppService.Models.DetectorDataSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10697,7 +10697,7 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class DetectorDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.DetectorDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DetectorDefinition>
     {
-        internal DetectorDefinition() { }
+        public DetectorDefinition() { }
         public string Description { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public bool? IsEnabled { get { throw null; } }
@@ -10714,7 +10714,7 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class DetectorInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.DetectorInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DetectorInfo>
     {
-        internal DetectorInfo() { }
+        public DetectorInfo() { }
         public System.Collections.Generic.IReadOnlyList<string> AnalysisType { get { throw null; } }
         public string Author { get { throw null; } }
         public string Category { get { throw null; } }
@@ -10776,13 +10776,13 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class DiagnosticAnalysis : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.DiagnosticAnalysis>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DiagnosticAnalysis>
     {
-        internal DiagnosticAnalysis() { }
+        public DiagnosticAnalysis() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.AbnormalTimePeriod> AbnormalTimePeriods { get { throw null; } }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
-        public string Kind { get { throw null; } }
+        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.DetectorDefinition> NonCorrelatedDetectors { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.AnalysisDetectorEvidences> Payload { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10795,10 +10795,10 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class DiagnosticDataRendering : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.DiagnosticDataRendering>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DiagnosticDataRendering>
     {
-        internal DiagnosticDataRendering() { }
-        public string Description { get { throw null; } }
-        public string Title { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.DiagnosticDataRenderingType? Type { get { throw null; } }
+        public DiagnosticDataRendering() { }
+        public string Description { get { throw null; } set { } }
+        public string Title { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.DiagnosticDataRenderingType? Type { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.DiagnosticDataRendering JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppService.Models.DiagnosticDataRendering PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10839,9 +10839,9 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class DiagnosticDataset : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.DiagnosticDataset>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DiagnosticDataset>
     {
-        internal DiagnosticDataset() { }
-        public Azure.ResourceManager.AppService.Models.DiagnosticDataRendering RenderingProperties { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.DataTableResponseObject Table { get { throw null; } }
+        public DiagnosticDataset() { }
+        public Azure.ResourceManager.AppService.Models.DiagnosticDataRendering RenderingProperties { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.DataTableResponseObject Table { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.DiagnosticDataset JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppService.Models.DiagnosticDataset PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10854,16 +10854,16 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class DiagnosticDetectorResponse : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.DiagnosticDetectorResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DiagnosticDetectorResponse>
     {
-        internal DiagnosticDetectorResponse() { }
+        public DiagnosticDetectorResponse() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.DetectorAbnormalTimePeriod> AbnormalTimePeriods { get { throw null; } }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.AppServiceNameValuePair>> Data { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.DetectorDataSource DataSource { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.DetectorDefinition DetectorDefinition { get { throw null; } }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
-        public bool? IssueDetected { get { throw null; } }
-        public string Kind { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.DetectorDataSource DataSource { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.DetectorDefinition DetectorDefinition { get { throw null; } set { } }
+        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
+        public bool? IssueDetected { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.DiagnosticMetricSet> Metrics { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10876,13 +10876,13 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class DiagnosticMetricSample : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.DiagnosticMetricSample>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DiagnosticMetricSample>
     {
-        internal DiagnosticMetricSample() { }
-        public bool? IsAggregated { get { throw null; } }
-        public double? Maximum { get { throw null; } }
-        public double? Minimum { get { throw null; } }
-        public string RoleInstance { get { throw null; } }
-        public System.DateTimeOffset? Timestamp { get { throw null; } }
-        public double? Total { get { throw null; } }
+        public DiagnosticMetricSample() { }
+        public bool? IsAggregated { get { throw null; } set { } }
+        public double? Maximum { get { throw null; } set { } }
+        public double? Minimum { get { throw null; } set { } }
+        public string RoleInstance { get { throw null; } set { } }
+        public System.DateTimeOffset? Timestamp { get { throw null; } set { } }
+        public double? Total { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.DiagnosticMetricSample JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppService.Models.DiagnosticMetricSample PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10895,12 +10895,12 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class DiagnosticMetricSet : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.DiagnosticMetricSet>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DiagnosticMetricSet>
     {
-        internal DiagnosticMetricSet() { }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
-        public string Name { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
-        public string TimeGrain { get { throw null; } }
-        public string Unit { get { throw null; } }
+        public DiagnosticMetricSet() { }
+        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
+        public string TimeGrain { get { throw null; } set { } }
+        public string Unit { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.DiagnosticMetricSample> Values { get { throw null; } }
         protected virtual Azure.ResourceManager.AppService.Models.DiagnosticMetricSet JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -10914,14 +10914,14 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class DiagnosticSolution : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.DiagnosticSolution>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DiagnosticSolution>
     {
-        internal DiagnosticSolution() { }
+        public DiagnosticSolution() { }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.AppServiceNameValuePair>> Data { get { throw null; } }
-        public string Description { get { throw null; } }
-        public string DisplayName { get { throw null; } }
-        public double? Id { get { throw null; } }
+        public string Description { get { throw null; } set { } }
+        public string DisplayName { get { throw null; } set { } }
+        public double? Id { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.AppServiceNameValuePair>> Metadata { get { throw null; } }
-        public double? Order { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.DiagnosticSolutionType? Type { get { throw null; } }
+        public double? Order { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.DiagnosticSolutionType? Type { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.DiagnosticSolution JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppService.Models.DiagnosticSolution PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -11072,15 +11072,15 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class ErrorEntity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ErrorEntity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ErrorEntity>
     {
-        internal ErrorEntity() { }
-        public string Code { get { throw null; } }
+        public ErrorEntity() { }
+        public string Code { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.ErrorEntity> Details { get { throw null; } }
-        public string ExtendedCode { get { throw null; } }
+        public string ExtendedCode { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.ErrorEntity> InnerErrors { get { throw null; } }
-        public string Message { get { throw null; } }
-        public string MessageTemplate { get { throw null; } }
+        public string Message { get { throw null; } set { } }
+        public string MessageTemplate { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Parameters { get { throw null; } }
-        public string Target { get { throw null; } }
+        public string Target { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.ErrorEntity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppService.Models.ErrorEntity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -11391,9 +11391,9 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class FunctionAppStack : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FunctionAppStack>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionAppStack>
     {
-        internal FunctionAppStack() { }
+        public FunctionAppStack() { }
         public string DisplayText { get { throw null; } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.FunctionAppMajorVersion> MajorVersions { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.StackPreferredOS? PreferredOs { get { throw null; } }
@@ -11706,8 +11706,8 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class HybridConnectionKey : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.HybridConnectionKey>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.HybridConnectionKey>
     {
-        internal HybridConnectionKey() { }
-        public string Kind { get { throw null; } }
+        public HybridConnectionKey() { }
+        public string Kind { get { throw null; } set { } }
         public string SendKeyName { get { throw null; } }
         public string SendKeyValue { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -11853,7 +11853,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string DefaultDomain { get { throw null; } }
         public string DeploymentErrors { get { throw null; } }
         public bool? IsInternalLoadBalancerEnabled { get { throw null; } set { } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.KubeEnvironmentProvisioningState? ProvisioningState { get { throw null; } }
         public string StaticIp { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -12127,7 +12127,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public MigrateMySqlRequest() { }
         public string ConnectionString { get { throw null; } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.MySqlMigrationType? MigrationType { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -12205,7 +12205,7 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class NetworkSecurityPerimeterConfiguration : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.NetworkSecurityPerimeterConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.NetworkSecurityPerimeterConfiguration>
     {
         internal NetworkSecurityPerimeterConfiguration() { }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.NetworkSecurityPerimeterConfigurationProperties Properties { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -12588,18 +12588,18 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class PremierAddOnOffer : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.PremierAddOnOffer>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.PremierAddOnOffer>
     {
-        internal PremierAddOnOffer() { }
-        public bool? IsPromoCodeRequired { get { throw null; } }
-        public string Kind { get { throw null; } }
-        public string LegalTermsUri { get { throw null; } }
-        public string MarketplaceOffer { get { throw null; } }
-        public string MarketplacePublisher { get { throw null; } }
-        public string PrivacyPolicyUri { get { throw null; } }
-        public string Product { get { throw null; } }
-        public int? Quota { get { throw null; } }
-        public string Sku { get { throw null; } }
-        public string Vendor { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.AppServicePlanRestriction? WebHostingPlanRestrictions { get { throw null; } }
+        public PremierAddOnOffer() { }
+        public bool? IsPromoCodeRequired { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
+        public string LegalTermsUri { get { throw null; } set { } }
+        public string MarketplaceOffer { get { throw null; } set { } }
+        public string MarketplacePublisher { get { throw null; } set { } }
+        public string PrivacyPolicyUri { get { throw null; } set { } }
+        public string Product { get { throw null; } set { } }
+        public int? Quota { get { throw null; } set { } }
+        public string Sku { get { throw null; } set { } }
+        public string Vendor { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.AppServicePlanRestriction? WebHostingPlanRestrictions { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -12613,7 +12613,7 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class PremierAddOnPatchResource : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.PremierAddOnPatchResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.PremierAddOnPatchResource>
     {
         public PremierAddOnPatchResource() { }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public string MarketplaceOffer { get { throw null; } set { } }
         public string MarketplacePublisher { get { throw null; } set { } }
         public string Product { get { throw null; } set { } }
@@ -12785,9 +12785,9 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class QueryUtterancesResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.QueryUtterancesResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.QueryUtterancesResult>
     {
-        internal QueryUtterancesResult() { }
-        public Azure.ResourceManager.AppService.Models.SampleUtterance SampleUtterance { get { throw null; } }
-        public float? Score { get { throw null; } }
+        public QueryUtterancesResult() { }
+        public Azure.ResourceManager.AppService.Models.SampleUtterance SampleUtterance { get { throw null; } set { } }
+        public float? Score { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.QueryUtterancesResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppService.Models.QueryUtterancesResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -12800,8 +12800,8 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class QueryUtterancesResults : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.QueryUtterancesResults>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.QueryUtterancesResults>
     {
-        internal QueryUtterancesResults() { }
-        public string Query { get { throw null; } }
+        public QueryUtterancesResults() { }
+        public string Query { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.QueryUtterancesResult> Results { get { throw null; } }
         protected virtual Azure.ResourceManager.AppService.Models.QueryUtterancesResults JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -12957,11 +12957,11 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class RemotePrivateEndpointConnection : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.RemotePrivateEndpointConnection>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RemotePrivateEndpointConnection>
     {
-        internal RemotePrivateEndpointConnection() { }
+        public RemotePrivateEndpointConnection() { }
         public System.Collections.Generic.IList<string> IpAddresses { get { throw null; } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public string PrivateEndpointId { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.PrivateLinkConnectionState PrivateLinkServiceConnectionState { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.PrivateLinkConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -13034,9 +13034,9 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class ResourceMetricDefinition : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ResourceMetricDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ResourceMetricDefinition>
     {
-        internal ResourceMetricDefinition() { }
-        public string Kind { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> Properties { get { throw null; } }
+        public ResourceMetricDefinition() { }
+        public string Kind { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> Properties { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -13128,7 +13128,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string HostingEnvironment { get { throw null; } set { } }
         public bool? IgnoreConflictingHostNames { get { throw null; } set { } }
         public bool? IgnoreDatabases { get { throw null; } set { } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.BackupRestoreOperationType? OperationType { get { throw null; } set { } }
         public string SiteName { get { throw null; } set { } }
         public string StorageAccountUri { get { throw null; } set { } }
@@ -13144,10 +13144,10 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class SampleUtterance : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.SampleUtterance>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.SampleUtterance>
     {
-        internal SampleUtterance() { }
+        public SampleUtterance() { }
         public System.Collections.Generic.IList<string> Links { get { throw null; } }
-        public string Qid { get { throw null; } }
-        public string Text { get { throw null; } }
+        public string Qid { get { throw null; } set { } }
+        public string Text { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.SampleUtterance JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppService.Models.SampleUtterance PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -13298,7 +13298,7 @@ namespace Azure.ResourceManager.AppService.Models
         public bool? IsEnabled { get { throw null; } set { } }
         public string Issuer { get { throw null; } set { } }
         public bool? IsTokenStoreEnabled { get { throw null; } set { } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public string MicrosoftAccountClientId { get { throw null; } set { } }
         public string MicrosoftAccountClientSecret { get { throw null; } set { } }
         public string MicrosoftAccountClientSecretSettingName { get { throw null; } set { } }
@@ -13458,8 +13458,8 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class SiteConfigurationSnapshotInfo : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.SiteConfigurationSnapshotInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.SiteConfigurationSnapshotInfo>
     {
-        internal SiteConfigurationSnapshotInfo() { }
-        public string Kind { get { throw null; } }
+        public SiteConfigurationSnapshotInfo() { }
+        public string Kind { get { throw null; } set { } }
         public int? SnapshotId { get { throw null; } }
         public System.DateTimeOffset? SnapshotTakenOn { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -13627,7 +13627,7 @@ namespace Azure.ResourceManager.AppService.Models
         public bool? IsStorageAccountRequired { get { throw null; } set { } }
         public bool? IsXenon { get { throw null; } set { } }
         public string KeyVaultReferenceIdentity { get { throw null; } set { } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public int? MaxNumberOfWorkers { get { throw null; } }
         public string OutboundIpAddresses { get { throw null; } }
@@ -13658,12 +13658,12 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class SitePhpErrorLogFlag : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.SitePhpErrorLogFlag>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.SitePhpErrorLogFlag>
     {
-        internal SitePhpErrorLogFlag() { }
-        public string Kind { get { throw null; } }
-        public string LocalLogErrors { get { throw null; } }
-        public string LocalLogErrorsMaxLength { get { throw null; } }
-        public string MasterLogErrors { get { throw null; } }
-        public string MasterLogErrorsMaxLength { get { throw null; } }
+        public SitePhpErrorLogFlag() { }
+        public string Kind { get { throw null; } set { } }
+        public string LocalLogErrors { get { throw null; } set { } }
+        public string LocalLogErrorsMaxLength { get { throw null; } set { } }
+        public string MasterLogErrors { get { throw null; } set { } }
+        public string MasterLogErrorsMaxLength { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -13724,10 +13724,10 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class SlotDifference : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.SlotDifference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.SlotDifference>
     {
-        internal SlotDifference() { }
+        public SlotDifference() { }
         public string Description { get { throw null; } }
         public string DiffRule { get { throw null; } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public string Level { get { throw null; } }
         public string SettingName { get { throw null; } }
         public string SettingType { get { throw null; } }
@@ -13796,7 +13796,7 @@ namespace Azure.ResourceManager.AppService.Models
         public SnapshotRestoreRequest() { }
         public bool? CanOverwrite { get { throw null; } }
         public bool? IgnoreConflictingHostNames { get { throw null; } set { } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public bool? RecoverConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.SnapshotRecoverySource RecoverySource { get { throw null; } set { } }
         public string SnapshotTime { get { throw null; } set { } }
@@ -13813,16 +13813,16 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class StackMajorVersion : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.StackMajorVersion>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.StackMajorVersion>
     {
-        internal StackMajorVersion() { }
+        public StackMajorVersion() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AppSettingsDictionary { get { throw null; } }
-        public string DisplayVersion { get { throw null; } }
-        public bool? IsApplicationInsights { get { throw null; } }
-        public bool? IsDefault { get { throw null; } }
-        public bool? IsDeprecated { get { throw null; } }
-        public bool? IsHidden { get { throw null; } }
-        public bool? IsPreview { get { throw null; } }
+        public string DisplayVersion { get { throw null; } set { } }
+        public bool? IsApplicationInsights { get { throw null; } set { } }
+        public bool? IsDefault { get { throw null; } set { } }
+        public bool? IsDeprecated { get { throw null; } set { } }
+        public bool? IsHidden { get { throw null; } set { } }
+        public bool? IsPreview { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.StackMinorVersion> MinorVersions { get { throw null; } }
-        public string RuntimeVersion { get { throw null; } }
+        public string RuntimeVersion { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> SiteConfigPropertiesDictionary { get { throw null; } }
         protected virtual Azure.ResourceManager.AppService.Models.StackMajorVersion JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -13836,11 +13836,11 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class StackMinorVersion : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.StackMinorVersion>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.StackMinorVersion>
     {
-        internal StackMinorVersion() { }
-        public string DisplayVersion { get { throw null; } }
-        public bool? IsDefault { get { throw null; } }
-        public bool? IsRemoteDebuggingEnabled { get { throw null; } }
-        public string RuntimeVersion { get { throw null; } }
+        public StackMinorVersion() { }
+        public string DisplayVersion { get { throw null; } set { } }
+        public bool? IsDefault { get { throw null; } set { } }
+        public bool? IsRemoteDebuggingEnabled { get { throw null; } set { } }
+        public string RuntimeVersion { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.StackMinorVersion JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppService.Models.StackMinorVersion PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -13947,7 +13947,7 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class StaticSiteCustomDomainContent : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.StaticSiteCustomDomainContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.StaticSiteCustomDomainContent>
     {
         public StaticSiteCustomDomainContent() { }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public string ValidationMethod { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -14012,9 +14012,9 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class StaticSiteFunctionOverview : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.StaticSiteFunctionOverview>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.StaticSiteFunctionOverview>
     {
-        internal StaticSiteFunctionOverview() { }
+        public StaticSiteFunctionOverview() { }
         public string FunctionName { get { throw null; } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.FunctionTriggerType? TriggerType { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -14055,7 +14055,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string DefaultHostname { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.EnterpriseGradeCdnStatus? EnterpriseGradeCdnStatus { get { throw null; } set { } }
         public string KeyVaultReferenceIdentity { get { throw null; } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.StaticSiteLinkedBackendInfo> LinkedBackends { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.ResponseMessageEnvelopeRemotePrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
         public string Provider { get { throw null; } set { } }
@@ -14109,7 +14109,7 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class StaticSiteResetContent : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.StaticSiteResetContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.StaticSiteResetContent>
     {
         public StaticSiteResetContent() { }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public string RepositoryToken { get { throw null; } set { } }
         public bool? ShouldUpdateRepository { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -14159,8 +14159,8 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class StaticSiteStringList : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.StaticSiteStringList>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.StaticSiteStringList>
     {
-        internal StaticSiteStringList() { }
-        public string Kind { get { throw null; } }
+        public StaticSiteStringList() { }
+        public string Kind { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Properties { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -14174,9 +14174,9 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class StaticSitesWorkflowPreview : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.StaticSitesWorkflowPreview>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.StaticSitesWorkflowPreview>
     {
-        internal StaticSitesWorkflowPreview() { }
+        public StaticSitesWorkflowPreview() { }
         public string Contents { get { throw null; } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public string Path { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -14193,7 +14193,7 @@ namespace Azure.ResourceManager.AppService.Models
         public StaticSitesWorkflowPreviewRequest() { }
         public string Branch { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.StaticSiteBuildProperties BuildProperties { get { throw null; } set { } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public string RepositoryUri { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -14227,7 +14227,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public StaticSiteUser() { }
         public string DisplayName { get { throw null; } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public string Provider { get { throw null; } }
         public string Roles { get { throw null; } set { } }
         public string UserId { get { throw null; } }
@@ -14245,7 +14245,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public StaticSiteUserInvitationContent() { }
         public string Domain { get { throw null; } set { } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public int? NumHoursToExpiration { get { throw null; } set { } }
         public string Provider { get { throw null; } set { } }
         public string Roles { get { throw null; } set { } }
@@ -14262,10 +14262,10 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class StaticSiteUserInvitationResult : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.StaticSiteUserInvitationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.StaticSiteUserInvitationResult>
     {
-        internal StaticSiteUserInvitationResult() { }
+        public StaticSiteUserInvitationResult() { }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public string InvitationUri { get { throw null; } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -14283,7 +14283,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string AppZipUri { get { throw null; } set { } }
         public string DeploymentTitle { get { throw null; } set { } }
         public string FunctionLanguage { get { throw null; } set { } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public string Provider { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -14337,7 +14337,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string AzurefilesConnectionString { get { throw null; } }
         public string AzurefilesShare { get { throw null; } }
         public bool? BlockWriteAccessToSite { get { throw null; } set { } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public bool? SwitchSiteAfterMigration { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -14351,8 +14351,8 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class StorageMigrationResult : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.StorageMigrationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.StorageMigrationResult>
     {
-        internal StorageMigrationResult() { }
-        public string Kind { get { throw null; } }
+        public StorageMigrationResult() { }
+        public string Kind { get { throw null; } set { } }
         public string OperationId { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -14430,18 +14430,18 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class TriggeredJobRun : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.TriggeredJobRun>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.TriggeredJobRun>
     {
-        internal TriggeredJobRun() { }
-        public System.TimeSpan? Duration { get { throw null; } }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
-        public System.Uri ErrorUri { get { throw null; } }
-        public string JobName { get { throw null; } }
-        public System.Uri OutputUri { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.TriggeredWebJobStatus? Status { get { throw null; } }
-        public string Trigger { get { throw null; } }
-        public System.Uri Uri { get { throw null; } }
-        public string WebJobId { get { throw null; } }
-        public string WebJobName { get { throw null; } }
+        public TriggeredJobRun() { }
+        public System.TimeSpan? Duration { get { throw null; } set { } }
+        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
+        public System.Uri ErrorUri { get { throw null; } set { } }
+        public string JobName { get { throw null; } set { } }
+        public System.Uri OutputUri { get { throw null; } set { } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.TriggeredWebJobStatus? Status { get { throw null; } set { } }
+        public string Trigger { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
+        public string WebJobId { get { throw null; } set { } }
+        public string WebJobName { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.TriggeredJobRun JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppService.Models.TriggeredJobRun PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -14569,12 +14569,12 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class VirtualIPMapping : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.VirtualIPMapping>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.VirtualIPMapping>
     {
-        internal VirtualIPMapping() { }
-        public int? InternalHttpPort { get { throw null; } }
-        public int? InternalHttpsPort { get { throw null; } }
-        public bool? IsInUse { get { throw null; } }
-        public string ServiceName { get { throw null; } }
-        public string VirtualIP { get { throw null; } }
+        public VirtualIPMapping() { }
+        public int? InternalHttpPort { get { throw null; } set { } }
+        public int? InternalHttpsPort { get { throw null; } set { } }
+        public bool? IsInUse { get { throw null; } set { } }
+        public string ServiceName { get { throw null; } set { } }
+        public string VirtualIP { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.VirtualIPMapping JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppService.Models.VirtualIPMapping PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -14587,11 +14587,11 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class VirtualNetworkValidationFailureDetails : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.VirtualNetworkValidationFailureDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.VirtualNetworkValidationFailureDetails>
     {
-        internal VirtualNetworkValidationFailureDetails() { }
+        public VirtualNetworkValidationFailureDetails() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.VirtualNetworkValidationTestFailure> FailedTests { get { throw null; } }
-        public bool? IsFailed { get { throw null; } }
-        public string Kind { get { throw null; } }
-        public string Message { get { throw null; } }
+        public bool? IsFailed { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
+        public string Message { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.VirtualNetworkValidationTestFailure> Warnings { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -14605,10 +14605,10 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class VirtualNetworkValidationTestFailure : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.VirtualNetworkValidationTestFailure>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.VirtualNetworkValidationTestFailure>
     {
-        internal VirtualNetworkValidationTestFailure() { }
-        public string Details { get { throw null; } }
-        public string Kind { get { throw null; } }
-        public string TestName { get { throw null; } }
+        public VirtualNetworkValidationTestFailure() { }
+        public string Details { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
+        public string TestName { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -14626,7 +14626,7 @@ namespace Azure.ResourceManager.AppService.Models
         public Azure.ResourceManager.AppService.Models.WebAppBackupSchedule BackupSchedule { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.AppServiceDatabaseBackupSetting> Databases { get { throw null; } }
         public bool? IsEnabled { get { throw null; } set { } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public string StorageAccountUri { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -14687,12 +14687,12 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class WebAppContentLink : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WebAppContentLink>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WebAppContentLink>
     {
-        internal WebAppContentLink() { }
+        public WebAppContentLink() { }
         public Azure.ResourceManager.AppService.Models.WebAppContentHash ContentHash { get { throw null; } }
         public long? ContentSize { get { throw null; } }
         public string ContentVersion { get { throw null; } }
         public System.BinaryData Metadata { get { throw null; } }
-        public System.Uri Uri { get { throw null; } }
+        public System.Uri Uri { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.WebAppContentLink JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppService.Models.WebAppContentLink PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -14759,9 +14759,9 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class WebAppErrorProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WebAppErrorProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WebAppErrorProperties>
     {
-        internal WebAppErrorProperties() { }
-        public string Code { get { throw null; } }
-        public string Message { get { throw null; } }
+        public WebAppErrorProperties() { }
+        public string Code { get { throw null; } set { } }
+        public string Message { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.WebAppErrorProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppService.Models.WebAppErrorProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -14914,7 +14914,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string ConnectionString { get { throw null; } set { } }
         public string DbType { get { throw null; } set { } }
         public bool? IsAppOffline { get { throw null; } set { } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public System.Uri PackageUri { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> SetParameters { get { throw null; } }
         public System.Uri SetParametersXmlFileUri { get { throw null; } set { } }
@@ -14931,9 +14931,9 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class WebAppMSDeployLog : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WebAppMSDeployLog>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WebAppMSDeployLog>
     {
-        internal WebAppMSDeployLog() { }
+        public WebAppMSDeployLog() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.WebAppMSDeployLogEntry> Entries { get { throw null; } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -15008,9 +15008,9 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class WebAppProcessThreadInfo : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WebAppProcessThreadInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WebAppProcessThreadInfo>
     {
-        internal WebAppProcessThreadInfo() { }
-        public string Kind { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.WebAppProcessThreadProperties Properties { get { throw null; } }
+        public WebAppProcessThreadInfo() { }
+        public string Kind { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.WebAppProcessThreadProperties Properties { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -15023,19 +15023,19 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class WebAppProcessThreadProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WebAppProcessThreadProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WebAppProcessThreadProperties>
     {
-        internal WebAppProcessThreadProperties() { }
-        public int? BasePriority { get { throw null; } }
-        public int? CurrentPriority { get { throw null; } }
-        public System.Uri Href { get { throw null; } }
+        public WebAppProcessThreadProperties() { }
+        public int? BasePriority { get { throw null; } set { } }
+        public int? CurrentPriority { get { throw null; } set { } }
+        public System.Uri Href { get { throw null; } set { } }
         public int? Identifier { get { throw null; } }
-        public string PriorityLevel { get { throw null; } }
-        public string Process { get { throw null; } }
-        public string StartAddress { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
-        public string State { get { throw null; } }
-        public string TotalProcessorTime { get { throw null; } }
-        public string UserProcessorTime { get { throw null; } }
-        public string WaitReason { get { throw null; } }
+        public string PriorityLevel { get { throw null; } set { } }
+        public string Process { get { throw null; } set { } }
+        public string StartAddress { get { throw null; } set { } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
+        public string State { get { throw null; } set { } }
+        public string TotalProcessorTime { get { throw null; } set { } }
+        public string UserProcessorTime { get { throw null; } set { } }
+        public string WaitReason { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.WebAppProcessThreadProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppService.Models.WebAppProcessThreadProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -15051,7 +15051,7 @@ namespace Azure.ResourceManager.AppService.Models
         public WebAppPushSettings() { }
         public string DynamicTagsJson { get { throw null; } set { } }
         public bool? IsPushEnabled { get { throw null; } set { } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public string TagsRequiringAuth { get { throw null; } set { } }
         public string TagWhitelistJson { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -15066,10 +15066,10 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class WebAppRequest : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WebAppRequest>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WebAppRequest>
     {
-        internal WebAppRequest() { }
-        public System.BinaryData Headers { get { throw null; } }
-        public string Method { get { throw null; } }
-        public System.Uri Uri { get { throw null; } }
+        public WebAppRequest() { }
+        public System.BinaryData Headers { get { throw null; } set { } }
+        public string Method { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.WebAppRequest JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppService.Models.WebAppRequest PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -15082,11 +15082,11 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class WebAppRequestHistoryProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WebAppRequestHistoryProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WebAppRequestHistoryProperties>
     {
-        internal WebAppRequestHistoryProperties() { }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.WebAppRequest Request { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.WebAppResponse Response { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public WebAppRequestHistoryProperties() { }
+        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.WebAppRequest Request { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.WebAppResponse Response { get { throw null; } set { } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.WebAppRequestHistoryProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppService.Models.WebAppRequestHistoryProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -15099,10 +15099,10 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class WebAppResponse : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WebAppResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WebAppResponse>
     {
-        internal WebAppResponse() { }
-        public Azure.ResourceManager.AppService.Models.WebAppContentLink BodyLink { get { throw null; } }
-        public System.BinaryData Headers { get { throw null; } }
-        public int? StatusCode { get { throw null; } }
+        public WebAppResponse() { }
+        public Azure.ResourceManager.AppService.Models.WebAppContentLink BodyLink { get { throw null; } set { } }
+        public System.BinaryData Headers { get { throw null; } set { } }
+        public int? StatusCode { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.WebAppResponse JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppService.Models.WebAppResponse PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -15115,13 +15115,13 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class WebAppRetryHistory : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WebAppRetryHistory>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WebAppRetryHistory>
     {
-        internal WebAppRetryHistory() { }
-        public string ClientRequestId { get { throw null; } }
-        public string Code { get { throw null; } }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.WebAppErrorProperties ErrorInfo { get { throw null; } }
-        public string ServiceRequestId { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public WebAppRetryHistory() { }
+        public string ClientRequestId { get { throw null; } set { } }
+        public string Code { get { throw null; } set { } }
+        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.WebAppErrorProperties ErrorInfo { get { throw null; } set { } }
+        public string ServiceRequestId { get { throw null; } set { } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.WebAppRetryHistory JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppService.Models.WebAppRetryHistory PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -15134,8 +15134,8 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class WebAppRunActionCorrelation : Azure.ResourceManager.AppService.Models.WebAppRunCorrelation, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WebAppRunActionCorrelation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WebAppRunActionCorrelation>
     {
-        internal WebAppRunActionCorrelation() { }
-        public string ActionTrackingId { get { throw null; } }
+        public WebAppRunActionCorrelation() { }
+        public string ActionTrackingId { get { throw null; } set { } }
         protected override Azure.ResourceManager.AppService.Models.WebAppRunCorrelation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.ResourceManager.AppService.Models.WebAppRunCorrelation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -15148,9 +15148,9 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class WebAppRunCorrelation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WebAppRunCorrelation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WebAppRunCorrelation>
     {
-        internal WebAppRunCorrelation() { }
+        public WebAppRunCorrelation() { }
         public System.Collections.Generic.IList<string> ClientKeywords { get { throw null; } }
-        public string ClientTrackingId { get { throw null; } }
+        public string ClientTrackingId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.WebAppRunCorrelation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppService.Models.WebAppRunCorrelation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -15203,9 +15203,9 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class WebAppStack : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WebAppStack>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WebAppStack>
     {
-        internal WebAppStack() { }
+        public WebAppStack() { }
         public string DisplayText { get { throw null; } }
-        public string Kind { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.WebAppMajorVersion> MajorVersions { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.StackPreferredOS? PreferredOs { get { throw null; } }
@@ -15330,10 +15330,10 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class WorkflowEnvelopeProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WorkflowEnvelopeProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowEnvelopeProperties>
     {
-        internal WorkflowEnvelopeProperties() { }
+        public WorkflowEnvelopeProperties() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> Files { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.WorkflowState? FlowState { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.WorkflowHealth Health { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.WorkflowState? FlowState { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.WorkflowHealth Health { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.WorkflowEnvelopeProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppService.Models.WorkflowEnvelopeProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -15391,9 +15391,9 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class WorkflowHealth : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WorkflowHealth>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowHealth>
     {
-        internal WorkflowHealth() { }
+        public WorkflowHealth(Azure.ResourceManager.AppService.Models.WorkflowHealthState state) { }
         public Azure.ResponseError Error { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.WorkflowHealthState State { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.WorkflowHealthState State { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.WorkflowHealth JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppService.Models.WorkflowHealth PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -15413,7 +15413,7 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class WorkflowOutputContent : Azure.ResourceManager.AppService.Models.WorkflowContent, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WorkflowOutputContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowOutputContent>
     {
-        internal WorkflowOutputContent() { }
+        public WorkflowOutputContent() { }
         public System.BinaryData Error { get { throw null; } }
         protected override Azure.ResourceManager.AppService.Models.WorkflowContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -15553,9 +15553,9 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class WorkflowRunActionRepetitionIndex : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WorkflowRunActionRepetitionIndex>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowRunActionRepetitionIndex>
     {
-        internal WorkflowRunActionRepetitionIndex() { }
-        public int ItemIndex { get { throw null; } }
-        public string ScopeName { get { throw null; } }
+        public WorkflowRunActionRepetitionIndex(int itemIndex) { }
+        public int ItemIndex { get { throw null; } set { } }
+        public string ScopeName { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.WorkflowRunActionRepetitionIndex JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AppService.Models.WorkflowRunActionRepetitionIndex PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualIPMapping"/>. </summary>
-        internal VirtualIPMapping()
+        public VirtualIPMapping()
         {
         }
 
@@ -41,22 +41,22 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Virtual IP address. </summary>
         [WirePath("virtualIP")]
-        public string VirtualIP { get; }
+        public string VirtualIP { get; set; }
 
         /// <summary> Internal HTTP port. </summary>
         [WirePath("internalHttpPort")]
-        public int? InternalHttpPort { get; }
+        public int? InternalHttpPort { get; set; }
 
         /// <summary> Internal HTTPS port. </summary>
         [WirePath("internalHttpsPort")]
-        public int? InternalHttpsPort { get; }
+        public int? InternalHttpsPort { get; set; }
 
         /// <summary> Is virtual IP mapping in use. </summary>
         [WirePath("inUse")]
-        public bool? IsInUse { get; }
+        public bool? IsInUse { get; set; }
 
         /// <summary> name of the service that virtual IP is assigned to. </summary>
         [WirePath("serviceName")]
-        public string ServiceName { get; }
+        public string ServiceName { get; set; }
     }
 }

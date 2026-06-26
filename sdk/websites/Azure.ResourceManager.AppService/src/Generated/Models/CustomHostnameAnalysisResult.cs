@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CustomHostnameAnalysisResult"/>. </summary>
-        internal CustomHostnameAnalysisResult()
+        public CustomHostnameAnalysisResult()
         {
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> CustomHostnameAnalysisResult resource specific properties. </summary>
         [WirePath("properties")]
-        internal CustomHostnameAnalysisResultProperties Properties { get; }
+        internal CustomHostnameAnalysisResultProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if hostname is already verified; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("properties.isHostnameAlreadyVerified")]
@@ -103,7 +103,11 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties is null ? default : Properties.CNameRecords;
+                if (Properties is null)
+                {
+                    Properties = new CustomHostnameAnalysisResultProperties();
+                }
+                return Properties.CNameRecords;
             }
         }
 
@@ -113,7 +117,11 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties is null ? default : Properties.TxtRecords;
+                if (Properties is null)
+                {
+                    Properties = new CustomHostnameAnalysisResultProperties();
+                }
+                return Properties.TxtRecords;
             }
         }
 
@@ -123,7 +131,11 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties is null ? default : Properties.ARecords;
+                if (Properties is null)
+                {
+                    Properties = new CustomHostnameAnalysisResultProperties();
+                }
+                return Properties.ARecords;
             }
         }
 
@@ -133,7 +145,11 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties is null ? default : Properties.AlternateCNameRecords;
+                if (Properties is null)
+                {
+                    Properties = new CustomHostnameAnalysisResultProperties();
+                }
+                return Properties.AlternateCNameRecords;
             }
         }
 
@@ -143,7 +159,11 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties is null ? default : Properties.AlternateTxtRecords;
+                if (Properties is null)
+                {
+                    Properties = new CustomHostnameAnalysisResultProperties();
+                }
+                return Properties.AlternateTxtRecords;
             }
         }
     }

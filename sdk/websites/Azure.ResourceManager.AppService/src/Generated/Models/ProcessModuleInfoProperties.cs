@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ProcessModuleInfoProperties"/>. </summary>
-        internal ProcessModuleInfoProperties()
+        public ProcessModuleInfoProperties()
         {
         }
 
@@ -53,46 +53,46 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Base address. Used as module identifier in ARM resource URI. </summary>
         [WirePath("base_address")]
-        public string BaseAddress { get; }
+        public string BaseAddress { get; set; }
 
         /// <summary> File name. </summary>
         [WirePath("file_name")]
-        public string FileName { get; }
+        public string FileName { get; set; }
 
         /// <summary> HRef URI. </summary>
         [WirePath("href")]
-        public string Href { get; }
+        public string Href { get; set; }
 
         /// <summary> File path. </summary>
         [WirePath("file_path")]
-        public string FilePath { get; }
+        public string FilePath { get; set; }
 
         /// <summary> Module memory size. </summary>
         [WirePath("module_memory_size")]
-        public int? ModuleMemorySize { get; }
+        public int? ModuleMemorySize { get; set; }
 
         /// <summary> File version. </summary>
         [WirePath("file_version")]
-        public string FileVersion { get; }
+        public string FileVersion { get; set; }
 
         /// <summary> File description. </summary>
         [WirePath("file_description")]
-        public string FileDescription { get; }
+        public string FileDescription { get; set; }
 
         /// <summary> Product name. </summary>
         [WirePath("product")]
-        public string Product { get; }
+        public string Product { get; set; }
 
         /// <summary> Product version. </summary>
         [WirePath("product_version")]
-        public string ProductVersion { get; }
+        public string ProductVersion { get; set; }
 
         /// <summary> Is debug?. </summary>
         [WirePath("is_debug")]
-        public bool? IsDebug { get; }
+        public bool? IsDebug { get; set; }
 
         /// <summary> Module language (locale). </summary>
         [WirePath("language")]
-        public string Language { get; }
+        public string Language { get; set; }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AbnormalTimePeriod"/>. </summary>
-        internal AbnormalTimePeriod()
+        public AbnormalTimePeriod()
         {
             Events = new ChangeTrackingList<DetectorAbnormalTimePeriod>();
             Solutions = new ChangeTrackingList<DiagnosticSolution>();
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Start time of the downtime. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartOn { get; set; }
 
         /// <summary> End time of the downtime. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndOn { get; set; }
 
         /// <summary> List of Possible Cause of downtime. </summary>
         [WirePath("events")]

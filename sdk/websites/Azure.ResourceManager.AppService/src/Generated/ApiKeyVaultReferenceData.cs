@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiKeyVaultReferenceData"/>. </summary>
-        internal ApiKeyVaultReferenceData()
+        public ApiKeyVaultReferenceData()
         {
         }
 
@@ -41,13 +41,13 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> ApiKVReference resource specific properties. </summary>
         [WirePath("properties")]
-        internal ApiKeyVaultReferenceProperties Properties { get; }
+        internal ApiKeyVaultReferenceProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
-        /// <summary> Gets the Reference. </summary>
+        /// <summary> Gets or sets the Reference. </summary>
         [WirePath("properties.reference")]
         public string Reference
         {
@@ -55,9 +55,17 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.Reference;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiKeyVaultReferenceProperties();
+                }
+                Properties.Reference = value;
+            }
         }
 
-        /// <summary> Gets the Status. </summary>
+        /// <summary> Gets or sets the Status. </summary>
         [WirePath("properties.status")]
         public ResolveStatus? Status
         {
@@ -65,9 +73,17 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.Status;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiKeyVaultReferenceProperties();
+                }
+                Properties.Status = value;
+            }
         }
 
-        /// <summary> Gets the VaultName. </summary>
+        /// <summary> Gets or sets the VaultName. </summary>
         [WirePath("properties.vaultName")]
         public string VaultName
         {
@@ -75,9 +91,17 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.VaultName;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiKeyVaultReferenceProperties();
+                }
+                Properties.VaultName = value;
+            }
         }
 
-        /// <summary> Gets the SecretName. </summary>
+        /// <summary> Gets or sets the SecretName. </summary>
         [WirePath("properties.secretName")]
         public string SecretName
         {
@@ -85,15 +109,31 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.SecretName;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiKeyVaultReferenceProperties();
+                }
+                Properties.SecretName = value;
+            }
         }
 
-        /// <summary> Gets the SecretVersion. </summary>
+        /// <summary> Gets or sets the SecretVersion. </summary>
         [WirePath("properties.secretVersion")]
         public string SecretVersion
         {
             get
             {
                 return Properties is null ? default : Properties.SecretVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiKeyVaultReferenceProperties();
+                }
+                Properties.SecretVersion = value;
             }
         }
 
@@ -105,9 +145,17 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.Identity;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiKeyVaultReferenceProperties();
+                }
+                Properties.Identity = value;
+            }
         }
 
-        /// <summary> Gets the Details. </summary>
+        /// <summary> Gets or sets the Details. </summary>
         [WirePath("properties.details")]
         public string Details
         {
@@ -115,9 +163,17 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.Details;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiKeyVaultReferenceProperties();
+                }
+                Properties.Details = value;
+            }
         }
 
-        /// <summary> Gets the Source. </summary>
+        /// <summary> Gets or sets the Source. </summary>
         [WirePath("properties.source")]
         public ConfigReferenceSource? Source
         {
@@ -125,15 +181,31 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.Source;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiKeyVaultReferenceProperties();
+                }
+                Properties.Source = value;
+            }
         }
 
-        /// <summary> Gets the ActiveVersion. </summary>
+        /// <summary> Gets or sets the ActiveVersion. </summary>
         [WirePath("properties.activeVersion")]
         public string ActiveVersion
         {
             get
             {
                 return Properties is null ? default : Properties.ActiveVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiKeyVaultReferenceProperties();
+                }
+                Properties.ActiveVersion = value;
             }
         }
     }

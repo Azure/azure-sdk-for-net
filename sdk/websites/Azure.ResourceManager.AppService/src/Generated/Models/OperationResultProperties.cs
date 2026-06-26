@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OperationResultProperties"/>. </summary>
-        internal OperationResultProperties()
+        public OperationResultProperties()
         {
         }
 
@@ -44,23 +44,23 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The start time of the workflow scope repetition. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartOn { get; set; }
 
         /// <summary> The end time of the workflow scope repetition. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndOn { get; set; }
 
         /// <summary> The correlation properties. </summary>
         [WirePath("correlation")]
-        public WebAppRunActionCorrelation Correlation { get; }
+        public WebAppRunActionCorrelation Correlation { get; set; }
 
         /// <summary> The status of the workflow scope repetition. </summary>
         [WirePath("status")]
-        public WorkflowStatus? Status { get; }
+        public WorkflowStatus? Status { get; set; }
 
         /// <summary> The workflow scope repetition code. </summary>
         [WirePath("code")]
-        public string Code { get; }
+        public string Code { get; set; }
 
         /// <summary>
         /// Anything
@@ -89,6 +89,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// </para>
         /// </summary>
         [WirePath("error")]
-        public BinaryData Error { get; }
+        public BinaryData Error { get; set; }
     }
 }

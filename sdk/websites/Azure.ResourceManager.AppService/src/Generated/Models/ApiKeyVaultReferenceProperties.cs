@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiKeyVaultReferenceProperties"/>. </summary>
-        internal ApiKeyVaultReferenceProperties()
+        public ApiKeyVaultReferenceProperties()
         {
         }
 
@@ -47,40 +47,40 @@ namespace Azure.ResourceManager.AppService.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the Reference. </summary>
+        /// <summary> Gets or sets the Reference. </summary>
         [WirePath("reference")]
-        public string Reference { get; }
+        public string Reference { get; set; }
 
-        /// <summary> Gets the Status. </summary>
+        /// <summary> Gets or sets the Status. </summary>
         [WirePath("status")]
-        public ResolveStatus? Status { get; }
+        public ResolveStatus? Status { get; set; }
 
-        /// <summary> Gets the VaultName. </summary>
+        /// <summary> Gets or sets the VaultName. </summary>
         [WirePath("vaultName")]
-        public string VaultName { get; }
+        public string VaultName { get; set; }
 
-        /// <summary> Gets the SecretName. </summary>
+        /// <summary> Gets or sets the SecretName. </summary>
         [WirePath("secretName")]
-        public string SecretName { get; }
+        public string SecretName { get; set; }
 
-        /// <summary> Gets the SecretVersion. </summary>
+        /// <summary> Gets or sets the SecretVersion. </summary>
         [WirePath("secretVersion")]
-        public string SecretVersion { get; }
+        public string SecretVersion { get; set; }
 
         /// <summary> Managed service identity. </summary>
         [WirePath("identityType")]
-        public ManagedServiceIdentity Identity { get; }
+        public ManagedServiceIdentity Identity { get; set; }
 
-        /// <summary> Gets the Details. </summary>
+        /// <summary> Gets or sets the Details. </summary>
         [WirePath("details")]
-        public string Details { get; }
+        public string Details { get; set; }
 
-        /// <summary> Gets the Source. </summary>
+        /// <summary> Gets or sets the Source. </summary>
         [WirePath("source")]
-        public ConfigReferenceSource? Source { get; }
+        public ConfigReferenceSource? Source { get; set; }
 
-        /// <summary> Gets the ActiveVersion. </summary>
+        /// <summary> Gets or sets the ActiveVersion. </summary>
         [WirePath("activeVersion")]
-        public string ActiveVersion { get; }
+        public string ActiveVersion { get; set; }
     }
 }

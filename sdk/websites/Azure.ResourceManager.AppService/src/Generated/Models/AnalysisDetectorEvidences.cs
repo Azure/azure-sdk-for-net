@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AnalysisDetectorEvidences"/>. </summary>
-        internal AnalysisDetectorEvidences()
+        public AnalysisDetectorEvidences()
         {
             Metrics = new ChangeTrackingList<DiagnosticMetricSet>();
             Data = new ChangeTrackingList<IList<AppServiceNameValuePair>>();
@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Name of the Detector. </summary>
         [WirePath("source")]
-        public string Source { get; }
+        public string Source { get; set; }
 
         /// <summary> Detector Definition. </summary>
         [WirePath("detectorDefinition")]
-        public DetectorDefinition DetectorDefinition { get; }
+        public DetectorDefinition DetectorDefinition { get; set; }
 
         /// <summary> Source Metrics. </summary>
         [WirePath("metrics")]
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Detector Meta Data. </summary>
         [WirePath("detectorMetaData")]
-        internal DetectorMetadata DetectorMetaData { get; }
+        internal DetectorMetadata DetectorMetaData { get; set; }
 
         /// <summary> Source of the Data. </summary>
         [WirePath("detectorMetaData.dataSource")]
@@ -68,6 +68,14 @@ namespace Azure.ResourceManager.AppService.Models
             get
             {
                 return DetectorMetaData is null ? default : DetectorMetaData.DataSource;
+            }
+            set
+            {
+                if (DetectorMetaData is null)
+                {
+                    DetectorMetaData = new DetectorMetadata();
+                }
+                DetectorMetaData.DataSource = value;
             }
         }
     }

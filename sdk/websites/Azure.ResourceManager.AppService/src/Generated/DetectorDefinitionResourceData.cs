@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DetectorDefinitionResourceData"/>. </summary>
-        internal DetectorDefinitionResourceData()
+        public DetectorDefinitionResourceData()
         {
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Core resource properties. </summary>
         [WirePath("properties")]
-        internal DetectorDefinition Properties { get; }
+        internal DetectorDefinition Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> Display name of the detector. </summary>
         [WirePath("properties.displayName")]

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteBuildData"/>. </summary>
-        internal StaticSiteBuildData()
+        public StaticSiteBuildData()
         {
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> StaticSiteBuildARMResource resource specific properties. </summary>
         [WirePath("properties")]
-        internal StaticSiteBuildARMResourceProperties Properties { get; }
+        internal StaticSiteBuildARMResourceProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> An identifier for the static site build. </summary>
         [WirePath("properties.buildId")]
@@ -123,7 +123,11 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties is null ? default : Properties.UserProvidedFunctionApps;
+                if (Properties is null)
+                {
+                    Properties = new StaticSiteBuildARMResourceProperties();
+                }
+                return Properties.UserProvidedFunctionApps;
             }
         }
 
@@ -133,7 +137,11 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties is null ? default : Properties.LinkedBackends;
+                if (Properties is null)
+                {
+                    Properties = new StaticSiteBuildARMResourceProperties();
+                }
+                return Properties.LinkedBackends;
             }
         }
 
@@ -143,7 +151,11 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties is null ? default : Properties.DatabaseConnections;
+                if (Properties is null)
+                {
+                    Properties = new StaticSiteBuildARMResourceProperties();
+                }
+                return Properties.DatabaseConnections;
             }
         }
     }

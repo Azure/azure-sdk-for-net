@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RecommendationProperties"/>. </summary>
-        internal RecommendationProperties()
+        public RecommendationProperties()
         {
             CategoryTags = new ChangeTrackingList<string>();
             States = new ChangeTrackingList<string>();
@@ -80,39 +80,39 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Timestamp when this instance was created. </summary>
         [WirePath("creationTime")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn { get; set; }
 
         /// <summary> A GUID value that each recommendation object is associated with. </summary>
         [WirePath("recommendationId")]
-        public string RecommendationId { get; }
+        public string RecommendationId { get; set; }
 
         /// <summary> Full ARM resource ID string that this recommendation object is associated with. </summary>
         [WirePath("resourceId")]
-        public ResourceIdentifier ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; set; }
 
         /// <summary> Name of a resource type this recommendation applies, e.g. Subscription, ServerFarm, Site. </summary>
         [WirePath("resourceScope")]
-        public ResourceScopeType? ResourceScope { get; }
+        public ResourceScopeType? ResourceScope { get; set; }
 
         /// <summary> Unique name of the rule. </summary>
         [WirePath("ruleName")]
-        public string RuleName { get; }
+        public string RuleName { get; set; }
 
         /// <summary> UI friendly name of the rule (may not be unique). </summary>
         [WirePath("displayName")]
-        public string DisplayName { get; }
+        public string DisplayName { get; set; }
 
         /// <summary> Recommendation text. </summary>
         [WirePath("message")]
-        public string Message { get; }
+        public string Message { get; set; }
 
         /// <summary> Level indicating how critical this recommendation can impact. </summary>
         [WirePath("level")]
-        public NotificationLevel? Level { get; }
+        public NotificationLevel? Level { get; set; }
 
         /// <summary> List of channels that this recommendation can apply. </summary>
         [WirePath("channels")]
-        public RecommendationChannel? Channels { get; }
+        public RecommendationChannel? Channels { get; set; }
 
         /// <summary> The list of category tags that this recommendation belongs to. </summary>
         [WirePath("categoryTags")]
@@ -120,11 +120,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Name of action recommended by this object. </summary>
         [WirePath("actionName")]
-        public string ActionName { get; }
+        public string ActionName { get; set; }
 
         /// <summary> True if this recommendation is still valid (i.e. "actionable"). False if it is invalid. </summary>
         [WirePath("enabled")]
-        public int? Enabled { get; }
+        public int? Enabled { get; set; }
 
         /// <summary> The list of states of this recommendation. If it's null then it should be considered "Active". </summary>
         [WirePath("states")]
@@ -132,42 +132,42 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The beginning time in UTC of a range that the recommendation refers to. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartOn { get; set; }
 
         /// <summary> The end time in UTC of a range that the recommendation refers to. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndOn { get; set; }
 
         /// <summary> When to notify this recommendation next in UTC. Null means that this will never be notified anymore. </summary>
         [WirePath("nextNotificationTime")]
-        public DateTimeOffset? NextNotificationOn { get; }
+        public DateTimeOffset? NextNotificationOn { get; set; }
 
         /// <summary> Date and time in UTC when this notification expires. </summary>
         [WirePath("notificationExpirationTime")]
-        public DateTimeOffset? NotificationExpirationOn { get; }
+        public DateTimeOffset? NotificationExpirationOn { get; set; }
 
         /// <summary> Last timestamp in UTC this instance was actually notified. Null means that this recommendation hasn't been notified yet. </summary>
         [WirePath("notifiedTime")]
-        public DateTimeOffset? NotifiedOn { get; }
+        public DateTimeOffset? NotifiedOn { get; set; }
 
         /// <summary> A metric value measured by the rule. </summary>
         [WirePath("score")]
-        public double? Score { get; }
+        public double? Score { get; set; }
 
         /// <summary> True if this is associated with a dynamically added rule. </summary>
         [WirePath("isDynamic")]
-        public bool? IsDynamic { get; }
+        public bool? IsDynamic { get; set; }
 
         /// <summary> Extension name of the portal if exists. </summary>
         [WirePath("extensionName")]
-        public string ExtensionName { get; }
+        public string ExtensionName { get; set; }
 
         /// <summary> Deep link to a blade on the portal. </summary>
         [WirePath("bladeName")]
-        public string BladeName { get; }
+        public string BladeName { get; set; }
 
         /// <summary> Forward link to an external document associated with the rule. </summary>
         [WirePath("forwardLink")]
-        public string ForwardLink { get; }
+        public string ForwardLink { get; set; }
     }
 }

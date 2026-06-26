@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticMetricSet"/>. </summary>
-        internal DiagnosticMetricSet()
+        public DiagnosticMetricSet()
         {
             Values = new ChangeTrackingList<DiagnosticMetricSample>();
         }
@@ -44,23 +44,23 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Name of the metric. </summary>
         [WirePath("name")]
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> Metric's unit. </summary>
         [WirePath("unit")]
-        public string Unit { get; }
+        public string Unit { get; set; }
 
         /// <summary> Start time of the period. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartOn { get; set; }
 
         /// <summary> End time of the period. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndOn { get; set; }
 
         /// <summary> Presented time grain. Supported grains at the moment are PT1M, PT1H, P1D. </summary>
         [WirePath("timeGrain")]
-        public string TimeGrain { get; }
+        public string TimeGrain { get; set; }
 
         /// <summary> Collection of metric values for the selected period based on the {Microsoft.Web.Hosting.Administration.DiagnosticMetricSet.TimeGrain}. </summary>
         [WirePath("values")]

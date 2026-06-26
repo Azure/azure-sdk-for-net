@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RemotePrivateEndpointConnectionProperties"/>. </summary>
-        internal RemotePrivateEndpointConnectionProperties()
+        public RemotePrivateEndpointConnectionProperties()
         {
             IpAddresses = new ChangeTrackingList<string>();
         }
@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> PrivateEndpoint of a remote private endpoint connection. </summary>
         [WirePath("privateEndpoint")]
-        internal ArmIdWrapper PrivateEndpoint { get; }
+        internal ArmIdWrapper PrivateEndpoint { get; set; }
 
         /// <summary> The state of a private link connection. </summary>
         [WirePath("privateLinkServiceConnectionState")]
-        public PrivateLinkConnectionState PrivateLinkServiceConnectionState { get; }
+        public PrivateLinkConnectionState PrivateLinkServiceConnectionState { get; set; }
 
         /// <summary> Private IPAddresses mapped to the remote private endpoint. </summary>
         [WirePath("ipAddresses")]

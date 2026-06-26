@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataTableResponseObject"/>. </summary>
-        internal DataTableResponseObject()
+        public DataTableResponseObject()
         {
             Columns = new ChangeTrackingList<DataTableResponseColumn>();
             Rows = new ChangeTrackingList<IList<string>>();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Name of the table. </summary>
         [WirePath("tableName")]
-        public string TableName { get; }
+        public string TableName { get; set; }
 
         /// <summary> List of columns with data types. </summary>
         [WirePath("columns")]

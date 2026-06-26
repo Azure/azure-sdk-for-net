@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppServiceUsage"/>. </summary>
-        internal AppServiceUsage()
+        public AppServiceUsage()
         {
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Usage resource specific properties. </summary>
         [WirePath("properties")]
-        internal UsageProperties Properties { get; }
+        internal UsageProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> Friendly name shown in the UI. </summary>
         [WirePath("properties.displayName")]

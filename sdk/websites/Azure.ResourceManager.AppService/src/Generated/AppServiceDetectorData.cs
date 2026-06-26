@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppServiceDetectorData"/>. </summary>
-        internal AppServiceDetectorData()
+        public AppServiceDetectorData()
         {
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> DetectorResponse resource specific properties. </summary>
         [WirePath("properties")]
-        internal DetectorResponseProperties Properties { get; }
+        internal DetectorResponseProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> metadata for the detector. </summary>
         [WirePath("properties.metadata")]
@@ -55,6 +55,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.Metadata;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DetectorResponseProperties();
+                }
+                Properties.Metadata = value;
+            }
         }
 
         /// <summary> Data Set. </summary>
@@ -63,7 +71,11 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties is null ? default : Properties.Dataset;
+                if (Properties is null)
+                {
+                    Properties = new DetectorResponseProperties();
+                }
+                return Properties.Dataset;
             }
         }
 
@@ -75,6 +87,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.Status;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DetectorResponseProperties();
+                }
+                Properties.Status = value;
+            }
         }
 
         /// <summary> Additional configuration for different data providers to be used by the UI. </summary>
@@ -83,7 +103,11 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties is null ? default : Properties.DataProvidersMetadata;
+                if (Properties is null)
+                {
+                    Properties = new DetectorResponseProperties();
+                }
+                return Properties.DataProvidersMetadata;
             }
         }
 
@@ -94,6 +118,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.SuggestedUtterances;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DetectorResponseProperties();
+                }
+                Properties.SuggestedUtterances = value;
             }
         }
     }

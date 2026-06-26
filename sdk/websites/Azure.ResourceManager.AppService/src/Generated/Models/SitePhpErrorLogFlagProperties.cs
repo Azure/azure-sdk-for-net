@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SitePhpErrorLogFlagProperties"/>. </summary>
-        internal SitePhpErrorLogFlagProperties()
+        public SitePhpErrorLogFlagProperties()
         {
         }
 
@@ -39,18 +39,18 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Local log_errors setting. </summary>
         [WirePath("localLogErrors")]
-        public string LocalLogErrors { get; }
+        public string LocalLogErrors { get; set; }
 
         /// <summary> Master log_errors setting. </summary>
         [WirePath("masterLogErrors")]
-        public string MasterLogErrors { get; }
+        public string MasterLogErrors { get; set; }
 
         /// <summary> Local log_errors_max_len setting. </summary>
         [WirePath("localLogErrorsMaxLength")]
-        public string LocalLogErrorsMaxLength { get; }
+        public string LocalLogErrorsMaxLength { get; set; }
 
         /// <summary> Master log_errors_max_len setting. </summary>
         [WirePath("masterLogErrorsMaxLength")]
-        public string MasterLogErrorsMaxLength { get; }
+        public string MasterLogErrorsMaxLength { get; set; }
     }
 }

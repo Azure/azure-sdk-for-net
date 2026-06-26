@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FunctionAppStack"/>. </summary>
-        internal FunctionAppStack()
+        public FunctionAppStack()
         {
         }
 
@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> FunctionAppStack resource specific properties. </summary>
         [WirePath("properties")]
-        internal FunctionAppStackProperties Properties { get; }
+        internal FunctionAppStackProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> Function App stack (display only). </summary>
         [WirePath("properties.displayText")]
@@ -79,7 +79,11 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties is null ? default : Properties.MajorVersions;
+                if (Properties is null)
+                {
+                    Properties = new FunctionAppStackProperties();
+                }
+                return Properties.MajorVersions;
             }
         }
 

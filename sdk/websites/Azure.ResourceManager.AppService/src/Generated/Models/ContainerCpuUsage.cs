@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerCpuUsage"/>. </summary>
-        internal ContainerCpuUsage()
+        public ContainerCpuUsage()
         {
             PerCpuUsage = new ChangeTrackingList<long>();
         }
@@ -38,20 +38,20 @@ namespace Azure.ResourceManager.AppService.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the TotalUsage. </summary>
+        /// <summary> Gets or sets the TotalUsage. </summary>
         [WirePath("totalUsage")]
-        public long? TotalUsage { get; }
+        public long? TotalUsage { get; set; }
 
         /// <summary> Gets the PerCpuUsage. </summary>
         [WirePath("perCpuUsage")]
         public IList<long> PerCpuUsage { get; }
 
-        /// <summary> Gets the KernelModeUsage. </summary>
+        /// <summary> Gets or sets the KernelModeUsage. </summary>
         [WirePath("kernelModeUsage")]
-        public long? KernelModeUsage { get; }
+        public long? KernelModeUsage { get; set; }
 
-        /// <summary> Gets the UserModeUsage. </summary>
+        /// <summary> Gets or sets the UserModeUsage. </summary>
         [WirePath("userModeUsage")]
-        public long? UserModeUsage { get; }
+        public long? UserModeUsage { get; set; }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteFunctionOverview"/>. </summary>
-        internal StaticSiteFunctionOverview()
+        public StaticSiteFunctionOverview()
         {
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> StaticSiteFunctionOverviewARMResource resource specific properties. </summary>
         [WirePath("properties")]
-        internal StaticSiteFunctionOverviewARMResourceProperties Properties { get; }
+        internal StaticSiteFunctionOverviewARMResourceProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> The name for the function. </summary>
         [WirePath("properties.functionName")]

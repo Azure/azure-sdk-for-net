@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerMemoryStatistics"/>. </summary>
-        internal ContainerMemoryStatistics()
+        public ContainerMemoryStatistics()
         {
         }
 
@@ -35,16 +35,16 @@ namespace Azure.ResourceManager.AppService.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the Usage. </summary>
+        /// <summary> Gets or sets the Usage. </summary>
         [WirePath("usage")]
-        public long? Usage { get; }
+        public long? Usage { get; set; }
 
-        /// <summary> Gets the MaxUsage. </summary>
+        /// <summary> Gets or sets the MaxUsage. </summary>
         [WirePath("maxUsage")]
-        public long? MaxUsage { get; }
+        public long? MaxUsage { get; set; }
 
-        /// <summary> Gets the Limit. </summary>
+        /// <summary> Gets or sets the Limit. </summary>
         [WirePath("limit")]
-        public long? Limit { get; }
+        public long? Limit { get; set; }
     }
 }

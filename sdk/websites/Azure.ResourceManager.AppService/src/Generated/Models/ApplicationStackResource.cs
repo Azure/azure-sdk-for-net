@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApplicationStackResource"/>. </summary>
-        internal ApplicationStackResource()
+        public ApplicationStackResource()
         {
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Core resource properties. </summary>
         [WirePath("properties")]
-        internal ApplicationStack Properties { get; }
+        internal ApplicationStack Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> Application stack name. </summary>
         [WirePath("properties.name")]
@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.AppService.Models
             get
             {
                 return Properties is null ? default : Properties.StackName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationStack();
+                }
+                Properties.StackName = value;
             }
         }
 
@@ -65,6 +73,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return Properties is null ? default : Properties.Display;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationStack();
+                }
+                Properties.Display = value;
+            }
         }
 
         /// <summary> Application stack dependency. </summary>
@@ -75,6 +91,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return Properties is null ? default : Properties.Dependency;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationStack();
+                }
+                Properties.Dependency = value;
+            }
         }
 
         /// <summary> List of major versions available. </summary>
@@ -83,7 +107,11 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties is null ? default : Properties.MajorVersions;
+                if (Properties is null)
+                {
+                    Properties = new ApplicationStack();
+                }
+                return Properties.MajorVersions;
             }
         }
 
@@ -93,7 +121,11 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties is null ? default : Properties.Frameworks;
+                if (Properties is null)
+                {
+                    Properties = new ApplicationStack();
+                }
+                return Properties.Frameworks;
             }
         }
 
@@ -103,7 +135,11 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties is null ? default : Properties.IsDeprecated;
+                if (Properties is null)
+                {
+                    Properties = new ApplicationStack();
+                }
+                return Properties.IsDeprecated;
             }
         }
     }

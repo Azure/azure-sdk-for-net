@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebAppErrorProperties"/>. </summary>
-        internal WebAppErrorProperties()
+        public WebAppErrorProperties()
         {
         }
 
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Error code. </summary>
         [WirePath("code")]
-        public string Code { get; }
+        public string Code { get; set; }
 
         /// <summary> Error message indicating why the operation failed. </summary>
         [WirePath("message")]
-        public string Message { get; }
+        public string Message { get; set; }
     }
 }

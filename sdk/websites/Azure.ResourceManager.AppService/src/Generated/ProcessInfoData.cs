@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ProcessInfoData"/>. </summary>
-        internal ProcessInfoData()
+        public ProcessInfoData()
         {
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> ProcessInfo resource specific properties. </summary>
         [WirePath("properties")]
-        internal ProcessInfoProperties Properties { get; }
+        internal ProcessInfoProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> ARM Identifier for deployment. </summary>
         [WirePath("properties.identifier")]
@@ -65,6 +65,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.DeploymentName;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.DeploymentName = value;
+            }
         }
 
         /// <summary> HRef URI. </summary>
@@ -74,6 +82,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.Href;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.Href = value;
             }
         }
 
@@ -85,6 +101,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.Minidump;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.Minidump = value;
+            }
         }
 
         /// <summary> Is profile running?. </summary>
@@ -94,6 +118,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.IsProfileRunning;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.IsProfileRunning = value;
             }
         }
 
@@ -105,6 +137,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.IsIisProfileRunning;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.IsIisProfileRunning = value;
+            }
         }
 
         /// <summary> IIS Profile timeout (seconds). </summary>
@@ -114,6 +154,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.IisProfileTimeoutInSeconds;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.IisProfileTimeoutInSeconds = value;
             }
         }
 
@@ -125,6 +173,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.Parent;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.Parent = value;
+            }
         }
 
         /// <summary> Child process list. </summary>
@@ -133,7 +189,11 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties is null ? default : Properties.Children;
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                return Properties.Children;
             }
         }
 
@@ -143,7 +203,11 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties is null ? default : Properties.ProcessThreads;
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                return Properties.ProcessThreads;
             }
         }
 
@@ -153,7 +217,11 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties is null ? default : Properties.OpenFileHandles;
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                return Properties.OpenFileHandles;
             }
         }
 
@@ -163,7 +231,11 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties is null ? default : Properties.Modules;
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                return Properties.Modules;
             }
         }
 
@@ -175,6 +247,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.FileName;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.FileName = value;
+            }
         }
 
         /// <summary> Command line. </summary>
@@ -184,6 +264,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.CommandLine;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.CommandLine = value;
             }
         }
 
@@ -195,6 +283,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.UserName;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.UserName = value;
+            }
         }
 
         /// <summary> Handle count. </summary>
@@ -204,6 +300,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.HandleCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.HandleCount = value;
             }
         }
 
@@ -215,6 +319,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.ModuleCount;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.ModuleCount = value;
+            }
         }
 
         /// <summary> Thread count. </summary>
@@ -224,6 +336,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.ThreadCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.ThreadCount = value;
             }
         }
 
@@ -235,6 +355,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.StartOn;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.StartOn = value;
+            }
         }
 
         /// <summary> Total CPU time. </summary>
@@ -244,6 +372,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.TotalCpuTime;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.TotalCpuTime = value;
             }
         }
 
@@ -255,6 +391,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.UserCpuTime;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.UserCpuTime = value;
+            }
         }
 
         /// <summary> Privileged CPU time. </summary>
@@ -264,6 +408,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.PrivilegedCpuTime;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.PrivilegedCpuTime = value;
             }
         }
 
@@ -275,6 +427,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.WorkingSet;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.WorkingSet = value;
+            }
         }
 
         /// <summary> Peak working set. </summary>
@@ -284,6 +444,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.PeakWorkingSet;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.PeakWorkingSet = value;
             }
         }
 
@@ -295,6 +463,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.PrivateMemory;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.PrivateMemory = value;
+            }
         }
 
         /// <summary> Virtual memory size. </summary>
@@ -304,6 +480,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.VirtualMemory;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.VirtualMemory = value;
             }
         }
 
@@ -315,6 +499,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.PeakVirtualMemory;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.PeakVirtualMemory = value;
+            }
         }
 
         /// <summary> Paged system memory. </summary>
@@ -324,6 +516,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.PagedSystemMemory;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.PagedSystemMemory = value;
             }
         }
 
@@ -335,6 +535,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.NonPagedSystemMemory;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.NonPagedSystemMemory = value;
+            }
         }
 
         /// <summary> Paged memory. </summary>
@@ -344,6 +552,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.PagedMemory;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.PagedMemory = value;
             }
         }
 
@@ -355,6 +571,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.PeakPagedMemory;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.PeakPagedMemory = value;
+            }
         }
 
         /// <summary> Time stamp. </summary>
@@ -365,6 +589,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.TimeStamp;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.TimeStamp = value;
+            }
         }
 
         /// <summary> List of environment variables. </summary>
@@ -373,7 +605,11 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties is null ? default : Properties.EnvironmentVariables;
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                return Properties.EnvironmentVariables;
             }
         }
 
@@ -385,6 +621,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.IsScmSite;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.IsScmSite = value;
+            }
         }
 
         /// <summary> Is this a Web Job?. </summary>
@@ -395,6 +639,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.IsWebjob;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.IsWebjob = value;
+            }
         }
 
         /// <summary> Description of process. </summary>
@@ -404,6 +656,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.Description = value;
             }
         }
     }

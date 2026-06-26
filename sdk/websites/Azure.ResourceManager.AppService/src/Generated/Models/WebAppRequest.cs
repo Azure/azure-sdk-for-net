@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebAppRequest"/>. </summary>
-        internal WebAppRequest()
+        public WebAppRequest()
         {
         }
 
@@ -63,14 +63,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// </para>
         /// </summary>
         [WirePath("headers")]
-        public BinaryData Headers { get; }
+        public BinaryData Headers { get; set; }
 
         /// <summary> The destination for the request. </summary>
         [WirePath("uri")]
-        public Uri Uri { get; }
+        public Uri Uri { get; set; }
 
         /// <summary> The HTTP method used for the request. </summary>
         [WirePath("method")]
-        public string Method { get; }
+        public string Method { get; set; }
     }
 }

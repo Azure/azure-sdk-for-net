@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="Correlation"/>. </summary>
-        internal Correlation()
+        public Correlation()
         {
         }
 
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The client tracking id. </summary>
         [WirePath("clientTrackingId")]
-        public string ClientTrackingId { get; }
+        public string ClientTrackingId { get; set; }
     }
 }

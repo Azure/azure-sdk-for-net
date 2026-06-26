@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Initializes a new instance of <see cref="WorkflowVersionData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal WorkflowVersionData(AzureLocation location) : base(location)
+        public WorkflowVersionData(AzureLocation location) : base(location)
         {
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> The workflow version properties. </summary>
         [WirePath("properties")]
-        internal WorkflowVersionProperties Properties { get; }
+        internal WorkflowVersionProperties Properties { get; set; }
 
         /// <summary> The provisioning state. </summary>
         [WirePath("properties.provisioningState")]
@@ -82,6 +82,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.State;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkflowVersionProperties();
+                }
+                Properties.State = value;
+            }
         }
 
         /// <summary> Gets the version. </summary>
@@ -112,6 +120,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.EndpointsConfiguration;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkflowVersionProperties();
+                }
+                Properties.EndpointsConfiguration = value;
+            }
         }
 
         /// <summary> The access control configuration. </summary>
@@ -121,6 +137,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.AccessControl;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkflowVersionProperties();
+                }
+                Properties.AccessControl = value;
             }
         }
 
@@ -142,6 +166,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.IntegrationAccount;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkflowVersionProperties();
+                }
+                Properties.IntegrationAccount = value;
+            }
         }
 
         /// <summary> The definition. </summary>
@@ -152,6 +184,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.Definition;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkflowVersionProperties();
+                }
+                Properties.Definition = value;
+            }
         }
 
         /// <summary> The parameters. </summary>
@@ -160,7 +200,11 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties is null ? default : Properties.Parameters;
+                if (Properties is null)
+                {
+                    Properties = new WorkflowVersionProperties();
+                }
+                return Properties.Parameters;
             }
         }
     }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppSnapshot"/>. </summary>
-        internal AppSnapshot()
+        public AppSnapshot()
         {
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Snapshot resource specific properties. </summary>
         [WirePath("properties")]
-        internal SnapshotProperties Properties { get; }
+        internal SnapshotProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> The time the snapshot was taken. </summary>
         [WirePath("properties.time")]

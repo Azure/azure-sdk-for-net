@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataTableResponseColumn"/>. </summary>
-        internal DataTableResponseColumn()
+        public DataTableResponseColumn()
         {
         }
 
@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Name of the column. </summary>
         [WirePath("columnName")]
-        public string ColumnName { get; }
+        public string ColumnName { get; set; }
 
         /// <summary> Data type which looks like 'String' or 'Int32'. </summary>
         [WirePath("dataType")]
-        public string DataType { get; }
+        public string DataType { get; set; }
 
         /// <summary> Column Type. </summary>
         [WirePath("columnType")]
-        public string ColumnType { get; }
+        public string ColumnType { get; set; }
     }
 }

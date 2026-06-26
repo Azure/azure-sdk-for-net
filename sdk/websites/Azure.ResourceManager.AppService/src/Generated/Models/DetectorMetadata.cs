@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DetectorMetadata"/>. </summary>
-        internal DetectorMetadata()
+        public DetectorMetadata()
         {
         }
 
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Source of the Data. </summary>
         [WirePath("dataSource")]
-        public DetectorDataSource DataSource { get; }
+        public DetectorDataSource DataSource { get; set; }
     }
 }

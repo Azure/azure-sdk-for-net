@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ErrorEntity"/>. </summary>
-        internal ErrorEntity()
+        public ErrorEntity()
         {
             Parameters = new ChangeTrackingList<string>();
             InnerErrors = new ChangeTrackingList<ErrorEntity>();
@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Type of error. </summary>
         [WirePath("extendedCode")]
-        public string ExtendedCode { get; }
+        public string ExtendedCode { get; set; }
 
         /// <summary> Message template. </summary>
         [WirePath("messageTemplate")]
-        public string MessageTemplate { get; }
+        public string MessageTemplate { get; set; }
 
         /// <summary> Parameters for the template. </summary>
         [WirePath("parameters")]
@@ -70,14 +70,14 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The error target. </summary>
         [WirePath("target")]
-        public string Target { get; }
+        public string Target { get; set; }
 
         /// <summary> Basic error code. </summary>
         [WirePath("code")]
-        public string Code { get; }
+        public string Code { get; set; }
 
         /// <summary> Any details of the error. </summary>
         [WirePath("message")]
-        public string Message { get; }
+        public string Message { get; set; }
     }
 }

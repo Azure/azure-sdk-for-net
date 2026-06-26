@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowTriggerHistoryProperties"/>. </summary>
-        internal WorkflowTriggerHistoryProperties()
+        public WorkflowTriggerHistoryProperties()
         {
         }
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The run correlation. </summary>
         [WirePath("correlation")]
-        internal Correlation Correlation { get; }
+        internal Correlation Correlation { get; set; }
 
         /// <summary> Gets the link to input parameters. </summary>
         [WirePath("inputsLink")]
@@ -134,6 +134,14 @@ namespace Azure.ResourceManager.AppService.Models
             get
             {
                 return Correlation is null ? default : Correlation.ClientTrackingId;
+            }
+            set
+            {
+                if (Correlation is null)
+                {
+                    Correlation = new Correlation();
+                }
+                Correlation.ClientTrackingId = value;
             }
         }
     }

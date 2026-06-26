@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TriggeredWebJobData"/>. </summary>
-        internal TriggeredWebJobData()
+        public TriggeredWebJobData()
         {
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> TriggeredWebJob resource specific properties. </summary>
         [WirePath("properties")]
-        internal TriggeredWebJobProperties Properties { get; }
+        internal TriggeredWebJobProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> Latest job run information. </summary>
         [WirePath("properties.latest_run")]
@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.LatestRun;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TriggeredWebJobProperties();
+                }
+                Properties.LatestRun = value;
             }
         }
 
@@ -65,6 +73,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.HistoryUri;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TriggeredWebJobProperties();
+                }
+                Properties.HistoryUri = value;
+            }
         }
 
         /// <summary> Scheduler Logs URL. </summary>
@@ -74,6 +90,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.SchedulerLogsUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TriggeredWebJobProperties();
+                }
+                Properties.SchedulerLogsUri = value;
             }
         }
 
@@ -85,6 +109,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.RunCommand;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TriggeredWebJobProperties();
+                }
+                Properties.RunCommand = value;
+            }
         }
 
         /// <summary> Job URL. </summary>
@@ -94,6 +126,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.Uri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TriggeredWebJobProperties();
+                }
+                Properties.Uri = value;
             }
         }
 
@@ -105,6 +145,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.ExtraInfoUri;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TriggeredWebJobProperties();
+                }
+                Properties.ExtraInfoUri = value;
+            }
         }
 
         /// <summary> Job type. </summary>
@@ -114,6 +162,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.WebJobType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TriggeredWebJobProperties();
+                }
+                Properties.WebJobType = value;
             }
         }
 
@@ -125,6 +181,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.Error;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TriggeredWebJobProperties();
+                }
+                Properties.Error = value;
+            }
         }
 
         /// <summary> Using SDK?. </summary>
@@ -134,6 +198,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.IsUsingSdk;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TriggeredWebJobProperties();
+                }
+                Properties.IsUsingSdk = value;
             }
         }
 
@@ -145,6 +217,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.PublicNetworkAccess;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TriggeredWebJobProperties();
+                }
+                Properties.PublicNetworkAccess = value;
+            }
         }
 
         /// <summary> Checks if Customer provided storage account is required. </summary>
@@ -155,6 +235,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.IsStorageAccountRequired;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TriggeredWebJobProperties();
+                }
+                Properties.IsStorageAccountRequired = value;
+            }
         }
 
         /// <summary> Job settings. </summary>
@@ -163,7 +251,11 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties is null ? default : Properties.Settings;
+                if (Properties is null)
+                {
+                    Properties = new TriggeredWebJobProperties();
+                }
+                return Properties.Settings;
             }
         }
     }

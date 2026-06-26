@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebAppResponse"/>. </summary>
-        internal WebAppResponse()
+        public WebAppResponse()
         {
         }
 
@@ -63,14 +63,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// </para>
         /// </summary>
         [WirePath("headers")]
-        public BinaryData Headers { get; }
+        public BinaryData Headers { get; set; }
 
         /// <summary> The status code of the response. </summary>
         [WirePath("statusCode")]
-        public int? StatusCode { get; }
+        public int? StatusCode { get; set; }
 
         /// <summary> Details on the location of the body content. </summary>
         [WirePath("bodyLink")]
-        public WebAppContentLink BodyLink { get; }
+        public WebAppContentLink BodyLink { get; set; }
     }
 }

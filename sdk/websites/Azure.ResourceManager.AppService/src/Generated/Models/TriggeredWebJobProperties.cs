@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TriggeredWebJobProperties"/>. </summary>
-        internal TriggeredWebJobProperties()
+        public TriggeredWebJobProperties()
         {
             Settings = new ChangeTrackingDictionary<string, BinaryData>();
         }
@@ -57,47 +57,47 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Latest job run information. </summary>
         [WirePath("latest_run")]
-        public TriggeredJobRun LatestRun { get; }
+        public TriggeredJobRun LatestRun { get; set; }
 
         /// <summary> History URL. </summary>
         [WirePath("history_url")]
-        public string HistoryUri { get; }
+        public string HistoryUri { get; set; }
 
         /// <summary> Scheduler Logs URL. </summary>
         [WirePath("scheduler_logs_url")]
-        public string SchedulerLogsUri { get; }
+        public string SchedulerLogsUri { get; set; }
 
         /// <summary> Run command. </summary>
         [WirePath("run_command")]
-        public string RunCommand { get; }
+        public string RunCommand { get; set; }
 
         /// <summary> Job URL. </summary>
         [WirePath("url")]
-        public string Uri { get; }
+        public string Uri { get; set; }
 
         /// <summary> Extra Info URL. </summary>
         [WirePath("extra_info_url")]
-        public string ExtraInfoUri { get; }
+        public string ExtraInfoUri { get; set; }
 
         /// <summary> Job type. </summary>
         [WirePath("web_job_type")]
-        public WebJobType? WebJobType { get; }
+        public WebJobType? WebJobType { get; set; }
 
         /// <summary> Error information. </summary>
         [WirePath("error")]
-        public string Error { get; }
+        public string Error { get; set; }
 
         /// <summary> Using SDK?. </summary>
         [WirePath("using_sdk")]
-        public bool? IsUsingSdk { get; }
+        public bool? IsUsingSdk { get; set; }
 
         /// <summary> Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled' or an empty string. </summary>
         [WirePath("publicNetworkAccess")]
-        public string PublicNetworkAccess { get; }
+        public string PublicNetworkAccess { get; set; }
 
         /// <summary> Checks if Customer provided storage account is required. </summary>
         [WirePath("storageAccountRequired")]
-        public bool? IsStorageAccountRequired { get; }
+        public bool? IsStorageAccountRequired { get; set; }
 
         /// <summary>
         /// Job settings.

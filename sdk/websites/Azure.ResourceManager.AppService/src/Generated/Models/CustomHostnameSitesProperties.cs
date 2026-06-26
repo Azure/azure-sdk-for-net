@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CustomHostnameSitesProperties"/>. </summary>
-        internal CustomHostnameSitesProperties()
+        public CustomHostnameSitesProperties()
         {
             SiteResourceIds = new ChangeTrackingList<AppServiceIdentifierData>();
         }
@@ -36,13 +36,13 @@ namespace Azure.ResourceManager.AppService.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the CustomHostname. </summary>
+        /// <summary> Gets or sets the CustomHostname. </summary>
         [WirePath("customHostname")]
-        public string CustomHostname { get; }
+        public string CustomHostname { get; set; }
 
-        /// <summary> Gets the Region. </summary>
+        /// <summary> Gets or sets the Region. </summary>
         [WirePath("region")]
-        public string Region { get; }
+        public string Region { get; set; }
 
         /// <summary> Gets the SiteResourceIds. </summary>
         [WirePath("siteResourceIds")]

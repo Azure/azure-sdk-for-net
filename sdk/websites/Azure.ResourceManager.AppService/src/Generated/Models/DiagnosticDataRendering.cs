@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticDataRendering"/>. </summary>
-        internal DiagnosticDataRendering()
+        public DiagnosticDataRendering()
         {
         }
 
@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Rendering Type. </summary>
         [WirePath("type")]
-        public DiagnosticDataRenderingType? Type { get; }
+        public DiagnosticDataRenderingType? Type { get; set; }
 
         /// <summary> Title of data. </summary>
         [WirePath("title")]
-        public string Title { get; }
+        public string Title { get; set; }
 
         /// <summary> Description of the data that will help it be interpreted. </summary>
         [WirePath("description")]
-        public string Description { get; }
+        public string Description { get; set; }
     }
 }

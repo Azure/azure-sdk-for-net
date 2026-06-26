@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ProcessModuleInfoData"/>. </summary>
-        internal ProcessModuleInfoData()
+        public ProcessModuleInfoData()
         {
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> ProcessModuleInfo resource specific properties. </summary>
         [WirePath("properties")]
-        internal ProcessModuleInfoProperties Properties { get; }
+        internal ProcessModuleInfoProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> Base address. Used as module identifier in ARM resource URI. </summary>
         [WirePath("properties.base_address")]
@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.BaseAddress;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessModuleInfoProperties();
+                }
+                Properties.BaseAddress = value;
             }
         }
 
@@ -65,6 +73,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.FileName;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessModuleInfoProperties();
+                }
+                Properties.FileName = value;
+            }
         }
 
         /// <summary> HRef URI. </summary>
@@ -74,6 +90,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.Href;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessModuleInfoProperties();
+                }
+                Properties.Href = value;
             }
         }
 
@@ -85,6 +109,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.FilePath;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessModuleInfoProperties();
+                }
+                Properties.FilePath = value;
+            }
         }
 
         /// <summary> Module memory size. </summary>
@@ -94,6 +126,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.ModuleMemorySize;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessModuleInfoProperties();
+                }
+                Properties.ModuleMemorySize = value;
             }
         }
 
@@ -105,6 +145,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.FileVersion;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessModuleInfoProperties();
+                }
+                Properties.FileVersion = value;
+            }
         }
 
         /// <summary> File description. </summary>
@@ -114,6 +162,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.FileDescription;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessModuleInfoProperties();
+                }
+                Properties.FileDescription = value;
             }
         }
 
@@ -125,6 +181,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.Product;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessModuleInfoProperties();
+                }
+                Properties.Product = value;
+            }
         }
 
         /// <summary> Product version. </summary>
@@ -134,6 +198,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.ProductVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessModuleInfoProperties();
+                }
+                Properties.ProductVersion = value;
             }
         }
 
@@ -145,6 +217,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.IsDebug;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessModuleInfoProperties();
+                }
+                Properties.IsDebug = value;
+            }
         }
 
         /// <summary> Module language (locale). </summary>
@@ -154,6 +234,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.Language;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessModuleInfoProperties();
+                }
+                Properties.Language = value;
             }
         }
     }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StackMajorVersion"/>. </summary>
-        internal StackMajorVersion()
+        public StackMajorVersion()
         {
             MinorVersions = new ChangeTrackingList<StackMinorVersion>();
             AppSettingsDictionary = new ChangeTrackingDictionary<string, BinaryData>();
@@ -65,15 +65,15 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Application stack major version (display only). </summary>
         [WirePath("displayVersion")]
-        public string DisplayVersion { get; }
+        public string DisplayVersion { get; set; }
 
         /// <summary> Application stack major version (runtime only). </summary>
         [WirePath("runtimeVersion")]
-        public string RuntimeVersion { get; }
+        public string RuntimeVersion { get; set; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if this is the default major version; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("isDefault")]
-        public bool? IsDefault { get; }
+        public bool? IsDefault { get; set; }
 
         /// <summary> Minor versions associated with the major version. </summary>
         [WirePath("minorVersions")]
@@ -81,19 +81,19 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if this supports Application Insights; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("applicationInsights")]
-        public bool? IsApplicationInsights { get; }
+        public bool? IsApplicationInsights { get; set; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if this stack is in Preview, otherwise &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("isPreview")]
-        public bool? IsPreview { get; }
+        public bool? IsPreview { get; set; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if this stack has been deprecated, otherwise &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("isDeprecated")]
-        public bool? IsDeprecated { get; }
+        public bool? IsDeprecated { get; set; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if this stack should be hidden for new customers on portal, otherwise &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("isHidden")]
-        public bool? IsHidden { get; }
+        public bool? IsHidden { get; set; }
 
         /// <summary>
         /// &lt;appSettings&gt;

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SiteExtensionInfoData"/>. </summary>
-        internal SiteExtensionInfoData()
+        public SiteExtensionInfoData()
         {
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> SiteExtensionInfo resource specific properties. </summary>
         [WirePath("properties")]
-        internal SiteExtensionInfoProperties Properties { get; }
+        internal SiteExtensionInfoProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> Site extension ID. </summary>
         [WirePath("properties.extension_id")]
@@ -55,15 +55,31 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.ExtensionId;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.ExtensionId = value;
+            }
         }
 
-        /// <summary> Gets the Title. </summary>
+        /// <summary> Gets or sets the Title. </summary>
         [WirePath("properties.title")]
         public string Title
         {
             get
             {
                 return Properties is null ? default : Properties.Title;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.Title = value;
             }
         }
 
@@ -75,6 +91,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.ExtensionType;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.ExtensionType = value;
+            }
         }
 
         /// <summary> Summary description. </summary>
@@ -84,6 +108,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.Summary;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.Summary = value;
             }
         }
 
@@ -95,6 +127,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.Description;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.Description = value;
+            }
         }
 
         /// <summary> Version information. </summary>
@@ -104,6 +144,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.Version;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.Version = value;
             }
         }
 
@@ -115,6 +163,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.ExtensionUri;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.ExtensionUri = value;
+            }
         }
 
         /// <summary> Project URL. </summary>
@@ -124,6 +180,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.ProjectUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.ProjectUri = value;
             }
         }
 
@@ -135,6 +199,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.IconUri;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.IconUri = value;
+            }
         }
 
         /// <summary> License URL. </summary>
@@ -144,6 +216,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.LicenseUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.LicenseUri = value;
             }
         }
 
@@ -155,6 +235,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.FeedUri;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.FeedUri = value;
+            }
         }
 
         /// <summary> List of authors. </summary>
@@ -163,7 +251,11 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties is null ? default : Properties.Authors;
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                return Properties.Authors;
             }
         }
 
@@ -175,6 +267,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.InstallerCommandLineParams;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.InstallerCommandLineParams = value;
+            }
         }
 
         /// <summary> Published timestamp. </summary>
@@ -184,6 +284,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.PublishedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.PublishedOn = value;
             }
         }
 
@@ -195,6 +303,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.DownloadCount;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.DownloadCount = value;
+            }
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the local version is the latest version; &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
@@ -204,6 +320,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.LocalIsLatestVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.LocalIsLatestVersion = value;
             }
         }
 
@@ -215,6 +339,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.LocalPath;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.LocalPath = value;
+            }
         }
 
         /// <summary> Installed timestamp. </summary>
@@ -224,6 +356,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.InstalledOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.InstalledOn = value;
             }
         }
 
@@ -235,6 +375,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.ProvisioningState;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.ProvisioningState = value;
+            }
         }
 
         /// <summary> Site Extension comment. </summary>
@@ -244,6 +392,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.Comment;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.Comment = value;
             }
         }
     }

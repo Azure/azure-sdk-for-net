@@ -21,10 +21,9 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRunActionRepetitionDefinitionData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The workflow run action repetition properties definition. </param>
-        internal WorkflowRunActionRepetitionDefinitionData(AzureLocation location, WorkflowRunActionRepetitionProperties properties) : base(location)
+        public WorkflowRunActionRepetitionDefinitionData(AzureLocation location) : base(location)
         {
-            Properties = properties;
+
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRunActionRepetitionDefinitionData"/>. </summary>
@@ -44,7 +43,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> The workflow run action repetition properties definition. </summary>
         [WirePath("properties")]
-        internal WorkflowRunActionRepetitionProperties Properties { get; }
+        internal WorkflowRunActionRepetitionProperties Properties { get; set; }
 
         /// <summary> The start time of the workflow scope repetition. </summary>
         [WirePath("properties.startTime")]
@@ -52,7 +51,15 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties.StartOn;
+                return Properties is null ? default : Properties.StartOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkflowRunActionRepetitionProperties();
+                }
+                Properties.StartOn = value;
             }
         }
 
@@ -62,7 +69,15 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties.EndOn;
+                return Properties is null ? default : Properties.EndOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkflowRunActionRepetitionProperties();
+                }
+                Properties.EndOn = value;
             }
         }
 
@@ -72,7 +87,15 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties.Correlation;
+                return Properties is null ? default : Properties.Correlation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkflowRunActionRepetitionProperties();
+                }
+                Properties.Correlation = value;
             }
         }
 
@@ -82,7 +105,15 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties.Status;
+                return Properties is null ? default : Properties.Status;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkflowRunActionRepetitionProperties();
+                }
+                Properties.Status = value;
             }
         }
 
@@ -92,7 +123,15 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties.Code;
+                return Properties is null ? default : Properties.Code;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkflowRunActionRepetitionProperties();
+                }
+                Properties.Code = value;
             }
         }
 
@@ -102,7 +141,15 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties.Error;
+                return Properties is null ? default : Properties.Error;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkflowRunActionRepetitionProperties();
+                }
+                Properties.Error = value;
             }
         }
 
@@ -112,7 +159,7 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties.TrackingId;
+                return Properties is null ? default : Properties.TrackingId;
             }
         }
 
@@ -122,7 +169,7 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties.Inputs;
+                return Properties is null ? default : Properties.Inputs;
             }
         }
 
@@ -132,7 +179,7 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties.InputsLink;
+                return Properties is null ? default : Properties.InputsLink;
             }
         }
 
@@ -142,7 +189,7 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties.Outputs;
+                return Properties is null ? default : Properties.Outputs;
             }
         }
 
@@ -152,7 +199,7 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties.OutputsLink;
+                return Properties is null ? default : Properties.OutputsLink;
             }
         }
 
@@ -162,7 +209,7 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties.TrackedProperties;
+                return Properties is null ? default : Properties.TrackedProperties;
             }
         }
 
@@ -172,17 +219,29 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties is null ? default : Properties.RetryHistory;
+                if (Properties is null)
+                {
+                    Properties = new WorkflowRunActionRepetitionProperties();
+                }
+                return Properties.RetryHistory;
             }
         }
 
-        /// <summary> Gets the IterationCount. </summary>
+        /// <summary> Gets or sets the IterationCount. </summary>
         [WirePath("properties.iterationCount")]
         public int? IterationCount
         {
             get
             {
-                return Properties.IterationCount;
+                return Properties is null ? default : Properties.IterationCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkflowRunActionRepetitionProperties();
+                }
+                Properties.IterationCount = value;
             }
         }
 
@@ -192,7 +251,11 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties is null ? default : Properties.RepetitionIndexes;
+                if (Properties is null)
+                {
+                    Properties = new WorkflowRunActionRepetitionProperties();
+                }
+                return Properties.RepetitionIndexes;
             }
         }
     }

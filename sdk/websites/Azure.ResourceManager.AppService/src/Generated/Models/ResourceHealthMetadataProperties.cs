@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceHealthMetadataProperties"/>. </summary>
-        internal ResourceHealthMetadataProperties()
+        public ResourceHealthMetadataProperties()
         {
         }
 
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The category that the resource matches in the RHC Policy File. </summary>
         [WirePath("category")]
-        public string Category { get; }
+        public string Category { get; set; }
 
         /// <summary> Is there a health signal for the resource. </summary>
         [WirePath("signalAvailability")]
-        public bool? IsSignalAvailable { get; }
+        public bool? IsSignalAvailable { get; set; }
     }
 }

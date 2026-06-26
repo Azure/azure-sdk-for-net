@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of <see cref="WorkflowHealth"/>. </summary>
         /// <param name="state"> Gets or sets the workflow health state. </param>
-        internal WorkflowHealth(WorkflowHealthState state)
+        public WorkflowHealth(WorkflowHealthState state)
         {
             State = state;
         }
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Gets or sets the workflow health state. </summary>
         [WirePath("state")]
-        public WorkflowHealthState State { get; }
+        public WorkflowHealthState State { get; set; }
     }
 }

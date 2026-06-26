@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SiteExtensionInfoProperties"/>. </summary>
-        internal SiteExtensionInfoProperties()
+        public SiteExtensionInfoProperties()
         {
             Authors = new ChangeTrackingList<string>();
         }
@@ -72,47 +72,47 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Site extension ID. </summary>
         [WirePath("extension_id")]
-        public string ExtensionId { get; }
+        public string ExtensionId { get; set; }
 
-        /// <summary> Gets the Title. </summary>
+        /// <summary> Gets or sets the Title. </summary>
         [WirePath("title")]
-        public string Title { get; }
+        public string Title { get; set; }
 
         /// <summary> Site extension type. </summary>
         [WirePath("extension_type")]
-        public SiteExtensionType? ExtensionType { get; }
+        public SiteExtensionType? ExtensionType { get; set; }
 
         /// <summary> Summary description. </summary>
         [WirePath("summary")]
-        public string Summary { get; }
+        public string Summary { get; set; }
 
         /// <summary> Detailed description. </summary>
         [WirePath("description")]
-        public string Description { get; }
+        public string Description { get; set; }
 
         /// <summary> Version information. </summary>
         [WirePath("version")]
-        public string Version { get; }
+        public string Version { get; set; }
 
         /// <summary> Extension URL. </summary>
         [WirePath("extension_url")]
-        public string ExtensionUri { get; }
+        public string ExtensionUri { get; set; }
 
         /// <summary> Project URL. </summary>
         [WirePath("project_url")]
-        public string ProjectUri { get; }
+        public string ProjectUri { get; set; }
 
         /// <summary> Icon URL. </summary>
         [WirePath("icon_url")]
-        public string IconUri { get; }
+        public string IconUri { get; set; }
 
         /// <summary> License URL. </summary>
         [WirePath("license_url")]
-        public string LicenseUri { get; }
+        public string LicenseUri { get; set; }
 
         /// <summary> Feed URL. </summary>
         [WirePath("feed_url")]
-        public string FeedUri { get; }
+        public string FeedUri { get; set; }
 
         /// <summary> List of authors. </summary>
         [WirePath("authors")]
@@ -120,34 +120,34 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Installer command line parameters. </summary>
         [WirePath("installer_command_line_params")]
-        public string InstallerCommandLineParams { get; }
+        public string InstallerCommandLineParams { get; set; }
 
         /// <summary> Published timestamp. </summary>
         [WirePath("published_date_time")]
-        public DateTimeOffset? PublishedOn { get; }
+        public DateTimeOffset? PublishedOn { get; set; }
 
         /// <summary> Count of downloads. </summary>
         [WirePath("download_count")]
-        public int? DownloadCount { get; }
+        public int? DownloadCount { get; set; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the local version is the latest version; &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
         [WirePath("local_is_latest_version")]
-        public bool? LocalIsLatestVersion { get; }
+        public bool? LocalIsLatestVersion { get; set; }
 
         /// <summary> Local path. </summary>
         [WirePath("local_path")]
-        public string LocalPath { get; }
+        public string LocalPath { get; set; }
 
         /// <summary> Installed timestamp. </summary>
         [WirePath("installed_date_time")]
-        public DateTimeOffset? InstalledOn { get; }
+        public DateTimeOffset? InstalledOn { get; set; }
 
         /// <summary> Provisioning state. </summary>
         [WirePath("provisioningState")]
-        public string ProvisioningState { get; }
+        public string ProvisioningState { get; set; }
 
         /// <summary> Site Extension comment. </summary>
         [WirePath("comment")]
-        public string Comment { get; }
+        public string Comment { get; set; }
     }
 }

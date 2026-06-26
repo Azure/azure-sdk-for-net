@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteCustomDomainOverviewData"/>. </summary>
-        internal StaticSiteCustomDomainOverviewData()
+        public StaticSiteCustomDomainOverviewData()
         {
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> StaticSiteCustomDomainOverviewARMResource resource specific properties. </summary>
         [WirePath("properties")]
-        internal StaticSiteCustomDomainOverviewARMResourceProperties Properties { get; }
+        internal StaticSiteCustomDomainOverviewARMResourceProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> The domain name for the static site custom domain. </summary>
         [WirePath("properties.domainName")]

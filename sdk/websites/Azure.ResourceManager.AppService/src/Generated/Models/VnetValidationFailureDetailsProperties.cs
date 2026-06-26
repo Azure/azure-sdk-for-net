@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VnetValidationFailureDetailsProperties"/>. </summary>
-        internal VnetValidationFailureDetailsProperties()
+        public VnetValidationFailureDetailsProperties()
         {
             FailedTests = new ChangeTrackingList<VirtualNetworkValidationTestFailure>();
             Warnings = new ChangeTrackingList<VirtualNetworkValidationTestFailure>();
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Text describing the validation outcome. </summary>
         [WirePath("message")]
-        public string Message { get; }
+        public string Message { get; set; }
 
         /// <summary> A flag describing whether or not validation failed. </summary>
         [WirePath("failed")]
-        public bool? IsFailed { get; }
+        public bool? IsFailed { get; set; }
 
         /// <summary> A list of tests that failed in the validation. </summary>
         [WirePath("failedTests")]

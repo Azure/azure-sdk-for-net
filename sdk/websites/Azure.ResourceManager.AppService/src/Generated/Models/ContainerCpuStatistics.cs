@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerCpuStatistics"/>. </summary>
-        internal ContainerCpuStatistics()
+        public ContainerCpuStatistics()
         {
         }
 
@@ -37,20 +37,20 @@ namespace Azure.ResourceManager.AppService.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the CpuUsage. </summary>
+        /// <summary> Gets or sets the CpuUsage. </summary>
         [WirePath("cpuUsage")]
-        public ContainerCpuUsage CpuUsage { get; }
+        public ContainerCpuUsage CpuUsage { get; set; }
 
-        /// <summary> Gets the SystemCpuUsage. </summary>
+        /// <summary> Gets or sets the SystemCpuUsage. </summary>
         [WirePath("systemCpuUsage")]
-        public long? SystemCpuUsage { get; }
+        public long? SystemCpuUsage { get; set; }
 
-        /// <summary> Gets the OnlineCpuCount. </summary>
+        /// <summary> Gets or sets the OnlineCpuCount. </summary>
         [WirePath("onlineCpuCount")]
-        public int? OnlineCpuCount { get; }
+        public int? OnlineCpuCount { get; set; }
 
-        /// <summary> Gets the ThrottlingData. </summary>
+        /// <summary> Gets or sets the ThrottlingData. </summary>
         [WirePath("throttlingData")]
-        public ContainerThrottlingInfo ThrottlingData { get; }
+        public ContainerThrottlingInfo ThrottlingData { get; set; }
     }
 }

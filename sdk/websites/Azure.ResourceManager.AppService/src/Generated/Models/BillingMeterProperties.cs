@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingMeterProperties"/>. </summary>
-        internal BillingMeterProperties()
+        public BillingMeterProperties()
         {
         }
 
@@ -43,26 +43,26 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Meter GUID onboarded in Commerce. </summary>
         [WirePath("meterId")]
-        public Guid? MeterId { get; }
+        public Guid? MeterId { get; set; }
 
         /// <summary> Azure Location of billable resource. </summary>
         [WirePath("billingLocation")]
-        public string BillingLocation { get; }
+        public string BillingLocation { get; set; }
 
         /// <summary> Short Name from App Service Azure pricing Page. </summary>
         [WirePath("shortName")]
-        public string ShortName { get; }
+        public string ShortName { get; set; }
 
         /// <summary> Friendly name of the meter. </summary>
         [WirePath("friendlyName")]
-        public string FriendlyName { get; }
+        public string FriendlyName { get; set; }
 
         /// <summary> App Service OS type meter used for. </summary>
         [WirePath("osType")]
-        public string OsType { get; }
+        public string OsType { get; set; }
 
         /// <summary> Meter Multiplier. </summary>
         [WirePath("multiplier")]
-        public double? Multiplier { get; }
+        public double? Multiplier { get; set; }
     }
 }

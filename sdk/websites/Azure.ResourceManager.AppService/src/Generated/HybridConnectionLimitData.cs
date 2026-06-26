@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HybridConnectionLimitData"/>. </summary>
-        internal HybridConnectionLimitData()
+        public HybridConnectionLimitData()
         {
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> HybridConnectionLimits resource specific properties. </summary>
         [WirePath("properties")]
-        internal HybridConnectionLimitProperties Properties { get; }
+        internal HybridConnectionLimitProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> The current number of Hybrid Connections. </summary>
         [WirePath("properties.current")]

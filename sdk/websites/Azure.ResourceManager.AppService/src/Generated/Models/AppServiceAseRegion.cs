@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppServiceAseRegion"/>. </summary>
-        internal AppServiceAseRegion()
+        public AppServiceAseRegion()
         {
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> ASE region resource specific properties. </summary>
         [WirePath("properties")]
-        internal AseRegionProperties Properties { get; }
+        internal AseRegionProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> Display name for region. </summary>
         [WirePath("properties.displayName")]
@@ -93,7 +93,11 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties is null ? default : Properties.AvailableSku;
+                if (Properties is null)
+                {
+                    Properties = new AseRegionProperties();
+                }
+                return Properties.AvailableSku;
             }
         }
 
@@ -103,7 +107,11 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties is null ? default : Properties.AvailableOS;
+                if (Properties is null)
+                {
+                    Properties = new AseRegionProperties();
+                }
+                return Properties.AvailableOS;
             }
         }
     }

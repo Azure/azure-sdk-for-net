@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerNetworkInterfaceStatistics"/>. </summary>
-        internal ContainerNetworkInterfaceStatistics()
+        public ContainerNetworkInterfaceStatistics()
         {
         }
 
@@ -45,36 +45,36 @@ namespace Azure.ResourceManager.AppService.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the RxBytes. </summary>
+        /// <summary> Gets or sets the RxBytes. </summary>
         [WirePath("rxBytes")]
-        public long? RxBytes { get; }
+        public long? RxBytes { get; set; }
 
-        /// <summary> Gets the RxPackets. </summary>
+        /// <summary> Gets or sets the RxPackets. </summary>
         [WirePath("rxPackets")]
-        public long? RxPackets { get; }
+        public long? RxPackets { get; set; }
 
-        /// <summary> Gets the RxErrors. </summary>
+        /// <summary> Gets or sets the RxErrors. </summary>
         [WirePath("rxErrors")]
-        public long? RxErrors { get; }
+        public long? RxErrors { get; set; }
 
-        /// <summary> Gets the RxDropped. </summary>
+        /// <summary> Gets or sets the RxDropped. </summary>
         [WirePath("rxDropped")]
-        public long? RxDropped { get; }
+        public long? RxDropped { get; set; }
 
-        /// <summary> Gets the TxBytes. </summary>
+        /// <summary> Gets or sets the TxBytes. </summary>
         [WirePath("txBytes")]
-        public long? TxBytes { get; }
+        public long? TxBytes { get; set; }
 
-        /// <summary> Gets the TxPackets. </summary>
+        /// <summary> Gets or sets the TxPackets. </summary>
         [WirePath("txPackets")]
-        public long? TxPackets { get; }
+        public long? TxPackets { get; set; }
 
-        /// <summary> Gets the TxErrors. </summary>
+        /// <summary> Gets or sets the TxErrors. </summary>
         [WirePath("txErrors")]
-        public long? TxErrors { get; }
+        public long? TxErrors { get; set; }
 
-        /// <summary> Gets the TxDropped. </summary>
+        /// <summary> Gets or sets the TxDropped. </summary>
         [WirePath("txDropped")]
-        public long? TxDropped { get; }
+        public long? TxDropped { get; set; }
     }
 }

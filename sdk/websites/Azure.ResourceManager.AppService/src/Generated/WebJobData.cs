@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebJobData"/>. </summary>
-        internal WebJobData()
+        public WebJobData()
         {
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> WebJob resource specific properties. </summary>
         [WirePath("properties")]
-        internal WebJobProperties Properties { get; }
+        internal WebJobProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> Run command. </summary>
         [WirePath("properties.run_command")]
@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.RunCommand;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebJobProperties();
+                }
+                Properties.RunCommand = value;
             }
         }
 
@@ -65,6 +73,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.Uri;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebJobProperties();
+                }
+                Properties.Uri = value;
+            }
         }
 
         /// <summary> Extra Info URL. </summary>
@@ -74,6 +90,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.ExtraInfoUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebJobProperties();
+                }
+                Properties.ExtraInfoUri = value;
             }
         }
 
@@ -85,6 +109,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.WebJobType;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebJobProperties();
+                }
+                Properties.WebJobType = value;
+            }
         }
 
         /// <summary> Error information. </summary>
@@ -94,6 +126,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.Error;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebJobProperties();
+                }
+                Properties.Error = value;
             }
         }
 
@@ -105,6 +145,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.IsUsingSdk;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebJobProperties();
+                }
+                Properties.IsUsingSdk = value;
+            }
         }
 
         /// <summary> Job settings. </summary>
@@ -113,7 +161,11 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties is null ? default : Properties.Settings;
+                if (Properties is null)
+                {
+                    Properties = new WebJobProperties();
+                }
+                return Properties.Settings;
             }
         }
     }

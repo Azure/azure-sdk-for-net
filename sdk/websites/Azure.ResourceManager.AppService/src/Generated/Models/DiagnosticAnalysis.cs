@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticAnalysis"/>. </summary>
-        internal DiagnosticAnalysis()
+        public DiagnosticAnalysis()
         {
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> DiagnosticAnalysis resource specific properties. </summary>
         [WirePath("properties")]
-        internal DiagnosticAnalysisProperties Properties { get; }
+        internal DiagnosticAnalysisProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> Start time of the period. </summary>
         [WirePath("properties.startTime")]
@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.AppService.Models
             get
             {
                 return Properties is null ? default : Properties.StartOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticAnalysisProperties();
+                }
+                Properties.StartOn = value;
             }
         }
 
@@ -65,6 +73,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return Properties is null ? default : Properties.EndOn;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticAnalysisProperties();
+                }
+                Properties.EndOn = value;
+            }
         }
 
         /// <summary> List of time periods. </summary>
@@ -73,7 +89,11 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties is null ? default : Properties.AbnormalTimePeriods;
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticAnalysisProperties();
+                }
+                return Properties.AbnormalTimePeriods;
             }
         }
 
@@ -83,7 +103,11 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties is null ? default : Properties.Payload;
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticAnalysisProperties();
+                }
+                return Properties.Payload;
             }
         }
 
@@ -93,7 +117,11 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties is null ? default : Properties.NonCorrelatedDetectors;
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticAnalysisProperties();
+                }
+                return Properties.NonCorrelatedDetectors;
             }
         }
     }

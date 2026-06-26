@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticAnalysisProperties"/>. </summary>
-        internal DiagnosticAnalysisProperties()
+        public DiagnosticAnalysisProperties()
         {
             AbnormalTimePeriods = new ChangeTrackingList<AbnormalTimePeriod>();
             Payload = new ChangeTrackingList<AnalysisDetectorEvidences>();
@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Start time of the period. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartOn { get; set; }
 
         /// <summary> End time of the period. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndOn { get; set; }
 
         /// <summary> List of time periods. </summary>
         [WirePath("abnormalTimePeriods")]

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FunctionAppStackProperties"/>. </summary>
-        internal FunctionAppStackProperties()
+        public FunctionAppStackProperties()
         {
             MajorVersions = new ChangeTrackingList<FunctionAppMajorVersion>();
         }

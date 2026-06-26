@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SitePhpErrorLogFlag"/>. </summary>
-        internal SitePhpErrorLogFlag()
+        public SitePhpErrorLogFlag()
         {
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> SitePhpErrorLogFlag resource specific properties. </summary>
         [WirePath("properties")]
-        internal SitePhpErrorLogFlagProperties Properties { get; }
+        internal SitePhpErrorLogFlagProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> Local log_errors setting. </summary>
         [WirePath("properties.localLogErrors")]
@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.AppService.Models
             get
             {
                 return Properties is null ? default : Properties.LocalLogErrors;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePhpErrorLogFlagProperties();
+                }
+                Properties.LocalLogErrors = value;
             }
         }
 
@@ -65,6 +73,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return Properties is null ? default : Properties.MasterLogErrors;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePhpErrorLogFlagProperties();
+                }
+                Properties.MasterLogErrors = value;
+            }
         }
 
         /// <summary> Local log_errors_max_len setting. </summary>
@@ -75,6 +91,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return Properties is null ? default : Properties.LocalLogErrorsMaxLength;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePhpErrorLogFlagProperties();
+                }
+                Properties.LocalLogErrorsMaxLength = value;
+            }
         }
 
         /// <summary> Master log_errors_max_len setting. </summary>
@@ -84,6 +108,14 @@ namespace Azure.ResourceManager.AppService.Models
             get
             {
                 return Properties is null ? default : Properties.MasterLogErrorsMaxLength;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SitePhpErrorLogFlagProperties();
+                }
+                Properties.MasterLogErrorsMaxLength = value;
             }
         }
     }

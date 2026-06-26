@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowTriggerHistoryData"/>. </summary>
-        internal WorkflowTriggerHistoryData()
+        public WorkflowTriggerHistoryData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the workflow trigger history properties. </summary>
         [WirePath("properties")]
-        internal WorkflowTriggerHistoryProperties Properties { get; }
+        internal WorkflowTriggerHistoryProperties Properties { get; set; }
 
         /// <summary> Gets the start time. </summary>
         [WirePath("properties.startTime")]
@@ -158,6 +158,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.CorrelationClientTrackingId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkflowTriggerHistoryProperties();
+                }
+                Properties.CorrelationClientTrackingId = value;
             }
         }
     }

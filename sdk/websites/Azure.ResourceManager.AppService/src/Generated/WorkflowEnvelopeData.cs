@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowEnvelopeData"/>. </summary>
-        internal WorkflowEnvelopeData()
+        public WorkflowEnvelopeData()
         {
         }
 
@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Additional workflow properties. </summary>
         [WirePath("properties")]
-        public WorkflowEnvelopeProperties Properties { get; }
+        public WorkflowEnvelopeProperties Properties { get; set; }
 
         /// <summary> The resource kind. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> The resource location. </summary>
         [WirePath("location")]
-        public string Location { get; }
+        public string Location { get; set; }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRunData"/>. </summary>
-        internal WorkflowRunData()
+        public WorkflowRunData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> The workflow run properties. </summary>
         [WirePath("properties")]
-        internal WorkflowRunProperties Properties { get; }
+        internal WorkflowRunProperties Properties { get; set; }
 
         /// <summary> Gets the wait end time. </summary>
         [WirePath("properties.waitEndTime")]
@@ -137,7 +137,11 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties is null ? default : Properties.Outputs;
+                if (Properties is null)
+                {
+                    Properties = new WorkflowRunProperties();
+                }
+                return Properties.Outputs;
             }
         }
 
@@ -158,6 +162,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.CorrelationClientTrackingId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkflowRunProperties();
+                }
+                Properties.CorrelationClientTrackingId = value;
             }
         }
     }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RemotePrivateEndpointConnection"/>. </summary>
-        internal RemotePrivateEndpointConnection()
+        public RemotePrivateEndpointConnection()
         {
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> RemotePrivateEndpointConnection resource specific properties. </summary>
         [WirePath("properties")]
-        internal RemotePrivateEndpointConnectionProperties Properties { get; }
+        internal RemotePrivateEndpointConnectionProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> Gets the ProvisioningState. </summary>
         [WirePath("properties.provisioningState")]
@@ -65,6 +65,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return Properties is null ? default : Properties.PrivateLinkServiceConnectionState;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RemotePrivateEndpointConnectionProperties();
+                }
+                Properties.PrivateLinkServiceConnectionState = value;
+            }
         }
 
         /// <summary> Private IPAddresses mapped to the remote private endpoint. </summary>
@@ -73,7 +81,11 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties is null ? default : Properties.IpAddresses;
+                if (Properties is null)
+                {
+                    Properties = new RemotePrivateEndpointConnectionProperties();
+                }
+                return Properties.IpAddresses;
             }
         }
 

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebAppProcessThreadInfo"/>. </summary>
-        internal WebAppProcessThreadInfo()
+        public WebAppProcessThreadInfo()
         {
         }
 
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> ProcessThreadInfo resource specific properties. </summary>
         [WirePath("properties")]
-        public WebAppProcessThreadProperties Properties { get; }
+        public WebAppProcessThreadProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
     }
 }

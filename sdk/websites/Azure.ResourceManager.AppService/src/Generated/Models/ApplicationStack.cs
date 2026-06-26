@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApplicationStack"/>. </summary>
-        internal ApplicationStack()
+        public ApplicationStack()
         {
             MajorVersions = new ChangeTrackingList<StackMajorVersion>();
             Frameworks = new ChangeTrackingList<ApplicationStack>();
@@ -46,15 +46,15 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Application stack name. </summary>
         [WirePath("name")]
-        public string StackName { get; }
+        public string StackName { get; set; }
 
         /// <summary> Application stack display name. </summary>
         [WirePath("display")]
-        public string Display { get; }
+        public string Display { get; set; }
 
         /// <summary> Application stack dependency. </summary>
         [WirePath("dependency")]
-        public string Dependency { get; }
+        public string Dependency { get; set; }
 
         /// <summary> List of major versions available. </summary>
         [WirePath("majorVersions")]

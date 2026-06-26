@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PremierAddOnOffer"/>. </summary>
-        internal PremierAddOnOffer()
+        public PremierAddOnOffer()
         {
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> PremierAddOnOffer resource specific properties. </summary>
         [WirePath("properties")]
-        internal PremierAddOnOfferProperties Properties { get; }
+        internal PremierAddOnOfferProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> Premier add on SKU. </summary>
         [WirePath("properties.sku")]
@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.AppService.Models
             get
             {
                 return Properties is null ? default : Properties.Sku;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PremierAddOnOfferProperties();
+                }
+                Properties.Sku = value;
             }
         }
 
@@ -65,6 +73,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return Properties is null ? default : Properties.Product;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PremierAddOnOfferProperties();
+                }
+                Properties.Product = value;
+            }
         }
 
         /// <summary> Premier add on offer Vendor. </summary>
@@ -74,6 +90,14 @@ namespace Azure.ResourceManager.AppService.Models
             get
             {
                 return Properties is null ? default : Properties.Vendor;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PremierAddOnOfferProperties();
+                }
+                Properties.Vendor = value;
             }
         }
 
@@ -85,6 +109,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return Properties is null ? default : Properties.IsPromoCodeRequired;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PremierAddOnOfferProperties();
+                }
+                Properties.IsPromoCodeRequired = value;
+            }
         }
 
         /// <summary> Premier add on offer Quota. </summary>
@@ -94,6 +126,14 @@ namespace Azure.ResourceManager.AppService.Models
             get
             {
                 return Properties is null ? default : Properties.Quota;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PremierAddOnOfferProperties();
+                }
+                Properties.Quota = value;
             }
         }
 
@@ -105,6 +145,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return Properties is null ? default : Properties.WebHostingPlanRestrictions;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PremierAddOnOfferProperties();
+                }
+                Properties.WebHostingPlanRestrictions = value;
+            }
         }
 
         /// <summary> Privacy policy URL. </summary>
@@ -114,6 +162,14 @@ namespace Azure.ResourceManager.AppService.Models
             get
             {
                 return Properties is null ? default : Properties.PrivacyPolicyUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PremierAddOnOfferProperties();
+                }
+                Properties.PrivacyPolicyUri = value;
             }
         }
 
@@ -125,6 +181,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return Properties is null ? default : Properties.LegalTermsUri;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PremierAddOnOfferProperties();
+                }
+                Properties.LegalTermsUri = value;
+            }
         }
 
         /// <summary> Marketplace publisher. </summary>
@@ -135,6 +199,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return Properties is null ? default : Properties.MarketplacePublisher;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PremierAddOnOfferProperties();
+                }
+                Properties.MarketplacePublisher = value;
+            }
         }
 
         /// <summary> Marketplace offer. </summary>
@@ -144,6 +216,14 @@ namespace Azure.ResourceManager.AppService.Models
             get
             {
                 return Properties is null ? default : Properties.MarketplaceOffer;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PremierAddOnOfferProperties();
+                }
+                Properties.MarketplaceOffer = value;
             }
         }
     }

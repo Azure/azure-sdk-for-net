@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebSiteInstanceStatusProperties"/>. </summary>
-        internal WebSiteInstanceStatusProperties()
+        public WebSiteInstanceStatusProperties()
         {
             Containers = new ChangeTrackingDictionary<string, ContainerInfo>();
         }
@@ -44,25 +44,25 @@ namespace Azure.ResourceManager.AppService.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the State. </summary>
+        /// <summary> Gets or sets the State. </summary>
         [WirePath("state")]
-        public SiteRuntimeState? State { get; }
+        public SiteRuntimeState? State { get; set; }
 
         /// <summary> Link to the GetStatusApi in Kudu. </summary>
         [WirePath("statusUrl")]
-        public string StatusUri { get; }
+        public string StatusUri { get; set; }
 
         /// <summary> Link to the Diagnose and Solve Portal. </summary>
         [WirePath("detectorUrl")]
-        public string DetectorUri { get; }
+        public string DetectorUri { get; set; }
 
         /// <summary> Link to the console to web app instance. </summary>
         [WirePath("consoleUrl")]
-        public string ConsoleUri { get; }
+        public string ConsoleUri { get; set; }
 
         /// <summary> Link to the console to web app instance. </summary>
         [WirePath("healthCheckUrl")]
-        public string HealthCheckUrlString { get; }
+        public string HealthCheckUrlString { get; set; }
 
         /// <summary> Dictionary of &lt;ContainerInfo&gt;. </summary>
         [WirePath("containers")]
@@ -70,6 +70,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The physical zone that the instance is in. </summary>
         [WirePath("physicalZone")]
-        public string PhysicalZone { get; }
+        public string PhysicalZone { get; set; }
     }
 }

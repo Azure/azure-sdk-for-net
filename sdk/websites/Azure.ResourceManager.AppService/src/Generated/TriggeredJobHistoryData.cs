@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TriggeredJobHistoryData"/>. </summary>
-        internal TriggeredJobHistoryData()
+        public TriggeredJobHistoryData()
         {
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> TriggeredJobHistory resource specific properties. </summary>
         [WirePath("properties")]
-        internal TriggeredJobHistoryProperties Properties { get; }
+        internal TriggeredJobHistoryProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> List of triggered web job runs. </summary>
         [WirePath("properties.runs")]
@@ -53,7 +53,11 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties is null ? default : Properties.Runs;
+                if (Properties is null)
+                {
+                    Properties = new TriggeredJobHistoryProperties();
+                }
+                return Properties.Runs;
             }
         }
     }

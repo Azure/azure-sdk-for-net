@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DetectorDataSource"/>. </summary>
-        internal DetectorDataSource()
+        public DetectorDataSource()
         {
             Instructions = new ChangeTrackingList<string>();
             DataSourceUri = new ChangeTrackingList<AppServiceNameValuePair>();

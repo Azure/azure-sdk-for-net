@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ProcessInfoProperties"/>. </summary>
-        internal ProcessInfoProperties()
+        public ProcessInfoProperties()
         {
             Children = new ChangeTrackingList<string>();
             ProcessThreads = new ChangeTrackingList<WebAppProcessThreadInfo>();
@@ -112,31 +112,31 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Deployment name. </summary>
         [WirePath("deployment_name")]
-        public string DeploymentName { get; }
+        public string DeploymentName { get; set; }
 
         /// <summary> HRef URI. </summary>
         [WirePath("href")]
-        public string Href { get; }
+        public string Href { get; set; }
 
         /// <summary> Minidump URI. </summary>
         [WirePath("minidump")]
-        public string Minidump { get; }
+        public string Minidump { get; set; }
 
         /// <summary> Is profile running?. </summary>
         [WirePath("is_profile_running")]
-        public bool? IsProfileRunning { get; }
+        public bool? IsProfileRunning { get; set; }
 
         /// <summary> Is the IIS Profile running?. </summary>
         [WirePath("is_iis_profile_running")]
-        public bool? IsIisProfileRunning { get; }
+        public bool? IsIisProfileRunning { get; set; }
 
         /// <summary> IIS Profile timeout (seconds). </summary>
         [WirePath("iis_profile_timeout_in_seconds")]
-        public double? IisProfileTimeoutInSeconds { get; }
+        public double? IisProfileTimeoutInSeconds { get; set; }
 
         /// <summary> Parent process. </summary>
         [WirePath("parent")]
-        public string Parent { get; }
+        public string Parent { get; set; }
 
         /// <summary> Child process list. </summary>
         [WirePath("children")]
@@ -156,83 +156,83 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> File name of this process. </summary>
         [WirePath("file_name")]
-        public string FileName { get; }
+        public string FileName { get; set; }
 
         /// <summary> Command line. </summary>
         [WirePath("command_line")]
-        public string CommandLine { get; }
+        public string CommandLine { get; set; }
 
         /// <summary> User name. </summary>
         [WirePath("user_name")]
-        public string UserName { get; }
+        public string UserName { get; set; }
 
         /// <summary> Handle count. </summary>
         [WirePath("handle_count")]
-        public int? HandleCount { get; }
+        public int? HandleCount { get; set; }
 
         /// <summary> Module count. </summary>
         [WirePath("module_count")]
-        public int? ModuleCount { get; }
+        public int? ModuleCount { get; set; }
 
         /// <summary> Thread count. </summary>
         [WirePath("thread_count")]
-        public int? ThreadCount { get; }
+        public int? ThreadCount { get; set; }
 
         /// <summary> Start time. </summary>
         [WirePath("start_time")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartOn { get; set; }
 
         /// <summary> Total CPU time. </summary>
         [WirePath("total_cpu_time")]
-        public string TotalCpuTime { get; }
+        public string TotalCpuTime { get; set; }
 
         /// <summary> User CPU time. </summary>
         [WirePath("user_cpu_time")]
-        public string UserCpuTime { get; }
+        public string UserCpuTime { get; set; }
 
         /// <summary> Privileged CPU time. </summary>
         [WirePath("privileged_cpu_time")]
-        public string PrivilegedCpuTime { get; }
+        public string PrivilegedCpuTime { get; set; }
 
         /// <summary> Working set. </summary>
         [WirePath("working_set")]
-        public long? WorkingSet { get; }
+        public long? WorkingSet { get; set; }
 
         /// <summary> Peak working set. </summary>
         [WirePath("peak_working_set")]
-        public long? PeakWorkingSet { get; }
+        public long? PeakWorkingSet { get; set; }
 
         /// <summary> Private memory size. </summary>
         [WirePath("private_memory")]
-        public long? PrivateMemory { get; }
+        public long? PrivateMemory { get; set; }
 
         /// <summary> Virtual memory size. </summary>
         [WirePath("virtual_memory")]
-        public long? VirtualMemory { get; }
+        public long? VirtualMemory { get; set; }
 
         /// <summary> Peak virtual memory usage. </summary>
         [WirePath("peak_virtual_memory")]
-        public long? PeakVirtualMemory { get; }
+        public long? PeakVirtualMemory { get; set; }
 
         /// <summary> Paged system memory. </summary>
         [WirePath("paged_system_memory")]
-        public long? PagedSystemMemory { get; }
+        public long? PagedSystemMemory { get; set; }
 
         /// <summary> Non-paged system memory. </summary>
         [WirePath("non_paged_system_memory")]
-        public long? NonPagedSystemMemory { get; }
+        public long? NonPagedSystemMemory { get; set; }
 
         /// <summary> Paged memory. </summary>
         [WirePath("paged_memory")]
-        public long? PagedMemory { get; }
+        public long? PagedMemory { get; set; }
 
         /// <summary> Peak paged memory. </summary>
         [WirePath("peak_paged_memory")]
-        public long? PeakPagedMemory { get; }
+        public long? PeakPagedMemory { get; set; }
 
         /// <summary> Time stamp. </summary>
         [WirePath("time_stamp")]
-        public DateTimeOffset? TimeStamp { get; }
+        public DateTimeOffset? TimeStamp { get; set; }
 
         /// <summary> List of environment variables. </summary>
         [WirePath("environment_variables")]
@@ -240,14 +240,14 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Is this the SCM site?. </summary>
         [WirePath("is_scm_site")]
-        public bool? IsScmSite { get; }
+        public bool? IsScmSite { get; set; }
 
         /// <summary> Is this a Web Job?. </summary>
         [WirePath("is_webjob")]
-        public bool? IsWebjob { get; }
+        public bool? IsWebjob { get; set; }
 
         /// <summary> Description of process. </summary>
         [WirePath("description")]
-        public string Description { get; }
+        public string Description { get; set; }
     }
 }

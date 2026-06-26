@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SampleUtterance"/>. </summary>
-        internal SampleUtterance()
+        public SampleUtterance()
         {
             Links = new ChangeTrackingList<string>();
         }
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Text attribute of sample utterance. </summary>
         [WirePath("text")]
-        public string Text { get; }
+        public string Text { get; set; }
 
         /// <summary> Links attribute of sample utterance. </summary>
         [WirePath("links")]
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Question id of sample utterance (for stackoverflow questions titles). </summary>
         [WirePath("qid")]
-        public string Qid { get; }
+        public string Qid { get; set; }
     }
 }

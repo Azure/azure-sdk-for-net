@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StaticSitesWorkflowPreview"/>. </summary>
-        internal StaticSitesWorkflowPreview()
+        public StaticSitesWorkflowPreview()
         {
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> StaticSitesWorkflowPreview resource specific properties. </summary>
         [WirePath("properties")]
-        internal StaticSitesWorkflowPreviewProperties Properties { get; }
+        internal StaticSitesWorkflowPreviewProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> The path for the workflow file to be generated. </summary>
         [WirePath("properties.path")]

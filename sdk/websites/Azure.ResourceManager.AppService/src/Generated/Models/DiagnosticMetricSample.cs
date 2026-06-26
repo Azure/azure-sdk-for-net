@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticMetricSample"/>. </summary>
-        internal DiagnosticMetricSample()
+        public DiagnosticMetricSample()
         {
         }
 
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Time at which metric is measured. </summary>
         [WirePath("timestamp")]
-        public DateTimeOffset? Timestamp { get; }
+        public DateTimeOffset? Timestamp { get; set; }
 
         /// <summary>
         /// Role Instance. Null if this counter is not per instance
@@ -57,22 +57,22 @@ namespace Azure.ResourceManager.AppService.Models
         /// where RDWORKERNAME is Machine name below and RoleInstance name in parenthesis
         /// </summary>
         [WirePath("roleInstance")]
-        public string RoleInstance { get; }
+        public string RoleInstance { get; set; }
 
         /// <summary> Total value of the metric. If multiple measurements are made this will have sum of all. </summary>
         [WirePath("total")]
-        public double? Total { get; }
+        public double? Total { get; set; }
 
         /// <summary> Maximum of the metric sampled during the time period. </summary>
         [WirePath("maximum")]
-        public double? Maximum { get; }
+        public double? Maximum { get; set; }
 
         /// <summary> Minimum of the metric sampled during the time period. </summary>
         [WirePath("minimum")]
-        public double? Minimum { get; }
+        public double? Minimum { get; set; }
 
         /// <summary> Whether the values are aggregates across all workers or not. </summary>
         [WirePath("isAggregated")]
-        public bool? IsAggregated { get; }
+        public bool? IsAggregated { get; set; }
     }
 }

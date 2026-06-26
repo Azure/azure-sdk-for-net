@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteUserInvitationResult"/>. </summary>
-        internal StaticSiteUserInvitationResult()
+        public StaticSiteUserInvitationResult()
         {
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> StaticSiteUserInvitationResponseResource resource specific properties. </summary>
         [WirePath("properties")]
-        internal StaticSiteUserInvitationResponseResourceProperties Properties { get; }
+        internal StaticSiteUserInvitationResponseResourceProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> The expiration time of the invitation. </summary>
         [WirePath("properties.expiresOn")]

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebSiteInstanceStatusData"/>. </summary>
-        internal WebSiteInstanceStatusData()
+        public WebSiteInstanceStatusData()
         {
         }
 
@@ -41,19 +41,27 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> WebSiteInstanceStatus resource specific properties. </summary>
         [WirePath("properties")]
-        internal WebSiteInstanceStatusProperties Properties { get; }
+        internal WebSiteInstanceStatusProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
-        /// <summary> Gets the State. </summary>
+        /// <summary> Gets or sets the State. </summary>
         [WirePath("properties.state")]
         public SiteRuntimeState? State
         {
             get
             {
                 return Properties is null ? default : Properties.State;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebSiteInstanceStatusProperties();
+                }
+                Properties.State = value;
             }
         }
 
@@ -65,6 +73,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.StatusUri;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebSiteInstanceStatusProperties();
+                }
+                Properties.StatusUri = value;
+            }
         }
 
         /// <summary> Link to the Diagnose and Solve Portal. </summary>
@@ -74,6 +90,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.DetectorUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebSiteInstanceStatusProperties();
+                }
+                Properties.DetectorUri = value;
             }
         }
 
@@ -85,6 +109,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.ConsoleUri;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebSiteInstanceStatusProperties();
+                }
+                Properties.ConsoleUri = value;
+            }
         }
 
         /// <summary> Link to the console to web app instance. </summary>
@@ -95,6 +127,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.HealthCheckUrlString;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebSiteInstanceStatusProperties();
+                }
+                Properties.HealthCheckUrlString = value;
+            }
         }
 
         /// <summary> Dictionary of &lt;ContainerInfo&gt;. </summary>
@@ -103,7 +143,11 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties is null ? default : Properties.Containers;
+                if (Properties is null)
+                {
+                    Properties = new WebSiteInstanceStatusProperties();
+                }
+                return Properties.Containers;
             }
         }
 
@@ -114,6 +158,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.PhysicalZone;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebSiteInstanceStatusProperties();
+                }
+                Properties.PhysicalZone = value;
             }
         }
     }

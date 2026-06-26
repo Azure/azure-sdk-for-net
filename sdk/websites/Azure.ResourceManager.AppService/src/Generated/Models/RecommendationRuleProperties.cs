@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RecommendationRuleProperties"/>. </summary>
-        internal RecommendationRuleProperties()
+        public RecommendationRuleProperties()
         {
             CategoryTags = new ChangeTrackingList<string>();
         }
@@ -61,38 +61,38 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Unique name of the rule. </summary>
         [WirePath("recommendationName")]
-        public string RecommendationName { get; }
+        public string RecommendationName { get; set; }
 
         /// <summary> UI friendly name of the rule. </summary>
         [WirePath("displayName")]
-        public string DisplayName { get; }
+        public string DisplayName { get; set; }
 
         /// <summary> Localized name of the rule (Good for UI). </summary>
         [WirePath("message")]
-        public string Message { get; }
+        public string Message { get; set; }
 
         /// <summary>
         /// Recommendation ID of an associated recommendation object tied to the rule, if exists.
         /// If such an object doesn't exist, it is set to null.
         /// </summary>
         [WirePath("recommendationId")]
-        public string RecommendationId { get; }
+        public string RecommendationId { get; set; }
 
         /// <summary> Localized detailed description of the rule. </summary>
         [WirePath("description")]
-        public string Description { get; }
+        public string Description { get; set; }
 
         /// <summary> Name of action that is recommended by this rule in string. </summary>
         [WirePath("actionName")]
-        public string ActionName { get; }
+        public string ActionName { get; set; }
 
         /// <summary> Level of impact indicating how critical this rule is. </summary>
         [WirePath("level")]
-        public NotificationLevel? Level { get; }
+        public NotificationLevel? Level { get; set; }
 
         /// <summary> List of available channels that this rule applies. </summary>
         [WirePath("channels")]
-        public RecommendationChannel? Channels { get; }
+        public RecommendationChannel? Channels { get; set; }
 
         /// <summary> The list of category tags that this recommendation rule belongs to. </summary>
         [WirePath("categoryTags")]
@@ -100,18 +100,18 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> True if this is associated with a dynamically added rule. </summary>
         [WirePath("isDynamic")]
-        public bool? IsDynamic { get; }
+        public bool? IsDynamic { get; set; }
 
         /// <summary> Extension name of the portal if exists. Applicable to dynamic rule only. </summary>
         [WirePath("extensionName")]
-        public string ExtensionName { get; }
+        public string ExtensionName { get; set; }
 
         /// <summary> Deep link to a blade on the portal. Applicable to dynamic rule only. </summary>
         [WirePath("bladeName")]
-        public string BladeName { get; }
+        public string BladeName { get; set; }
 
         /// <summary> Forward link to an external document associated with the rule. Applicable to dynamic rule only. </summary>
         [WirePath("forwardLink")]
-        public string ForwardLink { get; }
+        public string ForwardLink { get; set; }
     }
 }

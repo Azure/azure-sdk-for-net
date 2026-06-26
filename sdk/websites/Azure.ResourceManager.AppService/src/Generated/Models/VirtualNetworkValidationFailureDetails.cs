@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkValidationFailureDetails"/>. </summary>
-        internal VirtualNetworkValidationFailureDetails()
+        public VirtualNetworkValidationFailureDetails()
         {
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> VnetValidationFailureDetails resource specific properties. </summary>
         [WirePath("properties")]
-        internal VnetValidationFailureDetailsProperties Properties { get; }
+        internal VnetValidationFailureDetailsProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> Text describing the validation outcome. </summary>
         [WirePath("properties.message")]
@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.AppService.Models
             get
             {
                 return Properties is null ? default : Properties.Message;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VnetValidationFailureDetailsProperties();
+                }
+                Properties.Message = value;
             }
         }
 
@@ -65,6 +73,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return Properties is null ? default : Properties.IsFailed;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VnetValidationFailureDetailsProperties();
+                }
+                Properties.IsFailed = value;
+            }
         }
 
         /// <summary> A list of tests that failed in the validation. </summary>
@@ -73,7 +89,11 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties is null ? default : Properties.FailedTests;
+                if (Properties is null)
+                {
+                    Properties = new VnetValidationFailureDetailsProperties();
+                }
+                return Properties.FailedTests;
             }
         }
 
@@ -83,7 +103,11 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties is null ? default : Properties.Warnings;
+                if (Properties is null)
+                {
+                    Properties = new VnetValidationFailureDetailsProperties();
+                }
+                return Properties.Warnings;
             }
         }
     }

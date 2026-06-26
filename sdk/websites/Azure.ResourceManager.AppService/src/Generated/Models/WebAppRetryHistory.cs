@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebAppRetryHistory"/>. </summary>
-        internal WebAppRetryHistory()
+        public WebAppRetryHistory()
         {
         }
 
@@ -43,27 +43,27 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Gets the start time. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartOn { get; set; }
 
         /// <summary> Gets the end time. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndOn { get; set; }
 
         /// <summary> Gets the status code. </summary>
         [WirePath("code")]
-        public string Code { get; }
+        public string Code { get; set; }
 
         /// <summary> Gets the client request Id. </summary>
         [WirePath("clientRequestId")]
-        public string ClientRequestId { get; }
+        public string ClientRequestId { get; set; }
 
         /// <summary> Gets the service request Id. </summary>
         [WirePath("serviceRequestId")]
-        public string ServiceRequestId { get; }
+        public string ServiceRequestId { get; set; }
 
         /// <summary> Gets the error response. </summary>
         [WirePath("error")]
-        internal WebAppErrorResponse Error { get; }
+        internal WebAppErrorResponse Error { get; set; }
 
         /// <summary> The error properties. </summary>
         [WirePath("error.error")]
@@ -72,6 +72,14 @@ namespace Azure.ResourceManager.AppService.Models
             get
             {
                 return Error is null ? default : Error.ErrorInfo;
+            }
+            set
+            {
+                if (Error is null)
+                {
+                    Error = new WebAppErrorResponse();
+                }
+                Error.ErrorInfo = value;
             }
         }
     }

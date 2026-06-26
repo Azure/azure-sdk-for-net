@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRunActionRepetitionIndex"/>. </summary>
         /// <param name="itemIndex"> The index. </param>
-        internal WorkflowRunActionRepetitionIndex(int itemIndex)
+        public WorkflowRunActionRepetitionIndex(int itemIndex)
         {
             ItemIndex = itemIndex;
         }
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The scope. </summary>
         [WirePath("scopeName")]
-        public string ScopeName { get; }
+        public string ScopeName { get; set; }
 
         /// <summary> The index. </summary>
         [WirePath("itemIndex")]
-        public int ItemIndex { get; }
+        public int ItemIndex { get; set; }
     }
 }

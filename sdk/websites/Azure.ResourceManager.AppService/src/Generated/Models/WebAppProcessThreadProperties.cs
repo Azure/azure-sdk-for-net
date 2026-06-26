@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebAppProcessThreadProperties"/>. </summary>
-        internal WebAppProcessThreadProperties()
+        public WebAppProcessThreadProperties()
         {
         }
 
@@ -59,46 +59,46 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> HRef URI. </summary>
         [WirePath("href")]
-        public Uri Href { get; }
+        public Uri Href { get; set; }
 
         /// <summary> Process URI. </summary>
         [WirePath("process")]
-        public string Process { get; }
+        public string Process { get; set; }
 
         /// <summary> Start address. </summary>
         [WirePath("start_address")]
-        public string StartAddress { get; }
+        public string StartAddress { get; set; }
 
         /// <summary> Current thread priority. </summary>
         [WirePath("current_priority")]
-        public int? CurrentPriority { get; }
+        public int? CurrentPriority { get; set; }
 
         /// <summary> Thread priority level. </summary>
         [WirePath("priority_level")]
-        public string PriorityLevel { get; }
+        public string PriorityLevel { get; set; }
 
         /// <summary> Base priority. </summary>
         [WirePath("base_priority")]
-        public int? BasePriority { get; }
+        public int? BasePriority { get; set; }
 
         /// <summary> Start time. </summary>
         [WirePath("start_time")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartOn { get; set; }
 
         /// <summary> Total processor time. </summary>
         [WirePath("total_processor_time")]
-        public string TotalProcessorTime { get; }
+        public string TotalProcessorTime { get; set; }
 
         /// <summary> User processor time. </summary>
         [WirePath("user_processor_time")]
-        public string UserProcessorTime { get; }
+        public string UserProcessorTime { get; set; }
 
         /// <summary> Thread state. </summary>
         [WirePath("state")]
-        public string State { get; }
+        public string State { get; set; }
 
         /// <summary> Wait reason. </summary>
         [WirePath("wait_reason")]
-        public string WaitReason { get; }
+        public string WaitReason { get; set; }
     }
 }

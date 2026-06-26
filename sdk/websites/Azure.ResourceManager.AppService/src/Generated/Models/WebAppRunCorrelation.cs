@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebAppRunCorrelation"/>. </summary>
-        internal WebAppRunCorrelation()
+        public WebAppRunCorrelation()
         {
             ClientKeywords = new ChangeTrackingList<string>();
         }
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The client tracking identifier. </summary>
         [WirePath("clientTrackingId")]
-        public string ClientTrackingId { get; }
+        public string ClientTrackingId { get; set; }
 
         /// <summary> The client keywords. </summary>
         [WirePath("clientKeywords")]

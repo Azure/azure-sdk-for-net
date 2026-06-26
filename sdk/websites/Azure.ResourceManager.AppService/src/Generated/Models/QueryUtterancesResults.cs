@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="QueryUtterancesResults"/>. </summary>
-        internal QueryUtterancesResults()
+        public QueryUtterancesResults()
         {
             Results = new ChangeTrackingList<QueryUtterancesResult>();
         }
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Search Query. </summary>
         [WirePath("query")]
-        public string Query { get; }
+        public string Query { get; set; }
 
         /// <summary> Array of utterance results for search query. </summary>
         [WirePath("results")]

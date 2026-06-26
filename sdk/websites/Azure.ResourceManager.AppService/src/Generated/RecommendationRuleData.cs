@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RecommendationRuleData"/>. </summary>
-        internal RecommendationRuleData()
+        public RecommendationRuleData()
         {
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> RecommendationRule resource specific properties. </summary>
         [WirePath("properties")]
-        internal RecommendationRuleProperties Properties { get; }
+        internal RecommendationRuleProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> Unique name of the rule. </summary>
         [WirePath("properties.recommendationName")]
@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.RecommendationName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RecommendationRuleProperties();
+                }
+                Properties.RecommendationName = value;
             }
         }
 
@@ -65,6 +73,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.DisplayName;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RecommendationRuleProperties();
+                }
+                Properties.DisplayName = value;
+            }
         }
 
         /// <summary> Localized name of the rule (Good for UI). </summary>
@@ -74,6 +90,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.Message;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RecommendationRuleProperties();
+                }
+                Properties.Message = value;
             }
         }
 
@@ -88,6 +112,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.RecommendationId;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RecommendationRuleProperties();
+                }
+                Properties.RecommendationId = value;
+            }
         }
 
         /// <summary> Localized detailed description of the rule. </summary>
@@ -97,6 +129,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RecommendationRuleProperties();
+                }
+                Properties.Description = value;
             }
         }
 
@@ -108,6 +148,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.ActionName;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RecommendationRuleProperties();
+                }
+                Properties.ActionName = value;
+            }
         }
 
         /// <summary> Level of impact indicating how critical this rule is. </summary>
@@ -117,6 +165,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.Level;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RecommendationRuleProperties();
+                }
+                Properties.Level = value;
             }
         }
 
@@ -128,6 +184,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.Channels;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RecommendationRuleProperties();
+                }
+                Properties.Channels = value;
+            }
         }
 
         /// <summary> The list of category tags that this recommendation rule belongs to. </summary>
@@ -136,7 +200,11 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties is null ? default : Properties.CategoryTags;
+                if (Properties is null)
+                {
+                    Properties = new RecommendationRuleProperties();
+                }
+                return Properties.CategoryTags;
             }
         }
 
@@ -148,6 +216,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.IsDynamic;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RecommendationRuleProperties();
+                }
+                Properties.IsDynamic = value;
+            }
         }
 
         /// <summary> Extension name of the portal if exists. Applicable to dynamic rule only. </summary>
@@ -157,6 +233,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.ExtensionName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RecommendationRuleProperties();
+                }
+                Properties.ExtensionName = value;
             }
         }
 
@@ -168,6 +252,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return Properties is null ? default : Properties.BladeName;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RecommendationRuleProperties();
+                }
+                Properties.BladeName = value;
+            }
         }
 
         /// <summary> Forward link to an external document associated with the rule. Applicable to dynamic rule only. </summary>
@@ -177,6 +269,14 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.ForwardLink;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RecommendationRuleProperties();
+                }
+                Properties.ForwardLink = value;
             }
         }
     }

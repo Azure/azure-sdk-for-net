@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerThrottlingInfo"/>. </summary>
-        internal ContainerThrottlingInfo()
+        public ContainerThrottlingInfo()
         {
         }
 
@@ -35,16 +35,16 @@ namespace Azure.ResourceManager.AppService.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the Periods. </summary>
+        /// <summary> Gets or sets the Periods. </summary>
         [WirePath("periods")]
-        public int? Periods { get; }
+        public int? Periods { get; set; }
 
-        /// <summary> Gets the ThrottledPeriods. </summary>
+        /// <summary> Gets or sets the ThrottledPeriods. </summary>
         [WirePath("throttledPeriods")]
-        public int? ThrottledPeriods { get; }
+        public int? ThrottledPeriods { get; set; }
 
-        /// <summary> Gets the ThrottledTime. </summary>
+        /// <summary> Gets or sets the ThrottledTime. </summary>
         [WirePath("throttledTime")]
-        public int? ThrottledTime { get; }
+        public int? ThrottledTime { get; set; }
     }
 }

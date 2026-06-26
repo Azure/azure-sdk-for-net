@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticSolution"/>. </summary>
-        internal DiagnosticSolution()
+        public DiagnosticSolution()
         {
             Data = new ChangeTrackingList<IList<AppServiceNameValuePair>>();
             Metadata = new ChangeTrackingList<IList<AppServiceNameValuePair>>();
@@ -47,23 +47,23 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Solution Id. </summary>
         [WirePath("id")]
-        public double? Id { get; }
+        public double? Id { get; set; }
 
         /// <summary> Display Name of the solution. </summary>
         [WirePath("displayName")]
-        public string DisplayName { get; }
+        public string DisplayName { get; set; }
 
         /// <summary> Order of the solution. </summary>
         [WirePath("order")]
-        public double? Order { get; }
+        public double? Order { get; set; }
 
         /// <summary> Description of the solution. </summary>
         [WirePath("description")]
-        public string Description { get; }
+        public string Description { get; set; }
 
         /// <summary> Type of Solution. </summary>
         [WirePath("type")]
-        public DiagnosticSolutionType? Type { get; }
+        public DiagnosticSolutionType? Type { get; set; }
 
         /// <summary> Solution Data. </summary>
         [WirePath("data")]

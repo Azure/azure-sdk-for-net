@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppServiceBillingMeter"/>. </summary>
-        internal AppServiceBillingMeter()
+        public AppServiceBillingMeter()
         {
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> BillingMeter resource specific properties. </summary>
         [WirePath("properties")]
-        internal BillingMeterProperties Properties { get; }
+        internal BillingMeterProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> Meter GUID onboarded in Commerce. </summary>
         [WirePath("properties.meterId")]
@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.AppService.Models
             get
             {
                 return Properties is null ? default : Properties.MeterId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BillingMeterProperties();
+                }
+                Properties.MeterId = value;
             }
         }
 
@@ -65,6 +73,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return Properties is null ? default : Properties.BillingLocation;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BillingMeterProperties();
+                }
+                Properties.BillingLocation = value;
+            }
         }
 
         /// <summary> Short Name from App Service Azure pricing Page. </summary>
@@ -74,6 +90,14 @@ namespace Azure.ResourceManager.AppService.Models
             get
             {
                 return Properties is null ? default : Properties.ShortName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BillingMeterProperties();
+                }
+                Properties.ShortName = value;
             }
         }
 
@@ -85,6 +109,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return Properties is null ? default : Properties.FriendlyName;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BillingMeterProperties();
+                }
+                Properties.FriendlyName = value;
+            }
         }
 
         /// <summary> App Service OS type meter used for. </summary>
@@ -95,6 +127,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return Properties is null ? default : Properties.OsType;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BillingMeterProperties();
+                }
+                Properties.OsType = value;
+            }
         }
 
         /// <summary> Meter Multiplier. </summary>
@@ -104,6 +144,14 @@ namespace Azure.ResourceManager.AppService.Models
             get
             {
                 return Properties is null ? default : Properties.Multiplier;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BillingMeterProperties();
+                }
+                Properties.Multiplier = value;
             }
         }
     }

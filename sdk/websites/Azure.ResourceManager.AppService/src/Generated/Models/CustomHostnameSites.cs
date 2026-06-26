@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CustomHostnameSites"/>. </summary>
-        internal CustomHostnameSites()
+        public CustomHostnameSites()
         {
         }
 
@@ -41,13 +41,13 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> CustomHostnameSites resource specific properties. </summary>
         [WirePath("properties")]
-        internal CustomHostnameSitesProperties Properties { get; }
+        internal CustomHostnameSitesProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
-        /// <summary> Gets the CustomHostname. </summary>
+        /// <summary> Gets or sets the CustomHostname. </summary>
         [WirePath("properties.customHostname")]
         public string CustomHostname
         {
@@ -55,15 +55,31 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return Properties is null ? default : Properties.CustomHostname;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CustomHostnameSitesProperties();
+                }
+                Properties.CustomHostname = value;
+            }
         }
 
-        /// <summary> Gets the Region. </summary>
+        /// <summary> Gets or sets the Region. </summary>
         [WirePath("properties.region")]
         public string Region
         {
             get
             {
                 return Properties is null ? default : Properties.Region;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CustomHostnameSitesProperties();
+                }
+                Properties.Region = value;
             }
         }
 
@@ -73,7 +89,11 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties is null ? default : Properties.SiteResourceIds;
+                if (Properties is null)
+                {
+                    Properties = new CustomHostnameSitesProperties();
+                }
+                return Properties.SiteResourceIds;
             }
         }
     }

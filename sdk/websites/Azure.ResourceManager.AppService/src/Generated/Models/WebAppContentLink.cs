@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebAppContentLink"/>. </summary>
-        internal WebAppContentLink()
+        public WebAppContentLink()
         {
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The content link URI. </summary>
         [WirePath("uri")]
-        public Uri Uri { get; }
+        public Uri Uri { get; set; }
 
         /// <summary> The content version. </summary>
         [WirePath("contentVersion")]

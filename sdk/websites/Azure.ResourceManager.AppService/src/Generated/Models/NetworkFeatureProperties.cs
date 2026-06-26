@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkFeatureProperties"/>. </summary>
-        internal NetworkFeatureProperties()
+        public NetworkFeatureProperties()
         {
             HybridConnections = new ChangeTrackingList<RelayServiceConnectionEntityData>();
             HybridConnectionsV2 = new ChangeTrackingList<HybridConnectionData>();

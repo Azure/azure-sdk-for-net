@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DetectorAbnormalTimePeriod"/>. </summary>
-        internal DetectorAbnormalTimePeriod()
+        public DetectorAbnormalTimePeriod()
         {
             MetaData = new ChangeTrackingList<IList<AppServiceNameValuePair>>();
             Solutions = new ChangeTrackingList<DiagnosticSolution>();
@@ -49,23 +49,23 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Start time of the correlated event. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartOn { get; set; }
 
         /// <summary> End time of the correlated event. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndOn { get; set; }
 
         /// <summary> Message describing the event. </summary>
         [WirePath("message")]
-        public string Message { get; }
+        public string Message { get; set; }
 
         /// <summary> Represents the name of the Detector. </summary>
         [WirePath("source")]
-        public string Source { get; }
+        public string Source { get; set; }
 
         /// <summary> Represents the rank of the Detector. </summary>
         [WirePath("priority")]
-        public double? Priority { get; }
+        public double? Priority { get; set; }
 
         /// <summary> Downtime metadata. </summary>
         [WirePath("metaData")]
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Represents the type of the Detector. </summary>
         [WirePath("type")]
-        public DetectorIssueType? Type { get; }
+        public DetectorIssueType? Type { get; set; }
 
         /// <summary> List of proposed solutions. </summary>
         [WirePath("solutions")]

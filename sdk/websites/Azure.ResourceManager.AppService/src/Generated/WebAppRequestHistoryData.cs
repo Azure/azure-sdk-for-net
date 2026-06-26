@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Initializes a new instance of <see cref="WebAppRequestHistoryData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal WebAppRequestHistoryData(AzureLocation location) : base(location)
+        public WebAppRequestHistoryData(AzureLocation location) : base(location)
         {
         }
 
@@ -42,6 +42,6 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> The request history properties. </summary>
         [WirePath("properties")]
-        public WebAppRequestHistoryProperties Properties { get; }
+        public WebAppRequestHistoryProperties Properties { get; set; }
     }
 }

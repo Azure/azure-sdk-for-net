@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeletedSiteData"/>. </summary>
-        internal DeletedSiteData()
+        public DeletedSiteData()
         {
         }
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> DeletedSite resource specific properties. </summary>
         [WirePath("properties")]
-        internal DeletedSiteProperties Properties { get; }
+        internal DeletedSiteProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
-        public string Kind { get; }
+        public string Kind { get; set; }
 
         /// <summary> Numeric id for the deleted site. </summary>
         [WirePath("properties.deletedSiteId")]
