@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Software update configuration Run properties. </summary>
     public partial class SoftwareUpdateConfigurationRun
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationRun"/>. </summary>
         internal SoftwareUpdateConfigurationRun()
@@ -54,75 +25,140 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationRun"/>. </summary>
         /// <param name="name"> Name of the software update configuration run. </param>
         /// <param name="id"> Resource Id of the software update configuration run. </param>
-        /// <param name="softwareUpdateConfiguration"> software update configuration triggered this run. </param>
-        /// <param name="status"> Status of the software update configuration run. </param>
-        /// <param name="configuredDuration"> Configured duration for the software update configuration run. </param>
-        /// <param name="osType"> Operating system target of the software update configuration triggered this run. </param>
-        /// <param name="startOn"> Start time of the software update configuration run. </param>
-        /// <param name="endOn"> End time of the software update configuration run. </param>
-        /// <param name="computerCount"> Number of computers in the software update configuration run. </param>
-        /// <param name="failedCount"> Number of computers with failed status. </param>
-        /// <param name="createdOn"> Creation time of the resource, which only appears in the response. </param>
-        /// <param name="createdBy"> CreatedBy property, which only appears in the response. </param>
-        /// <param name="lastModifiedOn"> Last time resource was modified, which only appears in the response. </param>
-        /// <param name="lastModifiedBy"> LastModifiedBy property, which only appears in the response. </param>
-        /// <param name="tasks"> Software update configuration tasks triggered in this run. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SoftwareUpdateConfigurationRun(string name, ResourceIdentifier id, SoftwareUpdateConfigurationNavigation softwareUpdateConfiguration, string status, TimeSpan? configuredDuration, string osType, DateTimeOffset? startOn, DateTimeOffset? endOn, int? computerCount, int? failedCount, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, SoftwareUpdateConfigurationRunTasks tasks, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Software update configuration Run properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SoftwareUpdateConfigurationRun(string name, ResourceIdentifier id, SoftwareUpdateConfigurationRunProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Id = id;
-            SoftwareUpdateConfiguration = softwareUpdateConfiguration;
-            Status = status;
-            ConfiguredDuration = configuredDuration;
-            OSType = osType;
-            StartOn = startOn;
-            EndOn = endOn;
-            ComputerCount = computerCount;
-            FailedCount = failedCount;
-            CreatedOn = createdOn;
-            CreatedBy = createdBy;
-            LastModifiedOn = lastModifiedOn;
-            LastModifiedBy = lastModifiedBy;
-            Tasks = tasks;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the software update configuration run. </summary>
         public string Name { get; }
+
         /// <summary> Resource Id of the software update configuration run. </summary>
         public ResourceIdentifier Id { get; }
-        /// <summary> software update configuration triggered this run. </summary>
-        internal SoftwareUpdateConfigurationNavigation SoftwareUpdateConfiguration { get; }
+
+        /// <summary> Software update configuration Run properties. </summary>
+        internal SoftwareUpdateConfigurationRunProperties Properties { get; }
+
+        /// <summary> Status of the software update configuration run. </summary>
+        public string Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
+        /// <summary> Configured duration for the software update configuration run. </summary>
+        public TimeSpan? ConfiguredDuration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConfiguredDuration;
+            }
+        }
+
+        /// <summary> Operating system target of the software update configuration triggered this run. </summary>
+        public string OSType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OSType;
+            }
+        }
+
+        /// <summary> Start time of the software update configuration run. </summary>
+        public DateTimeOffset? StartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartOn;
+            }
+        }
+
+        /// <summary> End time of the software update configuration run. </summary>
+        public DateTimeOffset? EndOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndOn;
+            }
+        }
+
+        /// <summary> Number of computers in the software update configuration run. </summary>
+        public int? ComputerCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ComputerCount;
+            }
+        }
+
+        /// <summary> Number of computers with failed status. </summary>
+        public int? FailedCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FailedCount;
+            }
+        }
+
+        /// <summary> Creation time of the resource, which only appears in the response. </summary>
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
+        /// <summary> CreatedBy property, which only appears in the response. </summary>
+        public string CreatedBy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedBy;
+            }
+        }
+
+        /// <summary> Last time resource was modified, which only appears in the response. </summary>
+        public DateTimeOffset? LastModifiedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastModifiedOn;
+            }
+        }
+
+        /// <summary> LastModifiedBy property, which only appears in the response. </summary>
+        public string LastModifiedBy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastModifiedBy;
+            }
+        }
+
+        /// <summary> Software update configuration tasks triggered in this run. </summary>
+        public SoftwareUpdateConfigurationRunTasks Tasks
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Tasks;
+            }
+        }
+
         /// <summary> Name of the software update configuration triggered the software update configuration run. </summary>
         public string SoftwareUpdateName
         {
-            get => SoftwareUpdateConfiguration?.Name;
+            get
+            {
+                return Properties is null ? default : Properties.SoftwareUpdateName;
+            }
         }
-
-        /// <summary> Status of the software update configuration run. </summary>
-        public string Status { get; }
-        /// <summary> Configured duration for the software update configuration run. </summary>
-        public TimeSpan? ConfiguredDuration { get; }
-        /// <summary> Operating system target of the software update configuration triggered this run. </summary>
-        public string OSType { get; }
-        /// <summary> Start time of the software update configuration run. </summary>
-        public DateTimeOffset? StartOn { get; }
-        /// <summary> End time of the software update configuration run. </summary>
-        public DateTimeOffset? EndOn { get; }
-        /// <summary> Number of computers in the software update configuration run. </summary>
-        public int? ComputerCount { get; }
-        /// <summary> Number of computers with failed status. </summary>
-        public int? FailedCount { get; }
-        /// <summary> Creation time of the resource, which only appears in the response. </summary>
-        public DateTimeOffset? CreatedOn { get; }
-        /// <summary> CreatedBy property, which only appears in the response. </summary>
-        public string CreatedBy { get; }
-        /// <summary> Last time resource was modified, which only appears in the response. </summary>
-        public DateTimeOffset? LastModifiedOn { get; }
-        /// <summary> LastModifiedBy property, which only appears in the response. </summary>
-        public string LastModifiedBy { get; }
-        /// <summary> Software update configuration tasks triggered in this run. </summary>
-        public SoftwareUpdateConfigurationRunTasks Tasks { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Automation.Models
     public readonly partial struct JobProvisioningState : IEquatable<JobProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Suspended. </summary>
+        private const string SuspendedValue = "Suspended";
+        /// <summary> Processing. </summary>
+        private const string ProcessingValue = "Processing";
 
         /// <summary> Initializes a new instance of <see cref="JobProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public JobProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string FailedValue = "Failed";
-        private const string SucceededValue = "Succeeded";
-        private const string SuspendedValue = "Suspended";
-        private const string ProcessingValue = "Processing";
+            _value = value;
+        }
 
         /// <summary> Failed. </summary>
         public static JobProvisioningState Failed { get; } = new JobProvisioningState(FailedValue);
+
         /// <summary> Succeeded. </summary>
         public static JobProvisioningState Succeeded { get; } = new JobProvisioningState(SucceededValue);
+
         /// <summary> Suspended. </summary>
         public static JobProvisioningState Suspended { get; } = new JobProvisioningState(SuspendedValue);
+
         /// <summary> Processing. </summary>
         public static JobProvisioningState Processing { get; } = new JobProvisioningState(ProcessingValue);
+
         /// <summary> Determines if two <see cref="JobProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(JobProvisioningState left, JobProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="JobProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(JobProvisioningState left, JobProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="JobProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="JobProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator JobProvisioningState(string value) => new JobProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="JobProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator JobProvisioningState?(string value) => value == null ? null : new JobProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is JobProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(JobProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

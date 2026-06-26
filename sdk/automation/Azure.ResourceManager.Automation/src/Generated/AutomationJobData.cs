@@ -13,128 +13,265 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    /// <summary>
-    /// A class representing the AutomationJob data model.
-    /// Definition of the job.
-    /// </summary>
+    /// <summary> Definition of the job. </summary>
     public partial class AutomationJobData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AutomationJobData"/>. </summary>
         public AutomationJobData()
         {
-            Parameters = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AutomationJobData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="runbook"> Gets or sets the runbook. </param>
-        /// <param name="startedBy"> Gets or sets the job started by. </param>
-        /// <param name="runOn"> Gets or sets the runOn which specifies the group name where the job is to be executed. </param>
-        /// <param name="jobId"> Gets or sets the id of the job. </param>
-        /// <param name="createdOn"> Gets or sets the creation time of the job. </param>
-        /// <param name="status"> Gets or sets the status of the job. </param>
-        /// <param name="statusDetails"> Gets or sets the status details of the job. </param>
-        /// <param name="startOn"> Gets or sets the start time of the job. </param>
-        /// <param name="endOn"> Gets or sets the end time of the job. </param>
-        /// <param name="exception"> Gets or sets the exception of the job. </param>
-        /// <param name="lastModifiedOn"> Gets or sets the last modified time of the job. </param>
-        /// <param name="lastStatusModifiedOn"> Gets or sets the last status modified time of the job. </param>
-        /// <param name="parameters"> Gets or sets the parameters of the job. </param>
-        /// <param name="provisioningState"> The current provisioning state of the job. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutomationJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RunbookAssociationProperty runbook, string startedBy, string runOn, Guid? jobId, DateTimeOffset? createdOn, AutomationJobStatus? status, string statusDetails, DateTimeOffset? startOn, DateTimeOffset? endOn, string exception, DateTimeOffset? lastModifiedOn, DateTimeOffset? lastStatusModifiedOn, IDictionary<string, string> parameters, JobProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The properties of the job. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Runbook = runbook;
-            StartedBy = startedBy;
-            RunOn = runOn;
-            JobId = jobId;
-            CreatedOn = createdOn;
-            Status = status;
-            StatusDetails = statusDetails;
-            StartOn = startOn;
-            EndOn = endOn;
-            Exception = exception;
-            LastModifiedOn = lastModifiedOn;
-            LastStatusModifiedOn = lastStatusModifiedOn;
-            Parameters = parameters;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the runbook. </summary>
-        internal RunbookAssociationProperty Runbook { get; set; }
-        /// <summary> Gets or sets the name of the runbook. </summary>
-        public string RunbookName
+        /// <summary> The properties of the job. </summary>
+        internal JobProperties Properties { get; set; }
+
+        /// <summary> Gets or sets the job started by. </summary>
+        public string StartedBy
         {
-            get => Runbook is null ? default : Runbook.Name;
+            get
+            {
+                return Properties is null ? default : Properties.StartedBy;
+            }
             set
             {
-                if (Runbook is null)
-                    Runbook = new RunbookAssociationProperty();
-                Runbook.Name = value;
+                if (Properties is null)
+                {
+                    Properties = new JobProperties();
+                }
+                Properties.StartedBy = value;
             }
         }
 
-        /// <summary> Gets or sets the job started by. </summary>
-        public string StartedBy { get; set; }
         /// <summary> Gets or sets the runOn which specifies the group name where the job is to be executed. </summary>
-        public string RunOn { get; set; }
+        public string RunOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RunOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobProperties();
+                }
+                Properties.RunOn = value;
+            }
+        }
+
         /// <summary> Gets or sets the id of the job. </summary>
-        public Guid? JobId { get; set; }
+        public Guid? JobId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.JobId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobProperties();
+                }
+                Properties.JobId = value;
+            }
+        }
+
         /// <summary> Gets or sets the creation time of the job. </summary>
-        public DateTimeOffset? CreatedOn { get; set; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobProperties();
+                }
+                Properties.CreatedOn = value;
+            }
+        }
+
         /// <summary> Gets or sets the status of the job. </summary>
-        public AutomationJobStatus? Status { get; set; }
+        public AutomationJobStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobProperties();
+                }
+                Properties.Status = value;
+            }
+        }
+
         /// <summary> Gets or sets the status details of the job. </summary>
-        public string StatusDetails { get; set; }
+        public string StatusDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StatusDetails;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobProperties();
+                }
+                Properties.StatusDetails = value;
+            }
+        }
+
         /// <summary> Gets or sets the start time of the job. </summary>
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobProperties();
+                }
+                Properties.StartOn = value;
+            }
+        }
+
         /// <summary> Gets or sets the end time of the job. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobProperties();
+                }
+                Properties.EndOn = value;
+            }
+        }
+
         /// <summary> Gets or sets the exception of the job. </summary>
-        public string Exception { get; set; }
+        public string Exception
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Exception;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobProperties();
+                }
+                Properties.Exception = value;
+            }
+        }
+
         /// <summary> Gets or sets the last modified time of the job. </summary>
-        public DateTimeOffset? LastModifiedOn { get; set; }
+        public DateTimeOffset? LastModifiedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastModifiedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobProperties();
+                }
+                Properties.LastModifiedOn = value;
+            }
+        }
+
         /// <summary> Gets or sets the last status modified time of the job. </summary>
-        public DateTimeOffset? LastStatusModifiedOn { get; set; }
+        public DateTimeOffset? LastStatusModifiedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastStatusModifiedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobProperties();
+                }
+                Properties.LastStatusModifiedOn = value;
+            }
+        }
+
         /// <summary> Gets or sets the parameters of the job. </summary>
-        public IDictionary<string, string> Parameters { get; }
-        /// <summary> The current provisioning state of the job. </summary>
-        public JobProvisioningState? ProvisioningState { get; set; }
+        public IDictionary<string, string> Parameters
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobProperties();
+                }
+                return Properties.Parameters;
+            }
+        }
+
+        /// <summary> Gets or sets the name of the runbook. </summary>
+        public string RunbookName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RunbookName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobProperties();
+                }
+                Properties.RunbookName = value;
+            }
+        }
+
+        /// <summary> Name of Runtime Environment. </summary>
+        public string RuntimeEnvironmentName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RuntimeEnvironmentName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobProperties();
+                }
+                Properties.RuntimeEnvironmentName = value;
+            }
+        }
     }
 }
