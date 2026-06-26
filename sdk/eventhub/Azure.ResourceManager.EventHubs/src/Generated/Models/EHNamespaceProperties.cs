@@ -44,8 +44,9 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="alternateName"> Alternate name specified when alias and namespace names are same. </param>
         /// <param name="platformCapabilities"></param>
         /// <param name="geoDataReplication"> Geo Data Replication settings for the namespace. </param>
+        /// <param name="ipAddressType"> The IP address type for the namespace. Determines whether the namespace supports IPv4 only or both IPv4 and IPv6 (dual stack). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EHNamespaceProperties(EventHubsTlsVersion? minimumTlsVersion, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, ResourceIdentifier clusterArmId, string metricId, bool? isAutoInflateEnabled, EventHubsPublicNetworkAccess? publicNetworkAccess, int? maximumThroughputUnits, bool? kafkaEnabled, bool? zoneRedundant, EventHubsEncryption encryption, IList<EventHubsPrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth, string alternateName, PlatformCapabilities platformCapabilities, EventHubsNamespaceGeoDataReplicationProperties geoDataReplication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EHNamespaceProperties(EventHubsTlsVersion? minimumTlsVersion, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, ResourceIdentifier clusterArmId, string metricId, bool? isAutoInflateEnabled, EventHubsPublicNetworkAccess? publicNetworkAccess, int? maximumThroughputUnits, bool? kafkaEnabled, bool? zoneRedundant, EventHubsEncryption encryption, IList<EventHubsPrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth, string alternateName, PlatformCapabilities platformCapabilities, EventHubsNamespaceGeoDataReplicationProperties geoDataReplication, IpAddressType? ipAddressType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MinimumTlsVersion = minimumTlsVersion;
             ProvisioningState = provisioningState;
@@ -66,6 +67,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             AlternateName = alternateName;
             PlatformCapabilities = platformCapabilities;
             GeoDataReplication = geoDataReplication;
+            IpAddressType = ipAddressType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -144,6 +146,10 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Geo Data Replication settings for the namespace. </summary>
         [WirePath("geoDataReplication")]
         public EventHubsNamespaceGeoDataReplicationProperties GeoDataReplication { get; set; }
+
+        /// <summary> The IP address type for the namespace. Determines whether the namespace supports IPv4 only or both IPv4 and IPv6 (dual stack). </summary>
+        [WirePath("ipAddressType")]
+        public IpAddressType? IpAddressType { get; set; }
 
         /// <summary> Setting to Enable or Disable Confidential Compute. </summary>
         [WirePath("platformCapabilities.confidentialCompute.mode")]

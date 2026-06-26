@@ -23,64 +23,6 @@ namespace Azure.ResourceManager.EventHubs
     public partial class EventHubsNamespaceResource : ArmResource
     {
         /// <summary>
-        /// Creates or updates a namespace. Once created, this namespace's resource manifest is immutable. This operation is idempotent.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Namespaces_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventHubsNamespaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="data"> Parameters for updating a namespace resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<EventHubsNamespaceResource>> UpdateAsync(EventHubsNamespaceData data, CancellationToken cancellationToken = default)
-        {
-            var lro = await UpdateAsync(WaitUntil.Completed, data, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(lro.Value, lro.GetRawResponse());
-        }
-
-        /// <summary>
-        /// Creates or updates a namespace. Once created, this namespace's resource manifest is immutable. This operation is idempotent.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Namespaces_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventHubsNamespaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="data"> Parameters for updating a namespace resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<EventHubsNamespaceResource> Update(EventHubsNamespaceData data, CancellationToken cancellationToken = default)
-        {
-            var lro = Update(WaitUntil.Completed, data, cancellationToken);
-            return Response.FromValue(lro.Value, lro.GetRawResponse());
-        }
-
-        /// <summary>
         /// Refreshes a Network Security Perimeter Configuration.
         /// This method is preserved for backward compatibility.
         /// </summary>

@@ -4,7 +4,12 @@
 
 ### Features Added
 
+- Added support for the `2026-01-01` API version.
+- Added the `IpAddressType` property (`IPv4` / `DualStack`) to the Event Hubs namespace, enabling IPv4-only or dual-stack (IPv4 and IPv6) namespaces.
+
 ### Breaking Changes
+
+- The namespace update (PATCH) operation is now synchronous in API version `2026-01-01`. The long-running `Update(WaitUntil, EventHubsNamespaceData, CancellationToken)` and `UpdateAsync(WaitUntil, EventHubsNamespaceData, CancellationToken)` overloads on `EventHubsNamespaceResource` have been removed; use `Update(EventHubsNamespaceData, CancellationToken)` / `UpdateAsync(EventHubsNamespaceData, CancellationToken)` instead.
 
 ### Bugs Fixed
 
