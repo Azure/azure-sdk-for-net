@@ -97,19 +97,24 @@ namespace Azure.Generator.Visitors
                 if (ctor.Signature.Parameters.Count == 1 &&
                     ctor.Signature.Parameters[0].Type.Equals(clientProvider.ClientSettings?.Type))
                 {
-                    bool hasTokenCredCtor = constructors.Any(c =>
+                    // The Settings constructor chains to the internal constructor whose first
+                    // argument is the authentication policy. Match the public credential
+                    // constructor by argument count so the chained call maps argument-for-argument.
+                    int chainedArgCount = ctor.Signature.Initializer?.Arguments.Count ?? 0;
+
+                    var tokenCredCtor = constructors.FirstOrDefault(c =>
                         c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) &&
                         c.Signature.Parameters.Any(p => p.Type.Equals(typeof(TokenCredential))) &&
-                        c.Signature.Parameters.Count >= 3);
+                        c.Signature.Parameters.Count == chainedArgCount);
 
-                    bool hasKeyCredCtor = constructors.Any(c =>
+                    var keyCredCtor = constructors.FirstOrDefault(c =>
                         c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) &&
                         c.Signature.Parameters.Any(p => p.Type.Equals(typeof(AzureKeyCredential))) &&
-                        c.Signature.Parameters.Count >= 3);
+                        c.Signature.Parameters.Count == chainedArgCount);
 
-                    if (hasTokenCredCtor || hasKeyCredCtor)
+                    if (tokenCredCtor != null || keyCredCtor != null)
                     {
-                        UpdateSettingsConstructor(ctor, hasTokenCredCtor, hasKeyCredCtor);
+                        UpdateSettingsConstructor(ctor, tokenCredCtor, keyCredCtor);
                     }
                     else
                     {
@@ -119,12 +124,11 @@ namespace Azure.Generator.Visitors
             }
         }
 
-        private static void UpdateSettingsConstructor(ConstructorProvider settingsCtor, bool hasTokenCredCtor, bool hasKeyCredCtor)
+        private static void UpdateSettingsConstructor(ConstructorProvider settingsCtor, ConstructorProvider? tokenCredCtor, ConstructorProvider? keyCredCtor)
         {
-            var existingArgs = settingsCtor.Signature.Initializer!.Arguments;
             var settingsParam = settingsCtor.Signature.Parameters[0];
 
-            if (hasTokenCredCtor)
+            if (tokenCredCtor != null)
             {
                 // Build: settings?.CredentialProvider as TokenCredential
 #pragma warning disable SCME0002
@@ -132,17 +136,9 @@ namespace Azure.Generator.Visitors
 #pragma warning restore SCME0002
                 var tokenCredentialArg = new AsExpression(credentialProviderAccess, TokenCredentialType);
 
-                var newArgs = new List<ValueExpression>();
-                newArgs.Add(existingArgs[1]); // endpoint
-                newArgs.Add(tokenCredentialArg); // credential
-                for (int i = 2; i < existingArgs.Count; i++)
-                {
-                    newArgs.Add(existingArgs[i]);
-                }
-
-                settingsCtor.Signature.Update(initializer: new ConstructorInitializer(false, newArgs));
+                BuildSettingsInitializer(settingsCtor, tokenCredCtor, tokenCredentialArg, TokenCredentialType);
             }
-            else if (hasKeyCredCtor)
+            else if (keyCredCtor != null)
             {
                 // Key-credential only library.
                 // Build a ternary: check CredentialSource == "apikeycredential" (case-insensitive),
@@ -167,16 +163,41 @@ namespace Azure.Generator.Visitors
                     newKeyCredential,
                     Null);
 
-                var newArgs = new List<ValueExpression>();
-                newArgs.Add(existingArgs[1]); // endpoint
-                newArgs.Add(keyCredentialArg); // credential
-                for (int i = 2; i < existingArgs.Count; i++)
-                {
-                    newArgs.Add(existingArgs[i]);
-                }
-
-                settingsCtor.Signature.Update(initializer: new ConstructorInitializer(false, newArgs));
+                BuildSettingsInitializer(settingsCtor, keyCredCtor, keyCredentialArg, AzureKeyCredentialType);
             }
+        }
+
+        // Rebuilds the Settings constructor's chained initializer to target the public credential
+        // constructor. The credential argument is placed at the position of the credential parameter
+        // in the target constructor (which is not necessarily index 1 — e.g. when a parameter such as
+        // an instanceId has been hoisted onto the client via @clientInitialization). All other
+        // arguments are taken, in order, from the original chained arguments (skipping the leading
+        // authentication-policy argument), since the non-credential parameters keep their relative order.
+        private static void BuildSettingsInitializer(
+            ConstructorProvider settingsCtor,
+            ConstructorProvider targetCtor,
+            ValueExpression credentialArg,
+            CSharpType credentialType)
+        {
+            var existingArgs = settingsCtor.Signature.Initializer!.Arguments;
+            var restArgs = new Queue<ValueExpression>(existingArgs.Skip(1));
+
+            var newArgs = new List<ValueExpression>();
+            bool credentialPlaced = false;
+            foreach (var param in targetCtor.Signature.Parameters)
+            {
+                if (!credentialPlaced && param.Type.Equals(credentialType))
+                {
+                    newArgs.Add(credentialArg);
+                    credentialPlaced = true;
+                }
+                else
+                {
+                    newArgs.Add(restArgs.Dequeue());
+                }
+            }
+
+            settingsCtor.Signature.Update(initializer: new ConstructorInitializer(false, newArgs));
         }
 
         private static void UpdateSettingsConstructorForNoAuth(ConstructorProvider settingsCtor)

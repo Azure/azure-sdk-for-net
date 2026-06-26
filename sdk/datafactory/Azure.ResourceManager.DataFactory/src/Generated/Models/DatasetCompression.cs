@@ -8,12 +8,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The compression method used on a dataset. </summary>
     public partial class DatasetCompression
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="DatasetCompression"/>. </summary>
         /// <param name="datasetCompressionType"> Type of dataset compression. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="datasetCompressionType"/> is null. </exception>
@@ -22,59 +26,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(datasetCompressionType, nameof(datasetCompressionType));
 
             DatasetCompressionType = datasetCompressionType;
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DatasetCompression"/>. </summary>
         /// <param name="datasetCompressionType"> Type of dataset compression. Type: string (or Expression with resultType string). </param>
         /// <param name="level"> The dataset compression level. Type: string (or Expression with resultType string). </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         internal DatasetCompression(DataFactoryElement<string> datasetCompressionType, DataFactoryElement<string> level, IDictionary<string, BinaryData> additionalProperties)
         {
             DatasetCompressionType = datasetCompressionType;
             Level = level;
-            AdditionalProperties = additionalProperties;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DatasetCompression"/> for deserialization. </summary>
-        internal DatasetCompression()
-        {
+            _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> Type of dataset compression. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> DatasetCompressionType { get; set; }
+
         /// <summary> The dataset compression level. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Level { get; set; }
-        /// <summary>
-        /// Additional Properties
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties { get; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

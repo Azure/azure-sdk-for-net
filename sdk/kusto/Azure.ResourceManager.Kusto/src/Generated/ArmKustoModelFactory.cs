@@ -9,14 +9,1260 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmKustoModelFactory
     {
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="clusterPrincipalId"> The principal ID assigned to the cluster principal. It can be a user email, application ID, or security group name. </param>
+        /// <param name="role"> Cluster principal role. </param>
+        /// <param name="tenantId"> The tenant id of the principal. </param>
+        /// <param name="principalType"> Principal type. </param>
+        /// <param name="tenantName"> The tenant name of the principal. </param>
+        /// <param name="principalName"> The principal name. </param>
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        /// <param name="aadObjectId"> The service principal object id in AAD (Azure active directory). </param>
+        /// <returns> A new <see cref="Kusto.KustoClusterPrincipalAssignmentData"/> instance for mocking. </returns>
+        public static KustoClusterPrincipalAssignmentData KustoClusterPrincipalAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string clusterPrincipalId = default, KustoClusterPrincipalRole? role = default, Guid? tenantId = default, KustoPrincipalAssignmentType? principalType = default, string tenantName = default, string principalName = default, KustoProvisioningState? provisioningState = default, Guid? aadObjectId = default)
+        {
+            return new KustoClusterPrincipalAssignmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                clusterPrincipalId is null && role is null && tenantId is null && principalType is null && tenantName is null && principalName is null && provisioningState is null && aadObjectId is null ? default : new ClusterPrincipalProperties(
+                    clusterPrincipalId,
+                    role.GetValueOrDefault(),
+                    tenantId,
+                    principalType.GetValueOrDefault(),
+                    tenantName,
+                    principalName,
+                    provisioningState,
+                    aadObjectId,
+                    default),
+                default);
+        }
+
+        /// <param name="name"> Principal Assignment resource name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Kusto/clusters/principalAssignments. </param>
+        /// <returns> A new <see cref="Models.KustoClusterPrincipalAssignmentNameAvailabilityContent"/> instance for mocking. </returns>
+        public static KustoClusterPrincipalAssignmentNameAvailabilityContent KustoClusterPrincipalAssignmentNameAvailabilityContent(string name = default, KustoClusterPrincipalAssignmentType resourceType = default)
+        {
+            return new KustoClusterPrincipalAssignmentNameAvailabilityContent(name, resourceType, default);
+        }
+
+        /// <param name="nameAvailable"> Specifies a Boolean value that indicates if the name is available. </param>
+        /// <param name="name"> The name that was checked. </param>
+        /// <param name="message"> Message indicating an unavailable name due to a conflict, or a description of the naming rules that are violated. </param>
+        /// <param name="reason"> Message providing the reason why the given name is invalid. </param>
+        /// <returns> A new <see cref="Models.KustoNameAvailabilityResult"/> instance for mocking. </returns>
+        public static KustoNameAvailabilityResult KustoNameAvailabilityResult(bool? nameAvailable = default, string name = default, string message = default, KustoNameUnavailableReason? reason = default)
+        {
+            return new KustoNameAvailabilityResult(nameAvailable, name, message, reason, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="databasePrincipalId"> The principal ID assigned to the database principal. It can be a user email, application ID, or security group name. </param>
+        /// <param name="role"> Database principal role. </param>
+        /// <param name="tenantId"> The tenant id of the principal. </param>
+        /// <param name="principalType"> Principal type. </param>
+        /// <param name="tenantName"> The tenant name of the principal. </param>
+        /// <param name="principalName"> The principal name. </param>
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        /// <param name="aadObjectId"> The service principal object id in AAD (Azure active directory). </param>
+        /// <returns> A new <see cref="Kusto.KustoDatabasePrincipalAssignmentData"/> instance for mocking. </returns>
+        public static KustoDatabasePrincipalAssignmentData KustoDatabasePrincipalAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string databasePrincipalId = default, KustoDatabasePrincipalRole? role = default, Guid? tenantId = default, KustoPrincipalAssignmentType? principalType = default, string tenantName = default, string principalName = default, KustoProvisioningState? provisioningState = default, Guid? aadObjectId = default)
+        {
+            return new KustoDatabasePrincipalAssignmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                databasePrincipalId is null && role is null && tenantId is null && principalType is null && tenantName is null && principalName is null && provisioningState is null && aadObjectId is null ? default : new DatabasePrincipalProperties(
+                    databasePrincipalId,
+                    role.GetValueOrDefault(),
+                    tenantId,
+                    principalType.GetValueOrDefault(),
+                    tenantName,
+                    principalName,
+                    provisioningState,
+                    aadObjectId,
+                    default),
+                default);
+        }
+
+        /// <param name="name"> Principal Assignment resource name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Kusto/clusters/databases/principalAssignments. </param>
+        /// <returns> A new <see cref="Models.KustoDatabasePrincipalAssignmentNameAvailabilityContent"/> instance for mocking. </returns>
+        public static KustoDatabasePrincipalAssignmentNameAvailabilityContent KustoDatabasePrincipalAssignmentNameAvailabilityContent(string name = default, KustoDatabasePrincipalAssignmentType resourceType = default)
+        {
+            return new KustoDatabasePrincipalAssignmentNameAvailabilityContent(name, resourceType, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="scriptUri"> The url to the KQL script blob file. Must not be used together with scriptContent property. </param>
+        /// <param name="scriptUriSasToken"> The SaS token that provide read access to the file which contain the script. Must be provided when using scriptUrl property. </param>
+        /// <param name="scriptContent"> The script content. This property should be used when the script is provide inline and not through file in a SA. Must not be used together with scriptUrl and scriptUrlSasToken properties. </param>
+        /// <param name="forceUpdateTag"> A unique string. If changed the script will be applied again. </param>
+        /// <param name="shouldContinueOnErrors"> Flag that indicates whether to continue if one of the command fails. </param>
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        /// <param name="scriptLevel"> Differentiates between the type of script commands included - Database or Cluster. The default is Database. </param>
+        /// <param name="principalPermissionsAction"> Indicates if the permissions for the script caller are kept following completion of the script. </param>
+        /// <param name="managedIdentityResourceId"> The resource identifier of the managed identity to be used. When provided, the managed identity will be used to read the script content from the scriptUrl. </param>
+        /// <returns> A new <see cref="Kusto.KustoScriptData"/> instance for mocking. </returns>
+        public static KustoScriptData KustoScriptData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Uri scriptUri = default, string scriptUriSasToken = default, string scriptContent = default, string forceUpdateTag = default, bool? shouldContinueOnErrors = default, KustoProvisioningState? provisioningState = default, KustoScriptLevel? scriptLevel = default, PrincipalPermissionsAction? principalPermissionsAction = default, ResourceIdentifier managedIdentityResourceId = default)
+        {
+            return new KustoScriptData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                scriptUri is null && scriptUriSasToken is null && scriptContent is null && forceUpdateTag is null && shouldContinueOnErrors is null && provisioningState is null && scriptLevel is null && principalPermissionsAction is null && managedIdentityResourceId is null ? default : new ScriptProperties(
+                    scriptUri,
+                    scriptUriSasToken,
+                    scriptContent,
+                    forceUpdateTag,
+                    shouldContinueOnErrors,
+                    provisioningState,
+                    scriptLevel,
+                    principalPermissionsAction,
+                    managedIdentityResourceId,
+                    default),
+                default);
+        }
+
+        /// <param name="name"> Script name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Kusto/clusters/databases/scripts. </param>
+        /// <returns> A new <see cref="Models.KustoScriptNameAvailabilityContent"/> instance for mocking. </returns>
+        public static KustoScriptNameAvailabilityContent KustoScriptNameAvailabilityContent(string name = default, KustoScriptType resourceType = default)
+        {
+            return new KustoScriptNameAvailabilityContent(name, resourceType, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="kind"> Kind of the endpoint for the data connection. </param>
+        /// <returns> A new <see cref="Kusto.KustoDataConnectionData"/> instance for mocking. </returns>
+        public static KustoDataConnectionData KustoDataConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, string kind = default)
+        {
+            return new KustoDataConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                default,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="eventHubResourceId"> The resource ID of the event hub to be used to create a data connection. </param>
+        /// <param name="consumerGroup"> The event hub consumer group. </param>
+        /// <param name="tableName"> The table where the data should be ingested. Optionally the table information can be added to each message. </param>
+        /// <param name="mappingRuleName"> The mapping rule to be used to ingest the data. Optionally the mapping information can be added to each message. </param>
+        /// <param name="dataFormat"> The data format of the message. Optionally the data format can be added to each message. </param>
+        /// <param name="eventSystemProperties"> System properties of the event hub. </param>
+        /// <param name="compression"> The compression type. </param>
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        /// <param name="managedIdentityResourceId"> The resource ID of a managed identity (system or user assigned) to be used to authenticate with event hub. </param>
+        /// <param name="managedIdentityObjectId"> The object ID of the managedIdentityResourceId. </param>
+        /// <param name="databaseRouting"> Indication for database routing information from the data connection, by default only database routing information is allowed. </param>
+        /// <param name="retrievalStartOn"> When defined, the data connection retrieves existing Event hub events created since the Retrieval start date. It can only retrieve events retained by the Event hub, based on its retention period. </param>
+        /// <returns> A new <see cref="Models.KustoEventHubDataConnection"/> instance for mocking. </returns>
+        public static KustoEventHubDataConnection KustoEventHubDataConnection(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, ResourceIdentifier eventHubResourceId = default, string consumerGroup = default, string tableName = default, string mappingRuleName = default, KustoEventHubDataFormat? dataFormat = default, IEnumerable<string> eventSystemProperties = default, EventHubMessagesCompressionType? compression = default, KustoProvisioningState? provisioningState = default, ResourceIdentifier managedIdentityResourceId = default, Guid? managedIdentityObjectId = default, KustoDatabaseRouting? databaseRouting = default, DateTimeOffset? retrievalStartOn = default)
+        {
+            return new KustoEventHubDataConnection(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                default,
+                default,
+                eventHubResourceId is null && consumerGroup is null && tableName is null && mappingRuleName is null && dataFormat is null && eventSystemProperties is null && compression is null && provisioningState is null && managedIdentityResourceId is null && managedIdentityObjectId is null && databaseRouting is null && retrievalStartOn is null ? default : new EventHubConnectionProperties(
+                    eventHubResourceId,
+                    consumerGroup,
+                    tableName,
+                    mappingRuleName,
+                    dataFormat,
+                    (eventSystemProperties ?? new ChangeTrackingList<string>()).ToList(),
+                    compression,
+                    provisioningState,
+                    managedIdentityResourceId,
+                    managedIdentityObjectId,
+                    databaseRouting,
+                    retrievalStartOn,
+                    default));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="iotHubResourceId"> The resource ID of the Iot hub to be used to create a data connection. </param>
+        /// <param name="consumerGroup"> The iot hub consumer group. </param>
+        /// <param name="tableName"> The table where the data should be ingested. Optionally the table information can be added to each message. </param>
+        /// <param name="mappingRuleName"> The mapping rule to be used to ingest the data. Optionally the mapping information can be added to each message. </param>
+        /// <param name="dataFormat"> The data format of the message. Optionally the data format can be added to each message. </param>
+        /// <param name="eventSystemProperties"> System properties of the iot hub. </param>
+        /// <param name="sharedAccessPolicyName"> The name of the share access policy. </param>
+        /// <param name="databaseRouting"> Indication for database routing information from the data connection, by default only database routing information is allowed. </param>
+        /// <param name="retrievalStartOn"> When defined, the data connection retrieves existing Event hub events created since the Retrieval start date. It can only retrieve events retained by the Event hub, based on its retention period. </param>
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        /// <returns> A new <see cref="Models.KustoIotHubDataConnection"/> instance for mocking. </returns>
+        public static KustoIotHubDataConnection KustoIotHubDataConnection(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, ResourceIdentifier iotHubResourceId = default, string consumerGroup = default, string tableName = default, string mappingRuleName = default, KustoIotHubDataFormat? dataFormat = default, IEnumerable<string> eventSystemProperties = default, string sharedAccessPolicyName = default, KustoDatabaseRouting? databaseRouting = default, DateTimeOffset? retrievalStartOn = default, KustoProvisioningState? provisioningState = default)
+        {
+            return new KustoIotHubDataConnection(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                default,
+                default,
+                iotHubResourceId is null && consumerGroup is null && tableName is null && mappingRuleName is null && dataFormat is null && eventSystemProperties is null && sharedAccessPolicyName is null && databaseRouting is null && retrievalStartOn is null && provisioningState is null ? default : new IotHubConnectionProperties(
+                    iotHubResourceId,
+                    consumerGroup,
+                    tableName,
+                    mappingRuleName,
+                    dataFormat,
+                    (eventSystemProperties ?? new ChangeTrackingList<string>()).ToList(),
+                    sharedAccessPolicyName,
+                    databaseRouting,
+                    retrievalStartOn,
+                    provisioningState,
+                    default));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="storageAccountResourceId"> The resource ID of the storage account where the data resides. </param>
+        /// <param name="eventGridResourceId"> The resource ID of the event grid that is subscribed to the storage account events. </param>
+        /// <param name="eventHubResourceId"> The resource ID where the event grid is configured to send events. </param>
+        /// <param name="consumerGroup"> The event hub consumer group. </param>
+        /// <param name="tableName"> The table where the data should be ingested. Optionally the table information can be added to each message. </param>
+        /// <param name="mappingRuleName"> The mapping rule to be used to ingest the data. Optionally the mapping information can be added to each message. </param>
+        /// <param name="dataFormat"> The data format of the message. Optionally the data format can be added to each message. </param>
+        /// <param name="isFirstRecordIgnored"> A Boolean value that, if set to true, indicates that ingestion should ignore the first record of every file. </param>
+        /// <param name="blobStorageEventType"> The name of blob storage event type to process. </param>
+        /// <param name="managedIdentityResourceId"> The resource ID of a managed identity (system or user assigned) to be used to authenticate with event hub and storage account. </param>
+        /// <param name="managedIdentityObjectId"> The object ID of managedIdentityResourceId. </param>
+        /// <param name="databaseRouting"> Indication for database routing information from the data connection, by default only database routing information is allowed. </param>
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        /// <returns> A new <see cref="Models.KustoEventGridDataConnection"/> instance for mocking. </returns>
+        public static KustoEventGridDataConnection KustoEventGridDataConnection(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, ResourceIdentifier storageAccountResourceId = default, ResourceIdentifier eventGridResourceId = default, ResourceIdentifier eventHubResourceId = default, string consumerGroup = default, string tableName = default, string mappingRuleName = default, KustoEventGridDataFormat? dataFormat = default, bool? isFirstRecordIgnored = default, BlobStorageEventType? blobStorageEventType = default, ResourceIdentifier managedIdentityResourceId = default, Guid? managedIdentityObjectId = default, KustoDatabaseRouting? databaseRouting = default, KustoProvisioningState? provisioningState = default)
+        {
+            return new KustoEventGridDataConnection(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                default,
+                default,
+                storageAccountResourceId is null && eventGridResourceId is null && eventHubResourceId is null && consumerGroup is null && tableName is null && mappingRuleName is null && dataFormat is null && isFirstRecordIgnored is null && blobStorageEventType is null && managedIdentityResourceId is null && managedIdentityObjectId is null && databaseRouting is null && provisioningState is null ? default : new EventGridConnectionProperties(
+                    storageAccountResourceId,
+                    eventGridResourceId,
+                    eventHubResourceId,
+                    consumerGroup,
+                    tableName,
+                    mappingRuleName,
+                    dataFormat,
+                    isFirstRecordIgnored,
+                    blobStorageEventType,
+                    managedIdentityResourceId,
+                    managedIdentityObjectId,
+                    databaseRouting,
+                    provisioningState,
+                    default));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tableName"> The case-sensitive name of the existing target table in your cluster. Retrieved data is ingested into this table. </param>
+        /// <param name="mappingRuleName"> The name of an existing mapping rule to use when ingesting the retrieved data. </param>
+        /// <param name="managedIdentityResourceId"> The resource ID of a managed system or user-assigned identity. The identity is used to authenticate with Cosmos DB. </param>
+        /// <param name="managedIdentityObjectId"> The object ID of the managed identity resource. </param>
+        /// <param name="cosmosDBAccountResourceId"> The resource ID of the Cosmos DB account used to create the data connection. </param>
+        /// <param name="cosmosDBDatabase"> The name of an existing database in the Cosmos DB account. </param>
+        /// <param name="cosmosDBContainer"> The name of an existing container in the Cosmos DB database. </param>
+        /// <param name="retrievalStartOn"> Optional. If defined, the data connection retrieves Cosmos DB documents created or updated after the specified retrieval start date. </param>
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        /// <returns> A new <see cref="Models.KustoCosmosDBDataConnection"/> instance for mocking. </returns>
+        public static KustoCosmosDBDataConnection KustoCosmosDBDataConnection(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, string tableName = default, string mappingRuleName = default, ResourceIdentifier managedIdentityResourceId = default, Guid? managedIdentityObjectId = default, ResourceIdentifier cosmosDBAccountResourceId = default, string cosmosDBDatabase = default, string cosmosDBContainer = default, DateTimeOffset? retrievalStartOn = default, KustoProvisioningState? provisioningState = default)
+        {
+            return new KustoCosmosDBDataConnection(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                default,
+                default,
+                tableName is null && mappingRuleName is null && managedIdentityResourceId is null && managedIdentityObjectId is null && cosmosDBAccountResourceId is null && cosmosDBDatabase is null && cosmosDBContainer is null && retrievalStartOn is null && provisioningState is null ? default : new CosmosDbDataConnectionProperties(
+                    tableName,
+                    mappingRuleName,
+                    managedIdentityResourceId,
+                    managedIdentityObjectId,
+                    cosmosDBAccountResourceId,
+                    cosmosDBDatabase,
+                    cosmosDBContainer,
+                    retrievalStartOn,
+                    provisioningState,
+                    default));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="storageAccountResourceIdForManagedIdentity"> The resource ID of the storage account where the data resides. </param>
+        /// <param name="eventHubResourceIdForManagedIdentity"> The resource ID of the event hub that is subscribed to the storage account events. </param>
+        /// <param name="eventGridResourceId"> The resource ID where the event grid is configured to send events. </param>
+        /// <param name="consumerGroup"> The event hub consumer group. </param>
+        /// <param name="tableName"> The table where the data should be ingested. Optionally the table information can be added to each message. </param>
+        /// <param name="mappingRuleName"> The mapping rule to be used to ingest the data. Optionally the mapping information can be added to each message. </param>
+        /// <param name="dataFormat"> The data format of the message. Optionally the data format can be added to each message. </param>
+        /// <param name="shouldIgnoreFirstRecord"> A Boolean value that, if set to true, indicates that ingestion should ignore the first record of every file. </param>
+        /// <param name="blobStorageEventType"> The name of blob storage event type to process. </param>
+        /// <param name="managedIdentityResourceId"> The resource ID of a managed identity (system or user assigned) to be used to authenticate with event hub and storage account. </param>
+        /// <param name="managedIdentityObjectId"> The object ID of managedIdentityResourceId. </param>
+        /// <param name="databaseRouting"> Indication for database routing information from the data connection, by default only database routing information is allowed. </param>
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        /// <returns> A new <see cref="Models.EventGridDataConnectionWithManagedIdentity"/> instance for mocking. </returns>
+        public static EventGridDataConnectionWithManagedIdentity EventGridDataConnectionWithManagedIdentity(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, ResourceIdentifier storageAccountResourceIdForManagedIdentity = default, ResourceIdentifier eventHubResourceIdForManagedIdentity = default, ResourceIdentifier eventGridResourceId = default, string consumerGroup = default, string tableName = default, string mappingRuleName = default, KustoEventGridDataFormat? dataFormat = default, bool? shouldIgnoreFirstRecord = default, BlobStorageEventType? blobStorageEventType = default, ResourceIdentifier managedIdentityResourceId = default, Guid? managedIdentityObjectId = default, KustoDatabaseRouting? databaseRouting = default, KustoProvisioningState? provisioningState = default)
+        {
+            return new EventGridDataConnectionWithManagedIdentity(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                default,
+                default,
+                storageAccountResourceIdForManagedIdentity is null && eventHubResourceIdForManagedIdentity is null && eventGridResourceId is null && consumerGroup is null && tableName is null && mappingRuleName is null && dataFormat is null && shouldIgnoreFirstRecord is null && blobStorageEventType is null && managedIdentityResourceId is null && managedIdentityObjectId is null && databaseRouting is null && provisioningState is null ? default : new EventGridConnectionWithManagedIdentityProperties(
+                    storageAccountResourceIdForManagedIdentity,
+                    eventHubResourceIdForManagedIdentity,
+                    eventGridResourceId,
+                    consumerGroup,
+                    tableName,
+                    mappingRuleName,
+                    dataFormat,
+                    shouldIgnoreFirstRecord,
+                    blobStorageEventType,
+                    managedIdentityResourceId,
+                    managedIdentityObjectId,
+                    databaseRouting,
+                    provisioningState,
+                    default));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="eventHubResourceIdForManagedIdentity"> The resource ID of the event hub to be used to create a data connection. </param>
+        /// <param name="consumerGroup"> The event hub consumer group. </param>
+        /// <param name="tableName"> The table where the data should be ingested. Optionally the table information can be added to each message. </param>
+        /// <param name="mappingRuleName"> The mapping rule to be used to ingest the data. Optionally the mapping information can be added to each message. </param>
+        /// <param name="dataFormat"> The data format of the message. Optionally the data format can be added to each message. </param>
+        /// <param name="eventSystemProperties"> System properties of the event hub. </param>
+        /// <param name="compression"> The compression type. </param>
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        /// <param name="managedIdentityResourceId"> The resource ID of a managed identity (system or user assigned) to be used to authenticate with event hub. </param>
+        /// <param name="managedIdentityObjectId"> The object ID of the managedIdentityResourceId. </param>
+        /// <param name="databaseRouting"> Indication for database routing information from the data connection, by default only database routing information is allowed. </param>
+        /// <param name="retrievalStartOn"> When defined, the data connection retrieves existing Event hub events created since the Retrieval start date. It can only retrieve events retained by the Event hub, based on its retention period. </param>
+        /// <returns> A new <see cref="Models.EventHubDataConnectionWithManagedIdentity"/> instance for mocking. </returns>
+        public static EventHubDataConnectionWithManagedIdentity EventHubDataConnectionWithManagedIdentity(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, ResourceIdentifier eventHubResourceIdForManagedIdentity = default, string consumerGroup = default, string tableName = default, string mappingRuleName = default, KustoEventHubDataFormat? dataFormat = default, IEnumerable<string> eventSystemProperties = default, EventHubMessagesCompressionType? compression = default, KustoProvisioningState? provisioningState = default, ResourceIdentifier managedIdentityResourceId = default, Guid? managedIdentityObjectId = default, KustoDatabaseRouting? databaseRouting = default, DateTimeOffset? retrievalStartOn = default)
+        {
+            return new EventHubDataConnectionWithManagedIdentity(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                default,
+                default,
+                eventHubResourceIdForManagedIdentity is null && consumerGroup is null && tableName is null && mappingRuleName is null && dataFormat is null && eventSystemProperties is null && compression is null && provisioningState is null && managedIdentityResourceId is null && managedIdentityObjectId is null && databaseRouting is null && retrievalStartOn is null ? default : new EventHubConnectionWithManagedIdentityProperties(
+                    eventHubResourceIdForManagedIdentity,
+                    consumerGroup,
+                    tableName,
+                    mappingRuleName,
+                    dataFormat,
+                    (eventSystemProperties ?? new ChangeTrackingList<string>()).ToList(),
+                    compression,
+                    provisioningState,
+                    managedIdentityResourceId,
+                    managedIdentityObjectId,
+                    databaseRouting,
+                    retrievalStartOn,
+                    default));
+        }
+
+        /// <param name="dataConnectionName"> The name of the data connection. </param>
+        /// <param name="properties"> The data connection properties to validate. </param>
+        /// <returns> A new <see cref="Models.DataConnectionValidationContent"/> instance for mocking. </returns>
+        public static DataConnectionValidationContent DataConnectionValidationContent(string dataConnectionName = default, KustoDataConnectionData properties = default)
+        {
+            return new DataConnectionValidationContent(dataConnectionName, properties, default);
+        }
+
+        /// <param name="value"> The list of Kusto data connection validation errors. </param>
+        /// <returns> A new <see cref="Models.DataConnectionValidationResults"/> instance for mocking. </returns>
+        public static DataConnectionValidationResults DataConnectionValidationResults(IEnumerable<DataConnectionValidationResult> value = default)
+        {
+            value ??= new ChangeTrackingList<DataConnectionValidationResult>();
+
+            return new DataConnectionValidationResults((value ?? new ChangeTrackingList<DataConnectionValidationResult>()).ToList(), default);
+        }
+
+        /// <param name="errorMessage"> A message which indicates a problem in data connection validation. </param>
+        /// <returns> A new <see cref="Models.DataConnectionValidationResult"/> instance for mocking. </returns>
+        public static DataConnectionValidationResult DataConnectionValidationResult(string errorMessage = default)
+        {
+            return new DataConnectionValidationResult(errorMessage, default);
+        }
+
+        /// <param name="name"> Data Connection name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Kusto/clusters/databases/dataConnections. </param>
+        /// <returns> A new <see cref="Models.KustoDataConnectionNameAvailabilityContent"/> instance for mocking. </returns>
+        public static KustoDataConnectionNameAvailabilityContent KustoDataConnectionNameAvailabilityContent(string name = default, KustoDataConnectionType resourceType = default)
+        {
+            return new KustoDataConnectionNameAvailabilityContent(name, resourceType, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="kind"> Kind of the database. </param>
+        /// <returns> A new <see cref="Kusto.KustoDatabaseData"/> instance for mocking. </returns>
+        public static KustoDatabaseData KustoDatabaseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, string kind = default)
+        {
+            return new KustoDatabaseData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                default,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        /// <param name="softDeletePeriod"> The time the data should be kept before it stops being accessible to queries in TimeSpan. </param>
+        /// <param name="hotCachePeriod"> The time the data should be kept in cache for fast queries in TimeSpan. </param>
+        /// <param name="isFollowed"> Indicates whether the database is followed. </param>
+        /// <param name="keyVaultProperties"> KeyVault properties for the database encryption. </param>
+        /// <param name="statisticsSize"> The database size - the total size of compressed data and index in bytes. </param>
+        /// <param name="suspensionStartOn"> The starting date and time of the suspension state. </param>
+        /// <returns> A new <see cref="Models.KustoReadWriteDatabase"/> instance for mocking. </returns>
+        public static KustoReadWriteDatabase KustoReadWriteDatabase(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, KustoProvisioningState? provisioningState = default, TimeSpan? softDeletePeriod = default, TimeSpan? hotCachePeriod = default, bool? isFollowed = default, KustoKeyVaultProperties keyVaultProperties = default, float? statisticsSize = default, DateTimeOffset? suspensionStartOn = default)
+        {
+            return new KustoReadWriteDatabase(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                default,
+                default,
+                provisioningState is null && softDeletePeriod is null && hotCachePeriod is null && statisticsSize is null && isFollowed is null && keyVaultProperties is null && suspensionStartOn is null ? default : new ReadWriteDatabaseProperties(
+                    provisioningState,
+                    softDeletePeriod,
+                    hotCachePeriod,
+                    new DatabaseStatistics(statisticsSize, default),
+                    isFollowed,
+                    keyVaultProperties,
+                    new SuspensionDetails(suspensionStartOn, default),
+                    default));
+        }
+
+        /// <param name="keyName"> The name of the key vault key. </param>
+        /// <param name="keyVersion"> The version of the key vault key. </param>
+        /// <param name="keyVaultUri"> The Uri of the key vault. </param>
+        /// <param name="userIdentity"> The user assigned identity (ARM resource id) that has access to the key. The identity must have 'Get', 'Wrap Key', and 'Unwrap Key' permissions on the Key Vault key, or be assigned the 'Key Vault Crypto Service Encryption User' role. </param>
+        /// <param name="federatedIdentityClientId"> The application (client) ID of the multi-tenant Microsoft Entra application. Used for cross-tenant customer-managed key scenarios where the encryption key is stored in a different tenant than the cluster. The application must be configured with the user-assigned managed identity as a federated identity credential. </param>
+        /// <returns> A new <see cref="Models.KustoKeyVaultProperties"/> instance for mocking. </returns>
+        public static KustoKeyVaultProperties KustoKeyVaultProperties(string keyName = default, string keyVersion = default, Uri keyVaultUri = default, string userIdentity = default, string federatedIdentityClientId = default)
+        {
+            return new KustoKeyVaultProperties(
+                keyName,
+                keyVersion,
+                keyVaultUri,
+                userIdentity,
+                federatedIdentityClientId,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        /// <param name="softDeletePeriod"> The time the data should be kept before it stops being accessible to queries in TimeSpan. </param>
+        /// <param name="hotCachePeriod"> The time the data should be kept in cache for fast queries in TimeSpan. </param>
+        /// <param name="leaderClusterResourceId"> The name of the leader cluster. </param>
+        /// <param name="attachedDatabaseConfigurationName"> The name of the attached database configuration cluster. </param>
+        /// <param name="principalsModificationKind"> The principals modification kind of the database. </param>
+        /// <param name="tableLevelSharingProperties"> Table level sharing specifications. </param>
+        /// <param name="originalDatabaseName"> The original database name, before databaseNameOverride or databaseNamePrefix where applied. </param>
+        /// <param name="databaseShareOrigin"> The origin of the following setup. </param>
+        /// <param name="statisticsSize"> The database size - the total size of compressed data and index in bytes. </param>
+        /// <param name="suspensionStartOn"> The starting date and time of the suspension state. </param>
+        /// <returns> A new <see cref="Models.KustoReadOnlyFollowingDatabase"/> instance for mocking. </returns>
+        public static KustoReadOnlyFollowingDatabase KustoReadOnlyFollowingDatabase(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, KustoProvisioningState? provisioningState = default, TimeSpan? softDeletePeriod = default, TimeSpan? hotCachePeriod = default, string leaderClusterResourceId = default, string attachedDatabaseConfigurationName = default, KustoDatabasePrincipalsModificationKind? principalsModificationKind = default, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = default, string originalDatabaseName = default, KustoDatabaseShareOrigin? databaseShareOrigin = default, float? statisticsSize = default, DateTimeOffset? suspensionStartOn = default)
+        {
+            return new KustoReadOnlyFollowingDatabase(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                default,
+                default,
+                provisioningState is null && softDeletePeriod is null && hotCachePeriod is null && statisticsSize is null && leaderClusterResourceId is null && attachedDatabaseConfigurationName is null && principalsModificationKind is null && tableLevelSharingProperties is null && originalDatabaseName is null && databaseShareOrigin is null && suspensionStartOn is null ? default : new ReadOnlyFollowingDatabaseProperties(
+                    provisioningState,
+                    softDeletePeriod,
+                    hotCachePeriod,
+                    new DatabaseStatistics(statisticsSize, default),
+                    leaderClusterResourceId,
+                    attachedDatabaseConfigurationName,
+                    principalsModificationKind,
+                    tableLevelSharingProperties,
+                    originalDatabaseName,
+                    databaseShareOrigin,
+                    new SuspensionDetails(suspensionStartOn, default),
+                    default));
+        }
+
+        /// <param name="tablesToInclude"> List of tables to include in the follower database. </param>
+        /// <param name="tablesToExclude"> List of tables to exclude from the follower database. </param>
+        /// <param name="externalTablesToInclude"> List of external tables to include in the follower database. </param>
+        /// <param name="externalTablesToExclude"> List of external tables to exclude from the follower database. </param>
+        /// <param name="materializedViewsToInclude"> List of materialized views to include in the follower database. </param>
+        /// <param name="materializedViewsToExclude"> List of materialized views to exclude from the follower database. </param>
+        /// <param name="functionsToInclude"> List of functions to include in the follower database. </param>
+        /// <param name="functionsToExclude"> List of functions to exclude from the follower database. </param>
+        /// <returns> A new <see cref="Models.KustoDatabaseTableLevelSharingProperties"/> instance for mocking. </returns>
+        public static KustoDatabaseTableLevelSharingProperties KustoDatabaseTableLevelSharingProperties(IEnumerable<string> tablesToInclude = default, IEnumerable<string> tablesToExclude = default, IEnumerable<string> externalTablesToInclude = default, IEnumerable<string> externalTablesToExclude = default, IEnumerable<string> materializedViewsToInclude = default, IEnumerable<string> materializedViewsToExclude = default, IEnumerable<string> functionsToInclude = default, IEnumerable<string> functionsToExclude = default)
+        {
+            tablesToInclude ??= new ChangeTrackingList<string>();
+            tablesToExclude ??= new ChangeTrackingList<string>();
+            externalTablesToInclude ??= new ChangeTrackingList<string>();
+            externalTablesToExclude ??= new ChangeTrackingList<string>();
+            materializedViewsToInclude ??= new ChangeTrackingList<string>();
+            materializedViewsToExclude ??= new ChangeTrackingList<string>();
+            functionsToInclude ??= new ChangeTrackingList<string>();
+            functionsToExclude ??= new ChangeTrackingList<string>();
+
+            return new KustoDatabaseTableLevelSharingProperties(
+                (tablesToInclude ?? new ChangeTrackingList<string>()).ToList(),
+                (tablesToExclude ?? new ChangeTrackingList<string>()).ToList(),
+                (externalTablesToInclude ?? new ChangeTrackingList<string>()).ToList(),
+                (externalTablesToExclude ?? new ChangeTrackingList<string>()).ToList(),
+                (materializedViewsToInclude ?? new ChangeTrackingList<string>()).ToList(),
+                (materializedViewsToExclude ?? new ChangeTrackingList<string>()).ToList(),
+                (functionsToInclude ?? new ChangeTrackingList<string>()).ToList(),
+                (functionsToExclude ?? new ChangeTrackingList<string>()).ToList(),
+                default);
+        }
+
+        /// <param name="role"> Database principal role. </param>
+        /// <param name="name"> Database principal name. </param>
+        /// <param name="principalType"> Database principal type. </param>
+        /// <param name="fqn"> Database principal fully qualified name. </param>
+        /// <param name="email"> Database principal email if exists. </param>
+        /// <param name="appId"> Application id - relevant only for application principal type. </param>
+        /// <param name="tenantName"> The tenant name of the principal. </param>
+        /// <returns> A new <see cref="Models.KustoDatabasePrincipal"/> instance for mocking. </returns>
+        public static KustoDatabasePrincipal KustoDatabasePrincipal(KustoDatabasePrincipalRole role = default, string name = default, KustoDatabasePrincipalType principalType = default, string fqn = default, string email = default, string appId = default, string tenantName = default)
+        {
+            return new KustoDatabasePrincipal(
+                role,
+                name,
+                principalType,
+                fqn,
+                email,
+                appId,
+                tenantName,
+                default);
+        }
+
+        /// <param name="value"> The list of Kusto database principals. </param>
+        /// <returns> A new <see cref="Models.DatabasePrincipalList"/> instance for mocking. </returns>
+        public static DatabasePrincipalList DatabasePrincipalList(IEnumerable<KustoDatabasePrincipal> value = default)
+        {
+            value ??= new ChangeTrackingList<KustoDatabasePrincipal>();
+
+            return new DatabasePrincipalList((value ?? new ChangeTrackingList<KustoDatabasePrincipal>()).ToList(), default);
+        }
+
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> The type of resource, for instance Microsoft.Kusto/clusters/databases. </param>
+        /// <returns> A new <see cref="Models.KustoDatabaseNameAvailabilityContent"/> instance for mocking. </returns>
+        public static KustoDatabaseNameAvailabilityContent KustoDatabaseNameAvailabilityContent(string name = default, KustoDatabaseResourceType resourceType = default)
+        {
+            return new KustoDatabaseNameAvailabilityContent(name, resourceType, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        /// <param name="databaseName"> The name of the database which you would like to attach, use * if you want to follow all current and future databases. </param>
+        /// <param name="clusterResourceId"> The resource id of the cluster where the databases you would like to attach reside. </param>
+        /// <param name="attachedDatabaseNames"> The list of databases from the clusterResourceId which are currently attached to the cluster. </param>
+        /// <param name="defaultPrincipalsModificationKind"> The default principals modification kind. </param>
+        /// <param name="tableLevelSharingProperties"> Table level sharing specifications. </param>
+        /// <param name="databaseNameOverride"> Overrides the original database name. Relevant only when attaching to a specific database. </param>
+        /// <param name="databaseNamePrefix"> Adds a prefix to the attached databases name. When following an entire cluster, that prefix would be added to all of the databases original names from leader cluster. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <returns> A new <see cref="Kusto.KustoAttachedDatabaseConfigurationData"/> instance for mocking. </returns>
+        public static KustoAttachedDatabaseConfigurationData KustoAttachedDatabaseConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, KustoProvisioningState? provisioningState = default, string databaseName = default, ResourceIdentifier clusterResourceId = default, IEnumerable<string> attachedDatabaseNames = default, KustoDatabaseDefaultPrincipalsModificationKind? defaultPrincipalsModificationKind = default, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = default, string databaseNameOverride = default, string databaseNamePrefix = default, AzureLocation? location = default)
+        {
+            return new KustoAttachedDatabaseConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState is null && databaseName is null && clusterResourceId is null && attachedDatabaseNames is null && defaultPrincipalsModificationKind is null && tableLevelSharingProperties is null && databaseNameOverride is null && databaseNamePrefix is null ? default : new AttachedDatabaseConfigurationProperties(
+                    provisioningState,
+                    databaseName,
+                    clusterResourceId,
+                    (attachedDatabaseNames ?? new ChangeTrackingList<string>()).ToList(),
+                    defaultPrincipalsModificationKind.GetValueOrDefault(),
+                    tableLevelSharingProperties,
+                    databaseNameOverride,
+                    databaseNamePrefix,
+                    default),
+                location,
+                default);
+        }
+
+        /// <param name="name"> Attached database resource name. </param>
+        /// <param name="resourceType"> The type of resource, for instance Microsoft.Kusto/clusters/attachedDatabaseConfigurations. </param>
+        /// <returns> A new <see cref="Models.KustoAttachedDatabaseConfigurationNameAvailabilityContent"/> instance for mocking. </returns>
+        public static KustoAttachedDatabaseConfigurationNameAvailabilityContent KustoAttachedDatabaseConfigurationNameAvailabilityContent(string name = default, AttachedDatabaseType resourceType = default)
+        {
+            return new KustoAttachedDatabaseConfigurationNameAvailabilityContent(name, resourceType, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="privateLinkResourceId"> The ARM resource ID of the resource for which the managed private endpoint is created. </param>
+        /// <param name="privateLinkResourceRegion"> The region of the resource to which the managed private endpoint is created. </param>
+        /// <param name="groupId"> The groupId in which the managed private endpoint is created. </param>
+        /// <param name="requestMessage"> The user request message. </param>
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        /// <returns> A new <see cref="Kusto.KustoManagedPrivateEndpointData"/> instance for mocking. </returns>
+        public static KustoManagedPrivateEndpointData KustoManagedPrivateEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier privateLinkResourceId = default, string privateLinkResourceRegion = default, string groupId = default, string requestMessage = default, KustoProvisioningState? provisioningState = default)
+        {
+            return new KustoManagedPrivateEndpointData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                privateLinkResourceId is null && privateLinkResourceRegion is null && groupId is null && requestMessage is null && provisioningState is null ? default : new ManagedPrivateEndpointProperties(
+                    privateLinkResourceId,
+                    privateLinkResourceRegion,
+                    groupId,
+                    requestMessage,
+                    provisioningState,
+                    default),
+                default);
+        }
+
+        /// <param name="name"> Managed private endpoint resource name. </param>
+        /// <param name="resourceType"> The type of resource, for instance Microsoft.Kusto/clusters/managedPrivateEndpoints. </param>
+        /// <returns> A new <see cref="Models.KustoManagedPrivateEndpointNameAvailabilityContent"/> instance for mocking. </returns>
+        public static KustoManagedPrivateEndpointNameAvailabilityContent KustoManagedPrivateEndpointNameAvailabilityContent(string name = default, KustoManagedPrivateEndpointsType resourceType = default)
+        {
+            return new KustoManagedPrivateEndpointNameAvailabilityContent(name, resourceType, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="language"> The language name, for example Python. </param>
+        /// <param name="languageVersion"> The version of the language. Either this property or baseImageName should be specified. </param>
+        /// <param name="baseImageName"> The base image name on which the custom image is built on top of. It can be one of the LanguageExtensionImageName (e.g.: 'Python3_10_8', 'Python3_10_8_DL') or the name of an existing custom image. Either this property or languageVersion should be specified. </param>
+        /// <param name="requirementsFileContent"> The requirements file content. </param>
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        /// <returns> A new <see cref="Kusto.SandboxCustomImageData"/> instance for mocking. </returns>
+        public static SandboxCustomImageData SandboxCustomImageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SandboxCustomImageLanguage? language = default, string languageVersion = default, string baseImageName = default, string requirementsFileContent = default, KustoProvisioningState? provisioningState = default)
+        {
+            return new SandboxCustomImageData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                language is null && languageVersion is null && baseImageName is null && requirementsFileContent is null && provisioningState is null ? default : new SandboxCustomImageProperties(
+                    language.GetValueOrDefault(),
+                    languageVersion,
+                    baseImageName,
+                    requirementsFileContent,
+                    provisioningState,
+                    default),
+                default);
+        }
+
+        /// <param name="name"> Sandbox custom image resource name. </param>
+        /// <param name="imageType"> The type of resource, for instance Microsoft.Kusto/clusters/sandboxCustomImages. </param>
+        /// <returns> A new <see cref="Models.SandboxCustomImagesCheckNameContent"/> instance for mocking. </returns>
+        public static SandboxCustomImagesCheckNameContent SandboxCustomImagesCheckNameContent(string name = default, SandboxCustomImageType imageType = default)
+        {
+            return new SandboxCustomImagesCheckNameContent(name, imageType, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="state"> The state of the resource. </param>
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        /// <param name="clusterUri"> The cluster URI. </param>
+        /// <param name="dataIngestionUri"> The cluster data ingestion URI. </param>
+        /// <param name="stateReason"> The reason for the cluster's current state. </param>
+        /// <param name="trustedExternalTenants"> The cluster's external tenants. </param>
+        /// <param name="optimizedAutoscale"> Optimized auto scale definition. </param>
+        /// <param name="isDiskEncryptionEnabled"> A boolean value that indicates if the cluster's disks are encrypted. </param>
+        /// <param name="isStreamingIngestEnabled"> A boolean value that indicates if the streaming ingest is enabled. </param>
+        /// <param name="virtualNetworkConfiguration"> Virtual network definition. </param>
+        /// <param name="keyVaultProperties"> KeyVault properties for the cluster encryption. </param>
+        /// <param name="isPurgeEnabled"> A boolean value that indicates if the purge operations are enabled. </param>
+        /// <param name="isDoubleEncryptionEnabled"> A boolean value that indicates if double encryption is enabled. </param>
+        /// <param name="publicNetworkAccess"> Public network access to the cluster is enabled by default. When disabled, only private endpoint connection to the cluster is allowed. </param>
+        /// <param name="allowedIPRangeList"> The list of ips in the format of CIDR allowed to connect to the cluster. </param>
+        /// <param name="engineType"> The engine type. </param>
+        /// <param name="acceptedAudiences"> The cluster's accepted audiences. </param>
+        /// <param name="isAutoStopEnabled"> A boolean value that indicates if the cluster could be automatically stopped (due to lack of data or no activity for many days). </param>
+        /// <param name="restrictOutboundNetworkAccess"> Whether or not to restrict outbound network access.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="allowedFqdnList"> List of allowed FQDNs(Fully Qualified Domain Name) for egress from Cluster. </param>
+        /// <param name="calloutPolicies"> List of callout policies for egress from Cluster. </param>
+        /// <param name="publicIPType"> Indicates what public IP type to create - IPv4 (default), or DualStack (both IPv4 and IPv6). </param>
+        /// <param name="virtualClusterGraduationProperties"> Virtual Cluster graduation properties. </param>
+        /// <param name="privateEndpointConnections"> A list of private endpoint connections. </param>
+        /// <param name="migrationCluster"> Properties of the peer cluster involved in a migration to/from this cluster. </param>
+        /// <param name="zoneStatus"> Indicates whether the cluster is zonal or non-zonal. </param>
+        /// <param name="value"> The list of language extensions. </param>
+        /// <param name="nextLink"> The link to the next page of resources. </param>
+        /// <param name="sku"> The SKU of the cluster. </param>
+        /// <param name="zones"> The availability zones. </param>
+        /// <param name="identity"> The identity of the cluster, if configured. </param>
+        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        /// <returns> A new <see cref="Kusto.KustoClusterData"/> instance for mocking. </returns>
+        public static KustoClusterData KustoClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, KustoClusterState? state = default, KustoProvisioningState? provisioningState = default, Uri clusterUri = default, Uri dataIngestionUri = default, string stateReason = default, IEnumerable<KustoClusterTrustedExternalTenant> trustedExternalTenants = default, OptimizedAutoscale optimizedAutoscale = default, bool? isDiskEncryptionEnabled = default, bool? isStreamingIngestEnabled = default, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration = default, KustoKeyVaultProperties keyVaultProperties = default, bool? isPurgeEnabled = default, bool? isDoubleEncryptionEnabled = default, KustoClusterPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<string> allowedIPRangeList = default, KustoClusterEngineType? engineType = default, IEnumerable<AcceptedAudience> acceptedAudiences = default, bool? isAutoStopEnabled = default, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess = default, IEnumerable<string> allowedFqdnList = default, IEnumerable<KustoCalloutPolicy> calloutPolicies = default, KustoClusterPublicIPType? publicIPType = default, string virtualClusterGraduationProperties = default, IEnumerable<KustoPrivateEndpointConnectionData> privateEndpointConnections = default, MigrationClusterProperties migrationCluster = default, KustoClusterZoneStatus? zoneStatus = default, IEnumerable<KustoLanguageExtension> value = default, string nextLink = default, KustoSku sku = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            zones ??= new ChangeTrackingList<string>();
+
+            return new KustoClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                state is null && provisioningState is null && clusterUri is null && dataIngestionUri is null && stateReason is null && trustedExternalTenants is null && optimizedAutoscale is null && isDiskEncryptionEnabled is null && isStreamingIngestEnabled is null && virtualNetworkConfiguration is null && keyVaultProperties is null && isPurgeEnabled is null && value is null && nextLink is null && isDoubleEncryptionEnabled is null && publicNetworkAccess is null && allowedIPRangeList is null && engineType is null && acceptedAudiences is null && isAutoStopEnabled is null && restrictOutboundNetworkAccess is null && allowedFqdnList is null && calloutPolicies is null && publicIPType is null && virtualClusterGraduationProperties is null && privateEndpointConnections is null && migrationCluster is null && zoneStatus is null ? default : new ClusterProperties(
+                    state,
+                    provisioningState,
+                    clusterUri,
+                    dataIngestionUri,
+                    stateReason,
+                    (trustedExternalTenants ?? new ChangeTrackingList<KustoClusterTrustedExternalTenant>()).ToList(),
+                    optimizedAutoscale,
+                    isDiskEncryptionEnabled,
+                    isStreamingIngestEnabled,
+                    virtualNetworkConfiguration,
+                    keyVaultProperties,
+                    isPurgeEnabled,
+                    new KustoLanguageExtensionList((value ?? new ChangeTrackingList<KustoLanguageExtension>()).ToList(), nextLink, default),
+                    isDoubleEncryptionEnabled,
+                    publicNetworkAccess,
+                    (allowedIPRangeList ?? new ChangeTrackingList<string>()).ToList(),
+                    engineType,
+                    (acceptedAudiences ?? new ChangeTrackingList<AcceptedAudience>()).ToList(),
+                    isAutoStopEnabled,
+                    restrictOutboundNetworkAccess,
+                    (allowedFqdnList ?? new ChangeTrackingList<string>()).ToList(),
+                    (calloutPolicies ?? new ChangeTrackingList<KustoCalloutPolicy>()).ToList(),
+                    publicIPType,
+                    virtualClusterGraduationProperties,
+                    (privateEndpointConnections ?? new ChangeTrackingList<KustoPrivateEndpointConnectionData>()).ToList(),
+                    migrationCluster,
+                    zoneStatus,
+                    default),
+                sku,
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                identity,
+                eTag,
+                default);
+        }
+
+        /// <param name="value"> GUID representing an external tenant. </param>
+        /// <returns> A new <see cref="Models.KustoClusterTrustedExternalTenant"/> instance for mocking. </returns>
+        public static KustoClusterTrustedExternalTenant KustoClusterTrustedExternalTenant(string value = default)
+        {
+            return new KustoClusterTrustedExternalTenant(value, default);
+        }
+
+        /// <param name="version"> The version of the template defined, for instance 1. </param>
+        /// <param name="isEnabled"> A boolean value that indicate if the optimized autoscale feature is enabled or not. </param>
+        /// <param name="minimum"> Minimum allowed instances count. </param>
+        /// <param name="maximum"> Maximum allowed instances count. </param>
+        /// <returns> A new <see cref="Models.OptimizedAutoscale"/> instance for mocking. </returns>
+        public static OptimizedAutoscale OptimizedAutoscale(int version = default, bool isEnabled = default, int minimum = default, int maximum = default)
+        {
+            return new OptimizedAutoscale(version, isEnabled, minimum, maximum, default);
+        }
+
+        /// <param name="subnetId"> The subnet resource id. </param>
+        /// <param name="enginePublicIPId"> Engine service's public IP address resource id. </param>
+        /// <param name="dataManagementPublicIPId"> Data management's service public IP address resource id. </param>
+        /// <param name="state"> When enabled, the cluster is deployed into the configured subnet, when disabled it will be removed from the subnet. </param>
+        /// <returns> A new <see cref="Models.KustoClusterVirtualNetworkConfiguration"/> instance for mocking. </returns>
+        public static KustoClusterVirtualNetworkConfiguration KustoClusterVirtualNetworkConfiguration(string subnetId = default, string enginePublicIPId = default, string dataManagementPublicIPId = default, KustoClusterVnetState? state = default)
+        {
+            return new KustoClusterVirtualNetworkConfiguration(subnetId, enginePublicIPId, dataManagementPublicIPId, state, default);
+        }
+
+        /// <param name="value"> The list of language extensions. </param>
+        /// <param name="nextLink"> The link to the next page of resources. </param>
+        /// <returns> A new <see cref="Models.KustoLanguageExtensionList"/> instance for mocking. </returns>
+        public static KustoLanguageExtensionList KustoLanguageExtensionList(IEnumerable<KustoLanguageExtension> value = default, string nextLink = default)
+        {
+            value ??= new ChangeTrackingList<KustoLanguageExtension>();
+
+            return new KustoLanguageExtensionList((value ?? new ChangeTrackingList<KustoLanguageExtension>()).ToList(), nextLink, default);
+        }
+
+        /// <param name="languageExtensionName"> The language extension name. </param>
+        /// <param name="languageExtensionImageName"> The language extension image name. </param>
+        /// <param name="languageExtensionCustomImageName"> The sandbox custom image name that should be enabled as the active language extension. Sandbox custom image is a cluster sub resource. When this property is set, LanguageExtensionImageName should be set to 'PythonCustomImage'. </param>
+        /// <returns> A new <see cref="Models.KustoLanguageExtension"/> instance for mocking. </returns>
+        public static KustoLanguageExtension KustoLanguageExtension(KustoLanguageExtensionName? languageExtensionName = default, KustoLanguageExtensionImageName? languageExtensionImageName = default, string languageExtensionCustomImageName = default)
+        {
+            return new KustoLanguageExtension(languageExtensionName, languageExtensionImageName, languageExtensionCustomImageName, default);
+        }
+
+        /// <param name="value"> GUID or valid URL representing an accepted audience. </param>
+        /// <returns> A new <see cref="Models.AcceptedAudience"/> instance for mocking. </returns>
+        public static AcceptedAudience AcceptedAudience(string value = default)
+        {
+            return new AcceptedAudience(value, default);
+        }
+
+        /// <param name="calloutUriRegex"> Regular expression or FQDN pattern for the callout URI. </param>
+        /// <param name="calloutType"> Type of the callout service, specifying the kind of external resource or service being accessed. </param>
+        /// <param name="outboundAccess"> Indicates whether outbound access is permitted for the specified URI pattern. </param>
+        /// <param name="calloutId"> Unique identifier for the callout configuration. </param>
+        /// <returns> A new <see cref="Models.KustoCalloutPolicy"/> instance for mocking. </returns>
+        public static KustoCalloutPolicy KustoCalloutPolicy(string calloutUriRegex = default, KustoCalloutPolicyCalloutType? calloutType = default, KustoCalloutPolicyOutboundAccess? outboundAccess = default, string calloutId = default)
+        {
+            return new KustoCalloutPolicy(calloutUriRegex, calloutType, outboundAccess, calloutId, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="connectionState"> Connection State of the Private Endpoint Connection. </param>
+        /// <param name="groupId"> Group id of the private endpoint. </param>
+        /// <param name="provisioningState"> Provisioning state of the private endpoint. </param>
+        /// <param name="privateEndpointId"> Resource id of the private endpoint. </param>
+        /// <returns> A new <see cref="Kusto.KustoPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static KustoPrivateEndpointConnectionData KustoPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, KustoPrivateLinkServiceConnectionStateProperty connectionState = default, string groupId = default, string provisioningState = default, ResourceIdentifier privateEndpointId = default)
+        {
+            return new KustoPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                privateEndpointId is null && connectionState is null && groupId is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpointProperty(privateEndpointId, default), connectionState, groupId, provisioningState, default),
+                default);
+        }
+
+        /// <param name="status"> The private link service connection status. </param>
+        /// <param name="description"> The private link service connection description. </param>
+        /// <param name="actionsRequired"> Any action that is required beyond basic workflow (approve/ reject/ disconnect). </param>
+        /// <returns> A new <see cref="Models.KustoPrivateLinkServiceConnectionStateProperty"/> instance for mocking. </returns>
+        public static KustoPrivateLinkServiceConnectionStateProperty KustoPrivateLinkServiceConnectionStateProperty(string status = default, string description = default, string actionsRequired = default)
+        {
+            return new KustoPrivateLinkServiceConnectionStateProperty(status, description, actionsRequired, default);
+        }
+
+        /// <param name="id"> The resource ID of the cluster. </param>
+        /// <param name="uri"> The public URL of the cluster. </param>
+        /// <param name="dataIngestionUri"> The public data ingestion URL of the cluster. </param>
+        /// <param name="role"> The role of the cluster in the migration process. </param>
+        /// <returns> A new <see cref="Models.MigrationClusterProperties"/> instance for mocking. </returns>
+        public static MigrationClusterProperties MigrationClusterProperties(string id = default, Uri uri = default, Uri dataIngestionUri = default, MigrationClusterRole? role = default)
+        {
+            return new MigrationClusterProperties(id, uri, dataIngestionUri, role, default);
+        }
+
+        /// <param name="name"> SKU name. </param>
+        /// <param name="capacity"> The number of instances of the cluster. </param>
+        /// <param name="tier"> SKU tier. </param>
+        /// <returns> A new <see cref="Models.KustoSku"/> instance for mocking. </returns>
+        public static KustoSku KustoSku(KustoSkuName name = default, int? capacity = default, KustoSkuTier tier = default)
+        {
+            return new KustoSku(name, capacity, tier, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="sku"> The SKU of the cluster. </param>
+        /// <param name="zones"> The availability zones of the cluster. </param>
+        /// <param name="identity"> The identity of the cluster, if configured. </param>
+        /// <param name="state"> The state of the resource. </param>
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        /// <param name="clusterUri"> The cluster URI. </param>
+        /// <param name="dataIngestionUri"> The cluster data ingestion URI. </param>
+        /// <param name="stateReason"> The reason for the cluster's current state. </param>
+        /// <param name="trustedExternalTenants"> The cluster's external tenants. </param>
+        /// <param name="optimizedAutoscale"> Optimized auto scale definition. </param>
+        /// <param name="isDiskEncryptionEnabled"> A boolean value that indicates if the cluster's disks are encrypted. </param>
+        /// <param name="isStreamingIngestEnabled"> A boolean value that indicates if the streaming ingest is enabled. </param>
+        /// <param name="virtualNetworkConfiguration"> Virtual network definition. </param>
+        /// <param name="keyVaultProperties"> KeyVault properties for the cluster encryption. </param>
+        /// <param name="isPurgeEnabled"> A boolean value that indicates if the purge operations are enabled. </param>
+        /// <param name="isDoubleEncryptionEnabled"> A boolean value that indicates if double encryption is enabled. </param>
+        /// <param name="publicNetworkAccess"> Public network access to the cluster is enabled by default. When disabled, only private endpoint connection to the cluster is allowed. </param>
+        /// <param name="allowedIPRangeList"> The list of ips in the format of CIDR allowed to connect to the cluster. </param>
+        /// <param name="engineType"> The engine type. </param>
+        /// <param name="acceptedAudiences"> The cluster's accepted audiences. </param>
+        /// <param name="isAutoStopEnabled"> A boolean value that indicates if the cluster could be automatically stopped (due to lack of data or no activity for many days). </param>
+        /// <param name="restrictOutboundNetworkAccess"> Whether or not to restrict outbound network access.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="allowedFqdnList"> List of allowed FQDNs(Fully Qualified Domain Name) for egress from Cluster. </param>
+        /// <param name="calloutPolicies"> List of callout policies for egress from Cluster. </param>
+        /// <param name="publicIPType"> Indicates what public IP type to create - IPv4 (default), or DualStack (both IPv4 and IPv6). </param>
+        /// <param name="virtualClusterGraduationProperties"> Virtual Cluster graduation properties. </param>
+        /// <param name="privateEndpointConnections"> A list of private endpoint connections. </param>
+        /// <param name="migrationCluster"> Properties of the peer cluster involved in a migration to/from this cluster. </param>
+        /// <param name="zoneStatus"> Indicates whether the cluster is zonal or non-zonal. </param>
+        /// <param name="value"> The list of language extensions. </param>
+        /// <param name="nextLink"> The link to the next page of resources. </param>
+        /// <returns> A new <see cref="Models.KustoClusterPatch"/> instance for mocking. </returns>
+        public static KustoClusterPatch KustoClusterPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, KustoSku sku = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default, KustoClusterState? state = default, KustoProvisioningState? provisioningState = default, Uri clusterUri = default, Uri dataIngestionUri = default, string stateReason = default, IEnumerable<KustoClusterTrustedExternalTenant> trustedExternalTenants = default, OptimizedAutoscale optimizedAutoscale = default, bool? isDiskEncryptionEnabled = default, bool? isStreamingIngestEnabled = default, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration = default, KustoKeyVaultProperties keyVaultProperties = default, bool? isPurgeEnabled = default, bool? isDoubleEncryptionEnabled = default, KustoClusterPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<string> allowedIPRangeList = default, KustoClusterEngineType? engineType = default, IEnumerable<AcceptedAudience> acceptedAudiences = default, bool? isAutoStopEnabled = default, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess = default, IEnumerable<string> allowedFqdnList = default, IEnumerable<KustoCalloutPolicy> calloutPolicies = default, KustoClusterPublicIPType? publicIPType = default, string virtualClusterGraduationProperties = default, IEnumerable<KustoPrivateEndpointConnectionData> privateEndpointConnections = default, MigrationClusterProperties migrationCluster = default, KustoClusterZoneStatus? zoneStatus = default, IEnumerable<KustoLanguageExtension> value = default, string nextLink = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            zones ??= new ChangeTrackingList<string>();
+
+            return new KustoClusterPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                identity,
+                state is null && provisioningState is null && clusterUri is null && dataIngestionUri is null && stateReason is null && trustedExternalTenants is null && optimizedAutoscale is null && isDiskEncryptionEnabled is null && isStreamingIngestEnabled is null && virtualNetworkConfiguration is null && keyVaultProperties is null && isPurgeEnabled is null && value is null && nextLink is null && isDoubleEncryptionEnabled is null && publicNetworkAccess is null && allowedIPRangeList is null && engineType is null && acceptedAudiences is null && isAutoStopEnabled is null && restrictOutboundNetworkAccess is null && allowedFqdnList is null && calloutPolicies is null && publicIPType is null && virtualClusterGraduationProperties is null && privateEndpointConnections is null && migrationCluster is null && zoneStatus is null ? default : new ClusterProperties(
+                    state,
+                    provisioningState,
+                    clusterUri,
+                    dataIngestionUri,
+                    stateReason,
+                    (trustedExternalTenants ?? new ChangeTrackingList<KustoClusterTrustedExternalTenant>()).ToList(),
+                    optimizedAutoscale,
+                    isDiskEncryptionEnabled,
+                    isStreamingIngestEnabled,
+                    virtualNetworkConfiguration,
+                    keyVaultProperties,
+                    isPurgeEnabled,
+                    new KustoLanguageExtensionList((value ?? new ChangeTrackingList<KustoLanguageExtension>()).ToList(), nextLink, default),
+                    isDoubleEncryptionEnabled,
+                    publicNetworkAccess,
+                    (allowedIPRangeList ?? new ChangeTrackingList<string>()).ToList(),
+                    engineType,
+                    (acceptedAudiences ?? new ChangeTrackingList<AcceptedAudience>()).ToList(),
+                    isAutoStopEnabled,
+                    restrictOutboundNetworkAccess,
+                    (allowedFqdnList ?? new ChangeTrackingList<string>()).ToList(),
+                    (calloutPolicies ?? new ChangeTrackingList<KustoCalloutPolicy>()).ToList(),
+                    publicIPType,
+                    virtualClusterGraduationProperties,
+                    (privateEndpointConnections ?? new ChangeTrackingList<KustoPrivateEndpointConnectionData>()).ToList(),
+                    migrationCluster,
+                    zoneStatus,
+                    default),
+                default);
+        }
+
+        /// <param name="clusterResourceId"> Resource ID of the destination cluster or kusto pool. </param>
+        /// <returns> A new <see cref="Models.ClusterMigrateContent"/> instance for mocking. </returns>
+        public static ClusterMigrateContent ClusterMigrateContent(string clusterResourceId = default)
+        {
+            return new ClusterMigrateContent(clusterResourceId, default);
+        }
+
+        /// <param name="clusterResourceId"> Resource id of the cluster that follows a database owned by this cluster. </param>
+        /// <param name="attachedDatabaseConfigurationName"> Resource name of the attached database configuration in the follower cluster. </param>
+        /// <param name="databaseName"> The database name owned by this cluster that was followed. * in case following all databases. </param>
+        /// <param name="tableLevelSharingProperties"> Table level sharing specifications. </param>
+        /// <param name="databaseShareOrigin"> The origin of the following setup. </param>
+        /// <returns> A new <see cref="Models.KustoFollowerDatabase"/> instance for mocking. </returns>
+        public static KustoFollowerDatabase KustoFollowerDatabase(ResourceIdentifier clusterResourceId = default, string attachedDatabaseConfigurationName = default, string databaseName = default, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = default, KustoDatabaseShareOrigin? databaseShareOrigin = default)
+        {
+            return new KustoFollowerDatabase(clusterResourceId is null && attachedDatabaseConfigurationName is null && databaseName is null && tableLevelSharingProperties is null && databaseShareOrigin is null ? default : new FollowerDatabaseProperties(
+                clusterResourceId,
+                attachedDatabaseConfigurationName,
+                databaseName,
+                tableLevelSharingProperties,
+                databaseShareOrigin,
+                default), default);
+        }
+
+        /// <param name="clusterResourceId"> Resource id of the cluster that follows a database owned by this cluster. </param>
+        /// <param name="attachedDatabaseConfigurationName"> Resource name of the attached database configuration in the follower cluster. </param>
+        /// <param name="databaseName"> The database name owned by this cluster that was followed. * in case following all databases. </param>
+        /// <param name="tableLevelSharingProperties"> Table level sharing specifications. </param>
+        /// <param name="databaseShareOrigin"> The origin of the following setup. </param>
+        /// <returns> A new <see cref="Models.KustoFollowerDatabaseDefinition"/> instance for mocking. </returns>
+        public static KustoFollowerDatabaseDefinition KustoFollowerDatabaseDefinition(ResourceIdentifier clusterResourceId = default, string attachedDatabaseConfigurationName = default, string databaseName = default, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = default, KustoDatabaseShareOrigin? databaseShareOrigin = default)
+        {
+            return new KustoFollowerDatabaseDefinition(
+                clusterResourceId,
+                attachedDatabaseConfigurationName,
+                databaseName,
+                tableLevelSharingProperties,
+                databaseShareOrigin,
+                default);
+        }
+
+        /// <param name="findings"> The list of network connectivity diagnostic finding. </param>
+        /// <returns> A new <see cref="Models.DiagnoseVirtualNetworkResult"/> instance for mocking. </returns>
+        public static DiagnoseVirtualNetworkResult DiagnoseVirtualNetworkResult(IEnumerable<string> findings = default)
+        {
+            findings ??= new ChangeTrackingList<string>();
+
+            return new DiagnoseVirtualNetworkResult((findings ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <param name="resourceType"> Resource Namespace and Type. </param>
+        /// <param name="sku"> The SKU details. </param>
+        /// <param name="capacity"> The number of instances of the cluster. </param>
+        /// <returns> A new <see cref="Models.KustoAvailableSkuDetails"/> instance for mocking. </returns>
+        public static KustoAvailableSkuDetails KustoAvailableSkuDetails(string resourceType = default, KustoSku sku = default, KustoCapacity capacity = default)
+        {
+            return new KustoAvailableSkuDetails(resourceType, sku, capacity, default);
+        }
+
+        /// <param name="scaleType"> Scale type. </param>
+        /// <param name="minimum"> Minimum allowed capacity. </param>
+        /// <param name="maximum"> Maximum allowed capacity. </param>
+        /// <param name="default"> The default capacity that would be used. </param>
+        /// <returns> A new <see cref="Models.KustoCapacity"/> instance for mocking. </returns>
+        public static KustoCapacity KustoCapacity(KustoScaleType scaleType = default, int minimum = default, int maximum = default, int @default = default)
+        {
+            return new KustoCapacity(scaleType, minimum, maximum, @default, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="category"> The type of service accessed by the Kusto Service Environment, e.g., Azure Storage, Azure SQL Database, and Azure Active Directory. </param>
+        /// <param name="endpoints"> The endpoints that the Kusto Service Environment reaches the service at. </param>
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Models.OutboundNetworkDependenciesEndpoint"/> instance for mocking. </returns>
+        public static OutboundNetworkDependenciesEndpoint OutboundNetworkDependenciesEndpoint(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string category = default, IEnumerable<EndpointDependency> endpoints = default, KustoProvisioningState? provisioningState = default, ETag? eTag = default)
+        {
+            return new OutboundNetworkDependenciesEndpoint(
+                id,
+                name,
+                resourceType,
+                systemData,
+                category is null && endpoints is null && provisioningState is null ? default : new OutboundNetworkDependenciesEndpointProperties(category, (endpoints ?? new ChangeTrackingList<EndpointDependency>()).ToList(), provisioningState, default),
+                eTag,
+                default);
+        }
+
+        /// <param name="domainName"> The domain name of the dependency. </param>
+        /// <param name="endpointDetails"> The ports used when connecting to DomainName. </param>
+        /// <returns> A new <see cref="Models.EndpointDependency"/> instance for mocking. </returns>
+        public static EndpointDependency EndpointDependency(string domainName = default, IEnumerable<EndpointDetail> endpointDetails = default)
+        {
+            endpointDetails ??= new ChangeTrackingList<EndpointDetail>();
+
+            return new EndpointDependency(domainName, (endpointDetails ?? new ChangeTrackingList<EndpointDetail>()).ToList(), default);
+        }
+
+        /// <param name="port"> The port an endpoint is connected to. </param>
+        /// <param name="ipAddress"> The ip address of the endpoint. </param>
+        /// <returns> A new <see cref="Models.EndpointDetail"/> instance for mocking. </returns>
+        public static EndpointDetail EndpointDetail(int? port = default, string ipAddress = default)
+        {
+            return new EndpointDetail(port, ipAddress, default);
+        }
+
+        /// <param name="value"> The CalloutPolicy items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.CalloutPoliciesList"/> instance for mocking. </returns>
+        public static CalloutPoliciesList CalloutPoliciesList(IEnumerable<KustoCalloutPolicy> value = default, string nextLink = default)
+        {
+            value ??= new ChangeTrackingList<KustoCalloutPolicy>();
+
+            return new CalloutPoliciesList((value ?? new ChangeTrackingList<KustoCalloutPolicy>()).ToList(), nextLink, default);
+        }
+
+        /// <param name="calloutId"> Unique identifier for the callout configuration. </param>
+        /// <returns> A new <see cref="Models.CalloutPolicyToRemove"/> instance for mocking. </returns>
+        public static CalloutPolicyToRemove CalloutPolicyToRemove(string calloutId = default)
+        {
+            return new CalloutPolicyToRemove(calloutId, default);
+        }
+
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="name"> The name of the SKU. </param>
+        /// <param name="tier"> The tier of the SKU. </param>
+        /// <param name="locations"> The set of locations that the SKU is available. </param>
+        /// <param name="locationInfo"> Locations and zones. </param>
+        /// <param name="restrictions"> The restrictions because of which SKU cannot be used. </param>
+        /// <returns> A new <see cref="Models.KustoSkuDescription"/> instance for mocking. </returns>
+        public static KustoSkuDescription KustoSkuDescription(string resourceType = default, string name = default, string tier = default, IEnumerable<AzureLocation> locations = default, IEnumerable<KustoSkuLocationInfoItem> locationInfo = default, IEnumerable<BinaryData> restrictions = default)
+        {
+            locations ??= new ChangeTrackingList<AzureLocation>();
+            locationInfo ??= new ChangeTrackingList<KustoSkuLocationInfoItem>();
+            restrictions ??= new ChangeTrackingList<BinaryData>();
+
+            return new KustoSkuDescription(
+                resourceType,
+                name,
+                tier,
+                (locations ?? new ChangeTrackingList<AzureLocation>()).ToList(),
+                (locationInfo ?? new ChangeTrackingList<KustoSkuLocationInfoItem>()).ToList(),
+                (restrictions ?? new ChangeTrackingList<BinaryData>()).ToList(),
+                default);
+        }
+
+        /// <param name="location"> The available location of the SKU. </param>
+        /// <param name="zones"> The available zone of the SKU. </param>
+        /// <param name="zoneDetails"> Gets details of capabilities available to a SKU in specific zones. </param>
+        /// <returns> A new <see cref="Models.KustoSkuLocationInfoItem"/> instance for mocking. </returns>
+        public static KustoSkuLocationInfoItem KustoSkuLocationInfoItem(AzureLocation location = default, IEnumerable<string> zones = default, IEnumerable<KustoResourceSkuZoneDetails> zoneDetails = default)
+        {
+            zones ??= new ChangeTrackingList<string>();
+            zoneDetails ??= new ChangeTrackingList<KustoResourceSkuZoneDetails>();
+
+            return new KustoSkuLocationInfoItem(location, (zones ?? new ChangeTrackingList<string>()).ToList(), (zoneDetails ?? new ChangeTrackingList<KustoResourceSkuZoneDetails>()).ToList(), default);
+        }
+
+        /// <param name="name"> The set of zones that the SKU is available in with the specified capabilities. </param>
+        /// <param name="capabilities"> A list of capabilities that are available for the SKU in the specified list of zones. </param>
+        /// <returns> A new <see cref="Models.KustoResourceSkuZoneDetails"/> instance for mocking. </returns>
+        public static KustoResourceSkuZoneDetails KustoResourceSkuZoneDetails(IEnumerable<string> name = default, IEnumerable<KustoResourceSkuCapabilities> capabilities = default)
+        {
+            name ??= new ChangeTrackingList<string>();
+            capabilities ??= new ChangeTrackingList<KustoResourceSkuCapabilities>();
+
+            return new KustoResourceSkuZoneDetails((name ?? new ChangeTrackingList<string>()).ToList(), (capabilities ?? new ChangeTrackingList<KustoResourceSkuCapabilities>()).ToList(), default);
+        }
+
+        /// <param name="name"> An invariant to describe the feature. </param>
+        /// <param name="value"> An invariant if the feature is measured by quantity. </param>
+        /// <returns> A new <see cref="Models.KustoResourceSkuCapabilities"/> instance for mocking. </returns>
+        public static KustoResourceSkuCapabilities KustoResourceSkuCapabilities(string name = default, string value = default)
+        {
+            return new KustoResourceSkuCapabilities(name, value, default);
+        }
+
+        /// <param name="name"> Cluster name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Kusto/clusters. </param>
+        /// <returns> A new <see cref="Models.KustoClusterNameAvailabilityContent"/> instance for mocking. </returns>
+        public static KustoClusterNameAvailabilityContent KustoClusterNameAvailabilityContent(string name = default, KustoClusterType resourceType = default)
+        {
+            return new KustoClusterNameAvailabilityContent(name, resourceType, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource required zone names. </param>
+        /// <returns> A new <see cref="Kusto.KustoPrivateLinkResourceData"/> instance for mocking. </returns>
+        public static KustoPrivateLinkResourceData KustoPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
+        {
+            return new KustoPrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new KustoPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default),
+                default);
+        }
+
+        /// <param name="inviteeEmail"> The email of the invited user for which the follower invitation is generated. </param>
+        /// <param name="tableLevelSharingProperties"> Table level sharing specifications. </param>
+        /// <returns> A new <see cref="Models.DatabaseInviteFollowerContent"/> instance for mocking. </returns>
+        public static DatabaseInviteFollowerContent DatabaseInviteFollowerContent(string inviteeEmail = default, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = default)
+        {
+            return new DatabaseInviteFollowerContent(inviteeEmail, tableLevelSharingProperties, default);
+        }
+
+        /// <param name="generatedInvitation"> The generated invitation token. </param>
+        /// <returns> A new <see cref="Models.DatabaseInviteFollowerResult"/> instance for mocking. </returns>
+        public static DatabaseInviteFollowerResult DatabaseInviteFollowerResult(string generatedInvitation = default)
+        {
+            return new DatabaseInviteFollowerResult(generatedInvitation, default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Kusto.KustoClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -56,68 +1302,50 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="migrationCluster"> Properties of the peer cluster involved in a migration to/from this cluster. </param>
         /// <param name="zoneStatus"> Indicates whether the cluster is zonal or non-zonal. </param>
         /// <returns> A new <see cref="Kusto.KustoClusterData"/> instance for mocking. </returns>
-        public static KustoClusterData KustoClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, KustoSku sku = null, IEnumerable<string> zones = null, ManagedServiceIdentity identity = null, ETag? etag = null, KustoClusterState? state = null, KustoProvisioningState? provisioningState = null, Uri clusterUri = null, Uri dataIngestionUri = null, string stateReason = null, IEnumerable<KustoClusterTrustedExternalTenant> trustedExternalTenants = null, OptimizedAutoscale optimizedAutoscale = null, bool? isDiskEncryptionEnabled = null, bool? isStreamingIngestEnabled = null, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration = null, KustoKeyVaultProperties keyVaultProperties = null, bool? isPurgeEnabled = null, IEnumerable<KustoLanguageExtension> languageExtensionsValue = null, bool? isDoubleEncryptionEnabled = null, KustoClusterPublicNetworkAccess? publicNetworkAccess = null, IEnumerable<string> allowedIPRangeList = null, KustoClusterEngineType? engineType = null, IEnumerable<AcceptedAudience> acceptedAudiences = null, bool? isAutoStopEnabled = null, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess = null, IEnumerable<string> allowedFqdnList = null, IEnumerable<KustoCalloutPolicy> calloutPolicies = null, KustoClusterPublicIPType? publicIPType = null, string virtualClusterGraduationProperties = null, IEnumerable<KustoPrivateEndpointConnectionData> privateEndpointConnections = null, MigrationClusterProperties migrationCluster = null, KustoClusterZoneStatus? zoneStatus = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static KustoClusterData KustoClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, KustoSku sku = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default, ETag? etag = default, KustoClusterState? state = default, KustoProvisioningState? provisioningState = default, Uri clusterUri = default, Uri dataIngestionUri = default, string stateReason = default, IEnumerable<KustoClusterTrustedExternalTenant> trustedExternalTenants = default, OptimizedAutoscale optimizedAutoscale = default, bool? isDiskEncryptionEnabled = default, bool? isStreamingIngestEnabled = default, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration = default, KustoKeyVaultProperties keyVaultProperties = default, bool? isPurgeEnabled = default, IEnumerable<KustoLanguageExtension> languageExtensionsValue = default, bool? isDoubleEncryptionEnabled = default, KustoClusterPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<string> allowedIPRangeList = default, KustoClusterEngineType? engineType = default, IEnumerable<AcceptedAudience> acceptedAudiences = default, bool? isAutoStopEnabled = default, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess = default, IEnumerable<string> allowedFqdnList = default, IEnumerable<KustoCalloutPolicy> calloutPolicies = default, KustoClusterPublicIPType? publicIPType = default, string virtualClusterGraduationProperties = default, IEnumerable<KustoPrivateEndpointConnectionData> privateEndpointConnections = default, MigrationClusterProperties migrationCluster = default, KustoClusterZoneStatus? zoneStatus = default)
         {
-            tags ??= new Dictionary<string, string>();
-            zones ??= new List<string>();
-            trustedExternalTenants ??= new List<KustoClusterTrustedExternalTenant>();
-            languageExtensionsValue ??= new List<KustoLanguageExtension>();
-            allowedIPRangeList ??= new List<string>();
-            acceptedAudiences ??= new List<AcceptedAudience>();
-            allowedFqdnList ??= new List<string>();
-            calloutPolicies ??= new List<KustoCalloutPolicy>();
-            privateEndpointConnections ??= new List<KustoPrivateEndpointConnectionData>();
-
             return new KustoClusterData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                state is null && provisioningState is null && clusterUri is null && dataIngestionUri is null && stateReason is null && trustedExternalTenants is null && optimizedAutoscale is null && isDiskEncryptionEnabled is null && isStreamingIngestEnabled is null && virtualNetworkConfiguration is null && keyVaultProperties is null && isPurgeEnabled is null && languageExtensionsValue is null && isDoubleEncryptionEnabled is null && publicNetworkAccess is null && allowedIPRangeList is null && engineType is null && acceptedAudiences is null && isAutoStopEnabled is null && restrictOutboundNetworkAccess is null && allowedFqdnList is null && calloutPolicies is null && publicIPType is null && virtualClusterGraduationProperties is null && privateEndpointConnections is null && migrationCluster is null && zoneStatus is null ? default : new ClusterProperties(
+                    state,
+                    provisioningState,
+                    clusterUri,
+                    dataIngestionUri,
+                    stateReason,
+                    (trustedExternalTenants ?? new ChangeTrackingList<KustoClusterTrustedExternalTenant>()).ToList(),
+                    optimizedAutoscale,
+                    isDiskEncryptionEnabled,
+                    isStreamingIngestEnabled,
+                    virtualNetworkConfiguration,
+                    keyVaultProperties,
+                    isPurgeEnabled,
+                    new KustoLanguageExtensionList((languageExtensionsValue ?? new ChangeTrackingList<KustoLanguageExtension>()).ToList(), default, default),
+                    isDoubleEncryptionEnabled,
+                    publicNetworkAccess,
+                    (allowedIPRangeList ?? new ChangeTrackingList<string>()).ToList(),
+                    engineType,
+                    (acceptedAudiences ?? new ChangeTrackingList<AcceptedAudience>()).ToList(),
+                    isAutoStopEnabled,
+                    restrictOutboundNetworkAccess,
+                    (allowedFqdnList ?? new ChangeTrackingList<string>()).ToList(),
+                    (calloutPolicies ?? new ChangeTrackingList<KustoCalloutPolicy>()).ToList(),
+                    publicIPType,
+                    virtualClusterGraduationProperties,
+                    (privateEndpointConnections ?? new ChangeTrackingList<KustoPrivateEndpointConnectionData>()).ToList(),
+                    migrationCluster,
+                    zoneStatus,
+                    default),
                 sku,
-                zones?.ToList(),
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
                 identity,
                 etag,
-                state,
-                provisioningState,
-                clusterUri,
-                dataIngestionUri,
-                stateReason,
-                trustedExternalTenants?.ToList(),
-                optimizedAutoscale,
-                isDiskEncryptionEnabled,
-                isStreamingIngestEnabled,
-                virtualNetworkConfiguration,
-                keyVaultProperties,
-                isPurgeEnabled,
-                languageExtensionsValue != null ? new KustoLanguageExtensionList(languageExtensionsValue?.ToList(), serializedAdditionalRawData: null) : null,
-                isDoubleEncryptionEnabled,
-                publicNetworkAccess,
-                allowedIPRangeList?.ToList(),
-                engineType,
-                acceptedAudiences?.ToList(),
-                isAutoStopEnabled,
-                restrictOutboundNetworkAccess,
-                allowedFqdnList?.ToList(),
-                calloutPolicies?.ToList(),
-                publicIPType,
-                virtualClusterGraduationProperties,
-                privateEndpointConnections?.ToList(),
-                migrationCluster,
-                zoneStatus,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KustoCalloutPolicy"/>. </summary>
-        /// <param name="calloutUriRegex"> Regular expression or FQDN pattern for the callout URI. </param>
-        /// <param name="calloutType"> Type of the callout service, specifying the kind of external resource or service being accessed. </param>
-        /// <param name="outboundAccess"> Indicates whether outbound access is permitted for the specified URI pattern. </param>
-        /// <param name="calloutId"> Unique identifier for the callout configuration. </param>
-        /// <returns> A new <see cref="Models.KustoCalloutPolicy"/> instance for mocking. </returns>
-        public static KustoCalloutPolicy KustoCalloutPolicy(string calloutUriRegex = null, KustoCalloutPolicyCalloutType? calloutType = null, KustoCalloutPolicyOutboundAccess? outboundAccess = null, string calloutId = null)
-        {
-            return new KustoCalloutPolicy(calloutUriRegex, calloutType, outboundAccess, calloutId, serializedAdditionalRawData: null);
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Kusto.KustoPrivateEndpointConnectionData"/>. </summary>
@@ -130,39 +1358,16 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="groupId"> Group id of the private endpoint. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint. </param>
         /// <returns> A new <see cref="Kusto.KustoPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static KustoPrivateEndpointConnectionData KustoPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, KustoPrivateLinkServiceConnectionStateProperty connectionState = null, string groupId = null, string provisioningState = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static KustoPrivateEndpointConnectionData KustoPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier privateEndpointId = default, KustoPrivateLinkServiceConnectionStateProperty connectionState = default, string groupId = default, string provisioningState = default)
         {
             return new KustoPrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null,
-                connectionState,
-                groupId,
-                provisioningState,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KustoPrivateLinkServiceConnectionStateProperty"/>. </summary>
-        /// <param name="status"> The private link service connection status. </param>
-        /// <param name="description"> The private link service connection description. </param>
-        /// <param name="actionsRequired"> Any action that is required beyond basic workflow (approve/ reject/ disconnect). </param>
-        /// <returns> A new <see cref="Models.KustoPrivateLinkServiceConnectionStateProperty"/> instance for mocking. </returns>
-        public static KustoPrivateLinkServiceConnectionStateProperty KustoPrivateLinkServiceConnectionStateProperty(string status = null, string description = null, string actionsRequired = null)
-        {
-            return new KustoPrivateLinkServiceConnectionStateProperty(status, description, actionsRequired, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MigrationClusterProperties"/>. </summary>
-        /// <param name="id"> The resource ID of the cluster. </param>
-        /// <param name="uri"> The public URL of the cluster. </param>
-        /// <param name="dataIngestionUri"> The public data ingestion URL of the cluster. </param>
-        /// <param name="role"> The role of the cluster in the migration process. </param>
-        /// <returns> A new <see cref="Models.MigrationClusterProperties"/> instance for mocking. </returns>
-        public static MigrationClusterProperties MigrationClusterProperties(string id = null, Uri uri = null, Uri dataIngestionUri = null, MigrationClusterRole? role = null)
-        {
-            return new MigrationClusterProperties(id, uri, dataIngestionUri, role, serializedAdditionalRawData: null);
+                privateEndpointId is null && connectionState is null && groupId is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpointProperty(privateEndpointId, default), connectionState, groupId, provisioningState, default),
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KustoClusterPatch"/>. </summary>
@@ -203,360 +1408,49 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="migrationCluster"> Properties of the peer cluster involved in a migration to/from this cluster. </param>
         /// <param name="zoneStatus"> Indicates whether the cluster is zonal or non-zonal. </param>
         /// <returns> A new <see cref="Models.KustoClusterPatch"/> instance for mocking. </returns>
-        public static KustoClusterPatch KustoClusterPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, KustoSku sku = null, IEnumerable<string> zones = null, ManagedServiceIdentity identity = null, KustoClusterState? state = null, KustoProvisioningState? provisioningState = null, Uri uri = null, Uri dataIngestionUri = null, string stateReason = null, IEnumerable<KustoClusterTrustedExternalTenant> trustedExternalTenants = null, OptimizedAutoscale optimizedAutoscale = null, bool? isDiskEncryptionEnabled = null, bool? isStreamingIngestEnabled = null, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration = null, KustoKeyVaultProperties keyVaultProperties = null, bool? isPurgeEnabled = null, IEnumerable<KustoLanguageExtension> languageExtensionsValue = null, bool? isDoubleEncryptionEnabled = null, KustoClusterPublicNetworkAccess? publicNetworkAccess = null, IEnumerable<string> allowedIPRangeList = null, KustoClusterEngineType? engineType = null, IEnumerable<AcceptedAudience> acceptedAudiences = null, bool? isAutoStopEnabled = null, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess = null, IEnumerable<string> allowedFqdnList = null, IEnumerable<KustoCalloutPolicy> calloutPolicies = null, KustoClusterPublicIPType? publicIPType = null, string virtualClusterGraduationProperties = null, IEnumerable<KustoPrivateEndpointConnectionData> privateEndpointConnections = null, MigrationClusterProperties migrationCluster = null, KustoClusterZoneStatus? zoneStatus = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static KustoClusterPatch KustoClusterPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, KustoSku sku = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default, KustoClusterState? state = default, KustoProvisioningState? provisioningState = default, Uri uri = default, Uri dataIngestionUri = default, string stateReason = default, IEnumerable<KustoClusterTrustedExternalTenant> trustedExternalTenants = default, OptimizedAutoscale optimizedAutoscale = default, bool? isDiskEncryptionEnabled = default, bool? isStreamingIngestEnabled = default, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration = default, KustoKeyVaultProperties keyVaultProperties = default, bool? isPurgeEnabled = default, IEnumerable<KustoLanguageExtension> languageExtensionsValue = default, bool? isDoubleEncryptionEnabled = default, KustoClusterPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<string> allowedIPRangeList = default, KustoClusterEngineType? engineType = default, IEnumerable<AcceptedAudience> acceptedAudiences = default, bool? isAutoStopEnabled = default, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess = default, IEnumerable<string> allowedFqdnList = default, IEnumerable<KustoCalloutPolicy> calloutPolicies = default, KustoClusterPublicIPType? publicIPType = default, string virtualClusterGraduationProperties = default, IEnumerable<KustoPrivateEndpointConnectionData> privateEndpointConnections = default, MigrationClusterProperties migrationCluster = default, KustoClusterZoneStatus? zoneStatus = default)
         {
-            tags ??= new Dictionary<string, string>();
-            zones ??= new List<string>();
-            trustedExternalTenants ??= new List<KustoClusterTrustedExternalTenant>();
-            languageExtensionsValue ??= new List<KustoLanguageExtension>();
-            allowedIPRangeList ??= new List<string>();
-            acceptedAudiences ??= new List<AcceptedAudience>();
-            allowedFqdnList ??= new List<string>();
-            calloutPolicies ??= new List<KustoCalloutPolicy>();
-            privateEndpointConnections ??= new List<KustoPrivateEndpointConnectionData>();
-
             return new KustoClusterPatch(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 sku,
-                zones?.ToList(),
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
                 identity,
-                state,
-                provisioningState,
-                uri,
-                dataIngestionUri,
-                stateReason,
-                trustedExternalTenants?.ToList(),
-                optimizedAutoscale,
-                isDiskEncryptionEnabled,
-                isStreamingIngestEnabled,
-                virtualNetworkConfiguration,
-                keyVaultProperties,
-                isPurgeEnabled,
-                languageExtensionsValue != null ? new KustoLanguageExtensionList(languageExtensionsValue?.ToList(), serializedAdditionalRawData: null) : null,
-                isDoubleEncryptionEnabled,
-                publicNetworkAccess,
-                allowedIPRangeList?.ToList(),
-                engineType,
-                acceptedAudiences?.ToList(),
-                isAutoStopEnabled,
-                restrictOutboundNetworkAccess,
-                allowedFqdnList?.ToList(),
-                calloutPolicies?.ToList(),
-                publicIPType,
-                virtualClusterGraduationProperties,
-                privateEndpointConnections?.ToList(),
-                migrationCluster,
-                zoneStatus,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KustoClusterPrincipalAssignmentNameAvailabilityContent"/>. </summary>
-        /// <param name="name"> Principal Assignment resource name. </param>
-        /// <param name="resourceType"> The type of resource, Microsoft.Kusto/clusters/principalAssignments. </param>
-        /// <returns> A new <see cref="Models.KustoClusterPrincipalAssignmentNameAvailabilityContent"/> instance for mocking. </returns>
-        public static KustoClusterPrincipalAssignmentNameAvailabilityContent KustoClusterPrincipalAssignmentNameAvailabilityContent(string name = null, KustoClusterPrincipalAssignmentType resourceType = default)
-        {
-            return new KustoClusterPrincipalAssignmentNameAvailabilityContent(name, resourceType, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KustoNameAvailabilityResult"/>. </summary>
-        /// <param name="nameAvailable"> Specifies a Boolean value that indicates if the name is available. </param>
-        /// <param name="name"> The name that was checked. </param>
-        /// <param name="message"> Message indicating an unavailable name due to a conflict, or a description of the naming rules that are violated. </param>
-        /// <param name="reason"> Message providing the reason why the given name is invalid. </param>
-        /// <returns> A new <see cref="Models.KustoNameAvailabilityResult"/> instance for mocking. </returns>
-        public static KustoNameAvailabilityResult KustoNameAvailabilityResult(bool? nameAvailable = null, string name = null, string message = null, KustoNameUnavailableReason? reason = null)
-        {
-            return new KustoNameAvailabilityResult(nameAvailable, name, message, reason, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Kusto.KustoClusterPrincipalAssignmentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="clusterPrincipalId"> The principal ID assigned to the cluster principal. It can be a user email, application ID, or security group name. </param>
-        /// <param name="role"> Cluster principal role. </param>
-        /// <param name="tenantId"> The tenant id of the principal. </param>
-        /// <param name="principalType"> Principal type. </param>
-        /// <param name="tenantName"> The tenant name of the principal. </param>
-        /// <param name="principalName"> The principal name. </param>
-        /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        /// <param name="aadObjectId"> The service principal object id in AAD (Azure active directory). </param>
-        /// <returns> A new <see cref="Kusto.KustoClusterPrincipalAssignmentData"/> instance for mocking. </returns>
-        public static KustoClusterPrincipalAssignmentData KustoClusterPrincipalAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string clusterPrincipalId = null, KustoClusterPrincipalRole? role = null, Guid? tenantId = null, KustoPrincipalAssignmentType? principalType = null, string tenantName = null, string principalName = null, KustoProvisioningState? provisioningState = null, Guid? aadObjectId = null)
-        {
-            return new KustoClusterPrincipalAssignmentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                clusterPrincipalId,
-                role,
-                tenantId,
-                principalType,
-                tenantName,
-                principalName,
-                provisioningState,
-                aadObjectId,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KustoFollowerDatabase"/>. </summary>
-        /// <param name="clusterResourceId"> Resource id of the cluster that follows a database owned by this cluster. </param>
-        /// <param name="attachedDatabaseConfigurationName"> Resource name of the attached database configuration in the follower cluster. </param>
-        /// <param name="databaseName"> The database name owned by this cluster that was followed. * in case following all databases. </param>
-        /// <param name="tableLevelSharingProperties"> Table level sharing specifications. </param>
-        /// <param name="databaseShareOrigin"> The origin of the following setup. </param>
-        /// <returns> A new <see cref="Models.KustoFollowerDatabase"/> instance for mocking. </returns>
-        public static KustoFollowerDatabase KustoFollowerDatabase(ResourceIdentifier clusterResourceId = null, string attachedDatabaseConfigurationName = null, string databaseName = null, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = null, KustoDatabaseShareOrigin? databaseShareOrigin = null)
-        {
-            return new KustoFollowerDatabase(
-                clusterResourceId,
-                attachedDatabaseConfigurationName,
-                databaseName,
-                tableLevelSharingProperties,
-                databaseShareOrigin,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KustoFollowerDatabaseDefinition"/>. </summary>
-        /// <param name="clusterResourceId"> Resource id of the cluster that follows a database owned by this cluster. </param>
-        /// <param name="attachedDatabaseConfigurationName"> Resource name of the attached database configuration in the follower cluster. </param>
-        /// <param name="databaseName"> The database name owned by this cluster that was followed. * in case following all databases. </param>
-        /// <param name="tableLevelSharingProperties"> Table level sharing specifications. </param>
-        /// <param name="databaseShareOrigin"> The origin of the following setup. </param>
-        /// <returns> A new <see cref="Models.KustoFollowerDatabaseDefinition"/> instance for mocking. </returns>
-        public static KustoFollowerDatabaseDefinition KustoFollowerDatabaseDefinition(ResourceIdentifier clusterResourceId = null, string attachedDatabaseConfigurationName = null, string databaseName = null, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = null, KustoDatabaseShareOrigin? databaseShareOrigin = null)
-        {
-            return new KustoFollowerDatabaseDefinition(
-                clusterResourceId,
-                attachedDatabaseConfigurationName,
-                databaseName,
-                tableLevelSharingProperties,
-                databaseShareOrigin,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DiagnoseVirtualNetworkResult"/>. </summary>
-        /// <param name="findings"> The list of network connectivity diagnostic finding. </param>
-        /// <returns> A new <see cref="Models.DiagnoseVirtualNetworkResult"/> instance for mocking. </returns>
-        public static DiagnoseVirtualNetworkResult DiagnoseVirtualNetworkResult(IEnumerable<string> findings = null)
-        {
-            findings ??= new List<string>();
-
-            return new DiagnoseVirtualNetworkResult(findings?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KustoSkuDescription"/>. </summary>
-        /// <param name="resourceType"> The resource type. </param>
-        /// <param name="name"> The name of the SKU. </param>
-        /// <param name="tier"> The tier of the SKU. </param>
-        /// <param name="locations"> The set of locations that the SKU is available. </param>
-        /// <param name="locationInfo"> Locations and zones. </param>
-        /// <param name="restrictions"> The restrictions because of which SKU cannot be used. </param>
-        /// <returns> A new <see cref="Models.KustoSkuDescription"/> instance for mocking. </returns>
-        public static KustoSkuDescription KustoSkuDescription(string resourceType = null, string name = null, string tier = null, IEnumerable<AzureLocation> locations = null, IEnumerable<KustoSkuLocationInfoItem> locationInfo = null, IEnumerable<BinaryData> restrictions = null)
-        {
-            locations ??= new List<AzureLocation>();
-            locationInfo ??= new List<KustoSkuLocationInfoItem>();
-            restrictions ??= new List<BinaryData>();
-
-            return new KustoSkuDescription(
-                resourceType,
-                name,
-                tier,
-                locations?.ToList(),
-                locationInfo?.ToList(),
-                restrictions?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KustoSkuLocationInfoItem"/>. </summary>
-        /// <param name="location"> The available location of the SKU. </param>
-        /// <param name="zones"> The available zone of the SKU. </param>
-        /// <param name="zoneDetails"> Gets details of capabilities available to a SKU in specific zones. </param>
-        /// <returns> A new <see cref="Models.KustoSkuLocationInfoItem"/> instance for mocking. </returns>
-        public static KustoSkuLocationInfoItem KustoSkuLocationInfoItem(AzureLocation location = default, IEnumerable<string> zones = null, IEnumerable<KustoResourceSkuZoneDetails> zoneDetails = null)
-        {
-            zones ??= new List<string>();
-            zoneDetails ??= new List<KustoResourceSkuZoneDetails>();
-
-            return new KustoSkuLocationInfoItem(location, zones?.ToList(), zoneDetails?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KustoResourceSkuZoneDetails"/>. </summary>
-        /// <param name="name"> The set of zones that the SKU is available in with the specified capabilities. </param>
-        /// <param name="capabilities"> A list of capabilities that are available for the SKU in the specified list of zones. </param>
-        /// <returns> A new <see cref="Models.KustoResourceSkuZoneDetails"/> instance for mocking. </returns>
-        public static KustoResourceSkuZoneDetails KustoResourceSkuZoneDetails(IEnumerable<string> name = null, IEnumerable<KustoResourceSkuCapabilities> capabilities = null)
-        {
-            name ??= new List<string>();
-            capabilities ??= new List<KustoResourceSkuCapabilities>();
-
-            return new KustoResourceSkuZoneDetails(name?.ToList(), capabilities?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KustoResourceSkuCapabilities"/>. </summary>
-        /// <param name="name"> An invariant to describe the feature. </param>
-        /// <param name="value"> An invariant if the feature is measured by quantity. </param>
-        /// <returns> A new <see cref="Models.KustoResourceSkuCapabilities"/> instance for mocking. </returns>
-        public static KustoResourceSkuCapabilities KustoResourceSkuCapabilities(string name = null, string value = null)
-        {
-            return new KustoResourceSkuCapabilities(name, value, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KustoClusterNameAvailabilityContent"/>. </summary>
-        /// <param name="name"> Cluster name. </param>
-        /// <param name="resourceType"> The type of resource, Microsoft.Kusto/clusters. </param>
-        /// <returns> A new <see cref="Models.KustoClusterNameAvailabilityContent"/> instance for mocking. </returns>
-        public static KustoClusterNameAvailabilityContent KustoClusterNameAvailabilityContent(string name = null, KustoClusterType resourceType = default)
-        {
-            return new KustoClusterNameAvailabilityContent(name, resourceType, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KustoAttachedDatabaseConfigurationNameAvailabilityContent"/>. </summary>
-        /// <param name="name"> Attached database resource name. </param>
-        /// <param name="resourceType"> The type of resource, for instance Microsoft.Kusto/clusters/attachedDatabaseConfigurations. </param>
-        /// <returns> A new <see cref="Models.KustoAttachedDatabaseConfigurationNameAvailabilityContent"/> instance for mocking. </returns>
-        public static KustoAttachedDatabaseConfigurationNameAvailabilityContent KustoAttachedDatabaseConfigurationNameAvailabilityContent(string name = null, AttachedDatabaseType resourceType = default)
-        {
-            return new KustoAttachedDatabaseConfigurationNameAvailabilityContent(name, resourceType, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KustoManagedPrivateEndpointNameAvailabilityContent"/>. </summary>
-        /// <param name="name"> Managed private endpoint resource name. </param>
-        /// <param name="resourceType"> The type of resource, for instance Microsoft.Kusto/clusters/managedPrivateEndpoints. </param>
-        /// <returns> A new <see cref="Models.KustoManagedPrivateEndpointNameAvailabilityContent"/> instance for mocking. </returns>
-        public static KustoManagedPrivateEndpointNameAvailabilityContent KustoManagedPrivateEndpointNameAvailabilityContent(string name = null, KustoManagedPrivateEndpointsType resourceType = default)
-        {
-            return new KustoManagedPrivateEndpointNameAvailabilityContent(name, resourceType, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KustoAvailableSkuDetails"/>. </summary>
-        /// <param name="resourceType"> Resource Namespace and Type. </param>
-        /// <param name="sku"> The SKU details. </param>
-        /// <param name="capacity"> The number of instances of the cluster. </param>
-        /// <returns> A new <see cref="Models.KustoAvailableSkuDetails"/> instance for mocking. </returns>
-        public static KustoAvailableSkuDetails KustoAvailableSkuDetails(string resourceType = null, KustoSku sku = null, KustoCapacity capacity = null)
-        {
-            return new KustoAvailableSkuDetails(resourceType, sku, capacity, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KustoCapacity"/>. </summary>
-        /// <param name="scaleType"> Scale type. </param>
-        /// <param name="minimum"> Minimum allowed capacity. </param>
-        /// <param name="maximum"> Maximum allowed capacity. </param>
-        /// <param name="default"> The default capacity that would be used. </param>
-        /// <returns> A new <see cref="Models.KustoCapacity"/> instance for mocking. </returns>
-        public static KustoCapacity KustoCapacity(KustoScaleType scaleType = default, int minimum = default, int maximum = default, int @default = default)
-        {
-            return new KustoCapacity(scaleType, minimum, maximum, @default, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Kusto.KustoDatabaseData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="kind"> Kind of the database. </param>
-        /// <returns> A new <see cref="Kusto.KustoDatabaseData"/> instance for mocking. </returns>
-        public static KustoDatabaseData KustoDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = null)
-        {
-            return new KustoDatabaseData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                location,
-                kind == null ? default : new KustoKind(kind),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DatabaseInviteFollowerContent"/>. </summary>
-        /// <param name="inviteeEmail"> The email of the invited user for which the follower invitation is generated. </param>
-        /// <param name="tableLevelSharingProperties"> Table level sharing specifications. </param>
-        /// <returns> A new <see cref="Models.DatabaseInviteFollowerContent"/> instance for mocking. </returns>
-        public static DatabaseInviteFollowerContent DatabaseInviteFollowerContent(string inviteeEmail = null, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = null)
-        {
-            return new DatabaseInviteFollowerContent(inviteeEmail, tableLevelSharingProperties, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DatabaseInviteFollowerResult"/>. </summary>
-        /// <param name="generatedInvitation"> The generated invitation token. </param>
-        /// <returns> A new <see cref="Models.DatabaseInviteFollowerResult"/> instance for mocking. </returns>
-        public static DatabaseInviteFollowerResult DatabaseInviteFollowerResult(string generatedInvitation = null)
-        {
-            return new DatabaseInviteFollowerResult(generatedInvitation, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KustoDatabasePrincipalAssignmentNameAvailabilityContent"/>. </summary>
-        /// <param name="name"> Principal Assignment resource name. </param>
-        /// <param name="resourceType"> The type of resource, Microsoft.Kusto/clusters/databases/principalAssignments. </param>
-        /// <returns> A new <see cref="Models.KustoDatabasePrincipalAssignmentNameAvailabilityContent"/> instance for mocking. </returns>
-        public static KustoDatabasePrincipalAssignmentNameAvailabilityContent KustoDatabasePrincipalAssignmentNameAvailabilityContent(string name = null, KustoDatabasePrincipalAssignmentType resourceType = default)
-        {
-            return new KustoDatabasePrincipalAssignmentNameAvailabilityContent(name, resourceType, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Kusto.KustoDatabasePrincipalAssignmentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="databasePrincipalId"> The principal ID assigned to the database principal. It can be a user email, application ID, or security group name. </param>
-        /// <param name="role"> Database principal role. </param>
-        /// <param name="tenantId"> The tenant id of the principal. </param>
-        /// <param name="principalType"> Principal type. </param>
-        /// <param name="tenantName"> The tenant name of the principal. </param>
-        /// <param name="principalName"> The principal name. </param>
-        /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        /// <param name="aadObjectId"> The service principal object id in AAD (Azure active directory). </param>
-        /// <returns> A new <see cref="Kusto.KustoDatabasePrincipalAssignmentData"/> instance for mocking. </returns>
-        public static KustoDatabasePrincipalAssignmentData KustoDatabasePrincipalAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string databasePrincipalId = null, KustoDatabasePrincipalRole? role = null, Guid? tenantId = null, KustoPrincipalAssignmentType? principalType = null, string tenantName = null, string principalName = null, KustoProvisioningState? provisioningState = null, Guid? aadObjectId = null)
-        {
-            return new KustoDatabasePrincipalAssignmentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                databasePrincipalId,
-                role,
-                tenantId,
-                principalType,
-                tenantName,
-                principalName,
-                provisioningState,
-                aadObjectId,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KustoDatabasePrincipal"/>. </summary>
-        /// <param name="role"> Database principal role. </param>
-        /// <param name="name"> Database principal name. </param>
-        /// <param name="principalType"> Database principal type. </param>
-        /// <param name="fqn"> Database principal fully qualified name. </param>
-        /// <param name="email"> Database principal email if exists. </param>
-        /// <param name="appId"> Application id - relevant only for application principal type. </param>
-        /// <param name="tenantName"> The tenant name of the principal. </param>
-        /// <returns> A new <see cref="Models.KustoDatabasePrincipal"/> instance for mocking. </returns>
-        public static KustoDatabasePrincipal KustoDatabasePrincipal(KustoDatabasePrincipalRole role = default, string name = null, KustoDatabasePrincipalType principalType = default, string fqn = null, string email = null, string appId = null, string tenantName = null)
-        {
-            return new KustoDatabasePrincipal(
-                role,
-                name,
-                principalType,
-                fqn,
-                email,
-                appId,
-                tenantName,
-                serializedAdditionalRawData: null);
+                state is null && provisioningState is null && dataIngestionUri is null && stateReason is null && trustedExternalTenants is null && optimizedAutoscale is null && isDiskEncryptionEnabled is null && isStreamingIngestEnabled is null && virtualNetworkConfiguration is null && keyVaultProperties is null && isPurgeEnabled is null && languageExtensionsValue is null && isDoubleEncryptionEnabled is null && publicNetworkAccess is null && allowedIPRangeList is null && engineType is null && acceptedAudiences is null && isAutoStopEnabled is null && restrictOutboundNetworkAccess is null && allowedFqdnList is null && calloutPolicies is null && publicIPType is null && virtualClusterGraduationProperties is null && privateEndpointConnections is null && migrationCluster is null && zoneStatus is null ? default : new ClusterProperties(
+                    state,
+                    provisioningState,
+                    default,
+                    dataIngestionUri,
+                    stateReason,
+                    (trustedExternalTenants ?? new ChangeTrackingList<KustoClusterTrustedExternalTenant>()).ToList(),
+                    optimizedAutoscale,
+                    isDiskEncryptionEnabled,
+                    isStreamingIngestEnabled,
+                    virtualNetworkConfiguration,
+                    keyVaultProperties,
+                    isPurgeEnabled,
+                    new KustoLanguageExtensionList((languageExtensionsValue ?? new ChangeTrackingList<KustoLanguageExtension>()).ToList(), default, default),
+                    isDoubleEncryptionEnabled,
+                    publicNetworkAccess,
+                    (allowedIPRangeList ?? new ChangeTrackingList<string>()).ToList(),
+                    engineType,
+                    (acceptedAudiences ?? new ChangeTrackingList<AcceptedAudience>()).ToList(),
+                    isAutoStopEnabled,
+                    restrictOutboundNetworkAccess,
+                    (allowedFqdnList ?? new ChangeTrackingList<string>()).ToList(),
+                    (calloutPolicies ?? new ChangeTrackingList<KustoCalloutPolicy>()).ToList(),
+                    publicIPType,
+                    virtualClusterGraduationProperties,
+                    (privateEndpointConnections ?? new ChangeTrackingList<KustoPrivateEndpointConnectionData>()).ToList(),
+                    migrationCluster,
+                    zoneStatus,
+                    default),
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Kusto.KustoScriptData"/>. </summary>
@@ -573,108 +1467,26 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="scriptLevel"> Differentiates between the type of script commands included - Database or Cluster. The default is Database. </param>
         /// <param name="principalPermissionsAction"> Indicates if the permissions for the script caller are kept following completion of the script. </param>
         /// <returns> A new <see cref="Kusto.KustoScriptData"/> instance for mocking. </returns>
-        public static KustoScriptData KustoScriptData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Uri scriptUri = null, string scriptUriSasToken = null, string scriptContent = null, string forceUpdateTag = null, bool? shouldContinueOnErrors = null, KustoProvisioningState? provisioningState = null, KustoScriptLevel? scriptLevel = null, PrincipalPermissionsAction? principalPermissionsAction = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static KustoScriptData KustoScriptData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Uri scriptUri = default, string scriptUriSasToken = default, string scriptContent = default, string forceUpdateTag = default, bool? shouldContinueOnErrors = default, KustoProvisioningState? provisioningState = default, KustoScriptLevel? scriptLevel = default, PrincipalPermissionsAction? principalPermissionsAction = default)
         {
             return new KustoScriptData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                scriptUri,
-                scriptUriSasToken,
-                scriptContent,
-                forceUpdateTag,
-                shouldContinueOnErrors,
-                provisioningState,
-                scriptLevel,
-                principalPermissionsAction,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Kusto.SandboxCustomImageData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="language"> The language name, for example Python. </param>
-        /// <param name="languageVersion"> The version of the language. Either this property or baseImageName should be specified. </param>
-        /// <param name="baseImageName"> The base image name on which the custom image is built on top of. It can be one of the LanguageExtensionImageName (e.g.: 'Python3_10_8', 'Python3_10_8_DL') or the name of an existing custom image. Either this property or languageVersion should be specified. </param>
-        /// <param name="requirementsFileContent"> The requirements file content. </param>
-        /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        /// <returns> A new <see cref="Kusto.SandboxCustomImageData"/> instance for mocking. </returns>
-        public static SandboxCustomImageData SandboxCustomImageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SandboxCustomImageLanguage? language = null, string languageVersion = null, string baseImageName = null, string requirementsFileContent = null, KustoProvisioningState? provisioningState = null)
-        {
-            return new SandboxCustomImageData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                language,
-                languageVersion,
-                baseImageName,
-                requirementsFileContent,
-                provisioningState,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SandboxCustomImagesCheckNameContent"/>. </summary>
-        /// <param name="name"> Sandbox custom image resource name. </param>
-        /// <param name="imageType"> The type of resource, for instance Microsoft.Kusto/clusters/sandboxCustomImages. </param>
-        /// <returns> A new <see cref="Models.SandboxCustomImagesCheckNameContent"/> instance for mocking. </returns>
-        public static SandboxCustomImagesCheckNameContent SandboxCustomImagesCheckNameContent(string name = null, SandboxCustomImageType imageType = default)
-        {
-            return new SandboxCustomImagesCheckNameContent(name, imageType, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Kusto.KustoManagedPrivateEndpointData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="privateLinkResourceId"> The ARM resource ID of the resource for which the managed private endpoint is created. </param>
-        /// <param name="privateLinkResourceRegion"> The region of the resource to which the managed private endpoint is created. </param>
-        /// <param name="groupId"> The groupId in which the managed private endpoint is created. </param>
-        /// <param name="requestMessage"> The user request message. </param>
-        /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        /// <returns> A new <see cref="Kusto.KustoManagedPrivateEndpointData"/> instance for mocking. </returns>
-        public static KustoManagedPrivateEndpointData KustoManagedPrivateEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateLinkResourceId = null, string privateLinkResourceRegion = null, string groupId = null, string requestMessage = null, KustoProvisioningState? provisioningState = null)
-        {
-            return new KustoManagedPrivateEndpointData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                privateLinkResourceId,
-                privateLinkResourceRegion,
-                groupId,
-                requestMessage,
-                provisioningState,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Kusto.KustoPrivateLinkResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource required zone names. </param>
-        /// <returns> A new <see cref="Kusto.KustoPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static KustoPrivateLinkResourceData KustoPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
-        {
-            requiredMembers ??= new List<string>();
-            requiredZoneNames ??= new List<string>();
-
-            return new KustoPrivateLinkResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                groupId,
-                requiredMembers?.ToList(),
-                requiredZoneNames?.ToList(),
-                serializedAdditionalRawData: null);
+                scriptUri is null && scriptUriSasToken is null && scriptContent is null && forceUpdateTag is null && shouldContinueOnErrors is null && provisioningState is null && scriptLevel is null && principalPermissionsAction is null ? default : new ScriptProperties(
+                    scriptUri,
+                    scriptUriSasToken,
+                    scriptContent,
+                    forceUpdateTag,
+                    shouldContinueOnErrors,
+                    provisioningState,
+                    scriptLevel,
+                    principalPermissionsAction,
+                    default,
+                    default),
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OutboundNetworkDependenciesEndpoint"/>. </summary>
@@ -687,20 +1499,17 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="endpoints"> The endpoints that the Kusto Service Environment reaches the service at. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
         /// <returns> A new <see cref="Models.OutboundNetworkDependenciesEndpoint"/> instance for mocking. </returns>
-        public static OutboundNetworkDependenciesEndpoint OutboundNetworkDependenciesEndpoint(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string category = null, IEnumerable<EndpointDependency> endpoints = null, KustoProvisioningState? provisioningState = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static OutboundNetworkDependenciesEndpoint OutboundNetworkDependenciesEndpoint(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, string category = default, IEnumerable<EndpointDependency> endpoints = default, KustoProvisioningState? provisioningState = default)
         {
-            endpoints ??= new List<EndpointDependency>();
-
             return new OutboundNetworkDependenciesEndpoint(
                 id,
                 name,
                 resourceType,
                 systemData,
+                category is null && endpoints is null && provisioningState is null ? default : new OutboundNetworkDependenciesEndpointProperties(category, (endpoints ?? new ChangeTrackingList<EndpointDependency>()).ToList(), provisioningState, default),
                 etag,
-                category,
-                endpoints?.ToList(),
-                provisioningState,
-                serializedAdditionalRawData: null);
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Kusto.KustoAttachedDatabaseConfigurationData"/>. </summary>
@@ -718,81 +1527,26 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="databaseNameOverride"> Overrides the original database name. Relevant only when attaching to a specific database. </param>
         /// <param name="databaseNamePrefix"> Adds a prefix to the attached databases name. When following an entire cluster, that prefix would be added to all of the databases original names from leader cluster. </param>
         /// <returns> A new <see cref="Kusto.KustoAttachedDatabaseConfigurationData"/> instance for mocking. </returns>
-        public static KustoAttachedDatabaseConfigurationData KustoAttachedDatabaseConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, KustoProvisioningState? provisioningState = null, string databaseName = null, ResourceIdentifier clusterResourceId = null, IEnumerable<string> attachedDatabaseNames = null, KustoDatabaseDefaultPrincipalsModificationKind? defaultPrincipalsModificationKind = null, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = null, string databaseNameOverride = null, string databaseNamePrefix = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static KustoAttachedDatabaseConfigurationData KustoAttachedDatabaseConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, KustoProvisioningState? provisioningState = default, string databaseName = default, ResourceIdentifier clusterResourceId = default, IEnumerable<string> attachedDatabaseNames = default, KustoDatabaseDefaultPrincipalsModificationKind? defaultPrincipalsModificationKind = default, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = default, string databaseNameOverride = default, string databaseNamePrefix = default)
         {
-            attachedDatabaseNames ??= new List<string>();
-
             return new KustoAttachedDatabaseConfigurationData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                provisioningState is null && databaseName is null && clusterResourceId is null && attachedDatabaseNames is null && defaultPrincipalsModificationKind is null && tableLevelSharingProperties is null && databaseNameOverride is null && databaseNamePrefix is null ? default : new AttachedDatabaseConfigurationProperties(
+                    provisioningState,
+                    databaseName,
+                    clusterResourceId,
+                    (attachedDatabaseNames ?? new ChangeTrackingList<string>()).ToList(),
+                    defaultPrincipalsModificationKind.GetValueOrDefault(),
+                    tableLevelSharingProperties,
+                    databaseNameOverride,
+                    databaseNamePrefix,
+                    default),
                 location,
-                provisioningState,
-                databaseName,
-                clusterResourceId,
-                attachedDatabaseNames?.ToList(),
-                defaultPrincipalsModificationKind,
-                tableLevelSharingProperties,
-                databaseNameOverride,
-                databaseNamePrefix,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Kusto.KustoDataConnectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="kind"> Kind of the endpoint for the data connection. </param>
-        /// <returns> A new <see cref="Kusto.KustoDataConnectionData"/> instance for mocking. </returns>
-        public static KustoDataConnectionData KustoDataConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = null)
-        {
-            return new KustoDataConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                location,
-                kind == null ? default : new DataConnectionKind(kind),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DataConnectionValidationResults"/>. </summary>
-        /// <param name="value"> The list of Kusto data connection validation errors. </param>
-        /// <returns> A new <see cref="Models.DataConnectionValidationResults"/> instance for mocking. </returns>
-        public static DataConnectionValidationResults DataConnectionValidationResults(IEnumerable<DataConnectionValidationResult> value = null)
-        {
-            value ??= new List<DataConnectionValidationResult>();
-
-            return new DataConnectionValidationResults(value?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DataConnectionValidationResult"/>. </summary>
-        /// <param name="errorMessage"> A message which indicates a problem in data connection validation. </param>
-        /// <returns> A new <see cref="Models.DataConnectionValidationResult"/> instance for mocking. </returns>
-        public static DataConnectionValidationResult DataConnectionValidationResult(string errorMessage = null)
-        {
-            return new DataConnectionValidationResult(errorMessage, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KustoDataConnectionNameAvailabilityContent"/>. </summary>
-        /// <param name="name"> Data Connection name. </param>
-        /// <param name="resourceType"> The type of resource, Microsoft.Kusto/clusters/databases/dataConnections. </param>
-        /// <returns> A new <see cref="Models.KustoDataConnectionNameAvailabilityContent"/> instance for mocking. </returns>
-        public static KustoDataConnectionNameAvailabilityContent KustoDataConnectionNameAvailabilityContent(string name = null, KustoDataConnectionType resourceType = default)
-        {
-            return new KustoDataConnectionNameAvailabilityContent(name, resourceType, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KustoScriptNameAvailabilityContent"/>. </summary>
-        /// <param name="name"> Script name. </param>
-        /// <param name="resourceType"> The type of resource, Microsoft.Kusto/clusters/databases/scripts. </param>
-        /// <returns> A new <see cref="Models.KustoScriptNameAvailabilityContent"/> instance for mocking. </returns>
-        public static KustoScriptNameAvailabilityContent KustoScriptNameAvailabilityContent(string name = null, KustoScriptType resourceType = default)
-        {
-            return new KustoScriptNameAvailabilityContent(name, resourceType, serializedAdditionalRawData: null);
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KustoReadWriteDatabase"/>. </summary>
@@ -809,7 +1563,8 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="keyVaultProperties"> KeyVault properties for the database encryption. </param>
         /// <param name="suspensionStartOn"> The database suspension details. If the database is suspended, this object contains information related to the database's suspension state. </param>
         /// <returns> A new <see cref="Models.KustoReadWriteDatabase"/> instance for mocking. </returns>
-        public static KustoReadWriteDatabase KustoReadWriteDatabase(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, KustoProvisioningState? provisioningState = null, TimeSpan? softDeletePeriod = null, TimeSpan? hotCachePeriod = null, float? statisticsSize = null, bool? isFollowed = null, KustoKeyVaultProperties keyVaultProperties = null, DateTimeOffset? suspensionStartOn = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static KustoReadWriteDatabase KustoReadWriteDatabase(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, KustoProvisioningState? provisioningState = default, TimeSpan? softDeletePeriod = default, TimeSpan? hotCachePeriod = default, float? statisticsSize = default, bool? isFollowed = default, KustoKeyVaultProperties keyVaultProperties = default, DateTimeOffset? suspensionStartOn = default)
         {
             return new KustoReadWriteDatabase(
                 id,
@@ -817,15 +1572,17 @@ namespace Azure.ResourceManager.Kusto.Models
                 resourceType,
                 systemData,
                 location,
-                KustoKind.ReadWrite,
-                serializedAdditionalRawData: null,
-                provisioningState,
-                softDeletePeriod,
-                hotCachePeriod,
-                statisticsSize != null ? new DatabaseStatistics(statisticsSize, serializedAdditionalRawData: null) : null,
-                isFollowed,
-                keyVaultProperties,
-                suspensionStartOn != null ? new SuspensionDetails(suspensionStartOn, serializedAdditionalRawData: null) : null);
+                default,
+                default,
+                provisioningState is null && softDeletePeriod is null && hotCachePeriod is null && statisticsSize is null && isFollowed is null && keyVaultProperties is null && suspensionStartOn is null ? default : new ReadWriteDatabaseProperties(
+                    provisioningState,
+                    softDeletePeriod,
+                    hotCachePeriod,
+                    new DatabaseStatistics(statisticsSize, default),
+                    isFollowed,
+                    keyVaultProperties,
+                    new SuspensionDetails(suspensionStartOn, default),
+                    default));
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KustoReadOnlyFollowingDatabase"/>. </summary>
@@ -846,7 +1603,8 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="databaseShareOrigin"> The origin of the following setup. </param>
         /// <param name="suspensionStartOn"> The database suspension details. If the database is suspended, this object contains information related to the database's suspension state. </param>
         /// <returns> A new <see cref="Models.KustoReadOnlyFollowingDatabase"/> instance for mocking. </returns>
-        public static KustoReadOnlyFollowingDatabase KustoReadOnlyFollowingDatabase(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, KustoProvisioningState? provisioningState = null, TimeSpan? softDeletePeriod = null, TimeSpan? hotCachePeriod = null, float? statisticsSize = null, string leaderClusterResourceId = null, string attachedDatabaseConfigurationName = null, KustoDatabasePrincipalsModificationKind? principalsModificationKind = null, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = null, string originalDatabaseName = null, KustoDatabaseShareOrigin? databaseShareOrigin = null, DateTimeOffset? suspensionStartOn = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static KustoReadOnlyFollowingDatabase KustoReadOnlyFollowingDatabase(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, KustoProvisioningState? provisioningState = default, TimeSpan? softDeletePeriod = default, TimeSpan? hotCachePeriod = default, float? statisticsSize = default, string leaderClusterResourceId = default, string attachedDatabaseConfigurationName = default, KustoDatabasePrincipalsModificationKind? principalsModificationKind = default, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = default, string originalDatabaseName = default, KustoDatabaseShareOrigin? databaseShareOrigin = default, DateTimeOffset? suspensionStartOn = default)
         {
             return new KustoReadOnlyFollowingDatabase(
                 id,
@@ -854,187 +1612,21 @@ namespace Azure.ResourceManager.Kusto.Models
                 resourceType,
                 systemData,
                 location,
-                KustoKind.ReadOnlyFollowing,
-                serializedAdditionalRawData: null,
-                provisioningState,
-                softDeletePeriod,
-                hotCachePeriod,
-                statisticsSize != null ? new DatabaseStatistics(statisticsSize, serializedAdditionalRawData: null) : null,
-                leaderClusterResourceId,
-                attachedDatabaseConfigurationName,
-                principalsModificationKind,
-                tableLevelSharingProperties,
-                originalDatabaseName,
-                databaseShareOrigin,
-                suspensionStartOn != null ? new SuspensionDetails(suspensionStartOn, serializedAdditionalRawData: null) : null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KustoEventHubDataConnection"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="eventHubResourceId"> The resource ID of the event hub to be used to create a data connection. </param>
-        /// <param name="consumerGroup"> The event hub consumer group. </param>
-        /// <param name="tableName"> The table where the data should be ingested. Optionally the table information can be added to each message. </param>
-        /// <param name="mappingRuleName"> The mapping rule to be used to ingest the data. Optionally the mapping information can be added to each message. </param>
-        /// <param name="dataFormat"> The data format of the message. Optionally the data format can be added to each message. </param>
-        /// <param name="eventSystemProperties"> System properties of the event hub. </param>
-        /// <param name="compression"> The event hub messages compression type. </param>
-        /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        /// <param name="managedIdentityResourceId"> The resource ID of a managed identity (system or user assigned) to be used to authenticate with event hub. </param>
-        /// <param name="managedIdentityObjectId"> The object ID of the managedIdentityResourceId. </param>
-        /// <param name="databaseRouting"> Indication for database routing information from the data connection, by default only database routing information is allowed. </param>
-        /// <param name="retrievalStartOn"> When defined, the data connection retrieves existing Event hub events created since the Retrieval start date. It can only retrieve events retained by the Event hub, based on its retention period. </param>
-        /// <returns> A new <see cref="Models.KustoEventHubDataConnection"/> instance for mocking. </returns>
-        public static KustoEventHubDataConnection KustoEventHubDataConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ResourceIdentifier eventHubResourceId = null, string consumerGroup = null, string tableName = null, string mappingRuleName = null, KustoEventHubDataFormat? dataFormat = null, IEnumerable<string> eventSystemProperties = null, EventHubMessagesCompressionType? compression = null, KustoProvisioningState? provisioningState = null, ResourceIdentifier managedIdentityResourceId = null, Guid? managedIdentityObjectId = null, KustoDatabaseRouting? databaseRouting = null, DateTimeOffset? retrievalStartOn = null)
-        {
-            eventSystemProperties ??= new List<string>();
-
-            return new KustoEventHubDataConnection(
-                id,
-                name,
-                resourceType,
-                systemData,
-                location,
-                DataConnectionKind.EventHub,
-                serializedAdditionalRawData: null,
-                eventHubResourceId,
-                consumerGroup,
-                tableName,
-                mappingRuleName,
-                dataFormat,
-                eventSystemProperties?.ToList(),
-                compression,
-                provisioningState,
-                managedIdentityResourceId,
-                managedIdentityObjectId,
-                databaseRouting,
-                retrievalStartOn);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KustoIotHubDataConnection"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="iotHubResourceId"> The resource ID of the Iot hub to be used to create a data connection. </param>
-        /// <param name="consumerGroup"> The iot hub consumer group. </param>
-        /// <param name="tableName"> The table where the data should be ingested. Optionally the table information can be added to each message. </param>
-        /// <param name="mappingRuleName"> The mapping rule to be used to ingest the data. Optionally the mapping information can be added to each message. </param>
-        /// <param name="dataFormat"> The data format of the message. Optionally the data format can be added to each message. </param>
-        /// <param name="eventSystemProperties"> System properties of the iot hub. </param>
-        /// <param name="sharedAccessPolicyName"> The name of the share access policy. </param>
-        /// <param name="databaseRouting"> Indication for database routing information from the data connection, by default only database routing information is allowed. </param>
-        /// <param name="retrievalStartOn"> When defined, the data connection retrieves existing Event hub events created since the Retrieval start date. It can only retrieve events retained by the Event hub, based on its retention period. </param>
-        /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        /// <returns> A new <see cref="Models.KustoIotHubDataConnection"/> instance for mocking. </returns>
-        public static KustoIotHubDataConnection KustoIotHubDataConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ResourceIdentifier iotHubResourceId = null, string consumerGroup = null, string tableName = null, string mappingRuleName = null, KustoIotHubDataFormat? dataFormat = null, IEnumerable<string> eventSystemProperties = null, string sharedAccessPolicyName = null, KustoDatabaseRouting? databaseRouting = null, DateTimeOffset? retrievalStartOn = null, KustoProvisioningState? provisioningState = null)
-        {
-            eventSystemProperties ??= new List<string>();
-
-            return new KustoIotHubDataConnection(
-                id,
-                name,
-                resourceType,
-                systemData,
-                location,
-                DataConnectionKind.IotHub,
-                serializedAdditionalRawData: null,
-                iotHubResourceId,
-                consumerGroup,
-                tableName,
-                mappingRuleName,
-                dataFormat,
-                eventSystemProperties?.ToList(),
-                sharedAccessPolicyName,
-                databaseRouting,
-                retrievalStartOn,
-                provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KustoEventGridDataConnection"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="storageAccountResourceId"> The resource ID of the storage account where the data resides. </param>
-        /// <param name="eventGridResourceId"> The resource ID of the event grid that is subscribed to the storage account events. </param>
-        /// <param name="eventHubResourceId"> The resource ID where the event grid is configured to send events. </param>
-        /// <param name="consumerGroup"> The event hub consumer group. </param>
-        /// <param name="tableName"> The table where the data should be ingested. Optionally the table information can be added to each message. </param>
-        /// <param name="mappingRuleName"> The mapping rule to be used to ingest the data. Optionally the mapping information can be added to each message. </param>
-        /// <param name="dataFormat"> The data format of the message. Optionally the data format can be added to each message. </param>
-        /// <param name="isFirstRecordIgnored"> A Boolean value that, if set to true, indicates that ingestion should ignore the first record of every file. </param>
-        /// <param name="blobStorageEventType"> The name of blob storage event type to process. </param>
-        /// <param name="managedIdentityResourceId"> The resource ID of a managed identity (system or user assigned) to be used to authenticate with event hub and storage account. </param>
-        /// <param name="managedIdentityObjectId"> The object ID of managedIdentityResourceId. </param>
-        /// <param name="databaseRouting"> Indication for database routing information from the data connection, by default only database routing information is allowed. </param>
-        /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        /// <returns> A new <see cref="Models.KustoEventGridDataConnection"/> instance for mocking. </returns>
-        public static KustoEventGridDataConnection KustoEventGridDataConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ResourceIdentifier storageAccountResourceId = null, ResourceIdentifier eventGridResourceId = null, ResourceIdentifier eventHubResourceId = null, string consumerGroup = null, string tableName = null, string mappingRuleName = null, KustoEventGridDataFormat? dataFormat = null, bool? isFirstRecordIgnored = null, BlobStorageEventType? blobStorageEventType = null, ResourceIdentifier managedIdentityResourceId = null, Guid? managedIdentityObjectId = null, KustoDatabaseRouting? databaseRouting = null, KustoProvisioningState? provisioningState = null)
-        {
-            return new KustoEventGridDataConnection(
-                id,
-                name,
-                resourceType,
-                systemData,
-                location,
-                DataConnectionKind.EventGrid,
-                serializedAdditionalRawData: null,
-                storageAccountResourceId,
-                eventGridResourceId,
-                eventHubResourceId,
-                consumerGroup,
-                tableName,
-                mappingRuleName,
-                dataFormat,
-                isFirstRecordIgnored,
-                blobStorageEventType,
-                managedIdentityResourceId,
-                managedIdentityObjectId,
-                databaseRouting,
-                provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KustoCosmosDBDataConnection"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tableName"> The case-sensitive name of the existing target table in your cluster. Retrieved data is ingested into this table. </param>
-        /// <param name="mappingRuleName"> The name of an existing mapping rule to use when ingesting the retrieved data. </param>
-        /// <param name="managedIdentityResourceId"> The resource ID of a managed system or user-assigned identity. The identity is used to authenticate with Cosmos DB. </param>
-        /// <param name="managedIdentityObjectId"> The object ID of the managed identity resource. </param>
-        /// <param name="cosmosDBAccountResourceId"> The resource ID of the Cosmos DB account used to create the data connection. </param>
-        /// <param name="cosmosDBDatabase"> The name of an existing database in the Cosmos DB account. </param>
-        /// <param name="cosmosDBContainer"> The name of an existing container in the Cosmos DB database. </param>
-        /// <param name="retrievalStartOn"> Optional. If defined, the data connection retrieves Cosmos DB documents created or updated after the specified retrieval start date. </param>
-        /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        /// <returns> A new <see cref="Models.KustoCosmosDBDataConnection"/> instance for mocking. </returns>
-        public static KustoCosmosDBDataConnection KustoCosmosDBDataConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string tableName = null, string mappingRuleName = null, ResourceIdentifier managedIdentityResourceId = null, Guid? managedIdentityObjectId = null, ResourceIdentifier cosmosDBAccountResourceId = null, string cosmosDBDatabase = null, string cosmosDBContainer = null, DateTimeOffset? retrievalStartOn = null, KustoProvisioningState? provisioningState = null)
-        {
-            return new KustoCosmosDBDataConnection(
-                id,
-                name,
-                resourceType,
-                systemData,
-                location,
-                DataConnectionKind.CosmosDB,
-                serializedAdditionalRawData: null,
-                tableName,
-                mappingRuleName,
-                managedIdentityResourceId,
-                managedIdentityObjectId,
-                cosmosDBAccountResourceId,
-                cosmosDBDatabase,
-                cosmosDBContainer,
-                retrievalStartOn,
-                provisioningState);
+                default,
+                default,
+                provisioningState is null && softDeletePeriod is null && hotCachePeriod is null && statisticsSize is null && leaderClusterResourceId is null && attachedDatabaseConfigurationName is null && principalsModificationKind is null && tableLevelSharingProperties is null && originalDatabaseName is null && databaseShareOrigin is null && suspensionStartOn is null ? default : new ReadOnlyFollowingDatabaseProperties(
+                    provisioningState,
+                    softDeletePeriod,
+                    hotCachePeriod,
+                    new DatabaseStatistics(statisticsSize, default),
+                    leaderClusterResourceId,
+                    attachedDatabaseConfigurationName,
+                    principalsModificationKind,
+                    tableLevelSharingProperties,
+                    originalDatabaseName,
+                    databaseShareOrigin,
+                    new SuspensionDetails(suspensionStartOn, default),
+                    default));
         }
 
         /// <summary> Initializes a new instance of KustoClusterPatch. </summary>
@@ -1071,14 +1663,53 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="virtualClusterGraduationProperties"> Virtual Cluster graduation properties. </param>
         /// <param name="privateEndpointConnections"> A list of private endpoint connections. </param>
         /// <param name="migrationCluster"> Properties of the peer cluster involved in a migration to/from this cluster. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Kusto.Models.KustoClusterPatch" /> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.KustoClusterPatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static KustoClusterPatch KustoClusterPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, KustoSku sku, ManagedServiceIdentity identity, KustoClusterState? state, KustoProvisioningState? provisioningState, Uri uri, Uri dataIngestionUri, string stateReason, IEnumerable<KustoClusterTrustedExternalTenant> trustedExternalTenants, OptimizedAutoscale optimizedAutoscale, bool? isDiskEncryptionEnabled, bool? isStreamingIngestEnabled, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration, KustoKeyVaultProperties keyVaultProperties, bool? isPurgeEnabled, IEnumerable<KustoLanguageExtension> languageExtensionsValue, bool? isDoubleEncryptionEnabled, KustoClusterPublicNetworkAccess? publicNetworkAccess, IEnumerable<string> allowedIPRangeList, KustoClusterEngineType? engineType, IEnumerable<AcceptedAudience> acceptedAudiences, bool? isAutoStopEnabled, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess, IEnumerable<string> allowedFqdnList, KustoClusterPublicIPType? publicIPType, string virtualClusterGraduationProperties, IEnumerable<KustoPrivateEndpointConnectionData> privateEndpointConnections, MigrationClusterProperties migrationCluster)
         {
-            return KustoClusterPatch(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, sku: sku, zones: default, identity: identity, state: state, provisioningState: provisioningState, uri: uri, dataIngestionUri: dataIngestionUri, stateReason: stateReason, trustedExternalTenants: trustedExternalTenants, optimizedAutoscale: optimizedAutoscale, isDiskEncryptionEnabled: isDiskEncryptionEnabled, isStreamingIngestEnabled: isStreamingIngestEnabled, virtualNetworkConfiguration: virtualNetworkConfiguration, keyVaultProperties: keyVaultProperties, isPurgeEnabled: isPurgeEnabled, languageExtensionsValue: languageExtensionsValue, isDoubleEncryptionEnabled: isDoubleEncryptionEnabled, publicNetworkAccess: publicNetworkAccess, allowedIPRangeList: allowedIPRangeList, engineType: engineType, acceptedAudiences: acceptedAudiences, isAutoStopEnabled: isAutoStopEnabled, restrictOutboundNetworkAccess: restrictOutboundNetworkAccess, allowedFqdnList: allowedFqdnList, calloutPolicies: default, publicIPType: publicIPType, virtualClusterGraduationProperties: virtualClusterGraduationProperties, privateEndpointConnections: privateEndpointConnections, migrationCluster: migrationCluster, zoneStatus: default);
+            return new KustoClusterPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                default,
+                identity,
+                state is null && provisioningState is null && dataIngestionUri is null && stateReason is null && trustedExternalTenants is null && optimizedAutoscale is null && isDiskEncryptionEnabled is null && isStreamingIngestEnabled is null && virtualNetworkConfiguration is null && keyVaultProperties is null && isPurgeEnabled is null && languageExtensionsValue is null && isDoubleEncryptionEnabled is null && publicNetworkAccess is null && allowedIPRangeList is null && engineType is null && acceptedAudiences is null && isAutoStopEnabled is null && restrictOutboundNetworkAccess is null && allowedFqdnList is null && publicIPType is null && virtualClusterGraduationProperties is null && privateEndpointConnections is null && migrationCluster is null ? default : new ClusterProperties(
+                    state,
+                    provisioningState,
+                    default,
+                    dataIngestionUri,
+                    stateReason,
+                    (trustedExternalTenants ?? new ChangeTrackingList<KustoClusterTrustedExternalTenant>()).ToList(),
+                    optimizedAutoscale,
+                    isDiskEncryptionEnabled,
+                    isStreamingIngestEnabled,
+                    virtualNetworkConfiguration,
+                    keyVaultProperties,
+                    isPurgeEnabled,
+                    new KustoLanguageExtensionList((languageExtensionsValue ?? new ChangeTrackingList<KustoLanguageExtension>()).ToList(), default, default),
+                    isDoubleEncryptionEnabled,
+                    publicNetworkAccess,
+                    (allowedIPRangeList ?? new ChangeTrackingList<string>()).ToList(),
+                    engineType,
+                    (acceptedAudiences ?? new ChangeTrackingList<AcceptedAudience>()).ToList(),
+                    isAutoStopEnabled,
+                    restrictOutboundNetworkAccess,
+                    (allowedFqdnList ?? new ChangeTrackingList<string>()).ToList(),
+                    default,
+                    publicIPType,
+                    virtualClusterGraduationProperties,
+                    (privateEndpointConnections ?? new ChangeTrackingList<KustoPrivateEndpointConnectionData>()).ToList(),
+                    migrationCluster,
+                    default,
+                    default),
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Kusto.KustoClusterData" />. </summary>
+        /// <summary> Initializes a new instance of <see cref="Kusto.KustoClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1114,14 +1745,54 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="virtualClusterGraduationProperties"> Virtual Cluster graduation properties. </param>
         /// <param name="privateEndpointConnections"> A list of private endpoint connections. </param>
         /// <param name="migrationCluster"> Properties of the peer cluster involved in a migration to/from this cluster. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Kusto.KustoClusterData" /> instance for mocking. </returns>
+        /// <returns> A new <see cref="Kusto.KustoClusterData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static KustoClusterData KustoClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, KustoSku sku, IEnumerable<string> zones, ManagedServiceIdentity identity, ETag? etag, KustoClusterState? state, KustoProvisioningState? provisioningState, Uri clusterUri, Uri dataIngestionUri, string stateReason, IEnumerable<KustoClusterTrustedExternalTenant> trustedExternalTenants, OptimizedAutoscale optimizedAutoscale, bool? isDiskEncryptionEnabled, bool? isStreamingIngestEnabled, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration, KustoKeyVaultProperties keyVaultProperties, bool? isPurgeEnabled, IEnumerable<KustoLanguageExtension> languageExtensionsValue, bool? isDoubleEncryptionEnabled, KustoClusterPublicNetworkAccess? publicNetworkAccess, IEnumerable<string> allowedIPRangeList, KustoClusterEngineType? engineType, IEnumerable<AcceptedAudience> acceptedAudiences, bool? isAutoStopEnabled, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess, IEnumerable<string> allowedFqdnList, KustoClusterPublicIPType? publicIPType, string virtualClusterGraduationProperties, IEnumerable<KustoPrivateEndpointConnectionData> privateEndpointConnections, MigrationClusterProperties migrationCluster)
         {
-            return KustoClusterData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, sku: sku, zones: zones, identity: identity, etag: etag, state: state, provisioningState: provisioningState, clusterUri: clusterUri, dataIngestionUri: dataIngestionUri, stateReason: stateReason, trustedExternalTenants: trustedExternalTenants, optimizedAutoscale: optimizedAutoscale, isDiskEncryptionEnabled: isDiskEncryptionEnabled, isStreamingIngestEnabled: isStreamingIngestEnabled, virtualNetworkConfiguration: virtualNetworkConfiguration, keyVaultProperties: keyVaultProperties, isPurgeEnabled: isPurgeEnabled, languageExtensionsValue: languageExtensionsValue, isDoubleEncryptionEnabled: isDoubleEncryptionEnabled, publicNetworkAccess: publicNetworkAccess, allowedIPRangeList: allowedIPRangeList, engineType: engineType, acceptedAudiences: acceptedAudiences, isAutoStopEnabled: isAutoStopEnabled, restrictOutboundNetworkAccess: restrictOutboundNetworkAccess, allowedFqdnList: allowedFqdnList, calloutPolicies: default, publicIPType: publicIPType, virtualClusterGraduationProperties: virtualClusterGraduationProperties, privateEndpointConnections: privateEndpointConnections, migrationCluster: migrationCluster, zoneStatus: default);
+            return new KustoClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                state is null && provisioningState is null && clusterUri is null && dataIngestionUri is null && stateReason is null && trustedExternalTenants is null && optimizedAutoscale is null && isDiskEncryptionEnabled is null && isStreamingIngestEnabled is null && virtualNetworkConfiguration is null && keyVaultProperties is null && isPurgeEnabled is null && languageExtensionsValue is null && isDoubleEncryptionEnabled is null && publicNetworkAccess is null && allowedIPRangeList is null && engineType is null && acceptedAudiences is null && isAutoStopEnabled is null && restrictOutboundNetworkAccess is null && allowedFqdnList is null && publicIPType is null && virtualClusterGraduationProperties is null && privateEndpointConnections is null && migrationCluster is null ? default : new ClusterProperties(
+                    state,
+                    provisioningState,
+                    clusterUri,
+                    dataIngestionUri,
+                    stateReason,
+                    (trustedExternalTenants ?? new ChangeTrackingList<KustoClusterTrustedExternalTenant>()).ToList(),
+                    optimizedAutoscale,
+                    isDiskEncryptionEnabled,
+                    isStreamingIngestEnabled,
+                    virtualNetworkConfiguration,
+                    keyVaultProperties,
+                    isPurgeEnabled,
+                    new KustoLanguageExtensionList((languageExtensionsValue ?? new ChangeTrackingList<KustoLanguageExtension>()).ToList(), default, default),
+                    isDoubleEncryptionEnabled,
+                    publicNetworkAccess,
+                    (allowedIPRangeList ?? new ChangeTrackingList<string>()).ToList(),
+                    engineType,
+                    (acceptedAudiences ?? new ChangeTrackingList<AcceptedAudience>()).ToList(),
+                    isAutoStopEnabled,
+                    restrictOutboundNetworkAccess,
+                    (allowedFqdnList ?? new ChangeTrackingList<string>()).ToList(),
+                    default,
+                    publicIPType,
+                    virtualClusterGraduationProperties,
+                    (privateEndpointConnections ?? new ChangeTrackingList<KustoPrivateEndpointConnectionData>()).ToList(),
+                    migrationCluster,
+                    default,
+                    default),
+                sku,
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                identity,
+                etag,
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Kusto.Models.KustoClusterPatch" />. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KustoClusterPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1156,14 +1827,53 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="virtualClusterGraduationProperties"> Virtual Cluster graduation properties. </param>
         /// <param name="privateEndpointConnections"> A list of private endpoint connections. </param>
         /// <param name="migrationCluster"> Properties of the peer cluster involved in a migration to/from this cluster. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Kusto.Models.KustoClusterPatch" /> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.KustoClusterPatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static KustoClusterPatch KustoClusterPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, KustoSku sku, IEnumerable<string> zones, ManagedServiceIdentity identity, KustoClusterState? state, KustoProvisioningState? provisioningState, Uri uri, Uri dataIngestionUri, string stateReason, IEnumerable<KustoClusterTrustedExternalTenant> trustedExternalTenants, OptimizedAutoscale optimizedAutoscale, bool? isDiskEncryptionEnabled, bool? isStreamingIngestEnabled, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration, KustoKeyVaultProperties keyVaultProperties, bool? isPurgeEnabled, IEnumerable<KustoLanguageExtension> languageExtensionsValue, bool? isDoubleEncryptionEnabled, KustoClusterPublicNetworkAccess? publicNetworkAccess, IEnumerable<string> allowedIPRangeList, KustoClusterEngineType? engineType, IEnumerable<AcceptedAudience> acceptedAudiences, bool? isAutoStopEnabled, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess, IEnumerable<string> allowedFqdnList, KustoClusterPublicIPType? publicIPType, string virtualClusterGraduationProperties, IEnumerable<KustoPrivateEndpointConnectionData> privateEndpointConnections, MigrationClusterProperties migrationCluster)
         {
-            return KustoClusterPatch(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, sku: sku, zones: zones, identity: identity, state: state, provisioningState: provisioningState, uri: uri, dataIngestionUri: dataIngestionUri, stateReason: stateReason, trustedExternalTenants: trustedExternalTenants, optimizedAutoscale: optimizedAutoscale, isDiskEncryptionEnabled: isDiskEncryptionEnabled, isStreamingIngestEnabled: isStreamingIngestEnabled, virtualNetworkConfiguration: virtualNetworkConfiguration, keyVaultProperties: keyVaultProperties, isPurgeEnabled: isPurgeEnabled, languageExtensionsValue: languageExtensionsValue, isDoubleEncryptionEnabled: isDoubleEncryptionEnabled, publicNetworkAccess: publicNetworkAccess, allowedIPRangeList: allowedIPRangeList, engineType: engineType, acceptedAudiences: acceptedAudiences, isAutoStopEnabled: isAutoStopEnabled, restrictOutboundNetworkAccess: restrictOutboundNetworkAccess, allowedFqdnList: allowedFqdnList, calloutPolicies: default, publicIPType: publicIPType, virtualClusterGraduationProperties: virtualClusterGraduationProperties, privateEndpointConnections: privateEndpointConnections, migrationCluster: migrationCluster, zoneStatus: default);
+            return new KustoClusterPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                identity,
+                state is null && provisioningState is null && dataIngestionUri is null && stateReason is null && trustedExternalTenants is null && optimizedAutoscale is null && isDiskEncryptionEnabled is null && isStreamingIngestEnabled is null && virtualNetworkConfiguration is null && keyVaultProperties is null && isPurgeEnabled is null && languageExtensionsValue is null && isDoubleEncryptionEnabled is null && publicNetworkAccess is null && allowedIPRangeList is null && engineType is null && acceptedAudiences is null && isAutoStopEnabled is null && restrictOutboundNetworkAccess is null && allowedFqdnList is null && publicIPType is null && virtualClusterGraduationProperties is null && privateEndpointConnections is null && migrationCluster is null ? default : new ClusterProperties(
+                    state,
+                    provisioningState,
+                    default,
+                    dataIngestionUri,
+                    stateReason,
+                    (trustedExternalTenants ?? new ChangeTrackingList<KustoClusterTrustedExternalTenant>()).ToList(),
+                    optimizedAutoscale,
+                    isDiskEncryptionEnabled,
+                    isStreamingIngestEnabled,
+                    virtualNetworkConfiguration,
+                    keyVaultProperties,
+                    isPurgeEnabled,
+                    new KustoLanguageExtensionList((languageExtensionsValue ?? new ChangeTrackingList<KustoLanguageExtension>()).ToList(), default, default),
+                    isDoubleEncryptionEnabled,
+                    publicNetworkAccess,
+                    (allowedIPRangeList ?? new ChangeTrackingList<string>()).ToList(),
+                    engineType,
+                    (acceptedAudiences ?? new ChangeTrackingList<AcceptedAudience>()).ToList(),
+                    isAutoStopEnabled,
+                    restrictOutboundNetworkAccess,
+                    (allowedFqdnList ?? new ChangeTrackingList<string>()).ToList(),
+                    default,
+                    publicIPType,
+                    virtualClusterGraduationProperties,
+                    (privateEndpointConnections ?? new ChangeTrackingList<KustoPrivateEndpointConnectionData>()).ToList(),
+                    migrationCluster,
+                    default,
+                    default),
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Kusto.KustoScriptData" />. </summary>
+        /// <summary> Initializes a new instance of <see cref="Kusto.KustoScriptData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1174,14 +1884,30 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="forceUpdateTag"> A unique string. If changed the script will be applied again. </param>
         /// <param name="shouldContinueOnErrors"> Flag that indicates whether to continue if one of the command fails. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Kusto.KustoScriptData" /> instance for mocking. </returns>
+        /// <returns> A new <see cref="Kusto.KustoScriptData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static KustoScriptData KustoScriptData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri scriptUri, string scriptUriSasToken, string scriptContent, string forceUpdateTag, bool? shouldContinueOnErrors, KustoProvisioningState? provisioningState)
         {
-            return KustoScriptData(id: id, name: name, resourceType: resourceType, systemData: systemData, scriptUri: scriptUri, scriptUriSasToken: scriptUriSasToken, scriptContent: scriptContent, forceUpdateTag: forceUpdateTag, shouldContinueOnErrors: shouldContinueOnErrors, provisioningState: provisioningState, scriptLevel: default, principalPermissionsAction: default);
+            return new KustoScriptData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                scriptUri is null && scriptUriSasToken is null && scriptContent is null && forceUpdateTag is null && shouldContinueOnErrors is null && provisioningState is null ? default : new ScriptProperties(
+                    scriptUri,
+                    scriptUriSasToken,
+                    scriptContent,
+                    forceUpdateTag,
+                    shouldContinueOnErrors,
+                    provisioningState,
+                    default,
+                    default,
+                    default,
+                    default),
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Kusto.SandboxCustomImageData" />. </summary>
+        /// <summary> Initializes a new instance of <see cref="Kusto.SandboxCustomImageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1190,11 +1916,23 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="languageVersion"> The version of the language. </param>
         /// <param name="requirementsFileContent"> The requirements file content. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Kusto.SandboxCustomImageData" /> instance for mocking. </returns>
+        /// <returns> A new <see cref="Kusto.SandboxCustomImageData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SandboxCustomImageData SandboxCustomImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SandboxCustomImageLanguage? language, string languageVersion, string requirementsFileContent, KustoProvisioningState? provisioningState)
         {
-            return SandboxCustomImageData(id: id, name: name, resourceType: resourceType, systemData: systemData, language: language, languageVersion: languageVersion, baseImageName: default, requirementsFileContent: requirementsFileContent, provisioningState: provisioningState);
+            return new SandboxCustomImageData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                language is null && languageVersion is null && requirementsFileContent is null && provisioningState is null ? default : new SandboxCustomImageProperties(
+                    language.GetValueOrDefault(),
+                    languageVersion,
+                    default,
+                    requirementsFileContent,
+                    provisioningState,
+                    default),
+                default);
         }
     }
 }

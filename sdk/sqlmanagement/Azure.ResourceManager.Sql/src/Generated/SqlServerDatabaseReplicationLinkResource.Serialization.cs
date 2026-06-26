@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class SqlServerDatabaseReplicationLinkResource : IJsonModel<SqlServerDatabaseReplicationLinkData>
     {
-        private static SqlServerDatabaseReplicationLinkData s_dataDeserializationInstance;
-        private static SqlServerDatabaseReplicationLinkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SqlServerDatabaseReplicationLinkData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SqlServerDatabaseReplicationLinkData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SqlServerDatabaseReplicationLinkData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlServerDatabaseReplicationLinkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerDatabaseReplicationLinkData>)Data).Write(writer, options);
 
-        SqlServerDatabaseReplicationLinkData IJsonModel<SqlServerDatabaseReplicationLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerDatabaseReplicationLinkData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlServerDatabaseReplicationLinkData IJsonModel<SqlServerDatabaseReplicationLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SqlServerDatabaseReplicationLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerDatabaseReplicationLinkData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SqlServerDatabaseReplicationLinkData IPersistableModel<SqlServerDatabaseReplicationLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerDatabaseReplicationLinkData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlServerDatabaseReplicationLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerDatabaseReplicationLinkData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SqlServerDatabaseReplicationLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

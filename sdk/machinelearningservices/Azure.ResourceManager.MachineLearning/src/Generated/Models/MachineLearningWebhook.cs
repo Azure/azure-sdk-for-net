@@ -7,68 +7,43 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Webhook base
-    /// Please note <see cref="MachineLearningWebhook"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureDevOpsWebhook"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureDevOpsWebhook"/>.
     /// </summary>
     public abstract partial class MachineLearningWebhook
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningWebhook"/>. </summary>
-        protected MachineLearningWebhook()
-        {
-        }
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningWebhook"/>. </summary>
         /// <param name="webhookType"> [Required] Specifies the type of service to send a callback. </param>
-        /// <param name="eventType"> Send callback on a specified notification event. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningWebhook(MachineLearningWebhookType webhookType, string eventType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        private protected MachineLearningWebhook(WebhookType webhookType)
         {
             WebhookType = webhookType;
-            EventType = eventType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> [Required] Specifies the type of service to send a callback. </summary>
-        internal MachineLearningWebhookType WebhookType { get; set; }
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWebhook"/>. </summary>
+        /// <param name="eventType"> Send callback on a specified notification event. </param>
+        /// <param name="webhookType"> [Required] Specifies the type of service to send a callback. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningWebhook(string eventType, WebhookType webhookType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            EventType = eventType;
+            WebhookType = webhookType;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
         /// <summary> Send callback on a specified notification event. </summary>
         [WirePath("eventType")]
         public string EventType { get; set; }
+
+        /// <summary> [Required] Specifies the type of service to send a callback. </summary>
+        [WirePath("webhookType")]
+        internal WebhookType WebhookType { get; set; }
     }
 }

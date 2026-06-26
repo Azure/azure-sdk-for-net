@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct IntegrationRuntimeEntityReferenceType : IEquatable<IntegrationRuntimeEntityReferenceType>
     {
         private readonly string _value;
+        /// <summary> IntegrationRuntimeReference. </summary>
+        private const string IntegrationRuntimeReferenceValue = "IntegrationRuntimeReference";
+        /// <summary> LinkedServiceReference. </summary>
+        private const string LinkedServiceReferenceValue = "LinkedServiceReference";
 
         /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeEntityReferenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IntegrationRuntimeEntityReferenceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string IntegrationRuntimeReferenceValue = "IntegrationRuntimeReference";
-        private const string LinkedServiceReferenceValue = "LinkedServiceReference";
+            _value = value;
+        }
 
         /// <summary> IntegrationRuntimeReference. </summary>
         public static IntegrationRuntimeEntityReferenceType IntegrationRuntimeReference { get; } = new IntegrationRuntimeEntityReferenceType(IntegrationRuntimeReferenceValue);
+
         /// <summary> LinkedServiceReference. </summary>
         public static IntegrationRuntimeEntityReferenceType LinkedServiceReference { get; } = new IntegrationRuntimeEntityReferenceType(LinkedServiceReferenceValue);
+
         /// <summary> Determines if two <see cref="IntegrationRuntimeEntityReferenceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IntegrationRuntimeEntityReferenceType left, IntegrationRuntimeEntityReferenceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IntegrationRuntimeEntityReferenceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IntegrationRuntimeEntityReferenceType left, IntegrationRuntimeEntityReferenceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IntegrationRuntimeEntityReferenceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IntegrationRuntimeEntityReferenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IntegrationRuntimeEntityReferenceType(string value) => new IntegrationRuntimeEntityReferenceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IntegrationRuntimeEntityReferenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IntegrationRuntimeEntityReferenceType?(string value) => value == null ? null : new IntegrationRuntimeEntityReferenceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IntegrationRuntimeEntityReferenceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IntegrationRuntimeEntityReferenceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

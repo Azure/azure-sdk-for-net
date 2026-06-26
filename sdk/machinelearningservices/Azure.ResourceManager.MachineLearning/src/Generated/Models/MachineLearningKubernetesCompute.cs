@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -15,9 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningKubernetesCompute : MachineLearningComputeProperties
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningKubernetesCompute"/>. </summary>
-        public MachineLearningKubernetesCompute()
+        public MachineLearningKubernetesCompute() : base(ComputeType.Kubernetes)
         {
-            ComputeType = ComputeType.Kubernetes;
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningKubernetesCompute"/>. </summary>
@@ -31,12 +31,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="provisioningErrors"> Errors during provisioning. </param>
         /// <param name="isAttachedCompute"> Indicating whether the compute was provisioned by user and brought from outside if true, or machine learning service provisioned it if false. </param>
         /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure customers can use only MSI and AAD exclusively for authentication. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of Kubernetes. </param>
-        internal MachineLearningKubernetesCompute(ComputeType computeType, string computeLocation, MachineLearningProvisioningState? provisioningState, string description, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, ResourceIdentifier resourceId, IReadOnlyList<MachineLearningError> provisioningErrors, bool? isAttachedCompute, bool? disableLocalAuth, IDictionary<string, BinaryData> serializedAdditionalRawData, MachineLearningKubernetesProperties properties) : base(computeType, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors, isAttachedCompute, disableLocalAuth, serializedAdditionalRawData)
+        internal MachineLearningKubernetesCompute(ComputeType computeType, string computeLocation, MachineLearningProvisioningState? provisioningState, string description, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, ResourceIdentifier resourceId, IReadOnlyList<MachineLearningError> provisioningErrors, bool? isAttachedCompute, bool? disableLocalAuth, IDictionary<string, BinaryData> additionalBinaryDataProperties, MachineLearningKubernetesProperties properties) : base(computeType, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors, isAttachedCompute, disableLocalAuth, additionalBinaryDataProperties)
         {
             Properties = properties;
-            ComputeType = computeType;
         }
 
         /// <summary> Properties of Kubernetes. </summary>

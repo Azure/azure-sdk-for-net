@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -15,9 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningDataLakeAnalytics : MachineLearningComputeProperties
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningDataLakeAnalytics"/>. </summary>
-        public MachineLearningDataLakeAnalytics()
+        public MachineLearningDataLakeAnalytics() : base(ComputeType.DataLakeAnalytics)
         {
-            ComputeType = ComputeType.DataLakeAnalytics;
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningDataLakeAnalytics"/>. </summary>
@@ -31,25 +31,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="provisioningErrors"> Errors during provisioning. </param>
         /// <param name="isAttachedCompute"> Indicating whether the compute was provisioned by user and brought from outside if true, or machine learning service provisioned it if false. </param>
         /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure customers can use only MSI and AAD exclusively for authentication. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"></param>
-        internal MachineLearningDataLakeAnalytics(ComputeType computeType, string computeLocation, MachineLearningProvisioningState? provisioningState, string description, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, ResourceIdentifier resourceId, IReadOnlyList<MachineLearningError> provisioningErrors, bool? isAttachedCompute, bool? disableLocalAuth, IDictionary<string, BinaryData> serializedAdditionalRawData, MachineLearningDataLakeAnalyticsProperties properties) : base(computeType, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors, isAttachedCompute, disableLocalAuth, serializedAdditionalRawData)
+        internal MachineLearningDataLakeAnalytics(ComputeType computeType, string computeLocation, MachineLearningProvisioningState? provisioningState, string description, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, ResourceIdentifier resourceId, IReadOnlyList<MachineLearningError> provisioningErrors, bool? isAttachedCompute, bool? disableLocalAuth, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataLakeAnalyticsSchemaProperties properties) : base(computeType, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors, isAttachedCompute, disableLocalAuth, additionalBinaryDataProperties)
         {
             Properties = properties;
-            ComputeType = computeType;
         }
 
-        /// <summary> Gets or sets the properties. </summary>
-        internal MachineLearningDataLakeAnalyticsProperties Properties { get; set; }
+        /// <summary> Gets or sets the Properties. </summary>
+        [WirePath("properties")]
+        internal DataLakeAnalyticsSchemaProperties Properties { get; set; }
+
         /// <summary> DataLake Store Account Name. </summary>
         [WirePath("properties.dataLakeStoreAccountName")]
         public string DataLakeStoreAccountName
         {
-            get => Properties is null ? default : Properties.DataLakeStoreAccountName;
+            get
+            {
+                return Properties is null ? default : Properties.DataLakeStoreAccountName;
+            }
             set
             {
                 if (Properties is null)
-                    Properties = new MachineLearningDataLakeAnalyticsProperties();
+                {
+                    Properties = new DataLakeAnalyticsSchemaProperties();
+                }
                 Properties.DataLakeStoreAccountName = value;
             }
         }

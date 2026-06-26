@@ -9,7 +9,10 @@ on:
     branches: [main]
   workflow_dispatch:
 
-permissions: read-all
+permissions:
+  copilot-requests: write
+  contents: read
+  issues: read
 
 network:
   allowed:

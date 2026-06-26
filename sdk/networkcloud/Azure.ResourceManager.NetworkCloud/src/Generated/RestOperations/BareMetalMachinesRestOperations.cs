@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.NetworkCloud
             return message;
         }
 
-        internal HttpMessage CreateReimageRequest(Guid subscriptionId, string resourceGroupName, string bareMetalMachineName, RequestContext context)
+        internal HttpMessage CreateReimageRequest(Guid subscriptionId, string resourceGroupName, string bareMetalMachineName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -269,6 +269,11 @@ namespace Azure.ResourceManager.NetworkCloud
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            if (content != null)
+            {
+                request.Headers.SetValue("Content-Type", "application/json");
+            }
+            request.Content = content;
             return message;
         }
 

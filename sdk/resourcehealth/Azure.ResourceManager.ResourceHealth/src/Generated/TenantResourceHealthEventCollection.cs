@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ResourceHealth
@@ -25,76 +26,81 @@ namespace Azure.ResourceManager.ResourceHealth
     /// </summary>
     public partial class TenantResourceHealthEventCollection : ArmCollection, IEnumerable<TenantResourceHealthEventResource>, IAsyncEnumerable<TenantResourceHealthEventResource>
     {
-        private readonly ClientDiagnostics _tenantResourceHealthEventEventClientDiagnostics;
-        private readonly EventRestOperations _tenantResourceHealthEventEventRestClient;
-        private readonly ClientDiagnostics _tenantResourceHealthEventEventsClientDiagnostics;
-        private readonly EventsRestOperations _tenantResourceHealthEventEventsRestClient;
+        private readonly ClientDiagnostics _eventClientDiagnostics;
+        private readonly Event _eventRestClient;
+        private readonly ClientDiagnostics _eventsClientDiagnostics;
+        private readonly Events _eventsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="TenantResourceHealthEventCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of TenantResourceHealthEventCollection for mocking. </summary>
         protected TenantResourceHealthEventCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="TenantResourceHealthEventCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantResourceHealthEventCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal TenantResourceHealthEventCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _tenantResourceHealthEventEventClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", TenantResourceHealthEventResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(TenantResourceHealthEventResource.ResourceType, out string tenantResourceHealthEventEventApiVersion);
-            _tenantResourceHealthEventEventRestClient = new EventRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, tenantResourceHealthEventEventApiVersion);
-            _tenantResourceHealthEventEventsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", TenantResourceHealthEventResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(TenantResourceHealthEventResource.ResourceType, out string tenantResourceHealthEventEventsApiVersion);
-            _tenantResourceHealthEventEventsRestClient = new EventsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, tenantResourceHealthEventEventsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(TenantResourceHealthEventResource.ResourceType, out string tenantResourceHealthEventApiVersion);
+            _eventClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", TenantResourceHealthEventResource.ResourceType.Namespace, Diagnostics);
+            _eventRestClient = new Event(_eventClientDiagnostics, Pipeline, Endpoint, tenantResourceHealthEventApiVersion ?? "2025-05-01");
+            _eventsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", TenantResourceHealthEventResource.ResourceType.Namespace, Diagnostics);
+            _eventsRestClient = new Events(_eventsClientDiagnostics, Pipeline, Endpoint, tenantResourceHealthEventApiVersion ?? "2025-05-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != TenantResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Service health event in the tenant by event tracking id
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.ResourceHealth/events/{eventTrackingId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.ResourceHealth/events/{eventTrackingId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Event_GetByTenantIdAndTrackingId</description>
+        /// <term> Operation Id. </term>
+        /// <description> TenantEventOperationGroup_GetByTenantIdAndTrackingId. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantResourceHealthEventResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="eventTrackingId"> Event Id which uniquely identifies ServiceHealth event. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
-        /// <param name="queryStartTime"> Specifies from when to return events, based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
+        /// <param name="queryStartTime"> Specifies from when to return events (default is 3 days), based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
-        public virtual async Task<Response<TenantResourceHealthEventResource>> GetAsync(string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<TenantResourceHealthEventResource>> GetAsync(string eventTrackingId, string filter = default, string queryStartTime = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
 
-            using var scope = _tenantResourceHealthEventEventClientDiagnostics.CreateScope("TenantResourceHealthEventCollection.Get");
+            using DiagnosticScope scope = _eventClientDiagnostics.CreateScope("TenantResourceHealthEventCollection.Get");
             scope.Start();
             try
             {
-                var response = await _tenantResourceHealthEventEventRestClient.GetByTenantIdAndTrackingIdAsync(eventTrackingId, filter, queryStartTime, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _eventRestClient.CreateGetByTenantIdAndTrackingIdRequest(eventTrackingId, filter, queryStartTime, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ResourceHealthEventData> response = Response.FromValue(ResourceHealthEventData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new TenantResourceHealthEventResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -108,40 +114,44 @@ namespace Azure.ResourceManager.ResourceHealth
         /// Service health event in the tenant by event tracking id
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.ResourceHealth/events/{eventTrackingId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.ResourceHealth/events/{eventTrackingId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Event_GetByTenantIdAndTrackingId</description>
+        /// <term> Operation Id. </term>
+        /// <description> TenantEventOperationGroup_GetByTenantIdAndTrackingId. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantResourceHealthEventResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="eventTrackingId"> Event Id which uniquely identifies ServiceHealth event. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
-        /// <param name="queryStartTime"> Specifies from when to return events, based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
+        /// <param name="queryStartTime"> Specifies from when to return events (default is 3 days), based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
-        public virtual Response<TenantResourceHealthEventResource> Get(string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<TenantResourceHealthEventResource> Get(string eventTrackingId, string filter = default, string queryStartTime = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
 
-            using var scope = _tenantResourceHealthEventEventClientDiagnostics.CreateScope("TenantResourceHealthEventCollection.Get");
+            using DiagnosticScope scope = _eventClientDiagnostics.CreateScope("TenantResourceHealthEventCollection.Get");
             scope.Start();
             try
             {
-                var response = _tenantResourceHealthEventEventRestClient.GetByTenantIdAndTrackingId(eventTrackingId, filter, queryStartTime, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _eventRestClient.CreateGetByTenantIdAndTrackingIdRequest(eventTrackingId, filter, queryStartTime, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ResourceHealthEventData> response = Response.FromValue(ResourceHealthEventData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new TenantResourceHealthEventResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -155,102 +165,112 @@ namespace Azure.ResourceManager.ResourceHealth
         /// Lists current service health events in the tenant.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.ResourceHealth/events</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.ResourceHealth/events. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Events_ListByTenantId</description>
+        /// <term> Operation Id. </term>
+        /// <description> TenantEventOperationGroup_ListByTenantId. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantResourceHealthEventResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
-        /// <param name="queryStartTime"> Specifies from when to return events, based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TenantResourceHealthEventResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TenantResourceHealthEventResource> GetAllAsync(string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantResourceHealthEventEventsRestClient.CreateListByTenantIdRequest(filter, queryStartTime);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantResourceHealthEventEventsRestClient.CreateListByTenantIdNextPageRequest(nextLink, filter, queryStartTime);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TenantResourceHealthEventResource(Client, ResourceHealthEventData.DeserializeResourceHealthEventData(e)), _tenantResourceHealthEventEventsClientDiagnostics, Pipeline, "TenantResourceHealthEventCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists current service health events in the tenant.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.ResourceHealth/events</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Events_ListByTenantId</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantResourceHealthEventResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
-        /// <param name="queryStartTime"> Specifies from when to return events, based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
+        /// <param name="queryStartTime"> Specifies from when to return events (default is 3 days), based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TenantResourceHealthEventResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TenantResourceHealthEventResource> GetAll(string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TenantResourceHealthEventResource> GetAllAsync(string filter = default, string queryStartTime = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantResourceHealthEventEventsRestClient.CreateListByTenantIdRequest(filter, queryStartTime);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantResourceHealthEventEventsRestClient.CreateListByTenantIdNextPageRequest(nextLink, filter, queryStartTime);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TenantResourceHealthEventResource(Client, ResourceHealthEventData.DeserializeResourceHealthEventData(e)), _tenantResourceHealthEventEventsClientDiagnostics, Pipeline, "TenantResourceHealthEventCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ResourceHealthEventData, TenantResourceHealthEventResource>(new EventsGetByTenantIdAsyncCollectionResultOfT(_eventsRestClient, filter, queryStartTime, context, "TenantResourceHealthEventCollection.GetAll"), data => new TenantResourceHealthEventResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists current service health events in the tenant.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.ResourceHealth/events. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TenantEventOperationGroup_ListByTenantId. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="queryStartTime"> Specifies from when to return events (default is 3 days), based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="TenantResourceHealthEventResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<TenantResourceHealthEventResource> GetAll(string filter = default, string queryStartTime = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ResourceHealthEventData, TenantResourceHealthEventResource>(new EventsGetByTenantIdCollectionResultOfT(_eventsRestClient, filter, queryStartTime, context, "TenantResourceHealthEventCollection.GetAll"), data => new TenantResourceHealthEventResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.ResourceHealth/events/{eventTrackingId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.ResourceHealth/events/{eventTrackingId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Event_GetByTenantIdAndTrackingId</description>
+        /// <term> Operation Id. </term>
+        /// <description> TenantEventOperationGroup_GetByTenantIdAndTrackingId. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantResourceHealthEventResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="eventTrackingId"> Event Id which uniquely identifies ServiceHealth event. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
-        /// <param name="queryStartTime"> Specifies from when to return events, based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
+        /// <param name="queryStartTime"> Specifies from when to return events (default is 3 days), based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string eventTrackingId, string filter = default, string queryStartTime = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
 
-            using var scope = _tenantResourceHealthEventEventClientDiagnostics.CreateScope("TenantResourceHealthEventCollection.Exists");
+            using DiagnosticScope scope = _eventClientDiagnostics.CreateScope("TenantResourceHealthEventCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _tenantResourceHealthEventEventRestClient.GetByTenantIdAndTrackingIdAsync(eventTrackingId, filter, queryStartTime, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _eventRestClient.CreateGetByTenantIdAndTrackingIdRequest(eventTrackingId, filter, queryStartTime, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ResourceHealthEventData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ResourceHealthEventData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ResourceHealthEventData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -264,38 +284,52 @@ namespace Azure.ResourceManager.ResourceHealth
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.ResourceHealth/events/{eventTrackingId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.ResourceHealth/events/{eventTrackingId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Event_GetByTenantIdAndTrackingId</description>
+        /// <term> Operation Id. </term>
+        /// <description> TenantEventOperationGroup_GetByTenantIdAndTrackingId. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantResourceHealthEventResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="eventTrackingId"> Event Id which uniquely identifies ServiceHealth event. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
-        /// <param name="queryStartTime"> Specifies from when to return events, based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
+        /// <param name="queryStartTime"> Specifies from when to return events (default is 3 days), based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
-        public virtual Response<bool> Exists(string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string eventTrackingId, string filter = default, string queryStartTime = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
 
-            using var scope = _tenantResourceHealthEventEventClientDiagnostics.CreateScope("TenantResourceHealthEventCollection.Exists");
+            using DiagnosticScope scope = _eventClientDiagnostics.CreateScope("TenantResourceHealthEventCollection.Exists");
             scope.Start();
             try
             {
-                var response = _tenantResourceHealthEventEventRestClient.GetByTenantIdAndTrackingId(eventTrackingId, filter, queryStartTime, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _eventRestClient.CreateGetByTenantIdAndTrackingIdRequest(eventTrackingId, filter, queryStartTime, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ResourceHealthEventData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ResourceHealthEventData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ResourceHealthEventData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -309,40 +343,56 @@ namespace Azure.ResourceManager.ResourceHealth
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.ResourceHealth/events/{eventTrackingId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.ResourceHealth/events/{eventTrackingId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Event_GetByTenantIdAndTrackingId</description>
+        /// <term> Operation Id. </term>
+        /// <description> TenantEventOperationGroup_GetByTenantIdAndTrackingId. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantResourceHealthEventResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="eventTrackingId"> Event Id which uniquely identifies ServiceHealth event. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
-        /// <param name="queryStartTime"> Specifies from when to return events, based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
+        /// <param name="queryStartTime"> Specifies from when to return events (default is 3 days), based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
-        public virtual async Task<NullableResponse<TenantResourceHealthEventResource>> GetIfExistsAsync(string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<TenantResourceHealthEventResource>> GetIfExistsAsync(string eventTrackingId, string filter = default, string queryStartTime = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
 
-            using var scope = _tenantResourceHealthEventEventClientDiagnostics.CreateScope("TenantResourceHealthEventCollection.GetIfExists");
+            using DiagnosticScope scope = _eventClientDiagnostics.CreateScope("TenantResourceHealthEventCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _tenantResourceHealthEventEventRestClient.GetByTenantIdAndTrackingIdAsync(eventTrackingId, filter, queryStartTime, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _eventRestClient.CreateGetByTenantIdAndTrackingIdRequest(eventTrackingId, filter, queryStartTime, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ResourceHealthEventData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ResourceHealthEventData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ResourceHealthEventData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<TenantResourceHealthEventResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new TenantResourceHealthEventResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -356,40 +406,56 @@ namespace Azure.ResourceManager.ResourceHealth
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.ResourceHealth/events/{eventTrackingId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.ResourceHealth/events/{eventTrackingId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Event_GetByTenantIdAndTrackingId</description>
+        /// <term> Operation Id. </term>
+        /// <description> TenantEventOperationGroup_GetByTenantIdAndTrackingId. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantResourceHealthEventResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="eventTrackingId"> Event Id which uniquely identifies ServiceHealth event. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
-        /// <param name="queryStartTime"> Specifies from when to return events, based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
+        /// <param name="queryStartTime"> Specifies from when to return events (default is 3 days), based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
-        public virtual NullableResponse<TenantResourceHealthEventResource> GetIfExists(string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<TenantResourceHealthEventResource> GetIfExists(string eventTrackingId, string filter = default, string queryStartTime = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
 
-            using var scope = _tenantResourceHealthEventEventClientDiagnostics.CreateScope("TenantResourceHealthEventCollection.GetIfExists");
+            using DiagnosticScope scope = _eventClientDiagnostics.CreateScope("TenantResourceHealthEventCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _tenantResourceHealthEventEventRestClient.GetByTenantIdAndTrackingId(eventTrackingId, filter, queryStartTime, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _eventRestClient.CreateGetByTenantIdAndTrackingIdRequest(eventTrackingId, filter, queryStartTime, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ResourceHealthEventData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ResourceHealthEventData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ResourceHealthEventData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<TenantResourceHealthEventResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new TenantResourceHealthEventResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -409,6 +475,7 @@ namespace Azure.ResourceManager.ResourceHealth
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<TenantResourceHealthEventResource> IAsyncEnumerable<TenantResourceHealthEventResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

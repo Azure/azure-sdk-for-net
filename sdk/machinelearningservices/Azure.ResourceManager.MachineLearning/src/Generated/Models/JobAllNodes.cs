@@ -14,17 +14,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class JobAllNodes : JobNodes
     {
         /// <summary> Initializes a new instance of <see cref="JobAllNodes"/>. </summary>
-        public JobAllNodes()
+        public JobAllNodes() : base(NodesValueType.All)
         {
-            NodesValueType = NodesValueType.All;
         }
 
         /// <summary> Initializes a new instance of <see cref="JobAllNodes"/>. </summary>
         /// <param name="nodesValueType"> [Required] Type of the Nodes value. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal JobAllNodes(NodesValueType nodesValueType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(nodesValueType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal JobAllNodes(NodesValueType nodesValueType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(nodesValueType, additionalBinaryDataProperties)
         {
-            NodesValueType = nodesValueType;
         }
     }
 }

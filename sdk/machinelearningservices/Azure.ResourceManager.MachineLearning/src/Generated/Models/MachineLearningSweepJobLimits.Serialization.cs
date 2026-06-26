@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningSweepJobLimits : IUtf8JsonSerializable, IJsonModel<MachineLearningSweepJobLimits>
+    /// <summary> Sweep Job limit class. </summary>
+    public partial class MachineLearningSweepJobLimits : MachineLearningJobLimits, IJsonModel<MachineLearningSweepJobLimits>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningSweepJobLimits>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override MachineLearningJobLimits PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningSweepJobLimits>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMachineLearningSweepJobLimits(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningSweepJobLimits)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningSweepJobLimits>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningSweepJobLimits)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MachineLearningSweepJobLimits>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineLearningSweepJobLimits IPersistableModel<MachineLearningSweepJobLimits>.Create(BinaryData data, ModelReaderWriterOptions options) => (MachineLearningSweepJobLimits)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MachineLearningSweepJobLimits>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MachineLearningSweepJobLimits>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,260 +69,119 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningSweepJobLimits>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningSweepJobLimits>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineLearningSweepJobLimits)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(MaxTotalTrials))
-            {
-                if (MaxTotalTrials != null)
-                {
-                    writer.WritePropertyName("maxTotalTrials"u8);
-                    writer.WriteNumberValue(MaxTotalTrials.Value);
-                }
-                else
-                {
-                    writer.WriteNull("maxTotalTrials");
-                }
-            }
             if (Optional.IsDefined(MaxConcurrentTrials))
             {
-                if (MaxConcurrentTrials != null)
-                {
-                    writer.WritePropertyName("maxConcurrentTrials"u8);
-                    writer.WriteNumberValue(MaxConcurrentTrials.Value);
-                }
-                else
-                {
-                    writer.WriteNull("maxConcurrentTrials");
-                }
+                writer.WritePropertyName("maxConcurrentTrials"u8);
+                writer.WriteNumberValue(MaxConcurrentTrials.Value);
+            }
+            if (Optional.IsDefined(MaxTotalTrials))
+            {
+                writer.WritePropertyName("maxTotalTrials"u8);
+                writer.WriteNumberValue(MaxTotalTrials.Value);
             }
             if (Optional.IsDefined(TrialTimeout))
             {
-                if (TrialTimeout != null)
-                {
-                    writer.WritePropertyName("trialTimeout"u8);
-                    writer.WriteStringValue(TrialTimeout.Value, "P");
-                }
-                else
-                {
-                    writer.WriteNull("trialTimeout");
-                }
+                writer.WritePropertyName("trialTimeout"u8);
+                writer.WriteStringValue(TrialTimeout.Value, "P");
             }
         }
 
-        MachineLearningSweepJobLimits IJsonModel<MachineLearningSweepJobLimits>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineLearningSweepJobLimits IJsonModel<MachineLearningSweepJobLimits>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MachineLearningSweepJobLimits)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override MachineLearningJobLimits JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningSweepJobLimits>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningSweepJobLimits>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineLearningSweepJobLimits)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMachineLearningSweepJobLimits(document.RootElement, options);
         }
 
-        internal static MachineLearningSweepJobLimits DeserializeMachineLearningSweepJobLimits(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MachineLearningSweepJobLimits DeserializeMachineLearningSweepJobLimits(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            int? maxTotalTrials = default;
-            int? maxConcurrentTrials = default;
-            TimeSpan? trialTimeout = default;
             JobLimitsType jobLimitsType = default;
             TimeSpan? timeout = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            int? maxConcurrentTrials = default;
+            int? maxTotalTrials = default;
+            TimeSpan? trialTimeout = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("maxTotalTrials"u8))
+                if (prop.NameEquals("jobLimitsType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        maxTotalTrials = null;
-                        continue;
-                    }
-                    maxTotalTrials = property.Value.GetInt32();
+                    jobLimitsType = new JobLimitsType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("maxConcurrentTrials"u8))
+                if (prop.NameEquals("timeout"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        maxConcurrentTrials = null;
-                        continue;
-                    }
-                    maxConcurrentTrials = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("trialTimeout"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        trialTimeout = null;
-                        continue;
-                    }
-                    trialTimeout = property.Value.GetTimeSpan("P");
-                    continue;
-                }
-                if (property.NameEquals("jobLimitsType"u8))
-                {
-                    jobLimitsType = new JobLimitsType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("timeout"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         timeout = null;
                         continue;
                     }
-                    timeout = property.Value.GetTimeSpan("P");
+                    timeout = prop.Value.GetTimeSpan("P");
+                    continue;
+                }
+                if (prop.NameEquals("maxConcurrentTrials"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        maxConcurrentTrials = null;
+                        continue;
+                    }
+                    maxConcurrentTrials = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("maxTotalTrials"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        maxTotalTrials = null;
+                        continue;
+                    }
+                    maxTotalTrials = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("trialTimeout"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        trialTimeout = null;
+                        continue;
+                    }
+                    trialTimeout = prop.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningSweepJobLimits(
                 jobLimitsType,
                 timeout,
-                serializedAdditionalRawData,
-                maxTotalTrials,
+                additionalBinaryDataProperties,
                 maxConcurrentTrials,
+                maxTotalTrials,
                 trialTimeout);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxTotalTrials), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  maxTotalTrials: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MaxTotalTrials))
-                {
-                    builder.Append("  maxTotalTrials: ");
-                    builder.AppendLine($"{MaxTotalTrials.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxConcurrentTrials), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  maxConcurrentTrials: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MaxConcurrentTrials))
-                {
-                    builder.Append("  maxConcurrentTrials: ");
-                    builder.AppendLine($"{MaxConcurrentTrials.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TrialTimeout), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  trialTimeout: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TrialTimeout))
-                {
-                    builder.Append("  trialTimeout: ");
-                    var formattedTimeSpan = TypeFormatters.ToString(TrialTimeout.Value, "P");
-                    builder.AppendLine($"'{formattedTimeSpan}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JobLimitsType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  jobLimitsType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  jobLimitsType: ");
-                builder.AppendLine($"'{JobLimitsType.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Timeout), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  timeout: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Timeout))
-                {
-                    builder.Append("  timeout: ");
-                    var formattedTimeSpan = TypeFormatters.ToString(Timeout.Value, "P");
-                    builder.AppendLine($"'{formattedTimeSpan}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<MachineLearningSweepJobLimits>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningSweepJobLimits>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(MachineLearningSweepJobLimits)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        MachineLearningSweepJobLimits IPersistableModel<MachineLearningSweepJobLimits>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningSweepJobLimits>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMachineLearningSweepJobLimits(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MachineLearningSweepJobLimits)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<MachineLearningSweepJobLimits>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

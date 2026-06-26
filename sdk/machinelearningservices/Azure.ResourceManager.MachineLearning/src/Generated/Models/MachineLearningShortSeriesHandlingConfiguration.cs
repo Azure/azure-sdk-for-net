@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct MachineLearningShortSeriesHandlingConfiguration : IEquatable<MachineLearningShortSeriesHandlingConfiguration>
     {
         private readonly string _value;
+        /// <summary> Represents no/null value. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Short series will be padded if there are no long series, otherwise short series will be dropped. </summary>
+        private const string AutoValue = "Auto";
+        /// <summary> All the short series will be padded. </summary>
+        private const string PadValue = "Pad";
+        /// <summary> All the short series will be dropped. </summary>
+        private const string DropValue = "Drop";
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningShortSeriesHandlingConfiguration"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MachineLearningShortSeriesHandlingConfiguration(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string AutoValue = "Auto";
-        private const string PadValue = "Pad";
-        private const string DropValue = "Drop";
+            _value = value;
+        }
 
         /// <summary> Represents no/null value. </summary>
         public static MachineLearningShortSeriesHandlingConfiguration None { get; } = new MachineLearningShortSeriesHandlingConfiguration(NoneValue);
+
         /// <summary> Short series will be padded if there are no long series, otherwise short series will be dropped. </summary>
         public static MachineLearningShortSeriesHandlingConfiguration Auto { get; } = new MachineLearningShortSeriesHandlingConfiguration(AutoValue);
+
         /// <summary> All the short series will be padded. </summary>
         public static MachineLearningShortSeriesHandlingConfiguration Pad { get; } = new MachineLearningShortSeriesHandlingConfiguration(PadValue);
+
         /// <summary> All the short series will be dropped. </summary>
         public static MachineLearningShortSeriesHandlingConfiguration Drop { get; } = new MachineLearningShortSeriesHandlingConfiguration(DropValue);
+
         /// <summary> Determines if two <see cref="MachineLearningShortSeriesHandlingConfiguration"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MachineLearningShortSeriesHandlingConfiguration left, MachineLearningShortSeriesHandlingConfiguration right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MachineLearningShortSeriesHandlingConfiguration"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MachineLearningShortSeriesHandlingConfiguration left, MachineLearningShortSeriesHandlingConfiguration right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningShortSeriesHandlingConfiguration"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MachineLearningShortSeriesHandlingConfiguration"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MachineLearningShortSeriesHandlingConfiguration(string value) => new MachineLearningShortSeriesHandlingConfiguration(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MachineLearningShortSeriesHandlingConfiguration"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MachineLearningShortSeriesHandlingConfiguration?(string value) => value == null ? null : new MachineLearningShortSeriesHandlingConfiguration(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MachineLearningShortSeriesHandlingConfiguration other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MachineLearningShortSeriesHandlingConfiguration other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

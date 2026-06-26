@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
                 AssetId = "string",
                 BlobUri = new Uri("https://www.contoso.com/example"),
             };
-            BlobReferenceSasResult result = await machineLearningRegistry.GetBlobReferenceSasRegistryDataReferenceAsync(name, version, content);
+            BlobReferenceSasResult result = await machineLearningRegistry.GetBlobReferenceSasRegistryDataReferenceAsync(name, version, content, CancellationToken.None);
 
             Console.WriteLine($"Succeeded: {result}");
         }

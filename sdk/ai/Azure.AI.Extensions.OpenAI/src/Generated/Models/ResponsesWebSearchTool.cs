@@ -13,7 +13,6 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of <see cref="ResponsesWebSearchTool"/>. </summary>
         public ResponsesWebSearchTool() : base(ToolType.WebSearch)
         {
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponsesWebSearchTool"/>. </summary>
@@ -22,25 +21,15 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="filters"></param>
         /// <param name="userLocation"></param>
         /// <param name="searchContextSize"> High level guidance for the amount of context window space to use for the search. One of `low`, `medium`, or `high`. `medium` is the default. </param>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        /// <param name="toolConfigs">
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </param>
         /// <param name="customSearchConfiguration">
         /// The project connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </param>
-        internal ResponsesWebSearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, WebSearchToolFilters filters, ResponsesWebSearchApproximateLocation userLocation, ResponsesWebSearchToolSearchContextSize? searchContextSize, string name, string description, IDictionary<string, ToolConfig> toolConfigs, ResponsesWebSearchConfiguration customSearchConfiguration) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesWebSearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, WebSearchToolFilters filters, ResponsesWebSearchApproximateLocation userLocation, ResponsesWebSearchToolSearchContextSize? searchContextSize, ResponsesWebSearchConfiguration customSearchConfiguration) : base(@type, additionalBinaryDataProperties)
         {
             Filters = filters;
             UserLocation = userLocation;
             SearchContextSize = searchContextSize;
-            Name = name;
-            Description = description;
-            ToolConfigs = toolConfigs;
             CustomSearchConfiguration = customSearchConfiguration;
         }
 
@@ -52,19 +41,6 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> High level guidance for the amount of context window space to use for the search. One of `low`, `medium`, or `high`. `medium` is the default. </summary>
         public ResponsesWebSearchToolSearchContextSize? SearchContextSize { get; set; }
-
-        /// <summary> Optional user-defined name for this tool or configuration. </summary>
-        public string Name { get; set; }
-
-        /// <summary> Optional user-defined description for this tool or configuration. </summary>
-        public string Description { get; set; }
-
-        /// <summary>
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
 
         /// <summary>
         /// The project connections attached to this tool. There can be a maximum of 1 connection
