@@ -3,11 +3,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Threading;
+using Azure.AI.Extensions.OpenAI.Internal;
 
 namespace Azure.AI.Extensions.OpenAI;
 
 [CodeGenSuppress("CreateConversation", typeof(InternalMetadataContainer), typeof(IEnumerable<Internal.InputItem>), typeof(CancellationToken))]
+[CodeGenSuppress("CreateConversation", typeof(InternalMetadataContainer), typeof(IEnumerable<Internal.InputItem>), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("CreateConversationAsync", typeof(InternalMetadataContainer), typeof(IEnumerable<Internal.InputItem>), typeof(CancellationToken))]
+[CodeGenSuppress("CreateConversationAsync", typeof(InternalMetadataContainer), typeof(IEnumerable<Internal.InputItem>), typeof(string), typeof(CancellationToken))]
 internal partial class Conversations { }

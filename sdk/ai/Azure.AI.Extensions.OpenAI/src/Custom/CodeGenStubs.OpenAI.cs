@@ -7,23 +7,23 @@ namespace OpenAI;
 
 // Internal types
 
-[CodeGenType("Annotation")] internal partial class InternalAnnotation { }
-[CodeGenType("AnnotationFileCitation")] internal partial class InternalAnnotationFileCitation { }
-[CodeGenType("AnnotationFilePath")] internal partial class InternalAnnotationFilePath { }
-[CodeGenType("AnnotationUrlCitation")] internal partial class InternalAnnotationUrlCitation { }
+//[CodeGenType("Annotation")] internal partial class InternalAnnotation { }
+//[CodeGenType("AnnotationFileCitation")] internal partial class InternalAnnotationFileCitation { }
+//[CodeGenType("AnnotationFilePath")] internal partial class InternalAnnotationFilePath { }
+//[CodeGenType("AnnotationUrlCitation")] internal partial class InternalAnnotationUrlCitation { }
 [CodeGenType("ApproximateLocation")] internal partial class InternalApproximateLocation { }
-[CodeGenType("CodeInterpreterOutput")] internal partial class InternalCodeInterpreterOutput { }
-[CodeGenType("CodeInterpreterOutputImage")] internal partial class InternalCodeInterpreterOutputImage { }
-[CodeGenType("CodeInterpreterOutputLogs")] internal partial class InternalCodeInterpreterOutputLogs { }
+//[CodeGenType("CodeInterpreterOutput")] internal partial class InternalCodeInterpreterOutput { }
+//[CodeGenType("CodeInterpreterOutputImage")] internal partial class InternalCodeInterpreterOutputImage { }
+//[CodeGenType("CodeInterpreterOutputLogs")] internal partial class InternalCodeInterpreterOutputLogs { }
 [CodeGenType("CodeInterpreterTool")] internal partial class InternalCodeInterpreterTool { }
-[CodeGenType("CodeInterpreterToolAuto")] internal partial class InternalCodeInterpreterToolAuto { }
-[CodeGenType("CodeInterpreterToolCallItemParam")] internal partial class InternalCodeInterpreterToolCallItemParam { }
-[CodeGenType("CodeInterpreterToolCallItemResource")] internal partial class InternalCodeInterpreterToolCallItemResource { }
-[CodeGenType("CodeInterpreterToolCallItemResourceStatus")] internal readonly partial struct CodeInterpreterToolCallItemResourceStatus { }
-[CodeGenType("ComparisonFilter")] internal partial class InternalComparisonFilter { }
-[CodeGenType("ComparisonFilterType")] internal readonly partial struct ComparisonFilterType { }
-[CodeGenType("CompoundFilter")] internal partial class InternalCompoundFilter { }
-[CodeGenType("CompoundFilterType")] internal readonly partial struct CompoundFilterType { }
+//[CodeGenType("CodeInterpreterToolAuto")] internal partial class InternalCodeInterpreterToolAuto { }
+//[CodeGenType("CodeInterpreterToolCallItemParam")] internal partial class InternalCodeInterpreterToolCallItemParam { }
+//[CodeGenType("CodeInterpreterToolCallItemResource")] internal partial class InternalCodeInterpreterToolCallItemResource { }
+//[CodeGenType("CodeInterpreterToolCallItemResourceStatus")] internal readonly partial struct CodeInterpreterToolCallItemResourceStatus { }
+//[CodeGenType("ComparisonFilter")] internal partial class InternalComparisonFilter { }
+//[CodeGenType("ComparisonFilterType")] internal readonly partial struct ComparisonFilterType { }
+//[CodeGenType("CompoundFilter")] internal partial class InternalCompoundFilter { }
+//[CodeGenType("CompoundFilterType")] internal readonly partial struct CompoundFilterType { }
 //[CodeGenType("ComputerAction")] internal partial class InternalComputerAction { }
 //[CodeGenType("ComputerActionClick")] internal partial class InternalComputerActionClick { }
 //[CodeGenType("ComputerActionClickButton")] internal readonly partial struct ComputerActionClickButton { }
@@ -46,19 +46,19 @@ namespace OpenAI;
 //[CodeGenType("ComputerToolCallSafetyCheck")] internal partial class InternalComputerToolCallSafetyCheck { }
 //[CodeGenType("ComputerUsePreviewTool")] internal partial class InternalComputerUsePreviewTool { }
 //[CodeGenType("ComputerUsePreviewToolEnvironment")] internal readonly partial struct ComputerUsePreviewToolEnvironment { }
-[CodeGenType("Coordinate")] internal partial class InternalCoordinate { }
+//[CodeGenType("Coordinate")] internal partial class InternalCoordinate { }
 [CodeGenType("EasyInputMessage")] internal partial class InternalEasyInputMessage { }
-[CodeGenType("FileSearchTool")] internal partial class InternalFileSearchTool { }
-[CodeGenType("FileSearchToolCallItemParam")] internal partial class InternalFileSearchToolCallItemParam { }
-[CodeGenType("FileSearchToolCallItemParamResult")] internal partial class InternalFileSearchToolCallItemParamResult { }
-[CodeGenType("FileSearchToolCallItemResource")] internal partial class InternalFileSearchToolCallItemResource { }
-[CodeGenType("FileSearchToolCallItemResourceStatus")] internal readonly partial struct FileSearchToolCallItemResourceStatus { }
-[CodeGenType("FunctionToolCallItemParam")] internal partial class InternalFunctionToolCallItemParam { }
-[CodeGenType("FunctionToolCallItemResource")] internal partial class InternalFunctionToolCallItemResource { }
-[CodeGenType("FunctionToolCallItemResourceStatus")] internal readonly partial struct FunctionToolCallItemResourceStatus { }
-[CodeGenType("FunctionToolCallOutputItemParam")] internal partial class InternalFunctionToolCallOutputItemParam { }
-[CodeGenType("FunctionToolCallOutputItemResource")] internal partial class InternalFunctionToolCallOutputItemResource { }
-[CodeGenType("FunctionToolCallOutputItemResourceStatus")] internal readonly partial struct FunctionToolCallOutputItemResourceStatus { }
+//[CodeGenType("FileSearchTool")] internal partial class InternalFileSearchTool { }
+//[CodeGenType("FileSearchToolCallItemParam")] internal partial class InternalFileSearchToolCallItemParam { }
+//[CodeGenType("FileSearchToolCallItemParamResult")] internal partial class InternalFileSearchToolCallItemParamResult { }
+//[CodeGenType("FileSearchToolCallItemResource")] internal partial class InternalFileSearchToolCallItemResource { }
+//[CodeGenType("FileSearchToolCallItemResourceStatus")] internal readonly partial struct FileSearchToolCallItemResourceStatus { }
+//[CodeGenType("FunctionToolCallItemParam")] internal partial class InternalFunctionToolCallItemParam { }
+//[CodeGenType("FunctionToolCallItemResource")] internal partial class InternalFunctionToolCallItemResource { }
+//[CodeGenType("FunctionToolCallItemResourceStatus")] internal readonly partial struct FunctionToolCallItemResourceStatus { }
+//[CodeGenType("FunctionToolCallOutputItemParam")] internal partial class InternalFunctionToolCallOutputItemParam { }
+//[CodeGenType("FunctionToolCallOutputItemResource")] internal partial class InternalFunctionToolCallOutputItemResource { }
+//[CodeGenType("FunctionToolCallOutputItemResourceStatus")] internal readonly partial struct FunctionToolCallOutputItemResourceStatus { }
 [CodeGenType("ImageGenTool")] internal partial class InternalImageGenTool { }
 [CodeGenType("ImageGenToolBackground")] internal readonly partial struct ImageGenToolBackground { }
 [CodeGenType("ImageGenToolCallItemParam")] internal partial class InternalImageGenToolCallItemParam { }

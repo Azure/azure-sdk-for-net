@@ -5,11 +5,8 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Extensions.OpenAI.Internal;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -70,32 +67,6 @@ namespace Azure.AI.Extensions.OpenAI
         {
             using PipelineMessage message = CreateCreateConversationRequest(content, userIdentity, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-        }
-
-        /// <summary> Creates a new conversation resource. </summary>
-        /// <param name="metadata"></param>
-        /// <param name="items"></param>
-        /// <param name="userIdentity"> Opaque per-user identity string used to scope endpoint-scoped data to a specific end user. The caller must have the `agents/endpoints/UserIdentityImpersonation/action` RBAC permission. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ProjectConversation> CreateConversation(InternalMetadataContainer metadata = default, IEnumerable<InputItem> items = default, string userIdentity = default, CancellationToken cancellationToken = default)
-        {
-            CreateConversationRequest spreadModel = new CreateConversationRequest(metadata, items?.ToList() as IList<InputItem> ?? new ChangeTrackingList<InputItem>(), default);
-            ClientResult result = CreateConversation(spreadModel, userIdentity, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((ProjectConversation)result, result.GetRawResponse());
-        }
-
-        /// <summary> Creates a new conversation resource. </summary>
-        /// <param name="metadata"></param>
-        /// <param name="items"></param>
-        /// <param name="userIdentity"> Opaque per-user identity string used to scope endpoint-scoped data to a specific end user. The caller must have the `agents/endpoints/UserIdentityImpersonation/action` RBAC permission. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ProjectConversation>> CreateConversationAsync(InternalMetadataContainer metadata = default, IEnumerable<InputItem> items = default, string userIdentity = default, CancellationToken cancellationToken = default)
-        {
-            CreateConversationRequest spreadModel = new CreateConversationRequest(metadata, items?.ToList() as IList<InputItem> ?? new ChangeTrackingList<InputItem>(), default);
-            ClientResult result = await CreateConversationAsync(spreadModel, userIdentity, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((ProjectConversation)result, result.GetRawResponse());
         }
 
         /// <summary>

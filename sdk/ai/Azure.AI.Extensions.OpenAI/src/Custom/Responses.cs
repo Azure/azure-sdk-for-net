@@ -1,15 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-//using System;
-//using System.Linq;
-//using System.Collections.Generic;
-//using System.Threading;
-//using System.Threading.Tasks;
-//using Azure.AI.Extensions.OpenAI.Models;
+using System;
+using System.Threading;
+using Azure.AI.Extensions.OpenAI.Internal;
 
-//namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAI;
 
+[CodeGenSuppress("CompactResponseConversation", typeof(ModelIdsCompaction?), typeof(BinaryData), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+[CodeGenSuppress("CompactResponseConversationAsync", typeof(ModelIdsCompaction?), typeof(BinaryData), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+internal partial class Responses { }
 //public partial class Responses
 //{
 //    /// <summary> Creates a model response. </summary>
