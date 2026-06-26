@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The ClientAuthenticationMethod. </summary>
+    /// <summary></summary>
     public readonly partial struct ClientAuthenticationMethod : IEquatable<ClientAuthenticationMethod>
     {
         private readonly string _value;
+        /// <summary> Basic Client Authentication method. </summary>
+        private const string BasicValue = "Basic";
+        /// <summary> Body based Authentication method. </summary>
+        private const string BodyValue = "Body";
 
         /// <summary> Initializes a new instance of <see cref="ClientAuthenticationMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ClientAuthenticationMethod(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BasicValue = "Basic";
-        private const string BodyValue = "Body";
+            _value = value;
+        }
 
         /// <summary> Basic Client Authentication method. </summary>
         public static ClientAuthenticationMethod Basic { get; } = new ClientAuthenticationMethod(BasicValue);
+
         /// <summary> Body based Authentication method. </summary>
         public static ClientAuthenticationMethod Body { get; } = new ClientAuthenticationMethod(BodyValue);
+
         /// <summary> Determines if two <see cref="ClientAuthenticationMethod"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ClientAuthenticationMethod left, ClientAuthenticationMethod right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ClientAuthenticationMethod"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ClientAuthenticationMethod left, ClientAuthenticationMethod right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ClientAuthenticationMethod"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ClientAuthenticationMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ClientAuthenticationMethod(string value) => new ClientAuthenticationMethod(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ClientAuthenticationMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ClientAuthenticationMethod?(string value) => value == null ? null : new ClientAuthenticationMethod(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ClientAuthenticationMethod other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ClientAuthenticationMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

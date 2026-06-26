@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ApiManagement
 {
+    /// <summary></summary>
     public partial class ApiTagDescriptionResource : IJsonModel<ApiTagDescriptionData>
     {
-        private static ApiTagDescriptionData s_dataDeserializationInstance;
-        private static ApiTagDescriptionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ApiTagDescriptionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ApiTagDescriptionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ApiTagDescriptionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApiTagDescriptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiTagDescriptionData>)Data).Write(writer, options);
 
-        ApiTagDescriptionData IJsonModel<ApiTagDescriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiTagDescriptionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApiTagDescriptionData IJsonModel<ApiTagDescriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ApiTagDescriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiTagDescriptionData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ApiTagDescriptionData IPersistableModel<ApiTagDescriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiTagDescriptionData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<ApiTagDescriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiTagDescriptionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApiTagDescriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

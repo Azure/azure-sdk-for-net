@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning
     internal partial class FeaturesetVersionsGetAllCollectionResultOfT : Pageable<MachineLearningFeatureSetVersionData>
     {
         private readonly FeaturesetVersions _client;
-        private readonly Guid _subscriptionId;
+        private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _workspaceName;
         private readonly string _name;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="stage"> Specifies the featurestore stage. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public FeaturesetVersionsGetAllCollectionResultOfT(FeaturesetVersions client, Guid subscriptionId, string resourceGroupName, string workspaceName, string name, string skip, string tags, string listViewType, int? pageSize, string versionName, string version, string description, string createdBy, string stage, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public FeaturesetVersionsGetAllCollectionResultOfT(FeaturesetVersions client, string subscriptionId, string resourceGroupName, string workspaceName, string name, string skip, string tags, string listViewType, int? pageSize, string versionName, string version, string description, string createdBy, string stage, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

@@ -15,7 +15,7 @@ using Azure.ResourceManager.MachineLearning;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The RegistryListCredentialsResult. </summary>
-    public partial class RegistryListCredentialsResult : IJsonModel<RegistryListCredentialsResult>
+    internal partial class RegistryListCredentialsResult : IJsonModel<RegistryListCredentialsResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

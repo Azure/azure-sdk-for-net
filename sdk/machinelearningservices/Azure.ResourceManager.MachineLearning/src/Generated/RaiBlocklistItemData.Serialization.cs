@@ -17,7 +17,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    /// <summary> RaiBlocklistItemResource is a preview-only resource. </summary>
+    /// <summary> RaiBlocklistItemPropertiesBasicResource is a preview-only resource. </summary>
     public partial class RaiBlocklistItemData : ResourceData, IJsonModel<RaiBlocklistItemData>
     {
         /// <summary> Initializes a new instance of <see cref="RaiBlocklistItemData"/> for deserialization. </summary>
@@ -65,14 +65,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RaiBlocklistItemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="raiBlocklistItemPropertiesBasicData"> The <see cref="RaiBlocklistItemData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(RaiBlocklistItemData raiBlocklistItemPropertiesBasicData)
+        /// <param name="raiBlocklistItemData"> The <see cref="RaiBlocklistItemData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(RaiBlocklistItemData raiBlocklistItemData)
         {
-            if (raiBlocklistItemPropertiesBasicData == null)
+            if (raiBlocklistItemData == null)
             {
                 return null;
             }
-            return RequestContent.Create(raiBlocklistItemPropertiesBasicData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(raiBlocklistItemData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RaiBlocklistItemData"/> from. </param>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
@@ -155,7 +155,11 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -192,7 +196,7 @@ namespace Azure.ResourceManager.MachineLearning
                 }
             }
             return new RaiBlocklistItemData(
-                new ResourceIdentifier(id),
+                id,
                 name,
                 resourceType,
                 systemData,

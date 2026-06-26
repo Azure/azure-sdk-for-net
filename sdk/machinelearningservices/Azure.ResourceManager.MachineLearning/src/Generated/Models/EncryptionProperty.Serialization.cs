@@ -15,7 +15,7 @@ using Azure.ResourceManager.MachineLearning;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The EncryptionProperty. </summary>
-    public partial class EncryptionProperty : IJsonModel<EncryptionProperty>
+    internal partial class EncryptionProperty : IJsonModel<EncryptionProperty>
     {
         /// <summary> Initializes a new instance of <see cref="EncryptionProperty"/> for deserialization. </summary>
         internal EncryptionProperty()

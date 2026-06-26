@@ -7,9 +7,13 @@
 ### Breaking Changes
 
 ### Bugs Fixed
-- Fixed an issue where the `GenerateUserDelegationSasUri` convenience methods on Share clients did not honor the `DelegatedUserObjectId` property set on the supplied `ShareSasBuilder`.
 
 ### Other Changes
+
+## 12.27.1 (2026-06-23)
+
+### Bugs Fixed
+- Fixed an issue where the `GenerateUserDelegationSasUri` convenience methods on Share clients did not honor the `DelegatedUserObjectId` property set on the supplied `ShareSasBuilder`.
 
 ## 12.27.0 (2026-06-04)
 

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning
     internal partial class RegistryDataVersionsGetAllCollectionResultOfT : Pageable<MachineLearningDataVersionData>
     {
         private readonly RegistryDataVersions _client;
-        private readonly Guid _subscriptionId;
+        private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _registryName;
         private readonly string _name;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All]View type for including/excluding (for example) archived entities. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public RegistryDataVersionsGetAllCollectionResultOfT(RegistryDataVersions client, Guid subscriptionId, string resourceGroupName, string registryName, string name, string orderBy, int? top, string skip, string tags, string listViewType, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public RegistryDataVersionsGetAllCollectionResultOfT(RegistryDataVersions client, string subscriptionId, string resourceGroupName, string registryName, string name, string orderBy, int? top, string skip, string tags, string listViewType, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

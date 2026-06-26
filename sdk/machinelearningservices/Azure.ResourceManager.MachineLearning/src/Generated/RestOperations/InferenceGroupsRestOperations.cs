@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, string poolName, string groupName, RequestContext context)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string workspaceName, string poolName, string groupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.MachineLearning
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, string poolName, string groupName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string poolName, string groupName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.MachineLearning
             return message;
         }
 
-        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, string poolName, string groupName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string poolName, string groupName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.MachineLearning
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, string poolName, string groupName, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string workspaceName, string poolName, string groupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
@@ -148,12 +148,12 @@ namespace Azure.ResourceManager.MachineLearning
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, string poolName, int? count, string skip, string tags, string properties, string orderBy, RequestContext context)
+        internal HttpMessage CreateGetAllRequest(string subscriptionId, string resourceGroupName, string workspaceName, string poolName, int? count, string skip, string tags, string properties, string orderBy, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.MachineLearning
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string workspaceName, string poolName, int? count, string skip, string tags, string properties, string orderBy, RequestContext context)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string workspaceName, string poolName, int? count, string skip, string tags, string properties, string orderBy, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -216,12 +216,12 @@ namespace Azure.ResourceManager.MachineLearning
             return message;
         }
 
-        internal HttpMessage CreateGetDeltaModelsStatusAsyncRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, string poolName, string groupName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetDeltaModelsStatusAsyncRequest(string subscriptionId, string resourceGroupName, string workspaceName, string poolName, string groupName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
@@ -245,12 +245,12 @@ namespace Azure.ResourceManager.MachineLearning
             return message;
         }
 
-        internal HttpMessage CreateGetDeltaModelsAsyncRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, string poolName, string groupName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetDeltaModelsAsyncRequest(string subscriptionId, string resourceGroupName, string workspaceName, string poolName, string groupName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.MachineLearning
             return message;
         }
 
-        internal HttpMessage CreateNextGetDeltaModelsAsyncRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string workspaceName, string poolName, string groupName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateNextGetDeltaModelsAsyncRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string workspaceName, string poolName, string groupName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -298,12 +298,12 @@ namespace Azure.ResourceManager.MachineLearning
             return message;
         }
 
-        internal HttpMessage CreateModifyDeltaModelsAsyncRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, string poolName, string groupName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateModifyDeltaModelsAsyncRequest(string subscriptionId, string resourceGroupName, string workspaceName, string poolName, string groupName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
@@ -326,12 +326,12 @@ namespace Azure.ResourceManager.MachineLearning
             return message;
         }
 
-        internal HttpMessage CreateGetStatusRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, string poolName, string groupName, RequestContext context)
+        internal HttpMessage CreateGetStatusRequest(string subscriptionId, string resourceGroupName, string workspaceName, string poolName, string groupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
@@ -353,12 +353,12 @@ namespace Azure.ResourceManager.MachineLearning
             return message;
         }
 
-        internal HttpMessage CreateGetSkusRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, string poolName, string groupName, int? count, string skip, RequestContext context)
+        internal HttpMessage CreateGetSkusRequest(string subscriptionId, string resourceGroupName, string workspaceName, string poolName, string groupName, int? count, string skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.MachineLearning
             return message;
         }
 
-        internal HttpMessage CreateNextGetSkusRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string workspaceName, string poolName, string groupName, int? count, string skip, RequestContext context)
+        internal HttpMessage CreateNextGetSkusRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string workspaceName, string poolName, string groupName, int? count, string skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

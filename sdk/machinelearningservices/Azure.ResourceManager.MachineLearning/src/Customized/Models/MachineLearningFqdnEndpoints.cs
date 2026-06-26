@@ -17,6 +17,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Gets the FQDN endpoint property bag. </summary>
         [WirePath("properties")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public MachineLearningFqdnEndpointsProperties Properties => new MachineLearningFqdnEndpointsProperties(Category, Endpoints is null ? null : new List<MachineLearningFqdnEndpoint>(Endpoints), serializedAdditionalRawData: null);
+        public MachineLearningFqdnEndpointsProperties Properties => new MachineLearningFqdnEndpointsProperties(Category, Endpoints is null ? null : new List<MachineLearningFqdnEndpoint>(Endpoints));
     }
 }

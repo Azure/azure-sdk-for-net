@@ -43,7 +43,7 @@ namespace Azure.Generator.Management
         internal CustomCodeAttributeDefinition CodeGenTagPatchHookAttributeDefinition => _codeGenTagPatchHookAttributeProvider ??= new CodeGenTagPatchHookAttributeDefinition();
 
         private CSharpType? _modelReaderWriterContextType;
-        internal CSharpType ModelReaderWriterContextType => _modelReaderWriterContextType ??= new ManagementModelReaderWriterContextDefinition().Type;
+        internal CSharpType ModelReaderWriterContextType => _modelReaderWriterContextType ??= new ModelReaderWriterContextDefinition().Type;
 
         private IReadOnlyDictionary<RequestPathPattern, ResourceClientProvider>? _resourcesByIdDict;
         private IReadOnlyList<ResourceClientProvider>? _resources;
@@ -313,8 +313,7 @@ namespace Azure.Generator.Management
             var arrayResponseCollectionResults = ExtractArrayResponseCollectionResults();
 
             return [
-                .. base.BuildTypeProviders().Where(t => t is not SystemObjectModelProvider and not ModelReaderWriterContextDefinition),
-                new ManagementModelReaderWriterContextDefinition(),
+                .. base.BuildTypeProviders().Where(t => t is not SystemObjectModelProvider),
                 WirePathAttributeDefinition,
                 ArmOperation,
                 ArmOperationOfT,
