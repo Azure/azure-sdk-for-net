@@ -18,7 +18,7 @@ import { getVallyShardVerdict } from "./lib/verdict.js";
  * @param {string} options.evalArgs Whitespace-separated `-e <file>` args, exactly as the matrix emits them.
  * @param {string} options.shardName Shard name (log messages + result folder).
  * @param {string} options.outputDir `--output-dir` Vally writes results into.
- * @param {string} options.skillEvalPrefix npm prefix resolving the pinned Vally CLI (eng/skill-eval).
+ * @param {string} options.skillEvalPrefix npm prefix resolving the pinned Vally CLI (eng/common/vally-eval).
  * @param {number} [options.threshold] Pass-rate gate forwarded to `vally eval --threshold`.
  * @returns {number} 0 when the shard verdict passes, 1 otherwise.
  */

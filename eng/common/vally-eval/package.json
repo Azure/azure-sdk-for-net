@@ -1,0 +1,8 @@
+{
+  "name": "azure-sdk-tools-vally-eval",
+  "private": true,
+  "description": "CI-only npm project that pins @microsoft/vally-cli and its transitive dependencies via the committed lockfile for reproducible Vally eval CI runs; synced via eng/common, not published.",
+  "devDependencies": {
+    "@microsoft/vally-cli": "0.6.0"
+  }
+}
