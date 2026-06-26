@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <summary> Gets an object representing a <see cref="MachineLearningWorkspaceConnectionDeploymentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MachineLearningWorkspaceConnectionDeploymentResource"/> object. </returns>
-        public virtual MachineLearningWorkspaceConnectionDeploymentResource GetConnectionResource(ResourceIdentifier id)
+        public virtual MachineLearningWorkspaceConnectionDeploymentResource GetMachineLearningWorkspaceConnectionDeploymentResource(ResourceIdentifier id)
         {
             MachineLearningWorkspaceConnectionDeploymentResource.ValidateResourceId(id);
             return new MachineLearningWorkspaceConnectionDeploymentResource(Client, id);
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <summary> Gets an object representing a <see cref="RaiBlocklistResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RaiBlocklistResource"/> object. </returns>
-        public virtual RaiBlocklistResource GetRaiBlocklist(ResourceIdentifier id)
+        public virtual RaiBlocklistResource GetRaiBlocklistResource(ResourceIdentifier id)
         {
             RaiBlocklistResource.ValidateResourceId(id);
             return new RaiBlocklistResource(Client, id);
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <summary> Gets an object representing a <see cref="RaiBlocklistItemResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RaiBlocklistItemResource"/> object. </returns>
-        public virtual RaiBlocklistItemResource GetRaiBlocklistItem(ResourceIdentifier id)
+        public virtual RaiBlocklistItemResource GetRaiBlocklistItemResource(ResourceIdentifier id)
         {
             RaiBlocklistItemResource.ValidateResourceId(id);
             return new RaiBlocklistItemResource(Client, id);
@@ -470,28 +470,19 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <summary> Gets an object representing a <see cref="MachineLearningEndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MachineLearningEndpointResource"/> object. </returns>
-        public virtual MachineLearningEndpointResource GetMachineLearningEndpoint(ResourceIdentifier id)
+        public virtual MachineLearningEndpointResource GetMachineLearningEndpointResource(ResourceIdentifier id)
         {
             MachineLearningEndpointResource.ValidateResourceId(id);
             return new MachineLearningEndpointResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ManagedNetworkSettingsRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ManagedNetworkOutboundRuleBasicResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedNetworkSettingsRuleResource"/> object. </returns>
-        public virtual ManagedNetworkSettingsRuleResource GetManagedNetworkSettingsRuleResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedNetworkOutboundRuleBasicResource"/> object. </returns>
+        public virtual ManagedNetworkOutboundRuleBasicResource GetManagedNetworkOutboundRuleBasicResource(ResourceIdentifier id)
         {
-            ManagedNetworkSettingsRuleResource.ValidateResourceId(id);
-            return new ManagedNetworkSettingsRuleResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="MachineLearningOutboundRuleBasicResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineLearningOutboundRuleBasicResource"/> object. </returns>
-        public virtual MachineLearningOutboundRuleBasicResource GetMachineLearningOutboundRuleBasicResource(ResourceIdentifier id)
-        {
-            MachineLearningOutboundRuleBasicResource.ValidateResourceId(id);
-            return new MachineLearningOutboundRuleBasicResource(Client, id);
+            ManagedNetworkOutboundRuleBasicResource.ValidateResourceId(id);
+            return new ManagedNetworkOutboundRuleBasicResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="MachineLearningManagedNetworkSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>

@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAvailableRequest(Guid subscriptionId, string location, string skip, RequestContext context)
+        internal HttpMessage CreateGetAvailableRequest(string subscriptionId, string location, string skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/locations/", false);
             uri.AppendPath(location, true);
             uri.AppendPath("/availableQuota", false);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MachineLearning
             return message;
         }
 
-        internal HttpMessage CreateNextGetAvailableRequest(Uri nextPage, Guid subscriptionId, string location, string skip, RequestContext context)
+        internal HttpMessage CreateNextGetAvailableRequest(Uri nextPage, string subscriptionId, string location, string skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.MachineLearning
             return message;
         }
 
-        internal HttpMessage CreateGetAvailableRequest(Guid subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateGetAvailableRequest(string subscriptionId, string location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/locations/", false);
             uri.AppendPath(location, true);
             uri.AppendPath("/availableQuota/default", false);
@@ -110,12 +110,12 @@ namespace Azure.ResourceManager.MachineLearning
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string location, string skip, RequestContext context)
+        internal HttpMessage CreateGetAllRequest(string subscriptionId, string location, string skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/locations/", false);
             uri.AppendPath(location, true);
             uri.AppendPath("/quotaAndUsage", false);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.MachineLearning
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string location, string skip, RequestContext context)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string subscriptionId, string location, string skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

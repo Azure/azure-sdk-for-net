@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             EndpointType endpointType = default;
             Uri endpointUri = default;
             string failureReason = default;
-            string location = default;
+            AzureLocation? location = default;
             string name = default;
             DefaultResourceProvisioningState? provisioningState = default;
             bool? shouldCreateAiServicesEndpoint = default;
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningWorkspaceConnectionDeploymentData> array = new List<MachineLearningWorkspaceConnectionDeploymentData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningWorkspaceConnectionDeploymentData.DeserializeEndpointDeploymentResourcePropertiesBasicResourceData(item, options));
+                        array.Add(MachineLearningWorkspaceConnectionDeploymentData.DeserializeMachineLearningWorkspaceConnectionDeploymentData(item, options));
                     }
                     deployments = array;
                     continue;
@@ -220,7 +220,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))

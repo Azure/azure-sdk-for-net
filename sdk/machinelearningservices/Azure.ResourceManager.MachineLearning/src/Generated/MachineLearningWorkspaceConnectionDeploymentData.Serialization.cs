@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeEndpointDeploymentResourcePropertiesBasicResourceData(document.RootElement, options);
+                        return DeserializeMachineLearningWorkspaceConnectionDeploymentData(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningWorkspaceConnectionDeploymentData)} does not support reading '{options.Format}' format.");
@@ -65,21 +65,21 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MachineLearningWorkspaceConnectionDeploymentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="endpointDeploymentResourcePropertiesBasicResourceData"> The <see cref="MachineLearningWorkspaceConnectionDeploymentData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(MachineLearningWorkspaceConnectionDeploymentData endpointDeploymentResourcePropertiesBasicResourceData)
+        /// <param name="machineLearningWorkspaceConnectionDeploymentData"> The <see cref="MachineLearningWorkspaceConnectionDeploymentData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(MachineLearningWorkspaceConnectionDeploymentData machineLearningWorkspaceConnectionDeploymentData)
         {
-            if (endpointDeploymentResourcePropertiesBasicResourceData == null)
+            if (machineLearningWorkspaceConnectionDeploymentData == null)
             {
                 return null;
             }
-            return RequestContent.Create(endpointDeploymentResourcePropertiesBasicResourceData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(machineLearningWorkspaceConnectionDeploymentData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MachineLearningWorkspaceConnectionDeploymentData"/> from. </param>
         internal static MachineLearningWorkspaceConnectionDeploymentData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeEndpointDeploymentResourcePropertiesBasicResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeMachineLearningWorkspaceConnectionDeploymentData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -134,12 +134,12 @@ namespace Azure.ResourceManager.MachineLearning
                 throw new FormatException($"The model {nameof(MachineLearningWorkspaceConnectionDeploymentData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEndpointDeploymentResourcePropertiesBasicResourceData(document.RootElement, options);
+            return DeserializeMachineLearningWorkspaceConnectionDeploymentData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MachineLearningWorkspaceConnectionDeploymentData DeserializeEndpointDeploymentResourcePropertiesBasicResourceData(JsonElement element, ModelReaderWriterOptions options)
+        internal static MachineLearningWorkspaceConnectionDeploymentData DeserializeMachineLearningWorkspaceConnectionDeploymentData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning
     internal partial class FeaturesGetAllCollectionResultOfT : Pageable<MachineLearningFeatureData>
     {
         private readonly Features _client;
-        private readonly Guid _subscriptionId;
+        private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _workspaceName;
         private readonly string _featuresetName;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="pageSize"> Page size. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public FeaturesGetAllCollectionResultOfT(Features client, Guid subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string skip, string tags, string featureName, string description, string listViewType, int? pageSize, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public FeaturesGetAllCollectionResultOfT(Features client, string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string skip, string tags, string featureName, string description, string listViewType, int? pageSize, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

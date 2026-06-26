@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning
     internal partial class RegistryCodeVersionsGetAllAsyncCollectionResultOfT : AsyncPageable<MachineLearningCodeVersionData>
     {
         private readonly RegistryCodeVersions _client;
-        private readonly Guid _subscriptionId;
+        private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _registryName;
         private readonly string _codeName;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public RegistryCodeVersionsGetAllAsyncCollectionResultOfT(RegistryCodeVersions client, Guid subscriptionId, string resourceGroupName, string registryName, string codeName, string orderBy, int? top, string skip, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public RegistryCodeVersionsGetAllAsyncCollectionResultOfT(RegistryCodeVersions client, string subscriptionId, string resourceGroupName, string registryName, string codeName, string orderBy, int? top, string skip, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

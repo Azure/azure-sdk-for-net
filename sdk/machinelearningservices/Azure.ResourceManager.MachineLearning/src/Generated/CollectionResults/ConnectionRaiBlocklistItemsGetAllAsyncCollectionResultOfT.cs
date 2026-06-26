@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning
     internal partial class ConnectionRaiBlocklistItemsGetAllAsyncCollectionResultOfT : AsyncPageable<RaiBlocklistItemData>
     {
         private readonly ConnectionRaiBlocklistItems _client;
-        private readonly Guid _subscriptionId;
+        private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _workspaceName;
         private readonly string _connectionName;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="raiBlocklistName"> The name of the RaiBlocklist. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ConnectionRaiBlocklistItemsGetAllAsyncCollectionResultOfT(ConnectionRaiBlocklistItems client, Guid subscriptionId, string resourceGroupName, string workspaceName, string connectionName, string raiBlocklistName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ConnectionRaiBlocklistItemsGetAllAsyncCollectionResultOfT(ConnectionRaiBlocklistItems client, string subscriptionId, string resourceGroupName, string workspaceName, string connectionName, string raiBlocklistName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     yield break;
                 }
-                RaiBlocklistItemArmPaginatedResult result = RaiBlocklistItemArmPaginatedResult.FromResponse(response);
+                RaiBlocklistItemPropertiesBasicResourceArmPaginatedResult result = RaiBlocklistItemPropertiesBasicResourceArmPaginatedResult.FromResponse(response);
                 yield return Page<RaiBlocklistItemData>.FromValues((IReadOnlyList<RaiBlocklistItemData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)

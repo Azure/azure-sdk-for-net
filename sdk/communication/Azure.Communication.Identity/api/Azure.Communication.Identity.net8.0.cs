@@ -82,6 +82,7 @@ namespace Azure.Communication.Identity.Models
 {
     public static partial class CommunicationIdentityModelFactory
     {
+        public static Azure.Communication.Identity.Models.CommunicationUserDetail CommunicationUserDetail(string customId, System.DateTimeOffset? lastTokenIssuedAt, Azure.Communication.CommunicationUserIdentifier user) { throw null; }
         public static Azure.Communication.Identity.CommunicationUserIdentifierAndToken CommunicationUserIdentifierAndToken(Azure.Communication.CommunicationUserIdentifier user, Azure.Core.AccessToken accessToken) { throw null; }
     }
     public partial class CommunicationUserDetail

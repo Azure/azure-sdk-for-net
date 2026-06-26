@@ -14,7 +14,7 @@ using Azure.ResourceManager.MachineLearning;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Property bag for FQDN endpoints result. </summary>
-    public partial class MachineLearningFqdnEndpointGroup : IJsonModel<MachineLearningFqdnEndpointGroup>
+    internal partial class MachineLearningFqdnEndpointGroup : IJsonModel<MachineLearningFqdnEndpointGroup>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

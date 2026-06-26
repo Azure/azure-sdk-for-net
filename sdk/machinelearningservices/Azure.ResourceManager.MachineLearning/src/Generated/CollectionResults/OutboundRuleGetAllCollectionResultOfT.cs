@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning
     internal partial class OutboundRuleGetAllCollectionResultOfT : Pageable<MachineLearningOutboundRuleBasicData>
     {
         private readonly OutboundRule _client;
-        private readonly Guid _subscriptionId;
+        private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _workspaceName;
         private readonly string _managedNetworkName;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="managedNetworkName"> Name of the managedNetwork associated with the workspace. Only 'default' is supported. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public OutboundRuleGetAllCollectionResultOfT(OutboundRule client, Guid subscriptionId, string resourceGroupName, string workspaceName, string managedNetworkName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public OutboundRuleGetAllCollectionResultOfT(OutboundRule client, string subscriptionId, string resourceGroupName, string workspaceName, string managedNetworkName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

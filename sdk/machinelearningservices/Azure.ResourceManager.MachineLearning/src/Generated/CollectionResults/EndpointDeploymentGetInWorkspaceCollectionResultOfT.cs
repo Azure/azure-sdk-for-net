@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning
     internal partial class EndpointDeploymentGetInWorkspaceCollectionResultOfT : Pageable<MachineLearningWorkspaceConnectionDeploymentData>
     {
         private readonly EndpointDeployment _client;
-        private readonly Guid _subscriptionId;
+        private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _workspaceName;
         private readonly string _endpointType;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public EndpointDeploymentGetInWorkspaceCollectionResultOfT(EndpointDeployment client, Guid subscriptionId, string resourceGroupName, string workspaceName, string endpointType, string skip, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public EndpointDeploymentGetInWorkspaceCollectionResultOfT(EndpointDeployment client, string subscriptionId, string resourceGroupName, string workspaceName, string endpointType, string skip, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

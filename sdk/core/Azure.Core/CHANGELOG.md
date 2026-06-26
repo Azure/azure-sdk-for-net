@@ -11,6 +11,8 @@
 
 ### Bugs Fixed
 
+- Fixed a regression (introduced with managed identity host capability detection) where `DefaultAzureCredential` could throw an `AuthenticationFailedException` and stop evaluating the credential chain on hosts without a managed identity — for example, a developer machine running in Visual Studio where the IMDS endpoint (169.254.169.254) is unreachable. When `ManagedIdentityCredential` is part of a chain, a failure to detect the managed identity source/capabilities is now surfaced as a `CredentialUnavailableException`, allowing the chain to continue to the next credential.
+
 ### Other Changes
 
 ## 1.59.0 (2026-06-09)

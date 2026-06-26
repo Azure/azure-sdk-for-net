@@ -4,6 +4,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,6 +15,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public MonitorDefinition(IDictionary<string, MonitoringSignalBase> signals, MonitorComputeConfigurationBase computeConfiguration)
             : this(computeConfiguration, signals)
         {
+        }
+
+        // The current spec nests notification emails under MonitorNotificationSettings, but GA exposed a flattened Emails property.
+        // TypeSpec decorators cannot re-add a removed flattened property, so keep this alias over the generated collection.
+        /// <summary> The email recipient list which has a limitation of 499 characters in total. </summary>
+        [WirePath("alertNotificationSettings.emailNotificationSettings.emails")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public IList<string> Emails
+        {
+            get => AlertNotificationEmails;
+            set
+            {
+                AlertNotificationEmails.Clear();
+                if (value is null)
+                {
+                    return;
+                }
+
+                foreach (string email in value)
+                {
+                    AlertNotificationEmails.Add(email);
+                }
+            }
         }
     }
 }
