@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="extendedLocation"> Extended Location. </param>
         /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SiteProperties properties, Models.ManagedServiceIdentity identity, ExtendedLocation extendedLocation, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal WebSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SiteProperties properties, ResourceManager.Models.ManagedServiceIdentity identity, Resources.Models.ExtendedLocation extendedLocation, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Identity = identity;
@@ -52,11 +53,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Managed service identity. </summary>
         [WirePath("identity")]
-        public Models.ManagedServiceIdentity Identity { get; set; }
+        public ResourceManager.Models.ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Extended Location. </summary>
         [WirePath("extendedLocation")]
-        public ExtendedLocation ExtendedLocation { get; set; }
+        public Resources.Models.ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </summary>
         [WirePath("kind")]

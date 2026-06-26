@@ -47,16 +47,6 @@ namespace Azure.ResourceManager.AppService.Models
         [WirePath("kind")]
         public string Kind { get; }
 
-        /// <summary> Certificate password. </summary>
-        [WirePath("properties.password")]
-        public string Password
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Password;
-            }
-        }
-
         /// <summary> Friendly name of the certificate. </summary>
         [WirePath("properties.friendlyName")]
         public string FriendlyName

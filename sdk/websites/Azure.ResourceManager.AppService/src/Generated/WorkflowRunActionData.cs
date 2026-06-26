@@ -140,15 +140,5 @@ namespace Azure.ResourceManager.AppService
                 return Properties is null ? default : Properties.TrackedProperties;
             }
         }
-
-        /// <summary> Gets the retry histories. </summary>
-        [WirePath("properties.retryHistory")]
-        public IList<WebAppRetryHistory> RetryHistory
-        {
-            get
-            {
-                return Properties is null ? default : Properties.RetryHistory;
-            }
-        }
     }
 }

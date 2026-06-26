@@ -59,10 +59,6 @@ namespace Azure.ResourceManager.AppService.Models
         [WirePath("status")]
         public AppServiceOperationStatus? Status { get; }
 
-        /// <summary> Any errors associate with the operation. </summary>
-        [WirePath("errors")]
-        public IReadOnlyList<ResponseError> Errors { get; }
-
         /// <summary> Time when operation has started. </summary>
         [WirePath("createdTime")]
         public DateTimeOffset? CreatedOn { get; }

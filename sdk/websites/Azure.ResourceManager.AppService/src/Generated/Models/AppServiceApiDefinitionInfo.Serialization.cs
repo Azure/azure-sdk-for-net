@@ -13,7 +13,6 @@ using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Information about the formal API definition for the app. </summary>
     internal partial class AppServiceApiDefinitionInfo : IJsonModel<AppServiceApiDefinitionInfo>
     {
         /// <param name="data"> The data to parse. </param>

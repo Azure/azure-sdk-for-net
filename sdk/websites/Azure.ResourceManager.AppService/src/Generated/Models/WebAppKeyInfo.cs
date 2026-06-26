@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -32,13 +31,5 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Key name. </summary>
-        [WirePath("name")]
-        public string Name { get; set; }
-
-        /// <summary> Key value. </summary>
-        [WirePath("value")]
-        public string Value { get; set; }
     }
 }

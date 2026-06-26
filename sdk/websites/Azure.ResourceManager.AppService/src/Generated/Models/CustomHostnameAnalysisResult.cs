@@ -67,16 +67,6 @@ namespace Azure.ResourceManager.AppService.Models
             }
         }
 
-        /// <summary> Raw failure information if DNS verification fails. </summary>
-        [WirePath("properties.customDomainVerificationFailureInfo")]
-        public ErrorEntity CustomDomainVerificationFailureInfo
-        {
-            get
-            {
-                return Properties is null ? default : Properties.CustomDomainVerificationFailureInfo;
-            }
-        }
-
         /// <summary> &lt;code&gt;true&lt;/code&gt; if there is a conflict on a scale unit; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("properties.hasConflictOnScaleUnit")]
         public bool? HasConflictOnScaleUnit

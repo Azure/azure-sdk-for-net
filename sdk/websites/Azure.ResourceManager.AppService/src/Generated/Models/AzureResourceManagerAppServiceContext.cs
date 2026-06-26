@@ -9,6 +9,7 @@ using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -235,7 +236,8 @@ namespace Azure.ResourceManager.AppService
     [ModelReaderWriterBuildable(typeof(DnlResourceNameAvailabilityResult))]
     [ModelReaderWriterBuildable(typeof(ErrorEntity))]
     [ModelReaderWriterBuildable(typeof(ExpressionTraces))]
-    [ModelReaderWriterBuildable(typeof(ExtendedLocation))]
+    [ModelReaderWriterBuildable(typeof(Resources.Models.ExtendedLocation))]
+    [ModelReaderWriterBuildable(typeof(Models.ExtendedLocation))]
     [ModelReaderWriterBuildable(typeof(FileSystemApplicationLogsConfig))]
     [ModelReaderWriterBuildable(typeof(FileSystemHttpLogsConfig))]
     [ModelReaderWriterBuildable(typeof(FileSystemTokenStore))]

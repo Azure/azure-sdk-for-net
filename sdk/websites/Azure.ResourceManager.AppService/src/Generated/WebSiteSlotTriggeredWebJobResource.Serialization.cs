@@ -8,11 +8,12 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary></summary>
-    public partial class WebSiteSlotTriggeredWebJobResource : IJsonModel<TriggeredWebJobData>
+    public partial class WebSiteSlotTriggeredWebJobResource : ArmResource, IJsonModel<TriggeredWebJobData>
     {
         private static IJsonModel<TriggeredWebJobData> s_dataDeserializationInstance;
 
