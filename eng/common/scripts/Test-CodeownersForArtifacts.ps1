@@ -162,19 +162,24 @@ function getCheckPackageResponse([string] $OutputText) {
     }
 }
 
-function getSuggestedPrompts([object] $CheckPackageResponse) {
+function getCheckPackageIssues([object] $CheckPackageResponse) {
     if (!$CheckPackageResponse -or !$CheckPackageResponse.PSObject.Properties['issues']) {
         return ,@()
     }
 
-    $prompts = @()
+    $issues = @()
     foreach ($issue in @($CheckPackageResponse.issues)) {
-        if ($issue.next_step) {
-            $prompts += $issue.next_step
+        if (!$issue) {
+            continue
+        }
+
+        $issues += [PSCustomObject]@{
+            Message = $issue.message
+            Prompt = $issue.next_step
         }
     }
 
-    return ,@($prompts | Sort-Object -Unique)
+    return ,@($issues)
 }
 
 $failedPackages = @()
@@ -237,13 +242,13 @@ foreach ($pkgPropertiesFile in Get-ChildItem -Path $PackageInfoDirectory -Filter
         }
 
         if ($checkPackageExitCode) {
-            LogError "Codeowners validation failed for package: $($pkgProperties.DirectoryPath)"
+            Write-Host "Codeowners validation failed for package: $($pkgProperties.DirectoryPath)"
             $checkPackageResponse = getCheckPackageResponse -OutputText $outputText
             $failedPackages += [PSCustomObject]@{
                 Name = $pkgProperties.Name
                 DirectoryPath = $pkgProperties.DirectoryPath
                 ResponseError = if ($checkPackageResponse) { $checkPackageResponse.response_error } else { $null }
-                SuggestedPrompts = getSuggestedPrompts -CheckPackageResponse $checkPackageResponse
+                Issues = getCheckPackageIssues -CheckPackageResponse $checkPackageResponse
                 HasParsedResponse = $null -ne $checkPackageResponse
             }
         } else {
@@ -257,24 +262,28 @@ foreach ($pkgPropertiesFile in Get-ChildItem -Path $PackageInfoDirectory -Filter
 LogGroupEnd
 
 if ($failedPackages.Count -gt 0) {
+    LogError "Codeowners validation failed for one or more packages. See http://aka.ms/azsdk/codeowners for instructions to fix the issue."
     Write-Host ""
     Write-Host "Failed Packages:"
     foreach ($failedPackage in $failedPackages) {
         LogError "  - $($failedPackage.DirectoryPath) does not have sufficient code owners coverage"
-        if ($failedPackage.ResponseError) {
-            Write-Host "    $($failedPackage.ResponseError)"
-        }
+        if ($failedPackage.HasParsedResponse -and @($failedPackage.Issues).Count -gt 0) {
+            Write-Host "    Issue details:"
+            foreach ($issue in $failedPackage.Issues) {
+                if ($issue.Message) {
+                    Write-Host "      Error: $($issue.Message)"
+                }
 
-        if ($failedPackage.HasParsedResponse -and @($failedPackage.SuggestedPrompts).Count -gt 0) {
-            Write-Host "    Suggested prompt(s):"
-            foreach ($prompt in $failedPackage.SuggestedPrompts) {
-                Write-Host "      $prompt"
+                if ($issue.Prompt) {
+                    Write-Host "      Prompt: $($issue.Prompt)"
+                }
             }
+        } elseif ($failedPackage.ResponseError) {
+            Write-Host "    $($failedPackage.ResponseError)"
         } elseif (!$failedPackage.HasParsedResponse) {
             Write-Host "    Unable to parse check-package output; see grouped output above."
         }
     }
-    LogError "Codeowners validation failed for one or more packages. See http://aka.ms/azsdk/codeowners for instructions to fix the issue."
     exit 1
 }
 exit 0
