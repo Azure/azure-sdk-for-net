@@ -1,0 +1,6 @@
+# Azure.Security.CodeTransparency approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# 'JsonWebKey' is the standard JOSE key type name and collides with
+# Azure.Security.KeyVault.Keys.JsonWebKey; the two packages are never referenced together.
+nowarn:AZC0034 T:Azure.Security.CodeTransparency.JsonWebKey
