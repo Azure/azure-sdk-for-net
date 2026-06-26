@@ -1,9 +1,20 @@
 name: KeyVault Bug to Copilot
 
-# Triggers when the existing issue-triage and event-processor workflows
-# apply labels to a new issue. Gate 1 runs once all three qualifying
-# labels (KeyVault, Client, bug) are present.
+# Supports explicit handoff from issue triage. The workflow re-fetches
+# the issue and validates customer-reported + bug + exactly one service
+# label + exactly one category label + no needs-triage before gates run.
 on:
+  workflow_call:
+    inputs:
+      issue_number:
+        required: true
+        type: number
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: Issue number to evaluate
+        required: true
+        type: string
   issues:
     types: [labeled]
 
@@ -13,17 +24,137 @@ permissions:
 
 jobs:
   # ──────────────────────────────────────────────────────────────────
+  # Preflight – explicit handoff validation
+  # Triage should call this workflow after successful classification.
+  # This job re-fetches the issue and validates the same conditions again.
+  # ──────────────────────────────────────────────────────────────────
+  preflight:
+    runs-on: ubuntu-latest
+    outputs:
+      eligible: ${{ steps.validate.outputs.eligible }}
+      reason: ${{ steps.validate.outputs.reason }}
+      issue_number: ${{ steps.validate.outputs.issue_number }}
+      issue_title: ${{ steps.validate.outputs.issue_title }}
+      issue_body: ${{ steps.validate.outputs.issue_body }}
+      service_label: ${{ steps.validate.outputs.service_label }}
+      category_label: ${{ steps.validate.outputs.category_label }}
+    steps:
+      - name: Validate handoff preconditions
+        id: validate
+        uses: actions/github-script@v8
+        env:
+          ISSUE_NUMBER_INPUT: ${{ inputs.issue_number || github.event.issue.number }}
+        with:
+          script: |
+            const issueNumber = Number(process.env.ISSUE_NUMBER_INPUT);
+            if (!issueNumber) {
+              core.setOutput('eligible', 'false');
+              core.setOutput('reason', 'No issue number was provided.');
+              return;
+            }
+
+            const { data: issue } = await github.rest.issues.get({
+              ...context.repo,
+              issue_number: issueNumber
+            });
+
+            const labels = issue.labels.map(label => ({
+              name: label.name,
+              color: (label.color || '').toLowerCase()
+            }));
+            const names = labels.map(label => label.name);
+            const lowerNames = names.map(name => name.toLowerCase());
+
+            // Azure SDK convention from triage: service labels are pink,
+            // category labels are yellow. These colors cover the observed
+            // KeyVault/Client labels and keep the handoff service-agnostic.
+            const serviceLabels = labels.filter(label => label.color === 'e99695');
+            const categoryLabels = labels.filter(label => label.color === 'ffeb77');
+
+            const failures = [];
+            if (!lowerNames.includes('customer-reported')) {
+              failures.push('missing customer-reported');
+            }
+            if (!lowerNames.includes('bug')) {
+              failures.push('missing bug');
+            }
+            if (lowerNames.includes('needs-triage')) {
+              failures.push('issue is still needs-triage');
+            }
+            if (serviceLabels.length !== 1) {
+              failures.push(`expected exactly one service label, found ${serviceLabels.length}`);
+            }
+            if (categoryLabels.length !== 1) {
+              failures.push(`expected exactly one category label, found ${categoryLabels.length}`);
+            }
+
+            const serviceLabel = serviceLabels[0]?.name || '';
+            const categoryLabel = categoryLabels[0]?.name || '';
+
+            // KeyVault remains the only enabled service for this prototype.
+            // The preflight shape is generic so triage can integrate once and
+            // additional services can opt in later with their own policies.
+            if (serviceLabel && serviceLabel !== 'KeyVault') {
+              failures.push(`service ${serviceLabel} is not enabled yet`);
+            }
+            if (categoryLabel && categoryLabel !== 'Client') {
+              failures.push(`category ${categoryLabel} is not enabled yet`);
+            }
+
+            const eligible = failures.length === 0;
+            const reason = eligible
+              ? `Eligible customer-reported ${serviceLabel}/${categoryLabel} bug.`
+              : failures.join('; ');
+
+            core.setOutput('eligible', eligible ? 'true' : 'false');
+            core.setOutput('reason', reason);
+            core.setOutput('issue_number', issue.number.toString());
+            core.setOutput('issue_title', issue.title || '');
+            core.setOutput('issue_body', issue.body || '');
+            core.setOutput('service_label', serviceLabel);
+            core.setOutput('category_label', categoryLabel);
+            core.info(reason);
+
+      - name: Comment when preflight skips
+        if: steps.validate.outputs.eligible != 'true' && (github.event_name != 'issues' || github.event.label.name == 'bug')
+        uses: actions/github-script@v8
+        env:
+          ISSUE_NUMBER: ${{ steps.validate.outputs.issue_number }}
+          SKIP_REASON: ${{ steps.validate.outputs.reason }}
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              ...context.repo,
+              issue_number: Number(process.env.ISSUE_NUMBER),
+              body: [
+                `⏭️ **Copilot Automation Skipped**`,
+                ``,
+                `The issue did not meet the triage handoff preconditions.`,
+                ``,
+                `**Reason:** ${process.env.SKIP_REASON}`,
+                ``,
+                `Required: \`customer-reported\`, \`bug\`, exactly one service label, exactly one category label, and no \`needs-triage\`.`,
+                ``,
+                `> _This check was performed automatically by Preflight – Handoff Validation._`
+              ].join('\n')
+            });
+
+  # ──────────────────────────────────────────────────────────────────
   # Gate 1 – Duplicate Detection
   # Two-stage approach: error-signature hashing + title/error-code overlap
   # Action on match: post comment linking duplicate, add label
   # Safety: never auto-closes — human confirms
   # ──────────────────────────────────────────────────────────────────
   gate1-duplicate-check:
-    if: |
-      github.event.label.name == 'bug' &&
-      contains(join(github.event.issue.labels.*.name, ','), 'Client') &&
-      contains(join(github.event.issue.labels.*.name, ','), 'KeyVault')
+    needs: [preflight]
+    if: needs.preflight.outputs.eligible == 'true'
     runs-on: ubuntu-latest
+    env:
+      ISSUE_NUMBER: ${{ needs.preflight.outputs.issue_number }}
+      ISSUE_TITLE: ${{ needs.preflight.outputs.issue_title }}
+      ISSUE_BODY: ${{ needs.preflight.outputs.issue_body }}
+      SERVICE_LABEL: ${{ needs.preflight.outputs.service_label }}
+      CATEGORY_LABEL: ${{ needs.preflight.outputs.category_label }}
     outputs:
       is_duplicate: ${{ steps.dedup.outputs.is_duplicate }}
       duplicate_of: ${{ steps.dedup.outputs.duplicate_of }}
@@ -35,7 +166,7 @@ jobs:
         uses: actions/github-script@v8
         with:
           script: |
-            const body = context.payload.issue.body || '';
+            const body = process.env.ISSUE_BODY || '';
 
             // Extract .NET exception types
             const exceptionPattern = /(\w+(?:Exception|Error))\b/g;
@@ -76,15 +207,16 @@ jobs:
         uses: actions/github-script@v8
         with:
           script: |
-            const currentNumber = context.payload.issue.number;
-            const body = context.payload.issue.body || '';
-            const title = context.payload.issue.title || '';
+            const currentNumber = Number(process.env.ISSUE_NUMBER);
+            const body = process.env.ISSUE_BODY || '';
+            const title = process.env.ISSUE_TITLE || '';
             const sigHash = '${{ steps.signatures.outputs.signature_hash }}';
             const hasSig = '${{ steps.signatures.outputs.has_signature }}';
 
-            // Find open KeyVault bugs via GitHub Search API
+            // Find open matching service/category customer bugs via GitHub Search API
             const query = `repo:${context.repo.owner}/${context.repo.repo} `
-              + `is:issue is:open label:KeyVault label:bug label:Client`;
+              + `is:issue is:open label:"${process.env.SERVICE_LABEL}" label:bug `
+              + `label:"${process.env.CATEGORY_LABEL}" label:customer-reported`;
 
             const results = await github.rest.search.issuesAndPullRequests({
               q: query, sort: 'created', order: 'desc', per_page: 50
@@ -179,7 +311,7 @@ jobs:
 
             await github.rest.issues.createComment({
               ...context.repo,
-              issue_number: context.payload.issue.number,
+              issue_number: Number(process.env.ISSUE_NUMBER),
               body: [
                 `🔍 **Possible Duplicate Detected**`,
                 ``,
@@ -193,18 +325,18 @@ jobs:
 
             await github.rest.issues.addLabels({
               ...context.repo,
-              issue_number: context.payload.issue.number,
+              issue_number: Number(process.env.ISSUE_NUMBER),
               labels: ['possible-duplicate']
             });
 
-            core.info(`Flagged issue #${context.payload.issue.number} as possible duplicate of #${dupNum}`);
+            core.info(`Flagged issue #${process.env.ISSUE_NUMBER} as possible duplicate of #${dupNum}`);
 
       # ── Log pass when no duplicate ──
       - name: Gate 1 passed
         if: steps.dedup.outputs.is_duplicate != 'true'
         run: |
           echo "✅ Gate 1 passed — no duplicate detected (best score: ${{ steps.dedup.outputs.score }})"
-          echo "Issue #${{ github.event.issue.number }} proceeds to Gate 2"
+          echo "Issue #${{ needs.preflight.outputs.issue_number }} proceeds to Gate 2"
 
   # ──────────────────────────────────────────────────────────────────
   # Gate 2 – Version Currency Check
@@ -215,9 +347,15 @@ jobs:
   # behind on a living package?"
   # ──────────────────────────────────────────────────────────────────
   gate2-version-check:
-    needs: [gate1-duplicate-check]
+    needs: [preflight, gate1-duplicate-check]
     if: needs.gate1-duplicate-check.outputs.is_duplicate != 'true'
     runs-on: ubuntu-latest
+    env:
+      ISSUE_NUMBER: ${{ needs.preflight.outputs.issue_number }}
+      ISSUE_TITLE: ${{ needs.preflight.outputs.issue_title }}
+      ISSUE_BODY: ${{ needs.preflight.outputs.issue_body }}
+      SERVICE_LABEL: ${{ needs.preflight.outputs.service_label }}
+      CATEGORY_LABEL: ${{ needs.preflight.outputs.category_label }}
     outputs:
       is_outdated: ${{ steps.version-check.outputs.is_outdated }}
       customer_version: ${{ steps.version-check.outputs.customer_version }}
@@ -230,7 +368,7 @@ jobs:
         uses: actions/github-script@v8
         with:
           script: |
-            const body = context.payload.issue.body || '';
+            const body = process.env.ISSUE_BODY || '';
 
             // Known KeyVault package IDs
             const kvPackages = [
@@ -326,8 +464,8 @@ jobs:
             const path = require('path');
 
             const pkg = '${{ steps.version-check.outputs.detected_package }}';
-            const title = context.payload.issue.title || '';
-            const body = context.payload.issue.body || '';
+            const title = process.env.ISSUE_TITLE || '';
+            const body = process.env.ISSUE_BODY || '';
 
             // Map package name to directory
             const pkgDirMap = {
@@ -413,7 +551,7 @@ jobs:
 
             await github.rest.issues.createComment({
               ...context.repo,
-              issue_number: context.payload.issue.number,
+              issue_number: Number(process.env.ISSUE_NUMBER),
               body: body.join('\n')
             });
 
@@ -425,7 +563,7 @@ jobs:
           echo "✅ Gate 2 passed — version check complete"
           echo "  Outdated: ${{ steps.version-check.outputs.is_outdated }}"
           echo "  Possibly fixed: ${{ steps.changelog-check.outputs.possibly_fixed || 'n/a' }}"
-          echo "Issue #${{ github.event.issue.number }} proceeds to Gate 3"
+          echo "Issue #${{ needs.preflight.outputs.issue_number }} proceeds to Gate 3"
 
   # ──────────────────────────────────────────────────────────────────
   # Gate 3 – Information Completeness
@@ -435,8 +573,14 @@ jobs:
   # No equivalent exists in the current triage workflows.
   # ──────────────────────────────────────────────────────────────────
   gate3-info-completeness:
-    needs: [gate2-version-check]
+    needs: [preflight, gate2-version-check]
     runs-on: ubuntu-latest
+    env:
+      ISSUE_NUMBER: ${{ needs.preflight.outputs.issue_number }}
+      ISSUE_TITLE: ${{ needs.preflight.outputs.issue_title }}
+      ISSUE_BODY: ${{ needs.preflight.outputs.issue_body }}
+      SERVICE_LABEL: ${{ needs.preflight.outputs.service_label }}
+      CATEGORY_LABEL: ${{ needs.preflight.outputs.category_label }}
     outputs:
       is_sufficient: ${{ steps.score.outputs.is_sufficient }}
       score: ${{ steps.score.outputs.score }}
@@ -447,7 +591,7 @@ jobs:
         uses: actions/github-script@v8
         with:
           script: |
-            const body = context.payload.issue.body || '';
+            const body = process.env.ISSUE_BODY || '';
             const bodyLower = body.toLowerCase();
             const signals = {};
 
@@ -540,14 +684,14 @@ jobs:
 
             await github.rest.issues.createComment({
               ...context.repo,
-              issue_number: context.payload.issue.number,
+              issue_number: Number(process.env.ISSUE_NUMBER),
               body: commentBody
             });
 
             // Add needs-author-feedback label to pause pipeline
             await github.rest.issues.addLabels({
               ...context.repo,
-              issue_number: context.payload.issue.number,
+              issue_number: Number(process.env.ISSUE_NUMBER),
               labels: ['needs-author-feedback']
             });
 
@@ -559,7 +703,7 @@ jobs:
         if: steps.score.outputs.is_sufficient == 'true'
         run: |
           echo "✅ Gate 3 passed — information completeness score: ${{ steps.score.outputs.score }}/9"
-          echo "Issue #${{ github.event.issue.number }} proceeds to Gate 4"
+          echo "Issue #${{ needs.preflight.outputs.issue_number }} proceeds to Gate 4"
 
   # ──────────────────────────────────────────────────────────────────
   # Gate 4 – Working-as-Designed Check
@@ -570,9 +714,15 @@ jobs:
   # No equivalent exists in the current triage workflows.
   # ──────────────────────────────────────────────────────────────────
   gate4-by-design-check:
-    needs: [gate3-info-completeness]
+    needs: [preflight, gate3-info-completeness]
     if: needs.gate3-info-completeness.outputs.is_sufficient == 'true'
     runs-on: ubuntu-latest
+    env:
+      ISSUE_NUMBER: ${{ needs.preflight.outputs.issue_number }}
+      ISSUE_TITLE: ${{ needs.preflight.outputs.issue_title }}
+      ISSUE_BODY: ${{ needs.preflight.outputs.issue_body }}
+      SERVICE_LABEL: ${{ needs.preflight.outputs.service_label }}
+      CATEGORY_LABEL: ${{ needs.preflight.outputs.category_label }}
     outputs:
       is_by_design: ${{ steps.wad-check.outputs.is_by_design }}
       matched_id: ${{ steps.wad-check.outputs.matched_id }}
@@ -600,8 +750,8 @@ jobs:
         with:
           script: |
             const fs = require('fs');
-            const body = (context.payload.issue.body || '').toLowerCase();
-            const title = (context.payload.issue.title || '').toLowerCase();
+            const body = (process.env.ISSUE_BODY || '').toLowerCase();
+            const title = (process.env.ISSUE_TITLE || '').toLowerCase();
             const text = title + ' ' + body;
 
             // Curated Known-Behaviors Knowledge Base
@@ -760,8 +910,8 @@ jobs:
               const userPrompt = JSON.stringify({
                 task: 'Decide whether this issue matches exactly one approved known Key Vault by-design behavior.',
                 issue: {
-                  title: context.payload.issue.title || '',
-                  body: context.payload.issue.body || ''
+                  title: process.env.ISSUE_TITLE || '',
+                  body: process.env.ISSUE_BODY || ''
                 },
                 knownBehaviors: allowlist,
                 requiredJsonShape: {
@@ -887,13 +1037,13 @@ jobs:
 
             await github.rest.issues.createComment({
               ...context.repo,
-              issue_number: context.payload.issue.number,
+              issue_number: Number(process.env.ISSUE_NUMBER),
               body: commentBody
             });
 
             await github.rest.issues.addLabels({
               ...context.repo,
-              issue_number: context.payload.issue.number,
+              issue_number: Number(process.env.ISSUE_NUMBER),
               labels: ['possible-by-design']
             });
 
@@ -904,7 +1054,7 @@ jobs:
         if: steps.wad-check.outputs.is_by_design != 'true'
         run: |
           echo "✅ Gate 4 passed — no known-behavior match found"
-          echo "Issue #${{ github.event.issue.number }} proceeds to Gate 5"
+          echo "Issue #${{ needs.preflight.outputs.issue_number }} proceeds to Gate 5"
 
   # ──────────────────────────────────────────────────────────────────
   # Gate 5 – SDK vs Service Fault Domain
@@ -915,9 +1065,15 @@ jobs:
   # No equivalent exists in the current triage workflows.
   # ──────────────────────────────────────────────────────────────────
   gate5-fault-domain:
-    needs: [gate4-by-design-check]
+    needs: [preflight, gate4-by-design-check]
     if: needs.gate4-by-design-check.outputs.is_by_design != 'true'
     runs-on: ubuntu-latest
+    env:
+      ISSUE_NUMBER: ${{ needs.preflight.outputs.issue_number }}
+      ISSUE_TITLE: ${{ needs.preflight.outputs.issue_title }}
+      ISSUE_BODY: ${{ needs.preflight.outputs.issue_body }}
+      SERVICE_LABEL: ${{ needs.preflight.outputs.service_label }}
+      CATEGORY_LABEL: ${{ needs.preflight.outputs.category_label }}
     outputs:
       domain: ${{ steps.classify.outputs.domain }}
       sdk_score: ${{ steps.classify.outputs.sdk_score }}
@@ -928,8 +1084,8 @@ jobs:
         uses: actions/github-script@v8
         with:
           script: |
-            const body = (context.payload.issue.body || '');
-            const title = (context.payload.issue.title || '');
+            const body = (process.env.ISSUE_BODY || '');
+            const title = (process.env.ISSUE_TITLE || '');
             const text = (title + ' ' + body).toLowerCase();
 
             let sdkScore = 0;
@@ -1014,7 +1170,7 @@ jobs:
 
             await github.rest.issues.createComment({
               ...context.repo,
-              issue_number: context.payload.issue.number,
+              issue_number: Number(process.env.ISSUE_NUMBER),
               body: [
                 `🔀 **Service-Side Issue Detected**`,
                 ``,
@@ -1031,7 +1187,7 @@ jobs:
 
             await github.rest.issues.addLabels({
               ...context.repo,
-              issue_number: context.payload.issue.number,
+              issue_number: Number(process.env.ISSUE_NUMBER),
               labels: ['Service']
             });
 
@@ -1050,7 +1206,7 @@ jobs:
 
             await github.rest.issues.createComment({
               ...context.repo,
-              issue_number: context.payload.issue.number,
+              issue_number: Number(process.env.ISSUE_NUMBER),
               body: [
                 `🤔 **Ambiguous Fault Domain**`,
                 ``,
@@ -1069,7 +1225,7 @@ jobs:
 
             await github.rest.issues.addLabels({
               ...context.repo,
-              issue_number: context.payload.issue.number,
+              issue_number: Number(process.env.ISSUE_NUMBER),
               labels: ['needs-team-attention']
             });
 
@@ -1080,7 +1236,7 @@ jobs:
         if: steps.classify.outputs.domain == 'sdk'
         run: |
           echo "✅ Gate 5 passed — classified as SDK-side (SDK: ${{ steps.classify.outputs.sdk_score }}, Service: ${{ steps.classify.outputs.service_score }})"
-          echo "Issue #${{ github.event.issue.number }} proceeds to Gate 6"
+          echo "Issue #${{ needs.preflight.outputs.issue_number }} proceeds to Gate 6"
 
   # ──────────────────────────────────────────────────────────────────
   # Gate 6 – Fix-Class Allowlist
@@ -1090,9 +1246,15 @@ jobs:
   # This is the ONLY gate that takes autonomous action (assignment).
   # ──────────────────────────────────────────────────────────────────
   gate6-fix-class:
-    needs: [gate5-fault-domain]
+    needs: [preflight, gate5-fault-domain]
     if: needs.gate5-fault-domain.outputs.domain == 'sdk'
     runs-on: ubuntu-latest
+    env:
+      ISSUE_NUMBER: ${{ needs.preflight.outputs.issue_number }}
+      ISSUE_TITLE: ${{ needs.preflight.outputs.issue_title }}
+      ISSUE_BODY: ${{ needs.preflight.outputs.issue_body }}
+      SERVICE_LABEL: ${{ needs.preflight.outputs.service_label }}
+      CATEGORY_LABEL: ${{ needs.preflight.outputs.category_label }}
     outputs:
       is_eligible: ${{ steps.classify-fix.outputs.is_eligible }}
       fix_class: ${{ steps.classify-fix.outputs.fix_class }}
@@ -1102,10 +1264,10 @@ jobs:
         uses: actions/github-script@v8
         with:
           script: |
-            const body = (context.payload.issue.body || '').toLowerCase();
-            const title = (context.payload.issue.title || '').toLowerCase();
+            const body = (process.env.ISSUE_BODY || '').toLowerCase();
+            const title = (process.env.ISSUE_TITLE || '').toLowerCase();
             const text = title + ' ' + body;
-            const labels = (context.payload.issue.labels || []).map(l => l.name.toLowerCase());
+            const labels = [process.env.SERVICE_LABEL, process.env.CATEGORY_LABEL, 'bug', 'customer-reported'].map(l => l.toLowerCase());
 
             // Fix-class definitions with detection patterns and phase
             const fixClasses = [
@@ -1220,7 +1382,7 @@ jobs:
           script: |
             await github.rest.issues.addLabels({
               ...context.repo,
-              issue_number: context.payload.issue.number,
+              issue_number: Number(process.env.ISSUE_NUMBER),
               labels: ['auto-fix-candidate']
             });
             core.info('Added auto-fix-candidate label');
@@ -1246,7 +1408,7 @@ jobs:
 
             await github.rest.issues.createComment({
               ...context.repo,
-              issue_number: context.payload.issue.number,
+              issue_number: Number(process.env.ISSUE_NUMBER),
               body: [
                 `⏭️ **Auto-Fix Not Eligible**`,
                 ``,
@@ -1260,7 +1422,7 @@ jobs:
 
             await github.rest.issues.addLabels({
               ...context.repo,
-              issue_number: context.payload.issue.number,
+              issue_number: Number(process.env.ISSUE_NUMBER),
               labels: ['auto-fix-skipped']
             });
 
@@ -1271,7 +1433,7 @@ jobs:
         if: steps.classify-fix.outputs.is_eligible == 'true'
         run: |
           echo "✅ Gate 6 passed — fix class: ${{ steps.classify-fix.outputs.fix_class }}"
-          echo "Issue #${{ github.event.issue.number }} is eligible for Copilot assignment"
+          echo "Issue #${{ needs.preflight.outputs.issue_number }} is eligible for Copilot assignment"
 
   # ──────────────────────────────────────────────────────────────────
   # Assign Copilot – Final step after all 6 gates pass
@@ -1279,15 +1441,21 @@ jobs:
   # Falls back to GraphQL API if REST fails.
   # ──────────────────────────────────────────────────────────────────
   assign-copilot:
-    needs: [gate6-fix-class]
+    needs: [preflight, gate6-fix-class]
     if: needs.gate6-fix-class.outputs.is_eligible == 'true'
     runs-on: ubuntu-latest
+    env:
+      ISSUE_NUMBER: ${{ needs.preflight.outputs.issue_number }}
+      ISSUE_TITLE: ${{ needs.preflight.outputs.issue_title }}
+      ISSUE_BODY: ${{ needs.preflight.outputs.issue_body }}
+      SERVICE_LABEL: ${{ needs.preflight.outputs.service_label }}
+      CATEGORY_LABEL: ${{ needs.preflight.outputs.category_label }}
     steps:
       - name: Assign Copilot to issue
         uses: actions/github-script@v8
         with:
           script: |
-            const issueNumber = context.payload.issue.number;
+            const issueNumber = Number(process.env.ISSUE_NUMBER);
             const fixClass = '${{ needs.gate6-fix-class.outputs.fix_class }}';
 
             // Method 1: REST API (primary)
