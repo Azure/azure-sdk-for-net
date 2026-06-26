@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="properties"> ProcessThreadInfo resource specific properties. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppProcessThreadInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Models.WebAppProcessThreadProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal WebAppProcessThreadInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WebAppProcessThreadProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Kind = kind;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> ProcessThreadInfo resource specific properties. </summary>
         [WirePath("properties")]
-        public Models.WebAppProcessThreadProperties Properties { get; }
+        public WebAppProcessThreadProperties Properties { get; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]

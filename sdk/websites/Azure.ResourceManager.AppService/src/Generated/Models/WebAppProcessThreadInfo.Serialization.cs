@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<Models.WebAppProcessThreadProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppService.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            Models.WebAppProcessThreadProperties properties = default;
+            WebAppProcessThreadProperties properties = default;
             string kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    properties = Models.WebAppProcessThreadProperties.DeserializeWebAppProcessThreadProperties(prop.Value, options);
+                    properties = WebAppProcessThreadProperties.DeserializeWebAppProcessThreadProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))

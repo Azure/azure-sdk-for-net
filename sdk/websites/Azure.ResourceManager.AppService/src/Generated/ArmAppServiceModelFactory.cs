@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="marketplaceOffer"> Marketplace offer. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.PremierAddOnOffer"/> instance for mocking. </returns>
-        public static PremierAddOnOffer PremierAddOnOffer(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string sku = default, string product = default, string vendor = default, bool? isPromoCodeRequired = default, int? quota = default, AppServicePlanRestrictions? webHostingPlanRestrictions = default, string privacyPolicyUri = default, string legalTermsUri = default, string marketplacePublisher = default, string marketplaceOffer = default, string kind = default)
+        public static PremierAddOnOffer PremierAddOnOffer(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string sku = default, string product = default, string vendor = default, bool? isPromoCodeRequired = default, int? quota = default, AppServicePlanRestriction? webHostingPlanRestrictions = default, string privacyPolicyUri = default, string legalTermsUri = default, string marketplacePublisher = default, string marketplaceOffer = default, string kind = default)
         {
             return new PremierAddOnOffer(
                 id,
@@ -764,6 +764,14 @@ namespace Azure.ResourceManager.AppService.Models
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 kind,
                 default);
+        }
+
+        /// <param name="timeGrain"> Time grain . </param>
+        /// <param name="retention"> Retention period for the current time grain. </param>
+        /// <returns> A new <see cref="Models.ResourceMetricAvailability"/> instance for mocking. </returns>
+        public static ResourceMetricAvailability ResourceMetricAvailability(string timeGrain = default, string retention = default)
+        {
+            return new ResourceMetricAvailability(timeGrain, retention, default);
         }
 
         /// <param name="resourceType"> Resource type that this SKU applies to. </param>
@@ -7027,7 +7035,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="properties"> ProcessThreadInfo resource specific properties. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.WebAppProcessThreadInfo"/> instance for mocking. </returns>
-        public static WebAppProcessThreadInfo WebAppProcessThreadInfo(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Models.WebAppProcessThreadProperties properties = default, string kind = default)
+        public static WebAppProcessThreadInfo WebAppProcessThreadInfo(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, WebAppProcessThreadProperties properties = default, string kind = default)
         {
             return new WebAppProcessThreadInfo(
                 id,
@@ -7036,6 +7044,37 @@ namespace Azure.ResourceManager.AppService.Models
                 systemData,
                 properties,
                 kind,
+                default);
+        }
+
+        /// <param name="identifier"> Site extension ID. </param>
+        /// <param name="href"> HRef URI. </param>
+        /// <param name="process"> Process URI. </param>
+        /// <param name="startAddress"> Start address. </param>
+        /// <param name="currentPriority"> Current thread priority. </param>
+        /// <param name="priorityLevel"> Thread priority level. </param>
+        /// <param name="basePriority"> Base priority. </param>
+        /// <param name="startOn"> Start time. </param>
+        /// <param name="totalProcessorTime"> Total processor time. </param>
+        /// <param name="userProcessorTime"> User processor time. </param>
+        /// <param name="state"> Thread state. </param>
+        /// <param name="waitReason"> Wait reason. </param>
+        /// <returns> A new <see cref="Models.WebAppProcessThreadProperties"/> instance for mocking. </returns>
+        public static WebAppProcessThreadProperties WebAppProcessThreadProperties(int? identifier = default, Uri href = default, string process = default, string startAddress = default, int? currentPriority = default, string priorityLevel = default, int? basePriority = default, DateTimeOffset? startOn = default, string totalProcessorTime = default, string userProcessorTime = default, string state = default, string waitReason = default)
+        {
+            return new WebAppProcessThreadProperties(
+                identifier,
+                href,
+                process,
+                startAddress,
+                currentPriority,
+                priorityLevel,
+                basePriority,
+                startOn,
+                totalProcessorTime,
+                userProcessorTime,
+                state,
+                waitReason,
                 default);
         }
 
@@ -10032,7 +10071,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.ProcessInfoData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ProcessInfoData ProcessInfoData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? identifier = default, string deploymentName = default, string href = default, string minidump = default, bool? isProfileRunning = default, bool? isIisProfileRunning = default, double? iisProfileTimeoutInSeconds = default, string parent = default, IEnumerable<string> children = default, IEnumerable<Models.WebAppProcessThreadProperties> processThreads = default, IEnumerable<string> openFileHandles = default, IEnumerable<ProcessModuleInfoData> modules = default, string fileName = default, string commandLine = default, string userName = default, int? handleCount = default, int? moduleCount = default, int? threadCount = default, DateTimeOffset? startOn = default, string totalCpuTime = default, string userCpuTime = default, string privilegedCpuTime = default, long? workingSet = default, long? peakWorkingSet = default, long? privateMemory = default, long? virtualMemory = default, long? peakVirtualMemory = default, long? pagedSystemMemory = default, long? nonPagedSystemMemory = default, long? pagedMemory = default, long? peakPagedMemory = default, DateTimeOffset? timeStamp = default, IDictionary<string, string> environmentVariables = default, bool? isScmSite = default, bool? isWebjob = default, string description = default, string kind = default)
+        public static ProcessInfoData ProcessInfoData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? identifier = default, string deploymentName = default, string href = default, string minidump = default, bool? isProfileRunning = default, bool? isIisProfileRunning = default, double? iisProfileTimeoutInSeconds = default, string parent = default, IEnumerable<string> children = default, IEnumerable<WebAppProcessThreadProperties> processThreads = default, IEnumerable<string> openFileHandles = default, IEnumerable<ProcessModuleInfoData> modules = default, string fileName = default, string commandLine = default, string userName = default, int? handleCount = default, int? moduleCount = default, int? threadCount = default, DateTimeOffset? startOn = default, string totalCpuTime = default, string userCpuTime = default, string privilegedCpuTime = default, long? workingSet = default, long? peakWorkingSet = default, long? privateMemory = default, long? virtualMemory = default, long? peakVirtualMemory = default, long? pagedSystemMemory = default, long? nonPagedSystemMemory = default, long? pagedMemory = default, long? peakPagedMemory = default, DateTimeOffset? timeStamp = default, IDictionary<string, string> environmentVariables = default, bool? isScmSite = default, bool? isWebjob = default, string description = default, string kind = default)
         {
             return new ProcessInfoData(
                 id,
@@ -11560,20 +11599,20 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <returns> A new <see cref="Models.PremierAddOnOffer"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PremierAddOnOffer PremierAddOnOffer(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string sku = default, string product = default, string vendor = default, bool? isPromoCodeRequired = default, int? quota = default, Models.AppServicePlanRestriction? webHostingPlanRestrictions = default, Uri privacyPolicyUri = default, Uri legalTermsUri = default, string marketplacePublisher = default, string marketplaceOffer = default, string kind = default)
+        public static PremierAddOnOffer PremierAddOnOffer(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string sku = default, string product = default, string vendor = default, bool? isPromoCodeRequired = default, int? quota = default, AppServicePlanRestriction? webHostingPlanRestrictions = default, Uri privacyPolicyUri = default, Uri legalTermsUri = default, string marketplacePublisher = default, string marketplaceOffer = default, string kind = default)
         {
             return new PremierAddOnOffer(
                 id,
                 name,
                 resourceType,
                 systemData,
-                sku is null && product is null && vendor is null && isPromoCodeRequired is null && quota is null && marketplacePublisher is null && marketplaceOffer is null ? default : new PremierAddOnOfferProperties(
+                sku is null && product is null && vendor is null && isPromoCodeRequired is null && quota is null && webHostingPlanRestrictions is null && marketplacePublisher is null && marketplaceOffer is null ? default : new PremierAddOnOfferProperties(
                     sku,
                     product,
                     vendor,
                     isPromoCodeRequired,
                     quota,
-                    default,
+                    webHostingPlanRestrictions,
                     default,
                     default,
                     marketplacePublisher,
@@ -14936,7 +14975,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <returns> A new <see cref="AppService.ProcessInfoData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ProcessInfoData ProcessInfoData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, int? identifier = default, string deploymentName = default, string href = default, string minidump = default, bool? isProfileRunning = default, bool? isIisProfileRunning = default, double? iisProfileTimeoutInSeconds = default, string parent = default, IEnumerable<string> children = default, IEnumerable<Models.WebAppProcessThreadProperties> processThreads = default, IEnumerable<string> openFileHandles = default, IEnumerable<ProcessModuleInfoData> modules = default, string fileName = default, string commandLine = default, string userName = default, int? handleCount = default, int? moduleCount = default, int? threadCount = default, DateTimeOffset? startOn = default, string totalCpuTime = default, string userCpuTime = default, string privilegedCpuTime = default, long? workingSet = default, long? peakWorkingSet = default, long? privateMemory = default, long? virtualMemory = default, long? peakVirtualMemory = default, long? pagedSystemMemory = default, long? nonPagedSystemMemory = default, long? pagedMemory = default, long? peakPagedMemory = default, DateTimeOffset? timeStamp = default, IDictionary<string, string> environmentVariables = default, bool? isScmSite = default, bool? isWebjob = default, string description = default)
+        public static ProcessInfoData ProcessInfoData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, int? identifier = default, string deploymentName = default, string href = default, string minidump = default, bool? isProfileRunning = default, bool? isIisProfileRunning = default, double? iisProfileTimeoutInSeconds = default, string parent = default, IEnumerable<string> children = default, IEnumerable<WebAppProcessThreadProperties> processThreads = default, IEnumerable<string> openFileHandles = default, IEnumerable<ProcessModuleInfoData> modules = default, string fileName = default, string commandLine = default, string userName = default, int? handleCount = default, int? moduleCount = default, int? threadCount = default, DateTimeOffset? startOn = default, string totalCpuTime = default, string userCpuTime = default, string privilegedCpuTime = default, long? workingSet = default, long? peakWorkingSet = default, long? privateMemory = default, long? virtualMemory = default, long? peakVirtualMemory = default, long? pagedSystemMemory = default, long? nonPagedSystemMemory = default, long? pagedMemory = default, long? peakPagedMemory = default, DateTimeOffset? timeStamp = default, IDictionary<string, string> environmentVariables = default, bool? isScmSite = default, bool? isWebjob = default, string description = default)
         {
             return new ProcessInfoData(
                 id,
@@ -14982,6 +15021,39 @@ namespace Azure.ResourceManager.AppService.Models
                     description,
                     default),
                 kind,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.WebAppProcessThreadProperties"/>. </summary>
+        /// <param name="id">
+        /// Thread ID.
+        ///             Serialized Name: ProcessThreadProperties.id
+        /// </param>
+        /// <param name="href">
+        /// HRef URI.
+        ///             Serialized Name: ProcessThreadProperties.href
+        /// </param>
+        /// <param name="state">
+        /// Thread state.
+        ///             Serialized Name: ProcessThreadProperties.state
+        /// </param>
+        /// <returns> A new <see cref="Models.WebAppProcessThreadProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static WebAppProcessThreadProperties WebAppProcessThreadProperties(int? id = default, Uri href = default, string state = default)
+        {
+            return new WebAppProcessThreadProperties(
+                default,
+                href,
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                state,
+                default,
                 default);
         }
 

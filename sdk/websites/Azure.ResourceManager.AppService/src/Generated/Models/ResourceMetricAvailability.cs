@@ -12,7 +12,7 @@ using Azure.ResourceManager.AppService;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Metrics availability and retention. </summary>
-    internal partial class ResourceMetricAvailability
+    public partial class ResourceMetricAvailability
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

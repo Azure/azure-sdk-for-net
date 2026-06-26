@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> App Service plans this offer is restricted to. </summary>
         [WirePath("properties.webHostingPlanRestrictions")]
-        public AppServicePlanRestrictions? WebHostingPlanRestrictions
+        public AppServicePlanRestriction? WebHostingPlanRestrictions
         {
             get
             {

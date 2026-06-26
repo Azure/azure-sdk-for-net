@@ -14,7 +14,7 @@ using Azure.ResourceManager.AppService;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Metrics availability and retention. </summary>
-    internal partial class ResourceMetricAvailability : IJsonModel<ResourceMetricAvailability>
+    public partial class ResourceMetricAvailability : IJsonModel<ResourceMetricAvailability>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

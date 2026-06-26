@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.AppService.Models
             string vendor = default;
             bool? isPromoCodeRequired = default;
             int? quota = default;
-            AppServicePlanRestrictions? webHostingPlanRestrictions = default;
+            AppServicePlanRestriction? webHostingPlanRestrictions = default;
             string privacyPolicyUri = default;
             string legalTermsUri = default;
             string marketplacePublisher = default;
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    webHostingPlanRestrictions = prop.Value.GetString().ToAppServicePlanRestrictions();
+                    webHostingPlanRestrictions = prop.Value.GetString().ToAppServicePlanRestriction();
                     continue;
                 }
                 if (prop.NameEquals("privacyPolicyUrl"u8))

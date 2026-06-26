@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> App Service plans this offer is restricted to. </summary>
-    public enum AppServicePlanRestrictions
+    public enum AppServicePlanRestriction
     {
         /// <summary> None. </summary>
         None,

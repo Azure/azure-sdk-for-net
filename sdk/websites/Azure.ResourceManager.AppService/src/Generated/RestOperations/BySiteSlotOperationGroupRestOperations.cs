@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetBySiteSlotRequest(Guid subscriptionId, string resourceGroupName, string name, string slot, RequestContext context)
+        internal HttpMessage CreateGetResourceHealthMetadataRequest(Guid subscriptionId, string resourceGroupName, string name, string slot, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateNextGetBySiteSlotRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, string slot, RequestContext context)
+        internal HttpMessage CreateNextGetResourceHealthMetadataRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, string slot, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
