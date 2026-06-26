@@ -13,11 +13,8 @@ namespace Azure.AI.Extensions.OpenAI.Internal
     {
         /// <summary> Initializes a new instance of <see cref="InputItemToolSearchCallItemParam"/>. </summary>
         /// <param name="arguments"> The arguments supplied to the tool search call. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="arguments"/> is null. </exception>
-        public InputItemToolSearchCallItemParam(ResponsesEmptyModelParam arguments) : base(InputItemType.ToolSearchCall)
+        internal InputItemToolSearchCallItemParam(ResponsesEmptyModelParam arguments) : base(InputItemType.ToolSearchCall)
         {
-            Argument.AssertNotNull(arguments, nameof(arguments));
-
             Arguments = arguments;
         }
 
@@ -38,19 +35,19 @@ namespace Azure.AI.Extensions.OpenAI.Internal
             Status = status;
         }
 
-        /// <summary> Gets or sets the Id. </summary>
-        public string Id { get; set; }
+        /// <summary> Gets the Id. </summary>
+        public string Id { get; }
 
-        /// <summary> Gets or sets the CallId. </summary>
-        public string CallId { get; set; }
+        /// <summary> Gets the CallId. </summary>
+        public string CallId { get; }
 
         /// <summary> Whether tool search was executed by the server or by the client. </summary>
-        public ToolSearchExecutionType? Execution { get; set; }
+        public ToolSearchExecutionType? Execution { get; }
 
         /// <summary> The arguments supplied to the tool search call. </summary>
-        public ResponsesEmptyModelParam Arguments { get; set; }
+        public ResponsesEmptyModelParam Arguments { get; }
 
-        /// <summary> Gets or sets the Status. </summary>
-        public FunctionCallItemStatus? Status { get; set; }
+        /// <summary> Gets the Status. </summary>
+        public FunctionCallItemStatus? Status { get; }
     }
 }

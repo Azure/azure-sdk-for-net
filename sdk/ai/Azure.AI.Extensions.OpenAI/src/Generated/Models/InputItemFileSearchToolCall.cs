@@ -19,12 +19,8 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         ///   `searching`, `incomplete` or `failed`,
         /// </param>
         /// <param name="queries"> The queries used to search for files. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="queries"/> is null. </exception>
-        public InputItemFileSearchToolCall(string id, InputItemFileSearchToolCallStatus status, IEnumerable<string> queries) : base(InputItemType.FileSearchCall)
+        internal InputItemFileSearchToolCall(string id, InputItemFileSearchToolCallStatus status, IEnumerable<string> queries) : base(InputItemType.FileSearchCall)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(queries, nameof(queries));
-
             Id = id;
             Status = status;
             Queries = queries.ToList();
@@ -50,18 +46,18 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         }
 
         /// <summary> The unique ID of the file search tool call. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
 
         /// <summary>
         /// The status of the file search tool call. One of `in_progress`,
         ///   `searching`, `incomplete` or `failed`,
         /// </summary>
-        public InputItemFileSearchToolCallStatus Status { get; set; }
+        public InputItemFileSearchToolCallStatus Status { get; }
 
         /// <summary> The queries used to search for files. </summary>
         public IList<string> Queries { get; }
 
-        /// <summary> Gets or sets the Results. </summary>
-        public IList<FileSearchToolCallResults> Results { get; set; }
+        /// <summary> Gets the Results. </summary>
+        public IList<FileSearchToolCallResults> Results { get; }
     }
 }

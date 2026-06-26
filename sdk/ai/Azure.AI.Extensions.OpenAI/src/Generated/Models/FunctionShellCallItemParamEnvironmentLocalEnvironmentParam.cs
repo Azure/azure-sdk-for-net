@@ -12,7 +12,7 @@ namespace Azure.AI.Extensions.OpenAI.Internal
     internal partial class FunctionShellCallItemParamEnvironmentLocalEnvironmentParam : FunctionShellCallItemParamEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellCallItemParamEnvironmentLocalEnvironmentParam"/>. </summary>
-        public FunctionShellCallItemParamEnvironmentLocalEnvironmentParam() : base(FunctionShellCallItemParamEnvironmentType.Local)
+        internal FunctionShellCallItemParamEnvironmentLocalEnvironmentParam() : base(FunctionShellCallItemParamEnvironmentType.Local)
         {
             Skills = new ChangeTrackingList<LocalSkillParam>();
         }

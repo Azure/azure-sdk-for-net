@@ -11,7 +11,7 @@ namespace Azure.AI.Extensions.OpenAI.Internal
     internal partial class FunctionShellCallOutputTimeoutOutcomeParam : FunctionShellCallOutputOutcomeParam
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellCallOutputTimeoutOutcomeParam"/>. </summary>
-        public FunctionShellCallOutputTimeoutOutcomeParam() : base(FunctionShellCallOutputOutcomeParamType.Timeout)
+        internal FunctionShellCallOutputTimeoutOutcomeParam() : base(FunctionShellCallOutputOutcomeParamType.Timeout)
         {
         }
 

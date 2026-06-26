@@ -13,7 +13,7 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InternalInputFileContentParam"/>. </summary>
-        public InternalInputFileContentParam()
+        internal InternalInputFileContentParam()
         {
         }
 
@@ -35,18 +35,18 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         }
 
         /// <summary> The type of the input item. Always `input_file`. </summary>
-        public string Type { get; } = "input_file";
+        internal string Type { get; } = "input_file";
 
-        /// <summary> Gets or sets the FileId. </summary>
-        public string FileId { get; set; }
+        /// <summary> Gets the FileId. </summary>
+        public string FileId { get; }
 
-        /// <summary> Gets or sets the Filename. </summary>
-        public string Filename { get; set; }
+        /// <summary> Gets the Filename. </summary>
+        public string Filename { get; }
 
-        /// <summary> Gets or sets the FileData. </summary>
-        public string FileData { get; set; }
+        /// <summary> Gets the FileData. </summary>
+        public string FileData { get; }
 
-        /// <summary> Gets or sets the FileUrl. </summary>
-        public Uri FileUrl { get; set; }
+        /// <summary> Gets the FileUrl. </summary>
+        public Uri FileUrl { get; }
     }
 }

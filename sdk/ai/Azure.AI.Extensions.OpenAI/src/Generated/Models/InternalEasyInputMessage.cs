@@ -20,7 +20,7 @@ namespace OpenAI
         /// Text, image, or audio input to the model, used to generate a response.
         ///   Can also contain previous assistant responses.
         /// </param>
-        public InternalEasyInputMessage(EasyInputMessageRole role, BinaryData content) : base(InputItemType.Message)
+        internal InternalEasyInputMessage(EasyInputMessageRole role, BinaryData content) : base(InputItemType.Message)
         {
             Role = role;
             Content = content;
@@ -54,7 +54,7 @@ namespace OpenAI
         /// The role of the message input. One of `user`, `assistant`, `system`, or
         ///   `developer`.
         /// </summary>
-        public EasyInputMessageRole Role { get; set; }
+        public EasyInputMessageRole Role { get; }
 
         /// <summary>
         /// Text, image, or audio input to the model, used to generate a response.
@@ -96,15 +96,15 @@ namespace OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Content { get; set; }
+        public BinaryData Content { get; }
 
-        /// <summary> Gets or sets the Phase. </summary>
-        public MessagePhase? Phase { get; set; }
+        /// <summary> Gets the Phase. </summary>
+        public MessagePhase? Phase { get; }
 
         /// <summary>
         /// The status of item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </summary>
-        public EasyInputMessageStatus? Status { get; set; }
+        public EasyInputMessageStatus? Status { get; }
     }
 }

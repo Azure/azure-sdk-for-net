@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI.Internal
 {
@@ -15,11 +14,8 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         /// <param name="id"> The unique ID of the image generation call. </param>
         /// <param name="status"> The status of the image generation call. </param>
         /// <param name="result"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public InputItemImageGenToolCall(string id, InputItemImageGenToolCallStatus status, string result) : base(InputItemType.ImageGenerationCall)
+        internal InputItemImageGenToolCall(string id, InputItemImageGenToolCallStatus status, string result) : base(InputItemType.ImageGenerationCall)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
             Id = id;
             Status = status;
             Result = result;
@@ -39,12 +35,12 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         }
 
         /// <summary> The unique ID of the image generation call. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
 
         /// <summary> The status of the image generation call. </summary>
-        public InputItemImageGenToolCallStatus Status { get; set; }
+        public InputItemImageGenToolCallStatus Status { get; }
 
-        /// <summary> Gets or sets the Result. </summary>
-        public string Result { get; set; }
+        /// <summary> Gets the Result. </summary>
+        public string Result { get; }
     }
 }

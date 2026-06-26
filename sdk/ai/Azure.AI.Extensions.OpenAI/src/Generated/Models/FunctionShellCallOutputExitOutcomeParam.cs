@@ -12,7 +12,7 @@ namespace Azure.AI.Extensions.OpenAI.Internal
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellCallOutputExitOutcomeParam"/>. </summary>
         /// <param name="exitCode"> The exit code returned by the shell process. </param>
-        public FunctionShellCallOutputExitOutcomeParam(long exitCode) : base(FunctionShellCallOutputOutcomeParamType.Exit)
+        internal FunctionShellCallOutputExitOutcomeParam(long exitCode) : base(FunctionShellCallOutputOutcomeParamType.Exit)
         {
             ExitCode = exitCode;
         }
@@ -27,6 +27,6 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         }
 
         /// <summary> The exit code returned by the shell process. </summary>
-        public long ExitCode { get; set; }
+        public long ExitCode { get; }
     }
 }

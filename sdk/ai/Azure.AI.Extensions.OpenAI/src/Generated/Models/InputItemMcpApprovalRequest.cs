@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI.Internal
 {
@@ -16,14 +15,8 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         /// <param name="serverLabel"> The label of the MCP server making the request. </param>
         /// <param name="name"> The name of the tool to run. </param>
         /// <param name="arguments"> A JSON string of arguments for the tool. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="serverLabel"/>, <paramref name="name"/> or <paramref name="arguments"/> is null. </exception>
-        public InputItemMcpApprovalRequest(string id, string serverLabel, string name, string arguments) : base(InputItemType.McpApprovalRequest)
+        internal InputItemMcpApprovalRequest(string id, string serverLabel, string name, string arguments) : base(InputItemType.McpApprovalRequest)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(serverLabel, nameof(serverLabel));
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(arguments, nameof(arguments));
-
             Id = id;
             ServerLabel = serverLabel;
             Name = name;
@@ -46,15 +39,15 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         }
 
         /// <summary> The unique ID of the approval request. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
 
         /// <summary> The label of the MCP server making the request. </summary>
-        public string ServerLabel { get; set; }
+        public string ServerLabel { get; }
 
         /// <summary> The name of the tool to run. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> A JSON string of arguments for the tool. </summary>
-        public string Arguments { get; set; }
+        public string Arguments { get; }
     }
 }

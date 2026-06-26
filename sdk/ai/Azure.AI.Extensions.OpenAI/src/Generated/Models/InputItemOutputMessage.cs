@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI.Internal
 {
@@ -19,12 +18,8 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         /// The status of the message input. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when input items are returned via API.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        public InputItemOutputMessage(string id, IEnumerable<InternalOutputMessageContent> content, InputItemOutputMessageStatus status) : base(InputItemType.OutputMessage)
+        internal InputItemOutputMessage(string id, IEnumerable<InternalOutputMessageContent> content, InputItemOutputMessageStatus status) : base(InputItemType.OutputMessage)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(content, nameof(content));
-
             Id = id;
             Content = content.ToList();
             Status = status;
@@ -51,21 +46,21 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         }
 
         /// <summary> The unique ID of the output message. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
 
         /// <summary> The role of the output message. Always `assistant`. </summary>
-        public string Role { get; } = "assistant";
+        internal string Role { get; } = "assistant";
 
         /// <summary> The content of the output message. </summary>
         public IList<InternalOutputMessageContent> Content { get; }
 
-        /// <summary> Gets or sets the Phase. </summary>
-        public MessagePhase? Phase { get; set; }
+        /// <summary> Gets the Phase. </summary>
+        public MessagePhase? Phase { get; }
 
         /// <summary>
         /// The status of the message input. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when input items are returned via API.
         /// </summary>
-        public InputItemOutputMessageStatus Status { get; set; }
+        public InputItemOutputMessageStatus Status { get; }
     }
 }

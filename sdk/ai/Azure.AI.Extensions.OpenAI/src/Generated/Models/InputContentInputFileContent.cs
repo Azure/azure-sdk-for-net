@@ -11,7 +11,7 @@ namespace Azure.AI.Extensions.OpenAI.Internal
     internal partial class InputContentInputFileContent : InputContent
     {
         /// <summary> Initializes a new instance of <see cref="InputContentInputFileContent"/>. </summary>
-        public InputContentInputFileContent() : base(InputContentType.InputFile)
+        internal InputContentInputFileContent() : base(InputContentType.InputFile)
         {
         }
 
@@ -30,16 +30,16 @@ namespace Azure.AI.Extensions.OpenAI.Internal
             FileUrl = fileUrl;
         }
 
-        /// <summary> Gets or sets the FileId. </summary>
-        public string FileId { get; set; }
+        /// <summary> Gets the FileId. </summary>
+        public string FileId { get; }
 
         /// <summary> The name of the file to be sent to the model. </summary>
-        public string Filename { get; set; }
+        public string Filename { get; }
 
         /// <summary> The content of the file to be sent to the model. </summary>
-        public string FileData { get; set; }
+        public string FileData { get; }
 
         /// <summary> The URL of the file to be sent to the model. </summary>
-        public Uri FileUrl { get; set; }
+        public Uri FileUrl { get; }
     }
 }

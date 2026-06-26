@@ -27,7 +27,7 @@ public partial class ProjectConversationCreationOptions
     private global::Azure.AI.Extensions.OpenAI.InternalMetadataContainer InternalMetadata { get; set; }
 
     /// <summary> Gets the metadata attached to the conversation. </summary>
-    public IDictionary<string, string> Metadata => InternalMetadata.AdditionalProperties;
+    public IReadOnlyDictionary<string, string> Metadata => InternalMetadata.AdditionalProperties;
 
     /// <summary> Initializes a new instance of <see cref="ProjectConversationCreationOptions"/>. </summary>
     public ProjectConversationCreationOptions()
@@ -50,7 +50,7 @@ public partial class ProjectConversationCreationOptions
     /// You may add up to 20 items at a time.
     /// </param>
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-    internal ProjectConversationCreationOptions(IDictionary<string, string> metadata, IList<ResponseItem> items, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+    internal ProjectConversationCreationOptions(IReadOnlyDictionary<string, string> metadata, IList<ResponseItem> items, IDictionary<string, BinaryData> additionalBinaryDataProperties)
     {
         InternalMetadata = new global::Azure.AI.Extensions.OpenAI.InternalMetadataContainer(metadata, null);
         Items = items;

@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.Extensions.OpenAI;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI.Internal
@@ -15,11 +14,8 @@ namespace Azure.AI.Extensions.OpenAI.Internal
     {
         /// <summary> Initializes a new instance of <see cref="InputItemToolSearchOutputItemParam"/>. </summary>
         /// <param name="tools"> The loaded tool definitions returned by the tool search output. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tools"/> is null. </exception>
-        public InputItemToolSearchOutputItemParam(IEnumerable<ResponseTool> tools) : base(InputItemType.ToolSearchOutput)
+        internal InputItemToolSearchOutputItemParam(IEnumerable<ResponseTool> tools) : base(InputItemType.ToolSearchOutput)
         {
-            Argument.AssertNotNull(tools, nameof(tools));
-
             Tools = tools.ToList();
         }
 
@@ -40,19 +36,19 @@ namespace Azure.AI.Extensions.OpenAI.Internal
             Status = status;
         }
 
-        /// <summary> Gets or sets the Id. </summary>
-        public string Id { get; set; }
+        /// <summary> Gets the Id. </summary>
+        public string Id { get; }
 
-        /// <summary> Gets or sets the CallId. </summary>
-        public string CallId { get; set; }
+        /// <summary> Gets the CallId. </summary>
+        public string CallId { get; }
 
         /// <summary> Whether tool search was executed by the server or by the client. </summary>
-        public ToolSearchExecutionType? Execution { get; set; }
+        public ToolSearchExecutionType? Execution { get; }
 
         /// <summary> The loaded tool definitions returned by the tool search output. </summary>
         public IList<ResponseTool> Tools { get; }
 
-        /// <summary> Gets or sets the Status. </summary>
-        public FunctionCallItemStatus? Status { get; set; }
+        /// <summary> Gets the Status. </summary>
+        public FunctionCallItemStatus? Status { get; }
     }
 }

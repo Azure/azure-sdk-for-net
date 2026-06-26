@@ -15,12 +15,8 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         /// <summary> Initializes a new instance of <see cref="InputItemComputerCallOutputItemParam"/>. </summary>
         /// <param name="callId"> The ID of the computer tool call that produced the output. </param>
         /// <param name="output"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callId"/> or <paramref name="output"/> is null. </exception>
-        public InputItemComputerCallOutputItemParam(string callId, ComputerScreenshotImage output) : base(InputItemType.ComputerCallOutput)
+        internal InputItemComputerCallOutputItemParam(string callId, ComputerScreenshotImage output) : base(InputItemType.ComputerCallOutput)
         {
-            Argument.AssertNotNull(callId, nameof(callId));
-            Argument.AssertNotNull(output, nameof(output));
-
             CallId = callId;
             Output = output;
             AcknowledgedSafetyChecks = new ChangeTrackingList<ComputerCallSafetyCheck>();
@@ -43,19 +39,19 @@ namespace Azure.AI.Extensions.OpenAI.Internal
             Status = status;
         }
 
-        /// <summary> Gets or sets the Id. </summary>
-        public string Id { get; set; }
+        /// <summary> Gets the Id. </summary>
+        public string Id { get; }
 
         /// <summary> The ID of the computer tool call that produced the output. </summary>
-        public string CallId { get; set; }
+        public string CallId { get; }
 
-        /// <summary> Gets or sets the Output. </summary>
-        public ComputerScreenshotImage Output { get; set; }
+        /// <summary> Gets the Output. </summary>
+        public ComputerScreenshotImage Output { get; }
 
-        /// <summary> Gets or sets the AcknowledgedSafetyChecks. </summary>
-        public IList<ComputerCallSafetyCheck> AcknowledgedSafetyChecks { get; set; }
+        /// <summary> Gets the AcknowledgedSafetyChecks. </summary>
+        public IList<ComputerCallSafetyCheck> AcknowledgedSafetyChecks { get; }
 
-        /// <summary> Gets or sets the Status. </summary>
-        public FunctionCallItemStatus? Status { get; set; }
+        /// <summary> Gets the Status. </summary>
+        public FunctionCallItemStatus? Status { get; }
     }
 }

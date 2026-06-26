@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI.Internal
 {
@@ -13,11 +12,8 @@ namespace Azure.AI.Extensions.OpenAI.Internal
     {
         /// <summary> Initializes a new instance of <see cref="InputItemCompactionSummaryItemParam"/>. </summary>
         /// <param name="encryptedContent"> The encrypted content of the compaction summary. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="encryptedContent"/> is null. </exception>
-        public InputItemCompactionSummaryItemParam(string encryptedContent) : base(InputItemType.Compaction)
+        internal InputItemCompactionSummaryItemParam(string encryptedContent) : base(InputItemType.Compaction)
         {
-            Argument.AssertNotNull(encryptedContent, nameof(encryptedContent));
-
             EncryptedContent = encryptedContent;
         }
 
@@ -32,10 +28,10 @@ namespace Azure.AI.Extensions.OpenAI.Internal
             EncryptedContent = encryptedContent;
         }
 
-        /// <summary> Gets or sets the Id. </summary>
-        public string Id { get; set; }
+        /// <summary> Gets the Id. </summary>
+        public string Id { get; }
 
         /// <summary> The encrypted content of the compaction summary. </summary>
-        public string EncryptedContent { get; set; }
+        public string EncryptedContent { get; }
     }
 }

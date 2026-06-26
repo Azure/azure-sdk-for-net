@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI.Internal
 {
@@ -13,11 +12,8 @@ namespace Azure.AI.Extensions.OpenAI.Internal
     {
         /// <summary> Initializes a new instance of <see cref="ItemReferenceParam"/>. </summary>
         /// <param name="id"> The ID of the item to reference. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public ItemReferenceParam(string id) : base(InputItemType.ItemReference)
+        internal ItemReferenceParam(string id) : base(InputItemType.ItemReference)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
             Id = id;
         }
 
@@ -31,6 +27,6 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         }
 
         /// <summary> The ID of the item to reference. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
     }
 }

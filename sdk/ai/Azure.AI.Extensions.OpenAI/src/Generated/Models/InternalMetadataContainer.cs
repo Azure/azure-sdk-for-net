@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -14,7 +15,7 @@ namespace Azure.AI.Extensions.OpenAI
         private IDictionary<string, string> _additionalStringProperties;
 
         /// <summary> Initializes a new instance of <see cref="InternalMetadataContainer"/>. </summary>
-        public InternalMetadataContainer()
+        internal InternalMetadataContainer()
         {
             _additionalStringProperties = new ChangeTrackingDictionary<string, string>();
         }
@@ -22,13 +23,13 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of <see cref="InternalMetadataContainer"/>. </summary>
         /// <param name="additionalProperties"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalMetadataContainer(IDictionary<string, string> additionalProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalMetadataContainer(IReadOnlyDictionary<string, string> additionalProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            _additionalStringProperties = additionalProperties;
+            _additionalStringProperties = new ChangeTrackingDictionary<string, string>(additionalProperties);
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, string> AdditionalProperties => _additionalStringProperties;
+        public IReadOnlyDictionary<string, string> AdditionalProperties => new ReadOnlyDictionary<string, string>(_additionalStringProperties);
     }
 }

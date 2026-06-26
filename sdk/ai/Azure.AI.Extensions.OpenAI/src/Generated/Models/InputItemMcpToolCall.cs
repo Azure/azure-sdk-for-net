@@ -17,14 +17,8 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         /// <param name="serverLabel"> The label of the MCP server running the tool. </param>
         /// <param name="name"> The name of the tool that was run. </param>
         /// <param name="arguments"> A JSON string of the arguments passed to the tool. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="serverLabel"/>, <paramref name="name"/> or <paramref name="arguments"/> is null. </exception>
-        public InputItemMcpToolCall(string id, string serverLabel, string name, string arguments) : base(InputItemType.McpCall)
+        internal InputItemMcpToolCall(string id, string serverLabel, string name, string arguments) : base(InputItemType.McpCall)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(serverLabel, nameof(serverLabel));
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(arguments, nameof(arguments));
-
             Id = id;
             ServerLabel = serverLabel;
             Name = name;
@@ -56,19 +50,19 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         }
 
         /// <summary> The unique ID of the tool call. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
 
         /// <summary> The label of the MCP server running the tool. </summary>
-        public string ServerLabel { get; set; }
+        public string ServerLabel { get; }
 
         /// <summary> The name of the tool that was run. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> A JSON string of the arguments passed to the tool. </summary>
-        public string Arguments { get; set; }
+        public string Arguments { get; }
 
-        /// <summary> Gets or sets the Output. </summary>
-        public string Output { get; set; }
+        /// <summary> Gets the Output. </summary>
+        public string Output { get; }
 
         /// <summary>
         /// Gets the Error.
@@ -99,9 +93,9 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         public IDictionary<string, BinaryData> Error { get; }
 
         /// <summary> The status of the tool call. One of `in_progress`, `completed`, `incomplete`, `calling`, or `failed`. </summary>
-        public MCPToolCallStatus? Status { get; set; }
+        public MCPToolCallStatus? Status { get; }
 
-        /// <summary> Gets or sets the ApprovalRequestId. </summary>
-        public string ApprovalRequestId { get; set; }
+        /// <summary> Gets the ApprovalRequestId. </summary>
+        public string ApprovalRequestId { get; }
     }
 }

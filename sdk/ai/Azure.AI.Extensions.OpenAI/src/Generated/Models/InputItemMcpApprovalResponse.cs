@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI.Internal
 {
@@ -14,11 +13,8 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         /// <summary> Initializes a new instance of <see cref="InputItemMcpApprovalResponse"/>. </summary>
         /// <param name="approvalRequestId"> The ID of the approval request being answered. </param>
         /// <param name="approve"> Whether the request was approved. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="approvalRequestId"/> is null. </exception>
-        public InputItemMcpApprovalResponse(string approvalRequestId, bool approve) : base(InputItemType.McpApprovalResponse)
+        internal InputItemMcpApprovalResponse(string approvalRequestId, bool approve) : base(InputItemType.McpApprovalResponse)
         {
-            Argument.AssertNotNull(approvalRequestId, nameof(approvalRequestId));
-
             ApprovalRequestId = approvalRequestId;
             Approve = approve;
         }
@@ -38,16 +34,16 @@ namespace Azure.AI.Extensions.OpenAI.Internal
             Reason = reason;
         }
 
-        /// <summary> Gets or sets the Id. </summary>
-        public string Id { get; set; }
+        /// <summary> Gets the Id. </summary>
+        public string Id { get; }
 
         /// <summary> The ID of the approval request being answered. </summary>
-        public string ApprovalRequestId { get; set; }
+        public string ApprovalRequestId { get; }
 
         /// <summary> Whether the request was approved. </summary>
-        public bool Approve { get; set; }
+        public bool Approve { get; }
 
-        /// <summary> Gets or sets the Reason. </summary>
-        public string Reason { get; set; }
+        /// <summary> Gets the Reason. </summary>
+        public string Reason { get; }
     }
 }

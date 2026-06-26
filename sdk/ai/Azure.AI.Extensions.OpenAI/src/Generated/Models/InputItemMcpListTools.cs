@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.Extensions.OpenAI;
 using OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI.Internal
@@ -17,13 +16,8 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         /// <param name="id"> The unique ID of the list. </param>
         /// <param name="serverLabel"> The label of the MCP server. </param>
         /// <param name="tools"> The tools available on the server. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="serverLabel"/> or <paramref name="tools"/> is null. </exception>
-        public InputItemMcpListTools(string id, string serverLabel, IEnumerable<InternalMCPListToolsTool> tools) : base(InputItemType.McpListTools)
+        internal InputItemMcpListTools(string id, string serverLabel, IEnumerable<InternalMCPListToolsTool> tools) : base(InputItemType.McpListTools)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(serverLabel, nameof(serverLabel));
-            Argument.AssertNotNull(tools, nameof(tools));
-
             Id = id;
             ServerLabel = serverLabel;
             Tools = tools.ToList();
@@ -45,15 +39,15 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         }
 
         /// <summary> The unique ID of the list. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
 
         /// <summary> The label of the MCP server. </summary>
-        public string ServerLabel { get; set; }
+        public string ServerLabel { get; }
 
         /// <summary> The tools available on the server. </summary>
         public IList<InternalMCPListToolsTool> Tools { get; }
 
-        /// <summary> Gets or sets the Error. </summary>
-        public RealtimeMCPError Error { get; set; }
+        /// <summary> Gets the Error. </summary>
+        public RealtimeMCPError Error { get; }
     }
 }

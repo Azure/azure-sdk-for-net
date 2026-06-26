@@ -15,12 +15,8 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         /// <summary> Initializes a new instance of <see cref="InputItemReasoningItem"/>. </summary>
         /// <param name="id"> The unique identifier of the reasoning content. </param>
         /// <param name="summary"> Reasoning summary content. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="summary"/> is null. </exception>
-        public InputItemReasoningItem(string id, IEnumerable<InternalSummaryTextObject> summary) : base(InputItemType.Reasoning)
+        internal InputItemReasoningItem(string id, IEnumerable<InternalSummaryTextObject> summary) : base(InputItemType.Reasoning)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(summary, nameof(summary));
-
             Id = id;
             Summary = summary.ToList();
             Content = new ChangeTrackingList<ReasoningTextContent>();
@@ -47,10 +43,10 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         }
 
         /// <summary> The unique identifier of the reasoning content. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
 
-        /// <summary> Gets or sets the EncryptedContent. </summary>
-        public string EncryptedContent { get; set; }
+        /// <summary> Gets the EncryptedContent. </summary>
+        public string EncryptedContent { get; }
 
         /// <summary> Reasoning summary content. </summary>
         public IList<InternalSummaryTextObject> Summary { get; }
@@ -62,6 +58,6 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </summary>
-        public InputItemReasoningItemStatus? Status { get; set; }
+        public InputItemReasoningItemStatus? Status { get; }
     }
 }

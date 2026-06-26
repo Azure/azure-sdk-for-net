@@ -21,13 +21,8 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="callId"/> or <paramref name="pendingSafetyChecks"/> is null. </exception>
-        public InputItemComputerToolCall(string id, string callId, IEnumerable<ComputerCallSafetyCheck> pendingSafetyChecks, InputItemComputerToolCallStatus status) : base(InputItemType.ComputerCall)
+        internal InputItemComputerToolCall(string id, string callId, IEnumerable<ComputerCallSafetyCheck> pendingSafetyChecks, InputItemComputerToolCallStatus status) : base(InputItemType.ComputerCall)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(callId, nameof(callId));
-            Argument.AssertNotNull(pendingSafetyChecks, nameof(pendingSafetyChecks));
-
             Id = id;
             CallId = callId;
             Actions = new ChangeTrackingList<ComputerAction>();
@@ -58,13 +53,13 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         }
 
         /// <summary> The unique ID of the computer call. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
 
         /// <summary> An identifier used when responding to the tool call with output. </summary>
-        public string CallId { get; set; }
+        public string CallId { get; }
 
-        /// <summary> Gets or sets the Action. </summary>
-        public ComputerAction Action { get; set; }
+        /// <summary> Gets the Action. </summary>
+        public ComputerAction Action { get; }
 
         /// <summary> Gets the Actions. </summary>
         public IList<ComputerAction> Actions { get; }
@@ -76,6 +71,6 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </summary>
-        public InputItemComputerToolCallStatus Status { get; set; }
+        public InputItemComputerToolCallStatus Status { get; }
     }
 }

@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI.Internal
 {
@@ -19,12 +18,8 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         /// <param name="containerId"> The ID of the container used to run the code. </param>
         /// <param name="code"></param>
         /// <param name="outputs"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="containerId"/> is null. </exception>
-        public InputItemCodeInterpreterToolCall(string id, InputItemCodeInterpreterToolCallStatus status, string containerId, string code, IEnumerable<BinaryData> outputs) : base(InputItemType.CodeInterpreterCall)
+        internal InputItemCodeInterpreterToolCall(string id, InputItemCodeInterpreterToolCallStatus status, string containerId, string code, IEnumerable<BinaryData> outputs) : base(InputItemType.CodeInterpreterCall)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(containerId, nameof(containerId));
-
             Id = id;
             Status = status;
             ContainerId = containerId;
@@ -50,19 +45,19 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         }
 
         /// <summary> The unique ID of the code interpreter tool call. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
 
         /// <summary> The status of the code interpreter tool call. Valid values are `in_progress`, `completed`, `incomplete`, `interpreting`, and `failed`. </summary>
-        public InputItemCodeInterpreterToolCallStatus Status { get; set; }
+        public InputItemCodeInterpreterToolCallStatus Status { get; }
 
         /// <summary> The ID of the container used to run the code. </summary>
-        public string ContainerId { get; set; }
+        public string ContainerId { get; }
 
-        /// <summary> Gets or sets the Code. </summary>
-        public string Code { get; set; }
+        /// <summary> Gets the Code. </summary>
+        public string Code { get; }
 
         /// <summary>
-        /// Gets or sets the Outputs.
+        /// Gets the Outputs.
         /// <para> To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
@@ -100,6 +95,6 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         /// </list>
         /// </para>
         /// </summary>
-        public IList<BinaryData> Outputs { get; set; }
+        public IList<BinaryData> Outputs { get; }
     }
 }

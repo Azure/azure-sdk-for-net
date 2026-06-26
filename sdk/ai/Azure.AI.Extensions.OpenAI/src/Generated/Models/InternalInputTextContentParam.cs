@@ -14,7 +14,7 @@ namespace Azure.AI.Extensions.OpenAI.Internal
 
         /// <summary> Initializes a new instance of <see cref="InternalInputTextContentParam"/>. </summary>
         /// <param name="text"> The text input to the model. </param>
-        public InternalInputTextContentParam(string text)
+        internal InternalInputTextContentParam(string text)
         {
             Text = text;
         }
@@ -31,9 +31,9 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         }
 
         /// <summary> The type of the input item. Always `input_text`. </summary>
-        public string Type { get; } = "input_text";
+        internal string Type { get; } = "input_text";
 
         /// <summary> The text input to the model. </summary>
-        public string Text { get; set; }
+        public string Text { get; }
     }
 }

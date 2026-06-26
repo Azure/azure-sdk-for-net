@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI.Internal
 {
@@ -19,12 +18,8 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         /// An object describing the specific action taken in this web search call.
         ///   Includes details on how the model used the web (search, open_page, find_in_page).
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="action"/> is null. </exception>
-        public InputItemWebSearchToolCall(string id, InputItemWebSearchToolCallStatus status, BinaryData action) : base(InputItemType.WebSearchCall)
+        internal InputItemWebSearchToolCall(string id, InputItemWebSearchToolCallStatus status, BinaryData action) : base(InputItemType.WebSearchCall)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(action, nameof(action));
-
             Id = id;
             Status = status;
             Action = action;
@@ -47,10 +42,10 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         }
 
         /// <summary> The unique ID of the web search tool call. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
 
         /// <summary> The status of the web search tool call. </summary>
-        public InputItemWebSearchToolCallStatus Status { get; set; }
+        public InputItemWebSearchToolCallStatus Status { get; }
 
         /// <summary>
         /// An object describing the specific action taken in this web search call.
@@ -95,6 +90,6 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Action { get; set; }
+        public BinaryData Action { get; }
     }
 }
