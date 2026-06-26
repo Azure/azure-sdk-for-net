@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                    using var message = _processSlotOperationGroupRestClient.CreateGetSiteSlotProcessThreadsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                    using var message = _processSlotOperationGroupRestClient.CreateGetProcessThreadsSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     var response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     WebAppProcessThreadInfoListResult result = WebAppProcessThreadInfoListResult.FromResponse(response);
                     return Page.FromValues(result.Value.Select(thread => new ProcessThreadInfo(thread)).ToList(), result.NextLink?.AbsoluteUri, response);
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                    using var message = _processSlotOperationGroupRestClient.CreateNextGetSiteSlotProcessThreadsRequest(new Uri(nextLink, UriKind.RelativeOrAbsolute), Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                    using var message = _processSlotOperationGroupRestClient.CreateNextGetProcessThreadsSlotRequest(new Uri(nextLink, UriKind.RelativeOrAbsolute), Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     var response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     WebAppProcessThreadInfoListResult result = WebAppProcessThreadInfoListResult.FromResponse(response);
                     return Page.FromValues(result.Value.Select(thread => new ProcessThreadInfo(thread)).ToList(), result.NextLink?.AbsoluteUri, response);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                    using var message = _processSlotOperationGroupRestClient.CreateGetSiteSlotProcessThreadsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                    using var message = _processSlotOperationGroupRestClient.CreateGetProcessThreadsSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     var response = Pipeline.ProcessMessage(message, context);
                     WebAppProcessThreadInfoListResult result = WebAppProcessThreadInfoListResult.FromResponse(response);
                     return Page.FromValues(result.Value.Select(thread => new ProcessThreadInfo(thread)).ToList(), result.NextLink?.AbsoluteUri, response);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService
                 try
                 {
                     RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                    using var message = _processSlotOperationGroupRestClient.CreateNextGetSiteSlotProcessThreadsRequest(new Uri(nextLink, UriKind.RelativeOrAbsolute), Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                    using var message = _processSlotOperationGroupRestClient.CreateNextGetProcessThreadsSlotRequest(new Uri(nextLink, UriKind.RelativeOrAbsolute), Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     var response = Pipeline.ProcessMessage(message, context);
                     WebAppProcessThreadInfoListResult result = WebAppProcessThreadInfoListResult.FromResponse(response);
                     return Page.FromValues(result.Value.Select(thread => new ProcessThreadInfo(thread)).ToList(), result.NextLink?.AbsoluteUri, response);
