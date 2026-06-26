@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Automation.Models;
 
 namespace Azure.ResourceManager.Automation
@@ -21,55 +22,53 @@ namespace Azure.ResourceManager.Automation
     /// <summary>
     /// A class representing a collection of <see cref="AutomationScheduleResource"/> and their operations.
     /// Each <see cref="AutomationScheduleResource"/> in the collection will belong to the same instance of <see cref="AutomationAccountResource"/>.
-    /// To get an <see cref="AutomationScheduleCollection"/> instance call the GetAutomationSchedules method from an instance of <see cref="AutomationAccountResource"/>.
+    /// To get a <see cref="AutomationScheduleCollection"/> instance call the GetAutomationSchedules method from an instance of <see cref="AutomationAccountResource"/>.
     /// </summary>
     public partial class AutomationScheduleCollection : ArmCollection, IEnumerable<AutomationScheduleResource>, IAsyncEnumerable<AutomationScheduleResource>
     {
-        private readonly ClientDiagnostics _automationScheduleScheduleClientDiagnostics;
-        private readonly ScheduleRestOperations _automationScheduleScheduleRestClient;
+        private readonly ClientDiagnostics _scheduleClientDiagnostics;
+        private readonly Schedule _scheduleRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="AutomationScheduleCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of AutomationScheduleCollection for mocking. </summary>
         protected AutomationScheduleCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AutomationScheduleCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationScheduleCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AutomationScheduleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _automationScheduleScheduleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", AutomationScheduleResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(AutomationScheduleResource.ResourceType, out string automationScheduleScheduleApiVersion);
-            _automationScheduleScheduleRestClient = new ScheduleRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, automationScheduleScheduleApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(AutomationScheduleResource.ResourceType, out string automationScheduleApiVersion);
+            _scheduleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", AutomationScheduleResource.ResourceType.Namespace, Diagnostics);
+            _scheduleRestClient = new Schedule(_scheduleClientDiagnostics, Pipeline, Endpoint, automationScheduleApiVersion ?? "2024-10-23");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != AutomationAccountResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AutomationAccountResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AutomationAccountResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create a schedule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/schedules/{scheduleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/schedules/{scheduleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Schedule_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Schedules_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationScheduleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,23 +76,31 @@ namespace Azure.ResourceManager.Automation
         /// <param name="scheduleName"> The schedule name. </param>
         /// <param name="content"> The parameters supplied to the create or update schedule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<AutomationScheduleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string scheduleName, AutomationScheduleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _automationScheduleScheduleClientDiagnostics.CreateScope("AutomationScheduleCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _scheduleClientDiagnostics.CreateScope("AutomationScheduleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _automationScheduleScheduleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scheduleName, content, cancellationToken).ConfigureAwait(false);
-                var uri = _automationScheduleScheduleRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scheduleName, content);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AutomationArmOperation<AutomationScheduleResource>(Response.FromValue(new AutomationScheduleResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scheduleRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scheduleName, AutomationScheduleCreateOrUpdateContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AutomationScheduleData> response = Response.FromValue(AutomationScheduleData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AutomationArmOperation<AutomationScheduleResource> operation = new AutomationArmOperation<AutomationScheduleResource>(Response.FromValue(new AutomationScheduleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -107,20 +114,16 @@ namespace Azure.ResourceManager.Automation
         /// Create a schedule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/schedules/{scheduleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/schedules/{scheduleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Schedule_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Schedules_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationScheduleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,23 +131,31 @@ namespace Azure.ResourceManager.Automation
         /// <param name="scheduleName"> The schedule name. </param>
         /// <param name="content"> The parameters supplied to the create or update schedule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<AutomationScheduleResource> CreateOrUpdate(WaitUntil waitUntil, string scheduleName, AutomationScheduleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _automationScheduleScheduleClientDiagnostics.CreateScope("AutomationScheduleCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _scheduleClientDiagnostics.CreateScope("AutomationScheduleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _automationScheduleScheduleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scheduleName, content, cancellationToken);
-                var uri = _automationScheduleScheduleRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scheduleName, content);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AutomationArmOperation<AutomationScheduleResource>(Response.FromValue(new AutomationScheduleResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scheduleRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scheduleName, AutomationScheduleCreateOrUpdateContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AutomationScheduleData> response = Response.FromValue(AutomationScheduleData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AutomationArmOperation<AutomationScheduleResource> operation = new AutomationArmOperation<AutomationScheduleResource>(Response.FromValue(new AutomationScheduleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -158,38 +169,42 @@ namespace Azure.ResourceManager.Automation
         /// Retrieve the schedule identified by schedule name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/schedules/{scheduleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/schedules/{scheduleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Schedule_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Schedules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationScheduleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scheduleName"> The schedule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<AutomationScheduleResource>> GetAsync(string scheduleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
 
-            using var scope = _automationScheduleScheduleClientDiagnostics.CreateScope("AutomationScheduleCollection.Get");
+            using DiagnosticScope scope = _scheduleClientDiagnostics.CreateScope("AutomationScheduleCollection.Get");
             scope.Start();
             try
             {
-                var response = await _automationScheduleScheduleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scheduleName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scheduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scheduleName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AutomationScheduleData> response = Response.FromValue(AutomationScheduleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AutomationScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -203,38 +218,42 @@ namespace Azure.ResourceManager.Automation
         /// Retrieve the schedule identified by schedule name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/schedules/{scheduleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/schedules/{scheduleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Schedule_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Schedules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationScheduleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scheduleName"> The schedule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<AutomationScheduleResource> Get(string scheduleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
 
-            using var scope = _automationScheduleScheduleClientDiagnostics.CreateScope("AutomationScheduleCollection.Get");
+            using DiagnosticScope scope = _scheduleClientDiagnostics.CreateScope("AutomationScheduleCollection.Get");
             scope.Start();
             try
             {
-                var response = _automationScheduleScheduleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scheduleName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scheduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scheduleName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AutomationScheduleData> response = Response.FromValue(AutomationScheduleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AutomationScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,50 +267,50 @@ namespace Azure.ResourceManager.Automation
         /// Retrieve a list of schedules.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/schedules</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/schedules. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Schedule_ListByAutomationAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> Schedules_ListByAutomationAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationScheduleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomationScheduleResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutomationScheduleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationScheduleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _automationScheduleScheduleRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationScheduleScheduleRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationScheduleResource(Client, AutomationScheduleData.DeserializeAutomationScheduleData(e)), _automationScheduleScheduleClientDiagnostics, Pipeline, "AutomationScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<AutomationScheduleData, AutomationScheduleResource>(new ScheduleGetByAutomationAccountAsyncCollectionResultOfT(
+                _scheduleRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AutomationScheduleCollection.GetAll"), data => new AutomationScheduleResource(Client, data));
         }
 
         /// <summary>
         /// Retrieve a list of schedules.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/schedules</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/schedules. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Schedule_ListByAutomationAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> Schedules_ListByAutomationAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationScheduleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,45 +318,67 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="AutomationScheduleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationScheduleResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _automationScheduleScheduleRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationScheduleScheduleRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationScheduleResource(Client, AutomationScheduleData.DeserializeAutomationScheduleData(e)), _automationScheduleScheduleClientDiagnostics, Pipeline, "AutomationScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<AutomationScheduleData, AutomationScheduleResource>(new ScheduleGetByAutomationAccountCollectionResultOfT(
+                _scheduleRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AutomationScheduleCollection.GetAll"), data => new AutomationScheduleResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/schedules/{scheduleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/schedules/{scheduleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Schedule_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Schedules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationScheduleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scheduleName"> The schedule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string scheduleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
 
-            using var scope = _automationScheduleScheduleClientDiagnostics.CreateScope("AutomationScheduleCollection.Exists");
+            using DiagnosticScope scope = _scheduleClientDiagnostics.CreateScope("AutomationScheduleCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _automationScheduleScheduleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scheduleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scheduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scheduleName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<AutomationScheduleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AutomationScheduleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AutomationScheduleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -351,36 +392,50 @@ namespace Azure.ResourceManager.Automation
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/schedules/{scheduleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/schedules/{scheduleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Schedule_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Schedules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationScheduleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scheduleName"> The schedule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string scheduleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
 
-            using var scope = _automationScheduleScheduleClientDiagnostics.CreateScope("AutomationScheduleCollection.Exists");
+            using DiagnosticScope scope = _scheduleClientDiagnostics.CreateScope("AutomationScheduleCollection.Exists");
             scope.Start();
             try
             {
-                var response = _automationScheduleScheduleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scheduleName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scheduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scheduleName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<AutomationScheduleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AutomationScheduleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AutomationScheduleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -394,38 +449,54 @@ namespace Azure.ResourceManager.Automation
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/schedules/{scheduleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/schedules/{scheduleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Schedule_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Schedules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationScheduleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scheduleName"> The schedule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<AutomationScheduleResource>> GetIfExistsAsync(string scheduleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
 
-            using var scope = _automationScheduleScheduleClientDiagnostics.CreateScope("AutomationScheduleCollection.GetIfExists");
+            using DiagnosticScope scope = _scheduleClientDiagnostics.CreateScope("AutomationScheduleCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _automationScheduleScheduleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scheduleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scheduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scheduleName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<AutomationScheduleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AutomationScheduleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AutomationScheduleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<AutomationScheduleResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new AutomationScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -439,38 +510,54 @@ namespace Azure.ResourceManager.Automation
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/schedules/{scheduleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/schedules/{scheduleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Schedule_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Schedules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationScheduleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scheduleName"> The schedule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<AutomationScheduleResource> GetIfExists(string scheduleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
 
-            using var scope = _automationScheduleScheduleClientDiagnostics.CreateScope("AutomationScheduleCollection.GetIfExists");
+            using DiagnosticScope scope = _scheduleClientDiagnostics.CreateScope("AutomationScheduleCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _automationScheduleScheduleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scheduleName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scheduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scheduleName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<AutomationScheduleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AutomationScheduleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AutomationScheduleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<AutomationScheduleResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new AutomationScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -490,6 +577,7 @@ namespace Azure.ResourceManager.Automation
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<AutomationScheduleResource> IAsyncEnumerable<AutomationScheduleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

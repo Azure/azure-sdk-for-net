@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct MachineLearningEndpointAuthMode : IEquatable<MachineLearningEndpointAuthMode>
     {
         private readonly string _value;
+        private const string AMLTokenValue = "AMLToken";
+        private const string KeyValue = "Key";
+        private const string AADTokenValue = "AADToken";
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointAuthMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MachineLearningEndpointAuthMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string AmlTokenValue = "AMLToken";
-        private const string KeyValue = "Key";
-        private const string AadTokenValue = "AADToken";
+        /// <summary> Gets the AMLToken. </summary>
+        public static MachineLearningEndpointAuthMode AMLToken { get; } = new MachineLearningEndpointAuthMode(AMLTokenValue);
 
-        /// <summary> AMLToken. </summary>
-        public static MachineLearningEndpointAuthMode AmlToken { get; } = new MachineLearningEndpointAuthMode(AmlTokenValue);
-        /// <summary> Key. </summary>
+        /// <summary> Gets the Key. </summary>
         public static MachineLearningEndpointAuthMode Key { get; } = new MachineLearningEndpointAuthMode(KeyValue);
-        /// <summary> AADToken. </summary>
-        public static MachineLearningEndpointAuthMode AadToken { get; } = new MachineLearningEndpointAuthMode(AadTokenValue);
+
+        /// <summary> Gets the AADToken. </summary>
+        public static MachineLearningEndpointAuthMode AADToken { get; } = new MachineLearningEndpointAuthMode(AADTokenValue);
+
         /// <summary> Determines if two <see cref="MachineLearningEndpointAuthMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MachineLearningEndpointAuthMode left, MachineLearningEndpointAuthMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MachineLearningEndpointAuthMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MachineLearningEndpointAuthMode left, MachineLearningEndpointAuthMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningEndpointAuthMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MachineLearningEndpointAuthMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MachineLearningEndpointAuthMode(string value) => new MachineLearningEndpointAuthMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MachineLearningEndpointAuthMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MachineLearningEndpointAuthMode?(string value) => value == null ? null : new MachineLearningEndpointAuthMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MachineLearningEndpointAuthMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MachineLearningEndpointAuthMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

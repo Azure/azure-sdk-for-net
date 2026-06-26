@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -20,22 +21,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningAssetBase"/>. </summary>
         /// <param name="description"> The asset description text. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="properties"> The asset property dictionary. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="isArchived"> Is the asset archived?. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
-        internal MachineLearningAssetBase(string description, IDictionary<string, string> tags, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? isArchived, bool? isAnonymous) : base(description, tags, properties, serializedAdditionalRawData)
+        /// <param name="isArchived"> Is the asset archived?. </param>
+        internal MachineLearningAssetBase(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? isAnonymous, bool? isArchived) : base(description, properties, tags, additionalBinaryDataProperties)
         {
-            IsArchived = isArchived;
             IsAnonymous = isAnonymous;
+            IsArchived = isArchived;
         }
+
+        /// <summary> If the name version are system generated (anonymous registration). </summary>
+        [WirePath("isAnonymous")]
+        public bool? IsAnonymous { get; set; }
 
         /// <summary> Is the asset archived?. </summary>
         [WirePath("isArchived")]
         public bool? IsArchived { get; set; }
-        /// <summary> If the name version are system generated (anonymous registration). </summary>
-        [WirePath("isAnonymous")]
-        public bool? IsAnonymous { get; set; }
     }
 }

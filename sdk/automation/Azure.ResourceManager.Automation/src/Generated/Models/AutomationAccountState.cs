@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Automation.Models
     public readonly partial struct AutomationAccountState : IEquatable<AutomationAccountState>
     {
         private readonly string _value;
+        /// <summary> Ok. </summary>
+        private const string OkValue = "Ok";
+        /// <summary> Unavailable. </summary>
+        private const string UnavailableValue = "Unavailable";
+        /// <summary> Suspended. </summary>
+        private const string SuspendedValue = "Suspended";
 
         /// <summary> Initializes a new instance of <see cref="AutomationAccountState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AutomationAccountState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OkValue = "Ok";
-        private const string UnavailableValue = "Unavailable";
-        private const string SuspendedValue = "Suspended";
+            _value = value;
+        }
 
         /// <summary> Ok. </summary>
         public static AutomationAccountState Ok { get; } = new AutomationAccountState(OkValue);
+
         /// <summary> Unavailable. </summary>
         public static AutomationAccountState Unavailable { get; } = new AutomationAccountState(UnavailableValue);
+
         /// <summary> Suspended. </summary>
         public static AutomationAccountState Suspended { get; } = new AutomationAccountState(SuspendedValue);
+
         /// <summary> Determines if two <see cref="AutomationAccountState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AutomationAccountState left, AutomationAccountState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AutomationAccountState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AutomationAccountState left, AutomationAccountState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AutomationAccountState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AutomationAccountState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AutomationAccountState(string value) => new AutomationAccountState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AutomationAccountState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AutomationAccountState?(string value) => value == null ? null : new AutomationAccountState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AutomationAccountState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AutomationAccountState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

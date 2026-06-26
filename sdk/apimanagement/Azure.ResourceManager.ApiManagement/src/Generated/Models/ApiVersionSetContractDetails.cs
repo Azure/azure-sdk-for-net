@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> An API Version Set contains the common configuration for a set of API Versions relating. </summary>
     public partial class ApiVersionSetContractDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiVersionSetContractDetails"/>. </summary>
         public ApiVersionSetContractDetails()
@@ -57,8 +29,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="versioningScheme"> An value that determines where the API Version identifier will be located in a HTTP request. </param>
         /// <param name="versionQueryName"> Name of query parameter that indicates the API Version if versioningScheme is set to `query`. </param>
         /// <param name="versionHeaderName"> Name of HTTP header parameter that indicates the API Version if versioningScheme is set to `header`. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiVersionSetContractDetails(string id, string name, string description, VersioningScheme? versioningScheme, string versionQueryName, string versionHeaderName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApiVersionSetContractDetails(string id, string name, string description, VersioningScheme? versioningScheme, string versionQueryName, string versionHeaderName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -66,24 +38,29 @@ namespace Azure.ResourceManager.ApiManagement.Models
             VersioningScheme = versioningScheme;
             VersionQueryName = versionQueryName;
             VersionHeaderName = versionHeaderName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Identifier for existing API Version Set. Omit this value to create a new Version Set. </summary>
         [WirePath("id")]
         public string Id { get; set; }
+
         /// <summary> The display Name of the API Version Set. </summary>
         [WirePath("name")]
         public string Name { get; set; }
+
         /// <summary> Description of API Version Set. </summary>
         [WirePath("description")]
         public string Description { get; set; }
+
         /// <summary> An value that determines where the API Version identifier will be located in a HTTP request. </summary>
         [WirePath("versioningScheme")]
         public VersioningScheme? VersioningScheme { get; set; }
+
         /// <summary> Name of query parameter that indicates the API Version if versioningScheme is set to `query`. </summary>
         [WirePath("versionQueryName")]
         public string VersionQueryName { get; set; }
+
         /// <summary> Name of HTTP header parameter that indicates the API Version if versioningScheme is set to `header`. </summary>
         [WirePath("versionHeaderName")]
         public string VersionHeaderName { get; set; }

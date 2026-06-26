@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class SoftwareUpdateConfigurationScheduleProperties : IUtf8JsonSerializable, IJsonModel<SoftwareUpdateConfigurationScheduleProperties>
+    /// <summary> Definition of schedule parameters. </summary>
+    public partial class SoftwareUpdateConfigurationScheduleProperties : IJsonModel<SoftwareUpdateConfigurationScheduleProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SoftwareUpdateConfigurationScheduleProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SoftwareUpdateConfigurationScheduleProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationScheduleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSoftwareUpdateConfigurationScheduleProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationScheduleProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationScheduleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAutomationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationScheduleProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SoftwareUpdateConfigurationScheduleProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SoftwareUpdateConfigurationScheduleProperties IPersistableModel<SoftwareUpdateConfigurationScheduleProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SoftwareUpdateConfigurationScheduleProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SoftwareUpdateConfigurationScheduleProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationScheduleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationScheduleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationScheduleProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
@@ -46,15 +86,8 @@ namespace Azure.ResourceManager.Automation.Models
             }
             if (Optional.IsDefined(ExpireOn))
             {
-                if (ExpireOn != null)
-                {
-                    writer.WritePropertyName("expiryTime"u8);
-                    writer.WriteStringValue(ExpireOn.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("expiryTime");
-                }
+                writer.WritePropertyName("expiryTime"u8);
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsDefined(ExpireInMinutes))
             {
@@ -68,15 +101,8 @@ namespace Azure.ResourceManager.Automation.Models
             }
             if (Optional.IsDefined(NextRunOn))
             {
-                if (NextRunOn != null)
-                {
-                    writer.WritePropertyName("nextRun"u8);
-                    writer.WriteStringValue(NextRunOn.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("nextRun");
-                }
+                writer.WritePropertyName("nextRun"u8);
+                writer.WriteStringValue(NextRunOn.Value, "O");
             }
             if (Optional.IsDefined(NextRunInMinutes))
             {
@@ -118,15 +144,15 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -135,217 +161,189 @@ namespace Azure.ResourceManager.Automation.Models
             }
         }
 
-        SoftwareUpdateConfigurationScheduleProperties IJsonModel<SoftwareUpdateConfigurationScheduleProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SoftwareUpdateConfigurationScheduleProperties IJsonModel<SoftwareUpdateConfigurationScheduleProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SoftwareUpdateConfigurationScheduleProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationScheduleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationScheduleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationScheduleProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSoftwareUpdateConfigurationScheduleProperties(document.RootElement, options);
         }
 
-        internal static SoftwareUpdateConfigurationScheduleProperties DeserializeSoftwareUpdateConfigurationScheduleProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SoftwareUpdateConfigurationScheduleProperties DeserializeSoftwareUpdateConfigurationScheduleProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DateTimeOffset? startTime = default;
-            double? startTimeOffsetMinutes = default;
-            DateTimeOffset? expiryTime = default;
-            double? expiryTimeOffsetMinutes = default;
+            DateTimeOffset? startOn = default;
+            double? startInMinutes = default;
+            DateTimeOffset? expireOn = default;
+            double? expireInMinutes = default;
             bool? isEnabled = default;
-            DateTimeOffset? nextRun = default;
-            double? nextRunOffsetMinutes = default;
+            DateTimeOffset? nextRunOn = default;
+            double? nextRunInMinutes = default;
             long? interval = default;
             AutomationScheduleFrequency? frequency = default;
             string timeZone = default;
             AutomationAdvancedSchedule advancedSchedule = default;
-            DateTimeOffset? creationTime = default;
-            DateTimeOffset? lastModifiedTime = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? lastModifiedOn = default;
             string description = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("startTime"u8))
+                if (prop.NameEquals("startTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    startTime = property.Value.GetDateTimeOffset("O");
+                    startOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("startTimeOffsetMinutes"u8))
+                if (prop.NameEquals("startTimeOffsetMinutes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    startTimeOffsetMinutes = property.Value.GetDouble();
+                    startInMinutes = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("expiryTime"u8))
+                if (prop.NameEquals("expiryTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        expiryTime = null;
+                        expireOn = null;
                         continue;
                     }
-                    expiryTime = property.Value.GetDateTimeOffset("O");
+                    expireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("expiryTimeOffsetMinutes"u8))
+                if (prop.NameEquals("expiryTimeOffsetMinutes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    expiryTimeOffsetMinutes = property.Value.GetDouble();
-                    continue;
-                }
-                if (property.NameEquals("isEnabled"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isEnabled = property.Value.GetBoolean();
+                    expireInMinutes = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("nextRun"u8))
+                if (prop.NameEquals("isEnabled"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        nextRun = null;
-                        continue;
-                    }
-                    nextRun = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("nextRunOffsetMinutes"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    nextRunOffsetMinutes = property.Value.GetDouble();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("interval"u8))
+                if (prop.NameEquals("nextRun"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        nextRunOn = null;
+                        continue;
+                    }
+                    nextRunOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("nextRunOffsetMinutes"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    interval = property.Value.GetInt64();
+                    nextRunInMinutes = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("frequency"u8))
+                if (prop.NameEquals("interval"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    frequency = new AutomationScheduleFrequency(property.Value.GetString());
+                    interval = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("timeZone"u8))
+                if (prop.NameEquals("frequency"u8))
                 {
-                    timeZone = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("advancedSchedule"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    advancedSchedule = AutomationAdvancedSchedule.DeserializeAutomationAdvancedSchedule(property.Value, options);
+                    frequency = new AutomationScheduleFrequency(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("creationTime"u8))
+                if (prop.NameEquals("timeZone"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    timeZone = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("advancedSchedule"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    creationTime = property.Value.GetDateTimeOffset("O");
+                    advancedSchedule = AutomationAdvancedSchedule.DeserializeAutomationAdvancedSchedule(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("lastModifiedTime"u8))
+                if (prop.NameEquals("creationTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastModifiedTime = property.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("description"u8))
+                if (prop.NameEquals("lastModifiedTime"u8))
                 {
-                    description = property.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastModifiedOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("description"u8))
+                {
+                    description = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SoftwareUpdateConfigurationScheduleProperties(
-                startTime,
-                startTimeOffsetMinutes,
-                expiryTime,
-                expiryTimeOffsetMinutes,
+                startOn,
+                startInMinutes,
+                expireOn,
+                expireInMinutes,
                 isEnabled,
-                nextRun,
-                nextRunOffsetMinutes,
+                nextRunOn,
+                nextRunInMinutes,
                 interval,
                 frequency,
                 timeZone,
                 advancedSchedule,
-                creationTime,
-                lastModifiedTime,
+                createdOn,
+                lastModifiedOn,
                 description,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<SoftwareUpdateConfigurationScheduleProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationScheduleProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAutomationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationScheduleProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SoftwareUpdateConfigurationScheduleProperties IPersistableModel<SoftwareUpdateConfigurationScheduleProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationScheduleProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSoftwareUpdateConfigurationScheduleProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationScheduleProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SoftwareUpdateConfigurationScheduleProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

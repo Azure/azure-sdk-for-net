@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningDatabricksComputeSecrets : IUtf8JsonSerializable, IJsonModel<MachineLearningDatabricksComputeSecrets>
+    /// <summary> Secrets related to a Machine Learning compute based on Databricks. </summary>
+    public partial class MachineLearningDatabricksComputeSecrets : MachineLearningComputeSecrets, IJsonModel<MachineLearningDatabricksComputeSecrets>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningDatabricksComputeSecrets>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override MachineLearningComputeSecrets PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningDatabricksComputeSecrets>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMachineLearningDatabricksComputeSecrets(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningDatabricksComputeSecrets)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningDatabricksComputeSecrets>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningDatabricksComputeSecrets)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MachineLearningDatabricksComputeSecrets>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineLearningDatabricksComputeSecrets IPersistableModel<MachineLearningDatabricksComputeSecrets>.Create(BinaryData data, ModelReaderWriterOptions options) => (MachineLearningDatabricksComputeSecrets)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MachineLearningDatabricksComputeSecrets>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MachineLearningDatabricksComputeSecrets>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningDatabricksComputeSecrets>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningDatabricksComputeSecrets>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineLearningDatabricksComputeSecrets)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(DatabricksAccessToken))
             {
@@ -43,132 +82,52 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        MachineLearningDatabricksComputeSecrets IJsonModel<MachineLearningDatabricksComputeSecrets>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineLearningDatabricksComputeSecrets IJsonModel<MachineLearningDatabricksComputeSecrets>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MachineLearningDatabricksComputeSecrets)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override MachineLearningComputeSecrets JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningDatabricksComputeSecrets>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningDatabricksComputeSecrets>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineLearningDatabricksComputeSecrets)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMachineLearningDatabricksComputeSecrets(document.RootElement, options);
         }
 
-        internal static MachineLearningDatabricksComputeSecrets DeserializeMachineLearningDatabricksComputeSecrets(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MachineLearningDatabricksComputeSecrets DeserializeMachineLearningDatabricksComputeSecrets(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string databricksAccessToken = default;
             ComputeType computeType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string databricksAccessToken = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("databricksAccessToken"u8))
+                if (prop.NameEquals("computeType"u8))
                 {
-                    databricksAccessToken = property.Value.GetString();
+                    computeType = new ComputeType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("computeType"u8))
+                if (prop.NameEquals("databricksAccessToken"u8))
                 {
-                    computeType = new ComputeType(property.Value.GetString());
+                    databricksAccessToken = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new MachineLearningDatabricksComputeSecrets(computeType, serializedAdditionalRawData, databricksAccessToken);
+            return new MachineLearningDatabricksComputeSecrets(computeType, additionalBinaryDataProperties, databricksAccessToken);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabricksAccessToken), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  databricksAccessToken: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DatabricksAccessToken))
-                {
-                    builder.Append("  databricksAccessToken: ");
-                    if (DatabricksAccessToken.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DatabricksAccessToken}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DatabricksAccessToken}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ComputeType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  computeType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  computeType: ");
-                builder.AppendLine($"'{ComputeType.ToString()}'");
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<MachineLearningDatabricksComputeSecrets>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningDatabricksComputeSecrets>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(MachineLearningDatabricksComputeSecrets)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        MachineLearningDatabricksComputeSecrets IPersistableModel<MachineLearningDatabricksComputeSecrets>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningDatabricksComputeSecrets>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMachineLearningDatabricksComputeSecrets(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MachineLearningDatabricksComputeSecrets)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<MachineLearningDatabricksComputeSecrets>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -19,32 +19,18 @@ namespace Azure.AI.Projects.Agents
             Argument.AssertNotNull(functionDefinition, nameof(functionDefinition));
 
             FunctionDefinition = functionDefinition;
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAPITool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="functionDefinition"> The openapi function definition. </param>
-        /// <param name="toolConfigs">
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </param>
-        internal OpenAPITool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, OpenApiFunctionDefinition functionDefinition, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
+        internal OpenAPITool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, OpenApiFunctionDefinition functionDefinition) : base(@type, additionalBinaryDataProperties)
         {
             FunctionDefinition = functionDefinition;
-            ToolConfigs = toolConfigs;
         }
 
         /// <summary> The openapi function definition. </summary>
         public OpenApiFunctionDefinition FunctionDefinition { get; set; }
-
-        /// <summary>
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
     }
 }
