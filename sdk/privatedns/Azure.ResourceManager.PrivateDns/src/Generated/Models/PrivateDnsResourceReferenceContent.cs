@@ -7,12 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.PrivateDns.Models
 {
-    /// <summary> The response of a RecordSet list operation. </summary>
-    internal partial class PrivateDnsRecordListResult
+    /// <summary> Represents the properties of the private DNS Resource Reference Request. </summary>
+    public partial class PrivateDnsResourceReferenceContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +46,23 @@ namespace Azure.ResourceManager.PrivateDns.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PrivateDnsRecordListResult"/>. </summary>
-        /// <param name="value"> The RecordSet items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal PrivateDnsRecordListResult(IEnumerable<PrivateDnsRecordData> value)
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsResourceReferenceContent"/>. </summary>
+        public PrivateDnsResourceReferenceContent()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
+            TargetResources = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateDnsRecordListResult"/>. </summary>
-        /// <param name="value"> The RecordSet items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsResourceReferenceContent"/>. </summary>
+        /// <param name="targetResources"> A list of references to azure resources for which referencing private DNS records need to be queried. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateDnsRecordListResult(IReadOnlyList<PrivateDnsRecordData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PrivateDnsResourceReferenceContent(IList<WritableSubResource> targetResources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            TargetResources = targetResources;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateDnsRecordListResult"/> for deserialization. </summary>
-        internal PrivateDnsRecordListResult()
-        {
-        }
-
-        /// <summary> The RecordSet items on this page. </summary>
-        public IReadOnlyList<PrivateDnsRecordData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> A list of references to azure resources for which referencing private DNS records need to be queried. </summary>
+        [WirePath("properties.targetResources")]
+        public IList<WritableSubResource> TargetResources { get; }
     }
 }

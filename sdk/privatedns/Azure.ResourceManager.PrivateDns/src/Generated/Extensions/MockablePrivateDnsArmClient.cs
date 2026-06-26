@@ -47,18 +47,6 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VirtualNetworkLinkResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualNetworkLinkResource.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualNetworkLinkResource"/> object. </returns>
-        public virtual VirtualNetworkLinkResource GetVirtualNetworkLinkResource(ResourceIdentifier id)
-        {
-            VirtualNetworkLinkResource.ValidateResourceId(id);
-            return new VirtualNetworkLinkResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="PrivateDnsARecordResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PrivateDnsARecordResource.CreateResourceIdentifier(string,string,string,string)" /> to create a <see cref="PrivateDnsARecordResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -152,6 +140,18 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
         {
             PrivateDnsTxtRecordResource.ValidateResourceId(id);
             return new PrivateDnsTxtRecordResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualNetworkLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualNetworkLinkResource.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VirtualNetworkLinkResource"/> object. </returns>
+        public virtual VirtualNetworkLinkResource GetVirtualNetworkLinkResource(ResourceIdentifier id)
+        {
+            VirtualNetworkLinkResource.ValidateResourceId(id);
+            return new VirtualNetworkLinkResource(Client, id);
         }
     }
 }

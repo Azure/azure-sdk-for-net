@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.PrivateDns.Models
 {
-    /// <summary> The response to a Private DNS zone list operation. </summary>
+    /// <summary> The response of a PrivateZone list operation. </summary>
     internal partial class PrivateZoneListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.PrivateDns.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PrivateZoneListResult"/>. </summary>
-        internal PrivateZoneListResult()
+        /// <param name="value"> The PrivateZone items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal PrivateZoneListResult(IEnumerable<PrivateDnsZoneData> value)
         {
-            Value = new ChangeTrackingList<PrivateDnsZoneData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateZoneListResult"/>. </summary>
-        /// <param name="value"> Information about the Private DNS zones. </param>
-        /// <param name="nextLink"> The continuation token for the next page of results. </param>
+        /// <param name="value"> The PrivateZone items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateZoneListResult(IReadOnlyList<PrivateDnsZoneData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PrivateZoneListResult(IReadOnlyList<PrivateDnsZoneData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Information about the Private DNS zones. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateZoneListResult"/> for deserialization. </summary>
+        internal PrivateZoneListResult()
+        {
+        }
+
+        /// <summary> The PrivateZone items on this page. </summary>
         public IReadOnlyList<PrivateDnsZoneData> Value { get; }
-        /// <summary> The continuation token for the next page of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.PrivateDns.Mocking;
+using Azure.ResourceManager.PrivateDns.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PrivateDns
@@ -49,25 +50,6 @@ namespace Azure.ResourceManager.PrivateDns
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockablePrivateDnsArmClient(client).GetPrivateDnsZoneResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="VirtualNetworkLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualNetworkLinkResource.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePrivateDnsArmClient.GetVirtualNetworkLinkResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="VirtualNetworkLinkResource"/> object. </returns>
-        public static VirtualNetworkLinkResource GetVirtualNetworkLinkResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockablePrivateDnsArmClient(client).GetVirtualNetworkLinkResource(id);
         }
 
         /// <summary>
@@ -223,6 +205,25 @@ namespace Azure.ResourceManager.PrivateDns
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="VirtualNetworkLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualNetworkLinkResource.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePrivateDnsArmClient.GetVirtualNetworkLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="VirtualNetworkLinkResource"/> object. </returns>
+        public static VirtualNetworkLinkResource GetVirtualNetworkLinkResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockablePrivateDnsArmClient(client).GetVirtualNetworkLinkResource(id);
+        }
+
+        /// <summary>
         /// Gets a collection of PrivateDnsZoneResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
@@ -252,7 +253,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01</description>
+        /// <description>2026-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -290,7 +291,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01</description>
+        /// <description>2026-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -328,7 +329,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01</description>
+        /// <description>2026-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -365,7 +366,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01</description>
+        /// <description>2026-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -387,6 +388,70 @@ namespace Azure.ResourceManager.PrivateDns
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockablePrivateDnsSubscriptionResource(subscriptionResource).GetPrivateDnsZones(top, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns the private DNS zone records specified by the referencing targetResourceIds.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/getPrivateDnsResourceReference</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateDnsResourceReference_GetByTargetResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2026-06-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePrivateDnsSubscriptionResource.GetByTargetResourcesPrivateDnsResourceReference(PrivateDnsResourceReferenceContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<Response<PrivateDnsResourceReferenceResult>> GetByTargetResourcesPrivateDnsResourceReferenceAsync(this SubscriptionResource subscriptionResource, PrivateDnsResourceReferenceContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockablePrivateDnsSubscriptionResource(subscriptionResource).GetByTargetResourcesPrivateDnsResourceReferenceAsync(content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns the private DNS zone records specified by the referencing targetResourceIds.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/getPrivateDnsResourceReference</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateDnsResourceReference_GetByTargetResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2026-06-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePrivateDnsSubscriptionResource.GetByTargetResourcesPrivateDnsResourceReference(PrivateDnsResourceReferenceContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static Response<PrivateDnsResourceReferenceResult> GetByTargetResourcesPrivateDnsResourceReference(this SubscriptionResource subscriptionResource, PrivateDnsResourceReferenceContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockablePrivateDnsSubscriptionResource(subscriptionResource).GetByTargetResourcesPrivateDnsResourceReference(content, cancellationToken);
         }
     }
 }

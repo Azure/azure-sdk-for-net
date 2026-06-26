@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.PrivateDns
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Azure.ResourceManager.Models.SystemData systemData = default;
             IDictionary<string, string> metadata = default;
             long? ttl = default;
             string fqdn = default;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.PrivateDns
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(BinaryData.FromString(property.Value.GetRawText()), ModelSerializationExtensions.WireOptions, AzureResourceManagerPrivateDnsContext.Default);
+                    systemData = ModelReaderWriter.Read<Azure.ResourceManager.Models.SystemData>(BinaryData.FromString(property.Value.GetRawText()), ModelSerializationExtensions.WireOptions, AzureResourceManagerPrivateDnsContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
