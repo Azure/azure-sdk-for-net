@@ -151,6 +151,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="client">The value preserved for API compatibility.</param>
         /// <param name="id">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
+        [System.Obsolete("This method is obsolete and will be removed in a future release.", false)]
         public static SecurityConnectorGovernanceRuleResource GetSecurityConnectorGovernanceRuleResource(this ArmClient client, ResourceIdentifier id)
             => GetMockableSecurityCenterArmClient(client).GetSecurityConnectorGovernanceRuleResource(id);
     }
@@ -368,6 +369,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
+        [System.Obsolete("This method is obsolete and will be removed in a future release.", false)]
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource> GetSubscriptionGovernanceRule(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             => GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSubscriptionGovernanceRule(ruleId, cancellationToken);
         /// <summary>
@@ -378,6 +380,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
+        [System.Obsolete("This method is obsolete and will be removed in a future release.", false)]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource>> GetSubscriptionGovernanceRuleAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             => GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSubscriptionGovernanceRuleAsync(ruleId, cancellationToken);
         /// <summary>
@@ -503,6 +506,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
+        [System.Obsolete("This method is obsolete and will be removed in a future release.", false)]
         public static Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleCollection GetSubscriptionGovernanceRules(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource)
             => GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSubscriptionGovernanceRules();
         /// <summary>
@@ -511,6 +515,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="client">The value preserved for API compatibility.</param>
         /// <param name="id">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
+        [System.Obsolete("This method is obsolete and will be removed in a future release. Please use GetGovernanceRuleResource.", false)]
         public static Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource GetSubscriptionGovernanceRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id)
             => GetMockableSecurityCenterArmClient(client).GetSubscriptionGovernanceRuleResource(id);
         /// <summary>

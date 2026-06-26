@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter
     /// Provides a compatibility shim for the SecurityConnectorGovernanceRuleCollection class.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
+    [System.Obsolete("This class is obsolete and will be removed in a future release.", false)]
     public partial class SecurityConnectorGovernanceRuleCollection : ArmCollection, IEnumerable<SecurityConnectorGovernanceRuleResource>, IAsyncEnumerable<SecurityConnectorGovernanceRuleResource>
     {
         /// <summary>

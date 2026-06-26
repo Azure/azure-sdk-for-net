@@ -67,12 +67,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         public virtual Azure.ResourceManager.SecurityCenter.SoftwareInventoryResource GetSoftwareInventoryResource(Azure.Core.ResourceIdentifier id) { throw new System.NotSupportedException("This API is no longer supported by the service. No direct replacement is available."); }
 
         /// <summary> Gets an object representing a security connector governance rule resource. </summary>
+        [System.Obsolete("This method is obsolete and will be removed in a future release.", false)]
         public virtual SecurityConnectorGovernanceRuleResource GetSecurityConnectorGovernanceRuleResource(ResourceIdentifier id)
         {
             return new SecurityConnectorGovernanceRuleResource(Client, GetGovernanceRuleResource(id));
         }
 
         /// <summary> Gets an object representing a subscription governance rule resource. </summary>
+        [System.Obsolete("This method is obsolete and will be removed in a future release. Please use GetGovernanceRuleResource.", false)]
         public virtual SubscriptionGovernanceRuleResource GetSubscriptionGovernanceRuleResource(ResourceIdentifier id)
         {
             return new SubscriptionGovernanceRuleResource(Client, GetGovernanceRuleResource(id));

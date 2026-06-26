@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter
     /// Provides a compatibility shim for the SubscriptionGovernanceRuleResource class.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
+    [System.Obsolete("This class is obsolete and will be removed in a future release. Please use GovernanceRuleResource.", false)]
     public partial class SubscriptionGovernanceRuleResource : Azure.ResourceManager.ArmResource
     {
         /// <summary>

@@ -44,14 +44,17 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             => GetSecurityContactAsync(new SecurityContactName(securityContactName), cancellationToken);
 
         /// <summary> Gets subscription governance rules for this subscription. </summary>
+        [System.Obsolete("This method is obsolete and will be removed in a future release.", false)]
         public virtual SubscriptionGovernanceRuleCollection GetSubscriptionGovernanceRules()
             => new SubscriptionGovernanceRuleCollection(Client, Id);
 
         /// <summary> Gets a subscription governance rule for this subscription. </summary>
+        [System.Obsolete("This method is obsolete and will be removed in a future release.", false)]
         public virtual Response<SubscriptionGovernanceRuleResource> GetSubscriptionGovernanceRule(string ruleId, CancellationToken cancellationToken = default)
             => GetSubscriptionGovernanceRules().Get(ruleId, cancellationToken);
 
         /// <summary> Gets a subscription governance rule for this subscription. </summary>
+        [System.Obsolete("This method is obsolete and will be removed in a future release.", false)]
         public virtual Task<Response<SubscriptionGovernanceRuleResource>> GetSubscriptionGovernanceRuleAsync(string ruleId, CancellationToken cancellationToken = default)
             => GetSubscriptionGovernanceRules().GetAsync(ruleId, cancellationToken);
 
