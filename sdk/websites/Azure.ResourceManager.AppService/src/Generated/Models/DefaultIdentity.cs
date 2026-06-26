@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefaultIdentity"/>. </summary>
-        /// <param name="identityType"></param>
+        /// <param name="managedServiceIdentityType"></param>
         /// <param name="userAssignedIdentityResourceId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DefaultIdentity(ManagedServiceIdentityType? identityType, string userAssignedIdentityResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DefaultIdentity(AppServiceManagedServiceIdentityType? managedServiceIdentityType, string userAssignedIdentityResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IdentityType = identityType;
+            ManagedServiceIdentityType = managedServiceIdentityType;
             UserAssignedIdentityResourceId = userAssignedIdentityResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the IdentityType. </summary>
+        /// <summary> Gets or sets the ManagedServiceIdentityType. </summary>
         [WirePath("identityType")]
-        public ManagedServiceIdentityType? IdentityType { get; set; }
+        public AppServiceManagedServiceIdentityType? ManagedServiceIdentityType { get; set; }
 
         /// <summary> Gets or sets the UserAssignedIdentityResourceId. </summary>
         [WirePath("userAssignedIdentityResourceId")]

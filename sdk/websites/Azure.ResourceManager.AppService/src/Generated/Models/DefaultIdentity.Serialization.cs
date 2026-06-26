@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 throw new FormatException($"The model {nameof(DefaultIdentity)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IdentityType))
+            if (Optional.IsDefined(ManagedServiceIdentityType))
             {
                 writer.WritePropertyName("identityType"u8);
-                writer.WriteStringValue(IdentityType.Value.ToSerialString());
+                writer.WriteStringValue(ManagedServiceIdentityType.Value.ToSerialString());
             }
             if (Optional.IsDefined(UserAssignedIdentityResourceId))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            ManagedServiceIdentityType? identityType = default;
+            AppServiceManagedServiceIdentityType? managedServiceIdentityType = default;
             string userAssignedIdentityResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    identityType = prop.Value.GetString().ToManagedServiceIdentityType();
+                    managedServiceIdentityType = prop.Value.GetString().ToAppServiceManagedServiceIdentityType();
                     continue;
                 }
                 if (prop.NameEquals("userAssignedIdentityResourceId"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DefaultIdentity(identityType, userAssignedIdentityResourceId, additionalBinaryDataProperties);
+            return new DefaultIdentity(managedServiceIdentityType, userAssignedIdentityResourceId, additionalBinaryDataProperties);
         }
     }
 }

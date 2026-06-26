@@ -1953,12 +1953,12 @@ namespace Azure.ResourceManager.AppService.Models
             return new KubeEnvironmentProfile(id, name, default, default);
         }
 
-        /// <param name="identityType"></param>
+        /// <param name="managedServiceIdentityType"></param>
         /// <param name="userAssignedIdentityResourceId"></param>
         /// <returns> A new <see cref="Models.DefaultIdentity"/> instance for mocking. </returns>
-        public static DefaultIdentity DefaultIdentity(ManagedServiceIdentityType? identityType = default, string userAssignedIdentityResourceId = default)
+        public static DefaultIdentity DefaultIdentity(AppServiceManagedServiceIdentityType? managedServiceIdentityType = default, string userAssignedIdentityResourceId = default)
         {
-            return new DefaultIdentity(identityType, userAssignedIdentityResourceId, default);
+            return new DefaultIdentity(managedServiceIdentityType, userAssignedIdentityResourceId, default);
         }
 
         /// <param name="registryKey"> Registry key for the adapter. </param>

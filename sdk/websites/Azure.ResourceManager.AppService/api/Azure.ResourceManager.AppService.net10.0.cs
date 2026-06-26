@@ -8533,6 +8533,13 @@ namespace Azure.ResourceManager.AppService.Models
         public static bool operator !=(Azure.ResourceManager.AppService.Models.AppServiceKind left, Azure.ResourceManager.AppService.Models.AppServiceKind right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public enum AppServiceManagedServiceIdentityType
+    {
+        SystemAssigned = 0,
+        UserAssigned = 1,
+        SystemAssignedUserAssigned = 2,
+        None = 3,
+    }
     public partial class AppServiceNameAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AppServiceNameAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AppServiceNameAvailabilityContent>
     {
         public AppServiceNameAvailabilityContent(string name, Azure.ResourceManager.AppService.Models.CheckNameResourceType type) { }
@@ -9423,7 +9430,7 @@ namespace Azure.ResourceManager.AppService.Models
         public static Azure.ResourceManager.AppService.Models.DataTableResponseColumn DataTableResponseColumn(string columnName = null, string dataType = null, string columnType = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.DataTableResponseObject DataTableResponseObject(string tableName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.DataTableResponseColumn> columns = null, System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<string>> rows = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.DefaultAuthorizationPolicy DefaultAuthorizationPolicy(Azure.ResourceManager.AppService.Models.AppServiceAadAllowedPrincipals allowedPrincipals = null, System.Collections.Generic.IEnumerable<string> allowedApplications = null) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.DefaultIdentity DefaultIdentity(Azure.ResourceManager.AppService.Models.ManagedServiceIdentityType? identityType = default(Azure.ResourceManager.AppService.Models.ManagedServiceIdentityType?), string userAssignedIdentityResourceId = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.DefaultIdentity DefaultIdentity(Azure.ResourceManager.AppService.Models.AppServiceManagedServiceIdentityType? managedServiceIdentityType = default(Azure.ResourceManager.AppService.Models.AppServiceManagedServiceIdentityType?), string userAssignedIdentityResourceId = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.DeletedAppRestoreContent DeletedAppRestoreContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier deletedSiteId = null, bool? recoverConfiguration = default(bool?), string snapshotTime = null, bool? useDRSecondary = default(bool?), string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.DeletedSiteData DeletedSiteData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? deletedSiteId = default(int?), string deletedTimestamp = null, string subscription = null, string resourceGroup = null, string deletedSiteName = null, string slot = null, string kindPropertiesKind = null, string geoRegionName = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.DeletedSiteData DeletedSiteData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null, int? deletedSiteId = default(int?), string deletedTimestamp = null, string subscription = null, string resourceGroup = null, string deletedSiteName = null, string slot = null, string kindPropertiesKind = null, string geoRegionName = null) { throw null; }
@@ -10567,7 +10574,9 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class DefaultIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.DefaultIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DefaultIdentity>
     {
         public DefaultIdentity() { }
+        [System.ObsoleteAttribute("This property is deprecated and will be removed in a future release. Please use ManagedServiceIdentityType instead.")]
         public Azure.ResourceManager.AppService.Models.ManagedServiceIdentityType? IdentityType { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.AppServiceManagedServiceIdentityType? ManagedServiceIdentityType { get { throw null; } set { } }
         public string UserAssignedIdentityResourceId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppService.Models.DefaultIdentity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -11985,6 +11994,7 @@ namespace Azure.ResourceManager.AppService.Models
         Integrated = 0,
         Classic = 1,
     }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future release. Please use AppServiceManagedServiceIdentityType instead.")]
     public enum ManagedServiceIdentityType
     {
         None = 0,
