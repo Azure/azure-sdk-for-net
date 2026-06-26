@@ -1,6 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// Adapter for the NSP Reconcile customization: the generator produces an ArmOperation returning the
+// shared NetworkSecurityPerimeterConfigurationData, but main's GA Reconcile returns the resource. This
+// wraps ArmOperation<...Data> as ArmOperation<TResource>. See eventgrid-nsp-customization-analysis.md.
+
 #nullable disable
 
 using System;

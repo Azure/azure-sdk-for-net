@@ -1,6 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// GA API compatibility: The old SDK exposed Get/Reconcile with a split (perimeterGuid, associationName) signature
+// and a two-argument CreateResourceIdentifier. These partial methods provide the legacy overloads on top of the
+// generated single-argument methods. They cannot be removed without breaking the shipped GA surface.
+// See eventgrid-nsp-customization-analysis.md for the full rationale.
+
 #nullable disable
 
 using System;

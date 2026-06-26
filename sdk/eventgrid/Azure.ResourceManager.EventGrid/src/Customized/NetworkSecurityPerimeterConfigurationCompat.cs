@@ -1,6 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// Helper for the NSP config customizations: resolves parent scopes and splits the composite
+// resource id ".../networkSecurityPerimeterConfigurations/{perimeterGuid}.{associationName}" so the
+// customizations can call the generated single-segment-id REST operations and rebuild main's GA
+// (perimeterGuid, associationName) surface. See eventgrid-nsp-customization-analysis.md.
+
 #nullable disable
 
 using System;
