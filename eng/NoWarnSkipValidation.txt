@@ -32,7 +32,6 @@ Azure.Developer.DevCenter
 Azure.Health.Insights.CancerProfiling
 Azure.Health.Insights.ClinicalMatching
 Azure.Identity
-Azure.Identity.Broker
 Azure.Maps.Common
 Azure.Maps.Geolocation
 Azure.Maps.Rendering
@@ -96,15 +95,8 @@ Azure.Provisioning.Storage
 Azure.Provisioning.WebPubSub
 Azure.ResourceManager.AppService
 Azure.ResourceManager.Compute
-Azure.ResourceManager.CosmosDB
-Azure.ResourceManager.EdgeActions
 Azure.ResourceManager.InformaticaDataManagement
-Azure.ResourceManager.KubernetesConfiguration.Extensions
-Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
 Azure.ResourceManager.MachineLearning
-Azure.ResourceManager.Network
-Azure.Security.KeyVault.Certificates
-Azure.Security.KeyVault.Secrets
 Azure.Storage.Blobs
 Azure.Storage.Blobs.Batch
 Azure.Storage.Blobs.ChangeFeed
