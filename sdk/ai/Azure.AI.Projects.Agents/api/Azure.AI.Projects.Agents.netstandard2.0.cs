@@ -310,8 +310,8 @@ namespace Azure.AI.Projects.Agents
         public virtual System.ClientModel.ClientResult Delete(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> DeleteAsync(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Agents.OptimizationJob> Get(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.Agents.OptimizationJob> GetAll(int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, Azure.AI.Projects.Agents.JobStatus? status = default(Azure.AI.Projects.Agents.JobStatus?), string agentName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.Agents.OptimizationJob> GetAllAsync(int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, Azure.AI.Projects.Agents.JobStatus? status = default(Azure.AI.Projects.Agents.JobStatus?), string agentName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.Agents.OptimizationJob> GetAll(int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, Azure.AI.Projects.Agents.AgentsJobStatus? status = default(Azure.AI.Projects.Agents.AgentsJobStatus?), string agentName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.Agents.OptimizationJob> GetAllAsync(int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, Azure.AI.Projects.Agents.AgentsJobStatus? status = default(Azure.AI.Projects.Agents.AgentsJobStatus?), string agentName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Agents.OptimizationJob>> GetAsync(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class AgentSessionFiles
@@ -348,6 +348,43 @@ namespace Azure.AI.Projects.Agents
         public static implicit operator Azure.AI.Projects.Agents.AgentSessionStatus (string value) { throw null; }
         public static implicit operator Azure.AI.Projects.Agents.AgentSessionStatus? (string value) { throw null; }
         public static bool operator !=(Azure.AI.Projects.Agents.AgentSessionStatus left, Azure.AI.Projects.Agents.AgentSessionStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AgentsEvaluationLevel : System.IEquatable<Azure.AI.Projects.Agents.AgentsEvaluationLevel>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AgentsEvaluationLevel(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.AgentsEvaluationLevel Conversation { get { throw null; } }
+        public static Azure.AI.Projects.Agents.AgentsEvaluationLevel Turn { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.AgentsEvaluationLevel other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.AgentsEvaluationLevel left, Azure.AI.Projects.Agents.AgentsEvaluationLevel right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.AgentsEvaluationLevel (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.AgentsEvaluationLevel? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.AgentsEvaluationLevel left, Azure.AI.Projects.Agents.AgentsEvaluationLevel right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AgentsJobStatus : System.IEquatable<Azure.AI.Projects.Agents.AgentsJobStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AgentsJobStatus(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.AgentsJobStatus Cancelled { get { throw null; } }
+        public static Azure.AI.Projects.Agents.AgentsJobStatus Failed { get { throw null; } }
+        public static Azure.AI.Projects.Agents.AgentsJobStatus InProgress { get { throw null; } }
+        public static Azure.AI.Projects.Agents.AgentsJobStatus Queued { get { throw null; } }
+        public static Azure.AI.Projects.Agents.AgentsJobStatus Succeeded { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.AgentsJobStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.AgentsJobStatus left, Azure.AI.Projects.Agents.AgentsJobStatus right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.AgentsJobStatus (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.AgentsJobStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.AgentsJobStatus left, Azure.AI.Projects.Agents.AgentsJobStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class AgentsSkill : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.AgentsSkill>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.AgentsSkill>
@@ -967,23 +1004,6 @@ namespace Azure.AI.Projects.Agents
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.EntraAuthorizationScheme>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EvaluationLevel : System.IEquatable<Azure.AI.Projects.Agents.EvaluationLevel>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EvaluationLevel(string value) { throw null; }
-        public static Azure.AI.Projects.Agents.EvaluationLevel Conversation { get { throw null; } }
-        public static Azure.AI.Projects.Agents.EvaluationLevel Turn { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.Agents.EvaluationLevel other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.Agents.EvaluationLevel left, Azure.AI.Projects.Agents.EvaluationLevel right) { throw null; }
-        public static implicit operator Azure.AI.Projects.Agents.EvaluationLevel (string value) { throw null; }
-        public static implicit operator Azure.AI.Projects.Agents.EvaluationLevel? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.Agents.EvaluationLevel left, Azure.AI.Projects.Agents.EvaluationLevel right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ExportedDataTypes : System.IEquatable<Azure.AI.Projects.Agents.ExportedDataTypes>
     {
         private readonly object _dummy;
@@ -1159,26 +1179,6 @@ namespace Azure.AI.Projects.Agents
         Azure.AI.Projects.Agents.InvocationsWsProtocolConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.InvocationsWsProtocolConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.InvocationsWsProtocolConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.InvocationsWsProtocolConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct JobStatus : System.IEquatable<Azure.AI.Projects.Agents.JobStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public JobStatus(string value) { throw null; }
-        public static Azure.AI.Projects.Agents.JobStatus Cancelled { get { throw null; } }
-        public static Azure.AI.Projects.Agents.JobStatus Failed { get { throw null; } }
-        public static Azure.AI.Projects.Agents.JobStatus InProgress { get { throw null; } }
-        public static Azure.AI.Projects.Agents.JobStatus Queued { get { throw null; } }
-        public static Azure.AI.Projects.Agents.JobStatus Succeeded { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.Agents.JobStatus other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.Agents.JobStatus left, Azure.AI.Projects.Agents.JobStatus right) { throw null; }
-        public static implicit operator Azure.AI.Projects.Agents.JobStatus (string value) { throw null; }
-        public static implicit operator Azure.AI.Projects.Agents.JobStatus? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.Agents.JobStatus left, Azure.AI.Projects.Agents.JobStatus right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class ManagedAgentIdentityBlueprintReference : Azure.AI.Projects.Agents.AgentBlueprintReference, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.ManagedAgentIdentityBlueprintReference>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.ManagedAgentIdentityBlueprintReference>
     {
@@ -1553,7 +1553,7 @@ namespace Azure.AI.Projects.Agents
         public Azure.AI.Projects.Agents.OptimizationJobInputs Inputs { get { throw null; } set { } }
         public Azure.AI.Projects.Agents.OptimizationJobProgress Progress { get { throw null; } }
         public Azure.AI.Projects.Agents.OptimizationJobResult Result { get { throw null; } }
-        public Azure.AI.Projects.Agents.JobStatus Status { get { throw null; } }
+        public Azure.AI.Projects.Agents.AgentsJobStatus Status { get { throw null; } }
         public System.DateTimeOffset UpdatedAt { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Warnings { get { throw null; } }
         protected virtual Azure.AI.Projects.Agents.OptimizationJob JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1623,7 +1623,7 @@ namespace Azure.AI.Projects.Agents
     {
         public OptimizationOptions() { }
         public string EvalModel { get { throw null; } set { } }
-        public Azure.AI.Projects.Agents.EvaluationLevel? EvaluationLevel { get { throw null; } set { } }
+        public Azure.AI.Projects.Agents.AgentsEvaluationLevel? EvaluationLevel { get { throw null; } set { } }
         public int? MaxCandidates { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> OptimizationConfig { get { throw null; } }
         public string OptimizationModel { get { throw null; } set { } }
@@ -1915,7 +1915,7 @@ namespace Azure.AI.Projects.Agents
         public static Azure.AI.Projects.Agents.OptimizationJobInputs OptimizationJobInputs(Azure.AI.Projects.Agents.OptimizationAgentIdentifier agent = null, Azure.AI.Projects.Agents.OptimizationDatasetInput trainDataset = null, Azure.AI.Projects.Agents.OptimizationDatasetInput validationDataset = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.OptimizationEvaluatorRef> evaluators = null, Azure.AI.Projects.Agents.OptimizationOptions options = null) { throw null; }
         public static Azure.AI.Projects.Agents.OptimizationJobProgress OptimizationJobProgress(int candidatesCompleted = 0, double bestScore = 0, double elapsedTime = 0) { throw null; }
         public static Azure.AI.Projects.Agents.OptimizationJobResult OptimizationJobResult(string baseline = null, string best = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.OptimizationCandidate> candidates = null) { throw null; }
-        public static Azure.AI.Projects.Agents.OptimizationOptions OptimizationOptions(int? maxCandidates = default(int?), System.Collections.Generic.IDictionary<string, System.BinaryData> optimizationConfig = null, string evalModel = null, string optimizationModel = null, Azure.AI.Projects.Agents.EvaluationLevel? evaluationLevel = default(Azure.AI.Projects.Agents.EvaluationLevel?)) { throw null; }
+        public static Azure.AI.Projects.Agents.OptimizationOptions OptimizationOptions(int? maxCandidates = default(int?), System.Collections.Generic.IDictionary<string, System.BinaryData> optimizationConfig = null, string evalModel = null, string optimizationModel = null, Azure.AI.Projects.Agents.AgentsEvaluationLevel? evaluationLevel = default(Azure.AI.Projects.Agents.AgentsEvaluationLevel?)) { throw null; }
         public static Azure.AI.Projects.Agents.OptimizationReferenceDatasetInput OptimizationReferenceDatasetInput(string name = null, string version = null) { throw null; }
         public static Azure.AI.Projects.Agents.OtlpTelemetryEndpoint OtlpTelemetryEndpoint(System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.ExportedDataTypes> exportedDataTypes = null, Azure.AI.Projects.Agents.TelemetryEndpointAuthentication authentication = null, string endpoint = null, Azure.AI.Projects.Agents.TelemetryTransportProtocol protocol = default(Azure.AI.Projects.Agents.TelemetryTransportProtocol)) { throw null; }
         public static Azure.AI.Projects.Agents.PatchAgentOptions PatchAgentOptions(Azure.AI.Projects.Agents.AgentEndpointConfiguration agentEndpoint = null, Azure.AI.Projects.Agents.AgentCard agentCard = null) { throw null; }

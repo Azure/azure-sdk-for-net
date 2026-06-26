@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects
 {
     /// <summary> The discriminator values supported for routine triggers. </summary>
-    public readonly partial struct RoutineTriggerType : IEquatable<RoutineTriggerType>
+    public readonly partial struct RoutineTriggerKind : IEquatable<RoutineTriggerKind>
     {
         private readonly string _value;
         /// <summary> A custom event trigger. </summary>
@@ -20,10 +20,10 @@ namespace Azure.AI.Projects
         /// <summary> A one-shot timer trigger. </summary>
         private const string TimerValue = "timer";
 
-        /// <summary> Initializes a new instance of <see cref="RoutineTriggerType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutineTriggerKind"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RoutineTriggerType(string value)
+        public RoutineTriggerKind(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,41 +31,41 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> A custom event trigger. </summary>
-        public static RoutineTriggerType Custom { get; } = new RoutineTriggerType(CustomValue);
+        public static RoutineTriggerKind Custom { get; } = new RoutineTriggerKind(CustomValue);
 
         /// <summary> A GitHub issue trigger. </summary>
-        public static RoutineTriggerType GithubIssue { get; } = new RoutineTriggerType(GithubIssueValue);
+        public static RoutineTriggerKind GithubIssue { get; } = new RoutineTriggerKind(GithubIssueValue);
 
         /// <summary> A recurring cron-based trigger. </summary>
-        public static RoutineTriggerType Schedule { get; } = new RoutineTriggerType(ScheduleValue);
+        public static RoutineTriggerKind Schedule { get; } = new RoutineTriggerKind(ScheduleValue);
 
         /// <summary> A one-shot timer trigger. </summary>
-        public static RoutineTriggerType Timer { get; } = new RoutineTriggerType(TimerValue);
+        public static RoutineTriggerKind Timer { get; } = new RoutineTriggerKind(TimerValue);
 
-        /// <summary> Determines if two <see cref="RoutineTriggerType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="RoutineTriggerKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(RoutineTriggerType left, RoutineTriggerType right) => left.Equals(right);
+        public static bool operator ==(RoutineTriggerKind left, RoutineTriggerKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="RoutineTriggerType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="RoutineTriggerKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(RoutineTriggerType left, RoutineTriggerType right) => !left.Equals(right);
+        public static bool operator !=(RoutineTriggerKind left, RoutineTriggerKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="RoutineTriggerType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="RoutineTriggerKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RoutineTriggerType(string value) => new RoutineTriggerType(value);
+        public static implicit operator RoutineTriggerKind(string value) => new RoutineTriggerKind(value);
 
-        /// <summary> Converts a string to a <see cref="RoutineTriggerType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="RoutineTriggerKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RoutineTriggerType?(string value) => value == null ? null : new RoutineTriggerType(value);
+        public static implicit operator RoutineTriggerKind?(string value) => value == null ? null : new RoutineTriggerKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is RoutineTriggerType other && Equals(other);
+        public override bool Equals(object obj) => obj is RoutineTriggerKind other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(RoutineTriggerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(RoutineTriggerKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -9,26 +9,26 @@ using Azure.AI.Projects.Memory;
 namespace Azure.AI.Projects
 {
     /// <summary> Response for deleting a memory item from a memory store. </summary>
-    public partial class DeleteMemoryResponse
+    public partial class MemoryDeletionResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeleteMemoryResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MemoryDeletionResult"/>. </summary>
         /// <param name="memoryId"> The unique ID of the deleted memory item. </param>
         /// <param name="deleted"> Whether the memory item was successfully deleted. </param>
-        internal DeleteMemoryResponse(string memoryId, bool deleted)
+        internal MemoryDeletionResult(string memoryId, bool deleted)
         {
             MemoryId = memoryId;
             Deleted = deleted;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeleteMemoryResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MemoryDeletionResult"/>. </summary>
         /// <param name="object"> The object type. Always 'memory_store.item.deleted'. </param>
         /// <param name="memoryId"> The unique ID of the deleted memory item. </param>
         /// <param name="deleted"> Whether the memory item was successfully deleted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeleteMemoryResponse(MemoryStoreObjectType @object, string memoryId, bool deleted, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MemoryDeletionResult(MemoryStoreObjectType @object, string memoryId, bool deleted, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Object = @object;
             MemoryId = memoryId;

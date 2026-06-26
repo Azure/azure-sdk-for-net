@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects
 {
     /// <summary> Extensible status values shared by Foundry jobs. </summary>
-    public readonly partial struct JobStatus : IEquatable<JobStatus>
+    public readonly partial struct ProjectsJobStatus : IEquatable<ProjectsJobStatus>
     {
         private readonly string _value;
         /// <summary> Job is waiting to start. </summary>
@@ -22,10 +22,10 @@ namespace Azure.AI.Projects
         /// <summary> Job was cancelled by the caller. </summary>
         private const string CancelledValue = "cancelled";
 
-        /// <summary> Initializes a new instance of <see cref="JobStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectsJobStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public JobStatus(string value)
+        public ProjectsJobStatus(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,44 +33,44 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Job is waiting to start. </summary>
-        public static JobStatus Queued { get; } = new JobStatus(QueuedValue);
+        public static ProjectsJobStatus Queued { get; } = new ProjectsJobStatus(QueuedValue);
 
         /// <summary> Job is actively processing. </summary>
-        public static JobStatus InProgress { get; } = new JobStatus(InProgressValue);
+        public static ProjectsJobStatus InProgress { get; } = new ProjectsJobStatus(InProgressValue);
 
         /// <summary> Job completed successfully. </summary>
-        public static JobStatus Succeeded { get; } = new JobStatus(SucceededValue);
+        public static ProjectsJobStatus Succeeded { get; } = new ProjectsJobStatus(SucceededValue);
 
         /// <summary> Job failed. </summary>
-        public static JobStatus Failed { get; } = new JobStatus(FailedValue);
+        public static ProjectsJobStatus Failed { get; } = new ProjectsJobStatus(FailedValue);
 
         /// <summary> Job was cancelled by the caller. </summary>
-        public static JobStatus Cancelled { get; } = new JobStatus(CancelledValue);
+        public static ProjectsJobStatus Cancelled { get; } = new ProjectsJobStatus(CancelledValue);
 
-        /// <summary> Determines if two <see cref="JobStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ProjectsJobStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(JobStatus left, JobStatus right) => left.Equals(right);
+        public static bool operator ==(ProjectsJobStatus left, ProjectsJobStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="JobStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ProjectsJobStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(JobStatus left, JobStatus right) => !left.Equals(right);
+        public static bool operator !=(ProjectsJobStatus left, ProjectsJobStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="JobStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ProjectsJobStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator JobStatus(string value) => new JobStatus(value);
+        public static implicit operator ProjectsJobStatus(string value) => new ProjectsJobStatus(value);
 
-        /// <summary> Converts a string to a <see cref="JobStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ProjectsJobStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator JobStatus?(string value) => value == null ? null : new JobStatus(value);
+        public static implicit operator ProjectsJobStatus?(string value) => value == null ? null : new ProjectsJobStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is JobStatus other && Equals(other);
+        public override bool Equals(object obj) => obj is ProjectsJobStatus other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(JobStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ProjectsJobStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

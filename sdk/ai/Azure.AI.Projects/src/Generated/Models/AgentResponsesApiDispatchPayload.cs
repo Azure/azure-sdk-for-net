@@ -9,23 +9,23 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> A manual payload used to test a responses API routine dispatch. </summary>
-    public partial class InvokeAgentResponsesApiDispatchPayload : RoutineDispatchPayload
+    public partial class AgentResponsesApiDispatchPayload : RoutineDispatchPayload
     {
-        /// <summary> Initializes a new instance of <see cref="InvokeAgentResponsesApiDispatchPayload"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentResponsesApiDispatchPayload"/>. </summary>
         /// <param name="input"> The JSON value sent as the complete downstream responses input. The value is passed through as-is and can be an object, string, number, boolean, array, or null. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public InvokeAgentResponsesApiDispatchPayload(BinaryData input) : base(RoutineDispatchPayloadType.InvokeAgentResponsesApi)
+        public AgentResponsesApiDispatchPayload(BinaryData input) : base(RoutineDispatchPayloadType.InvokeAgentResponsesApi)
         {
             Argument.AssertNotNull(input, nameof(input));
 
             Input = input;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InvokeAgentResponsesApiDispatchPayload"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentResponsesApiDispatchPayload"/>. </summary>
         /// <param name="type"> The manual dispatch payload type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="input"> The JSON value sent as the complete downstream responses input. The value is passed through as-is and can be an object, string, number, boolean, array, or null. </param>
-        internal InvokeAgentResponsesApiDispatchPayload(RoutineDispatchPayloadType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData input) : base(@type, additionalBinaryDataProperties)
+        internal AgentResponsesApiDispatchPayload(RoutineDispatchPayloadType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData input) : base(@type, additionalBinaryDataProperties)
         {
             Input = input;
         }

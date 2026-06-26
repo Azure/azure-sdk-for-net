@@ -7,9 +7,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.Evaluation;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Evaluator Generation Job resource — a long-running job that generates rubric-based evaluator definitions from source materials. On success, the result is the persisted EvaluatorVersion. </summary>
     public partial class EvaluatorGenerationJob : IJsonModel<EvaluatorGenerationJob>
@@ -175,7 +175,7 @@ namespace Azure.AI.Projects
             string id = default;
             EvaluatorGenerationInputs inputs = default;
             EvaluatorVersion result = default;
-            JobStatus status = default;
+            ProjectsJobStatus status = default;
             FoundryOpenAIError error = default;
             DateTimeOffset createdAt = default;
             DateTimeOffset? finishedAt = default;
@@ -208,7 +208,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = new JobStatus(prop.Value.GetString());
+                    status = new ProjectsJobStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("error"u8))

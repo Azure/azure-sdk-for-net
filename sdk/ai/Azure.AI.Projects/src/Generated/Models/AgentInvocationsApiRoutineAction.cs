@@ -8,27 +8,27 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> Dispatches a routine through the responses API. Exactly one of agent_name or agent_endpoint_id must be provided. </summary>
-    public partial class InvokeAgentResponsesApiRoutineAction : RoutineAction
+    /// <summary> Dispatches a routine through the raw invocations API. Exactly one of agent_name or agent_endpoint_id must be provided. </summary>
+    public partial class AgentInvocationsApiRoutineAction : RoutineAction
     {
-        /// <summary> Initializes a new instance of <see cref="InvokeAgentResponsesApiRoutineAction"/>. </summary>
-        public InvokeAgentResponsesApiRoutineAction() : base(RoutineActionType.InvokeAgentResponsesApi)
+        /// <summary> Initializes a new instance of <see cref="AgentInvocationsApiRoutineAction"/>. </summary>
+        public AgentInvocationsApiRoutineAction() : base(RoutineActionKind.InvokeAgentInvocationsApi)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="InvokeAgentResponsesApiRoutineAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentInvocationsApiRoutineAction"/>. </summary>
         /// <param name="type"> The action type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="agentName"> The project-scoped agent name for routine dispatch. </param>
         /// <param name="agentEndpointId"> Legacy endpoint-scoped agent identifier for routine dispatch. </param>
         /// <param name="input"> Static JSON value sent as the complete downstream input when the routine fires. The value is passed through as-is; no templating is applied. </param>
-        /// <param name="conversation"> An optional existing conversation identifier to continue during the downstream dispatch. </param>
-        internal InvokeAgentResponsesApiRoutineAction(RoutineActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string agentName, string agentEndpointId, BinaryData input, string conversation) : base(@type, additionalBinaryDataProperties)
+        /// <param name="sessionId"> An optional existing hosted-agent session identifier to continue during the downstream dispatch. </param>
+        internal AgentInvocationsApiRoutineAction(RoutineActionKind @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string agentName, string agentEndpointId, BinaryData input, string sessionId) : base(@type, additionalBinaryDataProperties)
         {
             AgentName = agentName;
             AgentEndpointId = agentEndpointId;
             Input = input;
-            Conversation = conversation;
+            SessionId = sessionId;
         }
 
         /// <summary> The project-scoped agent name for routine dispatch. </summary>
@@ -65,7 +65,7 @@ namespace Azure.AI.Projects
         /// </summary>
         public BinaryData Input { get; set; }
 
-        /// <summary> An optional existing conversation identifier to continue during the downstream dispatch. </summary>
-        public string Conversation { get; set; }
+        /// <summary> An optional existing hosted-agent session identifier to continue during the downstream dispatch. </summary>
+        public string SessionId { get; set; }
     }
 }

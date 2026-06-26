@@ -8,22 +8,22 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Identifiers returned after a routine dispatch is queued. </summary>
-    public partial class DispatchRoutineResponse
+    public partial class DispatchRoutineResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DispatchRoutineResponse"/>. </summary>
-        internal DispatchRoutineResponse()
+        /// <summary> Initializes a new instance of <see cref="DispatchRoutineResult"/>. </summary>
+        public DispatchRoutineResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DispatchRoutineResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DispatchRoutineResult"/>. </summary>
         /// <param name="dispatchId"> The dispatch identifier created for the routine dispatch. </param>
         /// <param name="actionCorrelationId"> A downstream action correlation identifier, when available. </param>
         /// <param name="taskId"> A workspace task identifier created for the dispatch, when available. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DispatchRoutineResponse(string dispatchId, string actionCorrelationId, string taskId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DispatchRoutineResult(string dispatchId, string actionCorrelationId, string taskId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DispatchId = dispatchId;
             ActionCorrelationId = actionCorrelationId;
@@ -32,12 +32,12 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The dispatch identifier created for the routine dispatch. </summary>
-        public string DispatchId { get; }
+        public string DispatchId { get; set; }
 
         /// <summary> A downstream action correlation identifier, when available. </summary>
-        public string ActionCorrelationId { get; }
+        public string ActionCorrelationId { get; set; }
 
         /// <summary> A workspace task identifier created for the dispatch, when available. </summary>
-        public string TaskId { get; }
+        public string TaskId { get; set; }
     }
 }

@@ -671,7 +671,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(item.Content, Is.EqualTo(newContent));
         Assert.That(item.Scope, Is.EqualTo(MEMORY_STORE_SCOPE));
         // Delete
-        DeleteMemoryResponse delResult = await projectClient.MemoryStores.DeleteMemoryAsync(name: store.Name, memoryId: customerData.MemoryId);
+        MemoryDeletionResult delResult = await projectClient.MemoryStores.DeleteMemoryAsync(name: store.Name, memoryId: customerData.MemoryId);
         Assert.That(delResult.Deleted, Is.True);
         Assert.That(
             (await projectClient.MemoryStores.GetMemoriesAsync(name: store.Name, scope: MEMORY_STORE_SCOPE).ToEnumerableAsync())

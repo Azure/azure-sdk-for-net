@@ -7,70 +7,71 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Request body for getting evaluator credentials. </summary>
-    public partial class EvaluatorCredentialRequest : IJsonModel<EvaluatorCredentialRequest>
+    public partial class EvaluationCredentialContent : IJsonModel<EvaluationCredentialContent>
     {
-        /// <summary> Initializes a new instance of <see cref="EvaluatorCredentialRequest"/> for deserialization. </summary>
-        internal EvaluatorCredentialRequest()
+        /// <summary> Initializes a new instance of <see cref="EvaluationCredentialContent"/> for deserialization. </summary>
+        internal EvaluationCredentialContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EvaluatorCredentialRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual EvaluationCredentialContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EvaluatorCredentialRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EvaluationCredentialContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeEvaluatorCredentialRequest(document.RootElement, options);
+                        return DeserializeEvaluationCredentialContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EvaluatorCredentialRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EvaluationCredentialContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EvaluatorCredentialRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EvaluationCredentialContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EvaluatorCredentialRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EvaluationCredentialContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EvaluatorCredentialRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EvaluationCredentialContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EvaluatorCredentialRequest IPersistableModel<EvaluatorCredentialRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EvaluationCredentialContent IPersistableModel<EvaluationCredentialContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EvaluatorCredentialRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EvaluationCredentialContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="evaluatorCredentialRequest"> The <see cref="EvaluatorCredentialRequest"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(EvaluatorCredentialRequest evaluatorCredentialRequest)
+        /// <param name="evaluationCredentialContent"> The <see cref="EvaluationCredentialContent"/> to serialize into <see cref="BinaryContent"/>. </param>
+        public static implicit operator BinaryContent(EvaluationCredentialContent evaluationCredentialContent)
         {
-            if (evaluatorCredentialRequest == null)
+            if (evaluationCredentialContent == null)
             {
                 return null;
             }
-            return BinaryContent.Create(evaluatorCredentialRequest, ModelSerializationExtensions.WireOptions);
+            return BinaryContent.Create(evaluationCredentialContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<EvaluatorCredentialRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EvaluationCredentialContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -81,10 +82,10 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EvaluatorCredentialRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EvaluationCredentialContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EvaluatorCredentialRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EvaluationCredentialContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("blob_uri"u8);
             writer.WriteStringValue(BlobUri.AbsoluteUri);
@@ -107,24 +108,24 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EvaluatorCredentialRequest IJsonModel<EvaluatorCredentialRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EvaluationCredentialContent IJsonModel<EvaluationCredentialContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EvaluatorCredentialRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual EvaluationCredentialContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EvaluatorCredentialRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EvaluationCredentialContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EvaluatorCredentialRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EvaluationCredentialContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEvaluatorCredentialRequest(document.RootElement, options);
+            return DeserializeEvaluationCredentialContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static EvaluatorCredentialRequest DeserializeEvaluatorCredentialRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static EvaluationCredentialContent DeserializeEvaluationCredentialContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -144,7 +145,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EvaluatorCredentialRequest(blobUri, additionalBinaryDataProperties);
+            return new EvaluationCredentialContent(blobUri, additionalBinaryDataProperties);
         }
     }
 }

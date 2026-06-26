@@ -4,29 +4,30 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Request body for getting evaluator credentials. </summary>
-    public partial class EvaluatorCredentialRequest
+    public partial class EvaluationCredentialContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EvaluatorCredentialRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EvaluationCredentialContent"/>. </summary>
         /// <param name="blobUri"> The blob URI for the evaluator storage. Example: `https://account.blob.core.windows.net:443/container`. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blobUri"/> is null. </exception>
-        public EvaluatorCredentialRequest(Uri blobUri)
+        public EvaluationCredentialContent(Uri blobUri)
         {
             Argument.AssertNotNull(blobUri, nameof(blobUri));
 
             BlobUri = blobUri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EvaluatorCredentialRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EvaluationCredentialContent"/>. </summary>
         /// <param name="blobUri"> The blob URI for the evaluator storage. Example: `https://account.blob.core.windows.net:443/container`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluatorCredentialRequest(Uri blobUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EvaluationCredentialContent(Uri blobUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BlobUri = blobUri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

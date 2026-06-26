@@ -9,52 +9,52 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> Dispatches a routine through the responses API. Exactly one of agent_name or agent_endpoint_id must be provided. </summary>
-    public partial class InvokeAgentResponsesApiRoutineAction : RoutineAction, IJsonModel<InvokeAgentResponsesApiRoutineAction>
+    /// <summary> Dispatches a routine through the raw invocations API. Exactly one of agent_name or agent_endpoint_id must be provided. </summary>
+    public partial class AgentInvocationsApiRoutineAction : RoutineAction, IJsonModel<AgentInvocationsApiRoutineAction>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override RoutineAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InvokeAgentResponsesApiRoutineAction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentInvocationsApiRoutineAction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeInvokeAgentResponsesApiRoutineAction(document.RootElement, options);
+                        return DeserializeAgentInvocationsApiRoutineAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InvokeAgentResponsesApiRoutineAction)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentInvocationsApiRoutineAction)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InvokeAgentResponsesApiRoutineAction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentInvocationsApiRoutineAction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(InvokeAgentResponsesApiRoutineAction)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentInvocationsApiRoutineAction)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InvokeAgentResponsesApiRoutineAction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AgentInvocationsApiRoutineAction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InvokeAgentResponsesApiRoutineAction IPersistableModel<InvokeAgentResponsesApiRoutineAction>.Create(BinaryData data, ModelReaderWriterOptions options) => (InvokeAgentResponsesApiRoutineAction)PersistableModelCreateCore(data, options);
+        AgentInvocationsApiRoutineAction IPersistableModel<AgentInvocationsApiRoutineAction>.Create(BinaryData data, ModelReaderWriterOptions options) => (AgentInvocationsApiRoutineAction)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InvokeAgentResponsesApiRoutineAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AgentInvocationsApiRoutineAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<InvokeAgentResponsesApiRoutineAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AgentInvocationsApiRoutineAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -65,10 +65,10 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InvokeAgentResponsesApiRoutineAction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentInvocationsApiRoutineAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InvokeAgentResponsesApiRoutineAction)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentInvocationsApiRoutineAction)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(AgentName))
@@ -93,49 +93,49 @@ namespace Azure.AI.Projects
                 }
 #endif
             }
-            if (Optional.IsDefined(Conversation))
+            if (Optional.IsDefined(SessionId))
             {
-                writer.WritePropertyName("conversation"u8);
-                writer.WriteStringValue(Conversation);
+                writer.WritePropertyName("session_id"u8);
+                writer.WriteStringValue(SessionId);
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InvokeAgentResponsesApiRoutineAction IJsonModel<InvokeAgentResponsesApiRoutineAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (InvokeAgentResponsesApiRoutineAction)JsonModelCreateCore(ref reader, options);
+        AgentInvocationsApiRoutineAction IJsonModel<AgentInvocationsApiRoutineAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AgentInvocationsApiRoutineAction)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override RoutineAction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InvokeAgentResponsesApiRoutineAction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentInvocationsApiRoutineAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InvokeAgentResponsesApiRoutineAction)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentInvocationsApiRoutineAction)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInvokeAgentResponsesApiRoutineAction(document.RootElement, options);
+            return DeserializeAgentInvocationsApiRoutineAction(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static InvokeAgentResponsesApiRoutineAction DeserializeInvokeAgentResponsesApiRoutineAction(JsonElement element, ModelReaderWriterOptions options)
+        internal static AgentInvocationsApiRoutineAction DeserializeAgentInvocationsApiRoutineAction(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            RoutineActionType @type = default;
+            RoutineActionKind @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string agentName = default;
             string agentEndpointId = default;
             BinaryData input = default;
-            string conversation = default;
+            string sessionId = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new RoutineActionType(prop.Value.GetString());
+                    @type = new RoutineActionKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("agent_name"u8))
@@ -157,9 +157,9 @@ namespace Azure.AI.Projects
                     input = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
-                if (prop.NameEquals("conversation"u8))
+                if (prop.NameEquals("session_id"u8))
                 {
-                    conversation = prop.Value.GetString();
+                    sessionId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -167,13 +167,13 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InvokeAgentResponsesApiRoutineAction(
+            return new AgentInvocationsApiRoutineAction(
                 @type,
                 additionalBinaryDataProperties,
                 agentName,
                 agentEndpointId,
                 input,
-                conversation);
+                sessionId);
         }
     }
 }

@@ -9,11 +9,11 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> A manual payload used to test a responses API routine dispatch. </summary>
-    public partial class InvokeAgentResponsesApiDispatchPayload : RoutineDispatchPayload, IJsonModel<InvokeAgentResponsesApiDispatchPayload>
+    /// <summary> A manual payload used to test an invocations API routine dispatch. </summary>
+    public partial class AgentInvocationsApiDispatchPayload : RoutineDispatchPayload, IJsonModel<AgentInvocationsApiDispatchPayload>
     {
-        /// <summary> Initializes a new instance of <see cref="InvokeAgentResponsesApiDispatchPayload"/> for deserialization. </summary>
-        internal InvokeAgentResponsesApiDispatchPayload()
+        /// <summary> Initializes a new instance of <see cref="AgentInvocationsApiDispatchPayload"/> for deserialization. </summary>
+        internal AgentInvocationsApiDispatchPayload()
         {
         }
 
@@ -21,45 +21,45 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override RoutineDispatchPayload PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InvokeAgentResponsesApiDispatchPayload>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentInvocationsApiDispatchPayload>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeInvokeAgentResponsesApiDispatchPayload(document.RootElement, options);
+                        return DeserializeAgentInvocationsApiDispatchPayload(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InvokeAgentResponsesApiDispatchPayload)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentInvocationsApiDispatchPayload)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InvokeAgentResponsesApiDispatchPayload>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentInvocationsApiDispatchPayload>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(InvokeAgentResponsesApiDispatchPayload)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentInvocationsApiDispatchPayload)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InvokeAgentResponsesApiDispatchPayload>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AgentInvocationsApiDispatchPayload>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InvokeAgentResponsesApiDispatchPayload IPersistableModel<InvokeAgentResponsesApiDispatchPayload>.Create(BinaryData data, ModelReaderWriterOptions options) => (InvokeAgentResponsesApiDispatchPayload)PersistableModelCreateCore(data, options);
+        AgentInvocationsApiDispatchPayload IPersistableModel<AgentInvocationsApiDispatchPayload>.Create(BinaryData data, ModelReaderWriterOptions options) => (AgentInvocationsApiDispatchPayload)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InvokeAgentResponsesApiDispatchPayload>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AgentInvocationsApiDispatchPayload>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<InvokeAgentResponsesApiDispatchPayload>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AgentInvocationsApiDispatchPayload>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +70,10 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InvokeAgentResponsesApiDispatchPayload>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentInvocationsApiDispatchPayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InvokeAgentResponsesApiDispatchPayload)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentInvocationsApiDispatchPayload)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("input"u8);
@@ -89,24 +89,24 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InvokeAgentResponsesApiDispatchPayload IJsonModel<InvokeAgentResponsesApiDispatchPayload>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (InvokeAgentResponsesApiDispatchPayload)JsonModelCreateCore(ref reader, options);
+        AgentInvocationsApiDispatchPayload IJsonModel<AgentInvocationsApiDispatchPayload>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AgentInvocationsApiDispatchPayload)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override RoutineDispatchPayload JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InvokeAgentResponsesApiDispatchPayload>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentInvocationsApiDispatchPayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InvokeAgentResponsesApiDispatchPayload)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentInvocationsApiDispatchPayload)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInvokeAgentResponsesApiDispatchPayload(document.RootElement, options);
+            return DeserializeAgentInvocationsApiDispatchPayload(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static InvokeAgentResponsesApiDispatchPayload DeserializeInvokeAgentResponsesApiDispatchPayload(JsonElement element, ModelReaderWriterOptions options)
+        internal static AgentInvocationsApiDispatchPayload DeserializeAgentInvocationsApiDispatchPayload(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -132,7 +132,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InvokeAgentResponsesApiDispatchPayload(@type, additionalBinaryDataProperties, input);
+            return new AgentInvocationsApiDispatchPayload(@type, additionalBinaryDataProperties, input);
         }
     }
 }
