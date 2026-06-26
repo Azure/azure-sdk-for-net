@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Automation.Tests
         private void ConfigureRecording()
         {
             JsonPathSanitizers.Add("$..uri");
-            IgnoredQueryParameters.Add("api-version");
             LegacyExcludedHeaders.Add("Accept");
         }
 
