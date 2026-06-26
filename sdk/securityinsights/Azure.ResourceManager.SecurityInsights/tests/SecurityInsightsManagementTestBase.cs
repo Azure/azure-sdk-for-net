@@ -53,6 +53,8 @@ namespace Azure.ResourceManager.SecurityInsights.Tests
 
         private void IgnoreOperationalInsightsDependencyVersion()
         {
+            // MPG SDK omits Accept on some operations where the existing recordings include it.
+            LegacyExcludedHeaders.Add("Accept");
             UriRegexSanitizers.Add(new UriRegexSanitizer(@"/providers\/Microsoft.OperationalInsights\/(.*?)\?api-version=(?<group>[a-z0-9-]+)")
             {
                 GroupForReplace = "group",

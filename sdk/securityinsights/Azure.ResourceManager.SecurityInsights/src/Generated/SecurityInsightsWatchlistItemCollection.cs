@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -42,16 +41,6 @@ namespace Azure.ResourceManager.SecurityInsights
             _watchlistItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsWatchlistItemResource.ResourceType.Namespace, Diagnostics);
             _watchlistItemsRestClient = new WatchlistItems(_watchlistItemsClientDiagnostics, Pipeline, Endpoint, securityInsightsWatchlistItemApiVersion ?? "2025-07-01-preview");
             ValidateResourceId(id);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
-        internal static void ValidateResourceId(ResourceIdentifier id)
-        {
-            if (id.ResourceType != "Microsoft.OperationalInsights/workspaces")
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, "Microsoft.OperationalInsights/workspaces"), nameof(id));
-            }
         }
 
         /// <summary>

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return new OperationalInsightsWorkspaceSecurityInsightsResource(client, id);
+            return GetMockableSecurityInsightsArmClient(client).GetOperationalInsightsWorkspaceSecurityInsightsResource(id);
         }
     }
 }
