@@ -24,7 +24,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Azure.ResourceManager.SecurityCenter.AdaptiveApplicationControlGroupResource GetAdaptiveApplicationControlGroupResource(Azure.Core.ResourceIdentifier id) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetAdaptiveApplicationControlGroupResource(ResourceIdentifier id) instead."); }
+        public virtual Azure.ResourceManager.SecurityCenter.AdaptiveApplicationControlGroupResource GetAdaptiveApplicationControlGroupResource(Azure.Core.ResourceIdentifier id)
+            => new Azure.ResourceManager.SecurityCenter.AdaptiveApplicationControlGroupResource(Client, id);
         /// <summary>
         /// Provides a compatibility shim for the GetAdaptiveNetworkHardeningResource operation preserved from the previous public API surface.
         /// </summary>
@@ -32,7 +33,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Azure.ResourceManager.SecurityCenter.AdaptiveNetworkHardeningResource GetAdaptiveNetworkHardeningResource(Azure.Core.ResourceIdentifier id) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetAdaptiveNetworkHardeningResource(ResourceIdentifier id) instead."); }
+        public virtual Azure.ResourceManager.SecurityCenter.AdaptiveNetworkHardeningResource GetAdaptiveNetworkHardeningResource(Azure.Core.ResourceIdentifier id)
+            => new Azure.ResourceManager.SecurityCenter.AdaptiveNetworkHardeningResource(Client, id);
         /// <summary>
         /// Provides a compatibility shim for the GetCustomAssessmentAutomationResource operation preserved from the previous public API surface.
         /// </summary>
@@ -40,7 +42,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Azure.ResourceManager.SecurityCenter.CustomAssessmentAutomationResource GetCustomAssessmentAutomationResource(Azure.Core.ResourceIdentifier id) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetCustomAssessmentAutomationResource(ResourceIdentifier id) instead."); }
+        public virtual Azure.ResourceManager.SecurityCenter.CustomAssessmentAutomationResource GetCustomAssessmentAutomationResource(Azure.Core.ResourceIdentifier id)
+            => new Azure.ResourceManager.SecurityCenter.CustomAssessmentAutomationResource(Client, id);
         /// <summary>
         /// Provides a compatibility shim for the GetCustomEntityStoreAssignmentResource operation preserved from the previous public API surface.
         /// </summary>
@@ -48,7 +51,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Azure.ResourceManager.SecurityCenter.CustomEntityStoreAssignmentResource GetCustomEntityStoreAssignmentResource(Azure.Core.ResourceIdentifier id) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetCustomEntityStoreAssignmentResource(ResourceIdentifier id) instead."); }
+        public virtual Azure.ResourceManager.SecurityCenter.CustomEntityStoreAssignmentResource GetCustomEntityStoreAssignmentResource(Azure.Core.ResourceIdentifier id)
+            => new Azure.ResourceManager.SecurityCenter.CustomEntityStoreAssignmentResource(Client, id);
         /// <summary>
         /// Provides a compatibility shim for the GetSecurityCloudConnectorResource operation preserved from the previous public API surface.
         /// </summary>
@@ -56,7 +60,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorResource GetSecurityCloudConnectorResource(Azure.Core.ResourceIdentifier id) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetSecurityCloudConnectorResource(ResourceIdentifier id) instead."); }
+        public virtual Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorResource GetSecurityCloudConnectorResource(Azure.Core.ResourceIdentifier id)
+            => new Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorResource(Client, id);
         /// <summary>
         /// Provides a compatibility shim for the GetSoftwareInventoryResource operation preserved from the previous public API surface.
         /// </summary>
@@ -64,7 +69,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Azure.ResourceManager.SecurityCenter.SoftwareInventoryResource GetSoftwareInventoryResource(Azure.Core.ResourceIdentifier id) { throw new System.NotSupportedException("This API is no longer supported by the service. No direct replacement is available."); }
+        public virtual Azure.ResourceManager.SecurityCenter.SoftwareInventoryResource GetSoftwareInventoryResource(Azure.Core.ResourceIdentifier id)
+            => new Azure.ResourceManager.SecurityCenter.SoftwareInventoryResource(Client, id);
 
         /// <summary> Gets an object representing a security connector governance rule resource. </summary>
         [System.Obsolete("This method is obsolete and will be removed in a future release.", false)]

@@ -3547,17 +3547,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new RulesResults((value ?? new ChangeTrackingList<SqlVulnerabilityAssessmentBaselineRuleData>()).ToList(), nextLink, default);
         }
 
-        /// <param name="isLatestScan"> Take results from latest scan. </param>
+        /// <param name="latestScan"> Take results from latest scan. </param>
         /// <param name="results">
         /// Expected results to be inserted into the baseline.
         /// Leave this field empty if latestScan == true.
         /// </param>
         /// <returns> A new <see cref="Models.RulesResultsContent"/> instance for mocking. </returns>
-        public static RulesResultsContent RulesResultsContent(bool? isLatestScan = default, IDictionary<string, IList<IList<string>>> results = default)
+        public static RulesResultsContent RulesResultsContent(bool? latestScan = default, IDictionary<string, IList<IList<string>>> results = default)
         {
             results ??= new ChangeTrackingDictionary<string, IList<IList<string>>>();
 
-            return new RulesResultsContent(isLatestScan, results ?? new ChangeTrackingDictionary<string, IList<IList<string>>>(), default);
+            return new RulesResultsContent(latestScan, results ?? new ChangeTrackingDictionary<string, IList<IList<string>>>(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

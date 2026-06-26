@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 throw new FormatException($"The model {nameof(RulesResultsContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IsLatestScan))
+            if (Optional.IsDefined(LatestScan))
             {
                 writer.WritePropertyName("latestScan"u8);
-                writer.WriteBooleanValue(IsLatestScan.Value);
+                writer.WriteBooleanValue(LatestScan.Value);
             }
             if (Optional.IsCollectionDefined(Results))
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            bool? isLatestScan = default;
+            bool? latestScan = default;
             IDictionary<string, IList<IList<string>>> results = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    isLatestScan = prop.Value.GetBoolean();
+                    latestScan = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("results"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RulesResultsContent(isLatestScan, results ?? new ChangeTrackingDictionary<string, IList<IList<string>>>(), additionalBinaryDataProperties);
+            return new RulesResultsContent(latestScan, results ?? new ChangeTrackingDictionary<string, IList<IList<string>>>(), additionalBinaryDataProperties);
         }
     }
 }

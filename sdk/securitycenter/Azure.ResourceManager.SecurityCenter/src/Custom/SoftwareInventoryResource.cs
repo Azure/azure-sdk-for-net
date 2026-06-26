@@ -4,6 +4,8 @@
 #nullable disable
 
 using System.ComponentModel;
+using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
@@ -24,6 +26,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Initializes a new instance of the <see cref="SoftwareInventoryResource"/> type for compatibility with the previous public API surface.
         /// </summary>
         protected SoftwareInventoryResource() { }
+
+        internal SoftwareInventoryResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        {
+        }
+
         /// <summary>
         /// Gets the Data value preserved from the previous public API surface.
         /// </summary>
