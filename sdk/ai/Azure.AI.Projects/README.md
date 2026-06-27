@@ -622,7 +622,7 @@ await foreach (MemoryItem oneItem in projectClient.MemoryStores.GetMemoriesAsync
 Delete memory store items.
 
 ```C# Snippet:Sample_Delete_UpdateStoreItems_Async
-DeleteMemoryResponse response = await projectClient.MemoryStores.DeleteMemoryAsync(name: memoryStore.Name, memoryId: customerData.MemoryId);
+MemoryDeletionResult response = await projectClient.MemoryStores.DeleteMemoryAsync(name: memoryStore.Name, memoryId: customerData.MemoryId);
 Console.WriteLine($"Memory Item with ID {response.MemoryId} was{(response.Deleted ? " " : " not ")}removed.");
 response = await projectClient.MemoryStores.DeleteMemoryAsync(name: memoryStore.Name, memoryId: orangeSKU.MemoryId);
 Console.WriteLine($"Memory Item with ID {response.MemoryId} was{(response.Deleted ? " " : " not ")}removed.");
@@ -1420,13 +1420,13 @@ After the generation job is complete, the `EvaluatorVersion` object will be retu
 in `runningJob.Result` property.
 
 ```C# Snippet:Sample_GetJob_EvaluatorGenerationJob_Async
-while (runningJob.Status != JobStatus.Failed && runningJob.Status != JobStatus.Succeeded)
+while (runningJob.Status != ProjectsJobStatus.Failed && runningJob.Status != ProjectsJobStatus.Succeeded)
 {
     await Task.Delay(500);
     Console.WriteLine($"Waiting for job ID: {runningJob.Id}...");
     runningJob = await projectClient.EvaluatorGenerationJobs.GetAsync(jobId: runningJob.Id);
 }
-if (runningJob.Status == JobStatus.Failed)
+if (runningJob.Status == ProjectsJobStatus.Failed)
 {
     throw new InvalidOperationException($"The job {runningJob.Id} has failed.");
 }
@@ -1576,7 +1576,7 @@ EvaluationTaxonomy evalTaxonomyInput = new(agentTaxonomyInput)
 {
     Description = "Taxonomy for red teaming evaluation"
 };
-EvaluationTaxonomy taxonomy = await projectClient.EvaluationTaxonomies.CreateAsync(agentVersion.Name, taxonomy: evalTaxonomyInput);
+EvaluationTaxonomy taxonomy = await projectClient.EvaluationTaxonomies.CreateAsync(agentVersion.Name, body: evalTaxonomyInput);
 DirectoryInfo dataPath = Directory.CreateDirectory("data_folder");
 string taxonomyPath = Path.Combine(dataPath.FullName, $"taxonomy_{agentVersion.Name}.json");
 BinaryData taxonomyJson = ((IJsonModel<EvaluationTaxonomy>)taxonomy).Write(ModelReaderWriterOptions.Json);
@@ -1634,7 +1634,7 @@ MCPToolboxTool tool = new(serverLabel: "api-specs")
     ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
     ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
 };
-ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
+ToolboxVersion toolBox1 = await toolboxClient.CreateVersionAsync(
     name: toolboxName,
     tools: [tool],
     description: "Example toolbox created by the azure-ai-projects sample.",
@@ -1642,7 +1642,7 @@ ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
         {"team", "Engineers"}
     }
 );
-ToolboxVersion toolBox2 = await toolboxClient.CreateToolboxVersionAsync(
+ToolboxVersion toolBox2 = await toolboxClient.CreateVersionAsync(
     name: toolboxName,
     tools: [tool],
     description: "Another toolbox created by the azure-ai-projects sample.",
@@ -1659,14 +1659,14 @@ There are two objects which help to work with the Toolboxes: `ToolboxRecord` and
 name, it contains the default version of the Toolbox.
 
 ```C# Snippet:Sample_GetToolbox_ToolboxesCRUD_Async
-ToolboxRecord record = await toolboxClient.GetToolboxAsync(name: toolBox1.Name);
+ToolboxRecord record = await toolboxClient.GetAsync(name: toolBox1.Name);
 Console.WriteLine($"The default version for a toolbox {record.Name} is {record.DefaultVersion}");
 ```
 
 The name of Toolbox and its version allow to get the `ToolboxVersion`, containing the tools, which can be used by Agent.
 
 ```C# Snippet:Sample_GetToolboxVersion_ToolboxesCRUD_Async
-ToolboxVersion toolBox = await toolboxClient.GetToolboxVersionAsync(record.Name, record.DefaultVersion);
+ToolboxVersion toolBox = await toolboxClient.GetVersionAsync(record.Name, record.DefaultVersion);
 Console.WriteLine($"Retrieved toolbox: {toolBox.Name} ({toolBox.Id})");
 ```
 
@@ -1682,7 +1682,7 @@ To create Routine, we need to define the hosted agent to be called and an action
 Agent.
 
 ```C# Snippet:Sample_CreateRoutine_RoutinesScheduleTrigger_Async
-RoutineAction action = new InvokeAgentResponsesApiRoutineAction
+RoutineAction action = new AgentResponsesApiRoutineAction
 {
     AgentName = agentVersion.Name,
     Input = BinaryData.FromObjectAsJson("Hello, Tell me a joke."),
@@ -1692,11 +1692,11 @@ routineOptions.Triggers.Add("every_five_minutes", new ScheduleRoutineTrigger(
         cronExpression: "*/5 * * * *",
         timeZone: "UTC"
 ));
-ProjectsRoutine created = await routinesClient.CreateOrUpdateRoutineAsync(
-    routineName: routineName,
+ProjectsRoutine created = await routinesClient.CreateOrUpdateAsync(
+    name: routineName,
     options: routineOptions
 );
-Console.WriteLine($"Created routine: {created.Name} enabled={created.Enabled}.");
+Console.WriteLine($"Created routine: {created.Name} enabled={created.IsEnabled}.");
 Console.WriteLine($"cron expression: {((ScheduleRoutineTrigger)routineOptions.Triggers["every_five_minutes"]).CronExpression}; time zone: {((ScheduleRoutineTrigger)routineOptions.Triggers["every_five_minutes"]).TimeZone}");
 ```
 
@@ -1706,7 +1706,7 @@ and the phrase "Hello, Tell me a joke." as an input.
 Similarly, we can create the routine, which will start the run in a response to the external event.
 
 ```C# Snippet:Sample_CreateRoutine_RoutinesCRUD_Async
-RoutineAction action = new InvokeAgentResponsesApiRoutineAction
+RoutineAction action = new AgentResponsesApiRoutineAction
 {
     AgentName = agentVersion.Name
 };
@@ -1720,17 +1720,17 @@ routineOptions.Triggers.Add("manual", new CustomRoutineTrigger(
 {
     EventName = "sample-event"
 });
-ProjectsRoutine created = await routinesClient.CreateOrUpdateRoutineAsync(
-    routineName: routineName,
+ProjectsRoutine created = await routinesClient.CreateOrUpdateAsync(
+    name: routineName,
     options: routineOptions
 );
-Console.WriteLine($"Created routine: {created.Name} enabled={created.Enabled}");
+Console.WriteLine($"Created routine: {created.Name} enabled={created.IsEnabled}");
 ```
 
 To create a single run at given time we need to define routine as follows:
 
 ```C# Snippet:Sample_CreateRoutine_RoutinesTimerTrigger_Async
-RoutineAction action = new InvokeAgentResponsesApiRoutineAction
+RoutineAction action = new AgentResponsesApiRoutineAction
 {
     AgentName = agentVersion.Name,
     Input = BinaryData.FromObjectAsJson("Hello, Tell me a joke."),
@@ -1740,18 +1740,18 @@ routineOptions.Triggers.Add("once", new TimerRoutineTrigger()
 {
     At = DateTimeOffset.UtcNow + TimeSpan.FromSeconds(20),
 });
-ProjectsRoutine created = await routinesClient.CreateOrUpdateRoutineAsync(
-    routineName: routineName,
+ProjectsRoutine created = await routinesClient.CreateOrUpdateAsync(
+    name: routineName,
     options: routineOptions
 );
-Console.WriteLine($"Created routine: {created.Name} enabled={created.Enabled}.");
+Console.WriteLine($"Created routine: {created.Name} enabled={created.IsEnabled}.");
 Console.WriteLine($"Fire at: {((TimerRoutineTrigger)routineOptions.Triggers["once"]).At.Value.ToString("o")}");
 ```
 
 Routines runs can be manually dispatched by calling `DispatchAsyncRoutineAsync` or `DispatchAsyncRoutine` methods.
 
 ```C# Snippet:Sample_DispatchTask_RoutinesManualDispatch_Async
-DispatchRoutineResponse dispatch = await routinesClient.DispatchAsyncRoutineAsync(routineName: created.Name, payload: new InvokeAgentResponsesApiDispatchPayload(BinaryData.FromObjectAsJson("Hello, Tell me a joke.")));
+DispatchRoutineResult dispatch = await routinesClient.DispatchAsync(name: created.Name, payload: new AgentResponsesApiDispatchPayload(BinaryData.FromObjectAsJson("Hello, Tell me a joke.")));
 Console.WriteLine($"Dispatched the routine. Dispatch ID {dispatch.DispatchId}, task ID: {dispatch.TaskId}.");
 ```
 

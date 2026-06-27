@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects;
 
 /// <summary>
-/// The optionsfor creating routines.
+/// The options for creating routines.
 /// </summary>
 public partial class ProjectsRoutineOptions
 {
@@ -25,7 +25,7 @@ public partial class ProjectsRoutineOptions
         Action = action;
         Description = description;
         Triggers = [];
-        Enabled = enabled;
+        IsEnabled = enabled;
     }
 
     /// <summary>
@@ -46,5 +46,5 @@ public partial class ProjectsRoutineOptions
     /// <summary>
     /// Whether the routine is enabled.
     /// </summary>
-    public bool? Enabled { get; }
+    public bool? IsEnabled { get; }
 }

@@ -70,10 +70,10 @@ namespace Azure.AI.Projects.Agents
             {
                 throw new FormatException($"The model {nameof(ToolConfig)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Pin))
+            if (Optional.IsDefined(IsPinned))
             {
                 writer.WritePropertyName("pin"u8);
-                writer.WriteBooleanValue(Pin.Value);
+                writer.WriteBooleanValue(IsPinned.Value);
             }
             if (Optional.IsDefined(AdditionalSearchText))
             {
@@ -122,7 +122,7 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            bool? pin = default;
+            bool? isPinned = default;
             string additionalSearchText = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -133,7 +133,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    pin = prop.Value.GetBoolean();
+                    isPinned = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("additional_search_text"u8))
@@ -146,7 +146,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ToolConfig(pin, additionalSearchText, additionalBinaryDataProperties);
+            return new ToolConfig(isPinned, additionalSearchText, additionalBinaryDataProperties);
         }
     }
 }
