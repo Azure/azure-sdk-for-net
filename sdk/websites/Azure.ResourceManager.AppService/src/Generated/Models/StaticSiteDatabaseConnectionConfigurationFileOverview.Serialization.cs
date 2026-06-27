@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("contents"u8);
                 writer.WriteStringValue(Contents);
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(StaticSiteDatabaseConnectionConfigurationFileOverviewType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(StaticSiteDatabaseConnectionConfigurationFileOverviewType);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             string fileName = default;
             string contents = default;
-            string @type = default;
+            string staticSiteDatabaseConnectionConfigurationFileOverviewType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    staticSiteDatabaseConnectionConfigurationFileOverviewType = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StaticSiteDatabaseConnectionConfigurationFileOverview(fileName, contents, @type, additionalBinaryDataProperties);
+            return new StaticSiteDatabaseConnectionConfigurationFileOverview(fileName, contents, staticSiteDatabaseConnectionConfigurationFileOverviewType, additionalBinaryDataProperties);
         }
     }
 }

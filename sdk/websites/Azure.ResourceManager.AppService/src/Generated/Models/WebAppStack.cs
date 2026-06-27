@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Web App stack preferred OS. </summary>
         [WirePath("properties.preferredOs")]
-        public StackPreferredOS? PreferredOs
+        public StackPreferredOS? PreferredOS
         {
             get
             {
-                return Properties is null ? default : Properties.PreferredOs;
+                return Properties is null ? default : Properties.PreferredOS;
             }
         }
     }

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppProcessThreadProperties"/>. </summary>
-        /// <param name="identifier"> Site extension ID. </param>
+        /// <param name="id"> Site extension ID. </param>
         /// <param name="href"> HRef URI. </param>
         /// <param name="process"> Process URI. </param>
         /// <param name="startAddress"> Start address. </param>
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="state"> Thread state. </param>
         /// <param name="waitReason"> Wait reason. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppProcessThreadProperties(int? identifier, Uri href, string process, string startAddress, int? currentPriority, string priorityLevel, int? basePriority, DateTimeOffset? startOn, string totalProcessorTime, string userProcessorTime, string state, string waitReason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebAppProcessThreadProperties(int? id, Uri href, string process, string startAddress, int? currentPriority, string priorityLevel, int? basePriority, DateTimeOffset? startOn, string totalProcessorTime, string userProcessorTime, string state, string waitReason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Identifier = identifier;
+            Id = id;
             Href = href;
             Process = process;
             StartAddress = startAddress;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Site extension ID. </summary>
         [WirePath("identifier")]
-        public int? Identifier { get; }
+        public int? Id { get; }
 
         /// <summary> HRef URI. </summary>
         [WirePath("href")]

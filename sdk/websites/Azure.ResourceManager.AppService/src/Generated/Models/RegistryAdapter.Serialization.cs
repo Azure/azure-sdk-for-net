@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("registryKey"u8);
                 writer.WriteStringValue(RegistryKey);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(AdapterType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(AdapterType.Value.ToString());
             }
             if (Optional.IsDefined(KeyVaultSecretReference))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             string registryKey = default;
-            RegistryAdapterType? @type = default;
+            RegistryAdapterType? adapterType = default;
             KeyVaultReferenceWithStatus keyVaultSecretReference = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    @type = new RegistryAdapterType(prop.Value.GetString());
+                    adapterType = new RegistryAdapterType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("keyVaultSecretReference"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RegistryAdapter(registryKey, @type, keyVaultSecretReference, additionalBinaryDataProperties);
+            return new RegistryAdapter(registryKey, adapterType, keyVaultSecretReference, additionalBinaryDataProperties);
         }
     }
 }

@@ -1473,7 +1473,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppServiceOperation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AppServiceOperation> GetOperationsProvidersAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AppServiceOperation> GetOperationsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -1485,7 +1485,7 @@ namespace Azure.ResourceManager.AppService
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "AppServiceEnvironmentResource.GetOperationsProviders");
+                "AppServiceEnvironmentResource.GetOperations");
         }
 
         /// <summary>
@@ -1511,7 +1511,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppServiceOperation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AppServiceOperation> GetOperationsProviders(CancellationToken cancellationToken = default)
+        public virtual Pageable<AppServiceOperation> GetOperations(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -1523,7 +1523,7 @@ namespace Azure.ResourceManager.AppService
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "AppServiceEnvironmentResource.GetOperationsProviders");
+                "AppServiceEnvironmentResource.GetOperations");
         }
 
         /// <summary>

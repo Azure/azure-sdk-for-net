@@ -1895,9 +1895,9 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> ResetAllFiltersRecommendationAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ResetAllRecommendationFiltersAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = RecommendationsOperationGroupClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.ResetAllFiltersRecommendation");
+            using DiagnosticScope scope = RecommendationsOperationGroupClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.ResetAllRecommendationFilters");
             scope.Start();
             try
             {
@@ -1905,7 +1905,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RecommendationsOperationGroupRestClient.CreateResetAllFiltersRecommendationRequest(Guid.Parse(Id.SubscriptionId), context);
+                HttpMessage message = RecommendationsOperationGroupRestClient.CreateResetAllRecommendationFiltersRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -1934,9 +1934,9 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response ResetAllFiltersRecommendation(CancellationToken cancellationToken = default)
+        public virtual Response ResetAllRecommendationFilters(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = RecommendationsOperationGroupClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.ResetAllFiltersRecommendation");
+            using DiagnosticScope scope = RecommendationsOperationGroupClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.ResetAllRecommendationFilters");
             scope.Start();
             try
             {
@@ -1944,7 +1944,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RecommendationsOperationGroupRestClient.CreateResetAllFiltersRecommendationRequest(Guid.Parse(Id.SubscriptionId), context);
+                HttpMessage message = RecommendationsOperationGroupRestClient.CreateResetAllRecommendationFiltersRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

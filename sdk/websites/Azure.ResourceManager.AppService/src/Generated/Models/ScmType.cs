@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
         private const string ExternalHgValue = "ExternalHg";
         private const string OneDriveValue = "OneDrive";
         private const string VSOValue = "VSO";
-        private const string VSTSRMValue = "VSTSRM";
+        private const string VstsrmValue = "VSTSRM";
 
         /// <summary> Initializes a new instance of <see cref="ScmType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Gets the VSO. </summary>
         public static ScmType VSO { get; } = new ScmType(VSOValue);
 
-        /// <summary> Gets the VSTSRM. </summary>
-        public static ScmType VSTSRM { get; } = new ScmType(VSTSRMValue);
+        /// <summary> Gets the Vstsrm. </summary>
+        public static ScmType Vstsrm { get; } = new ScmType(VstsrmValue);
 
         /// <summary> Determines if two <see cref="ScmType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

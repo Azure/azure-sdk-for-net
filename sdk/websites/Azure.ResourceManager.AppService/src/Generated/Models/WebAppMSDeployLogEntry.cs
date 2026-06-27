@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of <see cref="WebAppMSDeployLogEntry"/>. </summary>
         /// <param name="time"> Timestamp of log entry. </param>
-        /// <param name="type"> Log entry type. </param>
+        /// <param name="entryType"> Log entry type. </param>
         /// <param name="message"> Log entry message. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppMSDeployLogEntry(DateTimeOffset? time, WebAppMSDeployLogEntryType? @type, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebAppMSDeployLogEntry(DateTimeOffset? time, WebAppMSDeployLogEntryType? entryType, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Time = time;
-            Type = @type;
+            EntryType = entryType;
             Message = message;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Log entry type. </summary>
         [WirePath("type")]
-        public WebAppMSDeployLogEntryType? Type { get; }
+        public WebAppMSDeployLogEntryType? EntryType { get; }
 
         /// <summary> Log entry message. </summary>
         [WirePath("message")]

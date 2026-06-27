@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetOperationsProvidersRequest(Guid subscriptionId, string resourceGroupName, string name, RequestContext context)
+        internal HttpMessage CreateGetOperationsRequest(Guid subscriptionId, string resourceGroupName, string name, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

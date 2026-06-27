@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of <see cref="InstallScriptSource"/>. </summary>
         /// <param name="sourceUri"> Install script source URI where the install script file will be fetched from. </param>
-        /// <param name="type"> Type of the install script. </param>
+        /// <param name="scriptType"> Type of the install script. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InstallScriptSource(Uri sourceUri, InstallScriptType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InstallScriptSource(Uri sourceUri, InstallScriptType? scriptType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceUri = sourceUri;
-            Type = @type;
+            ScriptType = scriptType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Type of the install script. </summary>
         [WirePath("type")]
-        public InstallScriptType? Type { get; set; }
+        public InstallScriptType? ScriptType { get; set; }
     }
 }

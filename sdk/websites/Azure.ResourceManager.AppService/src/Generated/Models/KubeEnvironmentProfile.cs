@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="KubeEnvironmentProfile"/>. </summary>
         /// <param name="id"> Resource ID of the Kubernetes Environment. </param>
         /// <param name="name"> Name of the Kubernetes Environment. </param>
-        /// <param name="type"> Resource type of the Kubernetes Environment. </param>
+        /// <param name="resourceType"> Resource type of the Kubernetes Environment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KubeEnvironmentProfile(ResourceIdentifier id, string name, ResourceType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KubeEnvironmentProfile(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
-            Type = @type;
+            ResourceType = resourceType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Resource type of the Kubernetes Environment. </summary>
         [WirePath("type")]
-        public ResourceType? Type { get; }
+        public ResourceType? ResourceType { get; }
     }
 }

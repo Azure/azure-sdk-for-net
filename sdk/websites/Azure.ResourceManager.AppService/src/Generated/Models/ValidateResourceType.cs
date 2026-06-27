@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         private readonly string _value;
         private const string ServerFarmValue = "ServerFarm";
-        private const string SiteValue = "Site";
+        private const string WebSiteValue = "Site";
         private const string MicrosoftWebHostingEnvironmentsValue = "Microsoft.Web/hostingEnvironments";
 
         /// <summary> Initializes a new instance of <see cref="ValidateResourceType"/>. </summary>
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Gets the ServerFarm. </summary>
         public static ValidateResourceType ServerFarm { get; } = new ValidateResourceType(ServerFarmValue);
 
-        /// <summary> Gets the Site. </summary>
-        public static ValidateResourceType Site { get; } = new ValidateResourceType(SiteValue);
+        /// <summary> Gets the WebSite. </summary>
+        public static ValidateResourceType WebSite { get; } = new ValidateResourceType(WebSiteValue);
 
         /// <summary> Gets the MicrosoftWebHostingEnvironments. </summary>
         public static ValidateResourceType MicrosoftWebHostingEnvironments { get; } = new ValidateResourceType(MicrosoftWebHostingEnvironmentsValue);

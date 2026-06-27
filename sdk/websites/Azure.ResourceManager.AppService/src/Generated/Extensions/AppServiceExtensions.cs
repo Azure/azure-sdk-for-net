@@ -3788,34 +3788,34 @@ namespace Azure.ResourceManager.AppService
         /// Description for Reset all recommendation opt-out settings for a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.ResetAllFiltersRecommendationAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.ResetAllRecommendationFiltersAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response> ResetAllFiltersRecommendationAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static async Task<Response> ResetAllRecommendationFiltersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).ResetAllFiltersRecommendationAsync(cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).ResetAllRecommendationFiltersAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Description for Reset all recommendation opt-out settings for a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.ResetAllFiltersRecommendation(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.ResetAllRecommendationFilters(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response ResetAllFiltersRecommendation(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Response ResetAllRecommendationFilters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).ResetAllFiltersRecommendation(cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).ResetAllRecommendationFilters(cancellationToken);
         }
 
         /// <summary>

@@ -1950,7 +1950,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.KubeEnvironmentProfile"/> instance for mocking. </returns>
         public static KubeEnvironmentProfile KubeEnvironmentProfile(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default)
         {
-            return new KubeEnvironmentProfile(id, name, default, default);
+            return new KubeEnvironmentProfile(id, name, resourceType, default);
         }
 
         /// <param name="managedServiceIdentityType"></param>
@@ -1962,12 +1962,12 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <param name="registryKey"> Registry key for the adapter. </param>
-        /// <param name="type"> Type of the registry adapter. </param>
+        /// <param name="adapterType"> Type of the registry adapter. </param>
         /// <param name="keyVaultSecretReference"> Key vault reference to the value that will be placed in the registry location. </param>
         /// <returns> A new <see cref="Models.RegistryAdapter"/> instance for mocking. </returns>
-        public static RegistryAdapter RegistryAdapter(string registryKey = default, RegistryAdapterType? @type = default, KeyVaultReferenceWithStatus keyVaultSecretReference = default)
+        public static RegistryAdapter RegistryAdapter(string registryKey = default, RegistryAdapterType? adapterType = default, KeyVaultReferenceWithStatus keyVaultSecretReference = default)
         {
-            return new RegistryAdapter(registryKey, @type, keyVaultSecretReference, default);
+            return new RegistryAdapter(registryKey, adapterType, keyVaultSecretReference, default);
         }
 
         /// <param name="secretUri"> Key vault secret URI. </param>
@@ -1987,24 +1987,24 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <param name="sourceUri"> Install script source URI where the install script file will be fetched from. </param>
-        /// <param name="type"> Type of the install script. </param>
+        /// <param name="scriptType"> Type of the install script. </param>
         /// <returns> A new <see cref="Models.InstallScriptSource"/> instance for mocking. </returns>
-        public static InstallScriptSource InstallScriptSource(Uri sourceUri = default, InstallScriptType? @type = default)
+        public static InstallScriptSource InstallScriptSource(Uri sourceUri = default, InstallScriptType? scriptType = default)
         {
-            return new InstallScriptSource(sourceUri, @type, default);
+            return new InstallScriptSource(sourceUri, scriptType, default);
         }
 
         /// <param name="name"> Name of the storage mount. </param>
-        /// <param name="type"> Type of the storage mount. </param>
+        /// <param name="mountType"> Type of the storage mount. </param>
         /// <param name="source"> Source of the fileshare/storage. </param>
         /// <param name="destinationPath"> Path on worker where storage will be mounted. </param>
         /// <param name="credentialsKeyVaultReference"> KV reference to the credentials to connect to the share. </param>
         /// <returns> A new <see cref="Models.StorageMount"/> instance for mocking. </returns>
-        public static StorageMount StorageMount(string name = default, StorageMountType? @type = default, string source = default, string destinationPath = default, KeyVaultReferenceWithStatus credentialsKeyVaultReference = default)
+        public static StorageMount StorageMount(string name = default, StorageMountType? mountType = default, string source = default, string destinationPath = default, KeyVaultReferenceWithStatus credentialsKeyVaultReference = default)
         {
             return new StorageMount(
                 name,
-                @type,
+                mountType,
                 source,
                 destinationPath,
                 credentialsKeyVaultReference,
@@ -4632,14 +4632,14 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebAppIPAddressRange(addressRange, default);
         }
 
-        /// <param name="type"> Type of provider for OAuth. </param>
+        /// <param name="providerType"> Type of provider for OAuth. </param>
         /// <param name="claims"> The access policy claims. </param>
         /// <returns> A new <see cref="Models.OpenAuthenticationAccessPolicy"/> instance for mocking. </returns>
-        public static OpenAuthenticationAccessPolicy OpenAuthenticationAccessPolicy(OpenAuthenticationProviderType? @type = default, IEnumerable<OpenAuthenticationPolicyClaim> claims = default)
+        public static OpenAuthenticationAccessPolicy OpenAuthenticationAccessPolicy(OpenAuthenticationProviderType? providerType = default, IEnumerable<OpenAuthenticationPolicyClaim> claims = default)
         {
             claims ??= new ChangeTrackingList<OpenAuthenticationPolicyClaim>();
 
-            return new OpenAuthenticationAccessPolicy(@type, (claims ?? new ChangeTrackingList<OpenAuthenticationPolicyClaim>()).ToList(), default);
+            return new OpenAuthenticationAccessPolicy(providerType, (claims ?? new ChangeTrackingList<OpenAuthenticationPolicyClaim>()).ToList(), default);
         }
 
         /// <param name="name"> The name of the claim. </param>
@@ -4664,17 +4664,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.WorkflowResourceReference"/> instance for mocking. </returns>
         public static WorkflowResourceReference WorkflowResourceReference(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default)
         {
-            return new WorkflowResourceReference(id, name, default, default);
+            return new WorkflowResourceReference(id, name, resourceType, default);
         }
 
-        /// <param name="type"> The type. </param>
+        /// <param name="webAppParameterType"> The type. </param>
         /// <param name="value"> The value. </param>
         /// <param name="metadata"> The metadata. </param>
         /// <param name="description"> The description. </param>
         /// <returns> A new <see cref="Models.WorkflowContent"/> instance for mocking. </returns>
-        public static WorkflowContent WorkflowContent(WebAppParameterType? @type = default, BinaryData value = default, BinaryData metadata = default, string description = default)
+        public static WorkflowContent WorkflowContent(WebAppParameterType? webAppParameterType = default, BinaryData value = default, BinaryData metadata = default, string description = default)
         {
-            return new WorkflowContent(@type, value, metadata, description, default);
+            return new WorkflowContent(webAppParameterType, value, metadata, description, default);
         }
 
         /// <param name="id"> The resource id. </param>
@@ -5005,7 +5005,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.StaticSiteDatabaseConnectionConfigurationFileOverview"/> instance for mocking. </returns>
         public static StaticSiteDatabaseConnectionConfigurationFileOverview StaticSiteDatabaseConnectionConfigurationFileOverview(string fileName = default, string contents = default, string staticSiteDatabaseConnectionConfigurationFileOverviewType = default)
         {
-            return new StaticSiteDatabaseConnectionConfigurationFileOverview(fileName, contents, default, default);
+            return new StaticSiteDatabaseConnectionConfigurationFileOverview(fileName, contents, staticSiteDatabaseConnectionConfigurationFileOverviewType, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -6422,10 +6422,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// Sets the AppOffline rule while the MSDeploy operation executes.
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
         /// </param>
+        /// <param name="appOffline"> Gets or sets the AppOffline. </param>
         /// <param name="addOnPackages"> List of Add-On packages. Add-On packages implicitly enable the Do Not Delete MSDeploy rule. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.WebAppMSDeploy"/> instance for mocking. </returns>
-        public static WebAppMSDeploy WebAppMSDeploy(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Uri packageUri = default, string connectionString = default, string dbType = default, Uri setParametersXmlFileUri = default, IDictionary<string, string> setParameters = default, bool? skipAppData = default, bool? isAppOffline = default, IEnumerable<MSDeployCore> addOnPackages = default, string kind = default)
+        public static WebAppMSDeploy WebAppMSDeploy(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Uri packageUri = default, string connectionString = default, string dbType = default, Uri setParametersXmlFileUri = default, IDictionary<string, string> setParameters = default, bool? skipAppData = default, bool? isAppOffline = default, bool? appOffline = default, IEnumerable<MSDeployCore> addOnPackages = default, string kind = default)
         {
             return new WebAppMSDeploy(
                 id,
@@ -6536,7 +6537,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.WebAppMSDeployLogEntry"/> instance for mocking. </returns>
         public static WebAppMSDeployLogEntry WebAppMSDeployLogEntry(DateTimeOffset? time = default, WebAppMSDeployLogEntryType? entryType = default, string message = default)
         {
-            return new WebAppMSDeployLogEntry(time, default, message, default);
+            return new WebAppMSDeployLogEntry(time, entryType, message, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -6850,7 +6851,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <param name="identifier"> Site extension ID. </param>
+        /// <param name="id"> Site extension ID. </param>
         /// <param name="href"> HRef URI. </param>
         /// <param name="process"> Process URI. </param>
         /// <param name="startAddress"> Start address. </param>
@@ -6863,10 +6864,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="state"> Thread state. </param>
         /// <param name="waitReason"> Wait reason. </param>
         /// <returns> A new <see cref="Models.WebAppProcessThreadProperties"/> instance for mocking. </returns>
-        public static WebAppProcessThreadProperties WebAppProcessThreadProperties(int? identifier = default, Uri href = default, string process = default, string startAddress = default, int? currentPriority = default, string priorityLevel = default, int? basePriority = default, DateTimeOffset? startOn = default, string totalProcessorTime = default, string userProcessorTime = default, string state = default, string waitReason = default)
+        public static WebAppProcessThreadProperties WebAppProcessThreadProperties(int? id = default, Uri href = default, string process = default, string startAddress = default, int? currentPriority = default, string priorityLevel = default, int? basePriority = default, DateTimeOffset? startOn = default, string totalProcessorTime = default, string userProcessorTime = default, string state = default, string waitReason = default)
         {
             return new WebAppProcessThreadProperties(
-                identifier,
+                id,
                 href,
                 process,
                 startAddress,
@@ -7502,7 +7503,7 @@ namespace Azure.ResourceManager.AppService.Models
         public static WorkflowOutputContent WorkflowOutputContent(WebAppParameterType? webAppParameterType = default, BinaryData value = default, BinaryData metadata = default, string description = default, BinaryData error = default)
         {
             return new WorkflowOutputContent(
-                default,
+                webAppParameterType,
                 value,
                 metadata,
                 description,
@@ -13099,6 +13100,74 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.WebAppMSDeploy"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="packageUri">
+        /// Package URI
+        ///             Serialized Name: MSDeploy.properties.packageUri
+        /// </param>
+        /// <param name="connectionString">
+        /// SQL Connection String
+        ///             Serialized Name: MSDeploy.properties.connectionString
+        /// </param>
+        /// <param name="dbType">
+        /// Database Type
+        ///             Serialized Name: MSDeploy.properties.dbType
+        /// </param>
+        /// <param name="setParametersXmlFileUri">
+        /// URI of MSDeploy Parameters file. Must not be set if SetParameters is used.
+        ///             Serialized Name: MSDeploy.properties.setParametersXmlFileUri
+        /// </param>
+        /// <param name="setParameters">
+        /// MSDeploy Parameters. Must not be set if SetParametersXmlFileUri is used.
+        ///             Serialized Name: MSDeploy.properties.setParameters
+        /// </param>
+        /// <param name="skipAppData">
+        /// Controls whether the MSDeploy operation skips the App_Data directory.
+        ///             If set to &lt;code&gt;true&lt;/code&gt;, the existing App_Data directory on the destination
+        ///             will not be deleted, and any App_Data directory in the source will be ignored.
+        ///             Setting is &lt;code&gt;false&lt;/code&gt; by default.
+        ///             Serialized Name: MSDeploy.properties.skipAppData
+        /// </param>
+        /// <param name="isAppOffline">
+        /// Sets the AppOffline rule while the MSDeploy operation executes.
+        ///             Setting is &lt;code&gt;false&lt;/code&gt; by default.
+        ///             Serialized Name: MSDeploy.properties.appOffline
+        /// </param>
+        /// <param name="addOnPackages">
+        /// List of Add-On packages. Add-On packages implicitly enable the Do Not Delete MSDeploy rule.
+        ///             Serialized Name: MSDeploy.properties.addOnPackages
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        ///             Serialized Name: ProxyOnlyResource.kind
+        /// </param>
+        /// <returns> A new <see cref="Models.WebAppMSDeploy"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static WebAppMSDeploy WebAppMSDeploy(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Uri packageUri = default, string connectionString = default, string dbType = default, Uri setParametersXmlFileUri = default, IDictionary<string, string> setParameters = default, bool? skipAppData = default, bool? isAppOffline = default, IEnumerable<MSDeployCore> addOnPackages = default, string kind = default)
+        {
+            return new WebAppMSDeploy(
+                id,
+                name,
+                resourceType,
+                systemData,
+                packageUri is null && connectionString is null && dbType is null && setParametersXmlFileUri is null && setParameters is null && skipAppData is null && isAppOffline is null && addOnPackages is null ? default : new MSDeployProperties(
+                    packageUri,
+                    connectionString,
+                    dbType,
+                    setParametersXmlFileUri,
+                    setParameters ?? new ChangeTrackingDictionary<string, string>(),
+                    skipAppData,
+                    isAppOffline,
+                    default,
+                    (addOnPackages ?? new ChangeTrackingList<MSDeployCore>()).ToList()),
+                kind,
+                default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="AppService.FunctionEnvelopeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -13846,7 +13915,7 @@ namespace Azure.ResourceManager.AppService.Models
         public static WebAppProcessThreadProperties WebAppProcessThreadProperties(int? id = default, Uri href = default, string state = default)
         {
             return new WebAppProcessThreadProperties(
-                default,
+                id,
                 href,
                 default,
                 default,

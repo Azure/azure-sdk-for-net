@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 throw new FormatException($"The model {nameof(OpenAuthenticationAccessPolicy)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(ProviderType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(ProviderType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Claims))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            OpenAuthenticationProviderType? @type = default;
+            OpenAuthenticationProviderType? providerType = default;
             IList<OpenAuthenticationPolicyClaim> claims = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    @type = new OpenAuthenticationProviderType(prop.Value.GetString());
+                    providerType = new OpenAuthenticationProviderType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("claims"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OpenAuthenticationAccessPolicy(@type, claims ?? new ChangeTrackingList<OpenAuthenticationPolicyClaim>(), additionalBinaryDataProperties);
+            return new OpenAuthenticationAccessPolicy(providerType, claims ?? new ChangeTrackingList<OpenAuthenticationPolicyClaim>(), additionalBinaryDataProperties);
         }
     }
 }

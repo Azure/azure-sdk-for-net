@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="StaticSiteDatabaseConnectionConfigurationFileOverview"/>. </summary>
         /// <param name="fileName"> The name of the configuration file. </param>
         /// <param name="contents"> The Base64 encoding of the file contents. </param>
-        /// <param name="type"> The type of configuration file. </param>
+        /// <param name="staticSiteDatabaseConnectionConfigurationFileOverviewType"> The type of configuration file. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteDatabaseConnectionConfigurationFileOverview(string fileName, string contents, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StaticSiteDatabaseConnectionConfigurationFileOverview(string fileName, string contents, string staticSiteDatabaseConnectionConfigurationFileOverviewType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FileName = fileName;
             Contents = contents;
-            Type = @type;
+            StaticSiteDatabaseConnectionConfigurationFileOverviewType = staticSiteDatabaseConnectionConfigurationFileOverviewType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The type of configuration file. </summary>
         [WirePath("type")]
-        public string Type { get; }
+        public string StaticSiteDatabaseConnectionConfigurationFileOverviewType { get; }
     }
 }

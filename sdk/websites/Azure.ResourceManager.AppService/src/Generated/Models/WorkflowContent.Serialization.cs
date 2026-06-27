@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 throw new FormatException($"The model {nameof(WorkflowContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(WebAppParameterType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(WebAppParameterType.Value.ToString());
             }
             if (Optional.IsDefined(Value))
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            WebAppParameterType? @type = default;
+            WebAppParameterType? webAppParameterType = default;
             BinaryData value = default;
             BinaryData metadata = default;
             string description = default;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    @type = new WebAppParameterType(prop.Value.GetString());
+                    webAppParameterType = new WebAppParameterType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("value"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WorkflowContent(@type, value, metadata, description, additionalBinaryDataProperties);
+            return new WorkflowContent(webAppParameterType, value, metadata, description, additionalBinaryDataProperties);
         }
     }
 }

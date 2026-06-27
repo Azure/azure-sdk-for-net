@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGetOperationsProvidersRequest(_subscriptionId, _resourceGroupName, _name, _context);
+            HttpMessage message = _client.CreateGetOperationsRequest(_subscriptionId, _resourceGroupName, _name, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

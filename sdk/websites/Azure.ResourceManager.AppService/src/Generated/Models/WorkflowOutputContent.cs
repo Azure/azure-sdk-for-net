@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowOutputContent"/>. </summary>
-        /// <param name="type"> The type. </param>
+        /// <param name="webAppParameterType"> The type. </param>
         /// <param name="value"> The value. </param>
         /// <param name="metadata"> The metadata. </param>
         /// <param name="description"> The description. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="error"> Gets the error. </param>
-        internal WorkflowOutputContent(WebAppParameterType? @type, BinaryData value, BinaryData metadata, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData error) : base(@type, value, metadata, description, additionalBinaryDataProperties)
+        internal WorkflowOutputContent(WebAppParameterType? webAppParameterType, BinaryData value, BinaryData metadata, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData error) : base(webAppParameterType, value, metadata, description, additionalBinaryDataProperties)
         {
             Error = error;
         }

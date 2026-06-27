@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="webAppProcessThreadInfo"> The instance of WebAppProcessThreadInfo. </param>
         internal ProcessThreadInfo(WebAppProcessThreadInfo webAppProcessThreadInfo)
         {
-            Identifier = webAppProcessThreadInfo.Properties.Identifier;
+            Identifier = webAppProcessThreadInfo.Properties.Id;
             Href = webAppProcessThreadInfo.Properties.Href?.AbsolutePath;
             Process = default;
             StartAddress = default;

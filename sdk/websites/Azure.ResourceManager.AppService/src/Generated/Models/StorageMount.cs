@@ -24,15 +24,15 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of <see cref="StorageMount"/>. </summary>
         /// <param name="name"> Name of the storage mount. </param>
-        /// <param name="type"> Type of the storage mount. </param>
+        /// <param name="mountType"> Type of the storage mount. </param>
         /// <param name="source"> Source of the fileshare/storage. </param>
         /// <param name="destinationPath"> Path on worker where storage will be mounted. </param>
         /// <param name="credentialsKeyVaultReference"> KV reference to the credentials to connect to the share. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageMount(string name, StorageMountType? @type, string source, string destinationPath, KeyVaultReferenceWithStatus credentialsKeyVaultReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageMount(string name, StorageMountType? mountType, string source, string destinationPath, KeyVaultReferenceWithStatus credentialsKeyVaultReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Type = @type;
+            MountType = mountType;
             Source = source;
             DestinationPath = destinationPath;
             CredentialsKeyVaultReference = credentialsKeyVaultReference;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Type of the storage mount. </summary>
         [WirePath("type")]
-        public StorageMountType? Type { get; set; }
+        public StorageMountType? MountType { get; set; }
 
         /// <summary> Source of the fileshare/storage. </summary>
         [WirePath("source")]

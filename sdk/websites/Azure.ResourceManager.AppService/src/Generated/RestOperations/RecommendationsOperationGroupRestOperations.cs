@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateResetAllFiltersRecommendationRequest(Guid subscriptionId, RequestContext context)
+        internal HttpMessage CreateResetAllRecommendationFiltersRequest(Guid subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

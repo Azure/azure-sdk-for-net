@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of <see cref="RegistryAdapter"/>. </summary>
         /// <param name="registryKey"> Registry key for the adapter. </param>
-        /// <param name="type"> Type of the registry adapter. </param>
+        /// <param name="adapterType"> Type of the registry adapter. </param>
         /// <param name="keyVaultSecretReference"> Key vault reference to the value that will be placed in the registry location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RegistryAdapter(string registryKey, RegistryAdapterType? @type, KeyVaultReferenceWithStatus keyVaultSecretReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RegistryAdapter(string registryKey, RegistryAdapterType? adapterType, KeyVaultReferenceWithStatus keyVaultSecretReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RegistryKey = registryKey;
-            Type = @type;
+            AdapterType = adapterType;
             KeyVaultSecretReference = keyVaultSecretReference;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Type of the registry adapter. </summary>
         [WirePath("type")]
-        public RegistryAdapterType? Type { get; set; }
+        public RegistryAdapterType? AdapterType { get; set; }
 
         /// <summary> Key vault reference to the value that will be placed in the registry location. </summary>
         [WirePath("keyVaultSecretReference")]

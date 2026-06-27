@@ -24,19 +24,19 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAuthenticationAccessPolicy"/>. </summary>
-        /// <param name="type"> Type of provider for OAuth. </param>
+        /// <param name="providerType"> Type of provider for OAuth. </param>
         /// <param name="claims"> The access policy claims. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OpenAuthenticationAccessPolicy(OpenAuthenticationProviderType? @type, IList<OpenAuthenticationPolicyClaim> claims, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OpenAuthenticationAccessPolicy(OpenAuthenticationProviderType? providerType, IList<OpenAuthenticationPolicyClaim> claims, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            ProviderType = providerType;
             Claims = claims;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Type of provider for OAuth. </summary>
         [WirePath("type")]
-        public OpenAuthenticationProviderType? Type { get; set; }
+        public OpenAuthenticationProviderType? ProviderType { get; set; }
 
         /// <summary> The access policy claims. </summary>
         [WirePath("claims")]

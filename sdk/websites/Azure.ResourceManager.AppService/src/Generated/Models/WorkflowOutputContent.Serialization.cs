@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            WebAppParameterType? @type = default;
+            WebAppParameterType? webAppParameterType = default;
             BinaryData value = default;
             BinaryData metadata = default;
             string description = default;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    @type = new WebAppParameterType(prop.Value.GetString());
+                    webAppParameterType = new WebAppParameterType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("value"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             return new WorkflowOutputContent(
-                @type,
+                webAppParameterType,
                 value,
                 metadata,
                 description,

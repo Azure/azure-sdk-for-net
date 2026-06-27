@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 throw new FormatException($"The model {nameof(WebAppProcessThreadProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Identifier))
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("identifier"u8);
-                writer.WriteNumberValue(Identifier.Value);
+                writer.WriteNumberValue(Id.Value);
             }
             if (Optional.IsDefined(Href))
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            int? identifier = default;
+            int? id = default;
             Uri href = default;
             string process = default;
             string startAddress = default;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    identifier = prop.Value.GetInt32();
+                    id = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("href"u8))
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             return new WebAppProcessThreadProperties(
-                identifier,
+                id,
                 href,
                 process,
                 startAddress,

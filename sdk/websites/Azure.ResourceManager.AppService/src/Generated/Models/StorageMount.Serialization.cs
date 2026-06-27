@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(MountType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(MountType.Value.ToString());
             }
             if (Optional.IsDefined(Source))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             string name = default;
-            StorageMountType? @type = default;
+            StorageMountType? mountType = default;
             string source = default;
             string destinationPath = default;
             KeyVaultReferenceWithStatus credentialsKeyVaultReference = default;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    @type = new StorageMountType(prop.Value.GetString());
+                    mountType = new StorageMountType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("source"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             return new StorageMount(
                 name,
-                @type,
+                mountType,
                 source,
                 destinationPath,
                 credentialsKeyVaultReference,

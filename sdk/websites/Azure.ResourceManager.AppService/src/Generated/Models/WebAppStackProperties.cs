@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="displayText"> Web App stack (display only). </param>
         /// <param name="value"> Web App stack name. </param>
         /// <param name="majorVersions"> List of major versions available. </param>
-        /// <param name="preferredOs"> Web App stack preferred OS. </param>
+        /// <param name="preferredOS"> Web App stack preferred OS. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppStackProperties(string displayText, string value, IReadOnlyList<WebAppMajorVersion> majorVersions, StackPreferredOS? preferredOs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebAppStackProperties(string displayText, string value, IReadOnlyList<WebAppMajorVersion> majorVersions, StackPreferredOS? preferredOS, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayText = displayText;
             Value = value;
             MajorVersions = majorVersions;
-            PreferredOs = preferredOs;
+            PreferredOS = preferredOS;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Web App stack preferred OS. </summary>
         [WirePath("preferredOs")]
-        public StackPreferredOS? PreferredOs { get; }
+        public StackPreferredOS? PreferredOS { get; }
     }
 }

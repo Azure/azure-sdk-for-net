@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(EntryType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToSerialString());
+                writer.WriteStringValue(EntryType.Value.ToSerialString());
             }
             if (options.Format != "W" && Optional.IsDefined(Message))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             DateTimeOffset? time = default;
-            WebAppMSDeployLogEntryType? @type = default;
+            WebAppMSDeployLogEntryType? entryType = default;
             string message = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    @type = prop.Value.GetString().ToWebAppMSDeployLogEntryType();
+                    entryType = prop.Value.GetString().ToWebAppMSDeployLogEntryType();
                     continue;
                 }
                 if (prop.NameEquals("message"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WebAppMSDeployLogEntry(time, @type, message, additionalBinaryDataProperties);
+            return new WebAppMSDeployLogEntry(time, entryType, message, additionalBinaryDataProperties);
         }
     }
 }
