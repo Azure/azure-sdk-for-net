@@ -13,5 +13,3 @@ additionalDirectories:
 - specification/ai-foundry/data-plane/Foundry/src/toolboxes
 - specification/ai-foundry/data-plane/Foundry/src/agents
 - specification/ai-foundry/data-plane/Foundry/src/skills
-
-emitterPackageJsonPath: sdk/ai/Azure.AI.Extensions.OpenAI/emitter-package.json
