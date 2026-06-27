@@ -16,6 +16,12 @@ const int MaxIterations = 3; // Force multiple candidates
 var credential = new DefaultAzureCredential();
 var client = new AgentOptimizationClient(new Uri(ProjectEndpoint), credential);
 
+// Resolve internal types via reflection (FoundryFeaturesOptInKeys is internal)
+var featuresAssembly = typeof(AgentOptimizationClient).Assembly;
+var featuresType = featuresAssembly.GetType("Azure.AI.AgentServer.Optimization.FoundryFeaturesOptInKeys")!;
+var nullableFeaturesType = typeof(Nullable<>).MakeGenericType(featuresType);
+var agentsOptV1Preview = Enum.Parse(featuresType, "AgentsOptimizationV1Preview");
+
 Console.WriteLine("═══════════════════════════════════════════════════════════");
 Console.WriteLine("  Live API Test: Typed Convenience Methods");
 Console.WriteLine("═══════════════════════════════════════════════════════════");
@@ -139,8 +145,7 @@ if (sw.Elapsed.TotalMinutes >= MaxPollMinutes)
 Console.WriteLine("\n── Step 4: List Candidates (typed GetCandidatesAsync) ──");
 try
 {
-    Response<AgentsPagedResultOptimizationCandidate> candidatesResponse =
-        await GetCandidatesAsync(client, createdJobId);
+    dynamic candidatesResponse = await GetCandidatesAsync(client, createdJobId);
 
     Console.WriteLine($"  Found {candidatesResponse.Value.Data.Count} candidate(s):");
     foreach (var candidate in candidatesResponse.Value.Data)
@@ -155,7 +160,7 @@ try
         Console.WriteLine($"\n  Getting deploy config for candidate: {bestCandidate.CandidateId}");
 
         Response<CandidateDeployConfig> configResponse =
-            await GetCandidateConfigAsync(client, createdJobId, bestCandidate.CandidateId);
+            await GetCandidateConfigAsync(client, createdJobId, (string)bestCandidate.CandidateId);
         Console.WriteLine($"    ✓ Deploy config retrieved: model={configResponse.Value.Model ?? "?"}, instructionsLen={configResponse.Value.Instructions?.Length ?? 0}");
     }
 }
@@ -186,7 +191,9 @@ Console.WriteLine("\n═══════════════════�
 Console.WriteLine("  Done.");
 Console.WriteLine("═══════════════════════════════════════════════════════════");
 
-static AsyncPageable<OptimizationJob> GetAllAsync(
+// ── Reflection helpers for internal types ──────────────────────────────────────
+
+AsyncPageable<OptimizationJob> GetAllAsync(
     AgentOptimizationClient client,
     int? limit = default,
     string? agentName = default,
@@ -194,7 +201,7 @@ static AsyncPageable<OptimizationJob> GetAllAsync(
 {
     MethodInfo method = GetInternalMethod(
         "GetAllAsync",
-        typeof(FoundryFeaturesOptInKeys?),
+        nullableFeaturesType,
         typeof(int?),
         typeof(PageOrder?),
         typeof(string),
@@ -205,10 +212,10 @@ static AsyncPageable<OptimizationJob> GetAllAsync(
 
     return (AsyncPageable<OptimizationJob>)method.Invoke(
         client,
-        new object?[] { FoundryFeaturesOptInKeys.AgentsOptimizationV1Preview, limit, null, null, null, null, agentName, cancellationToken })!;
+        new object?[] { agentsOptV1Preview, limit, null, null, null, null, agentName, cancellationToken })!;
 }
 
-static async Task<Response<OptimizationJob>> CreateAsync(
+async Task<Response<OptimizationJob>> CreateAsync(
     AgentOptimizationClient client,
     OptimizationJob job,
     CancellationToken cancellationToken = default)
@@ -216,16 +223,16 @@ static async Task<Response<OptimizationJob>> CreateAsync(
     MethodInfo method = GetInternalMethod(
         "CreateAsync",
         typeof(OptimizationJob),
-        typeof(FoundryFeaturesOptInKeys?),
+        nullableFeaturesType,
         typeof(string),
         typeof(CancellationToken));
 
     return await (Task<Response<OptimizationJob>>)method.Invoke(
         client,
-        new object?[] { job, FoundryFeaturesOptInKeys.AgentsOptimizationV1Preview, null, cancellationToken })!;
+        new object?[] { job, agentsOptV1Preview, null, cancellationToken })!;
 }
 
-static async Task<Response<OptimizationJob>> GetAsync(
+async Task<Response<OptimizationJob>> GetAsync(
     AgentOptimizationClient client,
     string jobId,
     CancellationToken cancellationToken = default)
@@ -233,15 +240,15 @@ static async Task<Response<OptimizationJob>> GetAsync(
     MethodInfo method = GetInternalMethod(
         "GetAsync",
         typeof(string),
-        typeof(FoundryFeaturesOptInKeys?),
+        nullableFeaturesType,
         typeof(CancellationToken));
 
     return await (Task<Response<OptimizationJob>>)method.Invoke(
         client,
-        new object?[] { jobId, FoundryFeaturesOptInKeys.AgentsOptimizationV1Preview, cancellationToken })!;
+        new object?[] { jobId, agentsOptV1Preview, cancellationToken })!;
 }
 
-static async Task<Response<AgentsPagedResultOptimizationCandidate>> GetCandidatesAsync(
+async Task<dynamic> GetCandidatesAsync(
     AgentOptimizationClient client,
     string jobId,
     CancellationToken cancellationToken = default)
@@ -249,19 +256,23 @@ static async Task<Response<AgentsPagedResultOptimizationCandidate>> GetCandidate
     MethodInfo method = GetInternalMethod(
         "GetCandidatesAsync",
         typeof(string),
-        typeof(FoundryFeaturesOptInKeys?),
+        nullableFeaturesType,
         typeof(int?),
         typeof(PageOrder?),
         typeof(string),
         typeof(string),
         typeof(CancellationToken));
 
-    return await (Task<Response<AgentsPagedResultOptimizationCandidate>>)method.Invoke(
+    // Return type is Response<AgentsPagedResultOptimizationCandidate> (internal).
+    // Use dynamic to access .Value.Data without static typing.
+    Task task = (Task)method.Invoke(
         client,
-        new object?[] { jobId, FoundryFeaturesOptInKeys.AgentsOptimizationV1Preview, null, null, null, null, cancellationToken })!;
+        new object?[] { jobId, agentsOptV1Preview, null, null, null, null, cancellationToken })!;
+    await task;
+    return ((dynamic)task).Result;
 }
 
-static async Task<Response<CandidateDeployConfig>> GetCandidateConfigAsync(
+async Task<Response<CandidateDeployConfig>> GetCandidateConfigAsync(
     AgentOptimizationClient client,
     string jobId,
     string candidateId,
@@ -271,14 +282,14 @@ static async Task<Response<CandidateDeployConfig>> GetCandidateConfigAsync(
         "GetCandidateConfigAsync",
         typeof(string),
         typeof(string),
-        typeof(FoundryFeaturesOptInKeys?),
+        nullableFeaturesType,
         typeof(CancellationToken));
 
     return await (Task<Response<CandidateDeployConfig>>)method.Invoke(
         client,
-        new object?[] { jobId, candidateId, FoundryFeaturesOptInKeys.AgentsOptimizationV1Preview, cancellationToken })!;
+        new object?[] { jobId, candidateId, agentsOptV1Preview, cancellationToken })!;
 }
 
-static MethodInfo GetInternalMethod(string name, params Type[] parameterTypes) =>
+MethodInfo GetInternalMethod(string name, params Type[] parameterTypes) =>
     typeof(AgentOptimizationClient).GetMethod(name, BindingFlags.Instance | BindingFlags.NonPublic, binder: null, types: parameterTypes, modifiers: null)
         ?? throw new MissingMethodException(typeof(AgentOptimizationClient).FullName, name);
