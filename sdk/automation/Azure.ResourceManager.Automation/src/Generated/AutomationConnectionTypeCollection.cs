@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Automation.Models;
 
 namespace Azure.ResourceManager.Automation
@@ -21,79 +22,85 @@ namespace Azure.ResourceManager.Automation
     /// <summary>
     /// A class representing a collection of <see cref="AutomationConnectionTypeResource"/> and their operations.
     /// Each <see cref="AutomationConnectionTypeResource"/> in the collection will belong to the same instance of <see cref="AutomationAccountResource"/>.
-    /// To get an <see cref="AutomationConnectionTypeCollection"/> instance call the GetAutomationConnectionTypes method from an instance of <see cref="AutomationAccountResource"/>.
+    /// To get a <see cref="AutomationConnectionTypeCollection"/> instance call the GetAutomationConnectionTypes method from an instance of <see cref="AutomationAccountResource"/>.
     /// </summary>
     public partial class AutomationConnectionTypeCollection : ArmCollection, IEnumerable<AutomationConnectionTypeResource>, IAsyncEnumerable<AutomationConnectionTypeResource>
     {
-        private readonly ClientDiagnostics _automationConnectionTypeConnectionTypeClientDiagnostics;
-        private readonly ConnectionTypeRestOperations _automationConnectionTypeConnectionTypeRestClient;
+        private readonly ClientDiagnostics _connectionTypeClientDiagnostics;
+        private readonly ConnectionType _connectionTypeRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="AutomationConnectionTypeCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of AutomationConnectionTypeCollection for mocking. </summary>
         protected AutomationConnectionTypeCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AutomationConnectionTypeCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationConnectionTypeCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AutomationConnectionTypeCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _automationConnectionTypeConnectionTypeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", AutomationConnectionTypeResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(AutomationConnectionTypeResource.ResourceType, out string automationConnectionTypeConnectionTypeApiVersion);
-            _automationConnectionTypeConnectionTypeRestClient = new ConnectionTypeRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, automationConnectionTypeConnectionTypeApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(AutomationConnectionTypeResource.ResourceType, out string automationConnectionTypeApiVersion);
+            _connectionTypeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", AutomationConnectionTypeResource.ResourceType.Namespace, Diagnostics);
+            _connectionTypeRestClient = new ConnectionType(_connectionTypeClientDiagnostics, Pipeline, Endpoint, automationConnectionTypeApiVersion ?? "2024-10-23");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != AutomationAccountResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AutomationAccountResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AutomationAccountResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create a connection type.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/connectionTypes/{connectionTypeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/connectionTypes/{connectionTypeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectionType_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectionTypes_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationConnectionTypeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="connectionTypeName"> The parameters supplied to the create or update connection type operation. </param>
+        /// <param name="connectionTypeName"> The name of connection type. </param>
         /// <param name="content"> The parameters supplied to the create or update connection type operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionTypeName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<AutomationConnectionTypeResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string connectionTypeName, AutomationConnectionTypeCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionTypeName, nameof(connectionTypeName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _automationConnectionTypeConnectionTypeClientDiagnostics.CreateScope("AutomationConnectionTypeCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _connectionTypeClientDiagnostics.CreateScope("AutomationConnectionTypeCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _automationConnectionTypeConnectionTypeRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionTypeName, content, cancellationToken).ConfigureAwait(false);
-                var uri = _automationConnectionTypeConnectionTypeRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionTypeName, content);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AutomationArmOperation<AutomationConnectionTypeResource>(Response.FromValue(new AutomationConnectionTypeResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectionTypeRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionTypeName, AutomationConnectionTypeCreateOrUpdateContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AutomationConnectionTypeData> response = Response.FromValue(AutomationConnectionTypeData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AutomationArmOperation<AutomationConnectionTypeResource> operation = new AutomationArmOperation<AutomationConnectionTypeResource>(Response.FromValue(new AutomationConnectionTypeResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -107,44 +114,48 @@ namespace Azure.ResourceManager.Automation
         /// Create a connection type.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/connectionTypes/{connectionTypeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/connectionTypes/{connectionTypeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectionType_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectionTypes_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationConnectionTypeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="connectionTypeName"> The parameters supplied to the create or update connection type operation. </param>
+        /// <param name="connectionTypeName"> The name of connection type. </param>
         /// <param name="content"> The parameters supplied to the create or update connection type operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionTypeName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<AutomationConnectionTypeResource> CreateOrUpdate(WaitUntil waitUntil, string connectionTypeName, AutomationConnectionTypeCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionTypeName, nameof(connectionTypeName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _automationConnectionTypeConnectionTypeClientDiagnostics.CreateScope("AutomationConnectionTypeCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _connectionTypeClientDiagnostics.CreateScope("AutomationConnectionTypeCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _automationConnectionTypeConnectionTypeRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionTypeName, content, cancellationToken);
-                var uri = _automationConnectionTypeConnectionTypeRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionTypeName, content);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AutomationArmOperation<AutomationConnectionTypeResource>(Response.FromValue(new AutomationConnectionTypeResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectionTypeRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionTypeName, AutomationConnectionTypeCreateOrUpdateContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AutomationConnectionTypeData> response = Response.FromValue(AutomationConnectionTypeData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AutomationArmOperation<AutomationConnectionTypeResource> operation = new AutomationArmOperation<AutomationConnectionTypeResource>(Response.FromValue(new AutomationConnectionTypeResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -158,38 +169,42 @@ namespace Azure.ResourceManager.Automation
         /// Retrieve the connection type identified by connection type name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/connectionTypes/{connectionTypeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/connectionTypes/{connectionTypeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectionType_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectionTypes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationConnectionTypeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionTypeName"> The name of connection type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<AutomationConnectionTypeResource>> GetAsync(string connectionTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionTypeName, nameof(connectionTypeName));
 
-            using var scope = _automationConnectionTypeConnectionTypeClientDiagnostics.CreateScope("AutomationConnectionTypeCollection.Get");
+            using DiagnosticScope scope = _connectionTypeClientDiagnostics.CreateScope("AutomationConnectionTypeCollection.Get");
             scope.Start();
             try
             {
-                var response = await _automationConnectionTypeConnectionTypeRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionTypeName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectionTypeRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionTypeName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AutomationConnectionTypeData> response = Response.FromValue(AutomationConnectionTypeData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AutomationConnectionTypeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -203,38 +218,42 @@ namespace Azure.ResourceManager.Automation
         /// Retrieve the connection type identified by connection type name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/connectionTypes/{connectionTypeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/connectionTypes/{connectionTypeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectionType_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectionTypes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationConnectionTypeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionTypeName"> The name of connection type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<AutomationConnectionTypeResource> Get(string connectionTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionTypeName, nameof(connectionTypeName));
 
-            using var scope = _automationConnectionTypeConnectionTypeClientDiagnostics.CreateScope("AutomationConnectionTypeCollection.Get");
+            using DiagnosticScope scope = _connectionTypeClientDiagnostics.CreateScope("AutomationConnectionTypeCollection.Get");
             scope.Start();
             try
             {
-                var response = _automationConnectionTypeConnectionTypeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionTypeName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectionTypeRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionTypeName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AutomationConnectionTypeData> response = Response.FromValue(AutomationConnectionTypeData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AutomationConnectionTypeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,50 +267,50 @@ namespace Azure.ResourceManager.Automation
         /// Retrieve a list of connection types.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/connectionTypes</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/connectionTypes. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectionType_ListByAutomationAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectionTypes_ListByAutomationAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationConnectionTypeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomationConnectionTypeResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutomationConnectionTypeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationConnectionTypeResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _automationConnectionTypeConnectionTypeRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationConnectionTypeConnectionTypeRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationConnectionTypeResource(Client, AutomationConnectionTypeData.DeserializeAutomationConnectionTypeData(e)), _automationConnectionTypeConnectionTypeClientDiagnostics, Pipeline, "AutomationConnectionTypeCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<AutomationConnectionTypeData, AutomationConnectionTypeResource>(new ConnectionTypeGetByAutomationAccountAsyncCollectionResultOfT(
+                _connectionTypeRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AutomationConnectionTypeCollection.GetAll"), data => new AutomationConnectionTypeResource(Client, data));
         }
 
         /// <summary>
         /// Retrieve a list of connection types.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/connectionTypes</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/connectionTypes. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectionType_ListByAutomationAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectionTypes_ListByAutomationAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationConnectionTypeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,45 +318,67 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="AutomationConnectionTypeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationConnectionTypeResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _automationConnectionTypeConnectionTypeRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationConnectionTypeConnectionTypeRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationConnectionTypeResource(Client, AutomationConnectionTypeData.DeserializeAutomationConnectionTypeData(e)), _automationConnectionTypeConnectionTypeClientDiagnostics, Pipeline, "AutomationConnectionTypeCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<AutomationConnectionTypeData, AutomationConnectionTypeResource>(new ConnectionTypeGetByAutomationAccountCollectionResultOfT(
+                _connectionTypeRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AutomationConnectionTypeCollection.GetAll"), data => new AutomationConnectionTypeResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/connectionTypes/{connectionTypeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/connectionTypes/{connectionTypeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectionType_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectionTypes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationConnectionTypeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionTypeName"> The name of connection type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string connectionTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionTypeName, nameof(connectionTypeName));
 
-            using var scope = _automationConnectionTypeConnectionTypeClientDiagnostics.CreateScope("AutomationConnectionTypeCollection.Exists");
+            using DiagnosticScope scope = _connectionTypeClientDiagnostics.CreateScope("AutomationConnectionTypeCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _automationConnectionTypeConnectionTypeRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionTypeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectionTypeRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionTypeName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<AutomationConnectionTypeData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AutomationConnectionTypeData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AutomationConnectionTypeData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -351,36 +392,50 @@ namespace Azure.ResourceManager.Automation
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/connectionTypes/{connectionTypeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/connectionTypes/{connectionTypeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectionType_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectionTypes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationConnectionTypeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionTypeName"> The name of connection type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string connectionTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionTypeName, nameof(connectionTypeName));
 
-            using var scope = _automationConnectionTypeConnectionTypeClientDiagnostics.CreateScope("AutomationConnectionTypeCollection.Exists");
+            using DiagnosticScope scope = _connectionTypeClientDiagnostics.CreateScope("AutomationConnectionTypeCollection.Exists");
             scope.Start();
             try
             {
-                var response = _automationConnectionTypeConnectionTypeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionTypeName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectionTypeRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionTypeName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<AutomationConnectionTypeData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AutomationConnectionTypeData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AutomationConnectionTypeData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -394,38 +449,54 @@ namespace Azure.ResourceManager.Automation
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/connectionTypes/{connectionTypeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/connectionTypes/{connectionTypeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectionType_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectionTypes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationConnectionTypeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionTypeName"> The name of connection type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<AutomationConnectionTypeResource>> GetIfExistsAsync(string connectionTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionTypeName, nameof(connectionTypeName));
 
-            using var scope = _automationConnectionTypeConnectionTypeClientDiagnostics.CreateScope("AutomationConnectionTypeCollection.GetIfExists");
+            using DiagnosticScope scope = _connectionTypeClientDiagnostics.CreateScope("AutomationConnectionTypeCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _automationConnectionTypeConnectionTypeRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionTypeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectionTypeRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionTypeName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<AutomationConnectionTypeData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AutomationConnectionTypeData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AutomationConnectionTypeData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<AutomationConnectionTypeResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new AutomationConnectionTypeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -439,38 +510,54 @@ namespace Azure.ResourceManager.Automation
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/connectionTypes/{connectionTypeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/connectionTypes/{connectionTypeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectionType_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectionTypes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationConnectionTypeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionTypeName"> The name of connection type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<AutomationConnectionTypeResource> GetIfExists(string connectionTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionTypeName, nameof(connectionTypeName));
 
-            using var scope = _automationConnectionTypeConnectionTypeClientDiagnostics.CreateScope("AutomationConnectionTypeCollection.GetIfExists");
+            using DiagnosticScope scope = _connectionTypeClientDiagnostics.CreateScope("AutomationConnectionTypeCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _automationConnectionTypeConnectionTypeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionTypeName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectionTypeRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionTypeName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<AutomationConnectionTypeData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AutomationConnectionTypeData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AutomationConnectionTypeData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<AutomationConnectionTypeResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new AutomationConnectionTypeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -490,6 +577,7 @@ namespace Azure.ResourceManager.Automation
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<AutomationConnectionTypeResource> IAsyncEnumerable<AutomationConnectionTypeResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

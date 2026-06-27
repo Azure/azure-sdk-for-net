@@ -7,139 +7,310 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Automation.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    /// <summary>
-    /// A class representing the AutomationRunbook data model.
-    /// Definition of the runbook type.
-    /// </summary>
+    /// <summary> Definition of the runbook type. </summary>
     public partial class AutomationRunbookData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AutomationRunbookData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public AutomationRunbookData(AzureLocation location) : base(location)
         {
-            Parameters = new ChangeTrackingDictionary<string, RunbookParameterDefinition>();
-            OutputTypes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AutomationRunbookData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> Gets or sets the etag of the resource. </param>
-        /// <param name="runbookType"> Gets or sets the type of the runbook. </param>
-        /// <param name="publishContentLink"> Gets or sets the published runbook content link. </param>
-        /// <param name="state"> Gets or sets the state of the runbook. </param>
-        /// <param name="isLogVerboseEnabled"> Gets or sets verbose log option. </param>
-        /// <param name="isLogProgressEnabled"> Gets or sets progress log option. </param>
-        /// <param name="logActivityTrace"> Gets or sets the option to log activity trace of the runbook. </param>
-        /// <param name="jobCount"> Gets or sets the job count of the runbook. </param>
-        /// <param name="parameters"> Gets or sets the runbook parameters. </param>
-        /// <param name="outputTypes"> Gets or sets the runbook output types. </param>
-        /// <param name="draft"> Gets or sets the draft runbook properties. </param>
-        /// <param name="provisioningState"> Gets or sets the provisioning state of the runbook. </param>
-        /// <param name="lastModifiedBy"> Gets or sets the last modified by. </param>
-        /// <param name="createdOn"> Gets or sets the creation time. </param>
-        /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
-        /// <param name="description"> Gets or sets the description. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutomationRunbookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, AutomationRunbookType? runbookType, AutomationContentLink publishContentLink, RunbookState? state, bool? isLogVerboseEnabled, bool? isLogProgressEnabled, int? logActivityTrace, int? jobCount, IDictionary<string, RunbookParameterDefinition> parameters, IList<string> outputTypes, AutomationRunbookDraft draft, RunbookProvisioningState? provisioningState, string lastModifiedBy, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Gets or sets the runbook properties. </param>
+        /// <param name="eTag"> Gets or sets the etag of the resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationRunbookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RunbookProperties properties, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = etag;
-            RunbookType = runbookType;
-            PublishContentLink = publishContentLink;
-            State = state;
-            IsLogVerboseEnabled = isLogVerboseEnabled;
-            IsLogProgressEnabled = isLogProgressEnabled;
-            LogActivityTrace = logActivityTrace;
-            JobCount = jobCount;
-            Parameters = parameters;
-            OutputTypes = outputTypes;
-            Draft = draft;
-            ProvisioningState = provisioningState;
-            LastModifiedBy = lastModifiedBy;
-            CreatedOn = createdOn;
-            LastModifiedOn = lastModifiedOn;
-            Description = description;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            ETag = eTag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AutomationRunbookData"/> for deserialization. </summary>
-        internal AutomationRunbookData()
-        {
-        }
+        /// <summary> Gets or sets the runbook properties. </summary>
+        internal RunbookProperties Properties { get; set; }
 
         /// <summary> Gets or sets the etag of the resource. </summary>
         public ETag? ETag { get; set; }
+
+        /// <summary> Runtime Environment of the runbook execution. </summary>
+        public string RuntimeEnvironment
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RuntimeEnvironment;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RunbookProperties();
+                }
+                Properties.RuntimeEnvironment = value;
+            }
+        }
+
         /// <summary> Gets or sets the type of the runbook. </summary>
-        public AutomationRunbookType? RunbookType { get; set; }
+        public AutomationRunbookType? RunbookType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RunbookType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RunbookProperties();
+                }
+                Properties.RunbookType = value;
+            }
+        }
+
         /// <summary> Gets or sets the published runbook content link. </summary>
-        public AutomationContentLink PublishContentLink { get; set; }
+        public AutomationContentLink PublishContentLink
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublishContentLink;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RunbookProperties();
+                }
+                Properties.PublishContentLink = value;
+            }
+        }
+
         /// <summary> Gets or sets the state of the runbook. </summary>
-        public RunbookState? State { get; set; }
+        public RunbookState? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RunbookProperties();
+                }
+                Properties.State = value;
+            }
+        }
+
         /// <summary> Gets or sets verbose log option. </summary>
-        public bool? IsLogVerboseEnabled { get; set; }
+        public bool? IsLogVerboseEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsLogVerboseEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RunbookProperties();
+                }
+                Properties.IsLogVerboseEnabled = value;
+            }
+        }
+
         /// <summary> Gets or sets progress log option. </summary>
-        public bool? IsLogProgressEnabled { get; set; }
+        public bool? IsLogProgressEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsLogProgressEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RunbookProperties();
+                }
+                Properties.IsLogProgressEnabled = value;
+            }
+        }
+
         /// <summary> Gets or sets the option to log activity trace of the runbook. </summary>
-        public int? LogActivityTrace { get; set; }
+        public int? LogActivityTrace
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LogActivityTrace;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RunbookProperties();
+                }
+                Properties.LogActivityTrace = value;
+            }
+        }
+
         /// <summary> Gets or sets the job count of the runbook. </summary>
-        public int? JobCount { get; set; }
+        public int? JobCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.JobCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RunbookProperties();
+                }
+                Properties.JobCount = value;
+            }
+        }
+
         /// <summary> Gets or sets the runbook parameters. </summary>
-        public IDictionary<string, RunbookParameterDefinition> Parameters { get; }
+        public IDictionary<string, RunbookParameterDefinition> Parameters
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RunbookProperties();
+                }
+                return Properties.Parameters;
+            }
+        }
+
         /// <summary> Gets or sets the runbook output types. </summary>
-        public IList<string> OutputTypes { get; }
+        public IList<string> OutputTypes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RunbookProperties();
+                }
+                return Properties.OutputTypes;
+            }
+        }
+
         /// <summary> Gets or sets the draft runbook properties. </summary>
-        public AutomationRunbookDraft Draft { get; set; }
+        public AutomationRunbookDraft Draft
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Draft;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RunbookProperties();
+                }
+                Properties.Draft = value;
+            }
+        }
+
         /// <summary> Gets or sets the provisioning state of the runbook. </summary>
-        public RunbookProvisioningState? ProvisioningState { get; set; }
+        public RunbookProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RunbookProperties();
+                }
+                Properties.ProvisioningState = value;
+            }
+        }
+
         /// <summary> Gets or sets the last modified by. </summary>
-        public string LastModifiedBy { get; set; }
+        public string LastModifiedBy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastModifiedBy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RunbookProperties();
+                }
+                Properties.LastModifiedBy = value;
+            }
+        }
+
         /// <summary> Gets or sets the creation time. </summary>
-        public DateTimeOffset? CreatedOn { get; set; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RunbookProperties();
+                }
+                Properties.CreatedOn = value;
+            }
+        }
+
         /// <summary> Gets or sets the last modified time. </summary>
-        public DateTimeOffset? LastModifiedOn { get; set; }
+        public DateTimeOffset? LastModifiedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastModifiedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RunbookProperties();
+                }
+                Properties.LastModifiedOn = value;
+            }
+        }
+
         /// <summary> Gets or sets the description. </summary>
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RunbookProperties();
+                }
+                Properties.Description = value;
+            }
+        }
     }
 }
