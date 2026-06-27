@@ -8,8 +8,8 @@ additionalDirectories:
 - specification/ai-foundry/data-plane/Foundry/src/openai-responses
 - specification/ai-foundry/data-plane/Foundry/src/tools
 - specification/ai-foundry/data-plane/Foundry/src/sdk-common
-- specification/ai-foundry/data-plane/Foundry/src/common/servicepatterns.tsp
-- specification/ai-foundry/data-plane/Foundry/src/common/error.range.tsp
 - specification/ai-foundry/data-plane/Foundry/src/toolboxes
 - specification/ai-foundry/data-plane/Foundry/src/agents
 - specification/ai-foundry/data-plane/Foundry/src/skills
+
+emitterPackageJsonPath: eng/http-client-csharp-emitter-package.json

@@ -9,3 +9,4 @@
 # exists so external consumers explicitly acknowledge experimental usage;
 # acknowledging it once at the assembly level matches intent.
 nowarn:OPENAI001
+nowarn:OPENAICUA001

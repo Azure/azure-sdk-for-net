@@ -48,7 +48,6 @@ namespace Azure.AI.Extensions.OpenAI
     [ModelReaderWriterBuildable(typeof(InternalImageGenToolInputImageMask))]
     [ModelReaderWriterBuildable(typeof(InternalInputFileContent))]
     [ModelReaderWriterBuildable(typeof(InternalInputFileContentParam))]
-    [ModelReaderWriterBuildable(typeof(InternalInputImageContent))]
     [ModelReaderWriterBuildable(typeof(InternalInputImageContentParamAutoParam))]
     [ModelReaderWriterBuildable(typeof(InternalInputTextContent))]
     [ModelReaderWriterBuildable(typeof(InternalInputTextContentParam))]
