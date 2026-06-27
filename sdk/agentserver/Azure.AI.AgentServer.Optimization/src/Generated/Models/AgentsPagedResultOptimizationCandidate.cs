@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.AgentServer.Optimization
 {
     /// <summary> The response data for a requested list of items. </summary>
-    public partial class AgentsPagedResultOptimizationCandidate
+    internal partial class AgentsPagedResultOptimizationCandidate
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

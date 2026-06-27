@@ -31,7 +31,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <param name="updatedAt"> The timestamp when the job was last updated, represented in Unix time. </param>
         /// <param name="progress"> Progress while in flight. Absent in terminal states. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OptimizationJob(string id, OptimizationJobInputs inputs, OptimizationJobResult result, JobStatus status, Error error, DateTimeOffset createdAt, DateTimeOffset? updatedAt, OptimizationJobProgress progress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OptimizationJob(string id, OptimizationJobInputs inputs, OptimizationJobResult result, JobStatus status, OptimizationError error, DateTimeOffset createdAt, DateTimeOffset? updatedAt, OptimizationJobProgress progress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Inputs = inputs;
@@ -57,7 +57,7 @@ namespace Azure.AI.AgentServer.Optimization
         public JobStatus Status { get; }
 
         /// <summary> Error details — populated only on failure. </summary>
-        public Error Error { get; }
+        public OptimizationError Error { get; }
 
         /// <summary> The timestamp when the job was created, represented in Unix time. </summary>
         public DateTimeOffset CreatedAt { get; }

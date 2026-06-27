@@ -122,13 +122,13 @@ namespace Azure.AI.AgentServer.Optimization
             {
                 return null;
             }
-            Error error = default;
+            OptimizationError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("error"u8))
                 {
-                    error = Error.DeserializeError(prop.Value, options);
+                    error = OptimizationError.DeserializeOptimizationError(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

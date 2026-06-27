@@ -183,7 +183,7 @@ namespace Azure.AI.AgentServer.Optimization
             OptimizationJobInputs inputs = default;
             OptimizationJobResult result = default;
             JobStatus status = default;
-            Error error = default;
+            OptimizationError error = default;
             DateTimeOffset createdAt = default;
             DateTimeOffset? updatedAt = default;
             OptimizationJobProgress progress = default;
@@ -224,7 +224,7 @@ namespace Azure.AI.AgentServer.Optimization
                     {
                         continue;
                     }
-                    error = Error.DeserializeError(prop.Value, options);
+                    error = OptimizationError.DeserializeOptimizationError(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("created_at"u8))

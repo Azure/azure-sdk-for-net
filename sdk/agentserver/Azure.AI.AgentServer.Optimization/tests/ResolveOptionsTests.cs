@@ -90,7 +90,8 @@ public class ResolveOptionsTests
     {
         Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG", "{not-json");
 
-        Assert.ThrowsAsync<Exception>(async () =>
-            await new TestAgentOptimizationClient().ResolveOptionsAsync(candidateId: null));
+        Assert.That(
+            async () => await new TestAgentOptimizationClient().ResolveOptionsAsync(candidateId: null),
+            Throws.InstanceOf<System.Text.Json.JsonException>());
     }
 }

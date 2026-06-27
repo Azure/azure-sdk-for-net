@@ -14,7 +14,7 @@ using Azure;
 namespace Azure.AI.AgentServer.Optimization
 {
     /// <summary> The response data for a requested list of items. </summary>
-    public partial class AgentsPagedResultOptimizationCandidate : IJsonModel<AgentsPagedResultOptimizationCandidate>
+    internal partial class AgentsPagedResultOptimizationCandidate : IJsonModel<AgentsPagedResultOptimizationCandidate>
     {
         /// <summary> Initializes a new instance of <see cref="AgentsPagedResultOptimizationCandidate"/> for deserialization. </summary>
         internal AgentsPagedResultOptimizationCandidate()

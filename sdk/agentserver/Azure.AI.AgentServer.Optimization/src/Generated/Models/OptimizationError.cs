@@ -11,25 +11,25 @@ using System.Text.Json;
 
 namespace Azure.AI.AgentServer.Optimization
 {
-    /// <summary> The Error. </summary>
-    public partial class Error
+    /// <summary> The OptimizationError. </summary>
+    public partial class OptimizationError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Error"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OptimizationError"/>. </summary>
         /// <param name="code"></param>
         /// <param name="message"></param>
-        internal Error(string code, string message)
+        internal OptimizationError(string code, string message)
         {
             Code = code;
             Message = message;
-            Details = new ChangeTrackingList<Error>();
+            Details = new ChangeTrackingList<OptimizationError>();
             AdditionalInfo = new ChangeTrackingDictionary<string, BinaryData>();
             DebugInfo = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Error"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OptimizationError"/>. </summary>
         /// <param name="code"></param>
         /// <param name="message"></param>
         /// <param name="param"></param>
@@ -38,7 +38,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <param name="additionalInfo"></param>
         /// <param name="debugInfo"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Error(string code, string message, string @param, string @type, IList<Error> details, IDictionary<string, BinaryData> additionalInfo, IDictionary<string, BinaryData> debugInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OptimizationError(string code, string message, string @param, string @type, IList<OptimizationError> details, IDictionary<string, BinaryData> additionalInfo, IDictionary<string, BinaryData> debugInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
@@ -63,7 +63,7 @@ namespace Azure.AI.AgentServer.Optimization
         public string Type { get; }
 
         /// <summary> Gets the Details. </summary>
-        public IList<Error> Details { get; }
+        public IList<OptimizationError> Details { get; }
 
         /// <summary>
         /// Gets the AdditionalInfo.

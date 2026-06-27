@@ -12,57 +12,57 @@ using System.Text.Json;
 
 namespace Azure.AI.AgentServer.Optimization
 {
-    /// <summary> The Error. </summary>
-    public partial class Error : IJsonModel<Error>
+    /// <summary> The OptimizationError. </summary>
+    public partial class OptimizationError : IJsonModel<OptimizationError>
     {
-        /// <summary> Initializes a new instance of <see cref="Error"/> for deserialization. </summary>
-        internal Error()
+        /// <summary> Initializes a new instance of <see cref="OptimizationError"/> for deserialization. </summary>
+        internal OptimizationError()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Error PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual OptimizationError PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Error>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OptimizationError>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeError(document.RootElement, options);
+                        return DeserializeOptimizationError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Error)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OptimizationError)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Error>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OptimizationError>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIAgentServerOptimizationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Error)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OptimizationError)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<Error>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<OptimizationError>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Error IPersistableModel<Error>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        OptimizationError IPersistableModel<OptimizationError>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<Error>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<OptimizationError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<Error>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<OptimizationError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -73,10 +73,10 @@ namespace Azure.AI.AgentServer.Optimization
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Error>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OptimizationError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Error)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(OptimizationError)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Code))
             {
@@ -103,7 +103,7 @@ namespace Azure.AI.AgentServer.Optimization
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
-                foreach (Error item in Details)
+                foreach (OptimizationError item in Details)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -174,24 +174,24 @@ namespace Azure.AI.AgentServer.Optimization
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Error IJsonModel<Error>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        OptimizationError IJsonModel<OptimizationError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Error JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual OptimizationError JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Error>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OptimizationError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Error)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(OptimizationError)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeError(document.RootElement, options);
+            return DeserializeOptimizationError(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static Error DeserializeError(JsonElement element, ModelReaderWriterOptions options)
+        internal static OptimizationError DeserializeOptimizationError(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -201,7 +201,7 @@ namespace Azure.AI.AgentServer.Optimization
             string message = default;
             string @param = default;
             string @type = default;
-            IList<Error> details = default;
+            IList<OptimizationError> details = default;
             IDictionary<string, BinaryData> additionalInfo = default;
             IDictionary<string, BinaryData> debugInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -243,10 +243,10 @@ namespace Azure.AI.AgentServer.Optimization
                     {
                         continue;
                     }
-                    List<Error> array = new List<Error>();
+                    List<OptimizationError> array = new List<OptimizationError>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeError(item, options));
+                        array.Add(DeserializeOptimizationError(item, options));
                     }
                     details = array;
                     continue;
@@ -298,12 +298,12 @@ namespace Azure.AI.AgentServer.Optimization
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new Error(
+            return new OptimizationError(
                 code,
                 message,
                 @param,
                 @type,
-                details ?? new ChangeTrackingList<Error>(),
+                details ?? new ChangeTrackingList<OptimizationError>(),
                 additionalInfo ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 debugInfo ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 additionalBinaryDataProperties);

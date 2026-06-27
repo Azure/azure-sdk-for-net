@@ -4,6 +4,8 @@
 using System;
 using Microsoft.Extensions.Configuration;
 
+#nullable enable
+
 namespace Azure.AI.AgentServer.Optimization.Configuration;
 
 /// <summary>

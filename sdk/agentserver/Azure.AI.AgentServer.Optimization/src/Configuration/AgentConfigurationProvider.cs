@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using Microsoft.Extensions.Configuration;
 
+#nullable enable
+
 namespace Azure.AI.AgentServer.Optimization.Configuration;
 
 /// <summary>
@@ -35,6 +37,8 @@ namespace Azure.AI.AgentServer.Optimization.Configuration;
 public class AgentConfigurationProvider : ConfigurationProvider
 {
     private readonly AgentConfigurationOptions _options;
+
+#nullable enable
 
     internal CandidateDeployConfig? ResolvedConfig { get; private set; }
 

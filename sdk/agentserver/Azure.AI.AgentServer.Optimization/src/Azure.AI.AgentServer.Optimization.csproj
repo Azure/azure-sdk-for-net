@@ -25,7 +25,13 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" />
     <PackageReference Include="System.ClientModel" />
   </ItemGroup>
-</Project>
 
+  <ItemGroup>
+    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="9.0.5" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.5" />
+  </ItemGroup>
+</Project>

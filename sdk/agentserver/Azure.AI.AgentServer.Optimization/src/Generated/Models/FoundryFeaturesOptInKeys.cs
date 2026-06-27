@@ -7,8 +7,8 @@
 
 namespace Azure.AI.AgentServer.Optimization
 {
-    /// <summary></summary>
-    public enum FoundryFeaturesOptInKeys
+    /// <summary> Feature opt-in keys for Foundry preview features. </summary>
+    internal enum FoundryFeaturesOptInKeys
     {
         /// <summary> EvaluationsV1Preview. </summary>
         EvaluationsV1Preview,

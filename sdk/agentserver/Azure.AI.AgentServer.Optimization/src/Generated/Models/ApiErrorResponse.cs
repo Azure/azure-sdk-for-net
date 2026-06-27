@@ -18,7 +18,7 @@ namespace Azure.AI.AgentServer.Optimization
 
         /// <summary> Initializes a new instance of <see cref="ApiErrorResponse"/>. </summary>
         /// <param name="error"></param>
-        internal ApiErrorResponse(Error error)
+        internal ApiErrorResponse(OptimizationError error)
         {
             Error = error;
         }
@@ -26,13 +26,13 @@ namespace Azure.AI.AgentServer.Optimization
         /// <summary> Initializes a new instance of <see cref="ApiErrorResponse"/>. </summary>
         /// <param name="error"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiErrorResponse(Error error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiErrorResponse(OptimizationError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Error = error;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the Error. </summary>
-        public Error Error { get; }
+        /// <summary> Gets The OptimizationError. </summary>
+        public OptimizationError Error { get; }
     }
 }
