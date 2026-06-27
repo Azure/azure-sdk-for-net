@@ -557,6 +557,18 @@ namespace Azure.Messaging.EventHubs.Amqp
                     EventHubsEventSource.Log.AmqpConsumerLinkFaultCapture(EventHubName, ConsumerGroup, PartitionId, linkException.Message);
                     _activePartitionStolenException = linkException;
                 }
+                else if (InvalidateConsumerWhenPartitionStolen && IsMaskedPartitionStolenException(linkException))
+                {
+                    // For an exclusive consumer (the processor), a partition steal can be masked by a
+                    // connection-level fault rather than an explicit link steal; in that case the link
+                    // closes with a connection-level fault or no terminal exception at all.  Capture it
+                    // as a disconnect so that the next operation faults and the load balancer
+                    // re-arbitrates ownership rather than silently re-opening a competing link.
+
+                    var maskedException = new EventHubsException(EventHubName, "The consumer was disconnected by a connection-level fault, which may mask a partition steal; the consumer will be invalidated so that ownership can be re-arbitrated.", EventHubsException.FailureReason.ConsumerDisconnected, linkException);
+                    EventHubsEventSource.Log.AmqpConsumerLinkFaultCapture(EventHubName, ConsumerGroup, PartitionId, maskedException.Message);
+                    _activePartitionStolenException = maskedException;
+                }
             }
 
             // Close the link and it's associated session.
@@ -580,6 +592,26 @@ namespace Azure.Messaging.EventHubs.Amqp
             {
                 null => null,
                 _ => link.TerminalException
+            };
+
+        /// <summary>
+        ///   Determines whether a terminal exception that closed the link asynchronously represents a
+        ///   partition steal that was masked by a connection-level fault rather than an explicit link
+        ///   steal.  Only a missing terminal exception or a connection-level AMQP fault qualifies; an
+        ///   exception already classified as a specific transient condition is left to the normal
+        ///   self-healing flow.
+        /// </summary>
+        ///
+        /// <param name="linkException">The terminal exception that closed the link, if any.</param>
+        ///
+        /// <returns><c>true</c> if <paramref name="linkException" /> represents a masked partition steal; otherwise, <c>false</c>.</returns>
+        ///
+        private static bool IsMaskedPartitionStolenException(Exception linkException) =>
+            linkException switch
+            {
+                null => true,
+                AmqpException => true,
+                _ => false
             };
     }
 }

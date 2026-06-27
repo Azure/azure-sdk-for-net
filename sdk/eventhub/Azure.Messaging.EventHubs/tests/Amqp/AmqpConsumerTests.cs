@@ -51,6 +51,18 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   The set of test cases for terminal exceptions that mask a partition steal for an
+        ///   exclusive consumer; namely, a missing terminal exception or a connection-level fault.
+        /// </summary>
+        ///
+        public static IEnumerable<object[]> MaskedPartitionStolenTestCases()
+        {
+            yield return new object[] { null };
+            yield return new object[] { new AmqpException(new Error { Condition = AmqpErrorCode.ConnectionForced }) };
+            yield return new object[] { new AmqpException(AmqpErrorCode.FramingError, "The connection framing was invalid.") };
+        }
+
+        /// <summary>
         ///   Verifies functionality of the constructor.
         /// </summary>
         ///
@@ -617,6 +629,90 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 mockConsumer.InvokeCloseConsumerLink(link);
                 Assert.That(GetActivePartitionStolenException(mockConsumer), Is.Null);
+            }
+            finally
+            {
+                link?.SafeClose();
+            }
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpConsumer.CloseConsumerLink "/>
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(MaskedPartitionStolenTestCases))]
+        public async Task CloseConsumerLinkCapturesAMaskedPartitionStealForExclusiveConsumers(Exception terminalException)
+        {
+            var eventHub = "fake-hub";
+            var link = new ReceivingAmqpLink(new AmqpLinkSettings());
+            var mockConsumer = new MockAmqpConsumer(eventHub, true, terminalException);
+            var capturedException = default(Exception);
+
+            try
+            {
+                mockConsumer.InvokeCloseConsumerLink(link);
+
+                // The masked steal should be captured as a disconnect so that it can be surfaced
+                // when the next link creation is requested.
+
+                var activeException = GetActivePartitionStolenException(mockConsumer);
+                Assert.That(activeException, Is.InstanceOf<EventHubsException>(), "The captured exception should be an EventHubsException.");
+                Assert.That(((EventHubsException)activeException).Reason, Is.EqualTo(EventHubsException.FailureReason.ConsumerDisconnected), "The captured exception should indicate that the consumer was disconnected.");
+
+                try
+                {
+                    await mockConsumer.InvokeCreateConsumerLinkAsync("cg", "0", "fake-id", EventPosition.Earliest, 300, null, 34, true, TimeSpan.FromSeconds(30), CancellationToken.None);
+                }
+                catch (Exception ex)
+                {
+                    capturedException = ex;
+                }
+
+                Assert.That(capturedException, Is.InstanceOf<EventHubsException>(), "The captured steal should be surfaced on the next link creation.");
+                Assert.That(((EventHubsException)capturedException).Reason, Is.EqualTo(EventHubsException.FailureReason.ConsumerDisconnected), "The surfaced exception should indicate that the consumer was disconnected.");
+
+                // Because the steal was surfaced, the consumer should not attempt to re-open a competing link.
+
+                mockConsumer.MockConnectionScope
+                   .Verify(scope => scope.OpenConsumerLinkAsync(
+                       It.IsAny<string>(),
+                       It.IsAny<string>(),
+                       It.IsAny<EventPosition>(),
+                       It.IsAny<TimeSpan>(),
+                       It.IsAny<TimeSpan>(),
+                       It.IsAny<uint>(),
+                       It.IsAny<long?>(),
+                       It.IsAny<long?>(),
+                       It.IsAny<bool>(),
+                       It.IsAny<string>(),
+                       It.IsAny<CancellationToken>()),
+                   Times.Never);
+            }
+            finally
+            {
+                link?.SafeClose();
+            }
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpConsumer.CloseConsumerLink "/>
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(MaskedPartitionStolenTestCases))]
+        public void CloseConsumerLinkIgnoresMaskedStealsForNonExclusiveConsumers(Exception terminalException)
+        {
+            var eventHub = "fake-hub";
+            var link = new ReceivingAmqpLink(new AmqpLinkSettings());
+            var mockConsumer = new MockAmqpConsumer(eventHub, false, terminalException);
+
+            try
+            {
+                mockConsumer.InvokeCloseConsumerLink(link);
+                Assert.That(GetActivePartitionStolenException(mockConsumer), Is.Null, "A non-exclusive consumer should not capture a masked steal.");
             }
             finally
             {
