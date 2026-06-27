@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.6 (Unreleased)
+## 1.1.0 (2026-06-28)
 
 ### Features Added
 
@@ -13,6 +13,8 @@
 ### Other Changes
 
 - Migrated SDK from AutoRest/Swagger to TypeSpec-based generation.
+- Upgraded dependent Azure.Core to 1.59.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
 
 ## 1.1.0-beta.5 (2025-08-21)
 
