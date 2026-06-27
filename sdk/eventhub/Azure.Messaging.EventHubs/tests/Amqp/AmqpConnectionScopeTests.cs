@@ -2286,6 +2286,82 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpConnectionScope.CloseConnection" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CloseConnectionForciblyAbortsAConnectionThatStallsClosing()
+        {
+            var endpoint = new Uri("amqp://test.service.gov");
+            var eventHub = "myHub";
+            var transport = EventHubsTransportType.AmqpTcp;
+            var idleTimeout = TimeSpan.FromSeconds(30);
+            var grace = TimeSpan.FromMilliseconds(250);
+            var mockCredential = new Mock<TokenCredential>();
+            var mockEventHubsCredential = new Mock<EventHubTokenCredential>(mockCredential.Object);
+            using var scope = new AbortFallbackMockScope(endpoint, endpoint, eventHub, mockEventHubsCredential.Object, transport, idleTimeout, grace);
+
+            var connectionTransport = new ObservableTransport();
+            var connection = new ObservableAmqpConnection(connectionTransport, closeCompletesSynchronously: false);
+
+            // Simulate a connection that has completed negotiation and whose graceful close stalls; the
+            // SafeClose performed by CloseConnection leaves it in the CloseSent state, never reaching End.
+
+            connection.ForceState(AmqpObjectState.Opened);
+
+            var abortCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            connection.Closed += (_, _) => abortCompletionSource.TrySetResult(true);
+
+            scope.InvokeCloseConnection(connection);
+
+            Assert.That(connection.State, Is.EqualTo(AmqpObjectState.CloseSent), "The graceful close should have left the connection stalled in the CloseSent state.");
+
+            var completed = await Task.WhenAny(abortCompletionSource.Task, Task.Delay(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit));
+            Assert.That(completed, Is.SameAs(abortCompletionSource.Task), "The fallback should have aborted the stalled connection within the time limit.");
+
+            Assert.That(connection.State, Is.EqualTo(AmqpObjectState.End), "The fallback abort should have transitioned the connection to the End state.");
+            Assert.That(connectionTransport.AbortCount, Is.EqualTo(1), "The fallback should have forcibly aborted the underlying transport exactly once.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpConnectionScope.CloseConnection" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CloseConnectionDoesNotAbortAConnectionThatClosesGracefully()
+        {
+            var endpoint = new Uri("amqp://test.service.gov");
+            var eventHub = "myHub";
+            var transport = EventHubsTransportType.AmqpTcp;
+            var idleTimeout = TimeSpan.FromSeconds(30);
+            var grace = TimeSpan.FromMilliseconds(250);
+            var mockCredential = new Mock<TokenCredential>();
+            var mockEventHubsCredential = new Mock<EventHubTokenCredential>(mockCredential.Object);
+            using var scope = new AbortFallbackMockScope(endpoint, endpoint, eventHub, mockEventHubsCredential.Object, transport, idleTimeout, grace);
+
+            var connectionTransport = new ObservableTransport();
+            var connection = new ObservableAmqpConnection(connectionTransport, closeCompletesSynchronously: true);
+
+            // Simulate a connection whose graceful close completes synchronously; the SafeClose performed
+            // by CloseConnection should transition it to End before the grace period elapses.
+
+            connection.ForceState(AmqpObjectState.Opened);
+
+            scope.InvokeCloseConnection(connection);
+            Assert.That(connection.State, Is.EqualTo(AmqpObjectState.End), "The graceful close should have transitioned the connection to the End state.");
+
+            // Allow more than the grace period to elapse to confirm that the fallback observes the End
+            // state and does not abort.
+
+            await Task.Delay(grace + grace + TimeSpan.FromMilliseconds(250));
+
+            Assert.That(connection.State, Is.EqualTo(AmqpObjectState.End), "The connection should remain in the End state.");
+            Assert.That(connectionTransport.AbortCount, Is.EqualTo(0), "The fallback should not have aborted a connection that closed gracefully.");
+        }
+
+        /// <summary>
         ///   Gets the active connection for the given scope, using the
         ///   private property accessor.
         /// </summary>
@@ -2391,6 +2467,71 @@ namespace Azure.Messaging.EventHubs.Tests
             public override bool WriteAsync(TransportAsyncCallbackArgs args) => throw new NotImplementedException();
             protected override void AbortInternal() => throw new NotImplementedException();
             protected override bool CloseInternal() => throw new NotImplementedException();
+        }
+
+        /// <summary>
+        ///   Provides a cooperative transport for testing connection teardown that records the number of
+        ///   times it is forcibly aborted.
+        /// </summary>
+        ///
+        private class ObservableTransport : TransportBase
+        {
+            private int _abortCount;
+
+            public ObservableTransport() : base("Observable") { }
+            public int AbortCount => Volatile.Read(ref _abortCount);
+            public override string LocalEndPoint { get; }
+            public override string RemoteEndPoint { get; }
+            public override bool ReadAsync(TransportAsyncCallbackArgs args) => false;
+            public override void SetMonitor(ITransportMonitor usageMeter) { }
+            public override bool WriteAsync(TransportAsyncCallbackArgs args) => false;
+            protected override void AbortInternal() => Interlocked.Increment(ref _abortCount);
+            protected override bool CloseInternal() => true;
+        }
+
+        /// <summary>
+        ///   Provides a connection whose graceful close behavior can be controlled and whose state can be
+        ///   forced for testing teardown.
+        /// </summary>
+        ///
+        private class ObservableAmqpConnection : AmqpConnection
+        {
+            private readonly bool _closeCompletesSynchronously;
+
+            public ObservableAmqpConnection(TransportBase transport,
+                                            bool closeCompletesSynchronously) : base(transport, CreateMockAmqpSettings(), new AmqpConnectionSettings())
+            {
+                _closeCompletesSynchronously = closeCompletesSynchronously;
+            }
+
+            public void ForceState(AmqpObjectState state) => State = state;
+
+            protected override bool CloseInternal() => _closeCompletesSynchronously || base.CloseInternal();
+        }
+
+        /// <summary>
+        ///   Provides a scope that exposes <see cref="AmqpConnectionScope.CloseConnection" /> and shortens
+        ///   the grace period before a stalled connection is forcibly aborted.
+        /// </summary>
+        ///
+        private class AbortFallbackMockScope : AmqpConnectionScope
+        {
+            private readonly TimeSpan _gracePeriod;
+
+            public AbortFallbackMockScope(Uri serviceEndpoint,
+                                          Uri connectionEndpoint,
+                                          string eventHubName,
+                                          EventHubTokenCredential credential,
+                                          EventHubsTransportType transport,
+                                          TimeSpan idleTimeout,
+                                          TimeSpan gracePeriod) : base(serviceEndpoint, connectionEndpoint, eventHubName, credential, transport, null, idleTimeout)
+            {
+                _gracePeriod = gracePeriod;
+            }
+
+            protected override TimeSpan ConnectionCloseGracePeriod => _gracePeriod;
+
+            public void InvokeCloseConnection(AmqpConnection connection) => base.CloseConnection(connection);
         }
 
         /// <summary>
