@@ -65,16 +65,6 @@ namespace Azure.AI.Extensions.OpenAI
             return new CustomGrammarFormatParam(CustomToolParamFormatType.Grammar, additionalBinaryDataProperties: null, syntax, definition);
         }
 
-        /// <summary> The LocalSkillParam. </summary>
-        /// <param name="name"> The name of the skill. </param>
-        /// <param name="description"> The description of the skill. </param>
-        /// <param name="path"> The path to the directory containing the skill. </param>
-        /// <returns> A new <see cref="Internal.LocalSkillParam"/> instance for mocking. </returns>
-        public static LocalSkillParam LocalSkillParam(string name = default, string description = default, string path = default)
-        {
-            return new LocalSkillParam(name, description, path, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> The input definition information for a bing grounding search tool as used to configure an agent. </summary>
         /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
@@ -736,6 +726,16 @@ namespace Azure.AI.Extensions.OpenAI
             return new ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam(FunctionShellToolParamEnvironmentType.Local, additionalBinaryDataProperties: null, skills.ToList());
         }
 
+        /// <summary> The LocalSkillParam. </summary>
+        /// <param name="name"> The name of the skill. </param>
+        /// <param name="description"> The description of the skill. </param>
+        /// <param name="path"> The path to the directory containing the skill. </param>
+        /// <returns> A new <see cref="Internal.LocalSkillParam"/> instance for mocking. </returns>
+        public static LocalSkillParam LocalSkillParam(string name = default, string description = default, string path = default)
+        {
+            return new LocalSkillParam(name, description, path, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam. </summary>
         /// <param name="containerId"> The ID of the referenced container. </param>
         /// <returns> A new <see cref="OpenAI.ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam"/> instance for mocking. </returns>
@@ -841,21 +841,6 @@ namespace Azure.AI.Extensions.OpenAI
         public static ResponsesToolSearchToolParam ResponsesToolSearchToolParam(ToolSearchExecutionType? execution = default, string description = default, ResponsesEmptyModelParam parameters = default)
         {
             return new ResponsesToolSearchToolParam("tool_search", execution, description, parameters, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The ProjectConversation. </summary>
-        /// <param name="id"> The unique ID of the conversation. </param>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be         useful for storing additional information about the object in a structured         format, and querying for objects via API or the dashboard.
-        ///   Keys are strings with a maximum length of 64 characters. Values are strings         with a maximum length of 512 characters.
-        /// </param>
-        /// <param name="createdAt"> The time at which the conversation was created, measured in seconds since the Unix epoch. </param>
-        /// <returns> A new <see cref="OpenAI.ProjectConversation"/> instance for mocking. </returns>
-        public static ProjectConversation ProjectConversation(string id = default, IDictionary<string, string> metadata = default, DateTimeOffset createdAt = default)
-        {
-            metadata ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ProjectConversation(id, "conversation", metadata, createdAt, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The AgentReference. </summary>
@@ -1473,6 +1458,21 @@ namespace Azure.AI.Extensions.OpenAI
                 internalConsentLink,
                 serverLabel,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The ProjectConversation. </summary>
+        /// <param name="id"> The unique ID of the conversation. </param>
+        /// <param name="metadata">
+        /// Set of 16 key-value pairs that can be attached to an object. This can be         useful for storing additional information about the object in a structured         format, and querying for objects via API or the dashboard.
+        ///   Keys are strings with a maximum length of 64 characters. Values are strings         with a maximum length of 512 characters.
+        /// </param>
+        /// <param name="createdAt"> The time at which the conversation was created, measured in seconds since the Unix epoch. </param>
+        /// <returns> A new <see cref="OpenAI.ProjectConversation"/> instance for mocking. </returns>
+        public static ProjectConversation ProjectConversation(string id = default, IDictionary<string, string> metadata = default, DateTimeOffset createdAt = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ProjectConversation(id, "conversation", metadata, createdAt, additionalBinaryDataProperties: null);
         }
     }
 }

@@ -3,7 +3,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -57,14 +56,6 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ProjectConversation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="ProjectConversation"/> from. </param>
-        public static explicit operator ProjectConversation(ClientResult result)
-        {
-            PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeProjectConversation(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
