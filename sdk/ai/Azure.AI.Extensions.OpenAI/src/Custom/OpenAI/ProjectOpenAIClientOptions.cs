@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel;
+using System.ComponentModel;
 using OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI;
@@ -12,6 +13,7 @@ public partial class ProjectOpenAIClientOptions : OpenAIClientOptions
     private string _apiVersion;
 
     /// <summary> Gets or sets the API version used for project OpenAI requests. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public string ApiVersion
     {
         get => _apiVersion;

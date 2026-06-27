@@ -15,6 +15,7 @@
 ### Other Changes
 
 - Agent endpoint clients now target the `endpoint/protocols/openai/v1` route and no longer append an `api-version` query parameter.
+- Hid the now-unused `ProjectOpenAIClientOptions.ApiVersion` property.
 - Marked `GetProjectResponsesClientForAgent` as non-browsable in favor of `GetProjectResponsesClientForAgentEndpoint`.
 
 ## 2.1.0-beta.3 (2026-05-29)

@@ -206,7 +206,8 @@ public partial class ProjectOpenAIClient : OpenAIClient
     {
         Match match = new Regex(@"(?<=/projects/)([^/]+)(?=[/?]|$)").Match(_options.Endpoint.LocalPath);
         string project = string.IsNullOrEmpty(match.Value) ? "_default" : match.Value;
-        return new Uri($"{_options.Endpoint.Scheme}://{_options.Endpoint.Host}/api/projects/{project}/agents/{agentName}/endpoint/protocols/openai/v1");
+        string authority = _options.Endpoint.GetLeftPart(UriPartial.Authority);
+        return new Uri($"{authority}/api/projects/{project}/agents/{Uri.EscapeDataString(agentName)}/endpoint/protocols/openai/v1");
     }
 
     internal static ClientPipeline CreatePipeline(AuthenticationPolicy authenticationPolicy, ProjectOpenAIClientOptions options)
