@@ -121,6 +121,11 @@ namespace Azure.AI.Projects.Agents
             writer.WriteNumberValue(CreatedAt, "U");
             writer.WritePropertyName("definition"u8);
             writer.WriteObjectValue(Definition, options);
+            if (Optional.IsDefined(Draft))
+            {
+                writer.WritePropertyName("draft"u8);
+                writer.WriteBooleanValue(Draft.Value);
+            }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -196,6 +201,7 @@ namespace Azure.AI.Projects.Agents
             string description = default;
             DateTimeOffset createdAt = default;
             ProjectsAgentDefinition definition = default;
+            bool? draft = default;
             AgentVersionStatus? status = default;
             AgentIdentity instanceIdentity = default;
             AgentIdentity blueprint = default;
@@ -261,6 +267,15 @@ namespace Azure.AI.Projects.Agents
                     definition = ProjectsAgentDefinition.DeserializeProjectsAgentDefinition(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("draft"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    draft = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (prop.NameEquals("status"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -316,6 +331,7 @@ namespace Azure.AI.Projects.Agents
                 description,
                 createdAt,
                 definition,
+                draft,
                 status,
                 instanceIdentity,
                 blueprint,

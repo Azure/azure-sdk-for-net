@@ -360,7 +360,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(toolBox.Description, Is.EqualTo($"{toolType}"));
         Assert.That(toolBox.Tools.Count, Is.EqualTo(1));
         Assert.That(toolBox.Tools[0].GetType(), Is.EqualTo(tool.GetType()));
-        // Use trhe tool to create an Agent
+        // Use the tool to create an Agent
         DeclarativeAgentDefinition definition = new(TestEnvironment.FOUNDRY_MODEL_NAME)
         {
             Tools = { ProjectsAgentTool.AsProjectTool(toolBox.Tools[0]) }

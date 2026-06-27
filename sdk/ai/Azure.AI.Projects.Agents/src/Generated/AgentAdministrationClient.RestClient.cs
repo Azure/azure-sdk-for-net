@@ -303,7 +303,7 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateGetAgentVersionsRequest(string agentName, int? limit, string order, string after, string before, RequestOptions options)
+        internal PipelineMessage CreateGetAgentVersionsRequest(string agentName, int? limit, string order, string after, string before, string foundryFeatures, bool? includeDrafts, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -326,12 +326,20 @@ namespace Azure.AI.Projects.Agents
             {
                 uri.AppendQuery("before", before, true);
             }
+            if (includeDrafts != null)
+            {
+                uri.AppendQuery("include_drafts", TypeFormatters.ConvertToString(includeDrafts), true);
+            }
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
+            if (foundryFeatures != null)
+            {
+                request.Headers.Set("Foundry-Features", foundryFeatures);
+            }
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
             return message;

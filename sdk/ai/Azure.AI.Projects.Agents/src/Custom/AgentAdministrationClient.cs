@@ -10,6 +10,7 @@ using System.ComponentModel;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.Agents;
@@ -18,8 +19,8 @@ using OpenAI;
 
 namespace Azure.AI.Projects.Agents;
 
-[CodeGenSuppress("CreateAgent", typeof(string), typeof(ProjectsAgentDefinition), typeof(AgentState?), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(AgentEndpointConfiguration), typeof(AgentCard), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
-[CodeGenSuppress("CreateAgentAsync", typeof(string), typeof(ProjectsAgentDefinition), typeof(AgentState?), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(AgentEndpointConfiguration), typeof(AgentCard), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAgent", typeof(string), typeof(ProjectsAgentDefinition), typeof(AgentState?), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(bool?), typeof(AgentEndpointConfiguration), typeof(AgentCard), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAgentAsync", typeof(string), typeof(ProjectsAgentDefinition), typeof(AgentState?), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(bool?), typeof(AgentEndpointConfiguration), typeof(AgentCard), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
 [CodeGenSuppress("CreateAgentFromManifest", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("CreateAgentFromManifestAsync", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("CreateAgentVersionFromManifest", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
@@ -34,11 +35,13 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenSuppress("UpdateAgentFromCodeAsync", typeof(string), typeof(string), typeof(CreateAgentVersionFromCodeContent), typeof(CancellationToken))]
 [CodeGenSuppress("GetAgents", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetAgentsAsync", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
-[CodeGenSuppress("GetAgentVersions", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
-[CodeGenSuppress("GetAgentVersionsAsync", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenSuppress("GetAgentVersions", typeof(string), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(bool?), typeof(CancellationToken))]
+[CodeGenSuppress("GetAgentVersionsAsync", typeof(string), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(bool?), typeof(CancellationToken))]
+[CodeGenSuppress("GetAgentVersions", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(RequestOptions))]
+[CodeGenSuppress("GetAgentVersionsAsync", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(RequestOptions))]
 [CodeGenSuppress("GetInternalAgentResponsesClient")]
-[CodeGenSuppress("CreateAgentVersion", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
-[CodeGenSuppress("CreateAgentVersionAsync", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAgentVersion", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(bool?), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAgentVersionAsync", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(bool?), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
 [CodeGenSuppress("UpdateAgent", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
 [CodeGenSuppress("UpdateAgentAsync", typeof(string), typeof(ProjectsAgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentBlueprintReference), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
 [CodeGenSuppress("UpdateAgentFromManifest", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
@@ -310,18 +313,57 @@ public partial class AgentAdministrationClient
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual CollectionResult<ProjectsAgentVersion> GetAgentVersions(string agentName, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
+        return GetAgentVersions(
+            agentName: agentName,
+            limit: limit,
+            order: order,
+            after: after,
+            before: before,
+            includeDrafts: default,
+            cancellationToken: cancellationToken);
+    }
+
+    /// <summary> Returns the list of versions of an agent. </summary>
+    /// <param name="includeDrafts"> (Preview) Whether to include draft versions in the listing. The service defaults to `false` if a value is not specified by the caller (only non-draft versions are returned). </param>
+    /// <param name="agentName"> The name of the agent to retrieve versions for. </param>
+    /// <param name="limit">
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+    /// default is 20.
+    /// </param>
+    /// <param name="order">
+    /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+    /// for descending order.
+    /// </param>
+    /// <param name="after">
+    /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+    /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+    /// </param>
+    /// <param name="before">
+    /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+    /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+    /// </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual CollectionResult<ProjectsAgentVersion> GetAgentVersions(bool? includeDrafts, string agentName, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
         return new InternalOpenAICollectionResultOfT<ProjectsAgentVersion>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
                 => CreateGetAgentVersionsRequest(
-                    localCollectionOptions.ParentResourceId,
-                    localCollectionOptions.Limit,
-                    localCollectionOptions.Order,
-                    localCollectionOptions.AfterId,
-                    localCollectionOptions.BeforeId,
-                    localRequestOptions),
+                    agentName: localCollectionOptions.ParentResourceId,
+                    foundryFeatures: default,
+                    limit: localCollectionOptions.Limit,
+                    order: localCollectionOptions.Order,
+                    after: localCollectionOptions.AfterId,
+                    before: localCollectionOptions.BeforeId,
+                    includeDrafts: includeDrafts,
+                    options: localRequestOptions),
             dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<ProjectsAgentVersion>(e, o),
             new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before)
             {
@@ -356,18 +398,56 @@ public partial class AgentAdministrationClient
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual AsyncCollectionResult<ProjectsAgentVersion> GetAgentVersionsAsync(string agentName, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
+        return GetAgentVersionsAsync(
+            agentName: agentName,
+            limit: limit,
+            order: order,
+            after: after,
+            before: before,
+            includeDrafts: default,
+            cancellationToken: cancellationToken);
+    }
+    /// <summary> Returns the list of versions of an agent. </summary>
+    /// <param name = "includeDrafts" > (Preview)Whether to include draft versions in the listing.The service defaults to `false` if a value is not specified by the caller (only non-draft versions are returned). </param>
+    /// <param name="agentName"> The name of the agent to retrieve versions for. </param>
+    /// <param name="limit">
+    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+    /// default is 20.
+    /// </param>
+    /// <param name="order">
+    /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+    /// for descending order.
+    /// </param>
+    /// <param name="after">
+    /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+    /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+    /// </param>
+    /// <param name="before">
+    /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+    /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+    /// </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual AsyncCollectionResult<ProjectsAgentVersion> GetAgentVersionsAsync(bool? includeDrafts, string agentName, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
         return new InternalOpenAIAsyncCollectionResultOfT<ProjectsAgentVersion>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
                 => CreateGetAgentVersionsRequest(
-                    localCollectionOptions.ParentResourceId,
-                    localCollectionOptions.Limit,
-                    localCollectionOptions.Order,
-                    localCollectionOptions.AfterId,
-                    localCollectionOptions.BeforeId,
-                    localRequestOptions),
+                    agentName: localCollectionOptions.ParentResourceId,
+                    foundryFeatures: default,
+                    limit: localCollectionOptions.Limit,
+                    order: localCollectionOptions.Order,
+                    after: localCollectionOptions.AfterId,
+                    before: localCollectionOptions.BeforeId,
+                    includeDrafts: includeDrafts,
+                    options: localRequestOptions),
             dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<ProjectsAgentVersion>(e, o),
             new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before)
             {

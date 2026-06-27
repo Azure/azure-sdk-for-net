@@ -50,11 +50,37 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The input definition information for a bing grounding search tool as used to configure an agent. </summary>
+        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="bingGrounding"> The bing grounding search tool parameters. </param>
         /// <returns> A new <see cref="OpenAI.ResponsesBingGroundingTool"/> instance for mocking. </returns>
-        public static ResponsesBingGroundingTool ResponsesBingGroundingTool(ResponsesBingGroundingSearchToolParameters bingGrounding = default)
+        public static ResponsesBingGroundingTool ResponsesBingGroundingTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, ResponsesBingGroundingSearchToolParameters bingGrounding = default)
         {
-            return new ResponsesBingGroundingTool(ToolType.BingGrounding, additionalBinaryDataProperties: null, bingGrounding);
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new ResponsesBingGroundingTool(
+                ToolType.BingGrounding,
+                additionalBinaryDataProperties: null,
+                name,
+                description,
+                toolConfigs,
+                bingGrounding);
+        }
+
+        /// <summary> Per-tool configuration that controls tool visibility and search behavior. </summary>
+        /// <param name="pin">
+        /// When true, the tool is always included in agent context and visible in `tools/list`.
+        /// When false (default), the tool is hidden from `tools/list` and only discoverable via `tool_search`.
+        /// </param>
+        /// <param name="additionalSearchText">
+        /// Additional text indexed for tool_search. Supplements the native tool description
+        /// to improve discoverability. Does not alter `tools/list` output.
+        /// </param>
+        /// <returns> A new <see cref="OpenAI.ToolConfig"/> instance for mocking. </returns>
+        public static ToolConfig ToolConfig(bool? pin = default, string additionalSearchText = default)
+        {
+            return new ToolConfig(pin, additionalSearchText, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The bing grounding search tool parameters. </summary>
@@ -139,11 +165,22 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The input definition information for an Azure AI search tool as used to configure an agent. </summary>
+        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="azureAISearch"> The azure ai search index resource. </param>
         /// <returns> A new <see cref="OpenAI.ResponsesAzureAISearchTool"/> instance for mocking. </returns>
-        public static ResponsesAzureAISearchTool ResponsesAzureAISearchTool(ResponsesAzureAISearchToolResource azureAISearch = default)
+        public static ResponsesAzureAISearchTool ResponsesAzureAISearchTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, ResponsesAzureAISearchToolResource azureAISearch = default)
         {
-            return new ResponsesAzureAISearchTool(ToolType.AzureAiSearch, additionalBinaryDataProperties: null, azureAISearch);
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new ResponsesAzureAISearchTool(
+                ToolType.AzureAiSearch,
+                additionalBinaryDataProperties: null,
+                name,
+                description,
+                toolConfigs,
+                azureAISearch);
         }
 
         /// <summary> A set of index resources used by the `azure_ai_search` tool. </summary>
@@ -180,11 +217,14 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The input definition information for an OpenAPI tool as used to configure an agent. </summary>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="openApi"> The openapi function definition. </param>
         /// <returns> A new <see cref="OpenAI.ResponsesOpenApiTool"/> instance for mocking. </returns>
-        public static ResponsesOpenApiTool ResponsesOpenApiTool(ResponsesOpenApiFunctionDefinition openApi = default)
+        public static ResponsesOpenApiTool ResponsesOpenApiTool(IDictionary<string, ToolConfig> toolConfigs = default, ResponsesOpenApiFunctionDefinition openApi = default)
         {
-            return new ResponsesOpenApiTool(ToolType.Openapi, additionalBinaryDataProperties: null, openApi);
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new ResponsesOpenApiTool(ToolType.Openapi, additionalBinaryDataProperties: null, toolConfigs, openApi);
         }
 
         /// <summary> The input definition information for an openapi function. </summary>
@@ -339,11 +379,14 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The input definition information for an Azure Function Tool, as used to configure an Agent. </summary>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="azureFunction"> The Azure Function Tool definition. </param>
         /// <returns> A new <see cref="OpenAI.ResponsesAzureFunctionTool"/> instance for mocking. </returns>
-        public static ResponsesAzureFunctionTool ResponsesAzureFunctionTool(ResponsesAzureFunctionDefinition azureFunction = default)
+        public static ResponsesAzureFunctionTool ResponsesAzureFunctionTool(IDictionary<string, ToolConfig> toolConfigs = default, ResponsesAzureFunctionDefinition azureFunction = default)
         {
-            return new ResponsesAzureFunctionTool(ToolType.AzureFunction, additionalBinaryDataProperties: null, azureFunction);
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new ResponsesAzureFunctionTool(ToolType.AzureFunction, additionalBinaryDataProperties: null, toolConfigs, azureFunction);
         }
 
         /// <summary> The definition of Azure function. </summary>
@@ -386,11 +429,22 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> A tool for capturing structured outputs. </summary>
+        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="outputDefinition"> The structured outputs to capture from the model. </param>
         /// <returns> A new <see cref="OpenAI.ResponsesCaptureStructuredOutputsTool"/> instance for mocking. </returns>
-        public static ResponsesCaptureStructuredOutputsTool ResponsesCaptureStructuredOutputsTool(ResponsesStructuredOutputDefinition outputDefinition = default)
+        public static ResponsesCaptureStructuredOutputsTool ResponsesCaptureStructuredOutputsTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, ResponsesStructuredOutputDefinition outputDefinition = default)
         {
-            return new ResponsesCaptureStructuredOutputsTool(ToolType.CaptureStructuredOutputs, additionalBinaryDataProperties: null, outputDefinition);
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new ResponsesCaptureStructuredOutputsTool(
+                ToolType.CaptureStructuredOutputs,
+                additionalBinaryDataProperties: null,
+                name,
+                description,
+                toolConfigs,
+                outputDefinition);
         }
 
         /// <summary> A structured output that can be produced by the agent. </summary>
@@ -582,19 +636,27 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="filters"></param>
         /// <param name="userLocation"></param>
         /// <param name="searchContextSize"> High level guidance for the amount of context window space to use for the search. One of `low`, `medium`, or `high`. `medium` is the default. </param>
+        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="customSearchConfiguration">
         /// The project connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </param>
         /// <returns> A new <see cref="OpenAI.ResponsesWebSearchTool"/> instance for mocking. </returns>
-        public static ResponsesWebSearchTool ResponsesWebSearchTool(WebSearchToolFilters filters = default, ResponsesWebSearchApproximateLocation userLocation = default, ResponsesWebSearchToolSearchContextSize? searchContextSize = default, ResponsesWebSearchConfiguration customSearchConfiguration = default)
+        public static ResponsesWebSearchTool ResponsesWebSearchTool(WebSearchToolFilters filters = default, ResponsesWebSearchApproximateLocation userLocation = default, ResponsesWebSearchToolSearchContextSize? searchContextSize = default, string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, ResponsesWebSearchConfiguration customSearchConfiguration = default)
         {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
             return new ResponsesWebSearchTool(
                 ToolType.WebSearch,
                 additionalBinaryDataProperties: null,
                 filters,
                 userLocation,
                 searchContextSize,
+                name,
+                description,
+                toolConfigs,
                 customSearchConfiguration);
         }
 
@@ -635,18 +697,34 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Local shell tool. </summary>
+        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <returns> A new <see cref="OpenAI.ResponsesLocalShellToolParam"/> instance for mocking. </returns>
-        public static ResponsesLocalShellToolParam ResponsesLocalShellToolParam()
+        public static ResponsesLocalShellToolParam ResponsesLocalShellToolParam(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default)
         {
-            return new ResponsesLocalShellToolParam(ToolType.LocalShell, additionalBinaryDataProperties: null);
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new ResponsesLocalShellToolParam(ToolType.LocalShell, additionalBinaryDataProperties: null, name, description, toolConfigs);
         }
 
         /// <summary> Shell tool. </summary>
         /// <param name="environment"></param>
+        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <returns> A new <see cref="OpenAI.ResponsesFunctionShellToolParam"/> instance for mocking. </returns>
-        public static ResponsesFunctionShellToolParam ResponsesFunctionShellToolParam(ResponsesFunctionShellToolParamEnvironment environment = default)
+        public static ResponsesFunctionShellToolParam ResponsesFunctionShellToolParam(ResponsesFunctionShellToolParamEnvironment environment = default, string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default)
         {
-            return new ResponsesFunctionShellToolParam(ToolType.Shell, additionalBinaryDataProperties: null, environment);
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new ResponsesFunctionShellToolParam(
+                ToolType.Shell,
+                additionalBinaryDataProperties: null,
+                environment,
+                name,
+                description,
+                toolConfigs);
         }
 
         /// <summary>
