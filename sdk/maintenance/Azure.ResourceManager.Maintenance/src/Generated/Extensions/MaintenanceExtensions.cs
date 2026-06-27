@@ -39,21 +39,21 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MaintenancePublicConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="MaintenanceGroupApplyUpdateResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMaintenanceArmClient.GetMaintenancePublicConfigurationResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMaintenanceArmClient.GetMaintenanceGroupApplyUpdateResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MaintenancePublicConfigurationResource"/> object. </returns>
-        public static MaintenancePublicConfigurationResource GetMaintenancePublicConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MaintenanceGroupApplyUpdateResource"/> object. </returns>
+        public static MaintenanceGroupApplyUpdateResource GetMaintenanceGroupApplyUpdateResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMaintenanceArmClient(client).GetMaintenancePublicConfigurationResource(id);
+            return GetMockableMaintenanceArmClient(client).GetMaintenanceGroupApplyUpdateResource(id);
         }
 
         /// <summary>
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary>
-        /// Post Scheduled Event Acknowledgement
+        /// Post ScheduledEvents Acknowledgement
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableMaintenanceArmClient.AcknowledgeAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="scheduledEventId"> Scheduled Event Id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="scheduledEventId"> ScheduledEvents Id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static async Task<Response<MaintenanceScheduledEventApproveResult>> AcknowledgeAsync(this ArmClient client, ResourceIdentifier scope, string scheduledEventId, CancellationToken cancellationToken = default)
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary>
-        /// Post Scheduled Event Acknowledgement
+        /// Post ScheduledEvents Acknowledgement
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableMaintenanceArmClient.Acknowledge(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="scheduledEventId"> Scheduled Event Id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="scheduledEventId"> ScheduledEvents Id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static Response<MaintenanceScheduledEventApproveResult> Acknowledge(this ArmClient client, ResourceIdentifier scope, string scheduledEventId, CancellationToken cancellationToken = default)
@@ -450,6 +450,44 @@ namespace Azure.ResourceManager.Maintenance
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMaintenanceArmClient(client).Acknowledge(scope, scheduledEventId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Post List of ScheduledEvents Acknowledgement
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableMaintenanceArmClient.AcknowledgeListAsync(ResourceIdentifier, MaintenanceScheduledEventIdList, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="scheduledEventsIdList"> List of ScheduledEvents Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static async Task<Response<MaintenanceScheduledEventApproveResult>> AcknowledgeListAsync(this ArmClient client, ResourceIdentifier scope, MaintenanceScheduledEventIdList scheduledEventsIdList, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableMaintenanceArmClient(client).AcknowledgeListAsync(scope, scheduledEventsIdList, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Post List of ScheduledEvents Acknowledgement
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableMaintenanceArmClient.AcknowledgeList(ResourceIdentifier, MaintenanceScheduledEventIdList, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="scheduledEventsIdList"> List of ScheduledEvents Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static Response<MaintenanceScheduledEventApproveResult> AcknowledgeList(this ArmClient client, ResourceIdentifier scope, MaintenanceScheduledEventIdList scheduledEventsIdList, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMaintenanceArmClient(client).AcknowledgeList(scope, scheduledEventsIdList, cancellationToken);
         }
 
         /// <summary>
@@ -747,27 +785,27 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary>
-        /// Gets a collection of MaintenancePublicConfigurations in the <see cref="SubscriptionResource"/>
+        /// Gets a collection of MaintenanceGroupApplyUpdates in the <see cref="SubscriptionResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMaintenanceSubscriptionResource.GetMaintenancePublicConfigurations()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMaintenanceSubscriptionResource.GetMaintenanceGroupApplyUpdates()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of MaintenancePublicConfigurations and their operations over a MaintenancePublicConfigurationResource. </returns>
-        public static MaintenancePublicConfigurationCollection GetMaintenancePublicConfigurations(this SubscriptionResource subscriptionResource)
+        /// <returns> An object representing collection of MaintenanceGroupApplyUpdates and their operations over a MaintenanceGroupApplyUpdateResource. </returns>
+        public static MaintenanceGroupApplyUpdateCollection GetMaintenanceGroupApplyUpdates(this SubscriptionResource subscriptionResource)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMaintenanceSubscriptionResource(subscriptionResource).GetMaintenancePublicConfigurations();
+            return GetMockableMaintenanceSubscriptionResource(subscriptionResource).GetMaintenanceGroupApplyUpdates();
         }
 
         /// <summary>
         /// Get Public Maintenance Configuration record
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMaintenanceSubscriptionResource.GetMaintenancePublicConfigurationAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMaintenanceSubscriptionResource.GetMaintenanceGroupApplyUpdateAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -775,18 +813,18 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<MaintenancePublicConfigurationResource>> GetMaintenancePublicConfigurationAsync(this SubscriptionResource subscriptionResource, string resourceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<MaintenanceGroupApplyUpdateResource>> GetMaintenanceGroupApplyUpdateAsync(this SubscriptionResource subscriptionResource, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableMaintenanceSubscriptionResource(subscriptionResource).GetMaintenancePublicConfigurationAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMaintenanceSubscriptionResource(subscriptionResource).GetMaintenanceGroupApplyUpdateAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get Public Maintenance Configuration record
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMaintenanceSubscriptionResource.GetMaintenancePublicConfiguration(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMaintenanceSubscriptionResource.GetMaintenanceGroupApplyUpdate(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -794,11 +832,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<MaintenancePublicConfigurationResource> GetMaintenancePublicConfiguration(this SubscriptionResource subscriptionResource, string resourceName, CancellationToken cancellationToken = default)
+        public static Response<MaintenanceGroupApplyUpdateResource> GetMaintenanceGroupApplyUpdate(this SubscriptionResource subscriptionResource, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMaintenanceSubscriptionResource(subscriptionResource).GetMaintenancePublicConfiguration(resourceName, cancellationToken);
+            return GetMockableMaintenanceSubscriptionResource(subscriptionResource).GetMaintenanceGroupApplyUpdate(resourceName, cancellationToken);
         }
 
         /// <summary>
