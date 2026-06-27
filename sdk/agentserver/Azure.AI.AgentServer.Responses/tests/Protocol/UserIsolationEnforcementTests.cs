@@ -13,58 +13,58 @@ using NUnit.Framework;
 namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 /// <summary>
-/// E2E tests verifying chat isolation key enforcement across all endpoints.
-/// When a response is created with a chat isolation key, all subsequent
+/// E2E tests verifying user isolation key enforcement across all endpoints.
+/// When a response is created with a user isolation key, all subsequent
 /// GET / Cancel / DELETE / InputItems calls must send the same key.
 /// Mismatch or missing key → 404 (indistinguishable from "not found").
-/// No enforcement when the response was created without a chat isolation key.
+/// No enforcement when the response was created without a user isolation key.
 /// </summary>
-public class ChatIsolationEnforcementTests : ProtocolTestBase
+public class UserIsolationEnforcementTests : ProtocolTestBase
 {
-    private const string ChatKeyA = "chat-key-alpha";
-    private const string ChatKeyB = "chat-key-beta";
+    private const string UserKeyA = "user-key-alpha";
+    private const string UserKeyB = "user-key-beta";
 
     // ─── GET JSON ─────────────────────────────────────────────
 
     [Test]
-    public async Task GET_WithMatchingChatKey_Returns200()
+    public async Task GET_WithMatchingUserKey_Returns200()
     {
-        var responseId = await CreateResponseWithChatKeyAsync(ChatKeyA);
+        var responseId = await CreateResponseWithUserKeyAsync(UserKeyA);
 
-        var get = await GetWithChatKeyAsync(responseId, ChatKeyA);
+        var get = await GetWithUserKeyAsync(responseId, UserKeyA);
 
         Assert.That(get.StatusCode, Is.EqualTo(HttpStatusCode.OK));
     }
 
     [Test]
-    public async Task GET_WithMismatchedChatKey_Returns404()
+    public async Task GET_WithMismatchedUserKey_Returns404()
     {
-        var responseId = await CreateResponseWithChatKeyAsync(ChatKeyA);
+        var responseId = await CreateResponseWithUserKeyAsync(UserKeyA);
 
-        var get = await GetWithChatKeyAsync(responseId, ChatKeyB);
+        var get = await GetWithUserKeyAsync(responseId, UserKeyB);
 
         Assert.That(get.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
 
     [Test]
-    public async Task GET_WithMissingChatKey_WhenCreatedWithOne_Returns404()
+    public async Task GET_WithMissingUserKey_WhenCreatedWithOne_Returns404()
     {
-        var responseId = await CreateResponseWithChatKeyAsync(ChatKeyA);
+        var responseId = await CreateResponseWithUserKeyAsync(UserKeyA);
 
-        // No chat key header on GET
+        // No user key header on GET
         var get = await GetResponseAsync(responseId);
 
         Assert.That(get.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
 
     [Test]
-    public async Task GET_WithChatKey_WhenCreatedWithout_Returns200()
+    public async Task GET_WithUserKey_WhenCreatedWithout_Returns200()
     {
         // Create without any isolation key (local dev scenario)
         var responseId = await CreateDefaultResponseAsync();
 
-        // GET with a chat key — no enforcement, should succeed
-        var get = await GetWithChatKeyAsync(responseId, ChatKeyA);
+        // GET with a user key — no enforcement, should succeed
+        var get = await GetWithUserKeyAsync(responseId, UserKeyA);
 
         Assert.That(get.StatusCode, Is.EqualTo(HttpStatusCode.OK));
     }
@@ -72,9 +72,9 @@ public class ChatIsolationEnforcementTests : ProtocolTestBase
     [Test]
     public async Task GET_Mismatch_ReturnsStandard404ErrorBody()
     {
-        var responseId = await CreateResponseWithChatKeyAsync(ChatKeyA);
+        var responseId = await CreateResponseWithUserKeyAsync(UserKeyA);
 
-        var get = await GetWithChatKeyAsync(responseId, ChatKeyB);
+        var get = await GetWithUserKeyAsync(responseId, UserKeyB);
 
         Assert.That(get.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
         using var doc = await ParseJsonAsync(get);
@@ -87,12 +87,12 @@ public class ChatIsolationEnforcementTests : ProtocolTestBase
     // ─── CANCEL ───────────────────────────────────────────────
 
     [Test]
-    public async Task Cancel_WithMatchingChatKey_Succeeds()
+    public async Task Cancel_WithMatchingUserKey_Succeeds()
     {
-        var responseId = await CreateBackgroundResponseWithChatKeyAsync(ChatKeyA);
-        await WaitForBackgroundCompletionWithChatKeyAsync(responseId, ChatKeyA);
+        var responseId = await CreateBackgroundResponseWithUserKeyAsync(UserKeyA);
+        await WaitForBackgroundCompletionWithUserKeyAsync(responseId, UserKeyA);
 
-        var cancel = await CancelWithChatKeyAsync(responseId, ChatKeyA);
+        var cancel = await CancelWithUserKeyAsync(responseId, UserKeyA);
 
         // Completed bg response → cancel returns 200 with the completed response (idempotent)
         // or 400 "Cannot cancel a completed response." — either is fine, both prove isolation passed.
@@ -100,23 +100,23 @@ public class ChatIsolationEnforcementTests : ProtocolTestBase
     }
 
     [Test]
-    public async Task Cancel_WithMismatchedChatKey_Returns404()
+    public async Task Cancel_WithMismatchedUserKey_Returns404()
     {
-        var responseId = await CreateBackgroundResponseWithChatKeyAsync(ChatKeyA);
-        await WaitForBackgroundCompletionWithChatKeyAsync(responseId, ChatKeyA);
+        var responseId = await CreateBackgroundResponseWithUserKeyAsync(UserKeyA);
+        await WaitForBackgroundCompletionWithUserKeyAsync(responseId, UserKeyA);
 
-        var cancel = await CancelWithChatKeyAsync(responseId, ChatKeyB);
+        var cancel = await CancelWithUserKeyAsync(responseId, UserKeyB);
 
         Assert.That(cancel.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
 
     [Test]
-    public async Task Cancel_WithMissingChatKey_WhenCreatedWithOne_Returns404()
+    public async Task Cancel_WithMissingUserKey_WhenCreatedWithOne_Returns404()
     {
-        var responseId = await CreateBackgroundResponseWithChatKeyAsync(ChatKeyA);
-        await WaitForBackgroundCompletionWithChatKeyAsync(responseId, ChatKeyA);
+        var responseId = await CreateBackgroundResponseWithUserKeyAsync(UserKeyA);
+        await WaitForBackgroundCompletionWithUserKeyAsync(responseId, UserKeyA);
 
-        // No chat key header
+        // No user key header
         var cancel = await CancelResponseAsync(responseId);
 
         Assert.That(cancel.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
@@ -125,29 +125,29 @@ public class ChatIsolationEnforcementTests : ProtocolTestBase
     // ─── DELETE ───────────────────────────────────────────────
 
     [Test]
-    public async Task DELETE_WithMatchingChatKey_Returns200()
+    public async Task DELETE_WithMatchingUserKey_Returns200()
     {
-        var responseId = await CreateResponseWithChatKeyAsync(ChatKeyA);
+        var responseId = await CreateResponseWithUserKeyAsync(UserKeyA);
 
-        var delete = await DeleteWithChatKeyAsync(responseId, ChatKeyA);
+        var delete = await DeleteWithUserKeyAsync(responseId, UserKeyA);
 
         Assert.That(delete.StatusCode, Is.EqualTo(HttpStatusCode.OK));
     }
 
     [Test]
-    public async Task DELETE_WithMismatchedChatKey_Returns404()
+    public async Task DELETE_WithMismatchedUserKey_Returns404()
     {
-        var responseId = await CreateResponseWithChatKeyAsync(ChatKeyA);
+        var responseId = await CreateResponseWithUserKeyAsync(UserKeyA);
 
-        var delete = await DeleteWithChatKeyAsync(responseId, ChatKeyB);
+        var delete = await DeleteWithUserKeyAsync(responseId, UserKeyB);
 
         Assert.That(delete.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
 
     [Test]
-    public async Task DELETE_WithMissingChatKey_WhenCreatedWithOne_Returns404()
+    public async Task DELETE_WithMissingUserKey_WhenCreatedWithOne_Returns404()
     {
-        var responseId = await CreateResponseWithChatKeyAsync(ChatKeyA);
+        var responseId = await CreateResponseWithUserKeyAsync(UserKeyA);
 
         var delete = await Client.DeleteAsync($"/responses/{responseId}");
 
@@ -157,29 +157,29 @@ public class ChatIsolationEnforcementTests : ProtocolTestBase
     // ─── INPUT ITEMS ─────────────────────────────────────────
 
     [Test]
-    public async Task InputItems_WithMatchingChatKey_Returns200()
+    public async Task InputItems_WithMatchingUserKey_Returns200()
     {
-        var responseId = await CreateResponseWithChatKeyAsync(ChatKeyA);
+        var responseId = await CreateResponseWithUserKeyAsync(UserKeyA);
 
-        var items = await GetInputItemsWithChatKeyAsync(responseId, ChatKeyA);
+        var items = await GetInputItemsWithUserKeyAsync(responseId, UserKeyA);
 
         Assert.That(items.StatusCode, Is.EqualTo(HttpStatusCode.OK));
     }
 
     [Test]
-    public async Task InputItems_WithMismatchedChatKey_Returns404()
+    public async Task InputItems_WithMismatchedUserKey_Returns404()
     {
-        var responseId = await CreateResponseWithChatKeyAsync(ChatKeyA);
+        var responseId = await CreateResponseWithUserKeyAsync(UserKeyA);
 
-        var items = await GetInputItemsWithChatKeyAsync(responseId, ChatKeyB);
+        var items = await GetInputItemsWithUserKeyAsync(responseId, UserKeyB);
 
         Assert.That(items.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
 
     [Test]
-    public async Task InputItems_WithMissingChatKey_WhenCreatedWithOne_Returns404()
+    public async Task InputItems_WithMissingUserKey_WhenCreatedWithOne_Returns404()
     {
-        var responseId = await CreateResponseWithChatKeyAsync(ChatKeyA);
+        var responseId = await CreateResponseWithUserKeyAsync(UserKeyA);
 
         var items = await Client.GetAsync($"/responses/{responseId}/input_items");
 
@@ -189,16 +189,16 @@ public class ChatIsolationEnforcementTests : ProtocolTestBase
     // ─── IN-FLIGHT (background, not yet completed) ───────────
 
     [Test]
-    public async Task GET_InFlight_WithMatchingChatKey_Returns200()
+    public async Task GET_InFlight_WithMatchingUserKey_Returns200()
     {
         var gate = new TaskCompletionSource();
         Handler.EventFactory = (req, ctx, ct) => WaitingStream(ctx, gate.Task, ct);
 
-        var responseId = await CreateBackgroundResponseWithChatKeyAsync(ChatKeyA);
+        var responseId = await CreateBackgroundResponseWithUserKeyAsync(UserKeyA);
 
         // Response is in-flight — GET with matching key should succeed
         var get = await PollUntilAsync(
-            () => GetWithChatKeyAsync(responseId, ChatKeyA),
+            () => GetWithUserKeyAsync(responseId, UserKeyA),
             r => r.StatusCode == HttpStatusCode.OK,
             TimeSpan.FromSeconds(3));
         Assert.That(get.StatusCode, Is.EqualTo(HttpStatusCode.OK));
@@ -207,32 +207,32 @@ public class ChatIsolationEnforcementTests : ProtocolTestBase
     }
 
     [Test]
-    public async Task GET_InFlight_WithMismatchedChatKey_Returns404()
+    public async Task GET_InFlight_WithMismatchedUserKey_Returns404()
     {
         var gate = new TaskCompletionSource();
         var handlerStarted = new TaskCompletionSource();
         Handler.EventFactory = (req, ctx, ct) => WaitingStreamWithSignal(ctx, gate.Task, handlerStarted, ct);
 
-        var responseId = await CreateBackgroundResponseWithChatKeyAsync(ChatKeyA);
+        var responseId = await CreateBackgroundResponseWithUserKeyAsync(UserKeyA);
         await handlerStarted.Task.WaitAsync(TimeSpan.FromSeconds(3));
 
-        var get = await GetWithChatKeyAsync(responseId, ChatKeyB);
+        var get = await GetWithUserKeyAsync(responseId, UserKeyB);
         Assert.That(get.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
 
         gate.SetResult();
     }
 
     [Test]
-    public async Task Cancel_InFlight_WithMismatchedChatKey_Returns404()
+    public async Task Cancel_InFlight_WithMismatchedUserKey_Returns404()
     {
         var gate = new TaskCompletionSource();
         var handlerStarted = new TaskCompletionSource();
         Handler.EventFactory = (req, ctx, ct) => WaitingStreamWithSignal(ctx, gate.Task, handlerStarted, ct);
 
-        var responseId = await CreateBackgroundResponseWithChatKeyAsync(ChatKeyA);
+        var responseId = await CreateBackgroundResponseWithUserKeyAsync(UserKeyA);
         await handlerStarted.Task.WaitAsync(TimeSpan.FromSeconds(3));
 
-        var cancel = await CancelWithChatKeyAsync(responseId, ChatKeyB);
+        var cancel = await CancelWithUserKeyAsync(responseId, UserKeyB);
         Assert.That(cancel.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
 
         gate.SetResult();
@@ -266,21 +266,21 @@ public class ChatIsolationEnforcementTests : ProtocolTestBase
 
     // ─── helpers ──────────────────────────────────────────────
 
-    private async Task<string> CreateResponseWithChatKeyAsync(string chatKey, string model = "test")
+    private async Task<string> CreateResponseWithUserKeyAsync(string userKey, string model = "test")
     {
-        var response = await PostWithChatKeyAsync(new { model }, chatKey);
+        var response = await PostWithUserKeyAsync(new { model }, userKey);
         using var doc = await ParseJsonAsync(response);
         return doc.RootElement.GetProperty("id").GetString()!;
     }
 
-    private async Task<string> CreateBackgroundResponseWithChatKeyAsync(string chatKey, string model = "test")
+    private async Task<string> CreateBackgroundResponseWithUserKeyAsync(string userKey, string model = "test")
     {
-        var response = await PostWithChatKeyAsync(new { model, background = true }, chatKey);
+        var response = await PostWithUserKeyAsync(new { model, background = true }, userKey);
         using var doc = await ParseJsonAsync(response);
         return doc.RootElement.GetProperty("id").GetString()!;
     }
 
-    private async Task<HttpResponseMessage> PostWithChatKeyAsync(object requestObj, string chatKey)
+    private async Task<HttpResponseMessage> PostWithUserKeyAsync(object requestObj, string userKey)
     {
         var request = new HttpRequestMessage(HttpMethod.Post, "/responses")
         {
@@ -289,46 +289,46 @@ public class ChatIsolationEnforcementTests : ProtocolTestBase
                 Encoding.UTF8,
                 "application/json")
         };
-        request.Headers.Add(PlatformHeaders.ChatIsolationKey, chatKey);
+        request.Headers.Add(PlatformHeaders.UserId, userKey);
         return await Client.SendAsync(request);
     }
 
-    private Task<HttpResponseMessage> GetWithChatKeyAsync(string responseId, string chatKey)
+    private Task<HttpResponseMessage> GetWithUserKeyAsync(string responseId, string userKey)
     {
         var request = new HttpRequestMessage(HttpMethod.Get, $"/responses/{responseId}");
-        request.Headers.Add(PlatformHeaders.ChatIsolationKey, chatKey);
+        request.Headers.Add(PlatformHeaders.UserId, userKey);
         return Client.SendAsync(request);
     }
 
-    private Task<HttpResponseMessage> CancelWithChatKeyAsync(string responseId, string chatKey)
+    private Task<HttpResponseMessage> CancelWithUserKeyAsync(string responseId, string userKey)
     {
         var request = new HttpRequestMessage(HttpMethod.Post, $"/responses/{responseId}/cancel");
-        request.Headers.Add(PlatformHeaders.ChatIsolationKey, chatKey);
+        request.Headers.Add(PlatformHeaders.UserId, userKey);
         return Client.SendAsync(request);
     }
 
-    private Task<HttpResponseMessage> DeleteWithChatKeyAsync(string responseId, string chatKey)
+    private Task<HttpResponseMessage> DeleteWithUserKeyAsync(string responseId, string userKey)
     {
         var request = new HttpRequestMessage(HttpMethod.Delete, $"/responses/{responseId}");
-        request.Headers.Add(PlatformHeaders.ChatIsolationKey, chatKey);
+        request.Headers.Add(PlatformHeaders.UserId, userKey);
         return Client.SendAsync(request);
     }
 
-    private Task<HttpResponseMessage> GetInputItemsWithChatKeyAsync(string responseId, string chatKey)
+    private Task<HttpResponseMessage> GetInputItemsWithUserKeyAsync(string responseId, string userKey)
     {
         var request = new HttpRequestMessage(HttpMethod.Get, $"/responses/{responseId}/input_items");
-        request.Headers.Add(PlatformHeaders.ChatIsolationKey, chatKey);
+        request.Headers.Add(PlatformHeaders.UserId, userKey);
         return Client.SendAsync(request);
     }
 
-    private async Task WaitForBackgroundCompletionWithChatKeyAsync(string responseId, string chatKey, TimeSpan? timeout = null)
+    private async Task WaitForBackgroundCompletionWithUserKeyAsync(string responseId, string userKey, TimeSpan? timeout = null)
     {
         var effectiveTimeout = timeout ?? TimeSpan.FromSeconds(5);
         var deadline = DateTimeOffset.UtcNow + effectiveTimeout;
         string lastObservedState = "no response received";
         while (DateTimeOffset.UtcNow < deadline)
         {
-            var response = await GetWithChatKeyAsync(responseId, chatKey);
+            var response = await GetWithUserKeyAsync(responseId, userKey);
             if (response.StatusCode == HttpStatusCode.NotFound)
             {
                 lastObservedState = "HTTP 404 NotFound";

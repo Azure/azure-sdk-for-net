@@ -14,12 +14,12 @@ using NUnit.Framework;
 namespace Azure.AI.AgentServer.Invocations.Tests;
 
 /// <summary>
-/// E2E tests verifying that <c>x-agent-user-isolation-key</c> and
-/// <c>x-agent-chat-isolation-key</c> headers flow through to the
-/// <see cref="InvocationContext.Isolation"/> property on all endpoints.
+/// E2E tests verifying that <c>x-agent-user-id</c> and
+/// <c>x-agent-foundry-call-id</c> headers flow through to the
+/// <see cref="InvocationContext.PlatformContext"/> property on all endpoints.
 /// </summary>
 [TestFixture]
-public class IsolationContextEndpointTests
+public class PlatformContextEndpointTests
 {
     [Test]
     public async Task PostInvocations_IsolationHeaders_FlowToHandler()
@@ -28,14 +28,14 @@ public class IsolationContextEndpointTests
 
         var request = new HttpRequestMessage(HttpMethod.Post, "/invocations");
         request.Content = new StringContent("{}");
-        request.Headers.Add(PlatformHeaders.UserIsolationKey, "user-abc");
-        request.Headers.Add(PlatformHeaders.ChatIsolationKey, "chat-xyz");
+        request.Headers.Add(PlatformHeaders.UserId, "user-abc");
+        request.Headers.Add(PlatformHeaders.FoundryCallId, "call-xyz");
         var response = await env.Client.SendAsync(request);
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         var json = await ParseJsonAsync(response);
         Assert.That(json.GetProperty("userKey").GetString(), Is.EqualTo("user-abc"));
-        Assert.That(json.GetProperty("chatKey").GetString(), Is.EqualTo("chat-xyz"));
+        Assert.That(json.GetProperty("callId").GetString(), Is.EqualTo("call-xyz"));
     }
 
     [Test]
@@ -48,7 +48,7 @@ public class IsolationContextEndpointTests
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         var json = await ParseJsonAsync(response);
         Assert.That(json.GetProperty("userKey").ValueKind, Is.EqualTo(JsonValueKind.Null));
-        Assert.That(json.GetProperty("chatKey").ValueKind, Is.EqualTo(JsonValueKind.Null));
+        Assert.That(json.GetProperty("callId").ValueKind, Is.EqualTo(JsonValueKind.Null));
     }
 
     [Test]
@@ -57,14 +57,14 @@ public class IsolationContextEndpointTests
         using var env = await StartAsync<IsolationCapturingHandler>();
 
         var request = new HttpRequestMessage(HttpMethod.Get, "/invocations/inv-123");
-        request.Headers.Add(PlatformHeaders.UserIsolationKey, "user-get");
-        request.Headers.Add(PlatformHeaders.ChatIsolationKey, "chat-get");
+        request.Headers.Add(PlatformHeaders.UserId, "user-get");
+        request.Headers.Add(PlatformHeaders.FoundryCallId, "call-get");
         var response = await env.Client.SendAsync(request);
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         var json = await ParseJsonAsync(response);
         Assert.That(json.GetProperty("userKey").GetString(), Is.EqualTo("user-get"));
-        Assert.That(json.GetProperty("chatKey").GetString(), Is.EqualTo("chat-get"));
+        Assert.That(json.GetProperty("callId").GetString(), Is.EqualTo("call-get"));
     }
 
     [Test]
@@ -73,14 +73,14 @@ public class IsolationContextEndpointTests
         using var env = await StartAsync<IsolationCapturingHandler>();
 
         var request = new HttpRequestMessage(HttpMethod.Post, "/invocations/inv-456/cancel");
-        request.Headers.Add(PlatformHeaders.UserIsolationKey, "user-cancel");
-        request.Headers.Add(PlatformHeaders.ChatIsolationKey, "chat-cancel");
+        request.Headers.Add(PlatformHeaders.UserId, "user-cancel");
+        request.Headers.Add(PlatformHeaders.FoundryCallId, "call-cancel");
         var response = await env.Client.SendAsync(request);
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         var json = await ParseJsonAsync(response);
         Assert.That(json.GetProperty("userKey").GetString(), Is.EqualTo("user-cancel"));
-        Assert.That(json.GetProperty("chatKey").GetString(), Is.EqualTo("chat-cancel"));
+        Assert.That(json.GetProperty("callId").GetString(), Is.EqualTo("call-cancel"));
     }
 
     [Test]
@@ -89,7 +89,7 @@ public class IsolationContextEndpointTests
         using var env = await StartAsync<IsolationCapturingHandler>();
 
         var request = new HttpRequestMessage(HttpMethod.Get, "/invocations/inv-789?custom=value1");
-        request.Headers.Add(PlatformHeaders.UserIsolationKey, "u");
+        request.Headers.Add(PlatformHeaders.UserId, "u");
         var response = await env.Client.SendAsync(request);
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
@@ -104,7 +104,7 @@ public class IsolationContextEndpointTests
 
         var request = new HttpRequestMessage(HttpMethod.Get, "/invocations/inv-101");
         request.Headers.Add("x-client-trace-id", "trace-abc");
-        request.Headers.Add(PlatformHeaders.UserIsolationKey, "u");
+        request.Headers.Add(PlatformHeaders.UserId, "u");
         var response = await env.Client.SendAsync(request);
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
@@ -186,8 +186,8 @@ public class IsolationContextEndpointTests
             response.StatusCode = 200;
             var result = new Dictionary<string, object?>
             {
-                ["userKey"] = context.Isolation.UserIsolationKey,
-                ["chatKey"] = context.Isolation.ChatIsolationKey,
+                ["userKey"] = context.PlatformContext.UserIdKey,
+                ["callId"] = context.PlatformContext.CallId,
             };
 
             // Include client headers
