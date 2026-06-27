@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `GetProjectConversationsClientForAgentEndpoint` on the `ProjectOpenAIClient`.
+
 ### Breaking Changes
 
 ### Bugs Fixed
@@ -11,6 +13,9 @@
 - Fixed issue with stateless encrypted reasoning [issue](https://github.com/Azure/azure-sdk-for-net/issues/59967).
 
 ### Other Changes
+
+- Agent endpoint clients now target the `endpoint/protocols/openai/v1` route and no longer append an `api-version` query parameter.
+- Marked `GetProjectResponsesClientForAgent` as non-browsable in favor of `GetProjectResponsesClientForAgentEndpoint`.
 
 ## 2.1.0-beta.3 (2026-05-29)
 

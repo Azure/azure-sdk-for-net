@@ -117,6 +117,42 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
         VerifyCall(DoResponseAsync(responsesClientWithoutApp), "AIProjectClient.*");
     }
 
+    [Test]
+    public void TestConversationsAgentEndpointStructure()
+    {
+        const string host = "my-test-host.services.ai.azure.com";
+        const string project = "my-test-project";
+        const string agentName = "my-test-agent";
+
+        Uri capturedUri = null;
+        PipelinePolicy captureUriAndFailPolicy = new TestPipelinePolicy(
+            processMessageAction: (PipelineMessage message) =>
+            {
+                capturedUri = message.Request?.Uri;
+                throw new NotImplementedException("This exception is expected as this policy short-circuits the pipeline after capturing the request URI.");
+            });
+
+        ProjectOpenAIClientOptions options = new();
+        options.RetryPolicy = new ClientRetryPolicy(maxRetries: 0);
+        options.AddPolicy(captureUriAndFailPolicy, PipelinePosition.BeforeTransport);
+
+        ProjectOpenAIClient client = new(
+            projectEndpoint: new Uri($"https://{host}/api/projects/{project}"),
+            tokenProvider: new MockCredential(),
+            options: options);
+
+        // The agent-endpoint conversations client reuses the parent pipeline (policy continuity), so the
+        // capture policy registered above also observes its requests.
+        ProjectConversationsClient conversationsClient = client.GetProjectConversationsClientForAgentEndpoint(agentName);
+
+        Assert.ThrowsAsync<NotImplementedException>(async () => await conversationsClient.CreateProjectConversationAsync());
+
+        Assert.That(capturedUri, Is.Not.Null);
+        Assert.That(
+            capturedUri.AbsoluteUri,
+            Is.EqualTo($"https://{host}/api/projects/{project}/agents/{agentName}/endpoint/protocols/openai/v1/conversations"));
+    }
+
     [RecordedTest]
     public async Task TestFileUpload()
     {

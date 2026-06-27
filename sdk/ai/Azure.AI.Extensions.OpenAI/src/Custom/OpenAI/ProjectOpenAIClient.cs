@@ -93,6 +93,25 @@ public partial class ProjectOpenAIClient : OpenAIClient
             ?? _cachedConversationClient;
     }
 
+    /// <summary> Gets a project conversations client that sends requests to the specified agent endpoint. </summary>
+    /// <param name="agentName"> The name of the agent endpoint to use. </param>
+    /// <param name="options"> The options used to configure the project conversations client. </param>
+    /// <returns> The project conversations client configured for the agent endpoint. </returns>
+    public virtual ProjectConversationsClient GetProjectConversationsClientForAgentEndpoint(string agentName, ProjectOpenAIClientOptions options = null)
+    {
+        Argument.AssertNotNull(agentName, nameof(agentName));
+
+        options ??= new();
+        options.AgentName = agentName;
+        options.TokenProvider = _options.TokenProvider;
+        options.Endpoint = BuildAgentEndpoint(agentName);
+
+        // Reuse the pipeline already configured on this client rather than building a new one. This
+        // preserves policy continuity (authentication, telemetry, and any custom user policies) across
+        // every client derived from this ProjectOpenAIClient.
+        return new ProjectConversationsClient(Pipeline, options);
+    }
+
     /// <summary> Gets a client for project file operations. </summary>
     /// <returns> The project files client. </returns>
     public virtual ProjectFilesClient GetProjectFilesClient()
@@ -126,9 +145,14 @@ public partial class ProjectOpenAIClient : OpenAIClient
     }
 
     /// <summary> Gets a project responses client that uses a default agent. </summary>
+    /// <remarks>
+    /// Using an agent endpoint via <see cref="GetProjectResponsesClientForAgentEndpoint(string, string, ProjectOpenAIClientOptions)"/>
+    /// is the preferred way to target an agent for response requests.
+    /// </remarks>
     /// <param name="defaultAgent"> The default agent used for response requests. </param>
     /// <param name="defaultConversationId"> The default conversation ID used for response requests. </param>
     /// <returns> The project responses client configured with the default agent. </returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual ProjectResponsesClient GetProjectResponsesClientForAgent(AgentReference defaultAgent, string defaultConversationId = null)
     {
         Argument.AssertNotNull(defaultAgent, nameof(defaultAgent));
@@ -147,17 +171,17 @@ public partial class ProjectOpenAIClient : OpenAIClient
     public virtual ProjectResponsesClient GetProjectResponsesClientForAgentEndpoint(string agentName, string defaultConversationId = null, ProjectOpenAIClientOptions options = null)
     {
         Argument.AssertNotNull(agentName, nameof(agentName));
+
         options ??= new();
         options.AgentName = agentName;
         options.TokenProvider = _options.TokenProvider;
-        options.Endpoint = null;
-        Match match = new Regex(@"(?<=/projects/)([^/]+)(?=[/?]|$)").Match(_options.Endpoint.LocalPath);
-        string project = string.IsNullOrEmpty(match.Value) ? "_default" : match.Value;
-        Uri projectEndpoint = new($"{_options.Endpoint.Scheme}://{_options.Endpoint.Host}/api/projects/{project}");
-        options = GetMergedOptions(projectEndpoint, _options.TokenProvider, options);
-        ClientPipeline endpointPipeline = CreatePipeline(CreateAuthenticationPolicy(options.TokenProvider, options), options);
+        options.Endpoint = BuildAgentEndpoint(agentName);
+
+        // Reuse the pipeline already configured on this client rather than building a new one. This
+        // preserves policy continuity (authentication, telemetry, and any custom user policies) across
+        // every client derived from this ProjectOpenAIClient.
         return new ProjectResponsesClient(
-            pipeline: endpointPipeline,
+            pipeline: Pipeline,
             options: options,
             defaultAgent: null,
             defaultConversationId: defaultConversationId
@@ -178,6 +202,13 @@ public partial class ProjectOpenAIClient : OpenAIClient
             defaultConversationId);
     }
 
+    private Uri BuildAgentEndpoint(string agentName)
+    {
+        Match match = new Regex(@"(?<=/projects/)([^/]+)(?=[/?]|$)").Match(_options.Endpoint.LocalPath);
+        string project = string.IsNullOrEmpty(match.Value) ? "_default" : match.Value;
+        return new Uri($"{_options.Endpoint.Scheme}://{_options.Endpoint.Host}/api/projects/{project}/agents/{agentName}/endpoint/protocols/openai/v1");
+    }
+
     internal static ClientPipeline CreatePipeline(AuthenticationPolicy authenticationPolicy, ProjectOpenAIClientOptions options)
     {
         options ??= new ProjectOpenAIClientOptions();
@@ -187,10 +218,6 @@ public partial class ProjectOpenAIClient : OpenAIClient
         if (!string.IsNullOrEmpty(options.UserAgentApplicationId))
         {
             prefix = $"{options.UserAgentApplicationId}-AIProjectClient";
-        }
-        if (!string.IsNullOrEmpty(options.AgentName))
-        {
-            PipelinePolicyHelpers.AddQueryParameterPolicy(options, "api-version", options.ApiVersion);
         }
         PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "User-Agent", $"{prefix} {telemetryDetails.UserAgent}");
         PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "x-ms-client-request-id", () => Guid.NewGuid().ToString().ToLowerInvariant());
@@ -214,7 +241,7 @@ public partial class ProjectOpenAIClient : OpenAIClient
         {
             return options;
         }
-        string path = string.IsNullOrEmpty(options?.AgentName) ? "/openai/v1" : $"/agents/{options.AgentName}/endpoint/protocols/openai";
+        string path = string.IsNullOrEmpty(options?.AgentName) ? "/openai/v1" : $"/agents/{options.AgentName}/endpoint/protocols/openai/v1";
         string rawTargetOpenAIEndpoint = projectEndpoint.AbsoluteUri.TrimEnd('/') + path;
         if (options?.Endpoint is not null && options?.Endpoint?.AbsoluteUri != rawTargetOpenAIEndpoint)
         {
