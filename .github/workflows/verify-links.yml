@@ -18,15 +18,21 @@ jobs:
   verify-links:
     name: Verify Links
     if: >-
-      github.event.check_run.check_suite.app.name == 'Azure Pipelines' && 
-      (github.repository == 'Azure/azure-sdk-for-net' && contains(github.event.check_run.name, 'Compliance')) ||
-      (github.repository == 'Azure/azure-sdk-for-python' && contains(github.event.check_run.name, 'Analyze')) ||
-      (github.repository == 'Azure/azure-sdk-for-java' && contains(github.event.check_run.name, 'Analyze')) ||
-      (github.repository == 'Azure/azure-sdk-for-js' && contains(github.event.check_run.name, 'Analyze')) ||
-      (github.repository == 'Azure/azure-sdk-for-c' && contains(github.event.check_run.name, 'GenerateReleaseArtifacts')) ||
-      (github.repository == 'Azure/azure-sdk-for-cpp' && contains(github.event.check_run.name, 'Analyze')) ||
-      (github.repository == 'Azure/azure-sdk-for-go' && contains(github.event.check_run.name, 'Analyze')) ||
-      (github.repository == 'Azure/azure-sdk-for-ios' && contains(github.event.check_run.name, 'Analyze'))
+      github.event_name == 'pull_request' ||
+      (
+        github.event_name == 'check_run' &&
+        github.event.check_run.check_suite.app.name == 'Azure Pipelines' &&
+        (
+          (github.repository == 'Azure/azure-sdk-for-net' && contains(github.event.check_run.name, 'Compliance')) ||
+          (github.repository == 'Azure/azure-sdk-for-python' && contains(github.event.check_run.name, 'Analyze')) ||
+          (github.repository == 'Azure/azure-sdk-for-java' && contains(github.event.check_run.name, 'Analyze')) ||
+          (github.repository == 'Azure/azure-sdk-for-js' && contains(github.event.check_run.name, 'Analyze')) ||
+          (github.repository == 'Azure/azure-sdk-for-c' && contains(github.event.check_run.name, 'GenerateReleaseArtifacts')) ||
+          (github.repository == 'Azure/azure-sdk-for-cpp' && contains(github.event.check_run.name, 'Analyze')) ||
+          (github.repository == 'Azure/azure-sdk-for-go' && contains(github.event.check_run.name, 'Analyze')) ||
+          (github.repository == 'Azure/azure-sdk-for-ios' && contains(github.event.check_run.name, 'Analyze'))
+        )
+      )
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
