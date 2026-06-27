@@ -1,17 +1,5 @@
 name: Verify Links
 
-# Runs the link verification check (eng/common/scripts/Verify-Links.ps1) that
-# previously lived as a step in the Azure DevOps "Compliance" job in
-# eng/pipelines/templates/jobs/ci.yml.
-#
-# Triggers:
-#   - pull_request: runs on every PR, scanning only changed *.md files (matches
-#     the prior Compliance-job behavior for PR builds).
-#   - check_run completed: fires when the Azure DevOps "net - pullrequest"
-#     pipeline (which owns the Compliance job) reports back to GitHub, so it
-#     effectively runs after the Compliance job. Same scanning behavior as PR.
-#   - workflow_dispatch: manual runs.
-
 on:
   pull_request:
     branches:
@@ -29,8 +17,6 @@ permissions:
 jobs:
   verify-links:
     name: Verify Links
-    # When fired via check_run, only run after the Azure DevOps Compliance
-    # job in the Azure/azure-sdk-for-net repo completes.
     if: >-
       github.event.check_run.check_suite.app.name == 'Azure Pipelines' && 
       (github.repository == 'Azure/azure-sdk-for-net' && contains(github.event.check_run.name, 'Compliance')) ||
@@ -47,17 +33,10 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha || github.event.check_run.head_sha || github.sha }}
-          # Need full history so get-markdown-files-from-changed-files.ps1 can
-          # diff against the target branch (origin/<base>) that checkout sets up.
           fetch-depth: 0
 
       - name: Link verification check
         shell: pwsh
-        # The shared scripts read these Azure DevOps-style variables to compute
-        # the git diff range used by Get-ChangedFiles. Setting them lets the
-        # script's defaults work:
-        #   $TargetCommittish = ("origin/${env:SYSTEM_PULLREQUEST_TARGETBRANCH}" -replace "refs/heads/")
-        #   $SourceCommittish = "${env:SYSTEM_PULLREQUEST_SOURCECOMMITID}"
         env:
           SYSTEM_PULLREQUEST_TARGETBRANCH: ${{ github.base_ref }}
           SYSTEM_PULLREQUEST_SOURCECOMMITID: ${{ github.event.pull_request.head.sha }}
