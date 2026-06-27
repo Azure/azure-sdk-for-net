@@ -22,6 +22,7 @@ checkout:
     .github
 inlined-imports: true
 permissions:
+  copilot-requests: write
   contents: read
   pull-requests: read
   actions: read
@@ -52,7 +53,7 @@ safe-outputs:
         pull-requests: write
       steps:
         - name: Dismiss stale change-request review
-          uses: actions/github-script@v9
+          uses: actions/github-script@v9.0.0
           env:
             TARGET_PR_NUMBER: "${{ github.event.pull_request.number || github.event.check_run.pull_requests[0].number || github.event.inputs.pr_number }}"
             REVIEW_WORKFLOW_NAME: "${{ github.workflow }}"

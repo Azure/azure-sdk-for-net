@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Automation
 {
+    /// <summary></summary>
     public partial class DscNodeConfigurationResource : IJsonModel<DscNodeConfigurationData>
     {
-        private static DscNodeConfigurationData s_dataDeserializationInstance;
-        private static DscNodeConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DscNodeConfigurationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DscNodeConfigurationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DscNodeConfigurationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DscNodeConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DscNodeConfigurationData>)Data).Write(writer, options);
 
-        DscNodeConfigurationData IJsonModel<DscNodeConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DscNodeConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DscNodeConfigurationData IJsonModel<DscNodeConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DscNodeConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DscNodeConfigurationData>(Data, options, AzureResourceManagerAutomationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DscNodeConfigurationData IPersistableModel<DscNodeConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DscNodeConfigurationData>(data, options, AzureResourceManagerAutomationContext.Default);
 
-        string IPersistableModel<DscNodeConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DscNodeConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DscNodeConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

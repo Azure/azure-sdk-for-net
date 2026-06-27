@@ -47,13 +47,13 @@ namespace BasicTypeSpec
                     yield break;
                 }
                 ListWithNextLinkResponse result = (ListWithNextLinkResponse)response;
+                nextPage = result.Next;
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Things)
                 {
                     items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default));
                 }
                 yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
-                nextPage = result.Next;
                 if (nextPage == null)
                 {
                     yield break;

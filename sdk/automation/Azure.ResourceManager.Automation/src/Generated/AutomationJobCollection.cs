@@ -6,14 +6,13 @@
 #nullable disable
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Automation.Models;
 
 namespace Azure.ResourceManager.Automation
@@ -21,55 +20,53 @@ namespace Azure.ResourceManager.Automation
     /// <summary>
     /// A class representing a collection of <see cref="AutomationJobResource"/> and their operations.
     /// Each <see cref="AutomationJobResource"/> in the collection will belong to the same instance of <see cref="AutomationAccountResource"/>.
-    /// To get an <see cref="AutomationJobCollection"/> instance call the GetAutomationJobs method from an instance of <see cref="AutomationAccountResource"/>.
+    /// To get a <see cref="AutomationJobCollection"/> instance call the GetAutomationJobs method from an instance of <see cref="AutomationAccountResource"/>.
     /// </summary>
-    public partial class AutomationJobCollection : ArmCollection, IEnumerable<AutomationJobCollectionItemData>, IAsyncEnumerable<AutomationJobCollectionItemData>
+    public partial class AutomationJobCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _automationJobJobClientDiagnostics;
-        private readonly JobRestOperations _automationJobJobRestClient;
+        private readonly ClientDiagnostics _jobClientDiagnostics;
+        private readonly Job _jobRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="AutomationJobCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of AutomationJobCollection for mocking. </summary>
         protected AutomationJobCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AutomationJobCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationJobCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AutomationJobCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _automationJobJobClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", AutomationJobResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(AutomationJobResource.ResourceType, out string automationJobJobApiVersion);
-            _automationJobJobRestClient = new JobRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, automationJobJobApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(AutomationJobResource.ResourceType, out string automationJobApiVersion);
+            _jobClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", AutomationJobResource.ResourceType.Namespace, Diagnostics);
+            _jobRestClient = new Job(_jobClientDiagnostics, Pipeline, Endpoint, automationJobApiVersion ?? "2024-10-23");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != AutomationAccountResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AutomationAccountResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AutomationAccountResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create a job of the runbook.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Job_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> Jobs_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,23 +75,31 @@ namespace Azure.ResourceManager.Automation
         /// <param name="content"> The parameters supplied to the create job operation. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<AutomationJobResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string jobName, AutomationJobCreateOrUpdateContent content, string clientRequestId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<AutomationJobResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string jobName, AutomationJobCreateOrUpdateContent content, string clientRequestId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _automationJobJobClientDiagnostics.CreateScope("AutomationJobCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _jobClientDiagnostics.CreateScope("AutomationJobCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _automationJobJobRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobName, content, clientRequestId, cancellationToken).ConfigureAwait(false);
-                var uri = _automationJobJobRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobName, content, clientRequestId);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AutomationArmOperation<AutomationJobResource>(Response.FromValue(new AutomationJobResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobName, AutomationJobCreateOrUpdateContent.ToRequestContent(content), clientRequestId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AutomationJobData> response = Response.FromValue(AutomationJobData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AutomationArmOperation<AutomationJobResource> operation = new AutomationArmOperation<AutomationJobResource>(Response.FromValue(new AutomationJobResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -108,20 +113,16 @@ namespace Azure.ResourceManager.Automation
         /// Create a job of the runbook.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Job_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> Jobs_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,23 +131,31 @@ namespace Azure.ResourceManager.Automation
         /// <param name="content"> The parameters supplied to the create job operation. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<AutomationJobResource> CreateOrUpdate(WaitUntil waitUntil, string jobName, AutomationJobCreateOrUpdateContent content, string clientRequestId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<AutomationJobResource> CreateOrUpdate(WaitUntil waitUntil, string jobName, AutomationJobCreateOrUpdateContent content, string clientRequestId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _automationJobJobClientDiagnostics.CreateScope("AutomationJobCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _jobClientDiagnostics.CreateScope("AutomationJobCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _automationJobJobRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobName, content, clientRequestId, cancellationToken);
-                var uri = _automationJobJobRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobName, content, clientRequestId);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AutomationArmOperation<AutomationJobResource>(Response.FromValue(new AutomationJobResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobName, AutomationJobCreateOrUpdateContent.ToRequestContent(content), clientRequestId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AutomationJobData> response = Response.FromValue(AutomationJobData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AutomationArmOperation<AutomationJobResource> operation = new AutomationArmOperation<AutomationJobResource>(Response.FromValue(new AutomationJobResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -160,39 +169,43 @@ namespace Azure.ResourceManager.Automation
         /// Retrieve the job identified by job name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Job_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Jobs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobName"> The job name. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        public virtual async Task<Response<AutomationJobResource>> GetAsync(string jobName, string clientRequestId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<AutomationJobResource>> GetAsync(string jobName, string clientRequestId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _automationJobJobClientDiagnostics.CreateScope("AutomationJobCollection.Get");
+            using DiagnosticScope scope = _jobClientDiagnostics.CreateScope("AutomationJobCollection.Get");
             scope.Start();
             try
             {
-                var response = await _automationJobJobRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobName, clientRequestId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobName, clientRequestId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AutomationJobData> response = Response.FromValue(AutomationJobData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AutomationJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -206,39 +219,43 @@ namespace Azure.ResourceManager.Automation
         /// Retrieve the job identified by job name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Job_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Jobs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobName"> The job name. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        public virtual Response<AutomationJobResource> Get(string jobName, string clientRequestId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<AutomationJobResource> Get(string jobName, string clientRequestId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _automationJobJobClientDiagnostics.CreateScope("AutomationJobCollection.Get");
+            using DiagnosticScope scope = _jobClientDiagnostics.CreateScope("AutomationJobCollection.Get");
             scope.Start();
             try
             {
-                var response = _automationJobJobRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobName, clientRequestId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobName, clientRequestId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AutomationJobData> response = Response.FromValue(AutomationJobData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AutomationJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -249,104 +266,54 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary>
-        /// Retrieve a list of jobs.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Job_ListByAutomationAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomationJobCollectionItemData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AutomationJobCollectionItemData> GetAllAsync(string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _automationJobJobRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, clientRequestId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationJobJobRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, clientRequestId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AutomationJobCollectionItemData.DeserializeAutomationJobCollectionItemData(e), _automationJobJobClientDiagnostics, Pipeline, "AutomationJobCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Retrieve a list of jobs.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Job_ListByAutomationAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomationJobCollectionItemData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AutomationJobCollectionItemData> GetAll(string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _automationJobJobRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, clientRequestId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationJobJobRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, clientRequestId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AutomationJobCollectionItemData.DeserializeAutomationJobCollectionItemData(e), _automationJobJobClientDiagnostics, Pipeline, "AutomationJobCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Job_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Jobs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobName"> The job name. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string jobName, string clientRequestId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string jobName, string clientRequestId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _automationJobJobClientDiagnostics.CreateScope("AutomationJobCollection.Exists");
+            using DiagnosticScope scope = _jobClientDiagnostics.CreateScope("AutomationJobCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _automationJobJobRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobName, clientRequestId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobName, clientRequestId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<AutomationJobData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AutomationJobData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AutomationJobData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -360,37 +327,51 @@ namespace Azure.ResourceManager.Automation
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Job_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Jobs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobName"> The job name. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        public virtual Response<bool> Exists(string jobName, string clientRequestId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string jobName, string clientRequestId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _automationJobJobClientDiagnostics.CreateScope("AutomationJobCollection.Exists");
+            using DiagnosticScope scope = _jobClientDiagnostics.CreateScope("AutomationJobCollection.Exists");
             scope.Start();
             try
             {
-                var response = _automationJobJobRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobName, clientRequestId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobName, clientRequestId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<AutomationJobData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AutomationJobData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AutomationJobData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -404,39 +385,55 @@ namespace Azure.ResourceManager.Automation
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Job_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Jobs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobName"> The job name. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        public virtual async Task<NullableResponse<AutomationJobResource>> GetIfExistsAsync(string jobName, string clientRequestId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<AutomationJobResource>> GetIfExistsAsync(string jobName, string clientRequestId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _automationJobJobClientDiagnostics.CreateScope("AutomationJobCollection.GetIfExists");
+            using DiagnosticScope scope = _jobClientDiagnostics.CreateScope("AutomationJobCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _automationJobJobRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobName, clientRequestId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobName, clientRequestId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<AutomationJobData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AutomationJobData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AutomationJobData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<AutomationJobResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new AutomationJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -450,39 +447,55 @@ namespace Azure.ResourceManager.Automation
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Job_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Jobs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobName"> The job name. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        public virtual NullableResponse<AutomationJobResource> GetIfExists(string jobName, string clientRequestId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<AutomationJobResource> GetIfExists(string jobName, string clientRequestId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _automationJobJobClientDiagnostics.CreateScope("AutomationJobCollection.GetIfExists");
+            using DiagnosticScope scope = _jobClientDiagnostics.CreateScope("AutomationJobCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _automationJobJobRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobName, clientRequestId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobName, clientRequestId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<AutomationJobData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AutomationJobData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AutomationJobData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<AutomationJobResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new AutomationJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -490,21 +503,6 @@ namespace Azure.ResourceManager.Automation
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        IEnumerator<AutomationJobCollectionItemData> IEnumerable<AutomationJobCollectionItemData>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<AutomationJobCollectionItemData> IAsyncEnumerable<AutomationJobCollectionItemData>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }
