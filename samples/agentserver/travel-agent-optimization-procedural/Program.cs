@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure;
 using Azure.AI.AgentServer.Optimization;
 using Azure.AI.AgentServer.Optimization.Samples;
 using Azure.AI.AgentServer.Responses;
@@ -19,7 +20,8 @@ AgentOptimizationClient optimizationClient = !string.IsNullOrEmpty(projectEndpoi
     : new LocalFallbackAgentOptimizationClient();
 
 string? candidateId = Environment.GetEnvironmentVariable("OPTIMIZATION_CANDIDATE_ID");
-CandidateDeployConfig? config = await optimizationClient.ResolveOptionsAsync(candidateId).ConfigureAwait(false);
+Response<CandidateDeployConfig>? response = await optimizationClient.ResolveOptionsAsync(candidateId).ConfigureAwait(false);
+CandidateDeployConfig? config = response?.Value;
 
 LogStartupConfig(config);
 
