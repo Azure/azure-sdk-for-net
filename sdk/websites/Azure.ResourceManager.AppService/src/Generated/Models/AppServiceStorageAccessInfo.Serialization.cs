@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 throw new FormatException($"The model {nameof(AppServiceStorageAccessInfo)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(StorageType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToSerialString());
+                writer.WriteStringValue(StorageType.Value.ToSerialString());
             }
             if (Optional.IsDefined(AccountName))
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            AppServiceStorageType? @type = default;
+            AppServiceStorageType? storageType = default;
             string accountName = default;
             string shareName = default;
             string accessKey = default;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    @type = prop.Value.GetString().ToAppServiceStorageType();
+                    storageType = prop.Value.GetString().ToAppServiceStorageType();
                     continue;
                 }
                 if (prop.NameEquals("accountName"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             return new AppServiceStorageAccessInfo(
-                @type,
+                storageType,
                 accountName,
                 shareName,
                 accessKey,

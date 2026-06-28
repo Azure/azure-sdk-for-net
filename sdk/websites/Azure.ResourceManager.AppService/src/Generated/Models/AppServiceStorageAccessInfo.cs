@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceStorageAccessInfo"/>. </summary>
-        /// <param name="type"> Type of storage. </param>
+        /// <param name="storageType"> Type of storage. </param>
         /// <param name="accountName"> Name of the storage account. </param>
         /// <param name="shareName"> Name of the file share (container name, for Blob storage). </param>
         /// <param name="accessKey"> Access key for the storage account. </param>
@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="state"> State of the storage account. </param>
         /// <param name="protocol"> Mounting protocol to use for the storage account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceStorageAccessInfo(AppServiceStorageType? @type, string accountName, string shareName, string accessKey, string mountPath, AppServiceStorageAccountState? state, AppServiceStorageProtocol? protocol, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppServiceStorageAccessInfo(AppServiceStorageType? storageType, string accountName, string shareName, string accessKey, string mountPath, AppServiceStorageAccountState? state, AppServiceStorageProtocol? protocol, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            StorageType = storageType;
             AccountName = accountName;
             ShareName = shareName;
             AccessKey = accessKey;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Type of storage. </summary>
         [WirePath("type")]
-        public AppServiceStorageType? Type { get; set; }
+        public AppServiceStorageType? StorageType { get; set; }
 
         /// <summary> Name of the storage account. </summary>
         [WirePath("accountName")]

@@ -19,26 +19,26 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of <see cref="AppServiceNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Resource name to verify. </param>
-        /// <param name="type"> Resource type used for verification. </param>
+        /// <param name="resourceType"> Resource type used for verification. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public AppServiceNameAvailabilityContent(string name, CheckNameResourceType @type)
+        public AppServiceNameAvailabilityContent(string name, CheckNameResourceType resourceType)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            Type = @type;
+            ResourceType = resourceType;
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Resource name to verify. </param>
-        /// <param name="type"> Resource type used for verification. </param>
+        /// <param name="resourceType"> Resource type used for verification. </param>
         /// <param name="isFqdn"> Is fully qualified domain name. </param>
         /// <param name="environmentId"> Azure Resource Manager ID of the customer's selected Container Apps Environment on which to host the Function app. This must be of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceNameAvailabilityContent(string name, CheckNameResourceType @type, bool? isFqdn, string environmentId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppServiceNameAvailabilityContent(string name, CheckNameResourceType resourceType, bool? isFqdn, string environmentId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Type = @type;
+            ResourceType = resourceType;
             IsFqdn = isFqdn;
             EnvironmentId = environmentId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Resource type used for verification. </summary>
         [WirePath("type")]
-        public CheckNameResourceType Type { get; }
+        public CheckNameResourceType ResourceType { get; }
 
         /// <summary> Is fully qualified domain name. </summary>
         [WirePath("isFqdn")]

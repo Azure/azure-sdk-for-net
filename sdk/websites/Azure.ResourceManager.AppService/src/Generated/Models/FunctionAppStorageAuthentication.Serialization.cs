@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 throw new FormatException($"The model {nameof(FunctionAppStorageAuthentication)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
             if (Optional.IsDefined(UserAssignedIdentityResourceId))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            FunctionAppStorageAccountAuthenticationType? @type = default;
+            FunctionAppStorageAccountAuthenticationType? authenticationType = default;
             string userAssignedIdentityResourceId = default;
             string storageAccountConnectionStringName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    @type = new FunctionAppStorageAccountAuthenticationType(prop.Value.GetString());
+                    authenticationType = new FunctionAppStorageAccountAuthenticationType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("userAssignedIdentityResourceId"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FunctionAppStorageAuthentication(@type, userAssignedIdentityResourceId, storageAccountConnectionStringName, additionalBinaryDataProperties);
+            return new FunctionAppStorageAuthentication(authenticationType, userAssignedIdentityResourceId, storageAccountConnectionStringName, additionalBinaryDataProperties);
         }
     }
 }

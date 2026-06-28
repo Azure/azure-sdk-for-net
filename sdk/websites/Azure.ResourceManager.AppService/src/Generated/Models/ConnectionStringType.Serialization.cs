@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.AppService.Models
         public static string ToSerialString(this ConnectionStringType value) => value switch
         {
             ConnectionStringType.MySql => "MySql",
-            ConnectionStringType.SQLServer => "SQLServer",
-            ConnectionStringType.SQLAzure => "SQLAzure",
+            ConnectionStringType.SqlServer => "SQLServer",
+            ConnectionStringType.SqlAzure => "SQLAzure",
             ConnectionStringType.Custom => "Custom",
             ConnectionStringType.NotificationHub => "NotificationHub",
             ConnectionStringType.ServiceBus => "ServiceBus",
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppService.Models
             ConnectionStringType.ApiHub => "ApiHub",
             ConnectionStringType.DocDb => "DocDb",
             ConnectionStringType.RedisCache => "RedisCache",
-            ConnectionStringType.PostgreSQL => "PostgreSQL",
+            ConnectionStringType.PostgreSql => "PostgreSQL",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ConnectionStringType value.")
         };
 
@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "SQLServer"))
             {
-                return ConnectionStringType.SQLServer;
+                return ConnectionStringType.SqlServer;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "SQLAzure"))
             {
-                return ConnectionStringType.SQLAzure;
+                return ConnectionStringType.SqlAzure;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Custom"))
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "PostgreSQL"))
             {
-                return ConnectionStringType.PostgreSQL;
+                return ConnectionStringType.PostgreSql;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ConnectionStringType value.");
         }

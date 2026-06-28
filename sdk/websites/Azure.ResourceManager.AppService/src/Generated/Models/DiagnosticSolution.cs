@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="displayName"> Display Name of the solution. </param>
         /// <param name="order"> Order of the solution. </param>
         /// <param name="description"> Description of the solution. </param>
-        /// <param name="type"> Type of Solution. </param>
+        /// <param name="solutionType"> Type of Solution. </param>
         /// <param name="data"> Solution Data. </param>
         /// <param name="metadata"> Solution Metadata. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiagnosticSolution(double? id, string displayName, double? order, string description, DiagnosticSolutionType? @type, IList<IList<AppServiceNameValuePair>> data, IList<IList<AppServiceNameValuePair>> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiagnosticSolution(double? id, string displayName, double? order, string description, DiagnosticSolutionType? solutionType, IList<IList<AppServiceNameValuePair>> data, IList<IList<AppServiceNameValuePair>> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             DisplayName = displayName;
             Order = order;
             Description = description;
-            Type = @type;
+            SolutionType = solutionType;
             Data = data;
             Metadata = metadata;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Type of Solution. </summary>
         [WirePath("type")]
-        public DiagnosticSolutionType? Type { get; set; }
+        public DiagnosticSolutionType? SolutionType { get; set; }
 
         /// <summary> Solution Data. </summary>
         [WirePath("data")]

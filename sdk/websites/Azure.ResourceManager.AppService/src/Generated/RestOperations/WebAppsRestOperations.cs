@@ -1682,7 +1682,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateSwapSlotSlotRequest(Guid subscriptionId, string resourceGroupName, string name, string slot, RequestContent content, RequestContext context)
+        internal HttpMessage CreateSwapSlotRequest(Guid subscriptionId, string resourceGroupName, string name, string slot, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

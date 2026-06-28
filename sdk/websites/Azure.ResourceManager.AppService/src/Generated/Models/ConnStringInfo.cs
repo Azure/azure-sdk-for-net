@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="ConnStringInfo"/>. </summary>
         /// <param name="name"> Name of connection string. </param>
         /// <param name="connectionString"> Connection string value. </param>
-        /// <param name="type"> Type of database. </param>
+        /// <param name="connectionStringType"> Type of database. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnStringInfo(string name, string connectionString, ConnectionStringType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnStringInfo(string name, string connectionString, ConnectionStringType? connectionStringType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ConnectionString = connectionString;
-            Type = @type;
+            ConnectionStringType = connectionStringType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Type of database. </summary>
         [WirePath("type")]
-        public ConnectionStringType? Type { get; set; }
+        public ConnectionStringType? ConnectionStringType { get; set; }
     }
 }

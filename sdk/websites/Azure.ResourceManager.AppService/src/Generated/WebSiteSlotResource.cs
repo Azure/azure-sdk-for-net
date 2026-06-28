@@ -5171,11 +5171,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="slotSwapEntity"/> is null. </exception>
-        public virtual async Task<ArmOperation> SwapSlotSlotAsync(WaitUntil waitUntil, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> SwapSlotAsync(WaitUntil waitUntil, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(slotSwapEntity, nameof(slotSwapEntity));
 
-            using DiagnosticScope scope = _webAppsClientDiagnostics.CreateScope("WebSiteSlotResource.SwapSlotSlot");
+            using DiagnosticScope scope = _webAppsClientDiagnostics.CreateScope("WebSiteSlotResource.SwapSlot");
             scope.Start();
             try
             {
@@ -5183,7 +5183,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webAppsRestClient.CreateSwapSlotSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CsmSlotEntity.ToRequestContent(slotSwapEntity), context);
+                HttpMessage message = _webAppsRestClient.CreateSwapSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CsmSlotEntity.ToRequestContent(slotSwapEntity), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation operation = new AppServiceArmOperation(_webAppsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -5224,11 +5224,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="slotSwapEntity"/> is null. </exception>
-        public virtual ArmOperation SwapSlotSlot(WaitUntil waitUntil, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
+        public virtual ArmOperation SwapSlot(WaitUntil waitUntil, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(slotSwapEntity, nameof(slotSwapEntity));
 
-            using DiagnosticScope scope = _webAppsClientDiagnostics.CreateScope("WebSiteSlotResource.SwapSlotSlot");
+            using DiagnosticScope scope = _webAppsClientDiagnostics.CreateScope("WebSiteSlotResource.SwapSlot");
             scope.Start();
             try
             {
@@ -5236,7 +5236,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webAppsRestClient.CreateSwapSlotSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CsmSlotEntity.ToRequestContent(slotSwapEntity), context);
+                HttpMessage message = _webAppsRestClient.CreateSwapSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CsmSlotEntity.ToRequestContent(slotSwapEntity), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation operation = new AppServiceArmOperation(_webAppsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

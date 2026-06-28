@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
     public readonly partial struct CheckNameResourceType : IEquatable<CheckNameResourceType>
     {
         private readonly string _value;
-        private const string SiteValue = "Site";
+        private const string WebSiteValue = "Site";
         private const string SlotValue = "Slot";
         private const string HostingEnvironmentValue = "HostingEnvironment";
         private const string PublishingUserValue = "PublishingUser";
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.AppService.Models
             _value = value;
         }
 
-        /// <summary> Gets the Site. </summary>
-        public static CheckNameResourceType Site { get; } = new CheckNameResourceType(SiteValue);
+        /// <summary> Gets the WebSite. </summary>
+        public static CheckNameResourceType WebSite { get; } = new CheckNameResourceType(WebSiteValue);
 
         /// <summary> Gets the Slot. </summary>
         public static CheckNameResourceType Slot { get; } = new CheckNameResourceType(SlotValue);

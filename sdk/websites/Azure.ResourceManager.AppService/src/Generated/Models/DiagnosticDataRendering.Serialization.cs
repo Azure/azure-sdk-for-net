@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 throw new FormatException($"The model {nameof(DiagnosticDataRendering)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(RenderingType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToSerialString());
+                writer.WriteStringValue(RenderingType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Title))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            DiagnosticDataRenderingType? @type = default;
+            DiagnosticDataRenderingType? renderingType = default;
             string title = default;
             string description = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    @type = prop.Value.GetString().ToDiagnosticDataRenderingType();
+                    renderingType = prop.Value.GetString().ToDiagnosticDataRenderingType();
                     continue;
                 }
                 if (prop.NameEquals("title"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DiagnosticDataRendering(@type, title, description, additionalBinaryDataProperties);
+            return new DiagnosticDataRendering(renderingType, title, description, additionalBinaryDataProperties);
         }
     }
 }

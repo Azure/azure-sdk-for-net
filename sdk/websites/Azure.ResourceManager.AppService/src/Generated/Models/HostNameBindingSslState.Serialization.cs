@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             HostNameBindingSslState.Disabled => "Disabled",
             HostNameBindingSslState.SniEnabled => "SniEnabled",
-            HostNameBindingSslState.IpBasedEnabled => "IpBasedEnabled",
+            HostNameBindingSslState.IPBasedEnabled => "IpBasedEnabled",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HostNameBindingSslState value.")
         };
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "IpBasedEnabled"))
             {
-                return HostNameBindingSslState.IpBasedEnabled;
+                return HostNameBindingSslState.IPBasedEnabled;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HostNameBindingSslState value.");
         }

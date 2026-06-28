@@ -124,10 +124,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(DetectorType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToSerialString());
+                writer.WriteStringValue(DetectorType.Value.ToSerialString());
             }
             if (options.Format != "W" && Optional.IsDefined(Score))
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppService.Models
             string category = default;
             IReadOnlyList<DetectorSupportTopic> supportTopicList = default;
             IReadOnlyList<string> analysisType = default;
-            DetectorType? @type = default;
+            DetectorType? detectorType = default;
             float? score = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    @type = prop.Value.GetString().ToDetectorType();
+                    detectorType = prop.Value.GetString().ToDetectorType();
                     continue;
                 }
                 if (prop.NameEquals("score"u8))
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.AppService.Models
                 category,
                 supportTopicList ?? new ChangeTrackingList<DetectorSupportTopic>(),
                 analysisType ?? new ChangeTrackingList<string>(),
-                @type,
+                detectorType,
                 score,
                 additionalBinaryDataProperties);
         }

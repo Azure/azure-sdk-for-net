@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(ResourceType.ToString());
             if (Optional.IsDefined(IsFqdn))
             {
                 writer.WritePropertyName("isFqdn"u8);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             string name = default;
-            CheckNameResourceType @type = default;
+            CheckNameResourceType resourceType = default;
             bool? isFqdn = default;
             string environmentId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new CheckNameResourceType(prop.Value.GetString());
+                    resourceType = new CheckNameResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("isFqdn"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AppServiceNameAvailabilityContent(name, @type, isFqdn, environmentId, additionalBinaryDataProperties);
+            return new AppServiceNameAvailabilityContent(name, resourceType, isFqdn, environmentId, additionalBinaryDataProperties);
         }
     }
 }

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToSerialString());
+            writer.WriteStringValue(ConnectionStringType.ToSerialString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             string value = default;
-            ConnectionStringType @type = default;
+            ConnectionStringType connectionStringType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString().ToConnectionStringType();
+                    connectionStringType = prop.Value.GetString().ToConnectionStringType();
                     continue;
                 }
                 if (options.Format != "W")
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ConnStringValueTypePair(value, @type, additionalBinaryDataProperties);
+            return new ConnStringValueTypePair(value, connectionStringType, additionalBinaryDataProperties);
         }
     }
 }

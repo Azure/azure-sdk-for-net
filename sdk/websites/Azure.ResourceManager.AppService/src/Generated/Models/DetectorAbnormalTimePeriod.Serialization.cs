@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(IssueType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToSerialString());
+                writer.WriteStringValue(IssueType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Solutions))
             {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.AppService.Models
             string source = default;
             double? priority = default;
             IList<IList<AppServiceNameValuePair>> metaData = default;
-            DetectorIssueType? @type = default;
+            DetectorIssueType? issueType = default;
             IList<DiagnosticSolution> solutions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    @type = prop.Value.GetString().ToDetectorIssueType();
+                    issueType = prop.Value.GetString().ToDetectorIssueType();
                     continue;
                 }
                 if (prop.NameEquals("solutions"u8))
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.AppService.Models
                 source,
                 priority,
                 metaData ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>(),
-                @type,
+                issueType,
                 solutions ?? new ChangeTrackingList<DiagnosticSolution>(),
                 additionalBinaryDataProperties);
         }

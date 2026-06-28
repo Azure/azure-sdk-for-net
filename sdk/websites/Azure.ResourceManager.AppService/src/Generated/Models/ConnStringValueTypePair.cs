@@ -19,24 +19,24 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of <see cref="ConnStringValueTypePair"/>. </summary>
         /// <param name="value"> Value of pair. </param>
-        /// <param name="type"> Type of database. </param>
+        /// <param name="connectionStringType"> Type of database. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ConnStringValueTypePair(string value, ConnectionStringType @type)
+        public ConnStringValueTypePair(string value, ConnectionStringType connectionStringType)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value;
-            Type = @type;
+            ConnectionStringType = connectionStringType;
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnStringValueTypePair"/>. </summary>
         /// <param name="value"> Value of pair. </param>
-        /// <param name="type"> Type of database. </param>
+        /// <param name="connectionStringType"> Type of database. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnStringValueTypePair(string value, ConnectionStringType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnStringValueTypePair(string value, ConnectionStringType connectionStringType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
-            Type = @type;
+            ConnectionStringType = connectionStringType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Type of database. </summary>
         [WirePath("type")]
-        public ConnectionStringType Type { get; set; }
+        public ConnectionStringType ConnectionStringType { get; set; }
     }
 }

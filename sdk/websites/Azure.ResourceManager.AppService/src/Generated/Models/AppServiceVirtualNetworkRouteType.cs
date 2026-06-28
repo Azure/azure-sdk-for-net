@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.AppService.Models
     public readonly partial struct AppServiceVirtualNetworkRouteType : IEquatable<AppServiceVirtualNetworkRouteType>
     {
         private readonly string _value;
-        private const string DEFAULTValue = "DEFAULT";
-        private const string INHERITEDValue = "INHERITED";
-        private const string STATICValue = "STATIC";
+        private const string DefaultValue = "DEFAULT";
+        private const string InheritedValue = "INHERITED";
+        private const string StaticValue = "STATIC";
 
         /// <summary> Initializes a new instance of <see cref="AppServiceVirtualNetworkRouteType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.AppService.Models
             _value = value;
         }
 
-        /// <summary> Gets the DEFAULT. </summary>
-        public static AppServiceVirtualNetworkRouteType DEFAULT { get; } = new AppServiceVirtualNetworkRouteType(DEFAULTValue);
+        /// <summary> Gets the Default. </summary>
+        public static AppServiceVirtualNetworkRouteType Default { get; } = new AppServiceVirtualNetworkRouteType(DefaultValue);
 
-        /// <summary> Gets the INHERITED. </summary>
-        public static AppServiceVirtualNetworkRouteType INHERITED { get; } = new AppServiceVirtualNetworkRouteType(INHERITEDValue);
+        /// <summary> Gets the Inherited. </summary>
+        public static AppServiceVirtualNetworkRouteType Inherited { get; } = new AppServiceVirtualNetworkRouteType(InheritedValue);
 
-        /// <summary> Gets the STATIC. </summary>
-        public static AppServiceVirtualNetworkRouteType STATIC { get; } = new AppServiceVirtualNetworkRouteType(STATICValue);
+        /// <summary> Gets the Static. </summary>
+        public static AppServiceVirtualNetworkRouteType Static { get; } = new AppServiceVirtualNetworkRouteType(StaticValue);
 
         /// <summary> Determines if two <see cref="AppServiceVirtualNetworkRouteType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

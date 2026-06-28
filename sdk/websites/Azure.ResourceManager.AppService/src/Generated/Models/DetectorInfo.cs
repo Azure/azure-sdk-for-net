@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="category"> Problem category. This serves for organizing group for detectors. </param>
         /// <param name="supportTopicList"> List of Support Topics for which this detector is enabled. </param>
         /// <param name="analysisType"> Analysis Types for which this detector should apply to. </param>
-        /// <param name="type"> Whether this detector is an Analysis Detector or not. </param>
+        /// <param name="detectorType"> Whether this detector is an Analysis Detector or not. </param>
         /// <param name="score"> Defines score of a detector to power ML based matching. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DetectorInfo(string id, string name, string description, string author, string category, IReadOnlyList<DetectorSupportTopic> supportTopicList, IReadOnlyList<string> analysisType, DetectorType? @type, float? score, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DetectorInfo(string id, string name, string description, string author, string category, IReadOnlyList<DetectorSupportTopic> supportTopicList, IReadOnlyList<string> analysisType, DetectorType? detectorType, float? score, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService.Models
             Category = category;
             SupportTopicList = supportTopicList;
             AnalysisType = analysisType;
-            Type = @type;
+            DetectorType = detectorType;
             Score = score;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Whether this detector is an Analysis Detector or not. </summary>
         [WirePath("type")]
-        public DetectorType? Type { get; }
+        public DetectorType? DetectorType { get; }
 
         /// <summary> Defines score of a detector to power ML based matching. </summary>
         [WirePath("score")]

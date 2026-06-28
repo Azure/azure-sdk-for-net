@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="source"> Represents the name of the Detector. </param>
         /// <param name="priority"> Represents the rank of the Detector. </param>
         /// <param name="metaData"> Downtime metadata. </param>
-        /// <param name="type"> Represents the type of the Detector. </param>
+        /// <param name="issueType"> Represents the type of the Detector. </param>
         /// <param name="solutions"> List of proposed solutions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DetectorAbnormalTimePeriod(DateTimeOffset? startOn, DateTimeOffset? endOn, string message, string source, double? priority, IList<IList<AppServiceNameValuePair>> metaData, DetectorIssueType? @type, IList<DiagnosticSolution> solutions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DetectorAbnormalTimePeriod(DateTimeOffset? startOn, DateTimeOffset? endOn, string message, string source, double? priority, IList<IList<AppServiceNameValuePair>> metaData, DetectorIssueType? issueType, IList<DiagnosticSolution> solutions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Models
             Source = source;
             Priority = priority;
             MetaData = metaData;
-            Type = @type;
+            IssueType = issueType;
             Solutions = solutions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Represents the type of the Detector. </summary>
         [WirePath("type")]
-        public DetectorIssueType? Type { get; set; }
+        public DetectorIssueType? IssueType { get; set; }
 
         /// <summary> List of proposed solutions. </summary>
         [WirePath("solutions")]

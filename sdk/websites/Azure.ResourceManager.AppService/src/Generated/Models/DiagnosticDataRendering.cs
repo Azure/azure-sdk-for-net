@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticDataRendering"/>. </summary>
-        /// <param name="type"> Rendering Type. </param>
+        /// <param name="renderingType"> Rendering Type. </param>
         /// <param name="title"> Title of data. </param>
         /// <param name="description"> Description of the data that will help it be interpreted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiagnosticDataRendering(DiagnosticDataRenderingType? @type, string title, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiagnosticDataRendering(DiagnosticDataRenderingType? renderingType, string title, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            RenderingType = renderingType;
             Title = title;
             Description = description;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Rendering Type. </summary>
         [WirePath("type")]
-        public DiagnosticDataRenderingType? Type { get; set; }
+        public DiagnosticDataRenderingType? RenderingType { get; set; }
 
         /// <summary> Title of data. </summary>
         [WirePath("title")]
