@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="inboundIPAddressOverride"> Customer provided Inbound IP Address. Only able to be set on Ase create. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.AseV3NetworkingConfigurationData"/> instance for mocking. </returns>
-        public static AseV3NetworkingConfigurationData AseV3NetworkingConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> windowsOutboundIPAddresses = default, IEnumerable<string> linuxOutboundIPAddresses = default, IEnumerable<string> externalInboundIPAddresses = default, IEnumerable<string> internalInboundIPAddresses = default, bool? allowNewPrivateEndpointConnections = default, bool? isFtpEnabled = default, bool? isRemoteDebugEnabled = default, string inboundIPAddressOverride = default, string kind = default)
+        public static AseV3NetworkingConfigurationData AseV3NetworkingConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<IPAddress> windowsOutboundIPAddresses = default, IEnumerable<IPAddress> linuxOutboundIPAddresses = default, IEnumerable<IPAddress> externalInboundIPAddresses = default, IEnumerable<IPAddress> internalInboundIPAddresses = default, bool? allowNewPrivateEndpointConnections = default, bool? isFtpEnabled = default, bool? isRemoteDebugEnabled = default, string inboundIPAddressOverride = default, string kind = default)
         {
             return new AseV3NetworkingConfigurationData(
                 id,
@@ -191,10 +191,10 @@ namespace Azure.ResourceManager.AppService.Models
                 resourceType,
                 systemData,
                 windowsOutboundIPAddresses is null && linuxOutboundIPAddresses is null && externalInboundIPAddresses is null && internalInboundIPAddresses is null && allowNewPrivateEndpointConnections is null && isFtpEnabled is null && isRemoteDebugEnabled is null && inboundIPAddressOverride is null ? default : new AseV3NetworkingConfigurationProperties(
-                    (windowsOutboundIPAddresses ?? new ChangeTrackingList<string>()).ToList(),
-                    (linuxOutboundIPAddresses ?? new ChangeTrackingList<string>()).ToList(),
-                    (externalInboundIPAddresses ?? new ChangeTrackingList<string>()).ToList(),
-                    (internalInboundIPAddresses ?? new ChangeTrackingList<string>()).ToList(),
+                    (windowsOutboundIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
+                    (linuxOutboundIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
+                    (externalInboundIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
+                    (internalInboundIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
                     allowNewPrivateEndpointConnections,
                     isFtpEnabled,
                     isRemoteDebugEnabled,
@@ -1817,14 +1817,21 @@ namespace Azure.ResourceManager.AppService.Models
             return new PrivateLinkResourcesWrapper((value ?? new ChangeTrackingList<AppServicePrivateLinkResourceData>()).ToList(), default);
         }
 
-        /// <param name="id"></param>
-        /// <param name="name"> Name of a private link resource. </param>
-        /// <param name="type"></param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Properties of a private link resource. </param>
         /// <returns> A new <see cref="Models.AppServicePrivateLinkResourceData"/> instance for mocking. </returns>
-        public static AppServicePrivateLinkResourceData AppServicePrivateLinkResourceData(string id = default, string name = default, string @type = default, AppServicePrivateLinkResourceProperties properties = default)
+        public static AppServicePrivateLinkResourceData AppServicePrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AppServicePrivateLinkResourceProperties properties = default)
         {
-            return new AppServicePrivateLinkResourceData(id, name, @type, properties, default);
+            return new AppServicePrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <param name="groupId"> GroupId of a private link resource. </param>
@@ -2198,14 +2205,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="privateEndpointId"> Gets the Id. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.RemotePrivateEndpointConnectionARMResourceData"/> instance for mocking. </returns>
-        public static RemotePrivateEndpointConnectionARMResourceData RemotePrivateEndpointConnectionARMResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default, PrivateLinkConnectionState privateLinkServiceConnectionState = default, IEnumerable<string> ipAddresses = default, string privateEndpointId = default, string kind = default)
+        public static RemotePrivateEndpointConnectionARMResourceData RemotePrivateEndpointConnectionARMResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default, PrivateLinkConnectionState privateLinkServiceConnectionState = default, IEnumerable<IPAddress> ipAddresses = default, string privateEndpointId = default, string kind = default)
         {
             return new RemotePrivateEndpointConnectionARMResourceData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && privateEndpointId is null && privateLinkServiceConnectionState is null && ipAddresses is null ? default : new RemotePrivateEndpointConnectionARMResourceProperties(provisioningState, new ArmIdWrapper(privateEndpointId, default), privateLinkServiceConnectionState, (ipAddresses ?? new ChangeTrackingList<string>()).ToList(), default),
+                provisioningState is null && privateEndpointId is null && privateLinkServiceConnectionState is null && ipAddresses is null ? default : new RemotePrivateEndpointConnectionARMResourceProperties(provisioningState, new ArmIdWrapper(privateEndpointId, default), privateLinkServiceConnectionState, (ipAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(), default),
                 kind,
                 default);
         }
@@ -2868,12 +2875,19 @@ namespace Azure.ResourceManager.AppService.Models
             return new FunctionAppHostKeys(masterKey, functionKeys ?? new ChangeTrackingDictionary<string, string>(), systemKeys ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <param name="properties"> Properties of function key info. </param>
+        /// <returns> A new <see cref="Models.WebAppKeyInfo"/> instance for mocking. </returns>
+        public static WebAppKeyInfo WebAppKeyInfo(WebAppKeyInfoProperties properties = default)
+        {
+            return new WebAppKeyInfo(properties, default);
+        }
+
         /// <param name="name"> Key name. </param>
         /// <param name="value"> Key value. </param>
-        /// <returns> A new <see cref="Models.WebAppKeyInfo"/> instance for mocking. </returns>
-        public static WebAppKeyInfo WebAppKeyInfo(string name = default, string value = default)
+        /// <returns> A new <see cref="Models.WebAppKeyInfoProperties"/> instance for mocking. </returns>
+        public static WebAppKeyInfoProperties WebAppKeyInfoProperties(string name = default, string value = default)
         {
-            return new WebAppKeyInfo(name, value, default);
+            return new WebAppKeyInfoProperties(name, value, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -5037,13 +5051,10 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <param name="id">
-        /// Resource Id. Typically ID is populated only for responses to GET requests. Caller is responsible for passing in this
-        /// value for GET requests only.
-        /// For example: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupId}/providers/Microsoft.Web/sites/{sitename}
-        /// </param>
-        /// <param name="name"> Name of resource. </param>
-        /// <param name="type"> Type of resource e.g "Microsoft.Web/sites". </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="location"> Geographical region resource belongs to e.g. SouthCentralUS, SouthEastAsia. </param>
         /// <param name="tags"> Tags associated with resource. </param>
         /// <param name="plan"> Azure resource manager plan. </param>
@@ -5054,7 +5065,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="identity"> MSI resource. </param>
         /// <param name="zones"> Logical Availability Zones the service is hosted in. </param>
         /// <returns> A new <see cref="Models.ResponseMessageEnvelopeRemotePrivateEndpointConnection"/> instance for mocking. </returns>
-        public static ResponseMessageEnvelopeRemotePrivateEndpointConnection ResponseMessageEnvelopeRemotePrivateEndpointConnection(string id = default, string name = default, string @type = default, AzureLocation? location = default, IReadOnlyDictionary<string, string> tags = default, AppServiceArmPlan plan = default, RemotePrivateEndpointConnection properties = default, AppServiceSkuDescription sku = default, string status = default, ResponseError error = default, ManagedServiceIdentity identity = default, IEnumerable<string> zones = default)
+        public static ResponseMessageEnvelopeRemotePrivateEndpointConnection ResponseMessageEnvelopeRemotePrivateEndpointConnection(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, IReadOnlyDictionary<string, string> tags = default, AppServiceArmPlan plan = default, RemotePrivateEndpointConnection properties = default, AppServiceSkuDescription sku = default, string status = default, ResponseError error = default, ManagedServiceIdentity identity = default, IEnumerable<string> zones = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -5062,7 +5073,8 @@ namespace Azure.ResourceManager.AppService.Models
             return new ResponseMessageEnvelopeRemotePrivateEndpointConnection(
                 id,
                 name,
-                @type,
+                resourceType,
+                systemData,
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 plan,
@@ -5102,14 +5114,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="privateEndpointId"> Gets the Id. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.RemotePrivateEndpointConnection"/> instance for mocking. </returns>
-        public static RemotePrivateEndpointConnection RemotePrivateEndpointConnection(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default, PrivateLinkConnectionState privateLinkServiceConnectionState = default, IEnumerable<string> ipAddresses = default, string privateEndpointId = default, string kind = default)
+        public static RemotePrivateEndpointConnection RemotePrivateEndpointConnection(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default, PrivateLinkConnectionState privateLinkServiceConnectionState = default, IEnumerable<IPAddress> ipAddresses = default, string privateEndpointId = default, string kind = default)
         {
             return new RemotePrivateEndpointConnection(
                 id,
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && privateEndpointId is null && privateLinkServiceConnectionState is null && ipAddresses is null ? default : new RemotePrivateEndpointConnectionProperties(provisioningState, new ArmIdWrapper(privateEndpointId, default), privateLinkServiceConnectionState, (ipAddresses ?? new ChangeTrackingList<string>()).ToList(), default),
+                provisioningState is null && privateEndpointId is null && privateLinkServiceConnectionState is null && ipAddresses is null ? default : new RemotePrivateEndpointConnectionProperties(provisioningState, new ArmIdWrapper(privateEndpointId, default), privateLinkServiceConnectionState, (ipAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(), default),
                 kind,
                 default);
         }
@@ -9604,43 +9616,6 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.AseV3NetworkingConfigurationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="windowsOutboundIPAddresses"></param>
-        /// <param name="linuxOutboundIPAddresses"></param>
-        /// <param name="externalInboundIPAddresses"></param>
-        /// <param name="internalInboundIPAddresses"></param>
-        /// <param name="allowNewPrivateEndpointConnections"> Property to enable and disable new private endpoint connection creation on ASE. </param>
-        /// <param name="isFtpEnabled"> Property to enable and disable FTP on ASEV3. </param>
-        /// <param name="isRemoteDebugEnabled"> Property to enable and disable Remote Debug on ASEV3. </param>
-        /// <param name="inboundIPAddressOverride"> Customer provided Inbound IP Address. Only able to be set on Ase create. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.AseV3NetworkingConfigurationData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AseV3NetworkingConfigurationData AseV3NetworkingConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IEnumerable<IPAddress> windowsOutboundIPAddresses, IEnumerable<IPAddress> linuxOutboundIPAddresses = default, IEnumerable<IPAddress> externalInboundIPAddresses = default, IEnumerable<IPAddress> internalInboundIPAddresses = default, bool? allowNewPrivateEndpointConnections = default, bool? isFtpEnabled = default, bool? isRemoteDebugEnabled = default, string inboundIPAddressOverride = default, string kind = default)
-        {
-            return new AseV3NetworkingConfigurationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                allowNewPrivateEndpointConnections is null && isFtpEnabled is null && isRemoteDebugEnabled is null && inboundIPAddressOverride is null ? default : new AseV3NetworkingConfigurationProperties(
-                    default,
-                    default,
-                    default,
-                    default,
-                    allowNewPrivateEndpointConnections,
-                    isFtpEnabled,
-                    isRemoteDebugEnabled,
-                    inboundIPAddressOverride,
-                    default),
-                kind,
-                default);
-        }
-
         /// <summary> Initializes a new instance of <see cref="AppService.KubeEnvironmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -9831,7 +9806,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && privateLinkServiceConnectionState is null ? default : new RemotePrivateEndpointConnectionARMResourceProperties(provisioningState, default, privateLinkServiceConnectionState, default, default),
+                provisioningState is null && privateLinkServiceConnectionState is null && ipAddresses is null ? default : new RemotePrivateEndpointConnectionARMResourceProperties(provisioningState, default, privateLinkServiceConnectionState, (ipAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(), default),
                 kind,
                 default);
         }
@@ -10454,11 +10429,11 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                allowNewPrivateEndpointConnections is null && isFtpEnabled is null && isRemoteDebugEnabled is null && inboundIPAddressOverride is null ? default : new AseV3NetworkingConfigurationProperties(
-                    default,
-                    default,
-                    default,
-                    default,
+                windowsOutboundIPAddresses is null && linuxOutboundIPAddresses is null && externalInboundIPAddresses is null && internalInboundIPAddresses is null && allowNewPrivateEndpointConnections is null && isFtpEnabled is null && isRemoteDebugEnabled is null && inboundIPAddressOverride is null ? default : new AseV3NetworkingConfigurationProperties(
+                    (windowsOutboundIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
+                    (linuxOutboundIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
+                    (externalInboundIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
+                    (internalInboundIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
                     allowNewPrivateEndpointConnections,
                     isFtpEnabled,
                     isRemoteDebugEnabled,
@@ -11371,67 +11346,6 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResponseMessageEnvelopeRemotePrivateEndpointConnection"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="location">
-        /// Geographical region resource belongs to e.g. SouthCentralUS, SouthEastAsia.
-        ///             Serialized Name: ResponseMessageEnvelopeRemotePrivateEndpointConnection.location
-        /// </param>
-        /// <param name="tags">
-        /// Tags associated with resource.
-        ///             Serialized Name: ResponseMessageEnvelopeRemotePrivateEndpointConnection.tags
-        /// </param>
-        /// <param name="plan">
-        /// Azure resource manager plan.
-        ///             Serialized Name: ResponseMessageEnvelopeRemotePrivateEndpointConnection.plan
-        /// </param>
-        /// <param name="properties">
-        /// Resource specific properties.
-        ///             Serialized Name: ResponseMessageEnvelopeRemotePrivateEndpointConnection.properties
-        /// </param>
-        /// <param name="sku">
-        /// SKU description of the resource.
-        ///             Serialized Name: ResponseMessageEnvelopeRemotePrivateEndpointConnection.sku
-        /// </param>
-        /// <param name="status">
-        /// Azure-AsyncOperation Status info.
-        ///             Serialized Name: ResponseMessageEnvelopeRemotePrivateEndpointConnection.status
-        /// </param>
-        /// <param name="error">
-        /// Azure-AsyncOperation Error info.
-        ///             Serialized Name: ResponseMessageEnvelopeRemotePrivateEndpointConnection.error
-        /// </param>
-        /// <param name="identity">
-        /// MSI resource
-        ///             Serialized Name: ResponseMessageEnvelopeRemotePrivateEndpointConnection.identity
-        /// </param>
-        /// <param name="zones">
-        /// Logical Availability Zones the service is hosted in
-        ///             Serialized Name: ResponseMessageEnvelopeRemotePrivateEndpointConnection.zones
-        /// </param>
-        /// <returns> A new <see cref="Models.ResponseMessageEnvelopeRemotePrivateEndpointConnection"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ResponseMessageEnvelopeRemotePrivateEndpointConnection ResponseMessageEnvelopeRemotePrivateEndpointConnection(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, IReadOnlyDictionary<string, string> tags = default, AppServiceArmPlan plan = default, RemotePrivateEndpointConnection properties = default, AppServiceSkuDescription sku = default, string status = default, ResponseError error = default, ManagedServiceIdentity identity = default, IEnumerable<string> zones = default)
-        {
-            return new ResponseMessageEnvelopeRemotePrivateEndpointConnection(
-                default,
-                name,
-                default,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                plan,
-                properties,
-                sku,
-                status,
-                error,
-                identity,
-                (zones ?? new ChangeTrackingList<string>()).ToList(),
-                default);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.RemotePrivateEndpointConnection"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -11463,7 +11377,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && privateLinkServiceConnectionState is null ? default : new RemotePrivateEndpointConnectionProperties(provisioningState, default, privateLinkServiceConnectionState, default, default),
+                provisioningState is null && privateLinkServiceConnectionState is null && ipAddresses is null ? default : new RemotePrivateEndpointConnectionProperties(provisioningState, default, privateLinkServiceConnectionState, (ipAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(), default),
                 kind,
                 default);
         }
@@ -11809,25 +11723,9 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && privateLinkServiceConnectionState is null ? default : new RemotePrivateEndpointConnectionARMResourceProperties(provisioningState, default, privateLinkServiceConnectionState, default, default),
+                provisioningState is null && privateLinkServiceConnectionState is null && ipAddresses is null ? default : new RemotePrivateEndpointConnectionARMResourceProperties(provisioningState, default, privateLinkServiceConnectionState, (ipAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(), default),
                 kind,
                 default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AppServicePrivateLinkResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// Properties of a private link resource
-        ///             Serialized Name: PrivateLinkResource.properties
-        /// </param>
-        /// <returns> A new <see cref="Models.AppServicePrivateLinkResourceData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AppServicePrivateLinkResourceData AppServicePrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AppServicePrivateLinkResourceProperties properties = default)
-        {
-            return new AppServicePrivateLinkResourceData(default, name, default, properties, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.RecommendationRuleData"/>. </summary>

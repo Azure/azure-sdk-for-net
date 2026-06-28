@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.ResourceManager.AppService;
 
@@ -93,14 +94,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
-                foreach (string item in IPAddresses)
+                foreach (IPAddress item in IPAddresses)
                 {
                     if (item == null)
                     {
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.AppService.Models
             string provisioningState = default;
             ArmIdWrapper privateEndpoint = default;
             PrivateLinkConnectionState privateLinkServiceConnectionState = default;
-            IList<string> ipAddresses = default;
+            IList<IPAddress> ipAddresses = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -182,7 +183,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<IPAddress> array = new List<IPAddress>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -191,7 +192,7 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         else
                         {
-                            array.Add(item.GetString());
+                            array.Add(IPAddress.Parse(item.GetString()));
                         }
                     }
                     ipAddresses = array;
@@ -202,7 +203,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RemotePrivateEndpointConnectionARMResourceProperties(provisioningState, privateEndpoint, privateLinkServiceConnectionState, ipAddresses ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new RemotePrivateEndpointConnectionARMResourceProperties(provisioningState, privateEndpoint, privateLinkServiceConnectionState, ipAddresses ?? new ChangeTrackingList<IPAddress>(), additionalBinaryDataProperties);
         }
     }
 }

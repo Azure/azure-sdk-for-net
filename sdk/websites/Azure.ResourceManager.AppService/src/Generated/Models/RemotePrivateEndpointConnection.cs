@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Private IPAddresses mapped to the remote private endpoint. </summary>
         [WirePath("properties.ipAddresses")]
-        public IList<string> IPAddresses
+        public IList<IPAddress> IPAddresses
         {
             get
             {

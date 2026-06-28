@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="RemotePrivateEndpointConnectionProperties"/>. </summary>
         public RemotePrivateEndpointConnectionProperties()
         {
-            IPAddresses = new ChangeTrackingList<string>();
+            IPAddresses = new ChangeTrackingList<IPAddress>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RemotePrivateEndpointConnectionProperties"/>. </summary>
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="privateLinkServiceConnectionState"> The state of a private link connection. </param>
         /// <param name="ipAddresses"> Private IPAddresses mapped to the remote private endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RemotePrivateEndpointConnectionProperties(string provisioningState, ArmIdWrapper privateEndpoint, PrivateLinkConnectionState privateLinkServiceConnectionState, IList<string> ipAddresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RemotePrivateEndpointConnectionProperties(string provisioningState, ArmIdWrapper privateEndpoint, PrivateLinkConnectionState privateLinkServiceConnectionState, IList<IPAddress> ipAddresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Private IPAddresses mapped to the remote private endpoint. </summary>
         [WirePath("ipAddresses")]
-        public IList<string> IPAddresses { get; } = new ChangeTrackingList<string>();
+        public IList<IPAddress> IPAddresses { get; } = new ChangeTrackingList<IPAddress>();
 
         /// <summary> Gets the Id. </summary>
         [WirePath("privateEndpoint.id")]

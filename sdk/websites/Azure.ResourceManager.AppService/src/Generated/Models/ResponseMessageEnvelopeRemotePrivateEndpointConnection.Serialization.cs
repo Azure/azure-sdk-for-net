@@ -18,11 +18,11 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Message envelope that contains the common Azure resource manager properties and the resource provider specific content. </summary>
-    public partial class ResponseMessageEnvelopeRemotePrivateEndpointConnection : IJsonModel<ResponseMessageEnvelopeRemotePrivateEndpointConnection>
+    public partial class ResponseMessageEnvelopeRemotePrivateEndpointConnection : ResourceData, IJsonModel<ResponseMessageEnvelopeRemotePrivateEndpointConnection>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResponseMessageEnvelopeRemotePrivateEndpointConnection PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ResponseMessageEnvelopeRemotePrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResponseMessageEnvelopeRemotePrivateEndpointConnection IPersistableModel<ResponseMessageEnvelopeRemotePrivateEndpointConnection>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ResponseMessageEnvelopeRemotePrivateEndpointConnection IPersistableModel<ResponseMessageEnvelopeRemotePrivateEndpointConnection>.Create(BinaryData data, ModelReaderWriterOptions options) => (ResponseMessageEnvelopeRemotePrivateEndpointConnection)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ResponseMessageEnvelopeRemotePrivateEndpointConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -71,28 +71,14 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ResponseMessageEnvelopeRemotePrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResponseMessageEnvelopeRemotePrivateEndpointConnection)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Type))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
-            }
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
@@ -178,11 +164,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResponseMessageEnvelopeRemotePrivateEndpointConnection IJsonModel<ResponseMessageEnvelopeRemotePrivateEndpointConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ResponseMessageEnvelopeRemotePrivateEndpointConnection IJsonModel<ResponseMessageEnvelopeRemotePrivateEndpointConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ResponseMessageEnvelopeRemotePrivateEndpointConnection)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResponseMessageEnvelopeRemotePrivateEndpointConnection JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ResponseMessageEnvelopeRemotePrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -201,9 +187,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             string name = default;
-            string @type = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
             AzureLocation? location = default;
             IReadOnlyDictionary<string, string> tags = default;
             AppServiceArmPlan plan = default;
@@ -218,7 +205,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -228,7 +219,20 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("location"u8))
@@ -340,7 +344,8 @@ namespace Azure.ResourceManager.AppService.Models
             return new ResponseMessageEnvelopeRemotePrivateEndpointConnection(
                 id,
                 name,
-                @type,
+                resourceType,
+                systemData,
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 plan,

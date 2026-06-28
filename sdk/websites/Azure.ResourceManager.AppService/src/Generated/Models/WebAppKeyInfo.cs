@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -22,14 +23,16 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppKeyInfo"/>. </summary>
-        /// <param name="name"> Key name. </param>
-        /// <param name="value"> Key value. </param>
+        /// <param name="properties"> Properties of function key info. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppKeyInfo(string name, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebAppKeyInfo(WebAppKeyInfoProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Name = name;
-            Value = value;
+            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Properties of function key info. </summary>
+        [WirePath("properties")]
+        public WebAppKeyInfoProperties Properties { get; set; }
     }
 }

@@ -7,55 +7,37 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.AppService;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> A private link resource. </summary>
-    public partial class AppServicePrivateLinkResourceData
+    public partial class AppServicePrivateLinkResourceData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppServicePrivateLinkResourceData"/>. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> Name of a private link resource. </param>
-        /// <param name="type"></param>
         /// <param name="properties"> Properties of a private link resource. </param>
-        internal AppServicePrivateLinkResourceData(string id, string name, string @type, AppServicePrivateLinkResourceProperties properties)
+        internal AppServicePrivateLinkResourceData(AppServicePrivateLinkResourceProperties properties)
         {
-            Id = id;
-            Name = name;
-            Type = @type;
             Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServicePrivateLinkResourceData"/>. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> Name of a private link resource. </param>
-        /// <param name="type"></param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Properties of a private link resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppServicePrivateLinkResourceData(string id, string name, string @type, AppServicePrivateLinkResourceProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppServicePrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppServicePrivateLinkResourceProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Id = id;
-            Name = name;
-            Type = @type;
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Gets the Id. </summary>
-        [WirePath("id")]
-        public string Id { get; }
-
-        /// <summary> Name of a private link resource. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-
-        /// <summary> Gets the Type. </summary>
-        [WirePath("type")]
-        public string Type { get; }
 
         /// <summary> Properties of a private link resource. </summary>
         [WirePath("properties")]

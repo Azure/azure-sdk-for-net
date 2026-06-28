@@ -8,13 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.AppService;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> A private link resource. </summary>
-    public partial class AppServicePrivateLinkResourceData : IJsonModel<AppServicePrivateLinkResourceData>
+    public partial class AppServicePrivateLinkResourceData : ResourceData, IJsonModel<AppServicePrivateLinkResourceData>
     {
         /// <summary> Initializes a new instance of <see cref="AppServicePrivateLinkResourceData"/> for deserialization. </summary>
         internal AppServicePrivateLinkResourceData()
@@ -23,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AppServicePrivateLinkResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AppServicePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -56,7 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AppServicePrivateLinkResourceData IPersistableModel<AppServicePrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AppServicePrivateLinkResourceData IPersistableModel<AppServicePrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AppServicePrivateLinkResourceData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AppServicePrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -72,19 +75,14 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AppServicePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AppServicePrivateLinkResourceData)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -106,11 +104,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AppServicePrivateLinkResourceData IJsonModel<AppServicePrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AppServicePrivateLinkResourceData IJsonModel<AppServicePrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AppServicePrivateLinkResourceData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AppServicePrivateLinkResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AppServicePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -129,16 +127,21 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             string name = default;
-            string @type = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
             AppServicePrivateLinkResourceProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -148,7 +151,20 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -161,7 +177,13 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AppServicePrivateLinkResourceData(id, name, @type, properties, additionalBinaryDataProperties);
+            return new AppServicePrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                additionalBinaryDataProperties);
         }
     }
 }

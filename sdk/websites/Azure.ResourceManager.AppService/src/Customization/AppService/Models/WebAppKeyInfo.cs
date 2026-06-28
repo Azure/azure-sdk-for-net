@@ -10,10 +10,32 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class WebAppKeyInfo
     {
+        [Obsolete("Please use WebAppKeyInfo.Properties.Name instead")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string Name { get; set; }
+        public string Name
+        {
+            get
+            {
+                return this.Properties.Name;
+            }
+            set
+            {
+                this.Properties.Name = value;
+            }
+        }
 
+        [Obsolete("Please use WebAppKeyInfo.Properties.Value instead")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string Value { get; set; }
+        public string Value
+        {
+            get
+            {
+                return this.Properties.Value;
+            }
+            set
+            {
+                this.Properties.Value = value;
+            }
+        }
     }
 }

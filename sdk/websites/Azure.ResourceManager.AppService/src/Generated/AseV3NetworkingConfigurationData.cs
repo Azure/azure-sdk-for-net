@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the WindowsOutboundIPAddresses. </summary>
         [WirePath("properties.windowsOutboundIpAddresses")]
-        public IReadOnlyList<string> WindowsOutboundIPAddresses
+        public IReadOnlyList<IPAddress> WindowsOutboundIPAddresses
         {
             get
             {
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the LinuxOutboundIPAddresses. </summary>
         [WirePath("properties.linuxOutboundIpAddresses")]
-        public IReadOnlyList<string> LinuxOutboundIPAddresses
+        public IReadOnlyList<IPAddress> LinuxOutboundIPAddresses
         {
             get
             {
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the ExternalInboundIPAddresses. </summary>
         [WirePath("properties.externalInboundIpAddresses")]
-        public IReadOnlyList<string> ExternalInboundIPAddresses
+        public IReadOnlyList<IPAddress> ExternalInboundIPAddresses
         {
             get
             {
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the InternalInboundIPAddresses. </summary>
         [WirePath("properties.internalInboundIpAddresses")]
-        public IReadOnlyList<string> InternalInboundIPAddresses
+        public IReadOnlyList<IPAddress> InternalInboundIPAddresses
         {
             get
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService
     // Compatibility shim: GA 1.5.0 exposed WebSiteResource.GetAllConfigurationData[Async] returning
     // Pageable<SiteConfigData>. The generator emits Sites.CreateGetAllConfigurationDataRequest but no
     // CollectionResult, so this wrapper is needed to preserve the GA public surface.
-    internal partial class SitesGetAllConfigurationDataAsyncCollectionResultOfT : AsyncPageable<SiteConfigData>
+    internal partial class WebSiteGetAllConfigurationDataAsyncCollectionResultOfT : AsyncPageable<SiteConfigData>
     {
         private readonly Sites _client;
         private readonly Guid _subscriptionId;
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppService
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        public SitesGetAllConfigurationDataAsyncCollectionResultOfT(Sites client, Guid subscriptionId, string resourceGroupName, string name, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public WebSiteGetAllConfigurationDataAsyncCollectionResultOfT(Sites client, Guid subscriptionId, string resourceGroupName, string name, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

@@ -15,7 +15,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Message envelope that contains the common Azure resource manager properties and the resource provider specific content. </summary>
-    public partial class ResponseMessageEnvelopeRemotePrivateEndpointConnection
+    public partial class ResponseMessageEnvelopeRemotePrivateEndpointConnection : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -28,13 +28,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponseMessageEnvelopeRemotePrivateEndpointConnection"/>. </summary>
-        /// <param name="id">
-        /// Resource Id. Typically ID is populated only for responses to GET requests. Caller is responsible for passing in this
-        /// value for GET requests only.
-        /// For example: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupId}/providers/Microsoft.Web/sites/{sitename}
-        /// </param>
-        /// <param name="name"> Name of resource. </param>
-        /// <param name="type"> Type of resource e.g "Microsoft.Web/sites". </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="location"> Geographical region resource belongs to e.g. SouthCentralUS, SouthEastAsia. </param>
         /// <param name="tags"> Tags associated with resource. </param>
         /// <param name="plan"> Azure resource manager plan. </param>
@@ -45,11 +42,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="identity"> MSI resource. </param>
         /// <param name="zones"> Logical Availability Zones the service is hosted in. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseMessageEnvelopeRemotePrivateEndpointConnection(string id, string name, string @type, AzureLocation? location, IReadOnlyDictionary<string, string> tags, AppServiceArmPlan plan, RemotePrivateEndpointConnection properties, AppServiceSkuDescription sku, string status, ResponseError error, ManagedServiceIdentity identity, IReadOnlyList<string> zones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponseMessageEnvelopeRemotePrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IReadOnlyDictionary<string, string> tags, AppServiceArmPlan plan, RemotePrivateEndpointConnection properties, AppServiceSkuDescription sku, string status, ResponseError error, ManagedServiceIdentity identity, IReadOnlyList<string> zones, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Id = id;
-            Name = name;
-            Type = @type;
             Location = location;
             Tags = tags;
             Plan = plan;
@@ -61,22 +55,6 @@ namespace Azure.ResourceManager.AppService.Models
             Zones = zones;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary>
-        /// Resource Id. Typically ID is populated only for responses to GET requests. Caller is responsible for passing in this
-        /// value for GET requests only.
-        /// For example: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupId}/providers/Microsoft.Web/sites/{sitename}
-        /// </summary>
-        [WirePath("id")]
-        public string Id { get; }
-
-        /// <summary> Name of resource. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-
-        /// <summary> Type of resource e.g "Microsoft.Web/sites". </summary>
-        [WirePath("type")]
-        public string Type { get; }
 
         /// <summary> Geographical region resource belongs to e.g. SouthCentralUS, SouthEastAsia. </summary>
         [WirePath("location")]

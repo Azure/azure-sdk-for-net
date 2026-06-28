@@ -645,6 +645,7 @@ namespace Azure.ResourceManager.AppService
     [ModelReaderWriterBuildable(typeof(WebAppIPAddressRange))]
     [ModelReaderWriterBuildable(typeof(WebAppJsonSchema))]
     [ModelReaderWriterBuildable(typeof(WebAppKeyInfo))]
+    [ModelReaderWriterBuildable(typeof(WebAppKeyInfoProperties))]
     [ModelReaderWriterBuildable(typeof(WebAppListResult))]
     [ModelReaderWriterBuildable(typeof(WebAppLoginInfo))]
     [ModelReaderWriterBuildable(typeof(WebAppMajorVersion))]

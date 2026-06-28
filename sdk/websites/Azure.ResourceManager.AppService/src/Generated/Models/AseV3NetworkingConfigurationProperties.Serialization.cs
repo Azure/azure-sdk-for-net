@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.ResourceManager.AppService;
 
@@ -78,14 +79,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("windowsOutboundIpAddresses"u8);
                 writer.WriteStartArray();
-                foreach (string item in WindowsOutboundIPAddresses)
+                foreach (IPAddress item in WindowsOutboundIPAddresses)
                 {
                     if (item == null)
                     {
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -93,14 +94,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("linuxOutboundIpAddresses"u8);
                 writer.WriteStartArray();
-                foreach (string item in LinuxOutboundIPAddresses)
+                foreach (IPAddress item in LinuxOutboundIPAddresses)
                 {
                     if (item == null)
                     {
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -108,14 +109,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("externalInboundIpAddresses"u8);
                 writer.WriteStartArray();
-                foreach (string item in ExternalInboundIPAddresses)
+                foreach (IPAddress item in ExternalInboundIPAddresses)
                 {
                     if (item == null)
                     {
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -123,14 +124,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("internalInboundIpAddresses"u8);
                 writer.WriteStartArray();
-                foreach (string item in InternalInboundIPAddresses)
+                foreach (IPAddress item in InternalInboundIPAddresses)
                 {
                     if (item == null)
                     {
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -196,10 +197,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            IReadOnlyList<string> windowsOutboundIPAddresses = default;
-            IReadOnlyList<string> linuxOutboundIPAddresses = default;
-            IReadOnlyList<string> externalInboundIPAddresses = default;
-            IReadOnlyList<string> internalInboundIPAddresses = default;
+            IReadOnlyList<IPAddress> windowsOutboundIPAddresses = default;
+            IReadOnlyList<IPAddress> linuxOutboundIPAddresses = default;
+            IReadOnlyList<IPAddress> externalInboundIPAddresses = default;
+            IReadOnlyList<IPAddress> internalInboundIPAddresses = default;
             bool? allowNewPrivateEndpointConnections = default;
             bool? isFtpEnabled = default;
             bool? isRemoteDebugEnabled = default;
@@ -213,7 +214,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<IPAddress> array = new List<IPAddress>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -222,7 +223,7 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         else
                         {
-                            array.Add(item.GetString());
+                            array.Add(IPAddress.Parse(item.GetString()));
                         }
                     }
                     windowsOutboundIPAddresses = array;
@@ -234,7 +235,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<IPAddress> array = new List<IPAddress>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -243,7 +244,7 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         else
                         {
-                            array.Add(item.GetString());
+                            array.Add(IPAddress.Parse(item.GetString()));
                         }
                     }
                     linuxOutboundIPAddresses = array;
@@ -255,7 +256,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<IPAddress> array = new List<IPAddress>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -264,7 +265,7 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         else
                         {
-                            array.Add(item.GetString());
+                            array.Add(IPAddress.Parse(item.GetString()));
                         }
                     }
                     externalInboundIPAddresses = array;
@@ -276,7 +277,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<IPAddress> array = new List<IPAddress>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -285,7 +286,7 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         else
                         {
-                            array.Add(item.GetString());
+                            array.Add(IPAddress.Parse(item.GetString()));
                         }
                     }
                     internalInboundIPAddresses = array;
@@ -329,10 +330,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             return new AseV3NetworkingConfigurationProperties(
-                windowsOutboundIPAddresses ?? new ChangeTrackingList<string>(),
-                linuxOutboundIPAddresses ?? new ChangeTrackingList<string>(),
-                externalInboundIPAddresses ?? new ChangeTrackingList<string>(),
-                internalInboundIPAddresses ?? new ChangeTrackingList<string>(),
+                windowsOutboundIPAddresses ?? new ChangeTrackingList<IPAddress>(),
+                linuxOutboundIPAddresses ?? new ChangeTrackingList<IPAddress>(),
+                externalInboundIPAddresses ?? new ChangeTrackingList<IPAddress>(),
+                internalInboundIPAddresses ?? new ChangeTrackingList<IPAddress>(),
                 allowNewPrivateEndpointConnections,
                 isFtpEnabled,
                 isRemoteDebugEnabled,

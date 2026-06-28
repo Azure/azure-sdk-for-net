@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -20,10 +21,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="AseV3NetworkingConfigurationProperties"/>. </summary>
         public AseV3NetworkingConfigurationProperties()
         {
-            WindowsOutboundIPAddresses = new ChangeTrackingList<string>();
-            LinuxOutboundIPAddresses = new ChangeTrackingList<string>();
-            ExternalInboundIPAddresses = new ChangeTrackingList<string>();
-            InternalInboundIPAddresses = new ChangeTrackingList<string>();
+            WindowsOutboundIPAddresses = new ChangeTrackingList<IPAddress>();
+            LinuxOutboundIPAddresses = new ChangeTrackingList<IPAddress>();
+            ExternalInboundIPAddresses = new ChangeTrackingList<IPAddress>();
+            InternalInboundIPAddresses = new ChangeTrackingList<IPAddress>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AseV3NetworkingConfigurationProperties"/>. </summary>
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isRemoteDebugEnabled"> Property to enable and disable Remote Debug on ASEV3. </param>
         /// <param name="inboundIPAddressOverride"> Customer provided Inbound IP Address. Only able to be set on Ase create. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AseV3NetworkingConfigurationProperties(IReadOnlyList<string> windowsOutboundIPAddresses, IReadOnlyList<string> linuxOutboundIPAddresses, IReadOnlyList<string> externalInboundIPAddresses, IReadOnlyList<string> internalInboundIPAddresses, bool? allowNewPrivateEndpointConnections, bool? isFtpEnabled, bool? isRemoteDebugEnabled, string inboundIPAddressOverride, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AseV3NetworkingConfigurationProperties(IReadOnlyList<IPAddress> windowsOutboundIPAddresses, IReadOnlyList<IPAddress> linuxOutboundIPAddresses, IReadOnlyList<IPAddress> externalInboundIPAddresses, IReadOnlyList<IPAddress> internalInboundIPAddresses, bool? allowNewPrivateEndpointConnections, bool? isFtpEnabled, bool? isRemoteDebugEnabled, string inboundIPAddressOverride, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WindowsOutboundIPAddresses = windowsOutboundIPAddresses;
             LinuxOutboundIPAddresses = linuxOutboundIPAddresses;
@@ -51,19 +52,19 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Gets the WindowsOutboundIPAddresses. </summary>
         [WirePath("windowsOutboundIpAddresses")]
-        public IReadOnlyList<string> WindowsOutboundIPAddresses { get; } = new ChangeTrackingList<string>();
+        public IReadOnlyList<IPAddress> WindowsOutboundIPAddresses { get; } = new ChangeTrackingList<IPAddress>();
 
         /// <summary> Gets the LinuxOutboundIPAddresses. </summary>
         [WirePath("linuxOutboundIpAddresses")]
-        public IReadOnlyList<string> LinuxOutboundIPAddresses { get; } = new ChangeTrackingList<string>();
+        public IReadOnlyList<IPAddress> LinuxOutboundIPAddresses { get; } = new ChangeTrackingList<IPAddress>();
 
         /// <summary> Gets the ExternalInboundIPAddresses. </summary>
         [WirePath("externalInboundIpAddresses")]
-        public IReadOnlyList<string> ExternalInboundIPAddresses { get; } = new ChangeTrackingList<string>();
+        public IReadOnlyList<IPAddress> ExternalInboundIPAddresses { get; } = new ChangeTrackingList<IPAddress>();
 
         /// <summary> Gets the InternalInboundIPAddresses. </summary>
         [WirePath("internalInboundIpAddresses")]
-        public IReadOnlyList<string> InternalInboundIPAddresses { get; } = new ChangeTrackingList<string>();
+        public IReadOnlyList<IPAddress> InternalInboundIPAddresses { get; } = new ChangeTrackingList<IPAddress>();
 
         /// <summary> Property to enable and disable new private endpoint connection creation on ASE. </summary>
         [WirePath("allowNewPrivateEndpointConnections")]

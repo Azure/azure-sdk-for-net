@@ -11,7 +11,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal partial class WebAppsGetAllConfigurationSlotDataCollectionResultOfT : Pageable<SiteConfigData>
+    internal partial class WebSiteSlotGetAllConfigurationSlotDataCollectionResultOfT : Pageable<SiteConfigData>
     {
         private readonly WebApps _client;
         private readonly Guid _subscriptionId;
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        public WebAppsGetAllConfigurationSlotDataCollectionResultOfT(WebApps client, Guid subscriptionId, string resourceGroupName, string name, string slot, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public WebSiteSlotGetAllConfigurationSlotDataCollectionResultOfT(WebApps client, Guid subscriptionId, string resourceGroupName, string name, string slot, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new WebAppsGetAllConfigurationSlotDataAsyncCollectionResultOfT(
+            return new WebSiteSlotGetAllConfigurationSlotDataAsyncCollectionResultOfT(
                 _webAppsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new WebAppsGetAllConfigurationSlotDataCollectionResultOfT(
+            return new WebSiteSlotGetAllConfigurationSlotDataCollectionResultOfT(
                 _webAppsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
