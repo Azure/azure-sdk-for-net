@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _addressResponsesRestClient.CreateGetVipInfoRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                HttpMessage message = _addressResponsesRestClient.CreateGetAppServiceEnvironmentIPAddressesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceEnvironmentAddressData> response = Response.FromValue(AppServiceEnvironmentAddressData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _addressResponsesRestClient.CreateGetVipInfoRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                HttpMessage message = _addressResponsesRestClient.CreateGetAppServiceEnvironmentIPAddressesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceEnvironmentAddressData> response = Response.FromValue(AppServiceEnvironmentAddressData.FromResponse(result), result);
                 if (response.Value == null)

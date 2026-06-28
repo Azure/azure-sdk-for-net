@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(ValidateResourceType.ToString());
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             string name = default;
-            ValidateResourceType @type = default;
+            ValidateResourceType validateResourceType = default;
             AzureLocation location = default;
             ValidateProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ValidateResourceType(prop.Value.GetString());
+                    validateResourceType = new ValidateResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("location"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AppServiceValidateContent(name, @type, location, properties, additionalBinaryDataProperties);
+            return new AppServiceValidateContent(name, validateResourceType, location, properties, additionalBinaryDataProperties);
         }
     }
 }

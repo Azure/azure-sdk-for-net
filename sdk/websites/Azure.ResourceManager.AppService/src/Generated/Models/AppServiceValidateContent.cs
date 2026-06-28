@@ -20,28 +20,28 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of <see cref="AppServiceValidateContent"/>. </summary>
         /// <param name="name"> Resource name to verify. </param>
-        /// <param name="type"> Resource type used for verification. </param>
+        /// <param name="validateResourceType"> Resource type used for verification. </param>
         /// <param name="location"> Expected location of the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public AppServiceValidateContent(string name, ValidateResourceType @type, AzureLocation location)
+        public AppServiceValidateContent(string name, ValidateResourceType validateResourceType, AzureLocation location)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            Type = @type;
+            ValidateResourceType = validateResourceType;
             Location = location;
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceValidateContent"/>. </summary>
         /// <param name="name"> Resource name to verify. </param>
-        /// <param name="type"> Resource type used for verification. </param>
+        /// <param name="validateResourceType"> Resource type used for verification. </param>
         /// <param name="location"> Expected location of the resource. </param>
         /// <param name="properties"> Properties of the resource to validate. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceValidateContent(string name, ValidateResourceType @type, AzureLocation location, ValidateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppServiceValidateContent(string name, ValidateResourceType validateResourceType, AzureLocation location, ValidateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Type = @type;
+            ValidateResourceType = validateResourceType;
             Location = location;
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -49,19 +49,19 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Resource name to verify. </summary>
         [WirePath("name")]
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> Resource type used for verification. </summary>
         [WirePath("type")]
-        public ValidateResourceType Type { get; }
+        public ValidateResourceType ValidateResourceType { get; set; }
 
         /// <summary> Expected location of the resource. </summary>
         [WirePath("location")]
-        public AzureLocation Location { get; }
+        public AzureLocation Location { get; set; }
 
         /// <summary> Properties of the resource to validate. </summary>
         [WirePath("properties")]
-        internal ValidateProperties Properties { get; }
+        internal ValidateProperties Properties { get; set; }
 
         /// <summary> ARM resource ID of an App Service plan that would host the app. </summary>
         [WirePath("properties.serverFarmId")]
@@ -69,7 +69,15 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties.ServerFarmId;
+                return Properties is null ? default : Properties.ServerFarmId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ValidateProperties();
+                }
+                Properties.ServerFarmId = value;
             }
         }
 
@@ -79,7 +87,15 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties.SkuName;
+                return Properties is null ? default : Properties.SkuName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ValidateProperties();
+                }
+                Properties.SkuName = value;
             }
         }
 
@@ -89,7 +105,15 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties.NeedLinuxWorkers;
+                return Properties is null ? default : Properties.NeedLinuxWorkers;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ValidateProperties();
+                }
+                Properties.NeedLinuxWorkers = value;
             }
         }
 
@@ -99,7 +123,15 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties.IsSpot;
+                return Properties is null ? default : Properties.IsSpot;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ValidateProperties();
+                }
+                Properties.IsSpot = value;
             }
         }
 
@@ -109,7 +141,15 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties.Capacity;
+                return Properties is null ? default : Properties.Capacity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ValidateProperties();
+                }
+                Properties.Capacity = value;
             }
         }
 
@@ -119,7 +159,15 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties.HostingEnvironment;
+                return Properties is null ? default : Properties.HostingEnvironment;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ValidateProperties();
+                }
+                Properties.HostingEnvironment = value;
             }
         }
 
@@ -129,7 +177,15 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties.IsXenon;
+                return Properties is null ? default : Properties.IsXenon;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ValidateProperties();
+                }
+                Properties.IsXenon = value;
             }
         }
 
@@ -139,7 +195,15 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties.ContainerRegistryBaseUri;
+                return Properties is null ? default : Properties.ContainerRegistryBaseUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ValidateProperties();
+                }
+                Properties.ContainerRegistryBaseUri = value;
             }
         }
 
@@ -149,7 +213,15 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties.ContainerRegistryUsername;
+                return Properties is null ? default : Properties.ContainerRegistryUsername;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ValidateProperties();
+                }
+                Properties.ContainerRegistryUsername = value;
             }
         }
 
@@ -159,7 +231,15 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties.ContainerRegistryPassword;
+                return Properties is null ? default : Properties.ContainerRegistryPassword;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ValidateProperties();
+                }
+                Properties.ContainerRegistryPassword = value;
             }
         }
 
@@ -169,7 +249,15 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties.ContainerImageRepository;
+                return Properties is null ? default : Properties.ContainerImageRepository;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ValidateProperties();
+                }
+                Properties.ContainerImageRepository = value;
             }
         }
 
@@ -179,7 +267,15 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties.ContainerImageTag;
+                return Properties is null ? default : Properties.ContainerImageTag;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ValidateProperties();
+                }
+                Properties.ContainerImageTag = value;
             }
         }
 
@@ -189,7 +285,15 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties.ContainerImagePlatform;
+                return Properties is null ? default : Properties.ContainerImagePlatform;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ValidateProperties();
+                }
+                Properties.ContainerImagePlatform = value;
             }
         }
 
@@ -199,7 +303,15 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties.AppServiceEnvironment;
+                return Properties is null ? default : Properties.AppServiceEnvironment;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ValidateProperties();
+                }
+                Properties.AppServiceEnvironment = value;
             }
         }
     }

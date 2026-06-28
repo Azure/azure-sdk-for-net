@@ -67,54 +67,6 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetAllConfigurationSlotDataRequest(Guid subscriptionId, string resourceGroupName, string name, string slot, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Web/sites/", false);
-            uri.AppendPath(name, true);
-            uri.AppendPath("/slots/", false);
-            uri.AppendPath(slot, true);
-            uri.AppendPath("/config", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateNextGetAllConfigurationSlotDataRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, string slot, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage.IsAbsoluteUri)
-            {
-                uri.Reset(nextPage);
-            }
-            else
-            {
-                uri.Reset(new Uri(_endpoint, nextPage));
-            }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
         internal HttpMessage CreateRecoverSiteConfigurationSnapshotSlotRequest(Guid subscriptionId, string resourceGroupName, string name, string slot, string snapshotId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
