@@ -3,12 +3,32 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 // NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.AppService.Models
 {
+    [CodeGenSuppress("PfxBlob")]
     public partial class AppCertificatePatch
     {
+        // GA shipped byte[] for PfxBlob; TypeSpec `bytes` now emits as BinaryData.
+        // Restore byte[] for backward compatibility by converting on access.
+        /// <summary> Pfx blob. </summary>
+        [WirePath("properties.pfxBlob")]
+        public byte[] PfxBlob
+        {
+            get => Properties is null ? null : Properties.PfxBlob?.ToArray();
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificatePatchResourceProperties();
+                }
+                Properties.PfxBlob = value is null ? null : BinaryData.FromBytes(value);
+            }
+        }
+
         /// <summary>
         /// Certificate thumbprint.
         /// <para>

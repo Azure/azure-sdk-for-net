@@ -47,24 +47,6 @@ namespace Azure.ResourceManager.AppService
         [WirePath("kind")]
         public string Kind { get; set; }
 
-        /// <summary> Public Certificate byte array. </summary>
-        [WirePath("properties.blob")]
-        public BinaryData Blob
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Blob;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new PublicCertificateProperties();
-                }
-                Properties.Blob = value;
-            }
-        }
-
         /// <summary> Public Certificate Location. </summary>
         [WirePath("properties.publicCertificateLocation")]
         public PublicCertificateLocation? PublicCertificateLocation

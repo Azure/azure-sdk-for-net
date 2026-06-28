@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 // NOTE: The following customization is intentionally retained for backward compatibility.
@@ -13,8 +14,26 @@ namespace Azure.ResourceManager.AppService
 {
     [CodeGenSerialization(nameof(KeyVaultId), DeserializationValueHook = nameof(DeserializeKeyVaultId))]
     [CodeGenSerialization(nameof(ThumbprintString), DeserializationValueHook = nameof(DeserializeThumbprintString))]
+    [CodeGenSuppress("PfxBlob")]
     public partial class AppCertificateData
     {
+        // GA shipped byte[] for PfxBlob; TypeSpec `bytes` now emits as BinaryData.
+        // Restore byte[] for backward compatibility by converting on access.
+        /// <summary> Pfx blob. </summary>
+        [WirePath("properties.pfxBlob")]
+        public byte[] PfxBlob
+        {
+            get => Properties is null ? null : Properties.PfxBlob?.ToArray();
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificateProperties();
+                }
+                Properties.PfxBlob = value is null ? null : BinaryData.FromBytes(value);
+            }
+        }
+
         /// <summary>
         /// Certificate thumbprint.
         /// <para>

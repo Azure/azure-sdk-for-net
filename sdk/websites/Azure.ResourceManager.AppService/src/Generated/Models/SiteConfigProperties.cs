@@ -204,10 +204,6 @@ namespace Azure.ResourceManager.AppService.Models
         [WirePath("numberOfWorkers")]
         public int? NumberOfWorkers { get; set; }
 
-        /// <summary> Default documents. </summary>
-        [WirePath("defaultDocuments")]
-        public IList<string> DefaultDocuments { get; } = new ChangeTrackingList<string>();
-
         /// <summary> .NET Framework version. </summary>
         [WirePath("netFrameworkVersion")]
         public string NetFrameworkVersion { get; set; }
@@ -276,25 +272,9 @@ namespace Azure.ResourceManager.AppService.Models
         [WirePath("publishingUsername")]
         public string PublishingUsername { get; set; }
 
-        /// <summary> Application settings. This property is not returned in response to normal create and read requests since it may contain sensitive information. </summary>
-        [WirePath("appSettings")]
-        public IList<AppServiceNameValuePair> AppSettings { get; } = new ChangeTrackingList<AppServiceNameValuePair>();
-
-        /// <summary> Application metadata. This property cannot be retrieved, since it may contain secrets. </summary>
-        [WirePath("metadata")]
-        public IList<AppServiceNameValuePair> Metadata { get; } = new ChangeTrackingList<AppServiceNameValuePair>();
-
-        /// <summary> Connection strings. This property is not returned in response to normal create and read requests since it may contain sensitive information. </summary>
-        [WirePath("connectionStrings")]
-        public IList<ConnStringInfo> ConnectionStrings { get; } = new ChangeTrackingList<ConnStringInfo>();
-
         /// <summary> Site MachineKey. </summary>
         [WirePath("machineKey")]
         public SiteMachineKey MachineKey { get; }
-
-        /// <summary> Handler mappings. </summary>
-        [WirePath("handlerMappings")]
-        public IList<HttpRequestHandlerMapping> HandlerMappings { get; } = new ChangeTrackingList<HttpRequestHandlerMapping>();
 
         /// <summary> Document root. </summary>
         [WirePath("documentRoot")]
@@ -335,10 +315,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Managed pipeline mode. </summary>
         [WirePath("managedPipelineMode")]
         public ManagedPipelineMode? ManagedPipelineMode { get; set; }
-
-        /// <summary> Virtual applications. </summary>
-        [WirePath("virtualApplications")]
-        public IList<VirtualApplication> VirtualApplications { get; } = new ChangeTrackingList<VirtualApplication>();
 
         /// <summary> Site load balancing. </summary>
         [WirePath("loadBalancing")]
@@ -412,17 +388,9 @@ namespace Azure.ResourceManager.AppService.Models
         [WirePath("keyVaultReferenceIdentity")]
         public string KeyVaultReferenceIdentity { get; set; }
 
-        /// <summary> IP security restrictions for main. </summary>
-        [WirePath("ipSecurityRestrictions")]
-        public IList<AppServiceIPSecurityRestriction> IPSecurityRestrictions { get; } = new ChangeTrackingList<AppServiceIPSecurityRestriction>();
-
         /// <summary> Default action for main access restriction if no rules are matched. </summary>
         [WirePath("ipSecurityRestrictionsDefaultAction")]
         public SiteDefaultAction? IPSecurityRestrictionsDefaultAction { get; set; }
-
-        /// <summary> IP security restrictions for scm. </summary>
-        [WirePath("scmIpSecurityRestrictions")]
-        public IList<AppServiceIPSecurityRestriction> ScmIPSecurityRestrictions { get; } = new ChangeTrackingList<AppServiceIPSecurityRestriction>();
 
         /// <summary> Default action for scm access restriction if no rules are matched. </summary>
         [WirePath("scmIpSecurityRestrictionsDefaultAction")]
@@ -499,10 +467,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         [WirePath("minimumElasticInstanceCount")]
         public int? MinimumElasticInstanceCount { get; set; }
-
-        /// <summary> List of Azure Storage Accounts. </summary>
-        [WirePath("azureStorageAccounts")]
-        public IDictionary<string, AppServiceStorageAccessInfo> AzureStorageAccounts { get; } = new ChangeTrackingDictionary<string, AppServiceStorageAccessInfo>();
 
         /// <summary> Property to allow or block all public traffic. </summary>
         [WirePath("publicNetworkAccess")]

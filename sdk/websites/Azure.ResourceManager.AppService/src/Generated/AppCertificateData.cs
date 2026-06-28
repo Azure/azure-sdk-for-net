@@ -84,24 +84,6 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Pfx blob. </summary>
-        [WirePath("properties.pfxBlob")]
-        public BinaryData PfxBlob
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PfxBlob;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CertificateProperties();
-                }
-                Properties.PfxBlob = value;
-            }
-        }
-
         /// <summary> App name. </summary>
         [WirePath("properties.siteName")]
         public string SiteName

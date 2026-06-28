@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="kind"> The resource kind. </param>
         /// <param name="location"> The resource location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowEnvelopeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkflowEnvelopeProperties properties, string kind, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal WorkflowEnvelopeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkflowEnvelopeProperties properties, string kind, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Kind = kind;
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> The resource location. </summary>
         [WirePath("location")]
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
     }
 }

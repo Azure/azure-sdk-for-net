@@ -3257,7 +3257,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="kind"> The resource kind. </param>
         /// <param name="location"> The resource location. </param>
         /// <returns> A new <see cref="AppService.WorkflowEnvelopeData"/> instance for mocking. </returns>
-        public static WorkflowEnvelopeData WorkflowEnvelopeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, WorkflowEnvelopeProperties properties = default, string kind = default, string location = default)
+        public static WorkflowEnvelopeData WorkflowEnvelopeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, WorkflowEnvelopeProperties properties = default, string kind = default, AzureLocation? location = default)
         {
             return new WorkflowEnvelopeData(
                 id,
@@ -3294,7 +3294,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="numberOfWorkers"> Number of workers. </param>
-        /// <param name="defaultDocuments"> Default documents. </param>
         /// <param name="netFrameworkVersion"> .NET Framework version. </param>
         /// <param name="phpVersion"> Version of PHP. </param>
         /// <param name="pythonVersion"> Version of Python. </param>
@@ -3312,11 +3311,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="logsDirectorySizeLimit"> HTTP logs directory size limit. </param>
         /// <param name="isDetailedErrorLoggingEnabled"> &lt;code&gt;true&lt;/code&gt; if detailed error logging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="publishingUsername"> Publishing user name. </param>
-        /// <param name="appSettings"> Application settings. This property is not returned in response to normal create and read requests since it may contain sensitive information. </param>
-        /// <param name="metadata"> Application metadata. This property cannot be retrieved, since it may contain secrets. </param>
-        /// <param name="connectionStrings"> Connection strings. This property is not returned in response to normal create and read requests since it may contain sensitive information. </param>
         /// <param name="machineKey"> Site MachineKey. </param>
-        /// <param name="handlerMappings"> Handler mappings. </param>
         /// <param name="documentRoot"> Document root. </param>
         /// <param name="scmType"> SCM type. </param>
         /// <param name="use32BitWorkerProcess"> &lt;code&gt;true&lt;/code&gt; to use 32-bit worker process; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
@@ -3327,7 +3322,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="javaContainerVersion"> Java container version. </param>
         /// <param name="appCommandLine"> App command line to launch. </param>
         /// <param name="managedPipelineMode"> Managed pipeline mode. </param>
-        /// <param name="virtualApplications"> Virtual applications. </param>
         /// <param name="loadBalancing"> Site load balancing. </param>
         /// <param name="limits"> Site limits. </param>
         /// <param name="isAutoHealEnabled"> &lt;code&gt;true&lt;/code&gt; if Auto Heal is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
@@ -3343,9 +3337,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="managedServiceIdentityId"> Managed Service Identity Id. </param>
         /// <param name="xManagedServiceIdentityId"> Explicit Managed Service Identity Id. </param>
         /// <param name="keyVaultReferenceIdentity"> Identity to use for Key Vault Reference authentication. </param>
-        /// <param name="ipSecurityRestrictions"> IP security restrictions for main. </param>
         /// <param name="ipSecurityRestrictionsDefaultAction"> Default action for main access restriction if no rules are matched. </param>
-        /// <param name="scmIPSecurityRestrictions"> IP security restrictions for scm. </param>
         /// <param name="scmIPSecurityRestrictionsDefaultAction"> Default action for scm access restriction if no rules are matched. </param>
         /// <param name="allowIPSecurityRestrictionsForScmToUseMain"> IP security restrictions for scm to use main. </param>
         /// <param name="isHttp20Enabled"> Http20Enabled: configures a web site to allow clients to connect over http2.0. </param>
@@ -3377,15 +3369,23 @@ namespace Azure.ResourceManager.AppService.Models
         /// Number of minimum instance count for a site
         /// This setting only applies to the Elastic Plans
         /// </param>
-        /// <param name="azureStorageAccounts"> List of Azure Storage Accounts. </param>
         /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. </param>
         /// <param name="experimentsRampUpRules"> List of ramp-up rules. </param>
         /// <param name="apiDefinitionUriStringValue"> The URL of the API definition. </param>
         /// <param name="apiManagementConfigId"> APIM-Api Identifier. </param>
         /// <param name="apiDefinitionUri"> Gets or sets the ApiDefinitionUri. </param>
+        /// <param name="appSettings"> Application settings. This property is not returned in response to normal create and read requests since it may contain sensitive information. </param>
+        /// <param name="azureStorageAccounts"> List of Azure Storage Accounts. </param>
+        /// <param name="connectionStrings"> Connection strings. This property is not returned in response to normal create and read requests since it may contain sensitive information. </param>
+        /// <param name="defaultDocuments"> Default documents. </param>
+        /// <param name="handlerMappings"> Handler mappings. </param>
+        /// <param name="ipSecurityRestrictions"> IP security restrictions for main. </param>
+        /// <param name="metadata"> Application metadata. This property cannot be retrieved, since it may contain secrets. </param>
+        /// <param name="scmIPSecurityRestrictions"> IP security restrictions for scm. </param>
+        /// <param name="virtualApplications"> Virtual applications. </param>
         /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <returns> A new <see cref="AppService.SiteConfigData"/> instance for mocking. </returns>
-        public static SiteConfigData SiteConfigData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? numberOfWorkers = default, IEnumerable<string> defaultDocuments = default, string netFrameworkVersion = default, string phpVersion = default, string pythonVersion = default, string nodeVersion = default, string powerShellVersion = default, string linuxFxVersion = default, string windowsFxVersion = default, bool? isRequestTracingEnabled = default, DateTimeOffset? requestTracingExpirationOn = default, bool? isRemoteDebuggingEnabled = default, string remoteDebuggingVersion = default, bool? isHttpLoggingEnabled = default, bool? useManagedIdentityCreds = default, string acrUserManagedIdentityId = default, int? logsDirectorySizeLimit = default, bool? isDetailedErrorLoggingEnabled = default, string publishingUsername = default, IEnumerable<AppServiceNameValuePair> appSettings = default, IEnumerable<AppServiceNameValuePair> metadata = default, IEnumerable<ConnStringInfo> connectionStrings = default, SiteMachineKey machineKey = default, IEnumerable<HttpRequestHandlerMapping> handlerMappings = default, string documentRoot = default, ScmType? scmType = default, bool? use32BitWorkerProcess = default, bool? isWebSocketsEnabled = default, bool? isAlwaysOn = default, string javaVersion = default, string javaContainer = default, string javaContainerVersion = default, string appCommandLine = default, ManagedPipelineMode? managedPipelineMode = default, IEnumerable<VirtualApplication> virtualApplications = default, SiteLoadBalancing? loadBalancing = default, SiteLimits limits = default, bool? isAutoHealEnabled = default, AutoHealRules autoHealRules = default, string tracingOptions = default, string vnetName = default, bool? isVnetRouteAllEnabled = default, int? vnetPrivatePortsCount = default, AppServiceCorsSettings cors = default, WebAppPushSettings push = default, string autoSwapSlotName = default, bool? isLocalMySqlEnabled = default, int? managedServiceIdentityId = default, int? xManagedServiceIdentityId = default, string keyVaultReferenceIdentity = default, IEnumerable<AppServiceIPSecurityRestriction> ipSecurityRestrictions = default, SiteDefaultAction? ipSecurityRestrictionsDefaultAction = default, IEnumerable<AppServiceIPSecurityRestriction> scmIPSecurityRestrictions = default, SiteDefaultAction? scmIPSecurityRestrictionsDefaultAction = default, bool? allowIPSecurityRestrictionsForScmToUseMain = default, bool? isHttp20Enabled = default, int? http20ProxyFlag = default, AppServiceSupportedTlsVersion? minTlsVersion = default, AppServiceTlsCipherSuite? minTlsCipherSuite = default, AppServiceSupportedTlsVersion? scmMinTlsVersion = default, AppServiceFtpsState? ftpsState = default, int? preWarmedInstanceCount = default, int? functionAppScaleLimit = default, int? elasticWebAppScaleLimit = default, string healthCheckPath = default, bool? isFunctionsRuntimeScaleMonitoringEnabled = default, string websiteTimeZone = default, int? minimumElasticInstanceCount = default, IDictionary<string, AppServiceStorageAccessInfo> azureStorageAccounts = default, string publicNetworkAccess = default, IEnumerable<RampUpRule> experimentsRampUpRules = default, string apiDefinitionUriStringValue = default, string apiManagementConfigId = default, Uri apiDefinitionUri = default, string kind = default)
+        public static SiteConfigData SiteConfigData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? numberOfWorkers = default, string netFrameworkVersion = default, string phpVersion = default, string pythonVersion = default, string nodeVersion = default, string powerShellVersion = default, string linuxFxVersion = default, string windowsFxVersion = default, bool? isRequestTracingEnabled = default, DateTimeOffset? requestTracingExpirationOn = default, bool? isRemoteDebuggingEnabled = default, string remoteDebuggingVersion = default, bool? isHttpLoggingEnabled = default, bool? useManagedIdentityCreds = default, string acrUserManagedIdentityId = default, int? logsDirectorySizeLimit = default, bool? isDetailedErrorLoggingEnabled = default, string publishingUsername = default, SiteMachineKey machineKey = default, string documentRoot = default, ScmType? scmType = default, bool? use32BitWorkerProcess = default, bool? isWebSocketsEnabled = default, bool? isAlwaysOn = default, string javaVersion = default, string javaContainer = default, string javaContainerVersion = default, string appCommandLine = default, ManagedPipelineMode? managedPipelineMode = default, SiteLoadBalancing? loadBalancing = default, SiteLimits limits = default, bool? isAutoHealEnabled = default, AutoHealRules autoHealRules = default, string tracingOptions = default, string vnetName = default, bool? isVnetRouteAllEnabled = default, int? vnetPrivatePortsCount = default, AppServiceCorsSettings cors = default, WebAppPushSettings push = default, string autoSwapSlotName = default, bool? isLocalMySqlEnabled = default, int? managedServiceIdentityId = default, int? xManagedServiceIdentityId = default, string keyVaultReferenceIdentity = default, SiteDefaultAction? ipSecurityRestrictionsDefaultAction = default, SiteDefaultAction? scmIPSecurityRestrictionsDefaultAction = default, bool? allowIPSecurityRestrictionsForScmToUseMain = default, bool? isHttp20Enabled = default, int? http20ProxyFlag = default, AppServiceSupportedTlsVersion? minTlsVersion = default, AppServiceTlsCipherSuite? minTlsCipherSuite = default, AppServiceSupportedTlsVersion? scmMinTlsVersion = default, AppServiceFtpsState? ftpsState = default, int? preWarmedInstanceCount = default, int? functionAppScaleLimit = default, int? elasticWebAppScaleLimit = default, string healthCheckPath = default, bool? isFunctionsRuntimeScaleMonitoringEnabled = default, string websiteTimeZone = default, int? minimumElasticInstanceCount = default, string publicNetworkAccess = default, IEnumerable<RampUpRule> experimentsRampUpRules = default, string apiDefinitionUriStringValue = default, string apiManagementConfigId = default, Uri apiDefinitionUri = default, IEnumerable<AppServiceNameValuePair> appSettings = default, IDictionary<string, AppServiceStorageAccessInfo> azureStorageAccounts = default, IEnumerable<ConnStringInfo> connectionStrings = default, IEnumerable<string> defaultDocuments = default, IEnumerable<HttpRequestHandlerMapping> handlerMappings = default, IEnumerable<AppServiceIPSecurityRestriction> ipSecurityRestrictions = default, IEnumerable<AppServiceNameValuePair> metadata = default, IEnumerable<AppServiceIPSecurityRestriction> scmIPSecurityRestrictions = default, IEnumerable<VirtualApplication> virtualApplications = default, string kind = default)
         {
             return new SiteConfigData(
                 id,
@@ -4728,6 +4728,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="provisioningState"> Gets the provisioning state. </param>
         /// <param name="createdOn"> Gets the created time. </param>
         /// <param name="changedOn"> Gets the changed time. </param>
@@ -4743,10 +4745,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="parameters"> The parameters. </param>
         /// <param name="kind"> The workflow kind. </param>
         /// <param name="identity"> Managed service identity. </param>
-        /// <param name="location"> The resource location. </param>
-        /// <param name="tags"> The resource tags. </param>
         /// <returns> A new <see cref="Models.WorkflowData"/> instance for mocking. </returns>
-        public static WorkflowData WorkflowData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, WorkflowProvisioningState? provisioningState = default, DateTimeOffset? createdOn = default, DateTimeOffset? changedOn = default, WorkflowState? state = default, string version = default, string accessEndpoint = default, FlowEndpointsConfiguration endpointsConfiguration = default, FlowAccessControlConfiguration accessControl = default, WorkflowSku sku = default, WorkflowResourceReference integrationAccount = default, WorkflowResourceReference integrationServiceEnvironment = default, BinaryData definition = default, IDictionary<string, WorkflowContent> parameters = default, AppServiceKind? kind = default, ManagedServiceIdentity identity = default, string location = default, IDictionary<string, string> tags = default)
+        public static WorkflowData WorkflowData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WorkflowProvisioningState? provisioningState = default, DateTimeOffset? createdOn = default, DateTimeOffset? changedOn = default, WorkflowState? state = default, string version = default, string accessEndpoint = default, FlowEndpointsConfiguration endpointsConfiguration = default, FlowAccessControlConfiguration accessControl = default, WorkflowSku sku = default, WorkflowResourceReference integrationAccount = default, WorkflowResourceReference integrationServiceEnvironment = default, BinaryData definition = default, IDictionary<string, WorkflowContent> parameters = default, AppServiceKind? kind = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -4755,6 +4755,8 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
                 provisioningState is null && createdOn is null && changedOn is null && state is null && version is null && accessEndpoint is null && endpointsConfiguration is null && accessControl is null && sku is null && integrationAccount is null && integrationServiceEnvironment is null && definition is null && parameters is null && kind is null ? default : new WorkflowProperties(
                     provisioningState,
                     createdOn,
@@ -4772,8 +4774,6 @@ namespace Azure.ResourceManager.AppService.Models
                     kind,
                     default),
                 identity,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);
         }
 
@@ -10042,7 +10042,7 @@ namespace Azure.ResourceManager.AppService.Models
                 systemData,
                 properties,
                 kind,
-                default,
+                location,
                 default);
         }
 
@@ -13461,6 +13461,8 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
                 provisioningState is null && createdOn is null && changedOn is null && state is null && version is null && accessEndpoint is null && endpointsConfiguration is null && accessControl is null && sku is null && integrationAccount is null && integrationServiceEnvironment is null && definition is null && parameters is null && kind is null ? default : new WorkflowProperties(
                     provisioningState,
                     createdOn,
@@ -13478,8 +13480,6 @@ namespace Azure.ResourceManager.AppService.Models
                     kind,
                     default),
                 identity,
-                default,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);
         }
 
@@ -13888,38 +13888,6 @@ namespace Azure.ResourceManager.AppService.Models
                     language,
                     default),
                 kind,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AppService.WorkflowEnvelopeData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// Additional workflow properties.
-        ///             Serialized Name: WorkflowEnvelope.properties
-        /// </param>
-        /// <param name="kind">
-        /// The resource kind.
-        ///             Serialized Name: WorkflowEnvelope.kind
-        /// </param>
-        /// <param name="location">
-        /// The resource location.
-        ///             Serialized Name: WorkflowEnvelope.location
-        /// </param>
-        /// <returns> A new <see cref="AppService.WorkflowEnvelopeData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static WorkflowEnvelopeData WorkflowEnvelopeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, WorkflowEnvelopeProperties properties = default, string kind = default, AzureLocation? location = default)
-        {
-            return new WorkflowEnvelopeData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                kind,
-                default,
                 default);
         }
 

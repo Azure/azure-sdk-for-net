@@ -14,15 +14,15 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The workflow type. </summary>
-    public partial class WorkflowData : ResourceData
+    public partial class WorkflowData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowData"/>. </summary>
-        public WorkflowData()
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        public WorkflowData(AzureLocation location) : base(location)
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowData"/>. </summary>
@@ -30,17 +30,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The workflow properties. </param>
         /// <param name="identity"> Managed service identity. </param>
-        /// <param name="location"> The resource location. </param>
-        /// <param name="tags"> The resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkflowProperties properties, ManagedServiceIdentity identity, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal WorkflowData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkflowProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Identity = identity;
-            Location = location;
-            Tags = tags;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -51,14 +49,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Managed service identity. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
-
-        /// <summary> The resource location. </summary>
-        [WirePath("location")]
-        public string Location { get; set; }
-
-        /// <summary> The resource tags. </summary>
-        [WirePath("tags")]
-        public IDictionary<string, string> Tags { get; }
 
         /// <summary> Gets the provisioning state. </summary>
         [WirePath("properties.provisioningState")]

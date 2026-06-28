@@ -65,20 +65,6 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Default documents. </summary>
-        [WirePath("properties.defaultDocuments")]
-        public IList<string> DefaultDocuments
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new SiteConfigProperties();
-                }
-                return Properties.DefaultDocuments;
-            }
-        }
-
         /// <summary> .NET Framework version. </summary>
         [WirePath("properties.netFrameworkVersion")]
         public string NetFrameworkVersion
@@ -385,48 +371,6 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Application settings. This property is not returned in response to normal create and read requests since it may contain sensitive information. </summary>
-        [WirePath("properties.appSettings")]
-        public IList<AppServiceNameValuePair> AppSettings
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new SiteConfigProperties();
-                }
-                return Properties.AppSettings;
-            }
-        }
-
-        /// <summary> Application metadata. This property cannot be retrieved, since it may contain secrets. </summary>
-        [WirePath("properties.metadata")]
-        public IList<AppServiceNameValuePair> Metadata
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new SiteConfigProperties();
-                }
-                return Properties.Metadata;
-            }
-        }
-
-        /// <summary> Connection strings. This property is not returned in response to normal create and read requests since it may contain sensitive information. </summary>
-        [WirePath("properties.connectionStrings")]
-        public IList<ConnStringInfo> ConnectionStrings
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new SiteConfigProperties();
-                }
-                return Properties.ConnectionStrings;
-            }
-        }
-
         /// <summary> Site MachineKey. </summary>
         [WirePath("properties.machineKey")]
         public SiteMachineKey MachineKey
@@ -434,20 +378,6 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.MachineKey;
-            }
-        }
-
-        /// <summary> Handler mappings. </summary>
-        [WirePath("properties.handlerMappings")]
-        public IList<HttpRequestHandlerMapping> HandlerMappings
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new SiteConfigProperties();
-                }
-                return Properties.HandlerMappings;
             }
         }
 
@@ -628,20 +558,6 @@ namespace Azure.ResourceManager.AppService
                     Properties = new SiteConfigProperties();
                 }
                 Properties.ManagedPipelineMode = value;
-            }
-        }
-
-        /// <summary> Virtual applications. </summary>
-        [WirePath("properties.virtualApplications")]
-        public IList<VirtualApplication> VirtualApplications
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new SiteConfigProperties();
-                }
-                return Properties.VirtualApplications;
             }
         }
 
@@ -915,20 +831,6 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> IP security restrictions for main. </summary>
-        [WirePath("properties.ipSecurityRestrictions")]
-        public IList<AppServiceIPSecurityRestriction> IPSecurityRestrictions
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new SiteConfigProperties();
-                }
-                return Properties.IPSecurityRestrictions;
-            }
-        }
-
         /// <summary> Default action for main access restriction if no rules are matched. </summary>
         [WirePath("properties.ipSecurityRestrictionsDefaultAction")]
         public SiteDefaultAction? IPSecurityRestrictionsDefaultAction
@@ -944,20 +846,6 @@ namespace Azure.ResourceManager.AppService
                     Properties = new SiteConfigProperties();
                 }
                 Properties.IPSecurityRestrictionsDefaultAction = value;
-            }
-        }
-
-        /// <summary> IP security restrictions for scm. </summary>
-        [WirePath("properties.scmIpSecurityRestrictions")]
-        public IList<AppServiceIPSecurityRestriction> ScmIPSecurityRestrictions
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new SiteConfigProperties();
-                }
-                return Properties.ScmIPSecurityRestrictions;
             }
         }
 
@@ -1244,20 +1132,6 @@ namespace Azure.ResourceManager.AppService
                     Properties = new SiteConfigProperties();
                 }
                 Properties.MinimumElasticInstanceCount = value;
-            }
-        }
-
-        /// <summary> List of Azure Storage Accounts. </summary>
-        [WirePath("properties.azureStorageAccounts")]
-        public IDictionary<string, AppServiceStorageAccessInfo> AzureStorageAccounts
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new SiteConfigProperties();
-                }
-                return Properties.AzureStorageAccounts;
             }
         }
 
