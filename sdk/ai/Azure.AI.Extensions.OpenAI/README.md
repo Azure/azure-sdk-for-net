@@ -17,8 +17,6 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
   - [Install the package](#install-the-package)
   - [Authenticate the client](#authenticate-the-client)
 - [Key concepts](#key-concepts)
-  - [Service API versions](#service-api-versions)
-  - [Select a service API version](#select-a-service-api-version)
 - [Additional concepts](#additional-concepts)
 - [Examples](#examples)
   - [Prompt Agents](#prompt-agents)
@@ -115,24 +113,6 @@ VectorStoreClient vectorStoreClient = projectClient.ProjectOpenAIClient.GetVecto
 ```
 
 ## Key concepts
-
-### Service API versions
-
-When clients send REST requests to the endpoint, one of the query parameters is `api-version`. It allows us to select the API versions supporting different features. The current stable version is `v1` (default).
-
-#### Select a service API version
-
-The API version may be set supplying `version` parameter to `ProjectOpenAIClientOptions` constructor as shown in the example code below.
-
-```C# Snippet:SelectAPIVersion
-ProjectOpenAIClientOptions option = new()
-{
-    ApiVersion = "2025-11-15-preview"
-};
-ProjectOpenAIClient projectClient = new(
-    projectEndpoint: new Uri("https://<RESOURCE>.services.ai.azure.com/api/projects/<PROJECT>"),
-    tokenProvider: new AzureCliCredential());
-```
 
 ### Additional concepts
 The Azure.AI.Extensions.OpenAI framework organized in a way that for each call, requiring the REST API request, there are synchronous and asynchronous counterparts where the letter has the "Async" suffix. For example, the following code demonstrates the creation of a `ResponseResult` object.

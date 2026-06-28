@@ -1010,6 +1010,7 @@ namespace Azure.AI.Extensions.OpenAI
         public override OpenAI.Conversations.ConversationClient GetConversationClient() { throw null; }
         public override OpenAI.Files.OpenAIFileClient GetOpenAIFileClient() { throw null; }
         public virtual Azure.AI.Extensions.OpenAI.ProjectConversationsClient GetProjectConversationsClient() { throw null; }
+        public virtual Azure.AI.Extensions.OpenAI.ProjectConversationsClient GetProjectConversationsClientForAgentEndpoint(string agentName, Azure.AI.Extensions.OpenAI.ProjectOpenAIClientOptions options = null) { throw null; }
         public virtual Azure.AI.Extensions.OpenAI.ProjectFilesClient GetProjectFilesClient() { throw null; }
         public virtual Azure.AI.Extensions.OpenAI.ProjectResponsesClient GetProjectResponsesClient() { throw null; }
         public virtual Azure.AI.Extensions.OpenAI.ProjectResponsesClient GetProjectResponsesClientForAgent(Azure.AI.Extensions.OpenAI.AgentReference defaultAgent, string defaultConversationId = null) { throw null; }
