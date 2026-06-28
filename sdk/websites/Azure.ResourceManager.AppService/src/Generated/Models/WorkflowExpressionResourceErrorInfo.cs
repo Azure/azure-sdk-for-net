@@ -20,15 +20,18 @@ namespace Azure.ResourceManager.AppService.Models
         internal WorkflowExpressionResourceErrorInfo(string code, string message) : base(code)
         {
             Message = message;
+            Details = new ChangeTrackingList<WorkflowExpressionResourceErrorInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowExpressionResourceErrorInfo"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="message"> The error message. </param>
-        internal WorkflowExpressionResourceErrorInfo(string code, IDictionary<string, BinaryData> additionalBinaryDataProperties, string message) : base(code, additionalBinaryDataProperties)
+        /// <param name="details"> The error details. </param>
+        internal WorkflowExpressionResourceErrorInfo(string code, IDictionary<string, BinaryData> additionalBinaryDataProperties, string message, IReadOnlyList<WorkflowExpressionResourceErrorInfo> details) : base(code, additionalBinaryDataProperties)
         {
             Message = message;
+            Details = details;
         }
 
         /// <summary> The error message. </summary>

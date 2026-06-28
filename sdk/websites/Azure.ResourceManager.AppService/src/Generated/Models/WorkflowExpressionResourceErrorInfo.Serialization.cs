@@ -82,6 +82,16 @@ namespace Azure.ResourceManager.AppService.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
+            if (Optional.IsCollectionDefined(Details))
+            {
+                writer.WritePropertyName("details"u8);
+                writer.WriteStartArray();
+                foreach (WorkflowExpressionResourceErrorInfo item in Details)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -112,6 +122,7 @@ namespace Azure.ResourceManager.AppService.Models
             string code = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string message = default;
+            IReadOnlyList<WorkflowExpressionResourceErrorInfo> details = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("code"u8))
@@ -124,12 +135,26 @@ namespace Azure.ResourceManager.AppService.Models
                     message = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("details"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<WorkflowExpressionResourceErrorInfo> array = new List<WorkflowExpressionResourceErrorInfo>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(DeserializeWorkflowExpressionResourceErrorInfo(item, options));
+                    }
+                    details = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WorkflowExpressionResourceErrorInfo(code, additionalBinaryDataProperties, message);
+            return new WorkflowExpressionResourceErrorInfo(code, additionalBinaryDataProperties, message, details ?? new ChangeTrackingList<WorkflowExpressionResourceErrorInfo>());
         }
     }
 }

@@ -12,7 +12,6 @@ using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Certificate resource specific properties. </summary>
     internal partial class CertificateProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -135,25 +134,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Is the certificate valid?. </summary>
         [WirePath("valid")]
         public bool? IsValid { get; }
-
-        /// <summary>
-        /// Raw bytes of .cer file
-        /// <para>
-        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
-        /// The byte[] will be serialized to a Base64 encoded string.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
-        /// <description> Creates a payload of "AQID". </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        [WirePath("cerBlob")]
-        public BinaryData CerBlob { get; set; }
 
         /// <summary> Public key hash. </summary>
         [WirePath("publicKeyHash")]

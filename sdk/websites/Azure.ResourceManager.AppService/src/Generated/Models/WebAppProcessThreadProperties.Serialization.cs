@@ -13,7 +13,7 @@ using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> ProcessThreadInfo resource specific properties. </summary>
+    /// <summary> Process Thread properties. </summary>
     public partial class WebAppProcessThreadProperties : IJsonModel<WebAppProcessThreadProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -74,9 +74,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 throw new FormatException($"The model {nameof(WebAppProcessThreadProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("identifier"u8);
+                writer.WritePropertyName("id"u8);
                 writer.WriteNumberValue(Id.Value);
             }
             if (Optional.IsDefined(Href))
@@ -84,55 +84,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("href"u8);
                 writer.WriteStringValue(Href.AbsoluteUri);
             }
-            if (Optional.IsDefined(Process))
-            {
-                writer.WritePropertyName("process"u8);
-                writer.WriteStringValue(Process);
-            }
-            if (Optional.IsDefined(StartAddress))
-            {
-                writer.WritePropertyName("start_address"u8);
-                writer.WriteStringValue(StartAddress);
-            }
-            if (Optional.IsDefined(CurrentPriority))
-            {
-                writer.WritePropertyName("current_priority"u8);
-                writer.WriteNumberValue(CurrentPriority.Value);
-            }
-            if (Optional.IsDefined(PriorityLevel))
-            {
-                writer.WritePropertyName("priority_level"u8);
-                writer.WriteStringValue(PriorityLevel);
-            }
-            if (Optional.IsDefined(BasePriority))
-            {
-                writer.WritePropertyName("base_priority"u8);
-                writer.WriteNumberValue(BasePriority.Value);
-            }
-            if (Optional.IsDefined(StartOn))
-            {
-                writer.WritePropertyName("start_time"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
-            }
-            if (Optional.IsDefined(TotalProcessorTime))
-            {
-                writer.WritePropertyName("total_processor_time"u8);
-                writer.WriteStringValue(TotalProcessorTime);
-            }
-            if (Optional.IsDefined(UserProcessorTime))
-            {
-                writer.WritePropertyName("user_processor_time"u8);
-                writer.WriteStringValue(UserProcessorTime);
-            }
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
-            }
-            if (Optional.IsDefined(WaitReason))
-            {
-                writer.WritePropertyName("wait_reason"u8);
-                writer.WriteStringValue(WaitReason);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -178,20 +133,11 @@ namespace Azure.ResourceManager.AppService.Models
             }
             int? id = default;
             Uri href = default;
-            string process = default;
-            string startAddress = default;
-            int? currentPriority = default;
-            string priorityLevel = default;
-            int? basePriority = default;
-            DateTimeOffset? startOn = default;
-            string totalProcessorTime = default;
-            string userProcessorTime = default;
             string state = default;
-            string waitReason = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("identifier"u8))
+                if (prop.NameEquals("id"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -209,66 +155,9 @@ namespace Azure.ResourceManager.AppService.Models
                     href = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
-                if (prop.NameEquals("process"u8))
-                {
-                    process = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("start_address"u8))
-                {
-                    startAddress = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("current_priority"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    currentPriority = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("priority_level"u8))
-                {
-                    priorityLevel = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("base_priority"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    basePriority = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("start_time"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    startOn = prop.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (prop.NameEquals("total_processor_time"u8))
-                {
-                    totalProcessorTime = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("user_processor_time"u8))
-                {
-                    userProcessorTime = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("state"u8))
                 {
                     state = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("wait_reason"u8))
-                {
-                    waitReason = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -276,20 +165,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WebAppProcessThreadProperties(
-                id,
-                href,
-                process,
-                startAddress,
-                currentPriority,
-                priorityLevel,
-                basePriority,
-                startOn,
-                totalProcessorTime,
-                userProcessorTime,
-                state,
-                waitReason,
-                additionalBinaryDataProperties);
+            return new WebAppProcessThreadProperties(id, href, state, additionalBinaryDataProperties);
         }
     }
 }

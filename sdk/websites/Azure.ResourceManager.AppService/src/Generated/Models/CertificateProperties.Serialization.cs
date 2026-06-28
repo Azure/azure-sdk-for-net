@@ -14,7 +14,6 @@ using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Certificate resource specific properties. </summary>
     internal partial class CertificateProperties : IJsonModel<CertificateProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -145,7 +144,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("valid"u8);
                 writer.WriteBooleanValue(IsValid.Value);
             }
-            if (Optional.IsDefined(CerBlob))
+            if (options.Format != "W" && Optional.IsDefined(CerBlob))
             {
                 writer.WritePropertyName("cerBlob"u8);
                 writer.WriteBase64StringValue(CerBlob.ToArray(), "D");

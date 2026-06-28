@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Thread list. </summary>
         [WirePath("properties.threads")]
-        public IList<WebAppProcessThreadInfo> ProcessThreads
+        public IList<WebAppProcessThreadProperties> ProcessThreads
         {
             get
             {

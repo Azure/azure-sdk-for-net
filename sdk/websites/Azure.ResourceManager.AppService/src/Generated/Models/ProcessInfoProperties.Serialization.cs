@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("threads"u8);
                 writer.WriteStartArray();
-                foreach (WebAppProcessThreadInfo item in ProcessThreads)
+                foreach (WebAppProcessThreadProperties item in ProcessThreads)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.AppService.Models
             double? iisProfileTimeoutInSeconds = default;
             string parent = default;
             IList<string> children = default;
-            IList<WebAppProcessThreadInfo> processThreads = default;
+            IList<WebAppProcessThreadProperties> processThreads = default;
             IList<string> openFileHandles = default;
             IList<ProcessModuleInfoData> modules = default;
             string fileName = default;
@@ -459,10 +459,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<WebAppProcessThreadInfo> array = new List<WebAppProcessThreadInfo>();
+                    List<WebAppProcessThreadProperties> array = new List<WebAppProcessThreadProperties>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(WebAppProcessThreadInfo.DeserializeWebAppProcessThreadInfo(item, options));
+                        array.Add(WebAppProcessThreadProperties.DeserializeWebAppProcessThreadProperties(item, options));
                     }
                     processThreads = array;
                     continue;
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.AppService.Models
                 iisProfileTimeoutInSeconds,
                 parent,
                 children ?? new ChangeTrackingList<string>(),
-                processThreads ?? new ChangeTrackingList<WebAppProcessThreadInfo>(),
+                processThreads ?? new ChangeTrackingList<WebAppProcessThreadProperties>(),
                 openFileHandles ?? new ChangeTrackingList<string>(),
                 modules ?? new ChangeTrackingList<ProcessModuleInfoData>(),
                 fileName,

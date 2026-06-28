@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                ((IJsonModel<Resources.Models.ExtendedLocation>)ExtendedLocation).Write(writer, options);
+                ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.AppService
             AzureLocation location = default;
             SiteProperties properties = default;
             ManagedServiceIdentity identity = default;
-            Resources.Models.ExtendedLocation extendedLocation = default;
+            ExtendedLocation extendedLocation = default;
             string kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    extendedLocation = ModelReaderWriter.Read<Resources.Models.ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
+                    extendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))

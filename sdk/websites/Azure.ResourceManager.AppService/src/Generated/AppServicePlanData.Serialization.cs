@@ -14,6 +14,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation, options);
+                ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -264,7 +265,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(prop.Value, options);
+                    extendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))

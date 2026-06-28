@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -18,12 +17,6 @@ namespace Azure.ResourceManager.AppService.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="ResourceMetricDefinition"/>. </summary>
-        public ResourceMetricDefinition()
-        {
-            Properties = new ChangeTrackingDictionary<string, string>();
-        }
 
         /// <summary> Initializes a new instance of <see cref="ResourceMetricDefinition"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -39,13 +32,5 @@ namespace Azure.ResourceManager.AppService.Models
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> ResourceMetricDefinition resource specific properties. </summary>
-        [WirePath("properties")]
-        public IReadOnlyDictionary<string, string> Properties { get; set; }
-
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }
