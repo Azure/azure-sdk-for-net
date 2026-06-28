@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.26 (Unreleased)
+## 1.0.0-beta.26 (2026-06-28)
 
 ### Features Added
 - Container protocol version `2.0.0` support: added the platform identity header constants `PlatformHeaders.UserId` (`x-agent-user-id`) and `PlatformHeaders.FoundryCallId` (`x-agent-foundry-call-id`).
@@ -10,10 +10,6 @@
 ### Breaking Changes
 - Renamed `IsolationContext` to `PlatformContext`. Its members are now `UserIdKey` (from `x-agent-user-id`) and `CallId` (from `x-agent-foundry-call-id`), replacing `UserIsolationKey` / `ChatIsolationKey`.
 - Replaced the `PlatformHeaders.UserIsolationKey` / `PlatformHeaders.ChatIsolationKey` constants with `PlatformHeaders.UserId` and `PlatformHeaders.FoundryCallId` per container protocol version `2.0.0`.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.25 (2026-05-25)
 
