@@ -565,7 +565,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                     // as a disconnect so that the next operation faults and the load balancer
                     // re-arbitrates ownership rather than silently re-opening a competing link.
 
-                    var maskedException = new EventHubsException(EventHubName, "The consumer was disconnected by a connection-level fault, which may mask a partition steal; the consumer will be invalidated so that ownership can be re-arbitrated.", EventHubsException.FailureReason.ConsumerDisconnected, linkException);
+                    var maskedException = new EventHubsException(EventHubName, Resources.ConsumerDisconnectedByMaskedPartitionSteal, EventHubsException.FailureReason.ConsumerDisconnected, linkException);
                     EventHubsEventSource.Log.AmqpConsumerLinkFaultCapture(EventHubName, ConsumerGroup, PartitionId, maskedException.Message);
                     _activePartitionStolenException = maskedException;
                 }

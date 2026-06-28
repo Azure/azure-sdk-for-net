@@ -360,4 +360,7 @@
   <data name="LongLastEnqueuedOffsetOffsetUnsupported" xml:space="preserve">
     <value>The Event Hubs services does not return a numeric offset for GeoDR-enabled namespaces.  Please use 'LastEnqueuedOffsetString' instead.</value>
   </data>
+  <data name="ConsumerDisconnectedByMaskedPartitionSteal" xml:space="preserve">
+    <value>The consumer was disconnected by a connection-level fault, which may mask a partition steal; the consumer will be invalidated so that ownership can be re-arbitrated.</value>
+  </data>
 </root>
