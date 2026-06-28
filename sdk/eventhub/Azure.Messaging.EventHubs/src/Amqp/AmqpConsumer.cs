@@ -35,6 +35,20 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <summary>The interval that an attempt to receive events should wait for additional events when less than the requested count was available.</summary>
         private static readonly TimeSpan ReceiveBuildBatchInterval = TimeSpan.FromMilliseconds(20);
 
+        /// <summary>
+        ///   The set of connection-level AMQP error conditions that are treated as a masked partition steal
+        ///   for an exclusive consumer.  These represent abnormal connection-level faults that can hide an
+        ///   explicit link steal; any other AMQP fault is left to the normal self-healing flow to avoid
+        ///   needlessly relinquishing partition ownership.  Conditions observed in the field via
+        ///   <see cref="EventHubsEventSource.AmqpConsumerLinkFaultUnclassified" /> can be evaluated for
+        ///   inclusion here.
+        /// </summary>
+        private static readonly HashSet<string> ConnectionLevelFaultConditions = new(StringComparer.InvariantCultureIgnoreCase)
+        {
+            AmqpErrorCode.ConnectionForced.Value,
+            AmqpErrorCode.FramingError.Value
+        };
+
         /// <summary>A captured exception that indicates the partition was stolen by another consumer; this should be surfaced when an attempt is made to open a consumer link.</summary>
         private volatile Exception _activePartitionStolenException;
 
@@ -569,6 +583,15 @@ namespace Azure.Messaging.EventHubs.Amqp
                     EventHubsEventSource.Log.AmqpConsumerLinkFaultCapture(EventHubName, ConsumerGroup, PartitionId, maskedException.Message);
                     _activePartitionStolenException = maskedException;
                 }
+                else if (InvalidateConsumerWhenPartitionStolen && linkException is AmqpException unclassifiedFault)
+                {
+                    // For an exclusive consumer, the link closed asynchronously with an AMQP fault that is
+                    // not currently treated as a masked partition steal.  Leave it to the normal self-healing
+                    // flow, but log the condition so that faults which recur ahead of a re-steal can be
+                    // evaluated for inclusion in the connection-level fault allow-list.
+
+                    EventHubsEventSource.Log.AmqpConsumerLinkFaultUnclassified(EventHubName, ConsumerGroup, PartitionId, unclassifiedFault.Error?.Condition.Value, unclassifiedFault.Message);
+                }
             }
 
             // Close the link and it's associated session.
@@ -610,7 +633,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             linkException switch
             {
                 null => true,
-                AmqpException => true,
+                AmqpException ex when ex.Error is not null && ConnectionLevelFaultConditions.Contains(ex.Error.Condition.Value) => true,
                 _ => false
             };
     }

@@ -1423,6 +1423,32 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
+        ///   Indicates that the link for an exclusive consumer closed asynchronously with an AMQP fault that is
+        ///   not classified as a masked partition steal; the fault is left to the normal self-healing flow.  This
+        ///   is logged so that conditions which recur ahead of a re-steal can be evaluated for inclusion in the
+        ///   set of connection-level faults treated as a masked steal.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub that the consumer is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group that is associated with the link.</param>
+        /// <param name="partitionId">The identifier of the Event Hub partition associated with the link.</param>
+        /// <param name="errorCondition">The AMQP error condition associated with the fault, if any.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(132, Level = EventLevel.Verbose, Message = "The link for an exclusive consumer closed with an AMQP fault that is not classified as a masked partition steal; it will be left to the normal self-healing flow for Event Hub: '{0}', Consumer Group: '{1}', Partition: '{2}'. AMQP Condition: '{3}'. Error Message: '{4}'")]
+        public virtual void AmqpConsumerLinkFaultUnclassified(string eventHubName,
+                                                              string consumerGroup,
+                                                              string partitionId,
+                                                              string errorCondition,
+                                                              string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(132, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, errorCondition ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
         ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance is about to begin processing events.
         /// </summary>
         ///

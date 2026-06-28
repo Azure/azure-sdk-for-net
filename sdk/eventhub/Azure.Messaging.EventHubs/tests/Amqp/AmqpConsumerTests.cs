@@ -63,6 +63,19 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   The set of test cases for terminal AMQP faults that are not classified as a masked partition
+        ///   steal for an exclusive consumer and should be left to the normal self-healing flow rather than
+        ///   relinquishing partition ownership.
+        /// </summary>
+        ///
+        public static IEnumerable<object[]> UnclassifiedAmqpFaultTestCases()
+        {
+            yield return new object[] { new AmqpException(AmqpErrorCode.ResourceLimitExceeded, "The resource limit was exceeded.") };
+            yield return new object[] { new AmqpException(AmqpErrorCode.InternalError, "An internal error occurred.") };
+            yield return new object[] { new AmqpException(new Error { Condition = AmqpErrorCode.IllegalState }) };
+        }
+
+        /// <summary>
         ///   Verifies functionality of the constructor.
         /// </summary>
         ///
@@ -713,6 +726,35 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 mockConsumer.InvokeCloseConsumerLink(link);
                 Assert.That(GetActivePartitionStolenException(mockConsumer), Is.Null, "A non-exclusive consumer should not capture a masked steal.");
+            }
+            finally
+            {
+                link?.SafeClose();
+            }
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpConsumer.CloseConsumerLink "/>
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(UnclassifiedAmqpFaultTestCases))]
+        public void CloseConsumerLinkDoesNotCaptureUnclassifiedAmqpFaultsForExclusiveConsumers(Exception terminalException)
+        {
+            var eventHub = "fake-hub";
+            var link = new ReceivingAmqpLink(new AmqpLinkSettings());
+            var mockConsumer = new MockAmqpConsumer(eventHub, true, terminalException);
+
+            try
+            {
+                mockConsumer.InvokeCloseConsumerLink(link);
+
+                // An AMQP fault that is not a connection-level fault should not be treated as a masked
+                // steal for an exclusive consumer; it is left to the normal self-healing flow rather than
+                // relinquishing partition ownership.
+
+                Assert.That(GetActivePartitionStolenException(mockConsumer), Is.Null, "An unclassified AMQP fault should not be captured as a masked steal.");
             }
             finally
             {
