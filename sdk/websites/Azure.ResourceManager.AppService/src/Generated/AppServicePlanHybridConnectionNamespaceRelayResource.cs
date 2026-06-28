@@ -410,13 +410,13 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<string> GetAllWebAppsByHybridConnectionAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<string> GetWebAppsByHybridConnectionAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new HybridConnectionsGetAllWebAppsByHybridConnectionAsyncCollectionResultOfT(
+            return new HybridConnectionsGetWebAppsByHybridConnectionAsyncCollectionResultOfT(
                 _hybridConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.AppService
                 Id.Parent.Name,
                 Id.Name,
                 context,
-                "AppServicePlanHybridConnectionNamespaceRelayResource.GetAllWebAppsByHybridConnection");
+                "AppServicePlanHybridConnectionNamespaceRelayResource.GetWebAppsByHybridConnection");
         }
 
         /// <summary>
@@ -450,13 +450,13 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<string> GetAllWebAppsByHybridConnection(CancellationToken cancellationToken = default)
+        public virtual Pageable<string> GetWebAppsByHybridConnection(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new HybridConnectionsGetAllWebAppsByHybridConnectionCollectionResultOfT(
+            return new HybridConnectionsGetWebAppsByHybridConnectionCollectionResultOfT(
                 _hybridConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.AppService
                 Id.Parent.Name,
                 Id.Name,
                 context,
-                "AppServicePlanHybridConnectionNamespaceRelayResource.GetAllWebAppsByHybridConnection");
+                "AppServicePlanHybridConnectionNamespaceRelayResource.GetWebAppsByHybridConnection");
         }
     }
 }

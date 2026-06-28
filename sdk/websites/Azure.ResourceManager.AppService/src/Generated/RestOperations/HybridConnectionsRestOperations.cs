@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetAllWebAppsByHybridConnectionRequest(Guid subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, RequestContext context)
+        internal HttpMessage CreateGetWebAppsByHybridConnectionRequest(Guid subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllWebAppsByHybridConnectionRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, RequestContext context)
+        internal HttpMessage CreateNextGetWebAppsByHybridConnectionRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

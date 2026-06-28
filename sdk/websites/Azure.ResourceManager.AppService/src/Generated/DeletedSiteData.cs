@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Kind of site that was deleted. </summary>
         [WirePath("properties.kind")]
-        public string DeletedSiteKind
+        public string KindPropertiesKind
         {
             get
             {
-                return Properties is null ? default : Properties.DeletedSiteKind;
+                return Properties is null ? default : Properties.KindPropertiesKind;
             }
         }
 

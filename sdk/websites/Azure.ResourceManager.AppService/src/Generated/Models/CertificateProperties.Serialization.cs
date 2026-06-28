@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("valid"u8);
                 writer.WriteBooleanValue(IsValid.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CerBlob))
+            if (Optional.IsDefined(CerBlob))
             {
                 writer.WritePropertyName("cerBlob"u8);
                 writer.WriteBase64StringValue(CerBlob.ToArray(), "D");

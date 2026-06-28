@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppService.Models
             ConnectionStringType.ServiceBus => "ServiceBus",
             ConnectionStringType.EventHub => "EventHub",
             ConnectionStringType.ApiHub => "ApiHub",
-            ConnectionStringType.DocDb => "DocDb",
+            ConnectionStringType.DocDB => "DocDb",
             ConnectionStringType.RedisCache => "RedisCache",
             ConnectionStringType.PostgreSql => "PostgreSQL",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ConnectionStringType value.")
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "DocDb"))
             {
-                return ConnectionStringType.DocDb;
+                return ConnectionStringType.DocDB;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "RedisCache"))
             {

@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.AppService
     [CodeGenSerialization(nameof(KeyVaultId), DeserializationValueHook = nameof(DeserializeKeyVaultId))]
     [CodeGenSerialization(nameof(ThumbprintString), DeserializationValueHook = nameof(DeserializeThumbprintString))]
     [CodeGenSuppress("PfxBlob")]
+    [CodeGenSuppress("CerBlob")]
     public partial class AppCertificateData
     {
         // GA shipped byte[] for PfxBlob; TypeSpec `bytes` now emits as BinaryData.
@@ -31,6 +32,23 @@ namespace Azure.ResourceManager.AppService
                     Properties = new CertificateProperties();
                 }
                 Properties.PfxBlob = value is null ? null : BinaryData.FromBytes(value);
+            }
+        }
+
+        // GA shipped byte[] for CerBlob; TypeSpec `bytes` now emits as BinaryData
+        // (after restoring Create/Update visibility via @@visibility in client.tsp).
+        /// <summary> Raw bytes of .cer file. </summary>
+        [WirePath("properties.cerBlob")]
+        public byte[] CerBlob
+        {
+            get => Properties is null ? null : Properties.CerBlob?.ToArray();
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificateProperties();
+                }
+                Properties.CerBlob = value is null ? null : BinaryData.FromBytes(value);
             }
         }
 

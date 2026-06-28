@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.AppService.Models
         EventHub,
         /// <summary> ApiHub. </summary>
         ApiHub,
-        /// <summary> DocDb. </summary>
-        DocDb,
+        /// <summary> DocDB. </summary>
+        DocDB,
         /// <summary> RedisCache. </summary>
         RedisCache,
         /// <summary> PostgreSql. </summary>

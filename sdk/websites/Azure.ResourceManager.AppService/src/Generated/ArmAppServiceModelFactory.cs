@@ -1808,15 +1808,6 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceEndpointDetail(ipAddress, port, latency, isAccessible, default);
         }
 
-        /// <param name="value"></param>
-        /// <returns> A new <see cref="Models.PrivateLinkResourcesWrapper"/> instance for mocking. </returns>
-        public static PrivateLinkResourcesWrapper PrivateLinkResourcesWrapper(IEnumerable<AppServicePrivateLinkResourceData> value = default)
-        {
-            value ??= new ChangeTrackingList<AppServicePrivateLinkResourceData>();
-
-            return new PrivateLinkResourcesWrapper((value ?? new ChangeTrackingList<AppServicePrivateLinkResourceData>()).ToList(), default);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -2205,7 +2196,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="privateEndpointId"> Gets the Id. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.RemotePrivateEndpointConnectionARMResourceData"/> instance for mocking. </returns>
-        public static RemotePrivateEndpointConnectionARMResourceData RemotePrivateEndpointConnectionARMResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default, PrivateLinkConnectionState privateLinkServiceConnectionState = default, IEnumerable<IPAddress> ipAddresses = default, string privateEndpointId = default, string kind = default)
+        public static RemotePrivateEndpointConnectionARMResourceData RemotePrivateEndpointConnectionARMResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default, PrivateLinkConnectionState privateLinkServiceConnectionState = default, IEnumerable<IPAddress> ipAddresses = default, ResourceIdentifier privateEndpointId = default, string kind = default)
         {
             return new RemotePrivateEndpointConnectionARMResourceData(
                 id,
@@ -3865,14 +3856,14 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                deletedSiteId is null && deletedTimestamp is null && subscription is null && resourceGroup is null && deletedSiteName is null && slot is null && geoRegionName is null ? default : new DeletedSiteProperties(
+                deletedSiteId is null && deletedTimestamp is null && subscription is null && resourceGroup is null && deletedSiteName is null && slot is null && kindPropertiesKind is null && geoRegionName is null ? default : new DeletedSiteProperties(
                     deletedSiteId,
                     deletedTimestamp,
                     subscription,
                     resourceGroup,
                     deletedSiteName,
                     slot,
-                    default,
+                    kindPropertiesKind,
                     geoRegionName,
                     default),
                 kind,
@@ -5097,7 +5088,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="privateEndpointId"> Gets the Id. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.RemotePrivateEndpointConnection"/> instance for mocking. </returns>
-        public static RemotePrivateEndpointConnection RemotePrivateEndpointConnection(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default, PrivateLinkConnectionState privateLinkServiceConnectionState = default, IEnumerable<IPAddress> ipAddresses = default, string privateEndpointId = default, string kind = default)
+        public static RemotePrivateEndpointConnection RemotePrivateEndpointConnection(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default, PrivateLinkConnectionState privateLinkServiceConnectionState = default, IEnumerable<IPAddress> ipAddresses = default, ResourceIdentifier privateEndpointId = default, string kind = default)
         {
             return new RemotePrivateEndpointConnection(
                 id,
@@ -9789,7 +9780,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && privateLinkServiceConnectionState is null && ipAddresses is null ? default : new RemotePrivateEndpointConnectionARMResourceProperties(provisioningState, default, privateLinkServiceConnectionState, (ipAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(), default),
+                provisioningState is null && privateEndpointId is null && privateLinkServiceConnectionState is null && ipAddresses is null ? default : new RemotePrivateEndpointConnectionARMResourceProperties(provisioningState, new ArmIdWrapper(privateEndpointId, default), privateLinkServiceConnectionState, (ipAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(), default),
                 kind,
                 default);
         }
@@ -10317,14 +10308,14 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                deletedSiteId is null && deletedTimestamp is null && subscription is null && resourceGroup is null && deletedSiteName is null && slot is null && geoRegionName is null ? default : new DeletedSiteProperties(
+                deletedSiteId is null && deletedTimestamp is null && subscription is null && resourceGroup is null && deletedSiteName is null && slot is null && kindPropertiesKind is null && geoRegionName is null ? default : new DeletedSiteProperties(
                     deletedSiteId,
                     deletedTimestamp,
                     subscription,
                     resourceGroup,
                     deletedSiteName,
                     slot,
-                    default,
+                    kindPropertiesKind,
                     geoRegionName,
                     default),
                 kind,
@@ -11360,7 +11351,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && privateLinkServiceConnectionState is null && ipAddresses is null ? default : new RemotePrivateEndpointConnectionProperties(provisioningState, default, privateLinkServiceConnectionState, (ipAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(), default),
+                provisioningState is null && privateEndpointId is null && privateLinkServiceConnectionState is null && ipAddresses is null ? default : new RemotePrivateEndpointConnectionProperties(provisioningState, new ArmIdWrapper(privateEndpointId, default), privateLinkServiceConnectionState, (ipAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(), default),
                 kind,
                 default);
         }
@@ -11706,7 +11697,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && privateLinkServiceConnectionState is null && ipAddresses is null ? default : new RemotePrivateEndpointConnectionARMResourceProperties(provisioningState, default, privateLinkServiceConnectionState, (ipAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(), default),
+                provisioningState is null && privateEndpointId is null && privateLinkServiceConnectionState is null && ipAddresses is null ? default : new RemotePrivateEndpointConnectionARMResourceProperties(provisioningState, new ArmIdWrapper(privateEndpointId, default), privateLinkServiceConnectionState, (ipAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(), default),
                 kind,
                 default);
         }

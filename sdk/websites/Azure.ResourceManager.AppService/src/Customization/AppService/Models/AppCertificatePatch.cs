@@ -10,6 +10,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.AppService.Models
 {
     [CodeGenSuppress("PfxBlob")]
+    [CodeGenSuppress("CerBlob")]
     public partial class AppCertificatePatch
     {
         // GA shipped byte[] for PfxBlob; TypeSpec `bytes` now emits as BinaryData.
@@ -26,6 +27,23 @@ namespace Azure.ResourceManager.AppService.Models
                     Properties = new CertificatePatchResourceProperties();
                 }
                 Properties.PfxBlob = value is null ? null : BinaryData.FromBytes(value);
+            }
+        }
+
+        // GA shipped byte[] for CerBlob; TypeSpec `bytes` now emits as BinaryData
+        // (after restoring Create/Update visibility via @@visibility in client.tsp).
+        /// <summary> Raw bytes of .cer file. </summary>
+        [WirePath("properties.cerBlob")]
+        public byte[] CerBlob
+        {
+            get => Properties is null ? null : Properties.CerBlob?.ToArray();
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificatePatchResourceProperties();
+                }
+                Properties.CerBlob = value is null ? null : BinaryData.FromBytes(value);
             }
         }
 

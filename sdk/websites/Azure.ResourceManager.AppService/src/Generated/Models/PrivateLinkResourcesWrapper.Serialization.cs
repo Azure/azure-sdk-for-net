@@ -15,7 +15,7 @@ using Azure.ResourceManager.AppService;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Wrapper for a collection of private link resources. </summary>
-    public partial class PrivateLinkResourcesWrapper : IJsonModel<PrivateLinkResourcesWrapper>
+    internal partial class PrivateLinkResourcesWrapper : IJsonModel<PrivateLinkResourcesWrapper>
     {
         /// <summary> Initializes a new instance of <see cref="PrivateLinkResourcesWrapper"/> for deserialization. </summary>
         internal PrivateLinkResourcesWrapper()

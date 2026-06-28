@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="resourceGroup"> ResourceGroup that contained the deleted site. </param>
         /// <param name="deletedSiteName"> Name of the deleted site. </param>
         /// <param name="slot"> Slot of the deleted site. </param>
-        /// <param name="deletedSiteKind"> Kind of site that was deleted. </param>
+        /// <param name="kindPropertiesKind"> Kind of site that was deleted. </param>
         /// <param name="geoRegionName"> Geo Region of the deleted site. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeletedSiteProperties(int? deletedSiteId, string deletedTimestamp, string subscription, string resourceGroup, string deletedSiteName, string slot, string deletedSiteKind, string geoRegionName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeletedSiteProperties(int? deletedSiteId, string deletedTimestamp, string subscription, string resourceGroup, string deletedSiteName, string slot, string kindPropertiesKind, string geoRegionName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DeletedSiteId = deletedSiteId;
             DeletedTimestamp = deletedTimestamp;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceGroup = resourceGroup;
             DeletedSiteName = deletedSiteName;
             Slot = slot;
-            DeletedSiteKind = deletedSiteKind;
+            KindPropertiesKind = kindPropertiesKind;
             GeoRegionName = geoRegionName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Kind of site that was deleted. </summary>
         [WirePath("kind")]
-        public string DeletedSiteKind { get; }
+        public string KindPropertiesKind { get; }
 
         /// <summary> Geo Region of the deleted site. </summary>
         [WirePath("geoRegionName")]

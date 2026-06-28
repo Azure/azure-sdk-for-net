@@ -151,16 +151,6 @@ namespace Azure.ResourceManager.AppService.Models
             }
         }
 
-        /// <summary> Raw bytes of .cer file. </summary>
-        [WirePath("properties.cerBlob")]
-        public BinaryData CerBlob
-        {
-            get
-            {
-                return Properties is null ? default : Properties.CerBlob;
-            }
-        }
-
         /// <summary> Public key hash. </summary>
         [WirePath("properties.publicKeyHash")]
         public string PublicKeyHash

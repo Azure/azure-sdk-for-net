@@ -130,5 +130,35 @@ namespace Azure.ResourceManager.AppService.Models
             AppServiceHttpSettings httpSettings,
             string kind)
             => SiteAuthSettingsV2(id, name, resourceType, systemData, kind, platform, globalValidation, identityProviders, login, httpSettings);
+
+        // ROOT CAUSE: GA 1.5.0 exposed factory overloads for ResourceNameAvailability,
+        // ResourceNameAvailabilityContent, and PrivateLinkConnectionApprovalRequestInfo
+        // (all of which survive as customization models). Recreate the GA factory
+        // signatures so existing test/sample code continues to compile.
+
+        /// <summary> Initializes a new instance of <see cref="ResourceNameAvailability"/>. </summary>
+        public static ResourceNameAvailability ResourceNameAvailability(
+            bool? isNameAvailable = default,
+            InAvailabilityReasonType? reason = default,
+            string message = default)
+            => new ResourceNameAvailability(isNameAvailable, reason, message, serializedAdditionalRawData: null);
+
+        /// <summary> Initializes a new instance of <see cref="ResourceNameAvailabilityContent"/>. </summary>
+        public static ResourceNameAvailabilityContent ResourceNameAvailabilityContent(
+            string name = default,
+            CheckNameResourceType resourceType = default,
+            bool? isFqdn = default,
+            string environmentId = default)
+            => new ResourceNameAvailabilityContent(name, resourceType, isFqdn, environmentId, serializedAdditionalRawData: null);
+
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkConnectionApprovalRequestInfo"/>. </summary>
+        public static PrivateLinkConnectionApprovalRequestInfo PrivateLinkConnectionApprovalRequestInfo(
+            ResourceIdentifier id = null,
+            string name = null,
+            ResourceType resourceType = default,
+            SystemData systemData = null,
+            PrivateLinkConnectionState privateLinkServiceConnectionState = null,
+            string kind = null)
+            => new PrivateLinkConnectionApprovalRequestInfo(id, name, resourceType, systemData, privateLinkServiceConnectionState, kind, serializedAdditionalRawData: null);
     }
 }

@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("slot"u8);
                 writer.WriteStringValue(Slot);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeletedSiteKind))
+            if (options.Format != "W" && Optional.IsDefined(KindPropertiesKind))
             {
                 writer.WritePropertyName("kind"u8);
-                writer.WriteStringValue(DeletedSiteKind);
+                writer.WriteStringValue(KindPropertiesKind);
             }
             if (options.Format != "W" && Optional.IsDefined(GeoRegionName))
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppService.Models
             string resourceGroup = default;
             string deletedSiteName = default;
             string slot = default;
-            string deletedSiteKind = default;
+            string kindPropertiesKind = default;
             string geoRegionName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("kind"u8))
                 {
-                    deletedSiteKind = prop.Value.GetString();
+                    kindPropertiesKind = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("geoRegionName"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppService.Models
                 resourceGroup,
                 deletedSiteName,
                 slot,
-                deletedSiteKind,
+                kindPropertiesKind,
                 geoRegionName,
                 additionalBinaryDataProperties);
         }

@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </para>
         /// </summary>
         [WirePath("cerBlob")]
-        public BinaryData CerBlob { get; }
+        public BinaryData CerBlob { get; set; }
 
         /// <summary> Public key hash. </summary>
         [WirePath("publicKeyHash")]
