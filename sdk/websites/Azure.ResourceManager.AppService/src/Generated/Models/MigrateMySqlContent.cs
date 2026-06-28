@@ -55,6 +55,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return Properties is null ? default : Properties.ConnectionString;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MigrateMySqlRequestProperties();
+                }
+                Properties.ConnectionString = value;
+            }
         }
 
         /// <summary> The type of migration operation to be done. </summary>
@@ -64,6 +72,17 @@ namespace Azure.ResourceManager.AppService.Models
             get
             {
                 return Properties is null ? default : Properties.MigrationType;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new MigrateMySqlRequestProperties();
+                    }
+                    Properties.MigrationType = value.Value;
+                }
             }
         }
     }

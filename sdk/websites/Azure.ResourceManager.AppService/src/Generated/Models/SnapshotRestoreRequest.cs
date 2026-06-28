@@ -94,6 +94,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return Properties is null ? default : Properties.CanOverwrite;
             }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new SnapshotRestoreRequestProperties();
+                    }
+                    Properties.CanOverwrite = value.Value;
+                }
+            }
         }
 
         /// <summary> If true, site configuration, in addition to content, will be reverted. </summary>

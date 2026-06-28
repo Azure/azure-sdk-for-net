@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Connection string to the remote MySQL database. </summary>
         [WirePath("connectionString")]
-        public string ConnectionString { get; }
+        public string ConnectionString { get; set; }
 
         /// <summary> The type of migration operation to be done. </summary>
         [WirePath("migrationType")]
-        public MySqlMigrationType MigrationType { get; }
+        public MySqlMigrationType MigrationType { get; set; }
     }
 }

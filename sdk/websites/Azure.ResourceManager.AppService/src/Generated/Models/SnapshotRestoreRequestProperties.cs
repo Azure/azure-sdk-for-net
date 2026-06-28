@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> If &lt;code&gt;true&lt;/code&gt; the restore operation can overwrite source app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("overwrite")]
-        public bool CanOverwrite { get; }
+        public bool CanOverwrite { get; set; }
 
         /// <summary> If true, site configuration, in addition to content, will be reverted. </summary>
         [WirePath("recoverConfiguration")]

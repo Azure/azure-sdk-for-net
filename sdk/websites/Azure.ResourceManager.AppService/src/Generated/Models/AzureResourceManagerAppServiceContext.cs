@@ -727,7 +727,6 @@ namespace Azure.ResourceManager.AppService
     [ModelReaderWriterBuildable(typeof(WorkflowProperties))]
     [ModelReaderWriterBuildable(typeof(WorkflowRecurrenceSchedule))]
     [ModelReaderWriterBuildable(typeof(WorkflowRegenerateActionContent))]
-    [ModelReaderWriterBuildable(typeof(WorkflowResource))]
     [ModelReaderWriterBuildable(typeof(WorkflowResourceReference))]
     [ModelReaderWriterBuildable(typeof(WorkflowRunActionData))]
     [ModelReaderWriterBuildable(typeof(WorkflowRunActionListResult))]

@@ -4724,11 +4724,10 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebAppErrorProperties(code, message, default);
         }
 
-        /// <param name="id"> The resource id. </param>
-        /// <param name="name"> Gets the resource name. </param>
-        /// <param name="type"> Gets the resource type. </param>
-        /// <param name="location"> The resource location. </param>
-        /// <param name="tags"> The resource tags. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="provisioningState"> Gets the provisioning state. </param>
         /// <param name="createdOn"> Gets the created time. </param>
         /// <param name="changedOn"> Gets the changed time. </param>
@@ -4744,18 +4743,18 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="parameters"> The parameters. </param>
         /// <param name="kind"> The workflow kind. </param>
         /// <param name="identity"> Managed service identity. </param>
+        /// <param name="location"> The resource location. </param>
+        /// <param name="tags"> The resource tags. </param>
         /// <returns> A new <see cref="Models.WorkflowData"/> instance for mocking. </returns>
-        public static WorkflowData WorkflowData(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, WorkflowProvisioningState? provisioningState = default, DateTimeOffset? createdOn = default, DateTimeOffset? changedOn = default, WorkflowState? state = default, string version = default, string accessEndpoint = default, FlowEndpointsConfiguration endpointsConfiguration = default, FlowAccessControlConfiguration accessControl = default, WorkflowSku sku = default, WorkflowResourceReference integrationAccount = default, WorkflowResourceReference integrationServiceEnvironment = default, BinaryData definition = default, IDictionary<string, WorkflowContent> parameters = default, AppServiceKind? kind = default, ManagedServiceIdentity identity = default)
+        public static WorkflowData WorkflowData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, WorkflowProvisioningState? provisioningState = default, DateTimeOffset? createdOn = default, DateTimeOffset? changedOn = default, WorkflowState? state = default, string version = default, string accessEndpoint = default, FlowEndpointsConfiguration endpointsConfiguration = default, FlowAccessControlConfiguration accessControl = default, WorkflowSku sku = default, WorkflowResourceReference integrationAccount = default, WorkflowResourceReference integrationServiceEnvironment = default, BinaryData definition = default, IDictionary<string, WorkflowContent> parameters = default, AppServiceKind? kind = default, ManagedServiceIdentity identity = default, string location = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new WorkflowData(
                 id,
                 name,
-                @type,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
+                resourceType,
+                systemData,
                 provisioningState is null && createdOn is null && changedOn is null && state is null && version is null && accessEndpoint is null && endpointsConfiguration is null && accessControl is null && sku is null && integrationAccount is null && integrationServiceEnvironment is null && definition is null && parameters is null && kind is null ? default : new WorkflowProperties(
                     provisioningState,
                     createdOn,
@@ -4772,7 +4771,10 @@ namespace Azure.ResourceManager.AppService.Models
                     parameters ?? new ChangeTrackingDictionary<string, WorkflowContent>(),
                     kind,
                     default),
-                identity);
+                identity,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
         }
 
         /// <param name="workflow"> The workflow endpoints. </param>
@@ -4871,25 +4873,6 @@ namespace Azure.ResourceManager.AppService.Models
         public static WorkflowContent WorkflowContent(WebAppParameterType? webAppParameterType = default, BinaryData value = default, BinaryData metadata = default, string description = default)
         {
             return new WorkflowContent(webAppParameterType, value, metadata, description, default);
-        }
-
-        /// <param name="id"> The resource id. </param>
-        /// <param name="name"> Gets the resource name. </param>
-        /// <param name="type"> Gets the resource type. </param>
-        /// <param name="location"> The resource location. </param>
-        /// <param name="tags"> The resource tags. </param>
-        /// <returns> A new <see cref="Models.WorkflowResource"/> instance for mocking. </returns>
-        public static WorkflowResource WorkflowResource(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new WorkflowResource(
-                id,
-                name,
-                @type,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -13474,12 +13457,10 @@ namespace Azure.ResourceManager.AppService.Models
         public static WorkflowData WorkflowData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, WorkflowProvisioningState? provisioningState = default, DateTimeOffset? createdOn = default, DateTimeOffset? changedOn = default, WorkflowState? state = default, string version = default, string accessEndpoint = default, FlowEndpointsConfiguration endpointsConfiguration = default, FlowAccessControlConfiguration accessControl = default, WorkflowSku sku = default, WorkflowResourceReference integrationAccount = default, WorkflowResourceReference integrationServiceEnvironment = default, BinaryData definition = default, IDictionary<string, WorkflowContent> parameters = default, AppServiceKind? kind = default)
         {
             return new WorkflowData(
-                default,
+                id,
                 name,
-                default,
-                default,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
+                resourceType,
+                systemData,
                 provisioningState is null && createdOn is null && changedOn is null && state is null && version is null && accessEndpoint is null && endpointsConfiguration is null && accessControl is null && sku is null && integrationAccount is null && integrationServiceEnvironment is null && definition is null && parameters is null && kind is null ? default : new WorkflowProperties(
                     provisioningState,
                     createdOn,
@@ -13496,7 +13477,10 @@ namespace Azure.ResourceManager.AppService.Models
                     parameters ?? new ChangeTrackingDictionary<string, WorkflowContent>(),
                     kind,
                     default),
-                identity);
+                identity,
+                default,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.RelayServiceConnectionEntityData"/>. </summary>

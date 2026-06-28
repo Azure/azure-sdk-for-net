@@ -55,6 +55,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return Properties is null ? default : Properties.AzurefilesConnectionString;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageMigrationContentProperties();
+                }
+                Properties.AzurefilesConnectionString = value;
+            }
         }
 
         /// <summary> AzureFiles share. </summary>
@@ -64,6 +72,14 @@ namespace Azure.ResourceManager.AppService.Models
             get
             {
                 return Properties is null ? default : Properties.AzurefilesShare;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageMigrationContentProperties();
+                }
+                Properties.AzurefilesShare = value;
             }
         }
 

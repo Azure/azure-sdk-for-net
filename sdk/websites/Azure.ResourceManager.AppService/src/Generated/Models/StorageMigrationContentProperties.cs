@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> AzureFiles connection string. </summary>
         [WirePath("azurefilesConnectionString")]
-        public string AzurefilesConnectionString { get; }
+        public string AzurefilesConnectionString { get; set; }
 
         /// <summary> AzureFiles share. </summary>
         [WirePath("azurefilesShare")]
-        public string AzurefilesShare { get; }
+        public string AzurefilesShare { get; set; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt;if the app should be switched over; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("switchSiteAfterMigration")]
