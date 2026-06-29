@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Publishing destination registry asset information. </summary>
     public partial class DestinationAssetContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DestinationAssetContent"/>. </summary>
         public DestinationAssetContent()
@@ -51,26 +23,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DestinationAssetContent"/>. </summary>
-        /// <param name="registryName"> Destination registry name. </param>
         /// <param name="destinationName"> Destination asset name. </param>
         /// <param name="destinationVersion"> Destination asset version. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DestinationAssetContent(string registryName, string destinationName, string destinationVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="registryName"> Destination registry name. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DestinationAssetContent(string destinationName, string destinationVersion, string registryName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            RegistryName = registryName;
             DestinationName = destinationName;
             DestinationVersion = destinationVersion;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            RegistryName = registryName;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Destination asset name. </summary>
+        [WirePath("destinationName")]
+        public string DestinationName { get; set; }
+
+        /// <summary> Destination asset version. </summary>
+        [WirePath("destinationVersion")]
+        public string DestinationVersion { get; set; }
 
         /// <summary> Destination registry name. </summary>
         [WirePath("registryName")]
         public string RegistryName { get; set; }
-        /// <summary> Destination asset name. </summary>
-        [WirePath("destinationName")]
-        public string DestinationName { get; set; }
-        /// <summary> Destination asset version. </summary>
-        [WirePath("destinationVersion")]
-        public string DestinationVersion { get; set; }
     }
 }

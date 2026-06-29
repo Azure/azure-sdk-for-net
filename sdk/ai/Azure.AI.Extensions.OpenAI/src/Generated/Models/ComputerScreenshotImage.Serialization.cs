@@ -71,7 +71,7 @@ namespace Azure.AI.Extensions.OpenAI
                 throw new FormatException($"The model {nameof(ComputerScreenshotImage)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(ImageKind);
             if (Optional.IsDefined(ImageUri))
             {
                 writer.WritePropertyName("image_url"u8);
@@ -124,7 +124,7 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 return null;
             }
-            string @type = default;
+            string imageKind = default;
             Uri imageUri = default;
             string fileId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -132,7 +132,7 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    imageKind = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("image_url"u8))
@@ -154,7 +154,7 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ComputerScreenshotImage(@type, imageUri, fileId, additionalBinaryDataProperties);
+            return new ComputerScreenshotImage(imageKind, imageUri, fileId, additionalBinaryDataProperties);
         }
     }
 }

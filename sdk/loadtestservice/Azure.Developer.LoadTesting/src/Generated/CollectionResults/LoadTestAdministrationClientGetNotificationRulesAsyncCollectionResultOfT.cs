@@ -61,8 +61,8 @@ namespace Azure.Developer.LoadTesting
                     yield break;
                 }
                 PagedNotificationRule result = (PagedNotificationRule)response;
-                yield return Page<NotificationRule>.FromValues((IReadOnlyList<NotificationRule>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NotificationRule>.FromValues((IReadOnlyList<NotificationRule>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

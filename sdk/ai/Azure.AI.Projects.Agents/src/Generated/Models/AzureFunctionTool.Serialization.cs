@@ -77,8 +77,6 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(AzureFunctionTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("azure_function"u8);
-            writer.WriteObjectValue(AzureFunction, options);
             if (Optional.IsCollectionDefined(ToolConfigs))
             {
                 writer.WritePropertyName("tool_configs"u8);
@@ -90,6 +88,8 @@ namespace Azure.AI.Projects.Agents
                 }
                 writer.WriteEndObject();
             }
+            writer.WritePropertyName("azure_function"u8);
+            writer.WriteObjectValue(AzureFunction, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -119,18 +119,13 @@ namespace Azure.AI.Projects.Agents
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            AzureFunctionDefinition azureFunction = default;
             IDictionary<string, ToolConfig> toolConfigs = default;
+            AzureFunctionDefinition azureFunction = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new ToolType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("azure_function"u8))
-                {
-                    azureFunction = AzureFunctionDefinition.DeserializeAzureFunctionDefinition(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tool_configs"u8))
@@ -147,12 +142,17 @@ namespace Azure.AI.Projects.Agents
                     toolConfigs = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("azure_function"u8))
+                {
+                    azureFunction = AzureFunctionDefinition.DeserializeAzureFunctionDefinition(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzureFunctionTool(@type, additionalBinaryDataProperties, azureFunction, toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>());
+            return new AzureFunctionTool(@type, additionalBinaryDataProperties, toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(), azureFunction);
         }
     }
 }

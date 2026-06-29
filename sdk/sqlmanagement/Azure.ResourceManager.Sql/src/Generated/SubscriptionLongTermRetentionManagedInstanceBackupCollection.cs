@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Sql.Models;
 
@@ -26,80 +27,87 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SubscriptionLongTermRetentionManagedInstanceBackupCollection : ArmCollection, IEnumerable<SubscriptionLongTermRetentionManagedInstanceBackupResource>, IAsyncEnumerable<SubscriptionLongTermRetentionManagedInstanceBackupResource>
     {
-        private readonly ClientDiagnostics _subscriptionLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsClientDiagnostics;
-        private readonly LongTermRetentionManagedInstanceBackupsRestOperations _subscriptionLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsRestClient;
+        private readonly ClientDiagnostics _longTermRetentionManagedInstanceBackupsClientDiagnostics;
+        private readonly LongTermRetentionManagedInstanceBackups _longTermRetentionManagedInstanceBackupsRestClient;
+        /// <summary> The locationName. </summary>
         private readonly AzureLocation _locationName;
+        /// <summary> The managedInstanceName. </summary>
         private readonly string _managedInstanceName;
+        /// <summary> The databaseName. </summary>
         private readonly string _databaseName;
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionLongTermRetentionManagedInstanceBackupCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SubscriptionLongTermRetentionManagedInstanceBackupCollection for mocking. </summary>
         protected SubscriptionLongTermRetentionManagedInstanceBackupCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionLongTermRetentionManagedInstanceBackupCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="locationName"> The location of the database. </param>
-        /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="databaseName"> The name of the managed database. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="locationName"> The locationName for the resource. </param>
+        /// <param name="managedInstanceName"> The managedInstanceName for the resource. </param>
+        /// <param name="databaseName"> The databaseName for the resource. </param>
         internal SubscriptionLongTermRetentionManagedInstanceBackupCollection(ArmClient client, ResourceIdentifier id, AzureLocation locationName, string managedInstanceName, string databaseName) : base(client, id)
         {
+            TryGetApiVersion(SubscriptionLongTermRetentionManagedInstanceBackupResource.ResourceType, out string subscriptionLongTermRetentionManagedInstanceBackupApiVersion);
             _locationName = locationName;
             _managedInstanceName = managedInstanceName;
             _databaseName = databaseName;
-            _subscriptionLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SubscriptionLongTermRetentionManagedInstanceBackupResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SubscriptionLongTermRetentionManagedInstanceBackupResource.ResourceType, out string subscriptionLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsApiVersion);
-            _subscriptionLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsRestClient = new LongTermRetentionManagedInstanceBackupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _longTermRetentionManagedInstanceBackupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SubscriptionLongTermRetentionManagedInstanceBackupResource.ResourceType.Namespace, Diagnostics);
+            _longTermRetentionManagedInstanceBackupsRestClient = new LongTermRetentionManagedInstanceBackups(_longTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, Endpoint, subscriptionLongTermRetentionManagedInstanceBackupApiVersion ?? "2025-02-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a long term retention backup for a managed database.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LongTermRetentionManagedInstanceBackups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceLongTermRetentionBackups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="backupName"> The backup name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SubscriptionLongTermRetentionManagedInstanceBackupResource>> GetAsync(string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
-            using var scope = _subscriptionLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionLongTermRetentionManagedInstanceBackupCollection.Get");
+            using DiagnosticScope scope = _longTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionLongTermRetentionManagedInstanceBackupCollection.Get");
             scope.Start();
             try
             {
-                var response = await _subscriptionLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_locationName), _managedInstanceName, _databaseName, backupName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _locationName, _managedInstanceName, _databaseName, backupName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ManagedInstanceLongTermRetentionBackupData> response = Response.FromValue(ManagedInstanceLongTermRetentionBackupData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -113,38 +121,42 @@ namespace Azure.ResourceManager.Sql
         /// Gets a long term retention backup for a managed database.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LongTermRetentionManagedInstanceBackups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceLongTermRetentionBackups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="backupName"> The backup name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SubscriptionLongTermRetentionManagedInstanceBackupResource> Get(string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
-            using var scope = _subscriptionLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionLongTermRetentionManagedInstanceBackupCollection.Get");
+            using DiagnosticScope scope = _longTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionLongTermRetentionManagedInstanceBackupCollection.Get");
             scope.Start();
             try
             {
-                var response = _subscriptionLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsRestClient.Get(Id.SubscriptionId, new AzureLocation(_locationName), _managedInstanceName, _databaseName, backupName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _locationName, _managedInstanceName, _databaseName, backupName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ManagedInstanceLongTermRetentionBackupData> response = Response.FromValue(ManagedInstanceLongTermRetentionBackupData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -158,52 +170,16 @@ namespace Azure.ResourceManager.Sql
         /// Lists all long term retention backups for a managed database.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LongTermRetentionManagedInstanceBackups_ListByDatabase</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceLongTermRetentionBackups_ListByDatabase. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
-        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetAllAsync(bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, new AzureLocation(_locationName), _managedInstanceName, _databaseName, onlyLatestPerDatabase, databaseState);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_locationName), _managedInstanceName, _databaseName, onlyLatestPerDatabase, databaseState);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData(e)), _subscriptionLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "SubscriptionLongTermRetentionManagedInstanceBackupCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all long term retention backups for a managed database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LongTermRetentionManagedInstanceBackups_ListByDatabase</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -211,47 +187,111 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetAll(bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetAllAsync(bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, new AzureLocation(_locationName), _managedInstanceName, _databaseName, onlyLatestPerDatabase, databaseState);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_locationName), _managedInstanceName, _databaseName, onlyLatestPerDatabase, databaseState);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData(e)), _subscriptionLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "SubscriptionLongTermRetentionManagedInstanceBackupCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ManagedInstanceLongTermRetentionBackupData, SubscriptionLongTermRetentionManagedInstanceBackupResource>(new LongTermRetentionManagedInstanceBackupsGetByDatabaseAsyncCollectionResultOfT(
+                _longTermRetentionManagedInstanceBackupsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                _locationName,
+                _managedInstanceName,
+                _databaseName,
+                onlyLatestPerDatabase,
+                databaseState?.ToString(),
+                context,
+                "SubscriptionLongTermRetentionManagedInstanceBackupCollection.GetAll"), data => new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all long term retention backups for a managed database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceLongTermRetentionBackups_ListByDatabase. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
+        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetAll(bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ManagedInstanceLongTermRetentionBackupData, SubscriptionLongTermRetentionManagedInstanceBackupResource>(new LongTermRetentionManagedInstanceBackupsGetByDatabaseCollectionResultOfT(
+                _longTermRetentionManagedInstanceBackupsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                _locationName,
+                _managedInstanceName,
+                _databaseName,
+                onlyLatestPerDatabase,
+                databaseState?.ToString(),
+                context,
+                "SubscriptionLongTermRetentionManagedInstanceBackupCollection.GetAll"), data => new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LongTermRetentionManagedInstanceBackups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceLongTermRetentionBackups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="backupName"> The backup name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
-            using var scope = _subscriptionLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionLongTermRetentionManagedInstanceBackupCollection.Exists");
+            using DiagnosticScope scope = _longTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionLongTermRetentionManagedInstanceBackupCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _subscriptionLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_locationName), _managedInstanceName, _databaseName, backupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _locationName, _managedInstanceName, _databaseName, backupName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ManagedInstanceLongTermRetentionBackupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ManagedInstanceLongTermRetentionBackupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ManagedInstanceLongTermRetentionBackupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -265,36 +305,50 @@ namespace Azure.ResourceManager.Sql
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LongTermRetentionManagedInstanceBackups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceLongTermRetentionBackups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="backupName"> The backup name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
-            using var scope = _subscriptionLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionLongTermRetentionManagedInstanceBackupCollection.Exists");
+            using DiagnosticScope scope = _longTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionLongTermRetentionManagedInstanceBackupCollection.Exists");
             scope.Start();
             try
             {
-                var response = _subscriptionLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsRestClient.Get(Id.SubscriptionId, new AzureLocation(_locationName), _managedInstanceName, _databaseName, backupName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _locationName, _managedInstanceName, _databaseName, backupName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ManagedInstanceLongTermRetentionBackupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ManagedInstanceLongTermRetentionBackupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ManagedInstanceLongTermRetentionBackupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -308,38 +362,54 @@ namespace Azure.ResourceManager.Sql
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LongTermRetentionManagedInstanceBackups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceLongTermRetentionBackups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="backupName"> The backup name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SubscriptionLongTermRetentionManagedInstanceBackupResource>> GetIfExistsAsync(string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
-            using var scope = _subscriptionLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionLongTermRetentionManagedInstanceBackupCollection.GetIfExists");
+            using DiagnosticScope scope = _longTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionLongTermRetentionManagedInstanceBackupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _subscriptionLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_locationName), _managedInstanceName, _databaseName, backupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _locationName, _managedInstanceName, _databaseName, backupName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ManagedInstanceLongTermRetentionBackupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ManagedInstanceLongTermRetentionBackupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ManagedInstanceLongTermRetentionBackupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SubscriptionLongTermRetentionManagedInstanceBackupResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -353,38 +423,54 @@ namespace Azure.ResourceManager.Sql
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LongTermRetentionManagedInstanceBackups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceLongTermRetentionBackups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="backupName"> The backup name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetIfExists(string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
-            using var scope = _subscriptionLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionLongTermRetentionManagedInstanceBackupCollection.GetIfExists");
+            using DiagnosticScope scope = _longTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionLongTermRetentionManagedInstanceBackupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _subscriptionLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsRestClient.Get(Id.SubscriptionId, new AzureLocation(_locationName), _managedInstanceName, _databaseName, backupName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _locationName, _managedInstanceName, _databaseName, backupName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ManagedInstanceLongTermRetentionBackupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ManagedInstanceLongTermRetentionBackupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ManagedInstanceLongTermRetentionBackupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SubscriptionLongTermRetentionManagedInstanceBackupResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -404,6 +490,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SubscriptionLongTermRetentionManagedInstanceBackupResource> IAsyncEnumerable<SubscriptionLongTermRetentionManagedInstanceBackupResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

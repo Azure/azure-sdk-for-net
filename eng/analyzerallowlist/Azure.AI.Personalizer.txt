@@ -1,0 +1,6 @@
+# Azure.AI.Personalizer approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# Azure Personalizer is a retired service whose surface is no longer evolving, so
+# no model-factory method is being added.
+nowarn:AZC0035 T:Azure.AI.Personalizer.PersonalizerLogProperties

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct MachineLearningModelSize : IEquatable<MachineLearningModelSize>
     {
         private readonly string _value;
+        /// <summary> No value selected. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Small size. </summary>
+        private const string SmallValue = "Small";
+        /// <summary> Medium size. </summary>
+        private const string MediumValue = "Medium";
+        /// <summary> Large size. </summary>
+        private const string LargeValue = "Large";
+        /// <summary> Extra large size. </summary>
+        private const string ExtraLargeValue = "ExtraLarge";
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningModelSize"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MachineLearningModelSize(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string SmallValue = "Small";
-        private const string MediumValue = "Medium";
-        private const string LargeValue = "Large";
-        private const string ExtraLargeValue = "ExtraLarge";
+            _value = value;
+        }
 
         /// <summary> No value selected. </summary>
         public static MachineLearningModelSize None { get; } = new MachineLearningModelSize(NoneValue);
+
         /// <summary> Small size. </summary>
         public static MachineLearningModelSize Small { get; } = new MachineLearningModelSize(SmallValue);
+
         /// <summary> Medium size. </summary>
         public static MachineLearningModelSize Medium { get; } = new MachineLearningModelSize(MediumValue);
+
         /// <summary> Large size. </summary>
         public static MachineLearningModelSize Large { get; } = new MachineLearningModelSize(LargeValue);
+
         /// <summary> Extra large size. </summary>
         public static MachineLearningModelSize ExtraLarge { get; } = new MachineLearningModelSize(ExtraLargeValue);
+
         /// <summary> Determines if two <see cref="MachineLearningModelSize"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MachineLearningModelSize left, MachineLearningModelSize right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MachineLearningModelSize"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MachineLearningModelSize left, MachineLearningModelSize right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningModelSize"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MachineLearningModelSize"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MachineLearningModelSize(string value) => new MachineLearningModelSize(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MachineLearningModelSize"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MachineLearningModelSize?(string value) => value == null ? null : new MachineLearningModelSize(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MachineLearningModelSize other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MachineLearningModelSize other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

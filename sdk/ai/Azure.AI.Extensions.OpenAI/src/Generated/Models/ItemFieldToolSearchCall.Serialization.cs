@@ -88,7 +88,7 @@ namespace Azure.AI.Extensions.OpenAI
                 writer.WriteNull("call_id"u8);
             }
             writer.WritePropertyName("execution"u8);
-            writer.WriteStringValue(Execution.ToSerialString());
+            writer.WriteStringValue(Execution.ToString());
             writer.WritePropertyName("arguments"u8);
 #if NET6_0_OR_GREATER
             writer.WriteRawValue(Arguments);
@@ -99,7 +99,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
 #endif
             writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToSerialString());
+            writer.WriteStringValue(Status.ToString());
             if (Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("created_by"u8);
@@ -164,7 +164,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("execution"u8))
                 {
-                    execution = prop.Value.GetString().ToResponsesToolSearchExecutionType();
+                    execution = new ResponsesToolSearchExecutionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("arguments"u8))
@@ -174,7 +174,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToResponsesFunctionCallStatus();
+                    status = new ResponsesFunctionCallStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("created_by"u8))

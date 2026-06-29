@@ -204,7 +204,7 @@ azure-ai-agentserver-responses
 Prepare the metadata for Agent:
 
 ```C# Snippet:Sample_CodeAgentMetadata_CodeAgent
-private static CreateAgentVersionFromCodeMetadata GetAgentMetadata()
+private static AgentVersionFromCodeMetadata GetAgentMetadata()
 {
     HostedAgentDefinition agentDefinition = new(
         cpu: "0.5",
@@ -218,7 +218,7 @@ private static CreateAgentVersionFromCodeMetadata GetAgentMetadata()
             dependencyResolution: CodeDependencyResolution.RemoteBuild
         ),
     };
-    CreateAgentVersionFromCodeMetadata metadata = new(agentDefinition);
+    AgentVersionFromCodeMetadata metadata = new(agentDefinition);
     metadata.Metadata["enableVnextExperience"] = "true";
     return metadata;
 }
@@ -281,12 +281,14 @@ Toolboxes allow us to store tools in Azure so that they can be retrieved and use
 
 In the example below we create two versions of MCP tool and save it to Azure.
 ```C# Snippet:Sample_CreateToolbox_ToolboxesAgentsCRUD_Async
-ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
-    serverLabel: "api-specs",
-    serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-    toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
-));
-ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
+MCPToolboxTool tool = new(serverLabel: "api-specs")
+{
+    Name = "mcp-tool",
+    Description = "Sample MCP tool",
+    ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+    ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+};
+ToolboxVersion toolBox1 = await toolboxClient.CreateVersionAsync(
     name: toolboxName,
     tools: [tool],
     description: "Example toolbox created by the azure-ai-projects sample.",
@@ -294,7 +296,7 @@ ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
         {"team", "Engineers"}
     }
 );
-ToolboxVersion toolBox2 = await toolboxClient.CreateToolboxVersionAsync(
+ToolboxVersion toolBox2 = await toolboxClient.CreateVersionAsync(
     name: toolboxName,
     tools: [tool],
     description: "Another toolbox created by the azure-ai-projects sample.",
@@ -311,14 +313,14 @@ There are two objects which help to work with the Toolboxes: `ToolboxRecord` and
 name, it contains the default version of the Toolbox.
 
 ```C# Snippet:Sample_GetToolbox_ToolboxesAgentsCRUD_Async
-ToolboxRecord record = await toolboxClient.GetToolboxAsync(name: toolBox1.Name);
+ToolboxRecord record = await toolboxClient.GetAsync(name: toolBox1.Name);
 Console.WriteLine($"The default version for a toolbox {record.Name} is {record.DefaultVersion}");
 ```
 
 The name of Toolbox and its version allow to get the `ToolboxVersion`, containing the tools, which can be used by Agent.
 
 ```C# Snippet:Sample_GetToolboxVersion_ToolboxesAgentsCRUD_Async
-ToolboxVersion toolBox = await toolboxClient.GetToolboxVersionAsync(record.Name, record.DefaultVersion);
+ToolboxVersion toolBox = await toolboxClient.GetVersionAsync(record.Name, record.DefaultVersion);
 Console.WriteLine($"Retrieved toolbox: {toolBox.Name} ({toolBox.Id})");
 ```
 
@@ -357,41 +359,22 @@ while (session2.Status != AgentSessionStatus.Failed && session2.Status != AgentS
 It is also possible to upload the files to the session store, so that it will only be accessible inside its session.
 To use this feature we need to create the `AgentSessionFiles` client:
 
-```C# Snippet:Sample_CreateClient_SessionFiles
-var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-var hostedAgentName = System.Environment.GetEnvironmentVariable("HOSTED_AGENT_NAME");
-var hostedAgentVersion = System.Environment.GetEnvironmentVariable("HOSTED_AGENT_VERSION");
-AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
-AgentSessionFiles sessionClient = agentsClient.GetAgentSessionFiles();
-```
-
-We can use it to upload the files.
-
-```C# Snippet:Sample_Upload_SessionFiles_Async
-string filePath = "sample_file_for_upload1.txt";
-File.WriteAllText(
-    path: filePath,
-    contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-SessionFileWriteResponse writeResponse = await sessionClient.UploadSessionFileAsync(
-        agentName: agentVersion.Name,
-        sessionId: session.AgentSessionId,
-        sessionStoragePath: filePath,
-        localPath: filePath
-    );
-Console.WriteLine($"The file was written to path {writeResponse.Path}, file length is {writeResponse.BytesWritten}.");
-File.Delete(filePath);
-filePath = "sample_file_for_upload2.txt";
-File.WriteAllText(
-    path: filePath,
-    contents: "The word 'grape' uses the code 111222, while the word 'mango' uses the code 222111.");
-writeResponse = await sessionClient.UploadSessionFileAsync(
+```C# Snippet:Sample_CreateAgentAndSession_SessionFiles_Async
+ProjectsAgentVersion agentVersion = await agentsClient.GetAgentVersionAsync(
+    agentName: hostedAgentName,
+    agentVersion: hostedAgentVersion);
+string sessionId = Guid.NewGuid().ToString("N");
+ProjectAgentSession session = await agentsClient.CreateSessionAsync(
     agentName: agentVersion.Name,
-    sessionId: session.AgentSessionId,
-    sessionStoragePath: $"{filePath}",
-    localPath: filePath
+    agentSessionId: sessionId,
+    versionIndicator: new VersionRefIndicator(agentVersion.Version)
 );
-Console.WriteLine($"The file was written to path {writeResponse.Path}, file length is {writeResponse.BytesWritten}.");
-File.Delete(filePath);
+AgentSessionFiles sessionClient = agentsClient.GetAgentSessionFiles(agentVersion.Name, session.AgentSessionId);
+while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
+{
+    await Task.Delay(TimeSpan.FromMilliseconds(500));
+    session = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
+}
 ```
 
 ### Skills
@@ -455,14 +438,17 @@ SkillInlineContent content = new(
 SkillVersion simpleSkill = await skillsClient.CreateSkillVersionAsync(name: "simpleSkill", inlineContent: content);
 ```
 
-3. We will create configure hosted agent so that it will use the 100% of traffic to the endpoint and will also
+3. We will create configure hosted agent so that it will use the 74% of traffic to the endpoint and will also
 make it aware of the skill we have created.
 
 ```C# Snippet:Sample_CreateEndpoint_AgentsEndpoint_Async
 AgentEndpointConfiguration config = new()
 {
-    VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
-    Protocols = {AgentEndpointProtocol.Responses}
+    VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 74)]),
+    ProtocolConfiguration = new()
+    {
+        Responses = new()
+    }
 };
 AgentCard card = new(version: "1", [new AgentCardSkill(id: simpleSkill.Id, name: SKILL)]);
 PatchAgentOptions patchOptions = new()
@@ -470,7 +456,7 @@ PatchAgentOptions patchOptions = new()
     AgentEndpoint = config,
     AgentCard = card
 };
-ProjectsAgentRecord patchedRecord = await agentsClient.PatchAgentObjectAsync(
+ProjectsAgentRecord patchedRecord = await agentsClient.PatchAgentAsync(
     agentName: hostedAgentName,
     patchAgentOptions: patchOptions);
 Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");

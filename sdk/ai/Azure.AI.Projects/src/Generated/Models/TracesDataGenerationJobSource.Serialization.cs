@@ -97,11 +97,11 @@ namespace Azure.AI.Projects
                 writer.WriteStringValue(AgentVersion);
             }
             writer.WritePropertyName("start_time"u8);
-            writer.WriteNumberValue(StartTime, "U");
-            if (Optional.IsDefined(EndTime))
+            writer.WriteNumberValue(StartAt, "U");
+            if (Optional.IsDefined(EndAt))
             {
                 writer.WritePropertyName("end_time"u8);
-                writer.WriteNumberValue(EndTime.Value, "U");
+                writer.WriteNumberValue(EndAt.Value, "U");
             }
         }
 
@@ -136,8 +136,8 @@ namespace Azure.AI.Projects
             string agentId = default;
             string agentName = default;
             string agentVersion = default;
-            DateTimeOffset startTime = default;
-            DateTimeOffset? endTime = default;
+            DateTimeOffset startAt = default;
+            DateTimeOffset? endAt = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -167,7 +167,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("start_time"u8))
                 {
-                    startTime = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    startAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("end_time"u8))
@@ -176,7 +176,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    endTime = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    endAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (options.Format != "W")
@@ -191,8 +191,8 @@ namespace Azure.AI.Projects
                 agentId,
                 agentName,
                 agentVersion,
-                startTime,
-                endTime);
+                startAt,
+                endAt);
         }
     }
 }

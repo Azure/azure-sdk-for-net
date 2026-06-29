@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.MachineLearning
     /// </summary>
     public partial class MachineLearningDataVersionCollection : ArmCollection, IEnumerable<MachineLearningDataVersionResource>, IAsyncEnumerable<MachineLearningDataVersionResource>
     {
-        private readonly ClientDiagnostics _machineLearningDataVersionDataVersionsClientDiagnostics;
-        private readonly DataVersionsRestOperations _machineLearningDataVersionDataVersionsRestClient;
+        private readonly ClientDiagnostics _dataVersionsClientDiagnostics;
+        private readonly DataVersions _dataVersionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MachineLearningDataVersionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MachineLearningDataVersionCollection for mocking. </summary>
         protected MachineLearningDataVersionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MachineLearningDataVersionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDataVersionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MachineLearningDataVersionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _machineLearningDataVersionDataVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearningDataVersionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(MachineLearningDataVersionResource.ResourceType, out string machineLearningDataVersionDataVersionsApiVersion);
-            _machineLearningDataVersionDataVersionsRestClient = new DataVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningDataVersionDataVersionsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(MachineLearningDataVersionResource.ResourceType, out string machineLearningDataVersionApiVersion);
+            _dataVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearningDataVersionResource.ResourceType.Namespace, Diagnostics);
+            _dataVersionsRestClient = new DataVersions(_dataVersionsClientDiagnostics, Pipeline, Endpoint, machineLearningDataVersionApiVersion ?? "2026-03-15-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != MachineLearningDataContainerResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, MachineLearningDataContainerResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MachineLearningDataContainerResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create or update version.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataVersions_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataVersions_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningDataVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,23 +76,31 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="version"> Version identifier. </param>
         /// <param name="data"> Version entity to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<MachineLearningDataVersionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string version, MachineLearningDataVersionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _machineLearningDataVersionDataVersionsClientDiagnostics.CreateScope("MachineLearningDataVersionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _dataVersionsClientDiagnostics.CreateScope("MachineLearningDataVersionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _machineLearningDataVersionDataVersionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data, cancellationToken).ConfigureAwait(false);
-                var uri = _machineLearningDataVersionDataVersionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new MachineLearningArmOperation<MachineLearningDataVersionResource>(Response.FromValue(new MachineLearningDataVersionResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, MachineLearningDataVersionData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MachineLearningDataVersionData> response = Response.FromValue(MachineLearningDataVersionData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                MachineLearningArmOperation<MachineLearningDataVersionResource> operation = new MachineLearningArmOperation<MachineLearningDataVersionResource>(Response.FromValue(new MachineLearningDataVersionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -107,20 +114,16 @@ namespace Azure.ResourceManager.MachineLearning
         /// Create or update version.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataVersions_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataVersions_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningDataVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,23 +131,31 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="version"> Version identifier. </param>
         /// <param name="data"> Version entity to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<MachineLearningDataVersionResource> CreateOrUpdate(WaitUntil waitUntil, string version, MachineLearningDataVersionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _machineLearningDataVersionDataVersionsClientDiagnostics.CreateScope("MachineLearningDataVersionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _dataVersionsClientDiagnostics.CreateScope("MachineLearningDataVersionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _machineLearningDataVersionDataVersionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data, cancellationToken);
-                var uri = _machineLearningDataVersionDataVersionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new MachineLearningArmOperation<MachineLearningDataVersionResource>(Response.FromValue(new MachineLearningDataVersionResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, MachineLearningDataVersionData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MachineLearningDataVersionData> response = Response.FromValue(MachineLearningDataVersionData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                MachineLearningArmOperation<MachineLearningDataVersionResource> operation = new MachineLearningArmOperation<MachineLearningDataVersionResource>(Response.FromValue(new MachineLearningDataVersionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -158,38 +169,42 @@ namespace Azure.ResourceManager.MachineLearning
         /// Get version.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningDataVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> Version identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<MachineLearningDataVersionResource>> GetAsync(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using var scope = _machineLearningDataVersionDataVersionsClientDiagnostics.CreateScope("MachineLearningDataVersionCollection.Get");
+            using DiagnosticScope scope = _dataVersionsClientDiagnostics.CreateScope("MachineLearningDataVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _machineLearningDataVersionDataVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MachineLearningDataVersionData> response = Response.FromValue(MachineLearningDataVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineLearningDataVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -203,38 +218,42 @@ namespace Azure.ResourceManager.MachineLearning
         /// Get version.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningDataVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> Version identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<MachineLearningDataVersionResource> Get(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using var scope = _machineLearningDataVersionDataVersionsClientDiagnostics.CreateScope("MachineLearningDataVersionCollection.Get");
+            using DiagnosticScope scope = _dataVersionsClientDiagnostics.CreateScope("MachineLearningDataVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = _machineLearningDataVersionDataVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MachineLearningDataVersionData> response = Response.FromValue(MachineLearningDataVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineLearningDataVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,112 +267,146 @@ namespace Azure.ResourceManager.MachineLearning
         /// List data versions in the data container
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}/versions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}/versions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataVersions_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataVersions_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningDataVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="orderBy"> Please choose OrderBy value from ['createdtime', 'modifiedtime']. </param>
         /// <param name="top">
         /// Top count of results, top count cannot be greater than the page size.
-        ///                               If topCount &gt; page size, results with be default page size count will be returned
-        /// </param>
-        /// <param name="skip"> Continuation token for pagination. </param>
-        /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
-        /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All]View type for including/excluding (for example) archived entities. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningDataVersionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningDataVersionResource> GetAllAsync(string orderBy = null, int? top = null, string skip = null, string tags = null, MachineLearningListViewType? listViewType = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningDataVersionDataVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, tags, listViewType);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningDataVersionDataVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, tags, listViewType);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningDataVersionResource(Client, MachineLearningDataVersionData.DeserializeMachineLearningDataVersionData(e)), _machineLearningDataVersionDataVersionsClientDiagnostics, Pipeline, "MachineLearningDataVersionCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List data versions in the data container
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}/versions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataVersions_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningDataVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="orderBy"> Please choose OrderBy value from ['createdtime', 'modifiedtime']. </param>
-        /// <param name="top">
-        /// Top count of results, top count cannot be greater than the page size.
-        ///                               If topCount &gt; page size, results with be default page size count will be returned
+        /// If topCount &gt; page size, results with be default page size count will be returned
         /// </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All]View type for including/excluding (for example) archived entities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MachineLearningDataVersionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningDataVersionResource> GetAll(string orderBy = null, int? top = null, string skip = null, string tags = null, MachineLearningListViewType? listViewType = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MachineLearningDataVersionResource> GetAllAsync(string orderBy = default, int? top = default, string skip = default, string tags = default, MachineLearningListViewType? listViewType = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningDataVersionDataVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, tags, listViewType);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningDataVersionDataVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, tags, listViewType);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningDataVersionResource(Client, MachineLearningDataVersionData.DeserializeMachineLearningDataVersionData(e)), _machineLearningDataVersionDataVersionsClientDiagnostics, Pipeline, "MachineLearningDataVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<MachineLearningDataVersionData, MachineLearningDataVersionResource>(new DataVersionsGetAllAsyncCollectionResultOfT(
+                _dataVersionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                orderBy,
+                top,
+                skip,
+                tags,
+                listViewType?.ToString(),
+                context,
+                "MachineLearningDataVersionCollection.GetAll"), data => new MachineLearningDataVersionResource(Client, data));
+        }
+
+        /// <summary>
+        /// List data versions in the data container
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}/versions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DataVersions_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="orderBy"> Please choose OrderBy value from ['createdtime', 'modifiedtime']. </param>
+        /// <param name="top">
+        /// Top count of results, top count cannot be greater than the page size.
+        /// If topCount &gt; page size, results with be default page size count will be returned
+        /// </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
+        /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All]View type for including/excluding (for example) archived entities. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MachineLearningDataVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MachineLearningDataVersionResource> GetAll(string orderBy = default, int? top = default, string skip = default, string tags = default, MachineLearningListViewType? listViewType = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<MachineLearningDataVersionData, MachineLearningDataVersionResource>(new DataVersionsGetAllCollectionResultOfT(
+                _dataVersionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                orderBy,
+                top,
+                skip,
+                tags,
+                listViewType?.ToString(),
+                context,
+                "MachineLearningDataVersionCollection.GetAll"), data => new MachineLearningDataVersionResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningDataVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> Version identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using var scope = _machineLearningDataVersionDataVersionsClientDiagnostics.CreateScope("MachineLearningDataVersionCollection.Exists");
+            using DiagnosticScope scope = _dataVersionsClientDiagnostics.CreateScope("MachineLearningDataVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _machineLearningDataVersionDataVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<MachineLearningDataVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MachineLearningDataVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MachineLearningDataVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -367,36 +420,50 @@ namespace Azure.ResourceManager.MachineLearning
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningDataVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> Version identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using var scope = _machineLearningDataVersionDataVersionsClientDiagnostics.CreateScope("MachineLearningDataVersionCollection.Exists");
+            using DiagnosticScope scope = _dataVersionsClientDiagnostics.CreateScope("MachineLearningDataVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _machineLearningDataVersionDataVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<MachineLearningDataVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MachineLearningDataVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MachineLearningDataVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -410,38 +477,54 @@ namespace Azure.ResourceManager.MachineLearning
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningDataVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> Version identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<MachineLearningDataVersionResource>> GetIfExistsAsync(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using var scope = _machineLearningDataVersionDataVersionsClientDiagnostics.CreateScope("MachineLearningDataVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _dataVersionsClientDiagnostics.CreateScope("MachineLearningDataVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _machineLearningDataVersionDataVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<MachineLearningDataVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MachineLearningDataVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MachineLearningDataVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<MachineLearningDataVersionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineLearningDataVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -455,38 +538,54 @@ namespace Azure.ResourceManager.MachineLearning
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningDataVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> Version identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<MachineLearningDataVersionResource> GetIfExists(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using var scope = _machineLearningDataVersionDataVersionsClientDiagnostics.CreateScope("MachineLearningDataVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _dataVersionsClientDiagnostics.CreateScope("MachineLearningDataVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _machineLearningDataVersionDataVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<MachineLearningDataVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MachineLearningDataVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MachineLearningDataVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<MachineLearningDataVersionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineLearningDataVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -506,6 +605,7 @@ namespace Azure.ResourceManager.MachineLearning
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<MachineLearningDataVersionResource> IAsyncEnumerable<MachineLearningDataVersionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

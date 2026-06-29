@@ -1,5 +1,11 @@
 # Release History
 
+## 1.16.1 (2026-06-26)
+
+### Bugs Fixed
+
+- Fixed duplicate IDPS enum types with different casing by preserving the GA `Idps`-cased enum types.
+
 ## 1.16.0 (2026-06-22)
 
 ### Features Added

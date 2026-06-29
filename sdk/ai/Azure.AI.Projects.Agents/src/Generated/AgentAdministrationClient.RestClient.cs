@@ -303,7 +303,7 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateGetAgentVersionsRequest(string agentName, int? limit, string order, string after, string before, RequestOptions options)
+        internal PipelineMessage CreateGetAgentVersionsRequest(string agentName, int? limit, string order, string after, string before, string foundryFeatures, bool? includeDrafts, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -326,18 +326,26 @@ namespace Azure.AI.Projects.Agents
             {
                 uri.AppendQuery("before", before, true);
             }
+            if (includeDrafts != null)
+            {
+                uri.AppendQuery("include_drafts", TypeFormatters.ConvertToString(includeDrafts), true);
+            }
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
+            if (foundryFeatures != null)
+            {
+                request.Headers.Set("Foundry-Features", foundryFeatures);
+            }
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
             return message;
         }
 
-        internal PipelineMessage CreatePatchAgentObjectRequest(string agentName, BinaryContent content, RequestOptions options)
+        internal PipelineMessage CreatePatchAgentRequest(string agentName, BinaryContent content, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -433,7 +441,7 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateCreateSessionRequest(string agentName, BinaryContent content, string userIsolationKey, RequestOptions options)
+        internal PipelineMessage CreateCreateSessionRequest(string agentName, BinaryContent content, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -446,10 +454,6 @@ namespace Azure.AI.Projects.Agents
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier201);
             PipelineRequest request = message.Request;
-            if (userIsolationKey != null)
-            {
-                request.Headers.Set("x-ms-user-isolation-key", userIsolationKey);
-            }
             request.Headers.Set("Content-Type", "application/json");
             request.Headers.Set("Accept", "application/json");
             request.Content = content;
@@ -457,7 +461,7 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateGetSessionRequest(string agentName, string sessionId, string userIsolationKey, RequestOptions options)
+        internal PipelineMessage CreateGetSessionRequest(string agentName, string sessionId, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -471,16 +475,12 @@ namespace Azure.AI.Projects.Agents
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (userIsolationKey != null)
-            {
-                request.Headers.Set("x-ms-user-isolation-key", userIsolationKey);
-            }
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
             return message;
         }
 
-        internal PipelineMessage CreateDeleteSessionRequest(string agentName, string sessionId, string userIsolationKey, RequestOptions options)
+        internal PipelineMessage CreateDeleteSessionRequest(string agentName, string sessionId, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -494,10 +494,6 @@ namespace Azure.AI.Projects.Agents
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "DELETE", PipelineMessageClassifier204);
             PipelineRequest request = message.Request;
-            if (userIsolationKey != null)
-            {
-                request.Headers.Set("x-ms-user-isolation-key", userIsolationKey);
-            }
             message.Apply(options);
             return message;
         }
@@ -521,7 +517,7 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateGetSessionsRequest(string agentName, string userIsolationKey, int? limit, string order, string after, string before, RequestOptions options)
+        internal PipelineMessage CreateGetSessionsRequest(string agentName, int? limit, string order, string after, string before, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -550,10 +546,6 @@ namespace Azure.AI.Projects.Agents
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (userIsolationKey != null)
-            {
-                request.Headers.Set("x-ms-user-isolation-key", userIsolationKey);
-            }
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
             return message;

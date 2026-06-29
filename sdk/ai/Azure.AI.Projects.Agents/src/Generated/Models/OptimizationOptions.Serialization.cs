@@ -159,7 +159,7 @@ namespace Azure.AI.Projects.Agents
             IDictionary<string, BinaryData> optimizationConfig = default;
             string evalModel = default;
             string optimizationModel = default;
-            EvaluationLevel? evaluationLevel = default;
+            AgentsEvaluationLevel? evaluationLevel = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -209,7 +209,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    evaluationLevel = new EvaluationLevel(prop.Value.GetString());
+                    evaluationLevel = new AgentsEvaluationLevel(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

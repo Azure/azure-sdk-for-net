@@ -8,7 +8,6 @@
     <PackageTags>Azure ConfidentialLedger</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <DefineConstants>$(DefineConstants)</DefineConstants>
-    <NoWarn>$(NoWarn);AZC0034;AZC0035</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>

@@ -14,7 +14,7 @@ namespace Azure.AI.Projects
         /// <param name="cronExpression"> A 5-field cron expression. The service enforces a minimum interval of five minutes by default. </param>
         /// <param name="timeZone"> An IANA or Windows time zone identifier for the schedule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cronExpression"/> or <paramref name="timeZone"/> is null. </exception>
-        public ScheduleRoutineTrigger(string cronExpression, string timeZone) : base(RoutineTriggerType.Schedule)
+        public ScheduleRoutineTrigger(string cronExpression, string timeZone) : base(RoutineTriggerKind.Schedule)
         {
             Argument.AssertNotNull(cronExpression, nameof(cronExpression));
             Argument.AssertNotNull(timeZone, nameof(timeZone));
@@ -28,7 +28,7 @@ namespace Azure.AI.Projects
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="cronExpression"> A 5-field cron expression. The service enforces a minimum interval of five minutes by default. </param>
         /// <param name="timeZone"> An IANA or Windows time zone identifier for the schedule. </param>
-        internal ScheduleRoutineTrigger(RoutineTriggerType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string cronExpression, string timeZone) : base(@type, additionalBinaryDataProperties)
+        internal ScheduleRoutineTrigger(RoutineTriggerKind @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string cronExpression, string timeZone) : base(@type, additionalBinaryDataProperties)
         {
             CronExpression = cronExpression;
             TimeZone = timeZone;

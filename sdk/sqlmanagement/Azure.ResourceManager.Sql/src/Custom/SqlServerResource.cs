@@ -5,159 +5,107 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Core;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary>
-    /// A Class representing a SqlServer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SqlServerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSqlServerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSqlServer method.
-    /// </summary>
-    public partial class SqlServerResource : ArmResource
+    public partial class SqlServerResource
     {
-        /// <summary>
-        /// Gets a recoverable database, which is a resource representing a database's geo backup
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/recoverableDatabases/{databaseName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecoverableDatabases_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
-        [ForwardsClientCalls]
+        /// <summary> Backward-compatible overload that accepts the strongly-typed <see cref="VulnerabilityAssessmentName"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<RecoverableDatabaseResource>> GetRecoverableDatabaseAsync(string databaseName, CancellationToken cancellationToken)
-            => await GetRecoverableDatabaseAsync(databaseName, null, null, cancellationToken).ConfigureAwait(false);
+        [ForwardsClientCalls]
+        public virtual Response<SqlServerSqlVulnerabilityAssessmentResource> GetSqlServerSqlVulnerabilityAssessment(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
+            => GetSqlServerSqlVulnerabilityAssessment(vulnerabilityAssessmentName.ToString(), cancellationToken);
 
-        /// <summary>
-        /// Gets a recoverable database, which is a resource representing a database's geo backup
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/recoverableDatabases/{databaseName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecoverableDatabases_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
-        [ForwardsClientCalls]
+        /// <summary> Backward-compatible overload that accepts the strongly-typed <see cref="VulnerabilityAssessmentName"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<RecoverableDatabaseResource> GetRecoverableDatabase(string databaseName, CancellationToken cancellationToken)
-            => GetRecoverableDatabase(databaseName, null, null, cancellationToken);
+        [ForwardsClientCalls]
+        public virtual Task<Response<SqlServerSqlVulnerabilityAssessmentResource>> GetSqlServerSqlVulnerabilityAssessmentAsync(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
+            => GetSqlServerSqlVulnerabilityAssessmentAsync(vulnerabilityAssessmentName.ToString(), cancellationToken);
 
-        /// <summary>
-        /// Gets a restorable dropped database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/restorableDroppedDatabases/{restorableDroppedDatabaseId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RestorableDroppedDatabases_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
-        [ForwardsClientCalls]
+        /// <summary> Backward-compatible overload that accepts a <see cref="string"/> for the DevOps auditing setting name. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<RestorableDroppedDatabaseResource>> GetRestorableDroppedDatabaseAsync(string restorableDroppedDatabaseId, CancellationToken cancellationToken = default)
-        {
-            return await GetRestorableDroppedDatabases().GetAsync(restorableDroppedDatabaseId, null, null, cancellationToken).ConfigureAwait(false);
-        }
+        [ForwardsClientCalls]
+        public virtual Response<SqlServerDevOpsAuditingSettingResource> GetSqlServerDevOpsAuditingSetting(string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
+            => GetSqlServerDevOpsAuditingSetting(new DevOpsAuditingSettingsName(devOpsAuditingSettingsName), cancellationToken);
 
-        /// <summary>
-        /// Gets a restorable dropped database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/restorableDroppedDatabases/{restorableDroppedDatabaseId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RestorableDroppedDatabases_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
-        [ForwardsClientCalls]
+        /// <summary> Backward-compatible overload that accepts a <see cref="string"/> for the DevOps auditing setting name. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<RestorableDroppedDatabaseResource> GetRestorableDroppedDatabase(string restorableDroppedDatabaseId, CancellationToken cancellationToken)
-        {
-            return GetRestorableDroppedDatabases().Get(restorableDroppedDatabaseId, null, null, cancellationToken);
-        }
+        [ForwardsClientCalls]
+        public virtual Task<Response<SqlServerDevOpsAuditingSettingResource>> GetSqlServerDevOpsAuditingSettingAsync(string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
+            => GetSqlServerDevOpsAuditingSettingAsync(new DevOpsAuditingSettingsName(devOpsAuditingSettingsName), cancellationToken);
 
-        /// <summary>
-        /// Gets a database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Databases_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
-        [ForwardsClientCalls]
+        /// <summary> Backward-compatible no-expand overload of <see cref="GetSqlDatabase(string, string, string, CancellationToken)"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<SqlDatabaseResource>> GetSqlDatabaseAsync(string databaseName, CancellationToken cancellationToken)
-        {
-            return await GetSqlDatabases().GetAsync(databaseName, null, null, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Databases_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         [ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<SqlDatabaseResource> GetSqlDatabase(string databaseName, CancellationToken cancellationToken)
-        {
-            return GetSqlDatabases().Get(databaseName, null, null, cancellationToken);
-        }
+            => GetSqlDatabase(databaseName, expand: null, filter: null, cancellationToken);
+
+        /// <summary> Backward-compatible no-expand overload of <see cref="GetSqlDatabaseAsync(string, string, string, CancellationToken)"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<Response<SqlDatabaseResource>> GetSqlDatabaseAsync(string databaseName, CancellationToken cancellationToken)
+            => GetSqlDatabaseAsync(databaseName, expand: null, filter: null, cancellationToken);
+
+        /// <summary> Backward-compatible no-expand overload of <see cref="GetRecoverableDatabase(string, string, string, CancellationToken)"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Response<RecoverableDatabaseResource> GetRecoverableDatabase(string databaseName, CancellationToken cancellationToken)
+            => GetRecoverableDatabase(databaseName, expand: null, filter: null, cancellationToken);
+
+        /// <summary> Backward-compatible no-expand overload of <see cref="GetRecoverableDatabaseAsync(string, string, string, CancellationToken)"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<Response<RecoverableDatabaseResource>> GetRecoverableDatabaseAsync(string databaseName, CancellationToken cancellationToken)
+            => GetRecoverableDatabaseAsync(databaseName, expand: null, filter: null, cancellationToken);
+
+        /// <summary> Backward-compatible no-expand overload of <see cref="GetRestorableDroppedDatabase(string, string, string, CancellationToken)"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Response<RestorableDroppedDatabaseResource> GetRestorableDroppedDatabase(string restorableDroppedDatabaseId, CancellationToken cancellationToken)
+            => GetRestorableDroppedDatabase(restorableDroppedDatabaseId, expand: null, filter: null, cancellationToken);
+
+        /// <summary> Backward-compatible no-expand overload of <see cref="GetRestorableDroppedDatabaseAsync(string, string, string, CancellationToken)"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<Response<RestorableDroppedDatabaseResource>> GetRestorableDroppedDatabaseAsync(string restorableDroppedDatabaseId, CancellationToken cancellationToken)
+            => GetRestorableDroppedDatabaseAsync(restorableDroppedDatabaseId, expand: null, filter: null, cancellationToken);
+
+        /// <summary> Backward-compatible alias for <see cref="Create(WaitUntil, TdeCertificate, CancellationToken)"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation CreateTdeCertificate(WaitUntil waitUntil, TdeCertificate tdeCertificate, CancellationToken cancellationToken = default)
+            => Create(waitUntil, tdeCertificate, cancellationToken);
+
+        /// <summary> Backward-compatible alias for <see cref="CreateAsync(WaitUntil, TdeCertificate, CancellationToken)"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Task<ArmOperation> CreateTdeCertificateAsync(WaitUntil waitUntil, TdeCertificate tdeCertificate, CancellationToken cancellationToken = default)
+            => CreateAsync(waitUntil, tdeCertificate, cancellationToken);
+
+        /// <summary> Backward-compatible alias for <see cref="GetByServer(CancellationToken)"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Pageable<SqlServerDatabaseReplicationLinkResource> GetReplicationLinks(CancellationToken cancellationToken = default)
+            => GetByServer(cancellationToken);
+
+        /// <summary> Backward-compatible alias for <see cref="GetByServerAsync(CancellationToken)"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<SqlServerDatabaseReplicationLinkResource> GetReplicationLinksAsync(CancellationToken cancellationToken = default)
+            => GetByServerAsync(cancellationToken);
+
+        /// <summary> Backward-compatible alias for <see cref="GetInaccessibleByServer(CancellationToken)"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Pageable<SqlDatabaseResource> GetInaccessibleDatabases(CancellationToken cancellationToken = default)
+            => GetInaccessibleByServer(cancellationToken);
+
+        /// <summary> Backward-compatible alias for <see cref="GetInaccessibleByServerAsync(CancellationToken)"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<SqlDatabaseResource> GetInaccessibleDatabasesAsync(CancellationToken cancellationToken = default)
+            => GetInaccessibleByServerAsync(cancellationToken);
     }
 }
