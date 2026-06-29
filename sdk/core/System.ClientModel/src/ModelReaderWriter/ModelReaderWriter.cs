@@ -267,7 +267,7 @@ public static class ModelReaderWriter
         }
         else if (returnObj is IPersistableModel<object> persistableModel)
         {
-            return options.ReadWithChain(persistableModel, data);
+            return options.ReadWithChain(persistableModel, data, returnType);
         }
         else
         {

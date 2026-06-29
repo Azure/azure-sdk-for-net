@@ -318,9 +318,9 @@ public class ModelReaderWriterOptions
     /// Resolves reading from <see cref="BinaryData"/> using a non-generic model reference.
     /// Uses the runtime type of the model to look up the proxy list.
     /// </summary>
-    internal object? ReadWithChain(IPersistableModel<object> model, BinaryData data)
+    internal object? ReadWithChain(IPersistableModel<object> model, BinaryData data, Type? requestedType = null)
     {
-        Type modelType = model.GetType();
+        Type modelType = requestedType ?? model.GetType();
         if (_proxies is null || !_proxies.TryGetValue(modelType, out List<object>? list) || list.Count == 0)
         {
             ProxiedModel = null;
