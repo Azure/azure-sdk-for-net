@@ -1,0 +1,6 @@
+directory: specification/keyvault/data-plane/Certificates
+commit: 538e38e10d30e578597d26ae404902bdd331fbe6
+repo: Azure/azure-rest-api-specs
+additionalDirectories:
+- specification/keyvault/data-plane/Certificates/common
+emitterPackageJsonPath: sdk/keyvault/Azure.Security.KeyVault.Certificates/emitter-package.json

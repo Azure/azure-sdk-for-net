@@ -76,7 +76,7 @@ public class Sample_MemoryStoreItems : SamplesBase
         }
         #endregion
         #region Snippet:Sample_Delete_UpdateStoreItems_Async
-        DeleteMemoryResponse response = await projectClient.MemoryStores.DeleteMemoryAsync(name: memoryStore.Name, memoryId: customerData.MemoryId);
+        MemoryDeletionResult response = await projectClient.MemoryStores.DeleteMemoryAsync(name: memoryStore.Name, memoryId: customerData.MemoryId);
         Console.WriteLine($"Memory Item with ID {response.MemoryId} was{(response.Deleted ? " " : " not ")}removed.");
         response = await projectClient.MemoryStores.DeleteMemoryAsync(name: memoryStore.Name, memoryId: orangeSKU.MemoryId);
         Console.WriteLine($"Memory Item with ID {response.MemoryId} was{(response.Deleted ? " " : " not ")}removed.");
@@ -146,7 +146,7 @@ public class Sample_MemoryStoreItems : SamplesBase
         }
         #endregion
         #region Snippet:Sample_Delete_UpdateStoreItems_Sync
-        DeleteMemoryResponse response = projectClient.MemoryStores.DeleteMemory(name: memoryStore.Name, memoryId: customerData.MemoryId);
+        MemoryDeletionResult response = projectClient.MemoryStores.DeleteMemory(name: memoryStore.Name, memoryId: customerData.MemoryId);
         Console.WriteLine($"Memory Item with ID {response.MemoryId} was{(response.Deleted ? " " : " not ")}removed.");
         response = projectClient.MemoryStores.DeleteMemory(name: memoryStore.Name, memoryId: orangeSKU.MemoryId);
         Console.WriteLine($"Memory Item with ID {response.MemoryId} was{(response.Deleted ? " " : " not ")}removed.");

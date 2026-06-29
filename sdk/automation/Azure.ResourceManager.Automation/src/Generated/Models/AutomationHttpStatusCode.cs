@@ -7,180 +7,290 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> The AutomationHttpStatusCode. </summary>
+    /// <summary></summary>
     public readonly partial struct AutomationHttpStatusCode : IEquatable<AutomationHttpStatusCode>
     {
         private readonly string _value;
+        /// <summary> Continue. </summary>
+        private const string ContinueValue = "Continue";
+        /// <summary> SwitchingProtocols. </summary>
+        private const string SwitchingProtocolsValue = "SwitchingProtocols";
+        /// <summary> OK. </summary>
+        private const string OKValue = "OK";
+        /// <summary> Created. </summary>
+        private const string CreatedValue = "Created";
+        /// <summary> Accepted. </summary>
+        private const string AcceptedValue = "Accepted";
+        /// <summary> NonAuthoritativeInformation. </summary>
+        private const string NonAuthoritativeInformationValue = "NonAuthoritativeInformation";
+        /// <summary> NoContent. </summary>
+        private const string NoContentValue = "NoContent";
+        /// <summary> ResetContent. </summary>
+        private const string ResetContentValue = "ResetContent";
+        /// <summary> PartialContent. </summary>
+        private const string PartialContentValue = "PartialContent";
+        /// <summary> MultipleChoices. </summary>
+        private const string MultipleChoicesValue = "MultipleChoices";
+        /// <summary> Ambiguous. </summary>
+        private const string AmbiguousValue = "Ambiguous";
+        /// <summary> MovedPermanently. </summary>
+        private const string MovedPermanentlyValue = "MovedPermanently";
+        /// <summary> Moved. </summary>
+        private const string MovedValue = "Moved";
+        /// <summary> Found. </summary>
+        private const string FoundValue = "Found";
+        /// <summary> Redirect. </summary>
+        private const string RedirectValue = "Redirect";
+        /// <summary> SeeOther. </summary>
+        private const string SeeOtherValue = "SeeOther";
+        /// <summary> RedirectMethod. </summary>
+        private const string RedirectMethodValue = "RedirectMethod";
+        /// <summary> NotModified. </summary>
+        private const string NotModifiedValue = "NotModified";
+        /// <summary> UseProxy. </summary>
+        private const string UseProxyValue = "UseProxy";
+        /// <summary> Unused. </summary>
+        private const string UnusedValue = "Unused";
+        /// <summary> TemporaryRedirect. </summary>
+        private const string TemporaryRedirectValue = "TemporaryRedirect";
+        /// <summary> RedirectKeepVerb. </summary>
+        private const string RedirectKeepVerbValue = "RedirectKeepVerb";
+        /// <summary> BadRequest. </summary>
+        private const string BadRequestValue = "BadRequest";
+        /// <summary> Unauthorized. </summary>
+        private const string UnauthorizedValue = "Unauthorized";
+        /// <summary> PaymentRequired. </summary>
+        private const string PaymentRequiredValue = "PaymentRequired";
+        /// <summary> Forbidden. </summary>
+        private const string ForbiddenValue = "Forbidden";
+        /// <summary> NotFound. </summary>
+        private const string NotFoundValue = "NotFound";
+        /// <summary> MethodNotAllowed. </summary>
+        private const string MethodNotAllowedValue = "MethodNotAllowed";
+        /// <summary> NotAcceptable. </summary>
+        private const string NotAcceptableValue = "NotAcceptable";
+        /// <summary> ProxyAuthenticationRequired. </summary>
+        private const string ProxyAuthenticationRequiredValue = "ProxyAuthenticationRequired";
+        /// <summary> RequestTimeout. </summary>
+        private const string RequestTimeoutValue = "RequestTimeout";
+        /// <summary> Conflict. </summary>
+        private const string ConflictValue = "Conflict";
+        /// <summary> Gone. </summary>
+        private const string GoneValue = "Gone";
+        /// <summary> LengthRequired. </summary>
+        private const string LengthRequiredValue = "LengthRequired";
+        /// <summary> PreconditionFailed. </summary>
+        private const string PreconditionFailedValue = "PreconditionFailed";
+        /// <summary> RequestEntityTooLarge. </summary>
+        private const string RequestEntityTooLargeValue = "RequestEntityTooLarge";
+        /// <summary> RequestUriTooLong. </summary>
+        private const string RequestUriTooLongValue = "RequestUriTooLong";
+        /// <summary> UnsupportedMediaType. </summary>
+        private const string UnsupportedMediaTypeValue = "UnsupportedMediaType";
+        /// <summary> RequestedRangeNotSatisfiable. </summary>
+        private const string RequestedRangeNotSatisfiableValue = "RequestedRangeNotSatisfiable";
+        /// <summary> ExpectationFailed. </summary>
+        private const string ExpectationFailedValue = "ExpectationFailed";
+        /// <summary> UpgradeRequired. </summary>
+        private const string UpgradeRequiredValue = "UpgradeRequired";
+        /// <summary> InternalServerError. </summary>
+        private const string InternalServerErrorValue = "InternalServerError";
+        /// <summary> NotImplemented. </summary>
+        private const string NotImplementedValue = "NotImplemented";
+        /// <summary> BadGateway. </summary>
+        private const string BadGatewayValue = "BadGateway";
+        /// <summary> ServiceUnavailable. </summary>
+        private const string ServiceUnavailableValue = "ServiceUnavailable";
+        /// <summary> GatewayTimeout. </summary>
+        private const string GatewayTimeoutValue = "GatewayTimeout";
+        /// <summary> HttpVersionNotSupported. </summary>
+        private const string HttpVersionNotSupportedValue = "HttpVersionNotSupported";
 
         /// <summary> Initializes a new instance of <see cref="AutomationHttpStatusCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AutomationHttpStatusCode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ContinueValue = "Continue";
-        private const string SwitchingProtocolsValue = "SwitchingProtocols";
-        private const string OKValue = "OK";
-        private const string CreatedValue = "Created";
-        private const string AcceptedValue = "Accepted";
-        private const string NonAuthoritativeInformationValue = "NonAuthoritativeInformation";
-        private const string NoContentValue = "NoContent";
-        private const string ResetContentValue = "ResetContent";
-        private const string PartialContentValue = "PartialContent";
-        private const string MultipleChoicesValue = "MultipleChoices";
-        private const string AmbiguousValue = "Ambiguous";
-        private const string MovedPermanentlyValue = "MovedPermanently";
-        private const string MovedValue = "Moved";
-        private const string FoundValue = "Found";
-        private const string RedirectValue = "Redirect";
-        private const string SeeOtherValue = "SeeOther";
-        private const string RedirectMethodValue = "RedirectMethod";
-        private const string NotModifiedValue = "NotModified";
-        private const string UseProxyValue = "UseProxy";
-        private const string UnusedValue = "Unused";
-        private const string TemporaryRedirectValue = "TemporaryRedirect";
-        private const string RedirectKeepVerbValue = "RedirectKeepVerb";
-        private const string BadRequestValue = "BadRequest";
-        private const string UnauthorizedValue = "Unauthorized";
-        private const string PaymentRequiredValue = "PaymentRequired";
-        private const string ForbiddenValue = "Forbidden";
-        private const string NotFoundValue = "NotFound";
-        private const string MethodNotAllowedValue = "MethodNotAllowed";
-        private const string NotAcceptableValue = "NotAcceptable";
-        private const string ProxyAuthenticationRequiredValue = "ProxyAuthenticationRequired";
-        private const string RequestTimeoutValue = "RequestTimeout";
-        private const string ConflictValue = "Conflict";
-        private const string GoneValue = "Gone";
-        private const string LengthRequiredValue = "LengthRequired";
-        private const string PreconditionFailedValue = "PreconditionFailed";
-        private const string RequestEntityTooLargeValue = "RequestEntityTooLarge";
-        private const string RequestUriTooLongValue = "RequestUriTooLong";
-        private const string UnsupportedMediaTypeValue = "UnsupportedMediaType";
-        private const string RequestedRangeNotSatisfiableValue = "RequestedRangeNotSatisfiable";
-        private const string ExpectationFailedValue = "ExpectationFailed";
-        private const string UpgradeRequiredValue = "UpgradeRequired";
-        private const string InternalServerErrorValue = "InternalServerError";
-        private const string NotImplementedValue = "NotImplemented";
-        private const string BadGatewayValue = "BadGateway";
-        private const string ServiceUnavailableValue = "ServiceUnavailable";
-        private const string GatewayTimeoutValue = "GatewayTimeout";
-        private const string HttpVersionNotSupportedValue = "HttpVersionNotSupported";
+            _value = value;
+        }
 
         /// <summary> Continue. </summary>
         public static AutomationHttpStatusCode Continue { get; } = new AutomationHttpStatusCode(ContinueValue);
+
         /// <summary> SwitchingProtocols. </summary>
         public static AutomationHttpStatusCode SwitchingProtocols { get; } = new AutomationHttpStatusCode(SwitchingProtocolsValue);
+
         /// <summary> OK. </summary>
         public static AutomationHttpStatusCode OK { get; } = new AutomationHttpStatusCode(OKValue);
+
         /// <summary> Created. </summary>
         public static AutomationHttpStatusCode Created { get; } = new AutomationHttpStatusCode(CreatedValue);
+
         /// <summary> Accepted. </summary>
         public static AutomationHttpStatusCode Accepted { get; } = new AutomationHttpStatusCode(AcceptedValue);
+
         /// <summary> NonAuthoritativeInformation. </summary>
         public static AutomationHttpStatusCode NonAuthoritativeInformation { get; } = new AutomationHttpStatusCode(NonAuthoritativeInformationValue);
+
         /// <summary> NoContent. </summary>
         public static AutomationHttpStatusCode NoContent { get; } = new AutomationHttpStatusCode(NoContentValue);
+
         /// <summary> ResetContent. </summary>
         public static AutomationHttpStatusCode ResetContent { get; } = new AutomationHttpStatusCode(ResetContentValue);
+
         /// <summary> PartialContent. </summary>
         public static AutomationHttpStatusCode PartialContent { get; } = new AutomationHttpStatusCode(PartialContentValue);
+
         /// <summary> MultipleChoices. </summary>
         public static AutomationHttpStatusCode MultipleChoices { get; } = new AutomationHttpStatusCode(MultipleChoicesValue);
+
         /// <summary> Ambiguous. </summary>
         public static AutomationHttpStatusCode Ambiguous { get; } = new AutomationHttpStatusCode(AmbiguousValue);
+
         /// <summary> MovedPermanently. </summary>
         public static AutomationHttpStatusCode MovedPermanently { get; } = new AutomationHttpStatusCode(MovedPermanentlyValue);
+
         /// <summary> Moved. </summary>
         public static AutomationHttpStatusCode Moved { get; } = new AutomationHttpStatusCode(MovedValue);
+
         /// <summary> Found. </summary>
         public static AutomationHttpStatusCode Found { get; } = new AutomationHttpStatusCode(FoundValue);
+
         /// <summary> Redirect. </summary>
         public static AutomationHttpStatusCode Redirect { get; } = new AutomationHttpStatusCode(RedirectValue);
+
         /// <summary> SeeOther. </summary>
         public static AutomationHttpStatusCode SeeOther { get; } = new AutomationHttpStatusCode(SeeOtherValue);
+
         /// <summary> RedirectMethod. </summary>
         public static AutomationHttpStatusCode RedirectMethod { get; } = new AutomationHttpStatusCode(RedirectMethodValue);
+
         /// <summary> NotModified. </summary>
         public static AutomationHttpStatusCode NotModified { get; } = new AutomationHttpStatusCode(NotModifiedValue);
+
         /// <summary> UseProxy. </summary>
         public static AutomationHttpStatusCode UseProxy { get; } = new AutomationHttpStatusCode(UseProxyValue);
+
         /// <summary> Unused. </summary>
         public static AutomationHttpStatusCode Unused { get; } = new AutomationHttpStatusCode(UnusedValue);
+
         /// <summary> TemporaryRedirect. </summary>
         public static AutomationHttpStatusCode TemporaryRedirect { get; } = new AutomationHttpStatusCode(TemporaryRedirectValue);
+
         /// <summary> RedirectKeepVerb. </summary>
         public static AutomationHttpStatusCode RedirectKeepVerb { get; } = new AutomationHttpStatusCode(RedirectKeepVerbValue);
+
         /// <summary> BadRequest. </summary>
         public static AutomationHttpStatusCode BadRequest { get; } = new AutomationHttpStatusCode(BadRequestValue);
+
         /// <summary> Unauthorized. </summary>
         public static AutomationHttpStatusCode Unauthorized { get; } = new AutomationHttpStatusCode(UnauthorizedValue);
+
         /// <summary> PaymentRequired. </summary>
         public static AutomationHttpStatusCode PaymentRequired { get; } = new AutomationHttpStatusCode(PaymentRequiredValue);
+
         /// <summary> Forbidden. </summary>
         public static AutomationHttpStatusCode Forbidden { get; } = new AutomationHttpStatusCode(ForbiddenValue);
+
         /// <summary> NotFound. </summary>
         public static AutomationHttpStatusCode NotFound { get; } = new AutomationHttpStatusCode(NotFoundValue);
+
         /// <summary> MethodNotAllowed. </summary>
         public static AutomationHttpStatusCode MethodNotAllowed { get; } = new AutomationHttpStatusCode(MethodNotAllowedValue);
+
         /// <summary> NotAcceptable. </summary>
         public static AutomationHttpStatusCode NotAcceptable { get; } = new AutomationHttpStatusCode(NotAcceptableValue);
+
         /// <summary> ProxyAuthenticationRequired. </summary>
         public static AutomationHttpStatusCode ProxyAuthenticationRequired { get; } = new AutomationHttpStatusCode(ProxyAuthenticationRequiredValue);
+
         /// <summary> RequestTimeout. </summary>
         public static AutomationHttpStatusCode RequestTimeout { get; } = new AutomationHttpStatusCode(RequestTimeoutValue);
+
         /// <summary> Conflict. </summary>
         public static AutomationHttpStatusCode Conflict { get; } = new AutomationHttpStatusCode(ConflictValue);
+
         /// <summary> Gone. </summary>
         public static AutomationHttpStatusCode Gone { get; } = new AutomationHttpStatusCode(GoneValue);
+
         /// <summary> LengthRequired. </summary>
         public static AutomationHttpStatusCode LengthRequired { get; } = new AutomationHttpStatusCode(LengthRequiredValue);
+
         /// <summary> PreconditionFailed. </summary>
         public static AutomationHttpStatusCode PreconditionFailed { get; } = new AutomationHttpStatusCode(PreconditionFailedValue);
+
         /// <summary> RequestEntityTooLarge. </summary>
         public static AutomationHttpStatusCode RequestEntityTooLarge { get; } = new AutomationHttpStatusCode(RequestEntityTooLargeValue);
+
         /// <summary> RequestUriTooLong. </summary>
         public static AutomationHttpStatusCode RequestUriTooLong { get; } = new AutomationHttpStatusCode(RequestUriTooLongValue);
+
         /// <summary> UnsupportedMediaType. </summary>
         public static AutomationHttpStatusCode UnsupportedMediaType { get; } = new AutomationHttpStatusCode(UnsupportedMediaTypeValue);
+
         /// <summary> RequestedRangeNotSatisfiable. </summary>
         public static AutomationHttpStatusCode RequestedRangeNotSatisfiable { get; } = new AutomationHttpStatusCode(RequestedRangeNotSatisfiableValue);
+
         /// <summary> ExpectationFailed. </summary>
         public static AutomationHttpStatusCode ExpectationFailed { get; } = new AutomationHttpStatusCode(ExpectationFailedValue);
+
         /// <summary> UpgradeRequired. </summary>
         public static AutomationHttpStatusCode UpgradeRequired { get; } = new AutomationHttpStatusCode(UpgradeRequiredValue);
+
         /// <summary> InternalServerError. </summary>
         public static AutomationHttpStatusCode InternalServerError { get; } = new AutomationHttpStatusCode(InternalServerErrorValue);
+
         /// <summary> NotImplemented. </summary>
         public static AutomationHttpStatusCode NotImplemented { get; } = new AutomationHttpStatusCode(NotImplementedValue);
+
         /// <summary> BadGateway. </summary>
         public static AutomationHttpStatusCode BadGateway { get; } = new AutomationHttpStatusCode(BadGatewayValue);
+
         /// <summary> ServiceUnavailable. </summary>
         public static AutomationHttpStatusCode ServiceUnavailable { get; } = new AutomationHttpStatusCode(ServiceUnavailableValue);
+
         /// <summary> GatewayTimeout. </summary>
         public static AutomationHttpStatusCode GatewayTimeout { get; } = new AutomationHttpStatusCode(GatewayTimeoutValue);
+
         /// <summary> HttpVersionNotSupported. </summary>
         public static AutomationHttpStatusCode HttpVersionNotSupported { get; } = new AutomationHttpStatusCode(HttpVersionNotSupportedValue);
+
         /// <summary> Determines if two <see cref="AutomationHttpStatusCode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AutomationHttpStatusCode left, AutomationHttpStatusCode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AutomationHttpStatusCode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AutomationHttpStatusCode left, AutomationHttpStatusCode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AutomationHttpStatusCode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AutomationHttpStatusCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AutomationHttpStatusCode(string value) => new AutomationHttpStatusCode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AutomationHttpStatusCode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AutomationHttpStatusCode?(string value) => value == null ? null : new AutomationHttpStatusCode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AutomationHttpStatusCode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AutomationHttpStatusCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

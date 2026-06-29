@@ -967,13 +967,13 @@ namespace Azure.AI.Projects.Memory
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="memoryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="memoryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<DeleteMemoryResponse> DeleteMemory(string name, string memoryId, CancellationToken cancellationToken = default)
+        public virtual ClientResult<MemoryDeletionResult> DeleteMemory(string name, string memoryId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
 
             ClientResult result = DeleteMemory(name, memoryId, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((DeleteMemoryResponse)result, result.GetRawResponse());
+            return ClientResult.FromValue((MemoryDeletionResult)result, result.GetRawResponse());
         }
 
         /// <summary> Deletes the specified memory item from the memory store. </summary>
@@ -983,13 +983,13 @@ namespace Azure.AI.Projects.Memory
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="memoryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="memoryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<DeleteMemoryResponse>> DeleteMemoryAsync(string name, string memoryId, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<MemoryDeletionResult>> DeleteMemoryAsync(string name, string memoryId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
 
             ClientResult result = await DeleteMemoryAsync(name, memoryId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((DeleteMemoryResponse)result, result.GetRawResponse());
+            return ClientResult.FromValue((MemoryDeletionResult)result, result.GetRawResponse());
         }
     }
 }

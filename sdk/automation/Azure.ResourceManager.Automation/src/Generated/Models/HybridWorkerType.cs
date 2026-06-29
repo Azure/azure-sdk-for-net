@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Automation.Models
     public readonly partial struct HybridWorkerType : IEquatable<HybridWorkerType>
     {
         private readonly string _value;
+        /// <summary> HybridV1. </summary>
+        private const string HybridV1Value = "HybridV1";
+        /// <summary> HybridV2. </summary>
+        private const string HybridV2Value = "HybridV2";
 
         /// <summary> Initializes a new instance of <see cref="HybridWorkerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HybridWorkerType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string HybridV1Value = "HybridV1";
-        private const string HybridV2Value = "HybridV2";
+            _value = value;
+        }
 
         /// <summary> HybridV1. </summary>
         public static HybridWorkerType HybridV1 { get; } = new HybridWorkerType(HybridV1Value);
+
         /// <summary> HybridV2. </summary>
         public static HybridWorkerType HybridV2 { get; } = new HybridWorkerType(HybridV2Value);
+
         /// <summary> Determines if two <see cref="HybridWorkerType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HybridWorkerType left, HybridWorkerType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HybridWorkerType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HybridWorkerType left, HybridWorkerType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HybridWorkerType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HybridWorkerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HybridWorkerType(string value) => new HybridWorkerType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HybridWorkerType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HybridWorkerType?(string value) => value == null ? null : new HybridWorkerType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HybridWorkerType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HybridWorkerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

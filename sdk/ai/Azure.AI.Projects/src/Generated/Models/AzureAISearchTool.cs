@@ -17,17 +17,33 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNull(azureAiSearch, nameof(azureAiSearch));
 
+            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
             AzureAiSearch = azureAiSearch;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureAISearchTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="azureAiSearch"> The azure ai search index resource. </param>
-        internal AzureAISearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureAISearchToolResource azureAiSearch) : base(@type, additionalBinaryDataProperties)
+        internal AzureAISearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, AzureAISearchToolResource azureAiSearch) : base(@type, additionalBinaryDataProperties)
         {
+            Name = name;
+            Description = description;
+            ToolConfigs = toolConfigs;
             AzureAiSearch = azureAiSearch;
         }
+
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public string Name { get; set; }
+
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public string Description { get; set; }
+
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public IDictionary<string, ToolConfig> ToolConfigs { get; }
 
         /// <summary> The azure ai search index resource. </summary>
         public AzureAISearchToolResource AzureAiSearch { get; set; }

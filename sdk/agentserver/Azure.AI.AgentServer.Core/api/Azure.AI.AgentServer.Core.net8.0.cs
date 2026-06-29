@@ -36,9 +36,27 @@ namespace Azure.AI.AgentServer.Core
         public string? AdditionalServerIdentity { get { throw null; } set { } }
         public System.TimeSpan ShutdownTimeout { get { throw null; } set { } }
     }
+    public sealed partial class FoundryAgentRequestContext
+    {
+        public FoundryAgentRequestContext() { }
+        public string? CallId { get { throw null; } set { } }
+        public static Azure.AI.AgentServer.Core.FoundryAgentRequestContext Current { get { throw null; } }
+        public static Azure.AI.AgentServer.Core.FoundryAgentRequestContext Empty { get { throw null; } }
+        public string? SessionId { get { throw null; } set { } }
+        public string? UserId { get { throw null; } set { } }
+        public System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>> PlatformHeaders() { throw null; }
+    }
+    public sealed partial class FoundryCallIdHandler : System.Net.Http.DelegatingHandler
+    {
+        public FoundryCallIdHandler() { }
+        public FoundryCallIdHandler(System.Net.Http.HttpMessageHandler innerHandler) { }
+        protected override System.Net.Http.HttpResponseMessage Send(System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken) { throw null; }
+        protected override System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> SendAsync(System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
     public static partial class FoundryEnvironment
     {
         public static string? AgentBlueprintClientId { get { throw null; } }
+        public static string? AgentId { get { throw null; } }
         public static string? AgentInstanceClientId { get { throw null; } }
         public static string? AgentName { get { throw null; } }
         public static string? AgentTenantId { get { throw null; } }
@@ -54,18 +72,17 @@ namespace Azure.AI.AgentServer.Core
         public static System.TimeSpan SseKeepAliveInterval { get { throw null; } }
         public static System.TimeSpan WebSocketKeepAliveInterval { get { throw null; } }
     }
-    public partial class IsolationContext
+    public partial class PlatformContext
     {
-        protected IsolationContext() { }
-        public IsolationContext(string? userIsolationKey, string? chatIsolationKey) { }
-        public virtual string? ChatIsolationKey { get { throw null; } }
-        public static Azure.AI.AgentServer.Core.IsolationContext Empty { get { throw null; } }
-        public virtual string? UserIsolationKey { get { throw null; } }
-        public static Azure.AI.AgentServer.Core.IsolationContext FromRequest(Microsoft.AspNetCore.Http.HttpRequest request) { throw null; }
+        protected PlatformContext() { }
+        public PlatformContext(string? userIdKey, string? callId) { }
+        public virtual string? CallId { get { throw null; } }
+        public static Azure.AI.AgentServer.Core.PlatformContext Empty { get { throw null; } }
+        public virtual string? UserIdKey { get { throw null; } }
+        public static Azure.AI.AgentServer.Core.PlatformContext FromRequest(Microsoft.AspNetCore.Http.HttpRequest request) { throw null; }
     }
     public static partial class PlatformHeaders
     {
-        public const string ChatIsolationKey = "x-agent-chat-isolation-key";
         public const string ClientHeaderPrefix = "x-client-";
         public const string ClientRequestId = "x-ms-client-request-id";
         public const string ErrorDetail = "x-platform-error-detail";
@@ -73,12 +90,13 @@ namespace Azure.AI.AgentServer.Core
         public const string ErrorSourcePlatform = "platform";
         public const string ErrorSourceUpstream = "upstream";
         public const string ErrorSourceUser = "user";
+        public const string FoundryCallId = "x-agent-foundry-call-id";
         public const string RequestId = "x-request-id";
         public const string RequestIdItemKey = "AgentServer.RequestId";
         public const string ServerVersion = "x-platform-server";
         public const string SessionId = "x-agent-session-id";
         public const string TraceParent = "traceparent";
-        public const string UserIsolationKey = "x-agent-user-isolation-key";
+        public const string UserId = "x-agent-user-id";
     }
     public sealed partial class ServerVersionRegistry
     {

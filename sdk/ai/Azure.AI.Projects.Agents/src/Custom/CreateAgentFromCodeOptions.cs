@@ -4,12 +4,11 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    public partial class CreateAgentFromCodeOptions
+    public partial class AgentFromCodeOptions
     {
         /// <summary>
         /// The code zip file (max 250 MB).

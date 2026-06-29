@@ -397,7 +397,7 @@ public class AgentsTestBase : ProjectsClientTestBase
     {
         FabricIQPreviewTool fabricIQTool = new(projectConnectionId: TestEnvironment.FABRIC_IQ_CONNECTION_ID)
         {
-            RequireApproval = BinaryData.FromObjectAsJson("never"),
+            RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
         };
         return fabricIQTool;
     }
@@ -461,7 +461,7 @@ public class AgentsTestBase : ProjectsClientTestBase
     {
         try
         {
-            await projectClient.AgentAdministrationClient.GetAgentToolboxes().DeleteToolboxAsync(name: TOOLBOX_NAME);
+            await projectClient.AgentAdministrationClient.GetAgentToolboxes().DeleteAsync(name: TOOLBOX_NAME);
         }
         catch
         {
@@ -487,7 +487,7 @@ public class AgentsTestBase : ProjectsClientTestBase
             Name = "ToolBoxSearch",
             Description = "Search for the toolboxes"
         };
-        ToolboxVersion toolBox = await projectClient.AgentAdministrationClient.GetAgentToolboxes().CreateToolboxVersionAsync(
+        ToolboxVersion toolBox = await projectClient.AgentAdministrationClient.GetAgentToolboxes().CreateVersionAsync(
             name: TOOLBOX_NAME,
             tools: [mcp, codeInterpreter, searchTool],
             description: "Toolbox for the unit test."

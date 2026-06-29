@@ -217,17 +217,17 @@ public class ServiceRegistrationTests
 
     private sealed class StubResponsesProvider : ResponsesProvider
     {
-        public override Task CreateResponseAsync(CreateResponseRequest request, IsolationContext isolation, CancellationToken ct = default) => Task.CompletedTask;
-        public override Task<Models.ResponseObject> GetResponseAsync(string responseId, IsolationContext isolation, CancellationToken ct = default)
+        public override Task CreateResponseAsync(CreateResponseRequest request, PlatformContext isolation, CancellationToken ct = default) => Task.CompletedTask;
+        public override Task<Models.ResponseObject> GetResponseAsync(string responseId, PlatformContext isolation, CancellationToken ct = default)
             => throw new ResourceNotFoundException("not found");
-        public override Task UpdateResponseAsync(Models.ResponseObject response, IsolationContext isolation, CancellationToken ct = default) => Task.CompletedTask;
-        public override Task DeleteResponseAsync(string responseId, IsolationContext isolation, CancellationToken ct = default)
+        public override Task UpdateResponseAsync(Models.ResponseObject response, PlatformContext isolation, CancellationToken ct = default) => Task.CompletedTask;
+        public override Task DeleteResponseAsync(string responseId, PlatformContext isolation, CancellationToken ct = default)
             => throw new ResourceNotFoundException("not found");
-        public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, IsolationContext isolation, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken ct = default)
+        public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, PlatformContext isolation, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken ct = default)
             => Task.FromResult(ResponsesModelFactory.AgentsPagedResultOutputItem(data: Array.Empty<OutputItem>(), hasMore: false));
-        public override Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, IsolationContext isolation, CancellationToken ct = default)
+        public override Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, PlatformContext isolation, CancellationToken ct = default)
             => Task.FromResult(Enumerable.Empty<OutputItem?>());
-        public override Task<IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, IsolationContext isolation, CancellationToken ct = default)
+        public override Task<IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, PlatformContext isolation, CancellationToken ct = default)
             => Task.FromResult(Enumerable.Empty<string>());
     }
 
@@ -254,14 +254,14 @@ public class ServiceRegistrationTests
         private readonly ConcurrentDictionary<string, Models.ResponseObject> _responses = new();
         public ConcurrentBag<string> Calls { get; } = new();
 
-        public override Task CreateResponseAsync(CreateResponseRequest request, IsolationContext isolation, CancellationToken ct = default)
+        public override Task CreateResponseAsync(CreateResponseRequest request, PlatformContext isolation, CancellationToken ct = default)
         {
             Calls.Add("CreateResponseAsync");
             _responses.TryAdd(request.Response.Id, request.Response);
             return Task.CompletedTask;
         }
 
-        public override Task<Models.ResponseObject> GetResponseAsync(string responseId, IsolationContext isolation, CancellationToken ct = default)
+        public override Task<Models.ResponseObject> GetResponseAsync(string responseId, PlatformContext isolation, CancellationToken ct = default)
         {
             Calls.Add("GetResponseAsync");
             if (!_responses.TryGetValue(responseId, out var response))
@@ -269,14 +269,14 @@ public class ServiceRegistrationTests
             return Task.FromResult(response);
         }
 
-        public override Task UpdateResponseAsync(Models.ResponseObject response, IsolationContext isolation, CancellationToken ct = default)
+        public override Task UpdateResponseAsync(Models.ResponseObject response, PlatformContext isolation, CancellationToken ct = default)
         {
             Calls.Add("UpdateResponseAsync");
             _responses[response.Id] = response;
             return Task.CompletedTask;
         }
 
-        public override Task DeleteResponseAsync(string responseId, IsolationContext isolation, CancellationToken ct = default)
+        public override Task DeleteResponseAsync(string responseId, PlatformContext isolation, CancellationToken ct = default)
         {
             Calls.Add("DeleteResponseAsync");
             if (!_responses.TryRemove(responseId, out _))
@@ -284,13 +284,13 @@ public class ServiceRegistrationTests
             return Task.CompletedTask;
         }
 
-        public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, IsolationContext isolation, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken ct = default)
+        public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, PlatformContext isolation, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken ct = default)
             => Task.FromResult(ResponsesModelFactory.AgentsPagedResultOutputItem(data: Array.Empty<OutputItem>(), hasMore: false));
 
-        public override Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, IsolationContext isolation, CancellationToken ct = default)
+        public override Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, PlatformContext isolation, CancellationToken ct = default)
             => Task.FromResult(Enumerable.Empty<OutputItem?>());
 
-        public override Task<IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, IsolationContext isolation, CancellationToken ct = default)
+        public override Task<IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, PlatformContext isolation, CancellationToken ct = default)
             => Task.FromResult(Enumerable.Empty<string>());
     }
 

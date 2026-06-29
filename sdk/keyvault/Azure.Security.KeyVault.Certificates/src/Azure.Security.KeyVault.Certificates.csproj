@@ -8,11 +8,8 @@
     <ApiCompatVersion>4.9.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Key Vault Certificates;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <NoWarn>$(NoWarn);3021</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
-    <!-- Disable warning for missing xml doc comments until we can add all the missing ones -->
-    <NoWarn>$(NoWarn);1591</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
@@ -23,12 +20,47 @@
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
 
+  <!--
+    Two generated wire-model files share names with hand-written public types
+    (PlatformManaged, CertificatePolicyAction) in src/. The spec @@access
+    leaves those types `public partial` so the C# compiler merges them with
+    the hand-written `public partial` declarations. Hand-written owns the
+    customer-facing API; generated contributes additive MRW JSON support.
+
+    Inputs is intentionally scoped to .\Generated only (plus the script itself)
+    so incremental builds don't re-run the script when unrelated handwritten
+    .cs files change. The stamp file is touched on success so MSBuild can skip
+    the target when nothing relevant moved.
+  -->
+  <Target Name="InternalizeGeneratedCode"
+          BeforeTargets="CoreCompile"
+          Inputs="$(MSBuildThisFileDirectory)Generated\**\*.cs;$(MSBuildThisFileDirectory)..\eng\Internalize-Generated.ps1"
+          Outputs="$(BaseIntermediateOutputPath)InternalizeGeneratedCode.stamp">
+    <Exec Command="pwsh -NoProfile -ExecutionPolicy Bypass -File &quot;$(MSBuildThisFileDirectory)..\eng\Internalize-Generated.ps1&quot;"
+          ConsoleToMSBuild="true"
+          IgnoreExitCode="false" />
+    <Touch Files="$(BaseIntermediateOutputPath)InternalizeGeneratedCode.stamp" AlwaysCreate="true" />
+  </Target>
+
+  <!--
+    Re-apply the post-emit patches whenever CI (or a developer) runs
+    `dotnet build /t:GenerateCode`, so the on-disk Generated/ tree matches
+    what gets committed. Without this hook, "Verify Generated Code" fails
+    because tsp-client regenerates the unpatched emitter output.
+  -->
+  <Target Name="InternalizeGeneratedCodeAfterGenerate"
+          AfterTargets="GenerateCode">
+    <Exec Command="pwsh -NoProfile -ExecutionPolicy Bypass -File &quot;$(MSBuildThisFileDirectory)..\eng\Internalize-Generated.ps1&quot;"
+          ConsoleToMSBuild="true"
+          IgnoreExitCode="false" />
+  </Target>
+
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)AzureEventSource.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)CallerShouldAuditAttribute.cs" LinkBase="Shared\Core" />
-    <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)ExperimentalAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)LightweightPkcs8Decoder.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)PemReader.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)UnsupportedOSPlatformAttribute.cs" LinkBase="Shared\Core" />

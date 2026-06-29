@@ -1236,11 +1236,10 @@
 ################
 
 # GitHub integration, CODEOWNERS, and bot rules
-/.github/                                                          @jsquire @m-redding @ArthurMa1978
-/.github/workflows/                                                @jsquire @m-redding @Azure/azure-sdk-eng
-/.github/CODEOWNERS                                                @jsquire @m-redding @Azure/azure-sdk-eng
-/.github/copilot-instructions.md                                   @jsquire @m-redding @praveenkuttappan @maririos
-/.github/skills/                                                   @azure/azsdk-cli @m-nash @jsquire
+/.github/                                                          @jsquire @m-nash @JoshLove-msft @ArthurMa1978
+/.github/workflows/                                                @jsquire @m-nash @JoshLove-msft
+/.github/CODEOWNERS                                                @jsquire @m-nash @JoshLove-msft
+/.github/copilot-instructions.md                                   @jsquire @m-nash @JoshLove-msft
 
 ###########################
 # Repository configuration
@@ -1269,5 +1268,5 @@
 /sdk/**/.gitattributes                                             @jsquire @m-redding
 
 # Add owners for NPM configuration
-/**/package.json                                                   @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @christothes @ArcturusZhang @ArthurMa1978
-/**/package-lock.json                                              @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @christothes
+/**/package.json                                                   @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @ArcturusZhang @ArthurMa1978 @mikeharder
+/**/package-lock.json                                              @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @mikeharder
