@@ -1,6 +1,6 @@
-# Azure.IoT.DeviceUpdate client library for .NET
+# Azure Device Update for IoT Hub client library for .NET
 
-Azure.IoT.DeviceUpdate is a client library for developing .NET applications with rich experience.
+Azure Device Update for IoT Hub is a service that enables you to deploy over-the-air updates (OTA) for your IoT devices. This client library lets you publish, manage, and deploy updates and inspect device state from .NET applications.
 
 ## Getting started
 
@@ -15,6 +15,21 @@ dotnet add package Azure.IoT.DeviceUpdate --prerelease
 ### Prerequisites
 
 - You must have a [Microsoft Azure subscription](https://azure.microsoft.com/free/dotnet/).
+- An existing Azure Device Update for IoT Hub account and instance.
+
+### Authenticate the client
+
+To create a `DeviceUpdateClient`, you need your Device Update account endpoint, the instance ID, and a token credential. The example below uses [`DefaultAzureCredential`](https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential) from the [Azure.Identity](https://www.nuget.org/packages/Azure.Identity) package:
+
+```csharp
+using Azure.Identity;
+using Azure.IoT.DeviceUpdate;
+
+DeviceUpdateClient client = new DeviceUpdateClient(
+    "<endpoint>",
+    "<instanceId>",
+    new DefaultAzureCredential());
+```
 
 ## Key concepts
 
