@@ -5,6 +5,7 @@
 
 using System;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,21 +14,26 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager.AppService.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
-// ROOT CAUSE: GA 1.5.0 shipped two flavours of "thread listing" methods on
-// Site*ProcessResource:
-//   * GetInstanceProcessThreads / GetProcessThreads etc. returning
-//     Pageable<ProcessThreadInfo> (legacy proxy-resource model).
-//   * GetSiteInstanceProcessThreads / GetSiteProcessThreads etc. returning
-//     Pageable<WebAppProcessThreadInfo> (the newer flat model).
-// The new TypeSpec generator emits only the second family but under the GA
-// first-family names (GetInstanceProcessThreads returning
-// WebAppProcessThreadInfo). Suppress those and redeclare the GA contract:
-// (1) the legacy name returns ProcessThreadInfo (wrapping the flat model);
-// (2) add the GetSite*ProcessThreads alias returning the flat model directly.
+// ROOT CAUSE: GA 1.5.0 shipped two related customizations on SiteInstanceProcessResource:
+//
+// (1) Thread listing (merged from ProcessThreads): GA shipped GetInstanceProcessThreads
+//     returning Pageable<ProcessThreadInfo> (legacy proxy-resource model). The new TypeSpec
+//     generator emits GetInstanceProcessThreads returning Pageable<WebAppProcessThreadInfo>
+//     (the newer flat model). Suppress the generated method and redeclare two variants:
+//     the legacy name returning ProcessThreadInfo (wrapping the flat model) for backward
+//     compatibility, and a new GetSiteInstanceProcessThreads returning WebAppProcessThreadInfo
+//     directly. Renaming in the spec would change the REST operation name used by other
+//     language SDKs (Python/JS/Java).
+//
+// (2) Process dump (merged from Streams): GA shipped GetInstanceProcessDump returning
+//     Response<Stream>. The new TypeSpec generator emits this as Response<BinaryData>.
+//     Suppress and redeclare with the GA Stream-returning contract.
 namespace Azure.ResourceManager.AppService
 {
     [CodeGenSuppress("GetInstanceProcessThreadsAsync", typeof(CancellationToken))]
     [CodeGenSuppress("GetInstanceProcessThreads", typeof(CancellationToken))]
+    [CodeGenSuppress("GetInstanceProcessDumpAsync", typeof(CancellationToken))]
+    [CodeGenSuppress("GetInstanceProcessDump", typeof(CancellationToken))]
     public partial class SiteInstanceProcessResource
     {
         /// <summary> Description for List the threads in a process by its ID for a specific scaled-out instance (returns legacy ProcessThreadInfo). </summary>
@@ -144,6 +150,44 @@ namespace Azure.ResourceManager.AppService
                 Id.Name,
                 context,
                 "SiteInstanceProcessResource.GetSiteInstanceProcessThreads");
+        }
+
+        /// <summary> Description for Get a memory dump of a process by its ID for a specific scaled-out instance. </summary>
+        public virtual async Task<Response<Stream>> GetInstanceProcessDumpAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _processInfosClientDiagnostics.CreateScope("SiteInstanceProcessResource.GetInstanceProcessDump");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _processInfosRestClient.CreateGetInstanceProcessDumpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return Response.FromValue(result.ContentStream, result);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Description for Get a memory dump of a process by its ID for a specific scaled-out instance. </summary>
+        public virtual Response<Stream> GetInstanceProcessDump(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _processInfosClientDiagnostics.CreateScope("SiteInstanceProcessResource.GetInstanceProcessDump");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _processInfosRestClient.CreateGetInstanceProcessDumpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                return Response.FromValue(result.ContentStream, result);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

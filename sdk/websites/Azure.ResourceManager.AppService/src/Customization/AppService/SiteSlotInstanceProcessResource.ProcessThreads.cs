@@ -10,6 +10,10 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.AppService.Models;
 
+// ROOT CAUSE: GA 1.5.0 shipped GetInstanceProcessThreadsSlot returning Pageable<WebAppProcessThreadInfo>
+// directly via the GetSiteSlotInstanceProcessThreads name. This file adds the new flat-model method name
+// as a companion to the legacy ProcessThreadInfo methods in SiteSlotInstanceProcessResource.cs.
+// The generated code emits only the old name; this adds the preferred new name returning the flat model.
 namespace Azure.ResourceManager.AppService
 {
     public partial class SiteSlotInstanceProcessResource

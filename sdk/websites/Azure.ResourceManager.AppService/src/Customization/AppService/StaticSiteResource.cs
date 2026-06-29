@@ -11,6 +11,12 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager.AppService.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
+// ROOT CAUSE: GA 1.5.0 exposed GetPrivateLinkResources returning Pageable<AppServicePrivateLinkResourceData>
+// on StaticSiteResource. The TypeSpec generator emits this method returning
+// Response<PrivateLinkResourcesWrapper> (a single-value response wrapping the list).
+// Suppress the generated single-response method and redeclare with the GA Pageable contract
+// by unwrapping wrapper.Value into a single page. A spec fix would change the return type
+// contract for all language SDKs.
 namespace Azure.ResourceManager.AppService
 {
     [CodeGenSuppress("GetPrivateLinkResourcesAsync", typeof(CancellationToken))]

@@ -11,6 +11,9 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Microsoft.TypeSpec.Generator.Customizations;
 
+// ROOT CAUSE: GA 1.5.0 shipped GetInstanceProcessDumpSlot returning Response<Stream> on
+// SiteSlotInstanceProcessResource. The TypeSpec generator emits this as Response<BinaryData>.
+// Suppress the generated method and redeclare with the GA Stream-returning contract.
 namespace Azure.ResourceManager.AppService
 {
     [CodeGenSuppress("GetInstanceProcessDumpSlotAsync", typeof(CancellationToken))]

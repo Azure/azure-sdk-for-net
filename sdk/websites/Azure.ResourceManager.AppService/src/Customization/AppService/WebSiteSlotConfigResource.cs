@@ -7,6 +7,11 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 
+// ROOT CAUSE: GA 1.5.0 exposed a single Update(SiteConfigData) method on
+// WebSiteSlotConfigResource. The TypeSpec emitter renamed this to UpdateConfigurationSlot.
+// This [EditorBrowsable(Never)] shim forwards the GA-named Update to the new method to
+// preserve the C# API surface. Renaming the method in the spec would change the REST
+// operation id used by other SDKs (Python/JS/Java).
 namespace Azure.ResourceManager.AppService
 {
     public partial class WebSiteSlotConfigResource

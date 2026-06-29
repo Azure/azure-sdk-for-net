@@ -10,6 +10,12 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Microsoft.TypeSpec.Generator.Customizations;
 
+// ROOT CAUSE: GA 1.5.0 exposed GetHybridConnectionsSlot returning Pageable<HybridConnectionData>
+// on WebSiteSlotResource. The TypeSpec generator emits this as returning Response<HybridConnectionData>
+// (a single item) because the response is not modeled as a paged collection in the spec.
+// The actual ARM endpoint returns { "value": [...], "nextLink": ... }. Suppress the generated
+// single-item method and redeclare with the GA Pageable contract that parses the value array.
+// A spec fix would change the REST response shape for all language SDKs.
 namespace Azure.ResourceManager.AppService
 {
     [CodeGenSuppress("GetHybridConnectionsSlotAsync", typeof(CancellationToken))]

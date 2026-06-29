@@ -11,6 +11,11 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
 
+// ROOT CAUSE: GA 1.5.0 shipped GetProcessThreadsSlot returning Pageable<ProcessThreadInfo>
+// (legacy proxy-resource model) on SiteSlotProcessResource. The TypeSpec generator emits
+// GetProcessThreadsSlot returning Pageable<WebAppProcessThreadInfo> (the newer flat model).
+// This file redeclares the legacy contract returning ProcessThreadInfo by wrapping WebAppProcessThreadInfo.
+// ProcessThreadInfo was a public GA type and cannot be removed without a breaking change.
 namespace Azure.ResourceManager.AppService
 {
     public partial class SiteSlotProcessResource : ArmResource
