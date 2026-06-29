@@ -207,15 +207,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <returns> A new <see cref="Models.FrontDoorResourceData"/> instance for mocking. </returns>
-        public static FrontDoorResourceData FrontDoorResourceData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default)
-        {
-            return new FrontDoorResourceData(id, name, resourceType, default);
-        }
-
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
         /// <param name="sampleSize"> The number of samples to consider for load balancing decisions. </param>
         /// <param name="successfulSamplesRequired"> The number of samples within the sample period that must succeed. </param>
         /// <param name="additionalLatencyMilliseconds"> The additional latency in milliseconds for probes to fall into the lowest latency bucket. </param>
@@ -335,6 +326,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 vaultId is null && secretName is null && secretVersion is null ? default : new KeyVaultCertificateSourceParameters(new KeyVaultCertificateSourceParametersVault(vaultId, default), secretName, secretVersion, default),
                 certificateType is null ? default : new FrontDoorCertificateSourceParameters(certificateType, default),
                 default);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <returns> A new <see cref="Models.FrontDoorResourceData"/> instance for mocking. </returns>
+        public static FrontDoorResourceData FrontDoorResourceData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default)
+        {
+            return new FrontDoorResourceData(id, name, resourceType, default);
         }
 
         /// <param name="enforceCertificateNameCheck"> Whether to enforce certificate name check on HTTPS requests to all backend pools. No effect on non-HTTPS requests. </param>
