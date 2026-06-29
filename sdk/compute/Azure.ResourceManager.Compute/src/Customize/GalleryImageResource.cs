@@ -6,8 +6,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Compute
 {
-    // Backward compatibility: the service requires osType on GalleryImage tag PATCH requests.
-    // The previous AutoRest configuration used update-required-copy: GalleryImage: OSType.
+    // Gallery image tag updates go through the image PATCH operation, where the service
+    // requires the existing OS type to preserve the image platform metadata.
     [CodeGenTagPatchHook(nameof(PrepareTagPatch))]
     public partial class GalleryImageResource
     {
