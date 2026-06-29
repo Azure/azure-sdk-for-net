@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- When using a `TokenCredential` and no `ConfigurationClientOptions.Audience` is set, the Microsoft Entra audience is now inferred from the endpoint for hosts that do not match a well-known cloud (for example, sovereign environments such as Bleu). The audience domain is anchored on the `appconfig`/`azconfig` segment of the host, so the leading store name is ignored. Well-known public, Azure China, and Azure US Government endpoints are unchanged, and hosts without a recognizable App Configuration marker continue to default to the Azure Public Cloud audience.
+
 ### Breaking Changes
 
 ### Bugs Fixed

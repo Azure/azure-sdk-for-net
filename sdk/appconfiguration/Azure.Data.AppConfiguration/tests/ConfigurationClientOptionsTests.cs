@@ -44,8 +44,8 @@ namespace Azure.Data.AppConfiguration.Tests
                 yield return new TestCaseData(AppConfigurationAudience.AzureChina, "https://other.AZconfig.cn/", $"{AppConfigurationAudience.AzureChina}/.default");
                 yield return new TestCaseData(AppConfigurationAudience.AzureGovernment, "https://gov-localhost-2353453.azconfig.us", $"{AppConfigurationAudience.AzureGovernment}/.default");
                 yield return new TestCaseData(AppConfigurationAudience.AzureGovernment, "https://gov-localhost-2353453.azconfig.us/", $"{AppConfigurationAudience.AzureGovernment}/.default");
-                yield return new TestCaseData(null, "https://localhost.azconfig.com", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
-                yield return new TestCaseData(null, "https://localhost.azconfig.com/", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
+                yield return new TestCaseData(null, "https://localhost.azconfig.com", "https://azconfig.com/.default");
+                yield return new TestCaseData(null, "https://localhost.azconfig.com/", "https://azconfig.com/.default");
                 yield return new TestCaseData(new AppConfigurationAudience("my.custom.audience"), "http://other.my.custom.audience", "my.custom.audience/.default");
                 yield return new TestCaseData(new AppConfigurationAudience("my.custom.audience"), "http://other.my.custom.audience/", "my.custom.audience/.default");
             }
@@ -62,6 +62,14 @@ namespace Azure.Data.AppConfiguration.Tests
                 yield return new TestCaseData("https://contoso.azconfig.io", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
                 yield return new TestCaseData("https://contoso.appconfig.azure.com", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
                 yield return new TestCaseData("https://contoso.appconfig.azure.com/", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
+                // derived audience for hosts that do not match a well-known cloud
+                yield return new TestCaseData("https://contoso.appconfig-test.azure.com", "https://appconfig-test.azure.com/.default");
+                yield return new TestCaseData("https://contoso.appconfig-test.azure.com/", "https://appconfig-test.azure.com/.default");
+                yield return new TestCaseData("https://contoso.appconfig.sovereign.cloud", "https://appconfig.sovereign.cloud/.default");
+                // derived audience is anchored on the appconfig/azconfig marker, so any leading labels (such as the store name) are ignored
+                yield return new TestCaseData("https://contoso.eastus.appconfig-test.azure.com", "https://appconfig-test.azure.com/.default");
+                yield return new TestCaseData("https://contoso.eastus.appconfig.sovereign.cloud", "https://appconfig.sovereign.cloud/.default");
+                // hosts without an appconfig/azconfig marker fall back to the public cloud audience
                 yield return new TestCaseData("http://other.my.custom.audience", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
                 // china cloud
                 yield return new TestCaseData("http://other-23232.AZconfig.azure.cn", $"{AppConfigurationAudience.AzureChina}/.default");

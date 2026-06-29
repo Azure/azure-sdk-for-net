@@ -22,6 +22,7 @@ namespace Azure.Data.AppConfiguration
         private const string AzConfigChinaCloudHostName = "azconfig.azure.cn";
         private const string AppConfigUsGovCloudHostName = "appconfig.azure.us";
         private const string AppConfigChinaCloudHostName = "appconfig.azure.cn";
+        private const string AzConfigPublicCloudHostName = "azconfig.io";
 
         /// <summary>
         /// The versions of the App Configuration service supported by this client library.
@@ -104,20 +105,43 @@ namespace Azure.Data.AppConfiguration
 
         internal string GetDefaultScope(Uri uri)
         {
-            if (string.IsNullOrEmpty(Audience?.ToString()))
+            if (!string.IsNullOrEmpty(Audience?.ToString()))
             {
-                string host = uri.GetComponents(UriComponents.Host, UriFormat.SafeUnescaped);
-                return host switch
-                {
-                    _ when host.EndsWith(AzConfigUsGovCloudHostName, StringComparison.InvariantCultureIgnoreCase) || host.EndsWith(AppConfigUsGovCloudHostName, StringComparison.InvariantCultureIgnoreCase)
-                        => $"{AppConfigurationAudience.AzureGovernment}/.default",
-                    _ when host.EndsWith(AzConfigChinaCloudHostName, StringComparison.InvariantCultureIgnoreCase) || host.EndsWith(AppConfigChinaCloudHostName, StringComparison.InvariantCultureIgnoreCase)
-                        => $"{AppConfigurationAudience.AzureChina}/.default",
-                    _ => $"{AppConfigurationAudience.AzurePublicCloud}/.default"
-                };
+                return $"{Audience}/.default";
             }
 
-            return $"{Audience}/.default";
+            string host = uri.GetComponents(UriComponents.Host, UriFormat.SafeUnescaped);
+            return host switch
+            {
+                _ when host.EndsWith(AzConfigUsGovCloudHostName, StringComparison.InvariantCultureIgnoreCase) || host.EndsWith(AppConfigUsGovCloudHostName, StringComparison.InvariantCultureIgnoreCase)
+                    => $"{AppConfigurationAudience.AzureGovernment}/.default",
+                _ when host.EndsWith(AzConfigChinaCloudHostName, StringComparison.InvariantCultureIgnoreCase) || host.EndsWith(AppConfigChinaCloudHostName, StringComparison.InvariantCultureIgnoreCase)
+                    => $"{AppConfigurationAudience.AzureChina}/.default",
+                _ when host.EndsWith(AzConfigPublicCloudHostName, StringComparison.InvariantCultureIgnoreCase)
+                    => $"{AppConfigurationAudience.AzurePublicCloud}/.default",
+                _ => $"{GetAudienceFromHost(host)}/.default"
+            };
+        }
+
+        // CUSTOM: Derives the Microsoft Entra audience from the endpoint host when no audience
+        // is explicitly configured and the host does not match a well-known cloud. The audience
+        // domain is anchored on the first DNS label that begins with "appconfig"/"azconfig", so any
+        // leading labels (such as the store name) are ignored. For example,
+        // "<store>.appconfig.azure.com" yields "https://appconfig.azure.com". Falls back to the
+        // public cloud audience when no recognizable App Configuration marker is present.
+        private static string GetAudienceFromHost(string host)
+        {
+            string[] labels = host.Split('.');
+            for (int i = 0; i < labels.Length - 1; i++)
+            {
+                if (labels[i].StartsWith("appconfig", StringComparison.InvariantCultureIgnoreCase) ||
+                    labels[i].StartsWith("azconfig", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return $"https://{string.Join(".", labels, i, labels.Length - i)}";
+                }
+            }
+
+            return AppConfigurationAudience.AzurePublicCloud.ToString();
         }
     }
 }
