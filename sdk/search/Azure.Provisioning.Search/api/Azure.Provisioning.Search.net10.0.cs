@@ -143,6 +143,7 @@ namespace Azure.Provisioning.Search
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Search.SearchServiceHostingMode> HostingMode { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Search.SearchServiceIPRule> IPRules { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsLocalAuthDisabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Search.SearchServiceUpgradeAvailable> IsUpgradeAvailable { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }

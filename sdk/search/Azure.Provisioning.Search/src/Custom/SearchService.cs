@@ -3,6 +3,7 @@
 
 using Azure.Provisioning;
 using Microsoft.TypeSpec.Generator.Customizations;
+using System.ComponentModel;
 
 #nullable disable
 
@@ -29,6 +30,27 @@ namespace Azure.Provisioning.Search
         public BicepList<SearchPrivateEndpointConnectionData> PrivateEndpointConnections
         {
             get { Initialize(); return _privateEndpointConnectionsCompat; }
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public BicepList<SearchServiceIPRule> IPRules
+        {
+            get
+            {
+                if (NetworkRuleSet is null)
+                {
+                    NetworkRuleSet = new SearchServiceNetworkRuleSet();
+                }
+                return NetworkRuleSet.IPRules;
+            }
+            set
+            {
+                if (NetworkRuleSet is null)
+                {
+                    NetworkRuleSet = new SearchServiceNetworkRuleSet();
+                }
+                NetworkRuleSet.IPRules = value;
+            }
         }
 
         [CodeGenMember("SharedPrivateLinkResources")]
