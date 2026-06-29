@@ -14,9 +14,9 @@
 // scope-dispatch GetAll so the public API matches main (no regression).
 //
 // Paired spec-side changes in csharp-customizations.tsp keep the rest of the surface aligned:
-//   - EventSubscriptions.listByDomainTopic is scoped out of C# (@@scope "!csharp") because
-//     the DomainTopicResource branch below delegates to the GENERATED
-//     DomainTopicEventSubscriptionCollection.GetAll instead of that op's plumbing.
+//   - EventSubscriptions.listByDomainTopic is internalized (@@access internal) because the
+//     DomainTopicResource branch below reuses its GENERATED plumbing on the shared
+//     EventSubscriptions REST client (not scoped out, so the plumbing still generates).
 //   - EventSubscriptionOperationGroup.listByResource is internalized (@@access internal)
 //     because the default scope branch below reuses its GENERATED
 //     EventSubscriptionsGetByResource*CollectionResultOfT plumbing; internalizing it only
