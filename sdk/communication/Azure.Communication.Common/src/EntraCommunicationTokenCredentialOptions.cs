@@ -63,12 +63,12 @@ namespace Azure.Communication
             }
 
             if (scopes.All(EntraCommunicationTokenScopes.IsTeamsExtensionScope)
-                || scopes.All(item => item.StartsWith(EntraCommunicationTokenScopes.CommunicationClientsScopePrefix)))
+                || scopes.All(item => item.StartsWith(EntraCommunicationTokenScopes.CommunicationClientsScopePrefix, StringComparison.OrdinalIgnoreCase)))
             {
                 return scopes;
             }
 
-            throw new ArgumentException($"Scopes validation failed. Ensure all scopes start with either {EntraCommunicationTokenScopes.TeamsExtensionScopePrefix}, {EntraCommunicationTokenScopes.TeamsExtensionSovereignScopePrefix}, or {EntraCommunicationTokenScopes.CommunicationClientsScopePrefix}.", nameof(_scopes));
+            throw new ArgumentException($"Scopes validation failed. Ensure all scopes start with either {EntraCommunicationTokenScopes.TeamsExtensionScopePrefix}, {EntraCommunicationTokenScopes.TeamsExtensionSovereignScopePrefix}, or {EntraCommunicationTokenScopes.CommunicationClientsScopePrefix}.", nameof(scopes));
         }
     }
 }
