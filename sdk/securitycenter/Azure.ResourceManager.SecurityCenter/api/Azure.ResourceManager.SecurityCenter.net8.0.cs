@@ -11293,11 +11293,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private readonly int _dummyPrimitive;
         public SettingName(string value) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.SettingName Current { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.SettingName MCAS { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SettingName Mcas { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SettingName Sentinel { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.SettingName WDATP { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.SettingName WDATPEXCLUDELINUXPUBLICPREVIEW { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.SettingName WDATPUNIFIEDSOLUTION { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SettingName Wdatp { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SettingName WdatpExcludeLinuxPublicPreview { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SettingName WdatpUnifiedSolution { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SettingName other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -11625,9 +11625,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public StandardSupportedCloud(string value) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.Models.StandardSupportedCloud AWS { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.StandardSupportedCloud Aws { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.StandardSupportedCloud Azure { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.StandardSupportedCloud GCP { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.StandardSupportedCloud Gcp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.StandardSupportedCloud other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -11639,8 +11639,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     }
     public enum StandardSupportedClouds
     {
-        AWS = 0,
-        GCP = 1,
+        Aws = 0,
+        Gcp = 1,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StandardType : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.StandardType>

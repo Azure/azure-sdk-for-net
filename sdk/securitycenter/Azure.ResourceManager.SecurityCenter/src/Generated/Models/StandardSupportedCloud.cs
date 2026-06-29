@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Azure. </summary>
         private const string AzureValue = "Azure";
         /// <summary> AWS. </summary>
-        private const string AWSValue = "AWS";
+        private const string AwsValue = "AWS";
         /// <summary> GCP. </summary>
-        private const string GCPValue = "GCP";
+        private const string GcpValue = "GCP";
 
         /// <summary> Initializes a new instance of <see cref="StandardSupportedCloud"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static StandardSupportedCloud Azure { get; } = new StandardSupportedCloud(AzureValue);
 
         /// <summary> AWS. </summary>
-        public static StandardSupportedCloud AWS { get; } = new StandardSupportedCloud(AWSValue);
+        public static StandardSupportedCloud Aws { get; } = new StandardSupportedCloud(AwsValue);
 
         /// <summary> GCP. </summary>
-        public static StandardSupportedCloud GCP { get; } = new StandardSupportedCloud(GCPValue);
+        public static StandardSupportedCloud Gcp { get; } = new StandardSupportedCloud(GcpValue);
 
         /// <summary> Determines if two <see cref="StandardSupportedCloud"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

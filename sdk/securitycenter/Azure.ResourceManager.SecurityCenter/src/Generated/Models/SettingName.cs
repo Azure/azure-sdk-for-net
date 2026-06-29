@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         private readonly string _value;
         /// <summary> MCAS. </summary>
-        private const string MCASValue = "MCAS";
+        private const string McasValue = "MCAS";
         /// <summary> WDATP. </summary>
-        private const string WDATPValue = "WDATP";
+        private const string WdatpValue = "WDATP";
         /// <summary> WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW. </summary>
-        private const string WDATPEXCLUDELINUXPUBLICPREVIEWValue = "WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW";
+        private const string WdatpExcludeLinuxPublicPreviewValue = "WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW";
         /// <summary> WDATP_UNIFIED_SOLUTION. </summary>
-        private const string WDATPUNIFIEDSOLUTIONValue = "WDATP_UNIFIED_SOLUTION";
+        private const string WdatpUnifiedSolutionValue = "WDATP_UNIFIED_SOLUTION";
         /// <summary> Sentinel. </summary>
         private const string SentinelValue = "Sentinel";
         /// <summary> Name of the Defender for Storage Settings name. </summary>
@@ -39,16 +39,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> MCAS. </summary>
-        public static SettingName MCAS { get; } = new SettingName(MCASValue);
+        public static SettingName Mcas { get; } = new SettingName(McasValue);
 
         /// <summary> WDATP. </summary>
-        public static SettingName WDATP { get; } = new SettingName(WDATPValue);
+        public static SettingName Wdatp { get; } = new SettingName(WdatpValue);
 
         /// <summary> WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW. </summary>
-        public static SettingName WDATPEXCLUDELINUXPUBLICPREVIEW { get; } = new SettingName(WDATPEXCLUDELINUXPUBLICPREVIEWValue);
+        public static SettingName WdatpExcludeLinuxPublicPreview { get; } = new SettingName(WdatpExcludeLinuxPublicPreviewValue);
 
         /// <summary> WDATP_UNIFIED_SOLUTION. </summary>
-        public static SettingName WDATPUNIFIEDSOLUTION { get; } = new SettingName(WDATPUNIFIEDSOLUTIONValue);
+        public static SettingName WdatpUnifiedSolution { get; } = new SettingName(WdatpUnifiedSolutionValue);
 
         /// <summary> Sentinel. </summary>
         public static SettingName Sentinel { get; } = new SettingName(SentinelValue);

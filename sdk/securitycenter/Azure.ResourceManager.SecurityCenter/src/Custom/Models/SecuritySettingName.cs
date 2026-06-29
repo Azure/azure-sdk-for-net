@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary>
         /// Gets the Mcas value preserved from the previous public API surface.
         /// </summary>
-        public static SecuritySettingName Mcas { get; } = new SecuritySettingName("Mcas");
+        public static SecuritySettingName Mcas { get; } = new SecuritySettingName("MCAS");
         /// <summary>
         /// Gets the Sentinel value preserved from the previous public API surface.
         /// </summary>
@@ -33,15 +33,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary>
         /// Gets the Wdatp value preserved from the previous public API surface.
         /// </summary>
-        public static SecuritySettingName Wdatp { get; } = new SecuritySettingName("Wdatp");
+        public static SecuritySettingName Wdatp { get; } = new SecuritySettingName("WDATP");
         /// <summary>
         /// Gets the WdatpExcludeLinuxPublicPreview value preserved from the previous public API surface.
         /// </summary>
-        public static SecuritySettingName WdatpExcludeLinuxPublicPreview { get; } = new SecuritySettingName("WdatpExcludeLinuxPublicPreview");
+        public static SecuritySettingName WdatpExcludeLinuxPublicPreview { get; } = new SecuritySettingName("WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW");
         /// <summary>
         /// Gets the WdatpUnifiedSolution value preserved from the previous public API surface.
         /// </summary>
-        public static SecuritySettingName WdatpUnifiedSolution { get; } = new SecuritySettingName("WdatpUnifiedSolution");
+        public static SecuritySettingName WdatpUnifiedSolution { get; } = new SecuritySettingName("WDATP_UNIFIED_SOLUTION");
         /// <summary>
         /// Provides a compatibility shim for the Equals operation preserved from the previous public API surface.
         /// </summary>

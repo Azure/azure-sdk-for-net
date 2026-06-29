@@ -14,8 +14,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this StandardSupportedClouds value) => value switch
         {
-            StandardSupportedClouds.AWS => "AWS",
-            StandardSupportedClouds.GCP => "GCP",
+            StandardSupportedClouds.Aws => "AWS",
+            StandardSupportedClouds.Gcp => "GCP",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StandardSupportedClouds value.")
         };
 
@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "AWS"))
             {
-                return StandardSupportedClouds.AWS;
+                return StandardSupportedClouds.Aws;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "GCP"))
             {
-                return StandardSupportedClouds.GCP;
+                return StandardSupportedClouds.Gcp;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StandardSupportedClouds value.");
         }

@@ -11,8 +11,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public enum StandardSupportedClouds
     {
         /// <summary> AWS. </summary>
-        AWS,
+        Aws,
         /// <summary> GCP. </summary>
-        GCP
+        Gcp
     }
 }
