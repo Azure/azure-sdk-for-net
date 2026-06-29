@@ -88,10 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     else
                     {
-#pragma warning disable IL2026, IL3050
-                        using JsonDocument doc = JsonDocument.Parse(System.Text.Json.JsonSerializer.Serialize(item));
-#pragma warning restore IL2026, IL3050
-                        doc.RootElement.WriteTo(writer);
+                        ((IJsonModel<ResponseError>)item).Write(writer, options);
                     }
                 }
                 writer.WriteEndArray();
@@ -216,9 +213,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 }
                                 else
                                 {
-#pragma warning disable IL2026, IL3050
-                                    errors.Add(System.Text.Json.JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
-#pragma warning restore IL2026, IL3050
+                                    errors.Add(ModelReaderWriter.Read<ResponseError>(BinaryData.FromString(item.GetRawText()), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default));
                                 }
                             }
                         }
