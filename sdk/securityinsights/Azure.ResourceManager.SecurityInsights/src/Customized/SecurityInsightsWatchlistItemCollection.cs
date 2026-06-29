@@ -10,7 +10,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    // The collection is constructed with the parent watchlist resource id, so DEBUG validation must accept the parent resource type.
+    // The collection is constructed with the parent watchlist resource id, so DEBUG validation must accept the parent resource type. Fix https://github.com/Azure/azure-sdk-for-net/issues/60372 to remove this customization.
     [CodeGenSuppress("ValidateResourceId", typeof(ResourceIdentifier))]
     public partial class SecurityInsightsWatchlistItemCollection
     {

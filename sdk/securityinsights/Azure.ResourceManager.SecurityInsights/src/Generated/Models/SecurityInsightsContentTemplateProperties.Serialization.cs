@@ -14,51 +14,51 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Template property bag. </summary>
-    public partial class TemplateProperties : IJsonModel<TemplateProperties>
+    public partial class SecurityInsightsContentTemplateProperties : IJsonModel<SecurityInsightsContentTemplateProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TemplateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SecurityInsightsContentTemplateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TemplateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsContentTemplateProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTemplateProperties(document.RootElement, options);
+                        return DeserializeSecurityInsightsContentTemplateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TemplateProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsContentTemplateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TemplateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsContentTemplateProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TemplateProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsContentTemplateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TemplateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SecurityInsightsContentTemplateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TemplateProperties IPersistableModel<TemplateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SecurityInsightsContentTemplateProperties IPersistableModel<SecurityInsightsContentTemplateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TemplateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SecurityInsightsContentTemplateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TemplateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SecurityInsightsContentTemplateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TemplateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsContentTemplateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TemplateProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsContentTemplateProperties)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(ContentId))
             {
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 writer.WritePropertyName("dependantTemplates"u8);
                 writer.WriteStartArray();
-                foreach (TemplateProperties item in DependantTemplates)
+                foreach (SecurityInsightsContentTemplateProperties item in DependantTemplates)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -290,24 +290,24 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TemplateProperties IJsonModel<TemplateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SecurityInsightsContentTemplateProperties IJsonModel<SecurityInsightsContentTemplateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TemplateProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SecurityInsightsContentTemplateProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TemplateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsContentTemplateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TemplateProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsContentTemplateProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTemplateProperties(document.RootElement, options);
+            return DeserializeSecurityInsightsContentTemplateProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TemplateProperties DeserializeTemplateProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static SecurityInsightsContentTemplateProperties DeserializeSecurityInsightsContentTemplateProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string packageName = default;
             SecurityInsightsMetadataFlag? isDeprecated = default;
             BinaryData mainTemplate = default;
-            IReadOnlyList<TemplateProperties> dependantTemplates = default;
+            IReadOnlyList<SecurityInsightsContentTemplateProperties> dependantTemplates = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -603,10 +603,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    List<TemplateProperties> array = new List<TemplateProperties>();
+                    List<SecurityInsightsContentTemplateProperties> array = new List<SecurityInsightsContentTemplateProperties>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeTemplateProperties(item, options));
+                        array.Add(DeserializeSecurityInsightsContentTemplateProperties(item, options));
                     }
                     dependantTemplates = array;
                     continue;
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TemplateProperties(
+            return new SecurityInsightsContentTemplateProperties(
                 contentId,
                 contentProductId,
                 packageVersion,
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 packageName,
                 isDeprecated,
                 mainTemplate,
-                dependantTemplates ?? new ChangeTrackingList<TemplateProperties>(),
+                dependantTemplates ?? new ChangeTrackingList<SecurityInsightsContentTemplateProperties>(),
                 additionalBinaryDataProperties);
         }
     }

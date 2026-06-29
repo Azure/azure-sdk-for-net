@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 writer.WritePropertyName("items"u8);
                 writer.WriteStartArray();
-                foreach (JobItem item in Items)
+                foreach (SecurityInsightsContentJobItem item in Items)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             DateTimeOffset? endOn = default;
-            IList<JobItem> items = default;
+            IList<SecurityInsightsContentJobItem> items = default;
             TriggeredAnalyticsRuleRunProvisioningState? provisioningState = default;
             DateTimeOffset? startOn = default;
             string errorMessage = default;
@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    List<JobItem> array = new List<JobItem>();
+                    List<SecurityInsightsContentJobItem> array = new List<SecurityInsightsContentJobItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(JobItem.DeserializeJobItem(item, options));
+                        array.Add(SecurityInsightsContentJobItem.DeserializeSecurityInsightsContentJobItem(item, options));
                     }
                     items = array;
                     continue;
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             return new JobProperties(
                 endOn,
-                items ?? new ChangeTrackingList<JobItem>(),
+                items ?? new ChangeTrackingList<SecurityInsightsContentJobItem>(),
                 provisioningState,
                 startOn,
                 errorMessage,

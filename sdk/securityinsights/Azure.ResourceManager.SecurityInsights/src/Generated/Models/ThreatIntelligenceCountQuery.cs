@@ -12,20 +12,20 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a query to run on the TI objects in the workspace. </summary>
-    public partial class CountQuery
+    public partial class ThreatIntelligenceCountQuery
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CountQuery"/>. </summary>
-        public CountQuery()
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceCountQuery"/>. </summary>
+        public ThreatIntelligenceCountQuery()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CountQuery"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceCountQuery"/>. </summary>
         /// <param name="properties"> Query properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CountQuery(QueryProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ThreatIntelligenceCountQuery(QueryProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

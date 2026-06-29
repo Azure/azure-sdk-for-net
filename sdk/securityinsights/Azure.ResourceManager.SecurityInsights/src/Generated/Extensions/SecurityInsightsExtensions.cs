@@ -3421,7 +3421,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Gets the count of all TI objects for the workspace.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.CountAsync(ResourceIdentifier, ThreatIntelligenceType, CountQuery, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.CountAsync(ResourceIdentifier, ThreatIntelligenceType, ThreatIntelligenceCountQuery, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -3430,7 +3430,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="query"> The query to run on the TI objects in the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static async Task<Response<ThreatIntelligenceCount>> CountAsync(this ArmClient client, ResourceIdentifier scope, ThreatIntelligenceType tiType, CountQuery query = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<ThreatIntelligenceCount>> CountAsync(this ArmClient client, ResourceIdentifier scope, ThreatIntelligenceType tiType, ThreatIntelligenceCountQuery query = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -3441,7 +3441,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Gets the count of all TI objects for the workspace.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.Count(ResourceIdentifier, ThreatIntelligenceType, CountQuery, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.Count(ResourceIdentifier, ThreatIntelligenceType, ThreatIntelligenceCountQuery, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -3450,7 +3450,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="query"> The query to run on the TI objects in the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static Response<ThreatIntelligenceCount> Count(this ArmClient client, ResourceIdentifier scope, ThreatIntelligenceType tiType, CountQuery query = default, CancellationToken cancellationToken = default)
+        public static Response<ThreatIntelligenceCount> Count(this ArmClient client, ResourceIdentifier scope, ThreatIntelligenceType tiType, ThreatIntelligenceCountQuery query = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 

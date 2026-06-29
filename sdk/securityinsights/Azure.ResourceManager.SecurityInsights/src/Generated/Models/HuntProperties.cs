@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="labels"> List of labels relevant to this hunt. </param>
         /// <param name="owner"> Describes a user that the hunt is assigned to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HuntProperties(string displayName, string description, Status? status, HypothesisStatus? hypothesisStatus, IList<SecurityInsightsAttackTactic> attackTactics, IList<string> attackTechniques, IList<string> labels, SecurityInsightsHuntOwner owner, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HuntProperties(string displayName, string description, SecurityInsightsContentStatus? status, HypothesisStatus? hypothesisStatus, IList<SecurityInsightsAttackTactic> attackTactics, IList<string> attackTechniques, IList<string> labels, SecurityInsightsHuntOwner owner, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Description = description;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The status of the hunt. </summary>
         [WirePath("status")]
-        public Status? Status { get; set; }
+        public SecurityInsightsContentStatus? Status { get; set; }
 
         /// <summary> The hypothesis status of the hunt. </summary>
         [WirePath("hypothesisStatus")]

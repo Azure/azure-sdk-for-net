@@ -13,23 +13,23 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Template property bag. </summary>
-    public partial class TemplateProperties
+    public partial class SecurityInsightsContentTemplateProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TemplateProperties"/>. </summary>
-        public TemplateProperties()
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsContentTemplateProperties"/>. </summary>
+        public SecurityInsightsContentTemplateProperties()
         {
             Providers = new ChangeTrackingList<string>();
             ThreatAnalysisTactics = new ChangeTrackingList<string>();
             ThreatAnalysisTechniques = new ChangeTrackingList<string>();
             PreviewImages = new ChangeTrackingList<string>();
             PreviewImagesDark = new ChangeTrackingList<string>();
-            DependantTemplates = new ChangeTrackingList<TemplateProperties>();
+            DependantTemplates = new ChangeTrackingList<SecurityInsightsContentTemplateProperties>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TemplateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsContentTemplateProperties"/>. </summary>
         /// <param name="contentId"> Static ID for the content.  Used to identify dependencies and content from solutions or community.  Hard-coded/static for out of the box content and solutions. Dynamic for user-created.  This is the resource name. </param>
         /// <param name="contentProductId"> Unique ID for the content. It should be generated based on the contentId of the package, contentId of the template, contentKind of the template and the contentVersion of the template. </param>
         /// <param name="packageVersion"> Version of the package.  Default and recommended format is numeric (e.g. 1, 1.0, 1.0.0, 1.0.0.0), following ARM metadata best practices.  Can also be any string, but then we cannot guarantee any version checks. </param>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="mainTemplate"> The JSON of the ARM template to deploy active content. Expandable. </param>
         /// <param name="dependantTemplates"> Dependant templates. Expandable. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TemplateProperties(string contentId, string contentProductId, string packageVersion, string version, string displayName, SecurityInsightsKind? contentKind, SecurityInsightsMetadataSource source, SecurityInsightsMetadataAuthor author, SecurityInsightsMetadataSupport support, SecurityInsightsMetadataDependencies dependencies, SecurityInsightsMetadataCategories categories, IList<string> providers, DateTimeOffset? firstPublishOn, DateTimeOffset? lastPublishOn, string customVersion, string contentSchemaVersion, string icon, IList<string> threatAnalysisTactics, IList<string> threatAnalysisTechniques, IList<string> previewImages, IList<string> previewImagesDark, string packageId, SecurityInsightsMetadataPackageKind? packageKind, string packageName, SecurityInsightsMetadataFlag? isDeprecated, BinaryData mainTemplate, IReadOnlyList<TemplateProperties> dependantTemplates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityInsightsContentTemplateProperties(string contentId, string contentProductId, string packageVersion, string version, string displayName, SecurityInsightsKind? contentKind, SecurityInsightsMetadataSource source, SecurityInsightsMetadataAuthor author, SecurityInsightsMetadataSupport support, SecurityInsightsMetadataDependencies dependencies, SecurityInsightsMetadataCategories categories, IList<string> providers, DateTimeOffset? firstPublishOn, DateTimeOffset? lastPublishOn, string customVersion, string contentSchemaVersion, string icon, IList<string> threatAnalysisTactics, IList<string> threatAnalysisTechniques, IList<string> previewImages, IList<string> previewImagesDark, string packageId, SecurityInsightsMetadataPackageKind? packageKind, string packageName, SecurityInsightsMetadataFlag? isDeprecated, BinaryData mainTemplate, IReadOnlyList<SecurityInsightsContentTemplateProperties> dependantTemplates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ContentId = contentId;
             ContentProductId = contentProductId;
@@ -221,6 +221,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Dependant templates. Expandable. </summary>
         [WirePath("dependantTemplates")]
-        public IReadOnlyList<TemplateProperties> DependantTemplates { get; } = new ChangeTrackingList<TemplateProperties>();
+        public IReadOnlyList<SecurityInsightsContentTemplateProperties> DependantTemplates { get; } = new ChangeTrackingList<SecurityInsightsContentTemplateProperties>();
     }
 }

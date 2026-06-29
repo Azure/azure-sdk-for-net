@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             string displayName = default;
             string description = default;
-            Status? status = default;
+            SecurityInsightsContentStatus? status = default;
             HypothesisStatus? hypothesisStatus = default;
             IList<SecurityInsightsAttackTactic> attackTactics = default;
             IList<string> attackTechniques = default;
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    status = new Status(prop.Value.GetString());
+                    status = new SecurityInsightsContentStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("hypothesisStatus"u8))

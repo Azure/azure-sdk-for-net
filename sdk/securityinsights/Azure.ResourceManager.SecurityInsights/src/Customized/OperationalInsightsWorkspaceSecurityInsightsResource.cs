@@ -777,14 +777,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Obsolete shim. Call ArmClient.CountThreatIntelligenceAsync(...) instead.
         /// </summary>
         [ForwardsClientCalls]
-        public virtual Task<Response<ThreatIntelligenceCount>> CountThreatIntelligenceAsync(ThreatIntelligenceType tiType, CountQuery query = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response<ThreatIntelligenceCount>> CountThreatIntelligenceAsync(ThreatIntelligenceType tiType, ThreatIntelligenceCountQuery query = null, CancellationToken cancellationToken = default)
             => throw new NotSupportedException(NotSupportedPrefix + "Call ArmClient.CountAsync(workspaceResourceIdentifier, tiType, query, cancellationToken) instead.");
 
         /// <summary>
         /// Obsolete shim. Call ArmClient.CountThreatIntelligence(...) instead.
         /// </summary>
         [ForwardsClientCalls]
-        public virtual Response<ThreatIntelligenceCount> CountThreatIntelligence(ThreatIntelligenceType tiType, CountQuery query = null, CancellationToken cancellationToken = default)
+        public virtual Response<ThreatIntelligenceCount> CountThreatIntelligence(ThreatIntelligenceType tiType, ThreatIntelligenceCountQuery query = null, CancellationToken cancellationToken = default)
             => throw new NotSupportedException(NotSupportedPrefix + "Call ArmClient.Count(workspaceResourceIdentifier, tiType, query, cancellationToken) instead.");
 
         /// <summary>

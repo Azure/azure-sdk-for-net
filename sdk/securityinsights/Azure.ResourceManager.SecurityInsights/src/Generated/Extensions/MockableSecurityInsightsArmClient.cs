@@ -2608,7 +2608,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <param name="query"> The query to run on the TI objects in the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual async Task<Response<ThreatIntelligenceCount>> CountAsync(ResourceIdentifier scope, ThreatIntelligenceType tiType, CountQuery query = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ThreatIntelligenceCount>> CountAsync(ResourceIdentifier scope, ThreatIntelligenceType tiType, ThreatIntelligenceCountQuery query = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -2620,7 +2620,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ThreatIntelligenceRestClient.CreateCountRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, tiType.ToString(), CountQuery.ToRequestContent(query), context);
+                HttpMessage message = ThreatIntelligenceRestClient.CreateCountRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, tiType.ToString(), ThreatIntelligenceCountQuery.ToRequestContent(query), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ThreatIntelligenceCount> response = Response.FromValue(ThreatIntelligenceCount.FromResponse(result), result);
                 if (response.Value == null)
@@ -2658,7 +2658,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <param name="query"> The query to run on the TI objects in the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual Response<ThreatIntelligenceCount> Count(ResourceIdentifier scope, ThreatIntelligenceType tiType, CountQuery query = default, CancellationToken cancellationToken = default)
+        public virtual Response<ThreatIntelligenceCount> Count(ResourceIdentifier scope, ThreatIntelligenceType tiType, ThreatIntelligenceCountQuery query = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -2670,7 +2670,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ThreatIntelligenceRestClient.CreateCountRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, tiType.ToString(), CountQuery.ToRequestContent(query), context);
+                HttpMessage message = ThreatIntelligenceRestClient.CreateCountRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, tiType.ToString(), ThreatIntelligenceCountQuery.ToRequestContent(query), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ThreatIntelligenceCount> response = Response.FromValue(ThreatIntelligenceCount.FromResponse(result), result);
                 if (response.Value == null)

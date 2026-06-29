@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="properties"> template properties. </param>
         /// <param name="eTag"> Etag of the azure resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityInsightsTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TemplateProperties properties, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal SecurityInsightsTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsContentTemplateProperties properties, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary> template properties. </summary>
         [WirePath("properties")]
-        internal TemplateProperties Properties { get; set; }
+        internal SecurityInsightsContentTemplateProperties Properties { get; set; }
 
         /// <summary> Etag of the azure resource. </summary>
         [WirePath("etag")]
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 if (Properties is null)
                 {
-                    Properties = new TemplateProperties();
+                    Properties = new SecurityInsightsContentTemplateProperties();
                 }
                 Properties.ContentId = value;
             }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 if (Properties is null)
                 {
-                    Properties = new TemplateProperties();
+                    Properties = new SecurityInsightsContentTemplateProperties();
                 }
                 Properties.ContentProductId = value;
             }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 if (Properties is null)
                 {
-                    Properties = new TemplateProperties();
+                    Properties = new SecurityInsightsContentTemplateProperties();
                 }
                 Properties.PackageVersion = value;
             }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 if (Properties is null)
                 {
-                    Properties = new TemplateProperties();
+                    Properties = new SecurityInsightsContentTemplateProperties();
                 }
                 Properties.Version = value;
             }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 if (Properties is null)
                 {
-                    Properties = new TemplateProperties();
+                    Properties = new SecurityInsightsContentTemplateProperties();
                 }
                 Properties.DisplayName = value;
             }
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 if (Properties is null)
                 {
-                    Properties = new TemplateProperties();
+                    Properties = new SecurityInsightsContentTemplateProperties();
                 }
                 Properties.ContentKind = value;
             }
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 if (Properties is null)
                 {
-                    Properties = new TemplateProperties();
+                    Properties = new SecurityInsightsContentTemplateProperties();
                 }
                 Properties.Source = value;
             }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 if (Properties is null)
                 {
-                    Properties = new TemplateProperties();
+                    Properties = new SecurityInsightsContentTemplateProperties();
                 }
                 Properties.Author = value;
             }
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 if (Properties is null)
                 {
-                    Properties = new TemplateProperties();
+                    Properties = new SecurityInsightsContentTemplateProperties();
                 }
                 Properties.Support = value;
             }
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 if (Properties is null)
                 {
-                    Properties = new TemplateProperties();
+                    Properties = new SecurityInsightsContentTemplateProperties();
                 }
                 Properties.Dependencies = value;
             }
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 if (Properties is null)
                 {
-                    Properties = new TemplateProperties();
+                    Properties = new SecurityInsightsContentTemplateProperties();
                 }
                 Properties.Categories = value;
             }
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 if (Properties is null)
                 {
-                    Properties = new TemplateProperties();
+                    Properties = new SecurityInsightsContentTemplateProperties();
                 }
                 return Properties.Providers;
             }
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 if (Properties is null)
                 {
-                    Properties = new TemplateProperties();
+                    Properties = new SecurityInsightsContentTemplateProperties();
                 }
                 Properties.FirstPublishOn = value;
             }
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 if (Properties is null)
                 {
-                    Properties = new TemplateProperties();
+                    Properties = new SecurityInsightsContentTemplateProperties();
                 }
                 Properties.LastPublishOn = value;
             }
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 if (Properties is null)
                 {
-                    Properties = new TemplateProperties();
+                    Properties = new SecurityInsightsContentTemplateProperties();
                 }
                 Properties.CustomVersion = value;
             }
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 if (Properties is null)
                 {
-                    Properties = new TemplateProperties();
+                    Properties = new SecurityInsightsContentTemplateProperties();
                 }
                 Properties.ContentSchemaVersion = value;
             }
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 if (Properties is null)
                 {
-                    Properties = new TemplateProperties();
+                    Properties = new SecurityInsightsContentTemplateProperties();
                 }
                 Properties.Icon = value;
             }
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 if (Properties is null)
                 {
-                    Properties = new TemplateProperties();
+                    Properties = new SecurityInsightsContentTemplateProperties();
                 }
                 return Properties.ThreatAnalysisTactics;
             }
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 if (Properties is null)
                 {
-                    Properties = new TemplateProperties();
+                    Properties = new SecurityInsightsContentTemplateProperties();
                 }
                 return Properties.ThreatAnalysisTechniques;
             }
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 if (Properties is null)
                 {
-                    Properties = new TemplateProperties();
+                    Properties = new SecurityInsightsContentTemplateProperties();
                 }
                 return Properties.PreviewImages;
             }
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 if (Properties is null)
                 {
-                    Properties = new TemplateProperties();
+                    Properties = new SecurityInsightsContentTemplateProperties();
                 }
                 return Properties.PreviewImagesDark;
             }
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 if (Properties is null)
                 {
-                    Properties = new TemplateProperties();
+                    Properties = new SecurityInsightsContentTemplateProperties();
                 }
                 Properties.PackageId = value;
             }
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 if (Properties is null)
                 {
-                    Properties = new TemplateProperties();
+                    Properties = new SecurityInsightsContentTemplateProperties();
                 }
                 Properties.PackageKind = value;
             }
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 if (Properties is null)
                 {
-                    Properties = new TemplateProperties();
+                    Properties = new SecurityInsightsContentTemplateProperties();
                 }
                 Properties.PackageName = value;
             }
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 if (Properties is null)
                 {
-                    Properties = new TemplateProperties();
+                    Properties = new SecurityInsightsContentTemplateProperties();
                 }
                 Properties.MainTemplate = value;
             }
@@ -490,13 +490,13 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary> Dependant templates. Expandable. </summary>
         [WirePath("properties.dependantTemplates")]
-        public IReadOnlyList<TemplateProperties> DependantTemplates
+        public IReadOnlyList<SecurityInsightsContentTemplateProperties> DependantTemplates
         {
             get
             {
                 if (Properties is null)
                 {
-                    Properties = new TemplateProperties();
+                    Properties = new SecurityInsightsContentTemplateProperties();
                 }
                 return Properties.DependantTemplates;
             }

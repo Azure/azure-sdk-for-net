@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.SecurityInsights
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            TemplateProperties properties = default;
+            SecurityInsightsContentTemplateProperties properties = default;
             ETag? eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     {
                         continue;
                     }
-                    properties = TemplateProperties.DeserializeTemplateProperties(prop.Value, options);
+                    properties = SecurityInsightsContentTemplateProperties.DeserializeSecurityInsightsContentTemplateProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("etag"u8))

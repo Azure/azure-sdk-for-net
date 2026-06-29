@@ -15,61 +15,61 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a query to run on the TI objects in the workspace. </summary>
-    public partial class CountQuery : IJsonModel<CountQuery>
+    public partial class ThreatIntelligenceCountQuery : IJsonModel<ThreatIntelligenceCountQuery>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CountQuery PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ThreatIntelligenceCountQuery PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CountQuery>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceCountQuery>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCountQuery(document.RootElement, options);
+                        return DeserializeThreatIntelligenceCountQuery(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CountQuery)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreatIntelligenceCountQuery)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CountQuery>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceCountQuery>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CountQuery)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreatIntelligenceCountQuery)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CountQuery>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ThreatIntelligenceCountQuery>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CountQuery IPersistableModel<CountQuery>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ThreatIntelligenceCountQuery IPersistableModel<ThreatIntelligenceCountQuery>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CountQuery>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ThreatIntelligenceCountQuery>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="countQuery"> The <see cref="CountQuery"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(CountQuery countQuery)
+        /// <param name="threatIntelligenceCountQuery"> The <see cref="ThreatIntelligenceCountQuery"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ThreatIntelligenceCountQuery threatIntelligenceCountQuery)
         {
-            if (countQuery == null)
+            if (threatIntelligenceCountQuery == null)
             {
                 return null;
             }
-            return RequestContent.Create(countQuery, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(threatIntelligenceCountQuery, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CountQuery>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ThreatIntelligenceCountQuery>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CountQuery>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceCountQuery>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CountQuery)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreatIntelligenceCountQuery)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Properties))
             {
@@ -109,24 +109,24 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CountQuery IJsonModel<CountQuery>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ThreatIntelligenceCountQuery IJsonModel<ThreatIntelligenceCountQuery>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CountQuery JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ThreatIntelligenceCountQuery JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CountQuery>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceCountQuery>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CountQuery)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreatIntelligenceCountQuery)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCountQuery(document.RootElement, options);
+            return DeserializeThreatIntelligenceCountQuery(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CountQuery DeserializeCountQuery(JsonElement element, ModelReaderWriterOptions options)
+        internal static ThreatIntelligenceCountQuery DeserializeThreatIntelligenceCountQuery(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CountQuery(properties, additionalBinaryDataProperties);
+            return new ThreatIntelligenceCountQuery(properties, additionalBinaryDataProperties);
         }
     }
 }

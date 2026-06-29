@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary> The status of the hunt. </summary>
         [WirePath("properties.status")]
-        public Status? Status
+        public SecurityInsightsContentStatus? Status
         {
             get
             {

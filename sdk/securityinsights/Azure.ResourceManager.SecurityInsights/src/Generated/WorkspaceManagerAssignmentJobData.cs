@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary> List of items published by the job. </summary>
         [WirePath("properties.items")]
-        public IList<JobItem> Items
+        public IList<SecurityInsightsContentJobItem> Items
         {
             get
             {

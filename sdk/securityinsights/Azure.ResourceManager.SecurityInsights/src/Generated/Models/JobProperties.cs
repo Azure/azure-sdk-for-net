@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="JobProperties"/>. </summary>
         public JobProperties()
         {
-            Items = new ChangeTrackingList<JobItem>();
+            Items = new ChangeTrackingList<SecurityInsightsContentJobItem>();
         }
 
         /// <summary> Initializes a new instance of <see cref="JobProperties"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="startOn"> The time the job started. </param>
         /// <param name="errorMessage"> Message to describe error, if an error exists. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JobProperties(DateTimeOffset? endOn, IList<JobItem> items, TriggeredAnalyticsRuleRunProvisioningState? provisioningState, DateTimeOffset? startOn, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JobProperties(DateTimeOffset? endOn, IList<SecurityInsightsContentJobItem> items, TriggeredAnalyticsRuleRunProvisioningState? provisioningState, DateTimeOffset? startOn, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EndOn = endOn;
             Items = items;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> List of items published by the job. </summary>
         [WirePath("items")]
-        public IList<JobItem> Items { get; } = new ChangeTrackingList<JobItem>();
+        public IList<SecurityInsightsContentJobItem> Items { get; } = new ChangeTrackingList<SecurityInsightsContentJobItem>();
 
         /// <summary> State of the job. </summary>
         [WirePath("provisioningState")]

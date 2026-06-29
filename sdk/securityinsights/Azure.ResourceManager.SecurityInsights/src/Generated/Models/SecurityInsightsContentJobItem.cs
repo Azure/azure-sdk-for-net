@@ -12,24 +12,24 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> An entity describing the publish status of a content item. </summary>
-    public partial class JobItem
+    public partial class SecurityInsightsContentJobItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="JobItem"/>. </summary>
-        public JobItem()
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsContentJobItem"/>. </summary>
+        public SecurityInsightsContentJobItem()
         {
             Errors = new ChangeTrackingList<PublicationFailedError>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsContentJobItem"/>. </summary>
         /// <param name="resourceId"> The resource id of the content item. </param>
         /// <param name="status"> Status of the item publication. </param>
         /// <param name="executionOn"> The time the item publishing was completed. </param>
         /// <param name="errors"> The list of error descriptions if the item publication fails. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JobItem(string resourceId, Status? status, DateTimeOffset? executionOn, IList<PublicationFailedError> errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityInsightsContentJobItem(string resourceId, SecurityInsightsContentStatus? status, DateTimeOffset? executionOn, IList<PublicationFailedError> errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             Status = status;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Status of the item publication. </summary>
         [WirePath("status")]
-        public Status? Status { get; }
+        public SecurityInsightsContentStatus? Status { get; }
 
         /// <summary> The time the item publishing was completed. </summary>
         [WirePath("executionTime")]

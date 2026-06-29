@@ -12,7 +12,7 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> The status of the hunt. </summary>
-    public readonly partial struct Status : IEquatable<Status>
+    public readonly partial struct SecurityInsightsContentStatus : IEquatable<SecurityInsightsContentStatus>
     {
         private readonly string _value;
         /// <summary> New. </summary>
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> InProgress. </summary>
         private const string InProgressValue = "InProgress";
 
-        /// <summary> Initializes a new instance of <see cref="Status"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsContentStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Status(string value)
+        public SecurityInsightsContentStatus(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -43,53 +43,53 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> New. </summary>
-        public static Status New { get; } = new Status(NewValue);
+        public static SecurityInsightsContentStatus New { get; } = new SecurityInsightsContentStatus(NewValue);
 
         /// <summary> Active. </summary>
-        public static Status Active { get; } = new Status(ActiveValue);
+        public static SecurityInsightsContentStatus Active { get; } = new SecurityInsightsContentStatus(ActiveValue);
 
         /// <summary> Closed. </summary>
-        public static Status Closed { get; } = new Status(ClosedValue);
+        public static SecurityInsightsContentStatus Closed { get; } = new SecurityInsightsContentStatus(ClosedValue);
 
         /// <summary> Backlog. </summary>
-        public static Status Backlog { get; } = new Status(BacklogValue);
+        public static SecurityInsightsContentStatus Backlog { get; } = new SecurityInsightsContentStatus(BacklogValue);
 
         /// <summary> Approved. </summary>
-        public static Status Approved { get; } = new Status(ApprovedValue);
+        public static SecurityInsightsContentStatus Approved { get; } = new SecurityInsightsContentStatus(ApprovedValue);
 
         /// <summary> Succeeded. </summary>
-        public static Status Succeeded { get; } = new Status(SucceededValue);
+        public static SecurityInsightsContentStatus Succeeded { get; } = new SecurityInsightsContentStatus(SucceededValue);
 
         /// <summary> Failed. </summary>
-        public static Status Failed { get; } = new Status(FailedValue);
+        public static SecurityInsightsContentStatus Failed { get; } = new SecurityInsightsContentStatus(FailedValue);
 
         /// <summary> InProgress. </summary>
-        public static Status InProgress { get; } = new Status(InProgressValue);
+        public static SecurityInsightsContentStatus InProgress { get; } = new SecurityInsightsContentStatus(InProgressValue);
 
-        /// <summary> Determines if two <see cref="Status"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="SecurityInsightsContentStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(Status left, Status right) => left.Equals(right);
+        public static bool operator ==(SecurityInsightsContentStatus left, SecurityInsightsContentStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="Status"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="SecurityInsightsContentStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(Status left, Status right) => !left.Equals(right);
+        public static bool operator !=(SecurityInsightsContentStatus left, SecurityInsightsContentStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="Status"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SecurityInsightsContentStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Status(string value) => new Status(value);
+        public static implicit operator SecurityInsightsContentStatus(string value) => new SecurityInsightsContentStatus(value);
 
-        /// <summary> Converts a string to a <see cref="Status"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SecurityInsightsContentStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Status?(string value) => value == null ? null : new Status(value);
+        public static implicit operator SecurityInsightsContentStatus?(string value) => value == null ? null : new SecurityInsightsContentStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is Status other && Equals(other);
+        public override bool Equals(object obj) => obj is SecurityInsightsContentStatus other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(Status other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SecurityInsightsContentStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

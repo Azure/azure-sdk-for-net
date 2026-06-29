@@ -63,6 +63,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
         }
 
         [TestCase]
+        [Ignore("Re-record test after Watchlists_Delete LRO behavior change: https://github.com/Azure/azure-sdk-for-net/issues/60373")]
         public async Task WatchlistResourceApiTests()
         {
             //0.prepare

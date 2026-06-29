@@ -4962,7 +4962,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="owner"> Describes a user that the hunt is assigned to. </param>
         /// <param name="eTag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsHuntData"/> instance for mocking. </returns>
-        public static SecurityInsightsHuntData SecurityInsightsHuntData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string description = default, Status? status = default, HypothesisStatus? hypothesisStatus = default, IEnumerable<SecurityInsightsAttackTactic> attackTactics = default, IEnumerable<string> attackTechniques = default, IEnumerable<string> labels = default, SecurityInsightsHuntOwner owner = default, ETag? eTag = default)
+        public static SecurityInsightsHuntData SecurityInsightsHuntData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string description = default, SecurityInsightsContentStatus? status = default, HypothesisStatus? hypothesisStatus = default, IEnumerable<SecurityInsightsAttackTactic> attackTactics = default, IEnumerable<string> attackTechniques = default, IEnumerable<string> labels = default, SecurityInsightsHuntOwner owner = default, ETag? eTag = default)
         {
             return new SecurityInsightsHuntData(
                 id,
@@ -5645,14 +5645,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="dependantTemplates"> Dependant templates. Expandable. </param>
         /// <param name="eTag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsTemplateData"/> instance for mocking. </returns>
-        public static SecurityInsightsTemplateData SecurityInsightsTemplateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string contentId = default, string contentProductId = default, string packageVersion = default, string version = default, string displayName = default, SecurityInsightsKind? contentKind = default, SecurityInsightsMetadataSource source = default, SecurityInsightsMetadataAuthor author = default, SecurityInsightsMetadataSupport support = default, SecurityInsightsMetadataDependencies dependencies = default, SecurityInsightsMetadataCategories categories = default, IEnumerable<string> providers = default, DateTimeOffset? firstPublishOn = default, DateTimeOffset? lastPublishOn = default, string customVersion = default, string contentSchemaVersion = default, string icon = default, IEnumerable<string> threatAnalysisTactics = default, IEnumerable<string> threatAnalysisTechniques = default, IEnumerable<string> previewImages = default, IEnumerable<string> previewImagesDark = default, string packageId = default, SecurityInsightsMetadataPackageKind? packageKind = default, string packageName = default, SecurityInsightsMetadataFlag? isDeprecated = default, BinaryData mainTemplate = default, IEnumerable<TemplateProperties> dependantTemplates = default, ETag? eTag = default)
+        public static SecurityInsightsTemplateData SecurityInsightsTemplateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string contentId = default, string contentProductId = default, string packageVersion = default, string version = default, string displayName = default, SecurityInsightsKind? contentKind = default, SecurityInsightsMetadataSource source = default, SecurityInsightsMetadataAuthor author = default, SecurityInsightsMetadataSupport support = default, SecurityInsightsMetadataDependencies dependencies = default, SecurityInsightsMetadataCategories categories = default, IEnumerable<string> providers = default, DateTimeOffset? firstPublishOn = default, DateTimeOffset? lastPublishOn = default, string customVersion = default, string contentSchemaVersion = default, string icon = default, IEnumerable<string> threatAnalysisTactics = default, IEnumerable<string> threatAnalysisTechniques = default, IEnumerable<string> previewImages = default, IEnumerable<string> previewImagesDark = default, string packageId = default, SecurityInsightsMetadataPackageKind? packageKind = default, string packageName = default, SecurityInsightsMetadataFlag? isDeprecated = default, BinaryData mainTemplate = default, IEnumerable<SecurityInsightsContentTemplateProperties> dependantTemplates = default, ETag? eTag = default)
         {
             return new SecurityInsightsTemplateData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                contentId is null && contentProductId is null && packageVersion is null && version is null && displayName is null && contentKind is null && source is null && author is null && support is null && dependencies is null && categories is null && providers is null && firstPublishOn is null && lastPublishOn is null && customVersion is null && contentSchemaVersion is null && icon is null && threatAnalysisTactics is null && threatAnalysisTechniques is null && previewImages is null && previewImagesDark is null && packageId is null && packageKind is null && packageName is null && isDeprecated is null && mainTemplate is null && dependantTemplates is null ? default : new TemplateProperties(
+                contentId is null && contentProductId is null && packageVersion is null && version is null && displayName is null && contentKind is null && source is null && author is null && support is null && dependencies is null && categories is null && providers is null && firstPublishOn is null && lastPublishOn is null && customVersion is null && contentSchemaVersion is null && icon is null && threatAnalysisTactics is null && threatAnalysisTechniques is null && previewImages is null && previewImagesDark is null && packageId is null && packageKind is null && packageName is null && isDeprecated is null && mainTemplate is null && dependantTemplates is null ? default : new SecurityInsightsContentTemplateProperties(
                     contentId,
                     contentProductId,
                     packageVersion,
@@ -5679,7 +5679,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     packageName,
                     isDeprecated,
                     mainTemplate,
-                    (dependantTemplates ?? new ChangeTrackingList<TemplateProperties>()).ToList(),
+                    (dependantTemplates ?? new ChangeTrackingList<SecurityInsightsContentTemplateProperties>()).ToList(),
                     default),
                 eTag,
                 default);
@@ -5712,17 +5712,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="isDeprecated"> Flag indicates if this template is deprecated. </param>
         /// <param name="mainTemplate"> The JSON of the ARM template to deploy active content. Expandable. </param>
         /// <param name="dependantTemplates"> Dependant templates. Expandable. </param>
-        /// <returns> A new <see cref="Models.TemplateProperties"/> instance for mocking. </returns>
-        public static TemplateProperties TemplateProperties(string contentId = default, string contentProductId = default, string packageVersion = default, string version = default, string displayName = default, SecurityInsightsKind? contentKind = default, SecurityInsightsMetadataSource source = default, SecurityInsightsMetadataAuthor author = default, SecurityInsightsMetadataSupport support = default, SecurityInsightsMetadataDependencies dependencies = default, SecurityInsightsMetadataCategories categories = default, IEnumerable<string> providers = default, DateTimeOffset? firstPublishOn = default, DateTimeOffset? lastPublishOn = default, string customVersion = default, string contentSchemaVersion = default, string icon = default, IEnumerable<string> threatAnalysisTactics = default, IEnumerable<string> threatAnalysisTechniques = default, IEnumerable<string> previewImages = default, IEnumerable<string> previewImagesDark = default, string packageId = default, SecurityInsightsMetadataPackageKind? packageKind = default, string packageName = default, SecurityInsightsMetadataFlag? isDeprecated = default, BinaryData mainTemplate = default, IEnumerable<TemplateProperties> dependantTemplates = default)
+        /// <returns> A new <see cref="Models.SecurityInsightsContentTemplateProperties"/> instance for mocking. </returns>
+        public static SecurityInsightsContentTemplateProperties SecurityInsightsContentTemplateProperties(string contentId = default, string contentProductId = default, string packageVersion = default, string version = default, string displayName = default, SecurityInsightsKind? contentKind = default, SecurityInsightsMetadataSource source = default, SecurityInsightsMetadataAuthor author = default, SecurityInsightsMetadataSupport support = default, SecurityInsightsMetadataDependencies dependencies = default, SecurityInsightsMetadataCategories categories = default, IEnumerable<string> providers = default, DateTimeOffset? firstPublishOn = default, DateTimeOffset? lastPublishOn = default, string customVersion = default, string contentSchemaVersion = default, string icon = default, IEnumerable<string> threatAnalysisTactics = default, IEnumerable<string> threatAnalysisTechniques = default, IEnumerable<string> previewImages = default, IEnumerable<string> previewImagesDark = default, string packageId = default, SecurityInsightsMetadataPackageKind? packageKind = default, string packageName = default, SecurityInsightsMetadataFlag? isDeprecated = default, BinaryData mainTemplate = default, IEnumerable<SecurityInsightsContentTemplateProperties> dependantTemplates = default)
         {
             providers ??= new ChangeTrackingList<string>();
             threatAnalysisTactics ??= new ChangeTrackingList<string>();
             threatAnalysisTechniques ??= new ChangeTrackingList<string>();
             previewImages ??= new ChangeTrackingList<string>();
             previewImagesDark ??= new ChangeTrackingList<string>();
-            dependantTemplates ??= new ChangeTrackingList<TemplateProperties>();
+            dependantTemplates ??= new ChangeTrackingList<SecurityInsightsContentTemplateProperties>();
 
-            return new TemplateProperties(
+            return new SecurityInsightsContentTemplateProperties(
                 contentId,
                 contentProductId,
                 packageVersion,
@@ -5749,7 +5749,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 packageName,
                 isDeprecated,
                 mainTemplate,
-                (dependantTemplates ?? new ChangeTrackingList<TemplateProperties>()).ToList(),
+                (dependantTemplates ?? new ChangeTrackingList<SecurityInsightsContentTemplateProperties>()).ToList(),
                 default);
         }
 
@@ -6276,10 +6276,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <param name="condition"> Represents a condition used to query for TI objects. </param>
-        /// <returns> A new <see cref="Models.CountQuery"/> instance for mocking. </returns>
-        public static CountQuery CountQuery(ThreatIntelligenceQueryConditionProperties condition = default)
+        /// <returns> A new <see cref="Models.ThreatIntelligenceCountQuery"/> instance for mocking. </returns>
+        public static ThreatIntelligenceCountQuery ThreatIntelligenceCountQuery(ThreatIntelligenceQueryConditionProperties condition = default)
         {
-            return new CountQuery(condition is null ? default : new QueryProperties(condition, default), default);
+            return new ThreatIntelligenceCountQuery(condition is null ? default : new QueryProperties(condition, default), default);
         }
 
         /// <param name="stixObjectType"> The STIX type for the objects returned by this query. </param>
@@ -6805,7 +6805,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="errorMessage"> Message to describe error, if an error exists. </param>
         /// <param name="eTag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.WorkspaceManagerAssignmentJobData"/> instance for mocking. </returns>
-        public static WorkspaceManagerAssignmentJobData WorkspaceManagerAssignmentJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? endOn = default, IEnumerable<JobItem> items = default, TriggeredAnalyticsRuleRunProvisioningState? provisioningState = default, DateTimeOffset? startOn = default, string errorMessage = default, ETag? eTag = default)
+        public static WorkspaceManagerAssignmentJobData WorkspaceManagerAssignmentJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? endOn = default, IEnumerable<SecurityInsightsContentJobItem> items = default, TriggeredAnalyticsRuleRunProvisioningState? provisioningState = default, DateTimeOffset? startOn = default, string errorMessage = default, ETag? eTag = default)
         {
             return new WorkspaceManagerAssignmentJobData(
                 id,
@@ -6814,7 +6814,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 systemData,
                 endOn is null && items is null && provisioningState is null && startOn is null && errorMessage is null ? default : new JobProperties(
                     endOn,
-                    (items ?? new ChangeTrackingList<JobItem>()).ToList(),
+                    (items ?? new ChangeTrackingList<SecurityInsightsContentJobItem>()).ToList(),
                     provisioningState,
                     startOn,
                     errorMessage,
@@ -6827,12 +6827,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="status"> Status of the item publication. </param>
         /// <param name="executionOn"> The time the item publishing was completed. </param>
         /// <param name="errors"> The list of error descriptions if the item publication fails. </param>
-        /// <returns> A new <see cref="Models.JobItem"/> instance for mocking. </returns>
-        public static JobItem JobItem(string resourceId = default, Status? status = default, DateTimeOffset? executionOn = default, IEnumerable<PublicationFailedError> errors = default)
+        /// <returns> A new <see cref="Models.SecurityInsightsContentJobItem"/> instance for mocking. </returns>
+        public static SecurityInsightsContentJobItem SecurityInsightsContentJobItem(string resourceId = default, SecurityInsightsContentStatus? status = default, DateTimeOffset? executionOn = default, IEnumerable<PublicationFailedError> errors = default)
         {
             errors ??= new ChangeTrackingList<PublicationFailedError>();
 
-            return new JobItem(resourceId, status, executionOn, (errors ?? new ChangeTrackingList<PublicationFailedError>()).ToList(), default);
+            return new SecurityInsightsContentJobItem(resourceId, status, executionOn, (errors ?? new ChangeTrackingList<PublicationFailedError>()).ToList(), default);
         }
 
         /// <param name="memberResourceName"> The member resource name for which the publication error occured. </param>
