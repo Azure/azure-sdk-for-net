@@ -3,9 +3,12 @@
 
 #nullable disable
 
+using Microsoft.TypeSpec.Generator.Customizations;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Compatibility declaration for the EffectiveRoute type. </summary>
+    [CodeGenSuppress("NextHopIPAddress")]
     public partial class EffectiveRoute
     {
         /// <summary> Compatibility member. </summary>

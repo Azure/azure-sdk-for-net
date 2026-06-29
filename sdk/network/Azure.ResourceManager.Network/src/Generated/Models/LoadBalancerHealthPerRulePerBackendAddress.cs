@@ -30,16 +30,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal LoadBalancerHealthPerRulePerBackendAddress(string ipAddress, NetworkInterfaceIPConfigurationData networkInterfaceIPConfigurationId, string state, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IpAddress = ipAddress;
+            IPAddress = ipAddress;
             NetworkInterfaceIPConfigurationId = networkInterfaceIPConfigurationId;
             State = state;
             Reason = reason;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The IP address belonging to the backend address. </summary>
-        [WirePath("ipAddress")]
-        public string IpAddress { get; }
 
         /// <summary> Resource ID of the Network Interface IP Configuration. </summary>
         [WirePath("networkInterfaceIPConfigurationId")]

@@ -3,9 +3,12 @@
 
 #nullable disable
 
+using Microsoft.TypeSpec.Generator.Customizations;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Compatibility declaration for the LoadBalancerHealthPerRulePerBackendAddress type. </summary>
+    [CodeGenSuppress("IPAddress")]
     public partial class LoadBalancerHealthPerRulePerBackendAddress
     {
         /// <summary> Compatibility member. </summary>

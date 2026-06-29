@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="VirtualApplianceAdditionalNicProperties"/>. </summary>
         /// <param name="name"> Name of additional nic. </param>
-        /// <param name="hasPublicIp"> Flag (true or false) for Intent for Public Ip on additional nic. </param>
+        /// <param name="hasPublicIP"> Flag (true or false) for Intent for Public Ip on additional nic. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualApplianceAdditionalNicProperties(string name, bool? hasPublicIp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualApplianceAdditionalNicProperties(string name, bool? hasPublicIP, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            HasPublicIp = hasPublicIp;
+            HasPublicIP = hasPublicIP;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Flag (true or false) for Intent for Public Ip on additional nic. </summary>
         [WirePath("hasPublicIp")]
-        public bool? HasPublicIp { get; set; }
+        public bool? HasPublicIP { get; set; }
     }
 }

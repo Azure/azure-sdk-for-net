@@ -1346,11 +1346,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters that define the VM to check security groups for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<SecurityGroupViewResult>> GetVMSecurityRulesAsync(WaitUntil waitUntil, SecurityGroupViewContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SecurityGroupViewResult>> GetVmSecurityRulesAsync(WaitUntil waitUntil, SecurityGroupViewContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _networkWatchersClientDiagnostics.CreateScope("NetworkWatcherResource.GetVMSecurityRules");
+            using DiagnosticScope scope = _networkWatchersClientDiagnostics.CreateScope("NetworkWatcherResource.GetVmSecurityRules");
             scope.Start();
             try
             {
@@ -1358,7 +1358,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateGetVMSecurityRulesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SecurityGroupViewContent.ToRequestContent(content), context);
+                HttpMessage message = _networkWatchersRestClient.CreateGetVmSecurityRulesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SecurityGroupViewContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<SecurityGroupViewResult> operation = new NetworkArmOperation<SecurityGroupViewResult>(
                     new SecurityGroupViewResultOperationSource(),
@@ -1405,11 +1405,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters that define the VM to check security groups for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<SecurityGroupViewResult> GetVMSecurityRules(WaitUntil waitUntil, SecurityGroupViewContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SecurityGroupViewResult> GetVmSecurityRules(WaitUntil waitUntil, SecurityGroupViewContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _networkWatchersClientDiagnostics.CreateScope("NetworkWatcherResource.GetVMSecurityRules");
+            using DiagnosticScope scope = _networkWatchersClientDiagnostics.CreateScope("NetworkWatcherResource.GetVmSecurityRules");
             scope.Start();
             try
             {
@@ -1417,7 +1417,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateGetVMSecurityRulesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SecurityGroupViewContent.ToRequestContent(content), context);
+                HttpMessage message = _networkWatchersRestClient.CreateGetVmSecurityRulesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SecurityGroupViewContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<SecurityGroupViewResult> operation = new NetworkArmOperation<SecurityGroupViewResult>(
                     new SecurityGroupViewResultOperationSource(),

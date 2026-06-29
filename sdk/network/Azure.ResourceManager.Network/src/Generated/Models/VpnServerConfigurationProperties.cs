@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             VpnClientRevokedCertificates = new ChangeTrackingList<VpnServerConfigVpnClientRevokedCertificate>();
             RadiusServerRootCertificates = new ChangeTrackingList<VpnServerConfigRadiusServerRootCertificate>();
             RadiusClientRootCertificates = new ChangeTrackingList<VpnServerConfigRadiusClientRootCertificate>();
-            VpnClientIpsecPolicies = new ChangeTrackingList<IPsecPolicy>();
+            VpnClientIPsecPolicies = new ChangeTrackingList<IPsecPolicy>();
             RadiusServers = new ChangeTrackingList<RadiusServer>();
             P2SVpnGateways = new ChangeTrackingList<P2SVpnGatewayData>();
             ConfigurationPolicyGroups = new ChangeTrackingList<VpnServerConfigurationPolicyGroupData>();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="vpnClientRevokedCertificates"> VPN client revoked certificate of VpnServerConfiguration. </param>
         /// <param name="radiusServerRootCertificates"> Radius Server root certificate of VpnServerConfiguration. </param>
         /// <param name="radiusClientRootCertificates"> Radius client root certificate of VpnServerConfiguration. </param>
-        /// <param name="vpnClientIpsecPolicies"> VpnClientIpsecPolicies for VpnServerConfiguration. </param>
+        /// <param name="vpnClientIPsecPolicies"> VpnClientIpsecPolicies for VpnServerConfiguration. </param>
         /// <param name="radiusServerAddress"> The radius server address property of the VpnServerConfiguration resource for point to site client connection. </param>
         /// <param name="radiusServerSecret"> The radius secret property of the VpnServerConfiguration resource for point to site client connection. We will no longer return radiusServerSecret in VpnServerConfiguration Create/Update/Get/List/UpdateTags APIs response. Please use VpnServerConfiguration ListRadiusSecrets API to fetch radius server secrets. </param>
         /// <param name="radiusServers"> Multiple Radius Server configuration for VpnServerConfiguration. </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="configurationPolicyGroups"> List of all VpnServerConfigurationPolicyGroups. </param>
         /// <param name="propertiesETag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VpnServerConfigurationProperties(string namePropertiesName, IList<VpnGatewayTunnelingProtocol> vpnProtocols, IList<VpnAuthenticationType> vpnAuthenticationTypes, IList<VpnServerConfigVpnClientRootCertificate> vpnClientRootCertificates, IList<VpnServerConfigVpnClientRevokedCertificate> vpnClientRevokedCertificates, IList<VpnServerConfigRadiusServerRootCertificate> radiusServerRootCertificates, IList<VpnServerConfigRadiusClientRootCertificate> radiusClientRootCertificates, IList<IPsecPolicy> vpnClientIpsecPolicies, string radiusServerAddress, string radiusServerSecret, IList<RadiusServer> radiusServers, AadAuthenticationParameters aadAuthenticationParameters, string provisioningState, IReadOnlyList<P2SVpnGatewayData> p2SVpnGateways, IList<VpnServerConfigurationPolicyGroupData> configurationPolicyGroups, string propertiesETag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VpnServerConfigurationProperties(string namePropertiesName, IList<VpnGatewayTunnelingProtocol> vpnProtocols, IList<VpnAuthenticationType> vpnAuthenticationTypes, IList<VpnServerConfigVpnClientRootCertificate> vpnClientRootCertificates, IList<VpnServerConfigVpnClientRevokedCertificate> vpnClientRevokedCertificates, IList<VpnServerConfigRadiusServerRootCertificate> radiusServerRootCertificates, IList<VpnServerConfigRadiusClientRootCertificate> radiusClientRootCertificates, IList<IPsecPolicy> vpnClientIPsecPolicies, string radiusServerAddress, string radiusServerSecret, IList<RadiusServer> radiusServers, AadAuthenticationParameters aadAuthenticationParameters, string provisioningState, IReadOnlyList<P2SVpnGatewayData> p2SVpnGateways, IList<VpnServerConfigurationPolicyGroupData> configurationPolicyGroups, string propertiesETag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NamePropertiesName = namePropertiesName;
             VpnProtocols = vpnProtocols;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             VpnClientRevokedCertificates = vpnClientRevokedCertificates;
             RadiusServerRootCertificates = radiusServerRootCertificates;
             RadiusClientRootCertificates = radiusClientRootCertificates;
-            VpnClientIpsecPolicies = vpnClientIpsecPolicies;
+            VpnClientIPsecPolicies = vpnClientIPsecPolicies;
             RadiusServerAddress = radiusServerAddress;
             RadiusServerSecret = radiusServerSecret;
             RadiusServers = radiusServers;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> VpnClientIpsecPolicies for VpnServerConfiguration. </summary>
         [WirePath("vpnClientIpsecPolicies")]
-        public IList<IPsecPolicy> VpnClientIpsecPolicies { get; } = new ChangeTrackingList<IPsecPolicy>();
+        public IList<IPsecPolicy> VpnClientIPsecPolicies { get; } = new ChangeTrackingList<IPsecPolicy>();
 
         /// <summary> The radius server address property of the VpnServerConfiguration resource for point to site client connection. </summary>
         [WirePath("radiusServerAddress")]

@@ -3,9 +3,12 @@
 
 #nullable disable
 
+using Microsoft.TypeSpec.Generator.Customizations;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Compatibility declaration for the ExpressRouteCircuitArpTable type. </summary>
+    [CodeGenSuppress("IPAddress")]
     public partial class ExpressRouteCircuitArpTable
     {
         /// <summary> Compatibility member. </summary>

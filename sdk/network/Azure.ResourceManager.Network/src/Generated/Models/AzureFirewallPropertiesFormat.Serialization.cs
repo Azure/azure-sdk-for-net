@@ -104,20 +104,20 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IpConfigurations))
+            if (Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (AzureFirewallIPConfiguration item in IpConfigurations)
+                foreach (AzureFirewallIPConfiguration item in IPConfigurations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ManagementIpConfiguration))
+            if (Optional.IsDefined(ManagementIPConfiguration))
             {
                 writer.WritePropertyName("managementIpConfiguration"u8);
-                writer.WriteObjectValue(ManagementIpConfiguration, options);
+                writer.WriteObjectValue(ManagementIPConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -144,11 +144,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("hubIPAddresses"u8);
                 writer.WriteObjectValue(HubIPAddresses, options);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IpGroups))
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPGroups))
             {
                 writer.WritePropertyName("ipGroups"u8);
                 writer.WriteStartArray();
-                foreach (AzureFirewallIPGroups item in IpGroups)
+                foreach (AzureFirewallIPGroups item in IPGroups)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Network.Models
             IList<AzureFirewallNatRuleCollectionData> natRuleCollections = default;
             IList<AzureFirewallNetworkRuleCollectionData> networkRuleCollections = default;
             IList<AzureFirewallIPConfiguration> ipConfigurations = default;
-            AzureFirewallIPConfiguration managementIpConfiguration = default;
+            AzureFirewallIPConfiguration managementIPConfiguration = default;
             NetworkProvisioningState? provisioningState = default;
             AzureFirewallThreatIntelMode? threatIntelMode = default;
             NetworkSubResource virtualHub = default;
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    managementIpConfiguration = AzureFirewallIPConfiguration.DeserializeAzureFirewallIPConfiguration(prop.Value, options);
+                    managementIPConfiguration = AzureFirewallIPConfiguration.DeserializeAzureFirewallIPConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Network.Models
                 natRuleCollections ?? new ChangeTrackingList<AzureFirewallNatRuleCollectionData>(),
                 networkRuleCollections ?? new ChangeTrackingList<AzureFirewallNetworkRuleCollectionData>(),
                 ipConfigurations ?? new ChangeTrackingList<AzureFirewallIPConfiguration>(),
-                managementIpConfiguration,
+                managementIPConfiguration,
                 provisioningState,
                 threatIntelMode,
                 virtualHub,
