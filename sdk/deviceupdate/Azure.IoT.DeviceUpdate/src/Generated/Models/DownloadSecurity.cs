@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.IoT._DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> The protocol the device should use when downloading the update payload. </summary>
     public readonly partial struct DownloadSecurity : IEquatable<DownloadSecurity>

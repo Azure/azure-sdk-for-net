@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.IoT._DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
     internal enum SerializationFormat
     {

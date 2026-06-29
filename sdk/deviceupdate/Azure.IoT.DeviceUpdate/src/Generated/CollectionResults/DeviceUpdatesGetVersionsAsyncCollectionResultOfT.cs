@@ -12,43 +12,39 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.IoT._DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
-    internal partial class DeviceUpdateGetOperationStatusesAsyncCollectionResultOfT : AsyncPageable<UpdateOperation>
+    internal partial class DeviceUpdatesGetVersionsAsyncCollectionResultOfT : AsyncPageable<string>
     {
-        private readonly DeviceUpdate _client;
+        private readonly DeviceUpdates _client;
+        private readonly string _provider;
+        private readonly string _name;
         private readonly string _filter;
-        private readonly int? _maxCount;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of DeviceUpdateGetOperationStatusesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The DeviceUpdate client used to send requests. </param>
-        /// <param name="filter">
-        /// Optional to filter operations by status property. Only one specific filter is
-        /// supported: "status eq 'NotStarted' or status eq 'Running'"
-        /// </param>
-        /// <param name="maxCount">
-        /// Specifies a non-negative integer n that limits the number of items returned
-        /// from a collection. The service returns the number of available items up to but
-        /// not greater than the specified value n.
-        /// </param>
+        /// <summary> Initializes a new instance of DeviceUpdatesGetVersionsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The DeviceUpdates client used to send requests. </param>
+        /// <param name="provider"> Update provider. </param>
+        /// <param name="name"> Update name. </param>
+        /// <param name="filter"> Optional to filter updates by isDeployable property. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DeviceUpdateGetOperationStatusesAsyncCollectionResultOfT(DeviceUpdate client, string filter, int? maxCount, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public DeviceUpdatesGetVersionsAsyncCollectionResultOfT(DeviceUpdates client, string provider, string name, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
+            _provider = provider;
+            _name = name;
             _filter = filter;
-            _maxCount = maxCount;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of DeviceUpdateGetOperationStatusesAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of DeviceUpdatesGetVersionsAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of DeviceUpdateGetOperationStatusesAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<UpdateOperation>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of DeviceUpdatesGetVersionsAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<string>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -58,9 +54,10 @@ namespace Azure.IoT._DeviceUpdate
                 {
                     yield break;
                 }
-                UpdateOperationsList result = (UpdateOperationsList)response;
-                yield return Page<UpdateOperation>.FromValues((IReadOnlyList<UpdateOperation>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
-                nextPage = result.NextLink;
+                StringsList result = (StringsList)response;
+                string nextPageString = result.NextLink;
+                nextPage = string.IsNullOrEmpty(nextPageString) ? null : new Uri(nextPageString, UriKind.RelativeOrAbsolute);
+                yield return Page<string>.FromValues((IReadOnlyList<string>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
@@ -73,7 +70,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetOperationStatusesRequest(nextLink, _filter, _maxCount, _context) : _client.CreateGetOperationStatusesRequest(_filter, _maxCount, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetVersionsRequest(nextLink, _provider, _name, _filter, _context) : _client.CreateGetVersionsRequest(_provider, _name, _filter, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

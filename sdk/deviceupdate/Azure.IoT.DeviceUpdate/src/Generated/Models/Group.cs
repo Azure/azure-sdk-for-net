@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.IoT._DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Group details. </summary>
     public partial class Group

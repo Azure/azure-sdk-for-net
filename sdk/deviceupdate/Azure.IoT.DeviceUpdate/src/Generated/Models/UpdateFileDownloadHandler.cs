@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.IoT._DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Download handler for utilizing related files to download payload file. </summary>
     public partial class UpdateFileDownloadHandler

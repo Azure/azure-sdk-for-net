@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.IoT._DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Device class subgroup deployment state. </summary>
     public readonly partial struct DeviceClassSubgroupDeploymentState : IEquatable<DeviceClassSubgroupDeploymentState>

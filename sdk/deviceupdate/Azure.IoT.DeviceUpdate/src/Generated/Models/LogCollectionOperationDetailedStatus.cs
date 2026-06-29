@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.IoT._DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Device diagnostics operation detailed status. </summary>
     public partial class LogCollectionOperationDetailedStatus

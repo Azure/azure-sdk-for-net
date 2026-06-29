@@ -9,7 +9,7 @@ using System;
 using Azure;
 using Azure.Core;
 
-namespace Azure.IoT._DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
     /// <summary></summary>
     public partial class DeviceManagement

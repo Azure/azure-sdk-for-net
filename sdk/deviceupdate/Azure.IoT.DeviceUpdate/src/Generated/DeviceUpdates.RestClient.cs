@@ -9,10 +9,10 @@ using System;
 using Azure;
 using Azure.Core;
 
-namespace Azure.IoT._DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
     /// <summary></summary>
-    public partial class DeviceUpdate
+    public partial class DeviceUpdates
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
         private static ResponseClassifier _pipelineMessageClassifier200202;

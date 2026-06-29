@@ -12,29 +12,29 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.IoT._DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
-    internal partial class DeviceUpdateGetProvidersCollectionResult : Pageable<BinaryData>
+    internal partial class DeviceUpdatesGetProvidersCollectionResult : Pageable<BinaryData>
     {
-        private readonly DeviceUpdate _client;
+        private readonly DeviceUpdates _client;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of DeviceUpdateGetProvidersCollectionResult, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The DeviceUpdate client used to send requests. </param>
+        /// <summary> Initializes a new instance of DeviceUpdatesGetProvidersCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The DeviceUpdates client used to send requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DeviceUpdateGetProvidersCollectionResult(DeviceUpdate client, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public DeviceUpdatesGetProvidersCollectionResult(DeviceUpdates client, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of DeviceUpdateGetProvidersCollectionResult as an enumerable collection. </summary>
+        /// <summary> Gets the pages of DeviceUpdatesGetProvidersCollectionResult as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of DeviceUpdateGetProvidersCollectionResult as an enumerable collection. </returns>
+        /// <returns> The pages of DeviceUpdatesGetProvidersCollectionResult as an enumerable collection. </returns>
         public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -46,18 +46,18 @@ namespace Azure.IoT._DeviceUpdate
                     yield break;
                 }
                 StringsList result = (StringsList)response;
+                string nextPageString = result.NextLink;
+                nextPage = string.IsNullOrEmpty(nextPageString) ? null : new Uri(nextPageString, UriKind.RelativeOrAbsolute);
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Value)
                 {
-                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureIoT_DeviceUpdateContext.Default));
+                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureIoTDeviceUpdateContext.Default));
                 }
                 yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
-                string nextPageString = result.NextLink;
-                if (string.IsNullOrEmpty(nextPageString))
+                if (nextPage == null)
                 {
                     yield break;
                 }
-                nextPage = new Uri(nextPageString, UriKind.RelativeOrAbsolute);
             }
         }
 

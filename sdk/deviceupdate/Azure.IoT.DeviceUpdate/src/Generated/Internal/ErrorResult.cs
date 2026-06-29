@@ -7,7 +7,7 @@
 
 using Azure;
 
-namespace Azure.IoT._DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
     internal partial class ErrorResult<T> : Response<T>
     {

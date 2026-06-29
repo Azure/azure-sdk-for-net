@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.IoT._DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Failure conditions to initiate rollback policy. </summary>
     public partial class CloudInitiatedRollbackPolicyFailure

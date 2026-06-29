@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.IoT._DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Step type. </summary>
     public readonly partial struct StepType : IEquatable<StepType>

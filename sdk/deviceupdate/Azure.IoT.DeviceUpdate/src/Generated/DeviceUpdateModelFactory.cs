@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.IoT._DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class DeviceUpdateModelFactory
@@ -33,7 +33,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <param name="importedDateTime"> Date and time in UTC when the update was imported. </param>
         /// <param name="createdDateTime"> Date and time in UTC when the update was created. </param>
         /// <param name="etag"> Update ETag. </param>
-        /// <returns> A new <see cref="_DeviceUpdate.Update"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.Update"/> instance for mocking. </returns>
         public static Update Update(UpdateId updateId = default, string description = default, string friendlyName = default, bool? isDeployable = default, string updateType = default, string installedCriteria = default, IEnumerable<Compatibility> compatibility = default, Instructions instructions = default, IEnumerable<UpdateId> referencedBy = default, string scanResult = default, string manifestVersion = default, DateTimeOffset importedDateTime = default, DateTimeOffset createdDateTime = default, string etag = default)
         {
             compatibility ??= new ChangeTrackingList<Compatibility>();
@@ -61,7 +61,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <param name="provider"> Update provider. </param>
         /// <param name="name"> Update name. </param>
         /// <param name="version"> Update version. </param>
-        /// <returns> A new <see cref="_DeviceUpdate.UpdateId"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.UpdateId"/> instance for mocking. </returns>
         public static UpdateId UpdateId(string provider = default, string name = default, string version = default)
         {
             return new UpdateId(provider, name, version, additionalBinaryDataProperties: null);
@@ -69,7 +69,7 @@ namespace Azure.IoT._DeviceUpdate
 
         /// <summary> Key-value pairs representing update compatibility information. </summary>
         /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="_DeviceUpdate.Compatibility"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.Compatibility"/> instance for mocking. </returns>
         public static Compatibility Compatibility(IReadOnlyDictionary<string, string> additionalProperties = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, string>();
@@ -79,7 +79,7 @@ namespace Azure.IoT._DeviceUpdate
 
         /// <summary> Update install instructions container. </summary>
         /// <param name="steps"> Collection of installation steps. </param>
-        /// <returns> A new <see cref="_DeviceUpdate.Instructions"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.Instructions"/> instance for mocking. </returns>
         public static Instructions Instructions(IEnumerable<Step> steps = default)
         {
             steps ??= new ChangeTrackingList<Step>();
@@ -100,7 +100,7 @@ namespace Azure.IoT._DeviceUpdate
         /// step type is inline.
         /// </param>
         /// <param name="updateId"> Referenced child update identity.  Required if step type is reference. </param>
-        /// <returns> A new <see cref="_DeviceUpdate.Step"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.Step"/> instance for mocking. </returns>
         public static Step Step(StepType? @type = default, string description = default, string handler = default, IDictionary<string, BinaryData> handlerProperties = default, IEnumerable<string> files = default, UpdateId updateId = default)
         {
             handlerProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
@@ -126,7 +126,7 @@ namespace Azure.IoT._DeviceUpdate
         /// the error.
         /// </param>
         /// <param name="occurredDateTime"> Date and time in UTC when the error occurred. </param>
-        /// <returns> A new <see cref="_DeviceUpdate.Error"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.Error"/> instance for mocking. </returns>
         public static Error Error(string code = default, string message = default, string target = default, IEnumerable<Error> details = default, InnerError innererror = default, DateTimeOffset? occurredDateTime = default)
         {
             details ??= new ChangeTrackingList<Error>();
@@ -152,7 +152,7 @@ namespace Azure.IoT._DeviceUpdate
         /// An object containing more specific information than the current object about
         /// the error.
         /// </param>
-        /// <returns> A new <see cref="_DeviceUpdate.InnerError"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.InnerError"/> instance for mocking. </returns>
         public static InnerError InnerError(string code = default, string message = default, string errorDetail = default, InnerError innerErrorProperty = default)
         {
             return new InnerError(code, message, errorDetail, innerErrorProperty, additionalBinaryDataProperties: null);
@@ -162,7 +162,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <param name="importManifest"> Import manifest metadata like source URL, file size/hashes, etc. </param>
         /// <param name="friendlyName"> Friendly update name. </param>
         /// <param name="files"> One or more update file properties like filename and source URL. </param>
-        /// <returns> A new <see cref="_DeviceUpdate.ImportUpdateInputItem"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.ImportUpdateInputItem"/> instance for mocking. </returns>
         public static ImportUpdateInputItem ImportUpdateInputItem(ImportManifestMetadata importManifest = default, string friendlyName = default, IEnumerable<FileImportMetadata> files = default)
         {
             files ??= new ChangeTrackingList<FileImportMetadata>();
@@ -186,7 +186,7 @@ namespace Azure.IoT._DeviceUpdate
         /// key is the hash algorithm, and the value is the hash of the file calculated
         /// using that algorithm.
         /// </param>
-        /// <returns> A new <see cref="_DeviceUpdate.ImportManifestMetadata"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.ImportManifestMetadata"/> instance for mocking. </returns>
         public static ImportManifestMetadata ImportManifestMetadata(string url = default, long sizeInBytes = default, IDictionary<string, string> hashes = default)
         {
             hashes ??= new ChangeTrackingDictionary<string, string>();
@@ -201,7 +201,7 @@ namespace Azure.IoT._DeviceUpdate
         /// Update for IoT Hub. This is typically a read-only SAS-protected blob URL with
         /// an expiration set to at least 4 hours.
         /// </param>
-        /// <returns> A new <see cref="_DeviceUpdate.FileImportMetadata"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.FileImportMetadata"/> instance for mocking. </returns>
         public static FileImportMetadata FileImportMetadata(string filename = default, string url = default)
         {
             return new FileImportMetadata(filename, url, additionalBinaryDataProperties: null);
@@ -223,7 +223,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <param name="lastActionDateTime"> Date and time in UTC when the operation status was last updated. </param>
         /// <param name="createdDateTime"> Date and time in UTC when the operation was created. </param>
         /// <param name="etag"> Operation ETag. </param>
-        /// <returns> A new <see cref="_DeviceUpdate.UpdateOperation"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.UpdateOperation"/> instance for mocking. </returns>
         public static UpdateOperation UpdateOperation(string operationId = default, OperationStatus status = default, UpdateInfo update = default, string resourceLocation = default, Error error = default, string traceId = default, DateTimeOffset lastActionDateTime = default, DateTimeOffset createdDateTime = default, string etag = default)
         {
             return new UpdateOperation(
@@ -243,7 +243,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <param name="updateId"> Update identifier. </param>
         /// <param name="description"> Update description. </param>
         /// <param name="friendlyName"> Friendly update name. </param>
-        /// <returns> A new <see cref="_DeviceUpdate.UpdateInfo"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.UpdateInfo"/> instance for mocking. </returns>
         public static UpdateInfo UpdateInfo(UpdateId updateId = default, string description = default, string friendlyName = default)
         {
             return new UpdateInfo(updateId, description, friendlyName, additionalBinaryDataProperties: null);
@@ -264,7 +264,7 @@ namespace Azure.IoT._DeviceUpdate
         /// </param>
         /// <param name="downloadHandler"> Optional download handler for utilizing related files to download payload file. </param>
         /// <param name="etag"> File ETag. </param>
-        /// <returns> A new <see cref="_DeviceUpdate.UpdateFile"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.UpdateFile"/> instance for mocking. </returns>
         public static UpdateFile UpdateFile(string fileName = default, long sizeInBytes = default, IDictionary<string, string> hashes = default, string mimeType = default, string scanResult = default, string scanDetails = default, IDictionary<string, string> properties = default, string fileId = default, IEnumerable<UpdateFileBase> relatedFiles = default, UpdateFileDownloadHandler downloadHandler = default, string etag = default)
         {
             hashes ??= new ChangeTrackingDictionary<string, string>();
@@ -294,7 +294,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <param name="scanResult"> Anti-malware scan result. </param>
         /// <param name="scanDetails"> Anti-malware scan details. </param>
         /// <param name="properties"> Optional file properties (not consumed by service but pass-through to device). </param>
-        /// <returns> A new <see cref="_DeviceUpdate.UpdateFileBase"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.UpdateFileBase"/> instance for mocking. </returns>
         public static UpdateFileBase UpdateFileBase(string fileName = default, long sizeInBytes = default, IDictionary<string, string> hashes = default, string mimeType = default, string scanResult = default, string scanDetails = default, IDictionary<string, string> properties = default)
         {
             hashes ??= new ChangeTrackingDictionary<string, string>();
@@ -313,7 +313,7 @@ namespace Azure.IoT._DeviceUpdate
 
         /// <summary> Download handler for utilizing related files to download payload file. </summary>
         /// <param name="id"> Download handler identifier. </param>
-        /// <returns> A new <see cref="_DeviceUpdate.UpdateFileDownloadHandler"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.UpdateFileDownloadHandler"/> instance for mocking. </returns>
         public static UpdateFileDownloadHandler UpdateFileDownloadHandler(string id = default)
         {
             return new UpdateFileDownloadHandler(id, additionalBinaryDataProperties: null);
@@ -331,7 +331,7 @@ namespace Azure.IoT._DeviceUpdate
         /// </param>
         /// <param name="deviceClassProperties"> The device class properties that are used to calculate the device class Id. </param>
         /// <param name="bestCompatibleUpdate"> Update that is the highest version compatible with this device class. </param>
-        /// <returns> A new <see cref="_DeviceUpdate.DeviceClass"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.DeviceClass"/> instance for mocking. </returns>
         public static DeviceClass DeviceClass(string deviceClassId = default, string friendlyName = default, DeviceClassProperties deviceClassProperties = default, UpdateInfo bestCompatibleUpdate = default)
         {
             return new DeviceClass(deviceClassId, friendlyName, deviceClassProperties, bestCompatibleUpdate, additionalBinaryDataProperties: null);
@@ -345,7 +345,7 @@ namespace Azure.IoT._DeviceUpdate
         /// and the value is the value of the compatibility property. There will always be
         /// at least 1 compat property
         /// </param>
-        /// <returns> A new <see cref="_DeviceUpdate.DeviceClassProperties"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.DeviceClassProperties"/> instance for mocking. </returns>
         public static DeviceClassProperties DeviceClassProperties(ContractModel contractModel = default, IDictionary<string, string> compatProperties = default)
         {
             compatProperties ??= new ChangeTrackingDictionary<string, string>();
@@ -362,7 +362,7 @@ namespace Azure.IoT._DeviceUpdate
         /// The Device Update agent contract model name of the device class. Intended to be
         /// a more readable form of the contract model Id.
         /// </param>
-        /// <returns> A new <see cref="_DeviceUpdate.ContractModel"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.ContractModel"/> instance for mocking. </returns>
         public static ContractModel ContractModel(string id = default, string name = default)
         {
             return new ContractModel(id, name, additionalBinaryDataProperties: null);
@@ -382,7 +382,7 @@ namespace Azure.IoT._DeviceUpdate
         /// </param>
         /// <param name="lastDeploymentId"> The deployment identifier for the last deployment to the device. </param>
         /// <param name="lastInstallResult"> Last install result. </param>
-        /// <returns> A new <see cref="_DeviceUpdate.Device"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.Device"/> instance for mocking. </returns>
         public static Device Device(string deviceId = default, string moduleId = default, string deviceClassId = default, string groupId = default, UpdateInfo lastAttemptedUpdate = default, DeviceDeploymentState? deploymentStatus = default, UpdateInfo installedUpdate = default, bool onLatestUpdate = default, string lastDeploymentId = default, InstallResult lastInstallResult = default)
         {
             return new Device(
@@ -404,7 +404,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <param name="extendedResultCode"> Install extended result code. </param>
         /// <param name="resultDetails"> A string containing further details about the install result. </param>
         /// <param name="stepResults"> Array of step results. </param>
-        /// <returns> A new <see cref="_DeviceUpdate.InstallResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.InstallResult"/> instance for mocking. </returns>
         public static InstallResult InstallResult(int resultCode = default, int extendedResultCode = default, string resultDetails = default, IEnumerable<StepResult> stepResults = default)
         {
             stepResults ??= new ChangeTrackingList<StepResult>();
@@ -418,7 +418,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <param name="resultCode"> Install result code. </param>
         /// <param name="extendedResultCode"> Install extended result code. </param>
         /// <param name="resultDetails"> A string containing further details about the install result. </param>
-        /// <returns> A new <see cref="_DeviceUpdate.StepResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.StepResult"/> instance for mocking. </returns>
         public static StepResult StepResult(UpdateInfo update = default, string description = default, int resultCode = default, int extendedResultCode = default, string resultDetails = default)
         {
             return new StepResult(
@@ -441,7 +441,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <param name="lastActionDateTime"> Date and time in UTC when the operation status was last updated. </param>
         /// <param name="createdDateTime"> Date and time in UTC when the operation was created. </param>
         /// <param name="etag"> Operation ETag. </param>
-        /// <returns> A new <see cref="_DeviceUpdate.DeviceOperation"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.DeviceOperation"/> instance for mocking. </returns>
         public static DeviceOperation DeviceOperation(string operationId = default, OperationStatus status = default, Error error = default, string traceId = default, DateTimeOffset lastActionDateTime = default, DateTimeOffset createdDateTime = default, string etag = default)
         {
             return new DeviceOperation(
@@ -460,7 +460,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <param name="onLatestUpdateDeviceCount"> Number of devices on the latest update. </param>
         /// <param name="newUpdatesAvailableDeviceCount"> Number of devices with a newer update available. </param>
         /// <param name="updatesInProgressDeviceCount"> Number of devices with update in-progress. </param>
-        /// <returns> A new <see cref="_DeviceUpdate.UpdateCompliance"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.UpdateCompliance"/> instance for mocking. </returns>
         public static UpdateCompliance UpdateCompliance(int totalDeviceCount = default, int onLatestUpdateDeviceCount = default, int newUpdatesAvailableDeviceCount = default, int updatesInProgressDeviceCount = default)
         {
             return new UpdateCompliance(totalDeviceCount, onLatestUpdateDeviceCount, newUpdatesAvailableDeviceCount, updatesInProgressDeviceCount, additionalBinaryDataProperties: null);
@@ -478,7 +478,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <param name="subgroupsWithUpdatesInProgressCount"> The count of subgroups with updates in progress. </param>
         /// <param name="subgroupsWithOnLatestUpdateCount"> The count of subgroups with devices on the latest update. </param>
         /// <param name="deployments"> The active deployment Ids for the group. </param>
-        /// <returns> A new <see cref="_DeviceUpdate.Group"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.Group"/> instance for mocking. </returns>
         public static Group Group(string groupId = default, GroupType groupType = default, string createdDateTime = default, int? deviceCount = default, int? subgroupsWithNewUpdatesAvailableCount = default, int? subgroupsWithUpdatesInProgressCount = default, int? subgroupsWithOnLatestUpdateCount = default, IEnumerable<string> deployments = default)
         {
             deployments ??= new ChangeTrackingList<string>();
@@ -503,7 +503,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <param name="deviceClassId"> The device class subgroup's device class Id. </param>
         /// <param name="update"> Update information. </param>
         /// <param name="deviceCount"> Total number of devices for which the update is applicable. </param>
-        /// <returns> A new <see cref="_DeviceUpdate.DeviceClassSubgroupUpdatableDevices"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.DeviceClassSubgroupUpdatableDevices"/> instance for mocking. </returns>
         public static DeviceClassSubgroupUpdatableDevices DeviceClassSubgroupUpdatableDevices(string groupId = default, string deviceClassId = default, UpdateInfo update = default, int deviceCount = default)
         {
             return new DeviceClassSubgroupUpdatableDevices(groupId, deviceClassId, update, deviceCount, additionalBinaryDataProperties: null);
@@ -533,7 +533,7 @@ namespace Azure.IoT._DeviceUpdate
         /// The protocol the device should use when downloading the update payload.
         /// Defaults to "https".
         /// </param>
-        /// <returns> A new <see cref="_DeviceUpdate.Deployment"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.Deployment"/> instance for mocking. </returns>
         public static Deployment Deployment(string deploymentId = default, DateTimeOffset startDateTime = default, UpdateInfo update = default, string groupId = default, IEnumerable<string> deviceClassSubgroups = default, bool? isCanceled = default, bool? isRetried = default, CloudInitiatedRollbackPolicy rollbackPolicy = default, bool? isCloudInitiatedRollback = default, DownloadSecurity? downloadSecurity = default)
         {
             deviceClassSubgroups ??= new ChangeTrackingList<string>();
@@ -555,7 +555,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <summary> Rollback policy for deployment. </summary>
         /// <param name="update"> Update to rollback to. </param>
         /// <param name="failure"> Failure conditions to initiate rollback policy. </param>
-        /// <returns> A new <see cref="_DeviceUpdate.CloudInitiatedRollbackPolicy"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.CloudInitiatedRollbackPolicy"/> instance for mocking. </returns>
         public static CloudInitiatedRollbackPolicy CloudInitiatedRollbackPolicy(UpdateInfo update = default, CloudInitiatedRollbackPolicyFailure failure = default)
         {
             return new CloudInitiatedRollbackPolicy(update, failure, additionalBinaryDataProperties: null);
@@ -564,7 +564,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <summary> Failure conditions to initiate rollback policy. </summary>
         /// <param name="devicesFailedPercentage"> Percentage of devices that failed. </param>
         /// <param name="devicesFailedCount"> Number of devices that failed. </param>
-        /// <returns> A new <see cref="_DeviceUpdate.CloudInitiatedRollbackPolicyFailure"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.CloudInitiatedRollbackPolicyFailure"/> instance for mocking. </returns>
         public static CloudInitiatedRollbackPolicyFailure CloudInitiatedRollbackPolicyFailure(int devicesFailedPercentage = default, int devicesFailedCount = default)
         {
             return new CloudInitiatedRollbackPolicyFailure(devicesFailedPercentage, devicesFailedCount, additionalBinaryDataProperties: null);
@@ -578,7 +578,7 @@ namespace Azure.IoT._DeviceUpdate
         /// state is not Failed.
         /// </param>
         /// <param name="subgroupStatus"> The collection of device class subgroup status objects. </param>
-        /// <returns> A new <see cref="_DeviceUpdate.DeploymentStatus"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.DeploymentStatus"/> instance for mocking. </returns>
         public static DeploymentStatus DeploymentStatus(string groupId = default, DeploymentState deploymentState = default, Error error = default, IEnumerable<DeviceClassSubgroupDeploymentStatus> subgroupStatus = default)
         {
             subgroupStatus ??= new ChangeTrackingList<DeviceClassSubgroupDeploymentStatus>();
@@ -599,7 +599,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <param name="devicesCompletedFailedCount"> The number of devices that have completed deployment with a failure. </param>
         /// <param name="devicesCompletedSucceededCount"> The number of devices which have successfully completed deployment. </param>
         /// <param name="devicesCanceledCount"> The number of devices which have had their deployment canceled. </param>
-        /// <returns> A new <see cref="_DeviceUpdate.DeviceClassSubgroupDeploymentStatus"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.DeviceClassSubgroupDeploymentStatus"/> instance for mocking. </returns>
         public static DeviceClassSubgroupDeploymentStatus DeviceClassSubgroupDeploymentStatus(string groupId = default, string deviceClassId = default, DeviceClassSubgroupDeploymentState deploymentState = default, Error error = default, int? totalDevices = default, int? devicesInProgressCount = default, int? devicesCompletedFailedCount = default, int? devicesCompletedSucceededCount = default, int? devicesCanceledCount = default)
         {
             return new DeviceClassSubgroupDeploymentStatus(
@@ -628,7 +628,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <param name="createdDateTime"> Date and time when the device class subgroup was created. </param>
         /// <param name="deviceCount"> The number of devices in the device class subgroup. </param>
         /// <param name="deploymentId"> The active deployment Id for the device class subgroup. </param>
-        /// <returns> A new <see cref="_DeviceUpdate.DeviceClassSubgroup"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.DeviceClassSubgroup"/> instance for mocking. </returns>
         public static DeviceClassSubgroup DeviceClassSubgroup(string deviceClassId = default, string groupId = default, string createdDateTime = default, int? deviceCount = default, string deploymentId = default)
         {
             return new DeviceClassSubgroup(
@@ -649,7 +649,7 @@ namespace Azure.IoT._DeviceUpdate
         /// longer retry this deployment.
         /// </param>
         /// <param name="deviceState"> Deployment device state. </param>
-        /// <returns> A new <see cref="_DeviceUpdate.DeploymentDeviceState"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.DeploymentDeviceState"/> instance for mocking. </returns>
         public static DeploymentDeviceState DeploymentDeviceState(string deviceId = default, string moduleId = default, int retryCount = default, bool movedOnToNewDeployment = default, DeviceDeploymentState deviceState = default)
         {
             return new DeploymentDeviceState(
@@ -668,7 +668,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <param name="createdDateTime"> The timestamp when the operation was created. </param>
         /// <param name="lastActionDateTime"> A timestamp for when the current state was entered. </param>
         /// <param name="status"> Operation status. </param>
-        /// <returns> A new <see cref="_DeviceUpdate.LogCollection"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.LogCollection"/> instance for mocking. </returns>
         public static LogCollection LogCollection(string logCollectionId = default, IEnumerable<DeviceUpdateAgentId> deviceList = default, string description = default, string createdDateTime = default, string lastActionDateTime = default, OperationStatus? status = default)
         {
             deviceList ??= new ChangeTrackingList<DeviceUpdateAgentId>();
@@ -686,7 +686,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <summary> Device Update agent id. </summary>
         /// <param name="deviceId"> Device Id. </param>
         /// <param name="moduleId"> Module Id. </param>
-        /// <returns> A new <see cref="_DeviceUpdate.DeviceUpdateAgentId"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.DeviceUpdateAgentId"/> instance for mocking. </returns>
         public static DeviceUpdateAgentId DeviceUpdateAgentId(string deviceId = default, string moduleId = default)
         {
             return new DeviceUpdateAgentId(deviceId, moduleId, additionalBinaryDataProperties: null);
@@ -699,7 +699,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <param name="status"> Operation status. </param>
         /// <param name="deviceStatus"> Status of the devices in the operation. </param>
         /// <param name="description"> Device diagnostics operation description. </param>
-        /// <returns> A new <see cref="_DeviceUpdate.LogCollectionOperationDetailedStatus"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.LogCollectionOperationDetailedStatus"/> instance for mocking. </returns>
         public static LogCollectionOperationDetailedStatus LogCollectionOperationDetailedStatus(string logCollectionId = default, string createdDateTime = default, string lastActionDateTime = default, OperationStatus? status = default, IEnumerable<LogCollectionOperationDeviceStatus> deviceStatus = default, string description = default)
         {
             deviceStatus ??= new ChangeTrackingList<LogCollectionOperationDeviceStatus>();
@@ -721,7 +721,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <param name="resultCode"> Log upload result code. </param>
         /// <param name="extendedResultCode"> Log upload extended result code. </param>
         /// <param name="logLocation"> Log upload location. </param>
-        /// <returns> A new <see cref="_DeviceUpdate.LogCollectionOperationDeviceStatus"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.LogCollectionOperationDeviceStatus"/> instance for mocking. </returns>
         public static LogCollectionOperationDeviceStatus LogCollectionOperationDeviceStatus(string deviceId = default, string moduleId = default, OperationStatus status = default, string resultCode = default, string extendedResultCode = default, string logLocation = default)
         {
             return new LogCollectionOperationDeviceStatus(
@@ -740,7 +740,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <param name="state"> Aggregate device health state. </param>
         /// <param name="digitalTwinModelId"> Digital twin model Id. </param>
         /// <param name="healthChecks"> Array of health checks and their results. </param>
-        /// <returns> A new <see cref="_DeviceUpdate.DeviceHealth"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.DeviceHealth"/> instance for mocking. </returns>
         public static DeviceHealth DeviceHealth(string deviceId = default, string moduleId = default, DeviceHealthState state = default, string digitalTwinModelId = default, IEnumerable<HealthCheck> healthChecks = default)
         {
             healthChecks ??= new ChangeTrackingList<HealthCheck>();
@@ -757,7 +757,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <summary> Health check. </summary>
         /// <param name="name"> Health check name. </param>
         /// <param name="result"> Health check result. </param>
-        /// <returns> A new <see cref="_DeviceUpdate.HealthCheck"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="DeviceUpdate.HealthCheck"/> instance for mocking. </returns>
         public static HealthCheck HealthCheck(string name = default, HealthCheckResult? result = default)
         {
             return new HealthCheck(name, result, additionalBinaryDataProperties: null);

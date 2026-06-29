@@ -10,7 +10,7 @@ using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Microsoft.Extensions.Configuration;
 
-namespace Azure.IoT._DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Client options for <see cref="DeviceUpdateClient"/>. </summary>
     public partial class DeviceUpdateClientOptions : ClientOptions

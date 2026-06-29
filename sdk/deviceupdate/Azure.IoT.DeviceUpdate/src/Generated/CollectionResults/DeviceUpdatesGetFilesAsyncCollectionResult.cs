@@ -8,73 +8,80 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.IoT._DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
-    internal partial class DeviceUpdateGetNamesCollectionResult : Pageable<BinaryData>
+    internal partial class DeviceUpdatesGetFilesAsyncCollectionResult : AsyncPageable<BinaryData>
     {
-        private readonly DeviceUpdate _client;
+        private readonly DeviceUpdates _client;
         private readonly string _provider;
+        private readonly string _name;
+        private readonly string _version;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of DeviceUpdateGetNamesCollectionResult, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The DeviceUpdate client used to send requests. </param>
+        /// <summary> Initializes a new instance of DeviceUpdatesGetFilesAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The DeviceUpdates client used to send requests. </param>
         /// <param name="provider"> Update provider. </param>
+        /// <param name="name"> Update name. </param>
+        /// <param name="version"> Update version. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DeviceUpdateGetNamesCollectionResult(DeviceUpdate client, string provider, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public DeviceUpdatesGetFilesAsyncCollectionResult(DeviceUpdates client, string provider, string name, string version, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _provider = provider;
+            _name = name;
+            _version = version;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of DeviceUpdateGetNamesCollectionResult as an enumerable collection. </summary>
+        /// <summary> Gets the pages of DeviceUpdatesGetFilesAsyncCollectionResult as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of DeviceUpdateGetNamesCollectionResult as an enumerable collection. </returns>
-        public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of DeviceUpdatesGetFilesAsyncCollectionResult as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
                 }
                 StringsList result = (StringsList)response;
+                string nextPageString = result.NextLink;
+                nextPage = string.IsNullOrEmpty(nextPageString) ? null : new Uri(nextPageString, UriKind.RelativeOrAbsolute);
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Value)
                 {
-                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureIoT_DeviceUpdateContext.Default));
+                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureIoTDeviceUpdateContext.Default));
                 }
                 yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
-                string nextPageString = result.NextLink;
-                if (string.IsNullOrEmpty(nextPageString))
+                if (nextPage == null)
                 {
                     yield break;
                 }
-                nextPage = new Uri(nextPageString, UriKind.RelativeOrAbsolute);
             }
         }
 
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetNamesRequest(nextLink, _provider, _context) : _client.CreateGetNamesRequest(_provider, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetFilesRequest(nextLink, _provider, _name, _version, _context) : _client.CreateGetFilesRequest(_provider, _name, _version, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return _client.Pipeline.ProcessMessage(message, _context);
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {

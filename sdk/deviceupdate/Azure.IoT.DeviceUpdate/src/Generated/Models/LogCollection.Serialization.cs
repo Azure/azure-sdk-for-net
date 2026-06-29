@@ -12,7 +12,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.IoT._DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Diagnostics request body. </summary>
     public partial class LogCollection : IJsonModel<LogCollection>
@@ -46,7 +46,7 @@ namespace Azure.IoT._DeviceUpdate
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureIoT_DeviceUpdateContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureIoTDeviceUpdateContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(LogCollection)} does not support writing '{options.Format}' format.");
             }

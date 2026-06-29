@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 
-namespace Azure.IoT._DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Operation metadata. </summary>
     public partial class DeviceOperation : IJsonModel<DeviceOperation>
@@ -45,7 +45,7 @@ namespace Azure.IoT._DeviceUpdate
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureIoT_DeviceUpdateContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureIoTDeviceUpdateContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DeviceOperation)} does not support writing '{options.Format}' format.");
             }

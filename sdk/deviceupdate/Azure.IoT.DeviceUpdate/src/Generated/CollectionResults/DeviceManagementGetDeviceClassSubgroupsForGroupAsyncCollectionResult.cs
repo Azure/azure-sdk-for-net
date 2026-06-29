@@ -13,7 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.IoT._DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
     internal partial class DeviceManagementGetDeviceClassSubgroupsForGroupAsyncCollectionResult : AsyncPageable<BinaryData>
     {
@@ -57,13 +57,13 @@ namespace Azure.IoT._DeviceUpdate
                     yield break;
                 }
                 DeviceClassSubgroupsList result = (DeviceClassSubgroupsList)response;
+                nextPage = result.NextLink;
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Value)
                 {
-                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureIoT_DeviceUpdateContext.Default));
+                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureIoTDeviceUpdateContext.Default));
                 }
                 yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
-                nextPage = result.NextLink;
                 if (nextPage == null)
                 {
                     yield break;

@@ -6,24 +6,23 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.IoT._DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
-    internal partial class DeviceUpdateGetOperationStatusesCollectionResult : Pageable<BinaryData>
+    internal partial class DeviceUpdatesGetOperationStatusesCollectionResultOfT : Pageable<UpdateOperation>
     {
-        private readonly DeviceUpdate _client;
+        private readonly DeviceUpdates _client;
         private readonly string _filter;
         private readonly int? _maxCount;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of DeviceUpdateGetOperationStatusesCollectionResult, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The DeviceUpdate client used to send requests. </param>
+        /// <summary> Initializes a new instance of DeviceUpdatesGetOperationStatusesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The DeviceUpdates client used to send requests. </param>
         /// <param name="filter">
         /// Optional to filter operations by status property. Only one specific filter is
         /// supported: "status eq 'NotStarted' or status eq 'Running'"
@@ -35,7 +34,7 @@ namespace Azure.IoT._DeviceUpdate
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DeviceUpdateGetOperationStatusesCollectionResult(DeviceUpdate client, string filter, int? maxCount, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public DeviceUpdatesGetOperationStatusesCollectionResultOfT(DeviceUpdates client, string filter, int? maxCount, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _filter = filter;
@@ -44,11 +43,11 @@ namespace Azure.IoT._DeviceUpdate
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of DeviceUpdateGetOperationStatusesCollectionResult as an enumerable collection. </summary>
+        /// <summary> Gets the pages of DeviceUpdatesGetOperationStatusesCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of DeviceUpdateGetOperationStatusesCollectionResult as an enumerable collection. </returns>
-        public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of DeviceUpdatesGetOperationStatusesCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<UpdateOperation>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -59,13 +58,8 @@ namespace Azure.IoT._DeviceUpdate
                     yield break;
                 }
                 UpdateOperationsList result = (UpdateOperationsList)response;
-                List<BinaryData> items = new List<BinaryData>();
-                foreach (var item in result.Value)
-                {
-                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureIoT_DeviceUpdateContext.Default));
-                }
-                yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<UpdateOperation>.FromValues((IReadOnlyList<UpdateOperation>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

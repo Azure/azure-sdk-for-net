@@ -12,7 +12,7 @@ using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
-namespace Azure.IoT._DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Extension methods to add <see cref="DeviceUpdateClient"/> to an <see cref="IHostApplicationBuilder"/>. </summary>
     [Experimental("SCME0002")]

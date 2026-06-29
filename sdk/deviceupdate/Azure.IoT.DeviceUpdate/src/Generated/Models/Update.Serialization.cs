@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 
-namespace Azure.IoT._DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Update metadata. </summary>
     public partial class Update : IJsonModel<Update>
@@ -45,7 +45,7 @@ namespace Azure.IoT._DeviceUpdate
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureIoT_DeviceUpdateContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureIoTDeviceUpdateContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(Update)} does not support writing '{options.Format}' format.");
             }
@@ -249,7 +249,7 @@ namespace Azure.IoT._DeviceUpdate
                     List<Compatibility> array = new List<Compatibility>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(_DeviceUpdate.Compatibility.DeserializeCompatibility(item, options));
+                        array.Add(DeviceUpdate.Compatibility.DeserializeCompatibility(item, options));
                     }
                     compatibility = array;
                     continue;

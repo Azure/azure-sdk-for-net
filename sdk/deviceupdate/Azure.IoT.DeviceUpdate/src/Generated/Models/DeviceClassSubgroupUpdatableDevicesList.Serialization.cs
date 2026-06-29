@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 
-namespace Azure.IoT._DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> The list of updatable devices for a device class subgroup. </summary>
     internal partial class DeviceClassSubgroupUpdatableDevicesList : IJsonModel<DeviceClassSubgroupUpdatableDevicesList>
@@ -45,7 +45,7 @@ namespace Azure.IoT._DeviceUpdate
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureIoT_DeviceUpdateContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureIoTDeviceUpdateContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DeviceClassSubgroupUpdatableDevicesList)} does not support writing '{options.Format}' format.");
             }

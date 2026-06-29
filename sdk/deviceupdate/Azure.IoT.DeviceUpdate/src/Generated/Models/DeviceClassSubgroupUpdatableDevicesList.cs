@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.IoT._DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> The list of updatable devices for a device class subgroup. </summary>
     internal partial class DeviceClassSubgroupUpdatableDevicesList

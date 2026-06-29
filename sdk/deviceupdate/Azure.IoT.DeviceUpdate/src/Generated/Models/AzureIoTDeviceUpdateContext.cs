@@ -7,7 +7,7 @@
 
 using System.ClientModel.Primitives;
 
-namespace Azure.IoT._DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
@@ -65,7 +65,7 @@ namespace Azure.IoT._DeviceUpdate
     [ModelReaderWriterBuildable(typeof(UpdateList))]
     [ModelReaderWriterBuildable(typeof(UpdateOperation))]
     [ModelReaderWriterBuildable(typeof(UpdateOperationsList))]
-    public partial class AzureIoT_DeviceUpdateContext : ModelReaderWriterContext
+    public partial class AzureIoTDeviceUpdateContext : ModelReaderWriterContext
     {
     }
 }

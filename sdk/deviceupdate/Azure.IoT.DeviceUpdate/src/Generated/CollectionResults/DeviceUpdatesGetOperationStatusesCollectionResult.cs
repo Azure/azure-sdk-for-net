@@ -14,30 +14,40 @@ using Azure.Core.Pipeline;
 
 namespace Azure.IoT.DeviceUpdate
 {
-    internal partial class DeviceManagementGetDeviceClassesCollectionResult : Pageable<BinaryData>
+    internal partial class DeviceUpdatesGetOperationStatusesCollectionResult : Pageable<BinaryData>
     {
-        private readonly DeviceManagement _client;
+        private readonly DeviceUpdates _client;
         private readonly string _filter;
+        private readonly int? _maxCount;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of DeviceManagementGetDeviceClassesCollectionResult, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The DeviceManagement client used to send requests. </param>
-        /// <param name="filter"> Restricts the set of device classes returned. You can filter on friendly name. </param>
+        /// <summary> Initializes a new instance of DeviceUpdatesGetOperationStatusesCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The DeviceUpdates client used to send requests. </param>
+        /// <param name="filter">
+        /// Optional to filter operations by status property. Only one specific filter is
+        /// supported: "status eq 'NotStarted' or status eq 'Running'"
+        /// </param>
+        /// <param name="maxCount">
+        /// Specifies a non-negative integer n that limits the number of items returned
+        /// from a collection. The service returns the number of available items up to but
+        /// not greater than the specified value n.
+        /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DeviceManagementGetDeviceClassesCollectionResult(DeviceManagement client, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public DeviceUpdatesGetOperationStatusesCollectionResult(DeviceUpdates client, string filter, int? maxCount, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _filter = filter;
+            _maxCount = maxCount;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of DeviceManagementGetDeviceClassesCollectionResult as an enumerable collection. </summary>
+        /// <summary> Gets the pages of DeviceUpdatesGetOperationStatusesCollectionResult as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of DeviceManagementGetDeviceClassesCollectionResult as an enumerable collection. </returns>
+        /// <returns> The pages of DeviceUpdatesGetOperationStatusesCollectionResult as an enumerable collection. </returns>
         public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -48,7 +58,7 @@ namespace Azure.IoT.DeviceUpdate
                 {
                     yield break;
                 }
-                DeviceClassesList result = (DeviceClassesList)response;
+                UpdateOperationsList result = (UpdateOperationsList)response;
                 nextPage = result.NextLink;
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Value)
@@ -68,7 +78,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetDeviceClassesRequest(nextLink, _filter, _context) : _client.CreateGetDeviceClassesRequest(_filter, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetOperationStatusesRequest(nextLink, _filter, _maxCount, _context) : _client.CreateGetOperationStatusesRequest(_filter, _maxCount, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

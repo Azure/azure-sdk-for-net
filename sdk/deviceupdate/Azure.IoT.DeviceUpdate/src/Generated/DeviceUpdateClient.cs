@@ -11,7 +11,7 @@ using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.IoT._DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Device Update for IoT Hub is an Azure service that enables customers to publish updates for their IoT devices to the cloud, and then deploy that update to their devices (approve updates to groups of devices managed and provisioned in IoT Hub). It leverages the proven security and reliability of the Windows Update platform, optimized for IoT devices. It works globally and knows when and how to update devices, enabling customers to focus on their business goals and let Device Update for IoT Hub handle the updates. </summary>
     public partial class DeviceUpdateClient
@@ -20,7 +20,7 @@ namespace Azure.IoT._DeviceUpdate
         private static readonly string[] AuthorizationScopes = new string[] { "https://api.adu.microsoft.com/.default" };
         private readonly string _apiVersion;
         private readonly string _instanceId;
-        private DeviceUpdate _cachedDeviceUpdate;
+        private DeviceUpdates _cachedDeviceUpdates;
         private DeviceManagement _cachedDeviceManagement;
 
         /// <summary> Initializes a new instance of DeviceUpdateClient for mocking. </summary>
@@ -78,7 +78,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <summary> Initializes a new instance of DeviceUpdateClient from a <see cref="DeviceUpdateClientSettings"/>. </summary>
         /// <param name="settings"> The settings for DeviceUpdateClient. </param>
         [Experimental("SCME0002")]
-        public DeviceUpdateClient(DeviceUpdateClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.InstanceId, settings?.Options)
+        public DeviceUpdateClient(DeviceUpdateClientSettings settings) : this(settings?.Endpoint, settings?.InstanceId, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
 
@@ -88,10 +88,10 @@ namespace Azure.IoT._DeviceUpdate
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary> Initializes a new instance of DeviceUpdate. </summary>
-        public virtual DeviceUpdate GetDeviceUpdateClient()
+        /// <summary> Initializes a new instance of DeviceUpdates. </summary>
+        public virtual DeviceUpdates GetDeviceUpdatesClient()
         {
-            return Volatile.Read(ref _cachedDeviceUpdate) ?? Interlocked.CompareExchange(ref _cachedDeviceUpdate, new DeviceUpdate(ClientDiagnostics, Pipeline, _endpoint, _apiVersion, _instanceId), null) ?? _cachedDeviceUpdate;
+            return Volatile.Read(ref _cachedDeviceUpdates) ?? Interlocked.CompareExchange(ref _cachedDeviceUpdates, new DeviceUpdates(ClientDiagnostics, Pipeline, _endpoint, _apiVersion, _instanceId), null) ?? _cachedDeviceUpdates;
         }
 
         /// <summary> Initializes a new instance of DeviceManagement. </summary>

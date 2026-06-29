@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.IoT._DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> The DeviceManagement sub-client. </summary>
     public partial class DeviceManagement
@@ -29,10 +29,10 @@ namespace Azure.IoT._DeviceUpdate
         /// <summary> Initializes a new instance of DeviceManagement. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> The Device Update for IoT Hub account endpoint (hostname only, no protocol). </param>
+        /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
         /// <param name="instanceId"></param>
-        internal DeviceManagement(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion, string instanceId)
+        internal DeviceManagement(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion, string instanceId)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;

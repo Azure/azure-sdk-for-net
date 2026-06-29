@@ -7,18 +7,16 @@
 # names cannot be changed. The suppressions here record SDK-team approval
 # for keeping those shipped names.
 
-# AZC0012 — "Type name 'X' is too generic". Every name below was already
-# part of the 1.0.0 public API. Renaming any of them would be a binary-
-# breaking change for every existing customer; the warning is silenced
-# per-type so it stays active for any new types added in the future.
-nowarn:AZC0012 T:Azure.IoT.DeviceUpdate.Device
-nowarn:AZC0012 T:Azure.IoT.DeviceUpdate.Group
-nowarn:AZC0012 T:Azure.IoT.DeviceUpdate.Instructions
-nowarn:AZC0012 T:Azure.IoT.DeviceUpdate.Step
-nowarn:AZC0012 T:Azure.IoT.DeviceUpdate.Update
-nowarn:AZC0012 T:Azure.IoT.DeviceUpdate.Compatibility
-nowarn:AZC0012 T:Azure.IoT.DeviceUpdate.Deployment
-nowarn:AZC0012 T:Azure.IoT.DeviceUpdate.Error
+# AZC0012 — "Type name 'X' is too generic". The generic-named types below
+# (Device, Group, Instructions, Step, Update, Compatibility, Deployment,
+# Error) were all part of the 1.0.0 GA public API; renaming any of them
+# would be a binary-breaking change for every existing customer. Suppressed
+# assembly-wide (not per-type) because AZC0012 is emitted at
+# DiagnosticSeverity.Error, and Roslyn's DiagnosticSuppressor pipeline does
+# not honor scoped `T:` suppressions for Error-severity diagnostics — the
+# same limitation documented for AZC0034 below (see
+# eng/analyzerallowlist/README.md, "Limitation").
+nowarn:AZC0012
 
 # AZC0034 — "Type name conflicts with another library". Both `Error` and
 # `InnerError` are 1.0.0 GA types and match the field names ("error" /

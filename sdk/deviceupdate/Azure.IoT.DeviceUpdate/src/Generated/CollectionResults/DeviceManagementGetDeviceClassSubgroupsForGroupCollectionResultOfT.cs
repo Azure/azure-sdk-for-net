@@ -11,7 +11,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.IoT._DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
     internal partial class DeviceManagementGetDeviceClassSubgroupsForGroupCollectionResultOfT : Pageable<DeviceClassSubgroup>
     {
@@ -55,8 +55,8 @@ namespace Azure.IoT._DeviceUpdate
                     yield break;
                 }
                 DeviceClassSubgroupsList result = (DeviceClassSubgroupsList)response;
-                yield return Page<DeviceClassSubgroup>.FromValues((IReadOnlyList<DeviceClassSubgroup>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DeviceClassSubgroup>.FromValues((IReadOnlyList<DeviceClassSubgroup>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

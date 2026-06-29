@@ -13,27 +13,27 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.IoT._DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
-    /// <summary> The DeviceUpdate sub-client. </summary>
-    public partial class DeviceUpdate
+    /// <summary> The DeviceUpdates sub-client. </summary>
+    public partial class DeviceUpdates
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly string _instanceId;
 
-        /// <summary> Initializes a new instance of DeviceUpdate for mocking. </summary>
-        protected DeviceUpdate()
+        /// <summary> Initializes a new instance of DeviceUpdates for mocking. </summary>
+        protected DeviceUpdates()
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceUpdate. </summary>
+        /// <summary> Initializes a new instance of DeviceUpdates. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> The Device Update for IoT Hub account endpoint (hostname only, no protocol). </param>
+        /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
         /// <param name="instanceId"></param>
-        internal DeviceUpdate(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion, string instanceId)
+        internal DeviceUpdates(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion, string instanceId)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -63,7 +63,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetUpdates(string search, string filter, RequestContext context)
         {
-            return new DeviceUpdateGetUpdatesCollectionResult(this, search, filter, context, "DeviceUpdate.GetUpdates");
+            return new DeviceUpdatesGetUpdatesCollectionResult(this, search, filter, context, "DeviceUpdates.GetUpdates");
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetUpdatesAsync(string search, string filter, RequestContext context)
         {
-            return new DeviceUpdateGetUpdatesAsyncCollectionResult(this, search, filter, context, "DeviceUpdate.GetUpdates");
+            return new DeviceUpdatesGetUpdatesAsyncCollectionResult(this, search, filter, context, "DeviceUpdates.GetUpdates");
         }
 
         /// <summary> Get a list of all updates that have been imported to Device Update for IoT Hub. </summary>
@@ -91,7 +91,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<Update> GetUpdates(string search = default, string filter = default, CancellationToken cancellationToken = default)
         {
-            return new DeviceUpdateGetUpdatesCollectionResultOfT(this, search, filter, cancellationToken.ToRequestContext(), "DeviceUpdate.GetUpdates");
+            return new DeviceUpdatesGetUpdatesCollectionResultOfT(this, search, filter, cancellationToken.ToRequestContext(), "DeviceUpdates.GetUpdates");
         }
 
         /// <summary> Get a list of all updates that have been imported to Device Update for IoT Hub. </summary>
@@ -101,7 +101,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<Update> GetUpdatesAsync(string search = default, string filter = default, CancellationToken cancellationToken = default)
         {
-            return new DeviceUpdateGetUpdatesAsyncCollectionResultOfT(this, search, filter, cancellationToken.ToRequestContext(), "DeviceUpdate.GetUpdates");
+            return new DeviceUpdatesGetUpdatesAsyncCollectionResultOfT(this, search, filter, cancellationToken.ToRequestContext(), "DeviceUpdates.GetUpdates");
         }
 
         /// <summary>
@@ -115,14 +115,14 @@ namespace Azure.IoT._DeviceUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual Operation ImportUpdate(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceUpdate.ImportUpdate");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceUpdates.ImportUpdate");
             scope.Start();
             try
             {
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateImportUpdateRequest(content, context);
-                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "DeviceUpdate.ImportUpdate", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "DeviceUpdates.ImportUpdate", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -142,14 +142,14 @@ namespace Azure.IoT._DeviceUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Operation> ImportUpdateAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceUpdate.ImportUpdate");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceUpdates.ImportUpdate");
             scope.Start();
             try
             {
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateImportUpdateRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DeviceUpdate.ImportUpdate", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DeviceUpdates.ImportUpdate", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -220,7 +220,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetUpdate(string provider, string name, string version, ETag? ifNoneMatch, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceUpdate.GetUpdate");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceUpdates.GetUpdate");
             scope.Start();
             try
             {
@@ -260,7 +260,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetUpdateAsync(string provider, string name, string version, ETag? ifNoneMatch, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceUpdate.GetUpdate");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceUpdates.GetUpdate");
             scope.Start();
             try
             {
@@ -336,7 +336,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual Operation DeleteUpdate(WaitUntil waitUntil, string provider, string name, string version, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceUpdate.DeleteUpdate");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceUpdates.DeleteUpdate");
             scope.Start();
             try
             {
@@ -345,7 +345,7 @@ namespace Azure.IoT._DeviceUpdate
                 Argument.AssertNotNullOrEmpty(version, nameof(version));
 
                 using HttpMessage message = CreateDeleteUpdateRequest(provider, name, version, context);
-                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "DeviceUpdate.DeleteUpdate", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "DeviceUpdates.DeleteUpdate", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -368,7 +368,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Operation> DeleteUpdateAsync(WaitUntil waitUntil, string provider, string name, string version, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceUpdate.DeleteUpdate");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceUpdates.DeleteUpdate");
             scope.Start();
             try
             {
@@ -377,7 +377,7 @@ namespace Azure.IoT._DeviceUpdate
                 Argument.AssertNotNullOrEmpty(version, nameof(version));
 
                 using HttpMessage message = CreateDeleteUpdateRequest(provider, name, version, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DeviceUpdate.DeleteUpdate", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DeviceUpdates.DeleteUpdate", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -440,7 +440,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetProviders(RequestContext context)
         {
-            return new DeviceUpdateGetProvidersCollectionResult(this, context, "DeviceUpdate.GetProviders");
+            return new DeviceUpdatesGetProvidersCollectionResult(this, context, "DeviceUpdates.GetProviders");
         }
 
         /// <summary>
@@ -457,7 +457,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetProvidersAsync(RequestContext context)
         {
-            return new DeviceUpdateGetProvidersAsyncCollectionResult(this, context, "DeviceUpdate.GetProviders");
+            return new DeviceUpdatesGetProvidersAsyncCollectionResult(this, context, "DeviceUpdates.GetProviders");
         }
 
         /// <summary>
@@ -468,7 +468,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<string> GetProviders(CancellationToken cancellationToken = default)
         {
-            return new DeviceUpdateGetProvidersCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DeviceUpdate.GetProviders");
+            return new DeviceUpdatesGetProvidersCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DeviceUpdates.GetProviders");
         }
 
         /// <summary>
@@ -479,7 +479,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<string> GetProvidersAsync(CancellationToken cancellationToken = default)
         {
-            return new DeviceUpdateGetProvidersAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DeviceUpdate.GetProviders");
+            return new DeviceUpdatesGetProvidersAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DeviceUpdates.GetProviders");
         }
 
         /// <summary>
@@ -500,7 +500,7 @@ namespace Azure.IoT._DeviceUpdate
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
 
-            return new DeviceUpdateGetNamesCollectionResult(this, provider, context, "DeviceUpdate.GetNames");
+            return new DeviceUpdatesGetNamesCollectionResult(this, provider, context, "DeviceUpdates.GetNames");
         }
 
         /// <summary>
@@ -521,7 +521,7 @@ namespace Azure.IoT._DeviceUpdate
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
 
-            return new DeviceUpdateGetNamesAsyncCollectionResult(this, provider, context, "DeviceUpdate.GetNames");
+            return new DeviceUpdatesGetNamesAsyncCollectionResult(this, provider, context, "DeviceUpdates.GetNames");
         }
 
         /// <summary> Get a list of all update names that match the specified provider. </summary>
@@ -534,7 +534,7 @@ namespace Azure.IoT._DeviceUpdate
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
 
-            return new DeviceUpdateGetNamesCollectionResultOfT(this, provider, cancellationToken.ToRequestContext(), "DeviceUpdate.GetNames");
+            return new DeviceUpdatesGetNamesCollectionResultOfT(this, provider, cancellationToken.ToRequestContext(), "DeviceUpdates.GetNames");
         }
 
         /// <summary> Get a list of all update names that match the specified provider. </summary>
@@ -547,7 +547,7 @@ namespace Azure.IoT._DeviceUpdate
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
 
-            return new DeviceUpdateGetNamesAsyncCollectionResultOfT(this, provider, cancellationToken.ToRequestContext(), "DeviceUpdate.GetNames");
+            return new DeviceUpdatesGetNamesAsyncCollectionResultOfT(this, provider, cancellationToken.ToRequestContext(), "DeviceUpdates.GetNames");
         }
 
         /// <summary>
@@ -571,13 +571,13 @@ namespace Azure.IoT._DeviceUpdate
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new DeviceUpdateGetVersionsCollectionResult(
+            return new DeviceUpdatesGetVersionsCollectionResult(
                 this,
                 provider,
                 name,
                 filter,
                 context,
-                "DeviceUpdate.GetVersions");
+                "DeviceUpdates.GetVersions");
         }
 
         /// <summary>
@@ -601,13 +601,13 @@ namespace Azure.IoT._DeviceUpdate
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new DeviceUpdateGetVersionsAsyncCollectionResult(
+            return new DeviceUpdatesGetVersionsAsyncCollectionResult(
                 this,
                 provider,
                 name,
                 filter,
                 context,
-                "DeviceUpdate.GetVersions");
+                "DeviceUpdates.GetVersions");
         }
 
         /// <summary> Get a list of all update versions that match the specified provider and name. </summary>
@@ -623,13 +623,13 @@ namespace Azure.IoT._DeviceUpdate
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new DeviceUpdateGetVersionsCollectionResultOfT(
+            return new DeviceUpdatesGetVersionsCollectionResultOfT(
                 this,
                 provider,
                 name,
                 filter,
                 cancellationToken.ToRequestContext(),
-                "DeviceUpdate.GetVersions");
+                "DeviceUpdates.GetVersions");
         }
 
         /// <summary> Get a list of all update versions that match the specified provider and name. </summary>
@@ -645,13 +645,13 @@ namespace Azure.IoT._DeviceUpdate
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new DeviceUpdateGetVersionsAsyncCollectionResultOfT(
+            return new DeviceUpdatesGetVersionsAsyncCollectionResultOfT(
                 this,
                 provider,
                 name,
                 filter,
                 cancellationToken.ToRequestContext(),
-                "DeviceUpdate.GetVersions");
+                "DeviceUpdates.GetVersions");
         }
 
         /// <summary>
@@ -676,13 +676,13 @@ namespace Azure.IoT._DeviceUpdate
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            return new DeviceUpdateGetFilesCollectionResult(
+            return new DeviceUpdatesGetFilesCollectionResult(
                 this,
                 provider,
                 name,
                 version,
                 context,
-                "DeviceUpdate.GetFiles");
+                "DeviceUpdates.GetFiles");
         }
 
         /// <summary>
@@ -707,13 +707,13 @@ namespace Azure.IoT._DeviceUpdate
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            return new DeviceUpdateGetFilesAsyncCollectionResult(
+            return new DeviceUpdatesGetFilesAsyncCollectionResult(
                 this,
                 provider,
                 name,
                 version,
                 context,
-                "DeviceUpdate.GetFiles");
+                "DeviceUpdates.GetFiles");
         }
 
         /// <summary> Get a list of all update file identifiers for the specified version. </summary>
@@ -730,13 +730,13 @@ namespace Azure.IoT._DeviceUpdate
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            return new DeviceUpdateGetFilesCollectionResultOfT(
+            return new DeviceUpdatesGetFilesCollectionResultOfT(
                 this,
                 provider,
                 name,
                 version,
                 cancellationToken.ToRequestContext(),
-                "DeviceUpdate.GetFiles");
+                "DeviceUpdates.GetFiles");
         }
 
         /// <summary> Get a list of all update file identifiers for the specified version. </summary>
@@ -753,13 +753,13 @@ namespace Azure.IoT._DeviceUpdate
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            return new DeviceUpdateGetFilesAsyncCollectionResultOfT(
+            return new DeviceUpdatesGetFilesAsyncCollectionResultOfT(
                 this,
                 provider,
                 name,
                 version,
                 cancellationToken.ToRequestContext(),
-                "DeviceUpdate.GetFiles");
+                "DeviceUpdates.GetFiles");
         }
 
         /// <summary>
@@ -785,7 +785,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetFile(string provider, string name, string version, string fileId, ETag? ifNoneMatch, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceUpdate.GetFile");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceUpdates.GetFile");
             scope.Start();
             try
             {
@@ -827,7 +827,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetFileAsync(string provider, string name, string version, string fileId, ETag? ifNoneMatch, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceUpdate.GetFile");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceUpdates.GetFile");
             scope.Start();
             try
             {
@@ -918,7 +918,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetOperationStatuses(string filter, int? maxCount, RequestContext context)
         {
-            return new DeviceUpdateGetOperationStatusesCollectionResult(this, filter, maxCount, context, "DeviceUpdate.GetOperationStatuses");
+            return new DeviceUpdatesGetOperationStatusesCollectionResult(this, filter, maxCount, context, "DeviceUpdates.GetOperationStatuses");
         }
 
         /// <summary>
@@ -945,7 +945,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetOperationStatusesAsync(string filter, int? maxCount, RequestContext context)
         {
-            return new DeviceUpdateGetOperationStatusesAsyncCollectionResult(this, filter, maxCount, context, "DeviceUpdate.GetOperationStatuses");
+            return new DeviceUpdatesGetOperationStatusesAsyncCollectionResult(this, filter, maxCount, context, "DeviceUpdates.GetOperationStatuses");
         }
 
         /// <summary>
@@ -966,7 +966,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<UpdateOperation> GetOperationStatuses(string filter = default, int? maxCount = default, CancellationToken cancellationToken = default)
         {
-            return new DeviceUpdateGetOperationStatusesCollectionResultOfT(this, filter, maxCount, cancellationToken.ToRequestContext(), "DeviceUpdate.GetOperationStatuses");
+            return new DeviceUpdatesGetOperationStatusesCollectionResultOfT(this, filter, maxCount, cancellationToken.ToRequestContext(), "DeviceUpdates.GetOperationStatuses");
         }
 
         /// <summary>
@@ -987,7 +987,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<UpdateOperation> GetOperationStatusesAsync(string filter = default, int? maxCount = default, CancellationToken cancellationToken = default)
         {
-            return new DeviceUpdateGetOperationStatusesAsyncCollectionResultOfT(this, filter, maxCount, cancellationToken.ToRequestContext(), "DeviceUpdate.GetOperationStatuses");
+            return new DeviceUpdatesGetOperationStatusesAsyncCollectionResultOfT(this, filter, maxCount, cancellationToken.ToRequestContext(), "DeviceUpdates.GetOperationStatuses");
         }
 
         /// <summary>
@@ -1010,7 +1010,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetOperationStatus(string operationId, ETag? ifNoneMatch, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceUpdate.GetOperationStatus");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceUpdates.GetOperationStatus");
             scope.Start();
             try
             {
@@ -1046,7 +1046,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetOperationStatusAsync(string operationId, ETag? ifNoneMatch, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceUpdate.GetOperationStatus");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceUpdates.GetOperationStatus");
             scope.Start();
             try
             {

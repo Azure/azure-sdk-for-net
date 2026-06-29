@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.IoT._DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
     internal partial class DeviceManagementGetDeploymentsForDeviceClassSubgroupAsyncCollectionResultOfT : AsyncPageable<Deployment>
     {
@@ -55,8 +55,8 @@ namespace Azure.IoT._DeviceUpdate
                     yield break;
                 }
                 DeploymentsList result = (DeploymentsList)response;
-                yield return Page<Deployment>.FromValues((IReadOnlyList<Deployment>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<Deployment>.FromValues((IReadOnlyList<Deployment>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

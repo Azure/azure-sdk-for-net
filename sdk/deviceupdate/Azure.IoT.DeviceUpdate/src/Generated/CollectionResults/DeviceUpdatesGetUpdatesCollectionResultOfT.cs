@@ -11,30 +11,36 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.IoT._DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
-    internal partial class DeviceUpdateGetProvidersCollectionResultOfT : Pageable<string>
+    internal partial class DeviceUpdatesGetUpdatesCollectionResultOfT : Pageable<Update>
     {
-        private readonly DeviceUpdate _client;
+        private readonly DeviceUpdates _client;
+        private readonly string _search;
+        private readonly string _filter;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of DeviceUpdateGetProvidersCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The DeviceUpdate client used to send requests. </param>
+        /// <summary> Initializes a new instance of DeviceUpdatesGetUpdatesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The DeviceUpdates client used to send requests. </param>
+        /// <param name="search"> Request updates matching a free-text search expression. </param>
+        /// <param name="filter"> Optional to filter updates by isDeployable property. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DeviceUpdateGetProvidersCollectionResultOfT(DeviceUpdate client, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public DeviceUpdatesGetUpdatesCollectionResultOfT(DeviceUpdates client, string search, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
+            _search = search;
+            _filter = filter;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of DeviceUpdateGetProvidersCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of DeviceUpdatesGetUpdatesCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of DeviceUpdateGetProvidersCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<string>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of DeviceUpdatesGetUpdatesCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<Update>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -44,14 +50,13 @@ namespace Azure.IoT._DeviceUpdate
                 {
                     yield break;
                 }
-                StringsList result = (StringsList)response;
-                yield return Page<string>.FromValues((IReadOnlyList<string>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
-                string nextPageString = result.NextLink;
-                if (string.IsNullOrEmpty(nextPageString))
+                UpdateList result = (UpdateList)response;
+                nextPage = result.NextLink;
+                yield return Page<Update>.FromValues((IReadOnlyList<Update>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                if (nextPage == null)
                 {
                     yield break;
                 }
-                nextPage = new Uri(nextPageString, UriKind.RelativeOrAbsolute);
             }
         }
 
@@ -60,7 +65,7 @@ namespace Azure.IoT._DeviceUpdate
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetProvidersRequest(nextLink, _context) : _client.CreateGetProvidersRequest(_context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetUpdatesRequest(nextLink, _search, _filter, _context) : _client.CreateGetUpdatesRequest(_search, _filter, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
