@@ -4,6 +4,24 @@
 
 ### Features Added
 
+- Added GitHub Copilot skills under `.github/skills/` to help users
+  iteratively author custom analyzers in VS Code with Copilot:
+  - **`cu-sdk-author-analyzer`** — author and refine a custom analyzer
+    for a single document type (layout extraction → schema drafting →
+    validation → batch test → agent review → refine cycle). Document
+    modality only today; audio/video/image are planned.
+  - **`cu-sdk-author-analyzer-classify-route`** — author and refine a
+    classify-and-route pipeline for mixed-document packets (e.g.
+    invoice + bank statement + loan application in one PDF), with
+    per-category agent review.
+
+  Both skills delegate to a small `cu-skill` .NET tool under
+  `.github/skills/_shared/` that exposes three subcommands —
+  `extract-layout`, `create-and-test`, and `create-and-test-router` —
+  and a pure-C# `SchemaValidator` that catches structural mistakes
+  (unknown `baseAnalyzerId`, missing `fieldSchema`, malformed
+  `contentCategories` routes) before a service round-trip.
+
 ### Breaking Changes
 
 ### Bugs Fixed

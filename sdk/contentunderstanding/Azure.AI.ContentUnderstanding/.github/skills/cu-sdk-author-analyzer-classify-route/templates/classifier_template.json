@@ -1,0 +1,32 @@
+{
+  "_comment": "Starter template for a classify-and-route outer classifier. Copy to .local_only/schemas/<name>_classifier_v1.json and edit. See SKILL.md Step 3 for the rules. Each contentCategories entry's analyzerId is an alias resolved by --inner-schema alias=path at runtime; values starting with 'prebuilt-' (e.g. prebuilt-invoice, prebuilt-receipt) are used as-is and don't need an inner schema. Keys beginning with '_' (_comment, _optional_*) are stripped from the request body before submission.",
+  "baseAnalyzerId": "prebuilt-document",
+  "description": "REPLACE: one-line description of what this packet contains.",
+  "config": {
+    "_comment": "enableSegment=true is required for multi-document packets. omitContent=true keeps the outer response small \u2014 inner analyzers see the full content independently.",
+    "enableSegment": true,
+    "omitContent": true,
+    "_optional_returnDetails": true,
+    "contentCategories": {
+      "REPLACE_category_a": {
+        "_comment": "Category routed to a custom inner analyzer. The analyzerId value must match an --inner-schema alias=path passed on the command line.",
+        "description": "REPLACE: text-anchored description \u2014 reference labels, headings, table column names. Never visual cues.",
+        "analyzerId": "REPLACE_category_a"
+      },
+      "REPLACE_category_b": {
+        "_comment": "Category routed to a service prebuilt analyzer. Any analyzerId starting with 'prebuilt-' (e.g. prebuilt-invoice, prebuilt-receipt) is used as-is and does NOT need a corresponding --inner-schema entry.",
+        "description": "REPLACE: text-anchored description for a document type covered by a prebuilt analyzer.",
+        "analyzerId": "prebuilt-invoice"
+      },
+      "other": {
+        "_comment": "Classify-only category with no analyzerId \u2014 segments matching this category are labelled but no fields are extracted. Recommended catch-all; without it every page is forced into one of the defined categories.",
+        "description": "REPLACE: catch-all category for pages that match none of the above."
+      }
+    }
+  },
+  "models": {
+    "_comment": "Required when contentCategories is set, unless the resource has defaults via samples/sample_update_defaults.py.",
+    "completion": "gpt-4.1",
+    "embedding": "text-embedding-3-large"
+  }
+}

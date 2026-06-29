@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>AzureSdkContentUnderstanding.Skills</RootNamespace>
+    <AssemblyName>cu-skill</AssemblyName>
+    <!-- Skill scripts are tooling, not shipped — suppress noisy analyzer warnings. -->
+    <NoWarn>CS8600;CS8602;CS8604;CS0168;CS0219;CA1303;CA1031;CA2007</NoWarn>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <!--
+      Reference the locally-built Azure.AI.ContentUnderstanding so the skill
+      always runs against the SDK version in this branch. Matches the pattern
+      from .sample_runner/.
+    -->
+    <Reference Include="Azure.AI.ContentUnderstanding">
+      <HintPath>$(MSBuildThisFileDirectory)../../../../../../artifacts/bin/Azure.AI.ContentUnderstanding/Debug/net10.0/Azure.AI.ContentUnderstanding.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <PackageReference Include="Azure.Core" Version="1.*" />
+    <PackageReference Include="Azure.Identity" Version="1.*" />
+  </ItemGroup>
+</Project>

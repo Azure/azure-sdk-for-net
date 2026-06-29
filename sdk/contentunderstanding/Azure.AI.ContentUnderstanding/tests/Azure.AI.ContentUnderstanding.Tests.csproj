@@ -14,6 +14,15 @@
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs"
              Link="Shared\Core\AzureResourceProviderNamespaceAttribute.cs" />
+    <!--
+      Link the analyzer-authoring skill's pure-C# validator so we can unit-test
+      it without depending on cu-skill.csproj (which opts out of central package
+      management and references the built SDK DLL via HintPath). The source is
+      intentionally pure System.Text.Json with no Azure.* imports — see the
+      SkillSchemaValidatorTests purity guard.
+    -->
+    <Compile Include="..\.github\skills\_shared\SchemaValidator.cs"
+             Link="Skills\_shared\SchemaValidator.cs" />
   </ItemGroup>
 
   <ItemGroup>

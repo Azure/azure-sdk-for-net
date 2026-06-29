@@ -323,6 +323,65 @@ using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsole
 
 For more information, see [Diagnostics samples][diagnostics].
 
+## What's New
+
+See [CHANGELOG.md][changelog] for the full release history.
+
+Recent highlights:
+
+- **Authoring skills for GitHub Copilot.** Two new skills,
+  [`cu-sdk-author-analyzer`][cu_sdk_author_analyzer_skill] (single document
+  type) and
+  [`cu-sdk-author-analyzer-classify-route`][cu_sdk_author_analyzer_classify_route_skill]
+  (mixed-document packets), guide the user and Copilot through an iterative
+  schema → test → review cycle for authoring custom Content Understanding
+  analyzers. See the [GitHub Copilot Skills](#github-copilot-skills) section
+  below.
+- **`ToLlmInput` extension method** for converting `AnalysisResult` into
+  LLM-friendly Markdown with YAML front matter. See
+  [Sample05_CreateClassifier][sample05] and
+  [Sample_Advanced_ToLlmInput][sample-advanced-to-llm-input].
+
+## GitHub Copilot Skills
+
+This package includes [GitHub Copilot][github_copilot] skills under
+`.github/skills/` that provide interactive, AI-assisted workflows for authoring
+custom Content Understanding analyzers. In VS Code, Copilot can use these
+skills to guide the user through layout extraction, schema authoring,
+validation, batch testing, agent review, and refinement.
+
+### Available Skills
+
+| Skill | Description | How to Use |
+|-------|-------------|------------|
+| [**cu-sdk-author-analyzer**][cu_sdk_author_analyzer_skill] | Iteratively author and test a custom analyzer for a single **document** type — layout extraction, schema drafting, local validation, batch test, agent review, and refine cycle. Document modality only today; audio/video/image are planned. | Ask: *"Help me author a custom analyzer for these invoices"* |
+| [**cu-sdk-author-analyzer-classify-route**][cu_sdk_author_analyzer_classify_route_skill] | Iteratively author and test a classify-and-route pipeline for mixed-document packets (e.g. invoice + bank statement + loan application in one PDF). Includes per-category agent review and refinement of both classifier descriptions and inner-schema field descriptions. | Ask: *"Help me author an analyzer for this mixed financial packet"* |
+
+Both skills delegate to a small `cu-skill` .NET tool under
+`.github/skills/_shared/` that exposes three subcommands: `extract-layout`,
+`create-and-test`, and `create-and-test-router`. The tool builds against the
+locally built SDK DLL, so you can iterate on schemas without leaving VS Code.
+
+### Using Skills in VS Code
+
+1. In VS Code, open the package folder `sdk/contentunderstanding/Azure.AI.ContentUnderstanding` (File → Open Folder). This is required for VS Code to discover the skills in `.github/skills/`.
+2. Ensure [GitHub Copilot][github_copilot] is installed and activated.
+3. Open Copilot Chat from the Chat view or Command Palette.
+4. Ask a question related to authoring an analyzer; Copilot can use the relevant skill when appropriate.
+
+**Example prompts:**
+
+- *"Help me author a custom analyzer for these invoices"* → likely uses `cu-sdk-author-analyzer`
+- *"This PDF mixes invoices, bank statements, and loan applications — help me extract fields"* → likely uses `cu-sdk-author-analyzer-classify-route`
+
+### Troubleshooting Skill Selection
+
+If Copilot does not use the expected skill, try the following:
+
+1. Be explicit about intent and context in one prompt (for example: *"Use cu-sdk-author-analyzer to extract these fields"*).
+2. Include your goal and current state (for example: *"I already have a layout file at `.local_only/layout/invoice.layout.md`; help me draft the schema"*).
+3. Ask for a step-by-step interactive flow when needed (for example: *"Guide me step by step through authoring a custom analyzer"*).
+
 ## Next steps
 
 * [Sample 00: Configure model deployment defaults][sample00] - Required one-time setup to configure model deployments for prebuilt and custom analyzers
@@ -361,8 +420,13 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [samples_directory]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples
 [sample00]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_UpdateDefaults.md
 [sample01]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md
+[sample05]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample05_CreateClassifier.md
 [prebuilt-analyzers-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/prebuilt-analyzers
 [sample-advanced-to-llm-input]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample_Advanced_ToLlmInput.md
+[changelog]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/CHANGELOG.md
+[github_copilot]: https://github.com/features/copilot
+[cu_sdk_author_analyzer_skill]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/.github/skills/cu-sdk-author-analyzer
+[cu_sdk_author_analyzer_classify_route_skill]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/.github/skills/cu-sdk-author-analyzer-classify-route
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
