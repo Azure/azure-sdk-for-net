@@ -11,18 +11,18 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Data.AppConfiguration
 {
-    internal class ConditionalPageableImplementation
+    internal class ConditionalPageableImplementation<T>
     {
         private readonly Func<MatchConditions, int?, HttpMessage> _createFirstPageRequest;
         private readonly Func<MatchConditions, int?, string, HttpMessage> _createNextPageRequest;
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly Func<Response, (List<ConfigurationSetting> Values, string NextLink)> _responseParser;
+        private readonly Func<Response, (List<T> Values, string NextLink)> _responseParser;
         private readonly string _scopeName;
         private readonly CancellationToken _cancellationToken;
         private readonly ErrorOptions _errorOptions;
 
-        public ConditionalPageableImplementation(Func<MatchConditions, int?, HttpMessage> createFirstPageRequest, Func<MatchConditions, int?, string, HttpMessage> createNextPageRequest, Func<Response, (List<ConfigurationSetting> Values, string NextLink)> responseParser, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, string scopeName, RequestContext requestContext)
+        public ConditionalPageableImplementation(Func<MatchConditions, int?, HttpMessage> createFirstPageRequest, Func<MatchConditions, int?, string, HttpMessage> createNextPageRequest, Func<Response, (List<T> Values, string NextLink)> responseParser, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, string scopeName, RequestContext requestContext)
         {
             _createFirstPageRequest = createFirstPageRequest;
             _createNextPageRequest = createNextPageRequest;
@@ -34,7 +34,7 @@ namespace Azure.Data.AppConfiguration
             _errorOptions = requestContext?.ErrorOptions ?? ErrorOptions.Default;
         }
 
-        public async IAsyncEnumerator<ConfigurationSetting> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+        public async IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
         {
             string nextLink = null;
             do
@@ -52,7 +52,7 @@ namespace Azure.Data.AppConfiguration
             } while (!string.IsNullOrEmpty(nextLink));
         }
 
-        public async IAsyncEnumerable<Page<ConfigurationSetting>> AsPagesAsync(IEnumerable<MatchConditions> conditionsEnumerable, string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
+        public async IAsyncEnumerable<Page<T>> AsPagesAsync(IEnumerable<MatchConditions> conditionsEnumerable, string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             var enumerator = conditionsEnumerable.GetEnumerator();
             string nextLink = continuationToken;
@@ -68,7 +68,7 @@ namespace Azure.Data.AppConfiguration
             } while (!string.IsNullOrEmpty(nextLink));
         }
 
-        public IEnumerator<ConfigurationSetting> GetEnumerator()
+        public IEnumerator<T> GetEnumerator()
         {
             string nextLink = null;
             do
@@ -86,7 +86,7 @@ namespace Azure.Data.AppConfiguration
             } while (!string.IsNullOrEmpty(nextLink));
         }
 
-        public IEnumerable<Page<ConfigurationSetting>> AsPages(IEnumerable<MatchConditions> conditionsEnumerable, string continuationToken, int? pageSizeHint)
+        public IEnumerable<Page<T>> AsPages(IEnumerable<MatchConditions> conditionsEnumerable, string continuationToken, int? pageSizeHint)
         {
             var enumerator = conditionsEnumerable.GetEnumerator();
             string nextLink = continuationToken;
@@ -167,7 +167,7 @@ namespace Azure.Data.AppConfiguration
             return message.Response;
         }
 
-        private bool TryGetItemsFromResponse(Response response, out string nextLink, out List<ConfigurationSetting> items)
+        private bool TryGetItemsFromResponse(Response response, out string nextLink, out List<T> items)
         {
             if (response is null)
             {
@@ -184,9 +184,9 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        private Page<ConfigurationSetting> CreatePage(Response response, out string nextLink) =>
+        private Page<T> CreatePage(Response response, out string nextLink) =>
             TryGetItemsFromResponse(response, out nextLink, out var items)
-                ? Page<ConfigurationSetting>.FromValues(items, nextLink, response)
-                : Page<ConfigurationSetting>.FromValues(Array.Empty<ConfigurationSetting>(), nextLink, response);
+                ? Page<T>.FromValues(items, nextLink, response)
+                : Page<T>.FromValues(Array.Empty<T>(), nextLink, response);
     }
 }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -21,24 +22,27 @@ namespace Azure.Data.AppConfiguration.Tests
         private string GenerateName(string prefix = "ff-")
             => prefix + (Mode == RecordedTestMode.Playback ? Guid.NewGuid().ToString("N") : Recording.GenerateId());
 
-        private FeatureFlagClient GetClient()
+        private FeatureFlagClient GetClient(bool skipInstrumentation = false)
         {
             ConfigurationClientOptions clientOptions = new ConfigurationClientOptions(_serviceVersion);
             ConfigurationClientOptions options = InstrumentClientOptions(clientOptions);
             // Set audience AFTER InstrumentClientOptions, as it might reset the options
             options.Audience = TestEnvironment.GetAudience();
             ConfigurationClient configurationClient = new ConfigurationClient(new System.Uri(TestEnvironment.Endpoint), TestEnvironment.Credential, options);
-            return InstrumentClient(configurationClient.GetFeatureFlagClient());
+            FeatureFlagClient client = configurationClient.GetFeatureFlagClient();
+            // Conditional paging relies on the concrete pageable type, which client instrumentation
+            // wraps; such tests opt out of instrumentation and provide explicit sync/async variants.
+            return skipInstrumentation ? client : InstrumentClient(client);
         }
 
-        private async Task<FeatureFlagClient> GetClientOrSkipIfApiVersionUnsupportedAsync()
+        private async Task<FeatureFlagClient> GetClientOrSkipIfApiVersionUnsupportedAsync(bool skipInstrumentation = false)
         {
             if (Mode != RecordedTestMode.Live)
             {
                 Assert.Ignore("Feature flag preview tests run in Live mode only.");
             }
 
-            FeatureFlagClient service = GetClient();
+            FeatureFlagClient service = GetClient(skipInstrumentation);
 
             try
             {
@@ -332,6 +336,203 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 await SafeDeleteAsync(service, name, label);
                 await SafeDeleteAsync(service, name);
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetFeatureFlagIfChangedReturnsNotModifiedWhenEtagMatches()
+        {
+            FeatureFlagClient service = await GetClientOrSkipIfApiVersionUnsupportedAsync();
+            string name = GenerateName();
+
+            try
+            {
+                Response<FeatureFlag> added = await service.AddFeatureFlagAsync(name, enabled: true);
+
+                Response<FeatureFlag> response = await service.GetFeatureFlagAsync(added.Value, onlyIfChanged: true);
+
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(304));
+            }
+            finally
+            {
+                await SafeDeleteAsync(service, name);
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetFeatureFlagIfChangedReturnsFlagWhenEtagStale()
+        {
+            FeatureFlagClient service = await GetClientOrSkipIfApiVersionUnsupportedAsync();
+            string name = GenerateName();
+
+            try
+            {
+                Response<FeatureFlag> added = await service.AddFeatureFlagAsync(name, enabled: true);
+                // Bump the server-side etag so the client's copy is stale.
+                await service.SetFeatureFlagAsync(name, enabled: false);
+
+                Response<FeatureFlag> response = await service.GetFeatureFlagAsync(added.Value, onlyIfChanged: true);
+
+                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(response.Value.Enabled, Is.EqualTo(false));
+            }
+            finally
+            {
+                await SafeDeleteAsync(service, name);
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetFeatureFlagWithAcceptDateTimeReturnsFlag()
+        {
+            FeatureFlagClient service = await GetClientOrSkipIfApiVersionUnsupportedAsync();
+            string name = GenerateName();
+
+            try
+            {
+                Response<FeatureFlag> added = await service.AddFeatureFlagAsync(name, enabled: true);
+
+                Response<FeatureFlag> response = await service.GetFeatureFlagAsync(added.Value, DateTimeOffset.UtcNow);
+
+                Assert.That(response.Value.Name, Is.EqualTo(name));
+                Assert.That(response.Value.Enabled, Is.EqualTo(true));
+            }
+            finally
+            {
+                await SafeDeleteAsync(service, name);
+            }
+        }
+
+        [RecordedTest]
+        public async Task DeleteFeatureFlagWithOnlyIfUnchangedSucceedsWhenEtagMatches()
+        {
+            FeatureFlagClient service = await GetClientOrSkipIfApiVersionUnsupportedAsync();
+            string name = GenerateName();
+
+            Response<FeatureFlag> added = await service.AddFeatureFlagAsync(name, enabled: true);
+
+            Response response = await service.DeleteFeatureFlagAsync(added.Value, onlyIfUnchanged: true);
+            Assert.That(response.Status, Is.EqualTo(200));
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
+                async () => await service.GetFeatureFlagAsync(name));
+            Assert.That(ex.Status, Is.EqualTo(404));
+        }
+
+        [RecordedTest]
+        public async Task DeleteFeatureFlagWithOnlyIfUnchangedThrowsWhenEtagStale()
+        {
+            FeatureFlagClient service = await GetClientOrSkipIfApiVersionUnsupportedAsync();
+            string name = GenerateName();
+
+            try
+            {
+                Response<FeatureFlag> added = await service.AddFeatureFlagAsync(name, enabled: true);
+                // Bump the server-side etag so the client's copy is stale.
+                await service.SetFeatureFlagAsync(name, enabled: false);
+
+                RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
+                    async () => await service.DeleteFeatureFlagAsync(added.Value, onlyIfUnchanged: true));
+
+                Assert.That(ex.Status, Is.EqualTo(412));
+            }
+            finally
+            {
+                await SafeDeleteAsync(service, name);
+            }
+        }
+
+        [RecordedTest]
+        [AsyncOnly]
+        public async Task GetFeatureFlagsIfChangedReturnsNotModifiedPages()
+        {
+            FeatureFlagClient service = await GetClientOrSkipIfApiVersionUnsupportedAsync(skipInstrumentation: true);
+            string label = GenerateName("ff-page-");
+            string name1 = GenerateName();
+            string name2 = GenerateName();
+
+            try
+            {
+                await service.AddFeatureFlagAsync(name1, enabled: true, label);
+                await service.AddFeatureFlagAsync(name2, enabled: false, label);
+
+                FeatureFlagSelector selector = new FeatureFlagSelector { LabelFilter = label };
+
+                var matchConditionsList = new List<MatchConditions>();
+                int flagsReturned = 0;
+                await foreach (Page<FeatureFlag> page in service.GetFeatureFlagsAsync(selector).AsPages())
+                {
+                    Response response = page.GetRawResponse();
+                    matchConditionsList.Add(new MatchConditions { IfNoneMatch = response.Headers.ETag });
+                    flagsReturned += page.Values.Count;
+                }
+
+                Assert.That(flagsReturned, Is.EqualTo(2));
+
+                int pagesCount = 0;
+                await foreach (Page<FeatureFlag> page in service.GetFeatureFlagsAsync(selector).AsPages(matchConditionsList))
+                {
+                    Response response = page.GetRawResponse();
+
+                    Assert.That(response.Status, Is.EqualTo(304));
+                    Assert.That(page.Values, Is.Empty);
+
+                    pagesCount++;
+                }
+
+                Assert.That(pagesCount, Is.EqualTo(matchConditionsList.Count));
+            }
+            finally
+            {
+                await SafeDeleteAsync(service, name1, label);
+                await SafeDeleteAsync(service, name2, label);
+            }
+        }
+
+        [RecordedTest]
+        [SyncOnly]
+        public async Task GetFeatureFlagsIfChangedReturnsNotModifiedPagesSync()
+        {
+            FeatureFlagClient service = await GetClientOrSkipIfApiVersionUnsupportedAsync(skipInstrumentation: true);
+            string label = GenerateName("ff-page-");
+            string name1 = GenerateName();
+            string name2 = GenerateName();
+
+            try
+            {
+                await service.AddFeatureFlagAsync(name1, enabled: true, label);
+                await service.AddFeatureFlagAsync(name2, enabled: false, label);
+
+                FeatureFlagSelector selector = new FeatureFlagSelector { LabelFilter = label };
+
+                var matchConditionsList = new List<MatchConditions>();
+                int flagsReturned = 0;
+                foreach (Page<FeatureFlag> page in service.GetFeatureFlags(selector).AsPages())
+                {
+                    Response response = page.GetRawResponse();
+                    matchConditionsList.Add(new MatchConditions { IfNoneMatch = response.Headers.ETag });
+                    flagsReturned += page.Values.Count;
+                }
+
+                Assert.That(flagsReturned, Is.EqualTo(2));
+
+                int pagesCount = 0;
+                foreach (Page<FeatureFlag> page in service.GetFeatureFlags(selector).AsPages(matchConditionsList))
+                {
+                    Response response = page.GetRawResponse();
+
+                    Assert.That(response.Status, Is.EqualTo(304));
+                    Assert.That(page.Values, Is.Empty);
+
+                    pagesCount++;
+                }
+
+                Assert.That(pagesCount, Is.EqualTo(matchConditionsList.Count));
+            }
+            finally
+            {
+                await SafeDeleteAsync(service, name1, label);
+                await SafeDeleteAsync(service, name2, label);
             }
         }
 

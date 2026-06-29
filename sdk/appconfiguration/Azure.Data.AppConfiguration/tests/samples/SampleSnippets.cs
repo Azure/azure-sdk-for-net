@@ -175,7 +175,7 @@ namespace Azure.Data.AppConfiguration.Samples
         {
 #if !SNIPPET
             var endpoint = TestEnvironment.Endpoint;
-            var options = new ConfigurationClientOptions { Audience = TestEnvironment.GetAudience() };
+            var options = new FeatureFlagClientOptions { Audience = TestEnvironment.GetAudience() };
 #endif
 
             #region Snippet:SetFeatureFlag
@@ -195,7 +195,7 @@ namespace Azure.Data.AppConfiguration.Samples
         {
 #if !SNIPPET
             var endpoint = TestEnvironment.Endpoint;
-            var options = new ConfigurationClientOptions { Audience = TestEnvironment.GetAudience() };
+            var options = new FeatureFlagClientOptions { Audience = TestEnvironment.GetAudience() };
 
             // Make sure a feature flag exists.
             var setupClient = new FeatureFlagClient(new Uri(endpoint), TestEnvironment.Credential, options);
@@ -219,7 +219,7 @@ namespace Azure.Data.AppConfiguration.Samples
         {
 #if !SNIPPET
             var endpoint = TestEnvironment.Endpoint;
-            var options = new ConfigurationClientOptions { Audience = TestEnvironment.GetAudience() };
+            var options = new FeatureFlagClientOptions { Audience = TestEnvironment.GetAudience() };
 
             // Make sure a feature flag exists.
             var setupClient = new FeatureFlagClient(new Uri(endpoint), TestEnvironment.Credential, options);
@@ -246,7 +246,7 @@ namespace Azure.Data.AppConfiguration.Samples
         {
 #if !SNIPPET
             var endpoint = TestEnvironment.Endpoint;
-            var options = new ConfigurationClientOptions { Audience = TestEnvironment.GetAudience() };
+            var options = new FeatureFlagClientOptions { Audience = TestEnvironment.GetAudience() };
 
             // Make sure a feature flag exists.
             var setupClient = new FeatureFlagClient(new Uri(endpoint), TestEnvironment.Credential, options);

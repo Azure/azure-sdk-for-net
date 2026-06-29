@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -8,13 +8,13 @@ using System.Threading;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary>
-    /// Extension methods for <see cref="ConfigurationClient"/> and its related models.
+    /// Extension methods for <see cref="FeatureFlagClient"/> and its related models.
     /// </summary>
-    public static class ConfigurationClientExtensions
+    public static class FeatureFlagClientExtensions
     {
         /// <summary>
         /// Enumerate the values a <see cref="Page{T}"/> at a time, if they satisfy the match conditions for each page.
-        /// This can be used to efficiently check for changes to a cache of pages of settings. This may make multiple
+        /// This can be used to efficiently check for changes to a cache of pages of feature flags. This may make multiple
         /// service requests.
         /// </summary>
         /// <param name="pageable">The pageable object.</param>
@@ -27,14 +27,14 @@ namespace Azure.Data.AppConfiguration
         /// <returns>An async sequence of <see cref="Page{T}"/>s.</returns>
         /// <exception cref="InvalidOperationException">
         /// Thrown if the pageable used does not support this operation. Only objects returned by the
-        /// <see cref="ConfigurationClient.GetConfigurationSettingsAsync(SettingSelector, CancellationToken)"/>
+        /// <see cref="FeatureFlagClient.GetFeatureFlagsAsync(FeatureFlagSelector, CancellationToken)"/>
         /// support it.
         /// </exception>
-        public static IAsyncEnumerable<Page<ConfigurationSetting>> AsPages(this AsyncPageable<ConfigurationSetting> pageable, IEnumerable<MatchConditions> conditions, string continuationToken = null, int? pageSizeHint = null)
+        public static IAsyncEnumerable<Page<FeatureFlag>> AsPages(this AsyncPageable<FeatureFlag> pageable, IEnumerable<MatchConditions> conditions, string continuationToken = null, int? pageSizeHint = null)
         {
             Argument.AssertNotNull(conditions, nameof(conditions));
 
-            var conditionalPageable = pageable as AsyncConditionalPageable<ConfigurationSetting>;
+            var conditionalPageable = pageable as AsyncConditionalPageable<FeatureFlag>;
 
             if (conditionalPageable is null)
             {
@@ -46,7 +46,7 @@ namespace Azure.Data.AppConfiguration
 
         /// <summary>
         /// Enumerate the values a <see cref="Page{T}"/> at a time, if they satisfy the match conditions for each page.
-        /// This can be used to efficiently check for changes to a cache of pages of settings. This may make multiple
+        /// This can be used to efficiently check for changes to a cache of pages of feature flags. This may make multiple
         /// service requests.
         /// </summary>
         /// <param name="pageable">The pageable object.</param>
@@ -59,14 +59,14 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A sequence of <see cref="Page{T}"/>s.</returns>
         /// <exception cref="InvalidOperationException">
         /// Thrown if the pageable used does not support this operation. Only objects returned by the
-        /// <see cref="ConfigurationClient.GetConfigurationSettings(SettingSelector, CancellationToken)"/>
+        /// <see cref="FeatureFlagClient.GetFeatureFlags(FeatureFlagSelector, CancellationToken)"/>
         /// support it.
         /// </exception>
-        public static IEnumerable<Page<ConfigurationSetting>> AsPages(this Pageable<ConfigurationSetting> pageable, IEnumerable<MatchConditions> conditions, string continuationToken = null, int? pageSizeHint = null)
+        public static IEnumerable<Page<FeatureFlag>> AsPages(this Pageable<FeatureFlag> pageable, IEnumerable<MatchConditions> conditions, string continuationToken = null, int? pageSizeHint = null)
         {
             Argument.AssertNotNull(conditions, nameof(conditions));
 
-            var conditionalPageable = pageable as ConditionalPageable<ConfigurationSetting>;
+            var conditionalPageable = pageable as ConditionalPageable<FeatureFlag>;
 
             if (conditionalPageable is null)
             {

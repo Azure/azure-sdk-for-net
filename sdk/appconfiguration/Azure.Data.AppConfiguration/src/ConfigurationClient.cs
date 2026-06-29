@@ -125,7 +125,7 @@ namespace Azure.Data.AppConfiguration
             ParseConnectionString(connectionString, out _endpoint, out var credential, out var secret);
             _apiVersion = options.Version;
             _syncTokenPolicy = new SyncTokenPolicy();
-            Pipeline = CreatePipeline(options, new AuthenticationPolicy(credential, secret), _syncTokenPolicy);
+            Pipeline = CreatePipeline(options, options.Audience != null, new AuthenticationPolicy(credential, secret), _syncTokenPolicy);
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
@@ -146,7 +146,7 @@ namespace Azure.Data.AppConfiguration
 
             _endpoint = endpoint;
             _syncTokenPolicy = new SyncTokenPolicy();
-            Pipeline = CreatePipeline(options, new BearerTokenAuthenticationPolicy(credential, options.GetDefaultScope(endpoint)), _syncTokenPolicy);
+            Pipeline = CreatePipeline(options, options.Audience != null, new BearerTokenAuthenticationPolicy(credential, options.GetDefaultScope(endpoint)), _syncTokenPolicy);
             _apiVersion = options.Version;
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -209,11 +209,11 @@ namespace Azure.Data.AppConfiguration
             _apiVersion = options.Version;
         }
 
-        private static HttpPipeline CreatePipeline(ConfigurationClientOptions options, HttpPipelinePolicy authenticationPolicy, HttpPipelinePolicy syncTokenPolicy)
+        internal static HttpPipeline CreatePipeline(ClientOptions options, bool hasAudience, HttpPipelinePolicy authenticationPolicy, HttpPipelinePolicy syncTokenPolicy)
         {
             return HttpPipelineBuilder.Build(options,
                 new HttpPipelinePolicy[] { new CustomHeadersPolicy(), new QueryParamPolicy() },
-                new HttpPipelinePolicy[] { new AudienceErrorHandlingPolicy(options.Audience != null), authenticationPolicy, syncTokenPolicy },
+                new HttpPipelinePolicy[] { new AudienceErrorHandlingPolicy(hasAudience), authenticationPolicy, syncTokenPolicy },
                 new ResponseClassifier());
         }
 
@@ -720,7 +720,7 @@ namespace Azure.Data.AppConfiguration
 
             var pageableImplementation = GetConfigurationSettingsPageableImplementation(selector, cancellationToken);
 
-            return new AsyncConditionalPageable(pageableImplementation);
+            return new AsyncConditionalPageable<ConfigurationSetting>(pageableImplementation);
         }
 
         /// <summary>
@@ -734,10 +734,10 @@ namespace Azure.Data.AppConfiguration
 
             var pageableImplementation = GetConfigurationSettingsPageableImplementation(selector, cancellationToken);
 
-            return new ConditionalPageable(pageableImplementation);
+            return new ConditionalPageable<ConfigurationSetting>(pageableImplementation);
         }
 
-        private ConditionalPageableImplementation GetConfigurationSettingsPageableImplementation(SettingSelector selector, CancellationToken cancellationToken)
+        private ConditionalPageableImplementation<ConfigurationSetting> GetConfigurationSettingsPageableImplementation(SettingSelector selector, CancellationToken cancellationToken)
         {
             var key = selector.KeyFilter;
             var label = selector.LabelFilter;
@@ -760,7 +760,7 @@ namespace Azure.Data.AppConfiguration
                 return CreateNextGetConfigurationSettingsRequest(nextLink, key, label, _syncToken, null, dateTime, fieldsString, null, conditions, tags, context);
             }
 
-            return new ConditionalPageableImplementation(FirstPageRequest, NextPageRequest, ParseGetConfigurationSettingsResponse, Pipeline, ClientDiagnostics, "ConfigurationClient.GetConfigurationSettings", context);
+            return new ConditionalPageableImplementation<ConfigurationSetting>(FirstPageRequest, NextPageRequest, ParseGetConfigurationSettingsResponse, Pipeline, ClientDiagnostics, "ConfigurationClient.GetConfigurationSettings", context);
         }
 
         /// <summary>
@@ -775,7 +775,7 @@ namespace Azure.Data.AppConfiguration
 
             var pageableImplementation = CheckConfigurationSettingsPageableImplementation(selector, cancellationToken);
 
-            return new AsyncConditionalPageable(pageableImplementation);
+            return new AsyncConditionalPageable<ConfigurationSetting>(pageableImplementation);
         }
 
         /// <summary>
@@ -790,10 +790,10 @@ namespace Azure.Data.AppConfiguration
 
             var pageableImplementation = CheckConfigurationSettingsPageableImplementation(selector, cancellationToken);
 
-            return new ConditionalPageable(pageableImplementation);
+            return new ConditionalPageable<ConfigurationSetting>(pageableImplementation);
         }
 
-        private ConditionalPageableImplementation CheckConfigurationSettingsPageableImplementation(SettingSelector selector, CancellationToken cancellationToken)
+        private ConditionalPageableImplementation<ConfigurationSetting> CheckConfigurationSettingsPageableImplementation(SettingSelector selector, CancellationToken cancellationToken)
         {
             var key = selector.KeyFilter;
             var label = selector.LabelFilter;
@@ -817,7 +817,7 @@ namespace Azure.Data.AppConfiguration
                 return message;
             }
 
-            return new ConditionalPageableImplementation(FirstPageRequest, NextPageRequest, ParseCheckConfigurationSettingsResponse, Pipeline, ClientDiagnostics, "ConfigurationClient.CheckConfigurationSettings", context);
+            return new ConditionalPageableImplementation<ConfigurationSetting>(FirstPageRequest, NextPageRequest, ParseCheckConfigurationSettingsResponse, Pipeline, ClientDiagnostics, "ConfigurationClient.CheckConfigurationSettings", context);
         }
 
         /// <summary>

@@ -323,17 +323,23 @@ namespace Azure.Data.AppConfiguration
     {
         protected FeatureFlagClient() { }
         public FeatureFlagClient(string connectionString) { }
-        public FeatureFlagClient(string connectionString, Azure.Data.AppConfiguration.ConfigurationClientOptions options) { }
+        public FeatureFlagClient(string connectionString, Azure.Data.AppConfiguration.FeatureFlagClientOptions options) { }
         public FeatureFlagClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public FeatureFlagClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Data.AppConfiguration.ConfigurationClientOptions options) { }
+        public FeatureFlagClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Data.AppConfiguration.FeatureFlagClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response<Azure.Data.AppConfiguration.FeatureFlag> AddFeatureFlag(string name, Azure.Data.AppConfiguration.FeatureFlag flag, string label = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Data.AppConfiguration.FeatureFlag> AddFeatureFlag(string name, bool? enabled, string label = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.FeatureFlag>> AddFeatureFlagAsync(string name, Azure.Data.AppConfiguration.FeatureFlag flag, string label = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.FeatureFlag>> AddFeatureFlagAsync(string name, bool? enabled, string label = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteFeatureFlag(Azure.Data.AppConfiguration.FeatureFlag flag, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteFeatureFlag(string name, string label = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteFeatureFlagAsync(Azure.Data.AppConfiguration.FeatureFlag flag, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteFeatureFlagAsync(string name, string label = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Data.AppConfiguration.FeatureFlag> GetFeatureFlag(Azure.Data.AppConfiguration.FeatureFlag flag, bool onlyIfChanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Data.AppConfiguration.FeatureFlag> GetFeatureFlag(Azure.Data.AppConfiguration.FeatureFlag flag, System.DateTimeOffset acceptDateTime, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Data.AppConfiguration.FeatureFlag> GetFeatureFlag(string name, string label = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.FeatureFlag>> GetFeatureFlagAsync(Azure.Data.AppConfiguration.FeatureFlag flag, bool onlyIfChanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.FeatureFlag>> GetFeatureFlagAsync(Azure.Data.AppConfiguration.FeatureFlag flag, System.DateTimeOffset acceptDateTime, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.FeatureFlag>> GetFeatureFlagAsync(string name, string label = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Data.AppConfiguration.FeatureFlag> GetFeatureFlags(Azure.Data.AppConfiguration.FeatureFlagSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Data.AppConfiguration.FeatureFlag> GetFeatureFlagsAsync(Azure.Data.AppConfiguration.FeatureFlagSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -341,6 +347,25 @@ namespace Azure.Data.AppConfiguration
         public virtual Azure.Response<Azure.Data.AppConfiguration.FeatureFlag> SetFeatureFlag(string name, bool? enabled, string label = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.FeatureFlag>> SetFeatureFlagAsync(string name, Azure.Data.AppConfiguration.FeatureFlag flag, string label = null, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.FeatureFlag>> SetFeatureFlagAsync(string name, bool? enabled, string label = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public static partial class FeatureFlagClientExtensions
+    {
+        public static System.Collections.Generic.IAsyncEnumerable<Azure.Page<Azure.Data.AppConfiguration.FeatureFlag>> AsPages(this Azure.AsyncPageable<Azure.Data.AppConfiguration.FeatureFlag> pageable, System.Collections.Generic.IEnumerable<Azure.MatchConditions> conditions, string continuationToken = null, int? pageSizeHint = default(int?)) { throw null; }
+        public static System.Collections.Generic.IEnumerable<Azure.Page<Azure.Data.AppConfiguration.FeatureFlag>> AsPages(this Azure.Pageable<Azure.Data.AppConfiguration.FeatureFlag> pageable, System.Collections.Generic.IEnumerable<Azure.MatchConditions> conditions, string continuationToken = null, int? pageSizeHint = default(int?)) { throw null; }
+    }
+    public partial class FeatureFlagClientOptions : Azure.Core.ClientOptions
+    {
+        public FeatureFlagClientOptions(Azure.Data.AppConfiguration.FeatureFlagClientOptions.ServiceVersion version = Azure.Data.AppConfiguration.FeatureFlagClientOptions.ServiceVersion.V2026_05_01_Preview) { }
+        public Azure.Data.AppConfiguration.AppConfigurationAudience? Audience { get { throw null; } set { } }
+        public enum ServiceVersion
+        {
+            V1_0 = 0,
+            V2023_10_01 = 1,
+            V2023_11_01 = 2,
+            V2024_09_01 = 3,
+            V2026_04_01 = 4,
+            V2026_05_01_Preview = 5,
+        }
     }
     public partial class FeatureFlagConditions : System.ClientModel.Primitives.IJsonModel<Azure.Data.AppConfiguration.FeatureFlagConditions>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.FeatureFlagConditions>
     {
