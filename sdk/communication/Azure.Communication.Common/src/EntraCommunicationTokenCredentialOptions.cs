@@ -59,16 +59,16 @@ namespace Azure.Communication
             if (scopes == null || scopes.Length == 0)
             {
                 throw new ArgumentException(
-                    $"Scopes must not be null or empty. Ensure all scopes start with either {EntraCommunicationTokenScopes.TeamsExtensionScopePrefix} or {EntraCommunicationTokenScopes.CommunicationClientsScopePrefix}.", nameof(scopes));
+                    $"Scopes must not be null or empty. Ensure all scopes start with either {EntraCommunicationTokenScopes.TeamsExtensionScopePrefix}, {EntraCommunicationTokenScopes.TeamsExtensionSovereignScopePrefix}, or {EntraCommunicationTokenScopes.CommunicationClientsScopePrefix}.", nameof(scopes));
             }
 
-            if (scopes.All(item => item.StartsWith(EntraCommunicationTokenScopes.TeamsExtensionScopePrefix))
+            if (scopes.All(EntraCommunicationTokenScopes.IsTeamsExtensionScope)
                 || scopes.All(item => item.StartsWith(EntraCommunicationTokenScopes.CommunicationClientsScopePrefix)))
             {
                 return scopes;
             }
 
-            throw new ArgumentException($"Scopes validation failed. Ensure all scopes start with either {EntraCommunicationTokenScopes.TeamsExtensionScopePrefix} or {EntraCommunicationTokenScopes.CommunicationClientsScopePrefix}.", nameof(_scopes));
+            throw new ArgumentException($"Scopes validation failed. Ensure all scopes start with either {EntraCommunicationTokenScopes.TeamsExtensionScopePrefix}, {EntraCommunicationTokenScopes.TeamsExtensionSovereignScopePrefix}, or {EntraCommunicationTokenScopes.CommunicationClientsScopePrefix}.", nameof(_scopes));
         }
     }
 }

@@ -136,7 +136,7 @@ namespace Azure.Communication
 
         private (string Endpoint, string ApiVersion) DetermineEndpointAndApiVersion()
         {
-            if (_scopes.All(item => item.StartsWith(EntraCommunicationTokenScopes.TeamsExtensionScopePrefix)))
+            if (_scopes.All(EntraCommunicationTokenScopes.IsTeamsExtensionScope))
             {
                 return (TeamsExtensionEndpoint, TeamsExtensionApiVersion);
             }
@@ -146,7 +146,7 @@ namespace Azure.Communication
             }
             else
             {
-                throw new ArgumentException($"Scopes validation failed. Ensure all scopes start with either {EntraCommunicationTokenScopes.TeamsExtensionScopePrefix} or {EntraCommunicationTokenScopes.CommunicationClientsScopePrefix}.", nameof(_scopes));
+                throw new ArgumentException($"Scopes validation failed. Ensure all scopes start with either {EntraCommunicationTokenScopes.TeamsExtensionScopePrefix}, {EntraCommunicationTokenScopes.TeamsExtensionSovereignScopePrefix}, or {EntraCommunicationTokenScopes.CommunicationClientsScopePrefix}.", nameof(_scopes));
             }
         }
 
