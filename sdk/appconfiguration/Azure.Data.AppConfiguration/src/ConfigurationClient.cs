@@ -101,6 +101,10 @@ namespace Azure.Data.AppConfiguration
         private readonly SyncTokenPolicy _syncTokenPolicy;
         private readonly string _syncToken;
 
+        internal Uri EndpointValue => _endpoint;
+        internal string ApiVersionValue => _apiVersion;
+        internal string SyncTokenValue => _syncToken;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationClient"/> class.
         /// </summary>
@@ -125,7 +129,7 @@ namespace Azure.Data.AppConfiguration
             ParseConnectionString(connectionString, out _endpoint, out var credential, out var secret);
             _apiVersion = options.Version;
             _syncTokenPolicy = new SyncTokenPolicy();
-            Pipeline = CreatePipeline(options, options.Audience != null, new AuthenticationPolicy(credential, secret), _syncTokenPolicy);
+            Pipeline = CreatePipeline(options, new AuthenticationPolicy(credential, secret), _syncTokenPolicy);
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
@@ -146,7 +150,7 @@ namespace Azure.Data.AppConfiguration
 
             _endpoint = endpoint;
             _syncTokenPolicy = new SyncTokenPolicy();
-            Pipeline = CreatePipeline(options, options.Audience != null, new BearerTokenAuthenticationPolicy(credential, options.GetDefaultScope(endpoint)), _syncTokenPolicy);
+            Pipeline = CreatePipeline(options, new BearerTokenAuthenticationPolicy(credential, options.GetDefaultScope(endpoint)), _syncTokenPolicy);
             _apiVersion = options.Version;
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -208,6 +212,9 @@ namespace Azure.Data.AppConfiguration
             _syncToken = syncToken;
             _apiVersion = options.Version;
         }
+
+        private static HttpPipeline CreatePipeline(ConfigurationClientOptions options, HttpPipelinePolicy authenticationPolicy, HttpPipelinePolicy syncTokenPolicy)
+            => CreatePipeline(options, options.Audience != null, authenticationPolicy, syncTokenPolicy);
 
         internal static HttpPipeline CreatePipeline(ClientOptions options, bool hasAudience, HttpPipelinePolicy authenticationPolicy, HttpPipelinePolicy syncTokenPolicy)
         {
@@ -819,19 +826,6 @@ namespace Azure.Data.AppConfiguration
 
             return new ConditionalPageableImplementation<ConfigurationSetting>(FirstPageRequest, NextPageRequest, ParseCheckConfigurationSettingsResponse, Pipeline, ClientDiagnostics, "ConfigurationClient.CheckConfigurationSettings", context);
         }
-
-        /// <summary>
-        /// Creates a <see cref="FeatureFlagClient"/> that performs feature flag operations against this configuration store,
-        /// sharing this client's pipeline and configuration.
-        /// </summary>
-        /// <returns>A <see cref="FeatureFlagClient"/> that can be used to manage feature flags.</returns>
-        public virtual FeatureFlagClient GetFeatureFlagClient() => _cachedFeatureFlagClient ??= new FeatureFlagClient(this);
-
-        internal Uri EndpointValue => _endpoint;
-
-        internal string ApiVersionValue => _apiVersion;
-
-        internal string SyncTokenValue => _syncToken;
 
         /// <summary>
         /// Retrieves one or more <see cref="ConfigurationSetting"/> entities for snapshots based on name.
@@ -1481,12 +1475,11 @@ namespace Azure.Data.AppConfiguration
                 ? [.. selector.Fields]
                 : null;
             var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
-            var resourceType = selector.ResourceType?.ToString();
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, _syncToken, null, dateTime, fields, resourceType, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetLabelsRequest(nextLink, name, _syncToken, null, dateTime, fields, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, _syncToken, null, dateTime, fields, null, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetLabelsRequest(new Uri(nextLink, UriKind.RelativeOrAbsolute), name, _syncToken, null, dateTime, fields, null, context);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SettingLabel.DeserializeLabel, ClientDiagnostics, Pipeline, "ConfigurationClient.GetLabels", "items", "@nextLink", cancellationToken);
         }
 
@@ -1501,12 +1494,11 @@ namespace Azure.Data.AppConfiguration
                ? [.. selector.Fields]
                : null;
             var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
-            var resourceType = selector.ResourceType?.ToString();
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, _syncToken, null, dateTime, fields, resourceType, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetLabelsRequest(nextLink, name, _syncToken, null, dateTime, fields, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, _syncToken, null, dateTime, fields, null, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetLabelsRequest(new Uri(nextLink, UriKind.RelativeOrAbsolute), name, _syncToken, null, dateTime, fields, null, context);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SettingLabel.DeserializeLabel, ClientDiagnostics, Pipeline, "ConfigurationClient.GetLabels", "items", "@nextLink", cancellationToken);
         }
 

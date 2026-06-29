@@ -44,9 +44,8 @@ namespace Azure.Data.AppConfiguration
 
         /// <summary>
         /// The fields of the <see cref="FeatureFlag"/> to retrieve for each feature flag in the retrieved group.
-        /// An empty collection indicates that all fields should be returned.
         /// </summary>
-        public IList<FeatureFlagFields> Fields { get; }
+        public FeatureFlagFields Fields { get; set; } = FeatureFlagFields.All;
 
         /// <summary>
         /// Indicates the point in time in the revision history of the selected <see cref="FeatureFlag"/> entities to retrieve.
@@ -61,7 +60,6 @@ namespace Azure.Data.AppConfiguration
         public FeatureFlagSelector()
         {
             TagsFilter = new List<string>();
-            Fields = new List<FeatureFlagFields>();
         }
 
         #region nobody wants to see these

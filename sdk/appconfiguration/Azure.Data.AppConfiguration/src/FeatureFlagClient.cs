@@ -696,16 +696,7 @@ namespace Azure.Data.AppConfiguration
         {
             string acceptDatetime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
 
-            IEnumerable<string> select = null;
-            if (selector.Fields.Count > 0)
-            {
-                var fields = new List<string>(selector.Fields.Count);
-                foreach (FeatureFlagFields field in selector.Fields)
-                {
-                    fields.Add(field.ToString());
-                }
-                select = fields;
-            }
+            IEnumerable<string> select = selector.Fields.Split();
 
             return (selector.NameFilter, selector.LabelFilter, acceptDatetime, select, selector.TagsFilter);
         }

@@ -390,31 +390,21 @@ namespace Azure.Data.AppConfiguration
         public bool IsEnabled { get { throw null; } set { } }
         public static string KeyPrefix { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FeatureFlagFields : System.IEquatable<Azure.Data.AppConfiguration.FeatureFlagFields>
+    [System.FlagsAttribute]
+    public enum FeatureFlagFields : uint
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FeatureFlagFields(string value) { throw null; }
-        public static Azure.Data.AppConfiguration.FeatureFlagFields Allocation { get { throw null; } }
-        public static Azure.Data.AppConfiguration.FeatureFlagFields Conditions { get { throw null; } }
-        public static Azure.Data.AppConfiguration.FeatureFlagFields Description { get { throw null; } }
-        public static Azure.Data.AppConfiguration.FeatureFlagFields Enabled { get { throw null; } }
-        public static Azure.Data.AppConfiguration.FeatureFlagFields Etag { get { throw null; } }
-        public static Azure.Data.AppConfiguration.FeatureFlagFields Label { get { throw null; } }
-        public static Azure.Data.AppConfiguration.FeatureFlagFields LastModified { get { throw null; } }
-        public static Azure.Data.AppConfiguration.FeatureFlagFields Name { get { throw null; } }
-        public static Azure.Data.AppConfiguration.FeatureFlagFields Tags { get { throw null; } }
-        public static Azure.Data.AppConfiguration.FeatureFlagFields Telemetry { get { throw null; } }
-        public static Azure.Data.AppConfiguration.FeatureFlagFields Variants { get { throw null; } }
-        public bool Equals(Azure.Data.AppConfiguration.FeatureFlagFields other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Data.AppConfiguration.FeatureFlagFields left, Azure.Data.AppConfiguration.FeatureFlagFields right) { throw null; }
-        public static implicit operator Azure.Data.AppConfiguration.FeatureFlagFields (string value) { throw null; }
-        public static implicit operator Azure.Data.AppConfiguration.FeatureFlagFields? (string value) { throw null; }
-        public static bool operator !=(Azure.Data.AppConfiguration.FeatureFlagFields left, Azure.Data.AppConfiguration.FeatureFlagFields right) { throw null; }
-        public override string ToString() { throw null; }
+        Name = (uint)1,
+        Enabled = (uint)2,
+        Label = (uint)4,
+        Description = (uint)8,
+        Conditions = (uint)16,
+        Variants = (uint)32,
+        Allocation = (uint)64,
+        Telemetry = (uint)128,
+        Tags = (uint)256,
+        LastModified = (uint)512,
+        Etag = (uint)1024,
+        All = (uint)4294967295,
     }
     public partial class FeatureFlagFilter
     {
@@ -428,7 +418,7 @@ namespace Azure.Data.AppConfiguration
         public static readonly string Any;
         public FeatureFlagSelector() { }
         public System.DateTimeOffset? AcceptDateTime { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Data.AppConfiguration.FeatureFlagFields> Fields { get { throw null; } }
+        public Azure.Data.AppConfiguration.FeatureFlagFields Fields { get { throw null; } set { } }
         public string LabelFilter { get { throw null; } set { } }
         public string NameFilter { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> TagsFilter { get { throw null; } }

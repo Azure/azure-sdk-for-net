@@ -24,7 +24,11 @@ namespace Azure.Data.AppConfiguration
         /// Initializes a new instance of the <see cref="FeatureFilter"/>.
         /// </summary>
         /// <param name="name">The name of the feature filter. For example: PercentageFilter, TimeWindowFilter, TargetingFilter.</param>
-        /// <param name="parameters">Parameters of the feature filter.</param>
+        /// <param name="parameters">
+        /// Parameters of the feature filter. Values that represent types other than a string
+        /// (for example, the <c>Audience</c> parameter of the <c>TargetingFilter</c>) should be
+        /// provided as their JSON-serialized representation.
+        /// </param>
         public FeatureFilter(string name, IDictionary<string, string> parameters)
         {
             Name = name;
@@ -37,7 +41,9 @@ namespace Azure.Data.AppConfiguration
         public string Name { get; }
 
         /// <summary>
-        /// Gets the parameters of the feature filter.
+        /// Gets the parameters of the feature filter. Values that represent types other than a string
+        /// (for example, the <c>Audience</c> parameter of the <c>TargetingFilter</c>) should be
+        /// provided as their JSON-serialized representation.
         /// </summary>
         public IDictionary<string, string> Parameters { get; }
     }

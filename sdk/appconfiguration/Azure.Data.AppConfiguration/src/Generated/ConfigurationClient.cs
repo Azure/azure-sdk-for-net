@@ -827,5 +827,11 @@ namespace Azure.Data.AppConfiguration
                 throw;
             }
         }
+
+        /// <summary> Initializes a new instance of FeatureFlagClient. </summary>
+        public virtual FeatureFlagClient GetFeatureFlagClient()
+        {
+            return Volatile.Read(ref _cachedFeatureFlagClient) ?? Interlocked.CompareExchange(ref _cachedFeatureFlagClient, new FeatureFlagClient(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedFeatureFlagClient;
+        }
     }
 }
