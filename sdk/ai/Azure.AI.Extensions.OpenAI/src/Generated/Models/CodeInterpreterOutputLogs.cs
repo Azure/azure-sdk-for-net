@@ -7,23 +7,24 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Extensions.OpenAI.Internal
 {
-    internal partial class InternalCodeInterpreterOutputLogs
+    /// <summary> Code interpreter output logs. </summary>
+    public partial class CodeInterpreterOutputLogs
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalCodeInterpreterOutputLogs"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CodeInterpreterOutputLogs"/>. </summary>
         /// <param name="logs"> The logs output from the code interpreter. </param>
-        internal InternalCodeInterpreterOutputLogs(string logs)
+        internal CodeInterpreterOutputLogs(string logs)
         {
             Logs = logs;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalCodeInterpreterOutputLogs"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CodeInterpreterOutputLogs"/>. </summary>
         /// <param name="type"> The type of the output. Always `logs`. </param>
         /// <param name="logs"> The logs output from the code interpreter. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalCodeInterpreterOutputLogs(string @type, string logs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CodeInterpreterOutputLogs(string @type, string logs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Logs = logs;

@@ -4,7 +4,7 @@
 
 using System;
 
-namespace Azure.AI.Extensions.OpenAI.Internal
+namespace Azure.AI.Extensions.OpenAI
 {
     internal static partial class ToolSearchExecutionTypeExtensions
     {

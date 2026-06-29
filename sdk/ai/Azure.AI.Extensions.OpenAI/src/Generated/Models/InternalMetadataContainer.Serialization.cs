@@ -70,11 +70,6 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 throw new FormatException($"The model {nameof(InternalMetadataContainer)} does not support writing '{format}' format.");
             }
-            foreach (var item in AdditionalProperties)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

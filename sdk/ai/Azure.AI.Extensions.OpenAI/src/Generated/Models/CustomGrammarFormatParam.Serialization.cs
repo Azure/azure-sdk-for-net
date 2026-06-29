@@ -6,9 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Extensions.OpenAI;
+using Azure.AI.Extensions.OpenAI.Internal;
 
-namespace Azure.AI.Extensions.OpenAI.Internal
+namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Grammar format. </summary>
     public partial class CustomGrammarFormatParam : ResponsesCustomToolParamFormat, IJsonModel<CustomGrammarFormatParam>

@@ -7,24 +7,25 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Extensions.OpenAI.Internal
 {
-    internal partial class InternalInputFileContentParam
+    /// <summary> Input file. </summary>
+    public partial class InputFileContentParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalInputFileContentParam"/>. </summary>
-        internal InternalInputFileContentParam()
+        /// <summary> Initializes a new instance of <see cref="InputFileContentParam"/>. </summary>
+        internal InputFileContentParam()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalInputFileContentParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="InputFileContentParam"/>. </summary>
         /// <param name="type"> The type of the input item. Always `input_file`. </param>
         /// <param name="fileId"></param>
         /// <param name="filename"></param>
         /// <param name="fileData"></param>
         /// <param name="fileUrl"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalInputFileContentParam(string @type, string fileId, string filename, string fileData, Uri fileUrl, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InputFileContentParam(string @type, string fileId, string filename, string fileData, Uri fileUrl, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             FileId = fileId;

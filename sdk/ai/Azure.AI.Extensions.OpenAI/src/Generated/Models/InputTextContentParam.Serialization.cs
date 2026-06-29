@@ -10,56 +10,57 @@ using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI.Internal
 {
-    internal partial class InternalCodeInterpreterOutputLogs : IJsonModel<InternalCodeInterpreterOutputLogs>
+    /// <summary> Input text. </summary>
+    public partial class InputTextContentParam : IJsonModel<InputTextContentParam>
     {
-        /// <summary> Initializes a new instance of <see cref="InternalCodeInterpreterOutputLogs"/> for deserialization. </summary>
-        internal InternalCodeInterpreterOutputLogs()
+        /// <summary> Initializes a new instance of <see cref="InputTextContentParam"/> for deserialization. </summary>
+        internal InputTextContentParam()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual InternalCodeInterpreterOutputLogs PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual InputTextContentParam PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalCodeInterpreterOutputLogs>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InputTextContentParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeInternalCodeInterpreterOutputLogs(document.RootElement, options);
+                        return DeserializeInputTextContentParam(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalCodeInterpreterOutputLogs)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InputTextContentParam)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalCodeInterpreterOutputLogs>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InputTextContentParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(InternalCodeInterpreterOutputLogs)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InputTextContentParam)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalCodeInterpreterOutputLogs>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<InputTextContentParam>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalCodeInterpreterOutputLogs IPersistableModel<InternalCodeInterpreterOutputLogs>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        InputTextContentParam IPersistableModel<InputTextContentParam>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalCodeInterpreterOutputLogs>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<InputTextContentParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<InternalCodeInterpreterOutputLogs>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<InputTextContentParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,15 +71,15 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalCodeInterpreterOutputLogs>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InputTextContentParam>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InternalCodeInterpreterOutputLogs)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(InputTextContentParam)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            writer.WritePropertyName("logs"u8);
-            writer.WriteStringValue(Logs);
+            writer.WritePropertyName("text"u8);
+            writer.WriteStringValue(Text);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -98,31 +99,31 @@ namespace Azure.AI.Extensions.OpenAI.Internal
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalCodeInterpreterOutputLogs IJsonModel<InternalCodeInterpreterOutputLogs>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        InputTextContentParam IJsonModel<InputTextContentParam>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual InternalCodeInterpreterOutputLogs JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual InputTextContentParam JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalCodeInterpreterOutputLogs>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InputTextContentParam>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InternalCodeInterpreterOutputLogs)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(InputTextContentParam)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInternalCodeInterpreterOutputLogs(document.RootElement, options);
+            return DeserializeInputTextContentParam(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static InternalCodeInterpreterOutputLogs DeserializeInternalCodeInterpreterOutputLogs(JsonElement element, ModelReaderWriterOptions options)
+        internal static InputTextContentParam DeserializeInputTextContentParam(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string @type = default;
-            string logs = default;
+            string text = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,9 +132,9 @@ namespace Azure.AI.Extensions.OpenAI.Internal
                     @type = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("logs"u8))
+                if (prop.NameEquals("text"u8))
                 {
-                    logs = prop.Value.GetString();
+                    text = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -141,7 +142,7 @@ namespace Azure.AI.Extensions.OpenAI.Internal
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalCodeInterpreterOutputLogs(@type, logs, additionalBinaryDataProperties);
+            return new InputTextContentParam(@type, text, additionalBinaryDataProperties);
         }
     }
 }

@@ -7,8 +7,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
+using Azure.AI.Extensions.OpenAI.Internal;
 
-namespace Azure.AI.Extensions.OpenAI.Internal
+namespace OpenAI
 {
     internal partial class InternalWebSearchActionSearch : IJsonModel<InternalWebSearchActionSearch>
     {

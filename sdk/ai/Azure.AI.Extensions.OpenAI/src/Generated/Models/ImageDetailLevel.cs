@@ -5,7 +5,7 @@
 namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary></summary>
-    internal enum ImageDetailLevel
+    public enum ImageDetailLevel
     {
         /// <summary> Low. </summary>
         Low,

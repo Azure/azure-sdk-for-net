@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -19,17 +18,5 @@ namespace Azure.AI.Extensions.OpenAI
         {
             _additionalStringProperties = new ChangeTrackingDictionary<string, string>();
         }
-
-        /// <summary> Initializes a new instance of <see cref="InternalMetadataContainer"/>. </summary>
-        /// <param name="additionalProperties"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalMetadataContainer(IReadOnlyDictionary<string, string> additionalProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            _additionalStringProperties = new ChangeTrackingDictionary<string, string>(additionalProperties);
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Gets the AdditionalProperties. </summary>
-        public IReadOnlyDictionary<string, string> AdditionalProperties => new ReadOnlyDictionary<string, string>(_additionalStringProperties);
     }
 }

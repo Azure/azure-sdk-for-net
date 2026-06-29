@@ -8,26 +8,27 @@ using System.Text.Json;
 
 namespace Azure.AI.Extensions.OpenAI.Internal
 {
-    internal partial class InternalComparisonFilter
+    /// <summary> Comparison Filter. </summary>
+    public partial class ComparisonFilter
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalComparisonFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComparisonFilter"/>. </summary>
         /// <param name="type">
         /// Specifies the comparison operator: `eq`, `ne`, `gt`, `gte`, `lt`, `lte`, `in`, `nin`.
         /// <list type="bullet"><item><description>`eq`: equals</description></item><item><description>`ne`: not equal</description></item><item><description>`gt`: greater than</description></item><item><description>`gte`: greater than or equal</description></item><item><description>`lt`: less than</description></item><item><description>`lte`: less than or equal</description></item><item><description>`in`: in</description></item><item><description>`nin`: not in</description></item></list>
         /// </param>
         /// <param name="key"> The key to compare against the value. </param>
         /// <param name="value"> The value to compare against the attribute key; supports string, number, or boolean types. </param>
-        internal InternalComparisonFilter(FileSearchToolFiltersType @type, string key, BinaryData value)
+        internal ComparisonFilter(FileSearchToolFiltersType @type, string key, BinaryData value)
         {
             Type = @type;
             Key = key;
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalComparisonFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComparisonFilter"/>. </summary>
         /// <param name="type">
         /// Specifies the comparison operator: `eq`, `ne`, `gt`, `gte`, `lt`, `lte`, `in`, `nin`.
         /// <list type="bullet"><item><description>`eq`: equals</description></item><item><description>`ne`: not equal</description></item><item><description>`gt`: greater than</description></item><item><description>`gte`: greater than or equal</description></item><item><description>`lt`: less than</description></item><item><description>`lte`: less than or equal</description></item><item><description>`in`: in</description></item><item><description>`nin`: not in</description></item></list>
@@ -35,7 +36,7 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         /// <param name="key"> The key to compare against the value. </param>
         /// <param name="value"> The value to compare against the attribute key; supports string, number, or boolean types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalComparisonFilter(FileSearchToolFiltersType @type, string key, BinaryData value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComparisonFilter(FileSearchToolFiltersType @type, string key, BinaryData value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Key = key;

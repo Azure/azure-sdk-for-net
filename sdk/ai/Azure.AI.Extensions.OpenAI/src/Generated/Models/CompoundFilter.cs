@@ -9,25 +9,26 @@ using System.Text.Json;
 
 namespace Azure.AI.Extensions.OpenAI.Internal
 {
-    internal partial class InternalCompoundFilter
+    /// <summary> Compound Filter. </summary>
+    public partial class CompoundFilter
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalCompoundFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CompoundFilter"/>. </summary>
         /// <param name="type"> Type of operation: `and` or `or`. </param>
         /// <param name="filters"> Array of filters to combine. Items can be `ComparisonFilter` or `CompoundFilter`. </param>
-        internal InternalCompoundFilter(FileSearchToolFiltersType1 @type, IEnumerable<BinaryData> filters)
+        internal CompoundFilter(FileSearchToolFiltersType1 @type, IEnumerable<BinaryData> filters)
         {
             Type = @type;
             Filters = filters.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalCompoundFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CompoundFilter"/>. </summary>
         /// <param name="type"> Type of operation: `and` or `or`. </param>
         /// <param name="filters"> Array of filters to combine. Items can be `ComparisonFilter` or `CompoundFilter`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalCompoundFilter(FileSearchToolFiltersType1 @type, IList<BinaryData> filters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CompoundFilter(FileSearchToolFiltersType1 @type, IList<BinaryData> filters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Filters = filters;
@@ -46,7 +47,7 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         /// Supported types:
         /// <list type="bullet">
         /// <item>
-        /// <description> <see cref="InternalComparisonFilter"/>. </description>
+        /// <description> <see cref="ComparisonFilter"/>. </description>
         /// </item>
         /// <item>
         /// <description> <see cref="BinaryData"/>. </description>

@@ -7,23 +7,24 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Extensions.OpenAI.Internal
 {
-    internal partial class InternalCodeInterpreterOutputImage
+    /// <summary> Code interpreter output image. </summary>
+    public partial class CodeInterpreterOutputImage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalCodeInterpreterOutputImage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CodeInterpreterOutputImage"/>. </summary>
         /// <param name="url"> The URL of the image output from the code interpreter. </param>
-        internal InternalCodeInterpreterOutputImage(Uri url)
+        internal CodeInterpreterOutputImage(Uri url)
         {
             Url = url;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalCodeInterpreterOutputImage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CodeInterpreterOutputImage"/>. </summary>
         /// <param name="type"> The type of the output. Always `image`. </param>
         /// <param name="url"> The URL of the image output from the code interpreter. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalCodeInterpreterOutputImage(string @type, Uri url, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CodeInterpreterOutputImage(string @type, Uri url, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Url = url;

@@ -7,23 +7,24 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Extensions.OpenAI.Internal
 {
-    internal partial class InternalInputImageContentParamAutoParam
+    /// <summary> Input image. </summary>
+    public partial class InputImageContentParamAutoParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalInputImageContentParamAutoParam"/>. </summary>
-        internal InternalInputImageContentParamAutoParam()
+        /// <summary> Initializes a new instance of <see cref="InputImageContentParamAutoParam"/>. </summary>
+        internal InputImageContentParamAutoParam()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalInputImageContentParamAutoParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="InputImageContentParamAutoParam"/>. </summary>
         /// <param name="type"> The type of the input item. Always `input_image`. </param>
         /// <param name="imageUrl"></param>
         /// <param name="fileId"></param>
         /// <param name="detail"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalInputImageContentParamAutoParam(string @type, Uri imageUrl, string fileId, ImageDetailLevel? detail, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InputImageContentParamAutoParam(string @type, Uri imageUrl, string fileId, ImageDetailLevel? detail, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             ImageUrl = imageUrl;

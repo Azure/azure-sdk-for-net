@@ -5,8 +5,9 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.Extensions.OpenAI;
+using Azure.AI.Extensions.OpenAI.Internal;
 
-namespace Azure.AI.Extensions.OpenAI.Internal
+namespace OpenAI
 {
     internal partial class InternalWebSearchActionSearch
     {
