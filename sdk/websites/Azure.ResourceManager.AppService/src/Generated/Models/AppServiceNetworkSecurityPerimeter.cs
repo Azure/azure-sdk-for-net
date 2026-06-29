@@ -7,27 +7,28 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Network Security Perimeter. </summary>
-    public partial class NetworkSecurityPerimeter
+    public partial class AppServiceNetworkSecurityPerimeter
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeter"/>. </summary>
-        internal NetworkSecurityPerimeter()
+        /// <summary> Initializes a new instance of <see cref="AppServiceNetworkSecurityPerimeter"/>. </summary>
+        internal AppServiceNetworkSecurityPerimeter()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceNetworkSecurityPerimeter"/>. </summary>
         /// <param name="id"> ARM URI of the Network Security Perimeter resource. </param>
         /// <param name="perimeterGuid"> GUID of the Network Security Perimeter resource. </param>
         /// <param name="location"> Location where the Network Security Perimeter resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeter(string id, string perimeterGuid, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppServiceNetworkSecurityPerimeter(string id, Guid? perimeterGuid, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             PerimeterGuid = perimeterGuid;
@@ -41,10 +42,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> GUID of the Network Security Perimeter resource. </summary>
         [WirePath("perimeterGuid")]
-        public string PerimeterGuid { get; }
+        public Guid? PerimeterGuid { get; }
 
         /// <summary> Location where the Network Security Perimeter resource. </summary>
         [WirePath("location")]
-        public string Location { get; }
+        public AzureLocation? Location { get; }
     }
 }

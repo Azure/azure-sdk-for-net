@@ -13,52 +13,52 @@ using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Network Security Perimeter Association Provisioning Issue. </summary>
-    public partial class NspProvisioningIssue : IJsonModel<NspProvisioningIssue>
+    /// <summary> Network Security Perimeter Resource Association. </summary>
+    public partial class AppServiceNetworkSecurityPerimeterProfileResourceAssociation : IJsonModel<AppServiceNetworkSecurityPerimeterProfileResourceAssociation>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NspProvisioningIssue PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AppServiceNetworkSecurityPerimeterProfileResourceAssociation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NspProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppServiceNetworkSecurityPerimeterProfileResourceAssociation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeNspProvisioningIssue(document.RootElement, options);
+                        return DeserializeAppServiceNetworkSecurityPerimeterProfileResourceAssociation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NspProvisioningIssue)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceNetworkSecurityPerimeterProfileResourceAssociation)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NspProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppServiceNetworkSecurityPerimeterProfileResourceAssociation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NspProvisioningIssue)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceNetworkSecurityPerimeterProfileResourceAssociation)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NspProvisioningIssue>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AppServiceNetworkSecurityPerimeterProfileResourceAssociation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NspProvisioningIssue IPersistableModel<NspProvisioningIssue>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AppServiceNetworkSecurityPerimeterProfileResourceAssociation IPersistableModel<AppServiceNetworkSecurityPerimeterProfileResourceAssociation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NspProvisioningIssue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AppServiceNetworkSecurityPerimeterProfileResourceAssociation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NspProvisioningIssue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AppServiceNetworkSecurityPerimeterProfileResourceAssociation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,20 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NspProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppServiceNetworkSecurityPerimeterProfileResourceAssociation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NspProvisioningIssue)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceNetworkSecurityPerimeterProfileResourceAssociation)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Properties))
+            if (Optional.IsDefined(AccessMode))
             {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                writer.WritePropertyName("accessMode"u8);
+                writer.WriteStringValue(AccessMode);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,31 +103,31 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NspProvisioningIssue IJsonModel<NspProvisioningIssue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AppServiceNetworkSecurityPerimeterProfileResourceAssociation IJsonModel<AppServiceNetworkSecurityPerimeterProfileResourceAssociation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NspProvisioningIssue JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AppServiceNetworkSecurityPerimeterProfileResourceAssociation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NspProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppServiceNetworkSecurityPerimeterProfileResourceAssociation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NspProvisioningIssue)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceNetworkSecurityPerimeterProfileResourceAssociation)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNspProvisioningIssue(document.RootElement, options);
+            return DeserializeAppServiceNetworkSecurityPerimeterProfileResourceAssociation(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NspProvisioningIssue DeserializeNspProvisioningIssue(JsonElement element, ModelReaderWriterOptions options)
+        internal static AppServiceNetworkSecurityPerimeterProfileResourceAssociation DeserializeAppServiceNetworkSecurityPerimeterProfileResourceAssociation(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
-            NspProvisioningIssueProperties properties = default;
+            string accessMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,13 +136,9 @@ namespace Azure.ResourceManager.AppService.Models
                     name = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("properties"u8))
+                if (prop.NameEquals("accessMode"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = NspProvisioningIssueProperties.DeserializeNspProvisioningIssueProperties(prop.Value, options);
+                    accessMode = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +146,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NspProvisioningIssue(name, properties, additionalBinaryDataProperties);
+            return new AppServiceNetworkSecurityPerimeterProfileResourceAssociation(name, accessMode, additionalBinaryDataProperties);
         }
     }
 }

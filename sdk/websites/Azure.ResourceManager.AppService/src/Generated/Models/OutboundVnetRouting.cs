@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isContentShareTrafficEnabled"> Enables accessing content over virtual network. Previously called VnetContentShareEnabled. </param>
         /// <param name="isImagePullTrafficEnabled"> Enables pulling image over Virtual Network. Previously called VnetImagePullEnabled. </param>
         /// <param name="isBackupRestoreTrafficEnabled"> Enables Backup and Restore operations over virtual network. Previously called VnetBackupRestoreEnabled. </param>
-        /// <param name="managedIdentityTraffic"> Enables Managed Identity operations over virtual network. </param>
+        /// <param name="isManagedIdentityTrafficEnabled"> Enables Managed Identity operations over virtual network. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OutboundVnetRouting(bool? isAllTrafficEnabled, bool? isApplicationTrafficEnabled, bool? isContentShareTrafficEnabled, bool? isImagePullTrafficEnabled, bool? isBackupRestoreTrafficEnabled, bool? managedIdentityTraffic, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OutboundVnetRouting(bool? isAllTrafficEnabled, bool? isApplicationTrafficEnabled, bool? isContentShareTrafficEnabled, bool? isImagePullTrafficEnabled, bool? isBackupRestoreTrafficEnabled, bool? isManagedIdentityTrafficEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsAllTrafficEnabled = isAllTrafficEnabled;
             IsApplicationTrafficEnabled = isApplicationTrafficEnabled;
             IsContentShareTrafficEnabled = isContentShareTrafficEnabled;
             IsImagePullTrafficEnabled = isImagePullTrafficEnabled;
             IsBackupRestoreTrafficEnabled = isBackupRestoreTrafficEnabled;
-            ManagedIdentityTraffic = managedIdentityTraffic;
+            IsManagedIdentityTrafficEnabled = isManagedIdentityTrafficEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -63,6 +63,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Enables Managed Identity operations over virtual network. </summary>
         [WirePath("managedIdentityTraffic")]
-        public bool? ManagedIdentityTraffic { get; set; }
+        public bool? IsManagedIdentityTrafficEnabled { get; set; }
     }
 }

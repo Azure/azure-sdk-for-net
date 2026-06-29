@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationCollection"/>. </summary>
         /// <param name="value"> The NetworkSecurityPerimeterConfiguration items on this page. </param>
-        internal NetworkSecurityPerimeterConfigurationCollection(IEnumerable<NetworkSecurityPerimeterConfiguration> value)
+        internal NetworkSecurityPerimeterConfigurationCollection(IEnumerable<AppServiceNetworkSecurityPerimeterConfiguration> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="value"> The NetworkSecurityPerimeterConfiguration items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterConfigurationCollection(IList<NetworkSecurityPerimeterConfiguration> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkSecurityPerimeterConfigurationCollection(IList<AppServiceNetworkSecurityPerimeterConfiguration> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The NetworkSecurityPerimeterConfiguration items on this page. </summary>
         [WirePath("value")]
-        public IList<NetworkSecurityPerimeterConfiguration> Value { get; }
+        public IList<AppServiceNetworkSecurityPerimeterConfiguration> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

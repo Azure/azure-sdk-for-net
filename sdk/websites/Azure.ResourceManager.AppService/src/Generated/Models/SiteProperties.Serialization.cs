@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(SiteScopedCertificatesEnabled))
+            if (Optional.IsDefined(IsSiteScopedCertificatesEnabled))
             {
                 writer.WritePropertyName("siteScopedCertificatesEnabled"u8);
-                writer.WriteBooleanValue(SiteScopedCertificatesEnabled.Value);
+                writer.WriteBooleanValue(IsSiteScopedCertificatesEnabled.Value);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(EnabledHostNames))
             {
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.AppService.Models
             string repositorySiteName = default;
             AppServiceUsageState? usageState = default;
             bool? isEnabled = default;
-            bool? siteScopedCertificatesEnabled = default;
+            bool? isSiteScopedCertificatesEnabled = default;
             IReadOnlyList<string> enabledHostNames = default;
             WebSiteAvailabilityState? availabilityState = default;
             IList<HostNameSslState> hostNameSslStates = default;
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    siteScopedCertificatesEnabled = prop.Value.GetBoolean();
+                    isSiteScopedCertificatesEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enabledHostNames"u8))
@@ -1036,7 +1036,7 @@ namespace Azure.ResourceManager.AppService.Models
                 repositorySiteName,
                 usageState,
                 isEnabled,
-                siteScopedCertificatesEnabled,
+                isSiteScopedCertificatesEnabled,
                 enabledHostNames ?? new ChangeTrackingList<string>(),
                 availabilityState,
                 hostNameSslStates ?? new ChangeTrackingList<HostNameSslState>(),

@@ -14,51 +14,51 @@ using Azure.ResourceManager.AppService;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Network Security Perimeter Subscription. </summary>
-    public partial class NspSubscription : IJsonModel<NspSubscription>
+    public partial class AppServiceNetworkSecurityPerimeterProfileSubscription : IJsonModel<AppServiceNetworkSecurityPerimeterProfileSubscription>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NspSubscription PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AppServiceNetworkSecurityPerimeterProfileSubscription PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NspSubscription>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppServiceNetworkSecurityPerimeterProfileSubscription>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeNspSubscription(document.RootElement, options);
+                        return DeserializeAppServiceNetworkSecurityPerimeterProfileSubscription(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NspSubscription)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceNetworkSecurityPerimeterProfileSubscription)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NspSubscription>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppServiceNetworkSecurityPerimeterProfileSubscription>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NspSubscription)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceNetworkSecurityPerimeterProfileSubscription)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NspSubscription>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AppServiceNetworkSecurityPerimeterProfileSubscription>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NspSubscription IPersistableModel<NspSubscription>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AppServiceNetworkSecurityPerimeterProfileSubscription IPersistableModel<AppServiceNetworkSecurityPerimeterProfileSubscription>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NspSubscription>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AppServiceNetworkSecurityPerimeterProfileSubscription>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NspSubscription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AppServiceNetworkSecurityPerimeterProfileSubscription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NspSubscription>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppServiceNetworkSecurityPerimeterProfileSubscription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NspSubscription)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceNetworkSecurityPerimeterProfileSubscription)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Id))
             {
@@ -98,24 +98,24 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NspSubscription IJsonModel<NspSubscription>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AppServiceNetworkSecurityPerimeterProfileSubscription IJsonModel<AppServiceNetworkSecurityPerimeterProfileSubscription>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NspSubscription JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AppServiceNetworkSecurityPerimeterProfileSubscription JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NspSubscription>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppServiceNetworkSecurityPerimeterProfileSubscription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NspSubscription)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceNetworkSecurityPerimeterProfileSubscription)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNspSubscription(document.RootElement, options);
+            return DeserializeAppServiceNetworkSecurityPerimeterProfileSubscription(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NspSubscription DeserializeNspSubscription(JsonElement element, ModelReaderWriterOptions options)
+        internal static AppServiceNetworkSecurityPerimeterProfileSubscription DeserializeAppServiceNetworkSecurityPerimeterProfileSubscription(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NspSubscription(id, additionalBinaryDataProperties);
+            return new AppServiceNetworkSecurityPerimeterProfileSubscription(id, additionalBinaryDataProperties);
         }
     }
 }

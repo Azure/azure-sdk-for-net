@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("backupRestoreTraffic"u8);
                 writer.WriteBooleanValue(IsBackupRestoreTrafficEnabled.Value);
             }
-            if (Optional.IsDefined(ManagedIdentityTraffic))
+            if (Optional.IsDefined(IsManagedIdentityTrafficEnabled))
             {
                 writer.WritePropertyName("managedIdentityTraffic"u8);
-                writer.WriteBooleanValue(ManagedIdentityTraffic.Value);
+                writer.WriteBooleanValue(IsManagedIdentityTrafficEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppService.Models
             bool? isContentShareTrafficEnabled = default;
             bool? isImagePullTrafficEnabled = default;
             bool? isBackupRestoreTrafficEnabled = default;
-            bool? managedIdentityTraffic = default;
+            bool? isManagedIdentityTrafficEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    managedIdentityTraffic = prop.Value.GetBoolean();
+                    isManagedIdentityTrafficEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.AppService.Models
                 isContentShareTrafficEnabled,
                 isImagePullTrafficEnabled,
                 isBackupRestoreTrafficEnabled,
-                managedIdentityTraffic,
+                isManagedIdentityTrafficEnabled,
                 additionalBinaryDataProperties);
         }
     }

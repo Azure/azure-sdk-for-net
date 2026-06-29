@@ -13,23 +13,23 @@ using Azure.ResourceManager.AppService;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Collection of site containers. </summary>
-    internal partial class SiteContainerListResult
+    internal partial class AppServiceSiteContainerListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SiteContainerListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceSiteContainerListResult"/>. </summary>
         /// <param name="value"> The SiteContainer items on this page. </param>
-        internal SiteContainerListResult(IEnumerable<SiteContainerData> value)
+        internal AppServiceSiteContainerListResult(IEnumerable<SiteContainerData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SiteContainerListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceSiteContainerListResult"/>. </summary>
         /// <param name="value"> The SiteContainer items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SiteContainerListResult(IList<SiteContainerData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppServiceSiteContainerListResult(IList<SiteContainerData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;

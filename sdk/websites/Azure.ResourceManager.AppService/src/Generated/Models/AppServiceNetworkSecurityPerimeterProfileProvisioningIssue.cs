@@ -12,21 +12,21 @@ using Azure.ResourceManager.AppService;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Network Security Perimeter Association Provisioning Issue. </summary>
-    public partial class NspProvisioningIssue
+    public partial class AppServiceNetworkSecurityPerimeterProfileProvisioningIssue
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NspProvisioningIssue"/>. </summary>
-        internal NspProvisioningIssue()
+        /// <summary> Initializes a new instance of <see cref="AppServiceNetworkSecurityPerimeterProfileProvisioningIssue"/>. </summary>
+        internal AppServiceNetworkSecurityPerimeterProfileProvisioningIssue()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NspProvisioningIssue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceNetworkSecurityPerimeterProfileProvisioningIssue"/>. </summary>
         /// <param name="name"> Provisioning Issue Name. </param>
         /// <param name="properties"> Provisioning Issue Properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NspProvisioningIssue(string name, NspProvisioningIssueProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppServiceNetworkSecurityPerimeterProfileProvisioningIssue(string name, AppServiceNetworkSecurityPerimeterProfileProvisioningIssueProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Properties = properties;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Provisioning Issue Properties. </summary>
         [WirePath("properties")]
-        public NspProvisioningIssueProperties Properties { get; }
+        public AppServiceNetworkSecurityPerimeterProfileProvisioningIssueProperties Properties { get; }
     }
 }

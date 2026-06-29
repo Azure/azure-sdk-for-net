@@ -14,51 +14,51 @@ using Azure.ResourceManager.AppService;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Network Security Perimeter Profile. </summary>
-    public partial class NspProfile : IJsonModel<NspProfile>
+    public partial class AppServiceNetworkSecurityPerimeterProfile : IJsonModel<AppServiceNetworkSecurityPerimeterProfile>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NspProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AppServiceNetworkSecurityPerimeterProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NspProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppServiceNetworkSecurityPerimeterProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeNspProfile(document.RootElement, options);
+                        return DeserializeAppServiceNetworkSecurityPerimeterProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NspProfile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceNetworkSecurityPerimeterProfile)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NspProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppServiceNetworkSecurityPerimeterProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NspProfile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceNetworkSecurityPerimeterProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NspProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AppServiceNetworkSecurityPerimeterProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NspProfile IPersistableModel<NspProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AppServiceNetworkSecurityPerimeterProfile IPersistableModel<AppServiceNetworkSecurityPerimeterProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NspProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AppServiceNetworkSecurityPerimeterProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NspProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AppServiceNetworkSecurityPerimeterProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NspProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppServiceNetworkSecurityPerimeterProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NspProfile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceNetworkSecurityPerimeterProfile)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Name))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("accessRules"u8);
                 writer.WriteStartArray();
-                foreach (NspProfileAccessRule item in AccessRules)
+                foreach (AppServiceNetworkSecurityPerimeterProfileAccessRule item in AccessRules)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -133,24 +133,24 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NspProfile IJsonModel<NspProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AppServiceNetworkSecurityPerimeterProfile IJsonModel<AppServiceNetworkSecurityPerimeterProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NspProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AppServiceNetworkSecurityPerimeterProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NspProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppServiceNetworkSecurityPerimeterProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NspProfile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceNetworkSecurityPerimeterProfile)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNspProfile(document.RootElement, options);
+            return DeserializeAppServiceNetworkSecurityPerimeterProfile(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NspProfile DeserializeNspProfile(JsonElement element, ModelReaderWriterOptions options)
+        internal static AppServiceNetworkSecurityPerimeterProfile DeserializeAppServiceNetworkSecurityPerimeterProfile(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             string name = default;
             string accessRulesVersion = default;
-            IList<NspProfileAccessRule> accessRules = default;
+            IList<AppServiceNetworkSecurityPerimeterProfileAccessRule> accessRules = default;
             string diagnosticSettingsVersion = default;
             IList<string> enabledLogCategories = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -180,10 +180,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<NspProfileAccessRule> array = new List<NspProfileAccessRule>();
+                    List<AppServiceNetworkSecurityPerimeterProfileAccessRule> array = new List<AppServiceNetworkSecurityPerimeterProfileAccessRule>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NspProfileAccessRule.DeserializeNspProfileAccessRule(item, options));
+                        array.Add(AppServiceNetworkSecurityPerimeterProfileAccessRule.DeserializeAppServiceNetworkSecurityPerimeterProfileAccessRule(item, options));
                     }
                     accessRules = array;
                     continue;
@@ -219,10 +219,10 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NspProfile(
+            return new AppServiceNetworkSecurityPerimeterProfile(
                 name,
                 accessRulesVersion,
-                accessRules ?? new ChangeTrackingList<NspProfileAccessRule>(),
+                accessRules ?? new ChangeTrackingList<AppServiceNetworkSecurityPerimeterProfileAccessRule>(),
                 diagnosticSettingsVersion,
                 enabledLogCategories ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);

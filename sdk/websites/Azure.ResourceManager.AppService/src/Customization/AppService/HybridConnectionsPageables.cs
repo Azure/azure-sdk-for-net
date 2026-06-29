@@ -5,6 +5,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -13,9 +16,10 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 // ROOT CAUSE: GA 1.5.0 exposed GetHybridConnections (and slot variant)
 // returning Pageable<HybridConnectionData>. The new TypeSpec emitter returns
-// Response<HybridConnectionData> (a single item). Suppress the generated
-// methods and redeclare with the GA Pageable contract by wrapping the single
-// response in a one-element page.
+// Response<HybridConnectionData> (a single item) because the response is not
+// modeled as a paged collection in the spec. The actual ARM endpoint returns
+// `{ "value": [...], "nextLink": ... }`. Suppress the generated single-item
+// methods and redeclare with the GA Pageable contract that parses the array.
 namespace Azure.ResourceManager.AppService
 {
     [CodeGenSuppress("GetHybridConnectionsAsync", typeof(CancellationToken))]
@@ -34,8 +38,7 @@ namespace Azure.ResourceManager.AppService
                     RequestContext context = new RequestContext { CancellationToken = cancellationToken };
                     using HttpMessage message = _sitesRestClient.CreateGetHybridConnectionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    HybridConnectionData data = HybridConnectionData.FromResponse(result);
-                    return Page.FromValues(data is null ? Array.Empty<HybridConnectionData>() : new[] { data }, null, result);
+                    return ParseHybridConnectionPage(result);
                 }
                 catch (Exception e)
                 {
@@ -58,8 +61,7 @@ namespace Azure.ResourceManager.AppService
                     RequestContext context = new RequestContext { CancellationToken = cancellationToken };
                     using HttpMessage message = _sitesRestClient.CreateGetHybridConnectionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    HybridConnectionData data = HybridConnectionData.FromResponse(result);
-                    return Page.FromValues(data is null ? Array.Empty<HybridConnectionData>() : new[] { data }, null, result);
+                    return ParseHybridConnectionPage(result);
                 }
                 catch (Exception e)
                 {
@@ -68,6 +70,26 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, (string nextLink, int? pageSizeHint) => null);
+        }
+
+        internal static Page<HybridConnectionData> ParseHybridConnectionPage(Response result)
+        {
+            ModelReaderWriterOptions options = new ModelReaderWriterOptions("W");
+            using JsonDocument doc = JsonDocument.Parse(result.Content);
+            JsonElement root = doc.RootElement;
+            List<HybridConnectionData> items = new List<HybridConnectionData>();
+            if (root.ValueKind == JsonValueKind.Object && root.TryGetProperty("value", out JsonElement valueElement) && valueElement.ValueKind == JsonValueKind.Array)
+            {
+                foreach (JsonElement item in valueElement.EnumerateArray())
+                {
+                    items.Add(HybridConnectionData.DeserializeHybridConnectionData(item, options));
+                }
+            }
+            else if (root.ValueKind == JsonValueKind.Object && root.TryGetProperty("id", out _))
+            {
+                items.Add(HybridConnectionData.DeserializeHybridConnectionData(root, options));
+            }
+            return Page.FromValues(items, null, result);
         }
     }
 
@@ -87,8 +109,7 @@ namespace Azure.ResourceManager.AppService
                     RequestContext context = new RequestContext { CancellationToken = cancellationToken };
                     using HttpMessage message = _webAppsRestClient.CreateGetHybridConnectionsSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    HybridConnectionData data = HybridConnectionData.FromResponse(result);
-                    return Page.FromValues(data is null ? Array.Empty<HybridConnectionData>() : new[] { data }, null, result);
+                    return WebSiteResource.ParseHybridConnectionPage(result);
                 }
                 catch (Exception e)
                 {
@@ -111,8 +132,7 @@ namespace Azure.ResourceManager.AppService
                     RequestContext context = new RequestContext { CancellationToken = cancellationToken };
                     using HttpMessage message = _webAppsRestClient.CreateGetHybridConnectionsSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    HybridConnectionData data = HybridConnectionData.FromResponse(result);
-                    return Page.FromValues(data is null ? Array.Empty<HybridConnectionData>() : new[] { data }, null, result);
+                    return WebSiteResource.ParseHybridConnectionPage(result);
                 }
                 catch (Exception e)
                 {

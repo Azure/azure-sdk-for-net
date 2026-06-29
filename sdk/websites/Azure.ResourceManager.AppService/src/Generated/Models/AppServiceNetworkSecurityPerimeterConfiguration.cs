@@ -14,17 +14,17 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Detailed view of a Network Security Perimeter Configured for the site. </summary>
-    public partial class NetworkSecurityPerimeterConfiguration : ResourceData
+    public partial class AppServiceNetworkSecurityPerimeterConfiguration : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfiguration"/>. </summary>
-        internal NetworkSecurityPerimeterConfiguration()
+        /// <summary> Initializes a new instance of <see cref="AppServiceNetworkSecurityPerimeterConfiguration"/>. </summary>
+        internal AppServiceNetworkSecurityPerimeterConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceNetworkSecurityPerimeterConfiguration"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="properties"> Name of the Network Security Perimeter Profile Access Rule. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterConfiguration(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkSecurityPerimeterConfigurationProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal AppServiceNetworkSecurityPerimeterConfiguration(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppServiceNetworkSecurityPerimeterConfigurationProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Kind = kind;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Name of the Network Security Perimeter Profile Access Rule. </summary>
         [WirePath("properties")]
-        public NetworkSecurityPerimeterConfigurationProperties Properties { get; }
+        public AppServiceNetworkSecurityPerimeterConfigurationProperties Properties { get; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]

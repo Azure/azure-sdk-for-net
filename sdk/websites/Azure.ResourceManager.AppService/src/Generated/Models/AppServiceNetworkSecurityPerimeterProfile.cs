@@ -12,26 +12,26 @@ using Azure.ResourceManager.AppService;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Network Security Perimeter Profile. </summary>
-    public partial class NspProfile
+    public partial class AppServiceNetworkSecurityPerimeterProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NspProfile"/>. </summary>
-        internal NspProfile()
+        /// <summary> Initializes a new instance of <see cref="AppServiceNetworkSecurityPerimeterProfile"/>. </summary>
+        internal AppServiceNetworkSecurityPerimeterProfile()
         {
-            AccessRules = new ChangeTrackingList<NspProfileAccessRule>();
+            AccessRules = new ChangeTrackingList<AppServiceNetworkSecurityPerimeterProfileAccessRule>();
             EnabledLogCategories = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NspProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceNetworkSecurityPerimeterProfile"/>. </summary>
         /// <param name="name"> Name of the Network Security Perimeter Profile. </param>
         /// <param name="accessRulesVersion"> Access Rules Version for the Network Security Perimeter Profile. </param>
         /// <param name="accessRules"> Access Rules for the Network Security Perimeter Profile. </param>
         /// <param name="diagnosticSettingsVersion"> Diagnostic Settings Version for the Network Security Perimeter Profile. </param>
         /// <param name="enabledLogCategories"> Enabled Log Categories for the Network Security Perimeter Profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NspProfile(string name, string accessRulesVersion, IList<NspProfileAccessRule> accessRules, string diagnosticSettingsVersion, IList<string> enabledLogCategories, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppServiceNetworkSecurityPerimeterProfile(string name, string accessRulesVersion, IList<AppServiceNetworkSecurityPerimeterProfileAccessRule> accessRules, string diagnosticSettingsVersion, IList<string> enabledLogCategories, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             AccessRulesVersion = accessRulesVersion;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Access Rules for the Network Security Perimeter Profile. </summary>
         [WirePath("accessRules")]
-        public IList<NspProfileAccessRule> AccessRules { get; }
+        public IList<AppServiceNetworkSecurityPerimeterProfileAccessRule> AccessRules { get; }
 
         /// <summary> Diagnostic Settings Version for the Network Security Perimeter Profile. </summary>
         [WirePath("diagnosticSettingsVersion")]

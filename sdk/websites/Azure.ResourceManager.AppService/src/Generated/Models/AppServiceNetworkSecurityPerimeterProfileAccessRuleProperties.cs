@@ -12,25 +12,25 @@ using Azure.ResourceManager.AppService;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Network Security Perimeter Profile Access Rule Properties. </summary>
-    public partial class NspProfileAccessRuleProperties
+    public partial class AppServiceNetworkSecurityPerimeterProfileAccessRuleProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NspProfileAccessRuleProperties"/>. </summary>
-        internal NspProfileAccessRuleProperties()
+        /// <summary> Initializes a new instance of <see cref="AppServiceNetworkSecurityPerimeterProfileAccessRuleProperties"/>. </summary>
+        internal AppServiceNetworkSecurityPerimeterProfileAccessRuleProperties()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
             ServiceTags = new ChangeTrackingList<string>();
-            AppliesTo = new ChangeTrackingList<NspProfileAccessRuleGranularFeature>();
-            Subscriptions = new ChangeTrackingList<NspSubscription>();
-            NetworkSecurityPerimeters = new ChangeTrackingList<NetworkSecurityPerimeter>();
+            AppliesTo = new ChangeTrackingList<AppServiceNetworkSecurityPerimeterProfileGranularFeature>();
+            Subscriptions = new ChangeTrackingList<AppServiceNetworkSecurityPerimeterProfileSubscription>();
+            NetworkSecurityPerimeters = new ChangeTrackingList<AppServiceNetworkSecurityPerimeter>();
             FullyQualifiedDomainNames = new ChangeTrackingList<string>();
             EmailAddresses = new ChangeTrackingList<string>();
             PhoneNumbers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NspProfileAccessRuleProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceNetworkSecurityPerimeterProfileAccessRuleProperties"/>. </summary>
         /// <param name="direction"> Direction of Access Rule (Inbound/Outbound). </param>
         /// <param name="addressPrefixes"> IP Address Ranges of Access Rule. </param>
         /// <param name="serviceTags"> Service Tags of Access Rule. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="emailAddresses"> Email Addresses of Access Rule. Not supported by App Service. </param>
         /// <param name="phoneNumbers"> Phone Numbers of Access Rule. Not supported by App Service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NspProfileAccessRuleProperties(string direction, IList<string> addressPrefixes, IList<string> serviceTags, IList<NspProfileAccessRuleGranularFeature> appliesTo, IList<NspSubscription> subscriptions, IList<NetworkSecurityPerimeter> networkSecurityPerimeters, IList<string> fullyQualifiedDomainNames, IList<string> emailAddresses, IList<string> phoneNumbers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppServiceNetworkSecurityPerimeterProfileAccessRuleProperties(string direction, IList<string> addressPrefixes, IList<string> serviceTags, IList<AppServiceNetworkSecurityPerimeterProfileGranularFeature> appliesTo, IList<AppServiceNetworkSecurityPerimeterProfileSubscription> subscriptions, IList<AppServiceNetworkSecurityPerimeter> networkSecurityPerimeters, IList<string> fullyQualifiedDomainNames, IList<string> emailAddresses, IList<string> phoneNumbers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Direction = direction;
             AddressPrefixes = addressPrefixes;
@@ -69,15 +69,15 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Granular Features of Access Rule. </summary>
         [WirePath("appliesTo")]
-        public IList<NspProfileAccessRuleGranularFeature> AppliesTo { get; }
+        public IList<AppServiceNetworkSecurityPerimeterProfileGranularFeature> AppliesTo { get; }
 
         /// <summary> Subscriptions of Access Rule. Not supported by App Service. </summary>
         [WirePath("subscriptions")]
-        public IList<NspSubscription> Subscriptions { get; }
+        public IList<AppServiceNetworkSecurityPerimeterProfileSubscription> Subscriptions { get; }
 
         /// <summary> NetworkSecurityPerimeter of Access Rule. Not supported by App Service. </summary>
         [WirePath("networkSecurityPerimeters")]
-        public IList<NetworkSecurityPerimeter> NetworkSecurityPerimeters { get; }
+        public IList<AppServiceNetworkSecurityPerimeter> NetworkSecurityPerimeters { get; }
 
         /// <summary> Fully Qualified Domain Names of Access Rule. Not supported by App Service. </summary>
         [WirePath("fullyQualifiedDomainNames")]

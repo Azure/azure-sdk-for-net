@@ -12,26 +12,26 @@ using Azure.ResourceManager.AppService;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Network Security Perimeter Association Provisioning Issue Properties. </summary>
-    public partial class NspProvisioningIssueProperties
+    public partial class AppServiceNetworkSecurityPerimeterProfileProvisioningIssueProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NspProvisioningIssueProperties"/>. </summary>
-        internal NspProvisioningIssueProperties()
+        /// <summary> Initializes a new instance of <see cref="AppServiceNetworkSecurityPerimeterProfileProvisioningIssueProperties"/>. </summary>
+        internal AppServiceNetworkSecurityPerimeterProfileProvisioningIssueProperties()
         {
             SuggestedResourceIds = new ChangeTrackingList<string>();
             SuggestedAccessRules = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NspProvisioningIssueProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceNetworkSecurityPerimeterProfileProvisioningIssueProperties"/>. </summary>
         /// <param name="issueType"> Provisioning Issue Type. </param>
         /// <param name="severity"> Provisioning Issue Severity. </param>
         /// <param name="description"> Provisioning Issue Description. </param>
         /// <param name="suggestedResourceIds"> Recommended ARM Ids to resolve the issue. </param>
         /// <param name="suggestedAccessRules"> Recommended access rules to resolve the issue. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NspProvisioningIssueProperties(string issueType, string severity, string description, IList<string> suggestedResourceIds, IList<string> suggestedAccessRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppServiceNetworkSecurityPerimeterProfileProvisioningIssueProperties(string issueType, string severity, string description, IList<string> suggestedResourceIds, IList<string> suggestedAccessRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IssueType = issueType;
             Severity = severity;

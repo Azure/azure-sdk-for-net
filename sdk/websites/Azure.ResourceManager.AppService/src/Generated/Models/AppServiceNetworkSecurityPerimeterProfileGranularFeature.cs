@@ -12,22 +12,22 @@ using Azure.ResourceManager.AppService;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Network Security Perimeter Profile Access Rule Granular Feature. </summary>
-    public partial class NspProfileAccessRuleGranularFeature
+    public partial class AppServiceNetworkSecurityPerimeterProfileGranularFeature
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NspProfileAccessRuleGranularFeature"/>. </summary>
-        internal NspProfileAccessRuleGranularFeature()
+        /// <summary> Initializes a new instance of <see cref="AppServiceNetworkSecurityPerimeterProfileGranularFeature"/>. </summary>
+        internal AppServiceNetworkSecurityPerimeterProfileGranularFeature()
         {
             Features = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NspProfileAccessRuleGranularFeature"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceNetworkSecurityPerimeterProfileGranularFeature"/>. </summary>
         /// <param name="resourceType"> Resource Type of Granular Feature. </param>
         /// <param name="features"> Names of applied Granular Features. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NspProfileAccessRuleGranularFeature(string resourceType, IList<string> features, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppServiceNetworkSecurityPerimeterProfileGranularFeature(string resourceType, IList<string> features, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceType = resourceType;
             Features = features;

@@ -12,21 +12,21 @@ using Azure.ResourceManager.AppService;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Network Security Perimeter Resource Association. </summary>
-    public partial class NspResourceAssociation
+    public partial class AppServiceNetworkSecurityPerimeterProfileResourceAssociation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NspResourceAssociation"/>. </summary>
-        internal NspResourceAssociation()
+        /// <summary> Initializes a new instance of <see cref="AppServiceNetworkSecurityPerimeterProfileResourceAssociation"/>. </summary>
+        internal AppServiceNetworkSecurityPerimeterProfileResourceAssociation()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NspResourceAssociation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceNetworkSecurityPerimeterProfileResourceAssociation"/>. </summary>
         /// <param name="name"> Network Security Perimeter Resource Association Name. </param>
         /// <param name="accessMode"> Network Security Perimeter Association Access Mode (Learning/Enforced). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NspResourceAssociation(string name, string accessMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppServiceNetworkSecurityPerimeterProfileResourceAssociation(string name, string accessMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             AccessMode = accessMode;

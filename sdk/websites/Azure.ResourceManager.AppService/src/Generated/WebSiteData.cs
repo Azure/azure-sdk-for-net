@@ -127,11 +127,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if site scoped certificates are enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("properties.siteScopedCertificatesEnabled")]
-        public bool? SiteScopedCertificatesEnabled
+        public bool? IsSiteScopedCertificatesEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.SiteScopedCertificatesEnabled;
+                return Properties is null ? default : Properties.IsSiteScopedCertificatesEnabled;
             }
             set
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new SiteProperties();
                 }
-                Properties.SiteScopedCertificatesEnabled = value;
+                Properties.IsSiteScopedCertificatesEnabled = value;
             }
         }
 

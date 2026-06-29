@@ -12,21 +12,21 @@ using Azure.ResourceManager.AppService;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Network Security Perimeter Profile Access Rule. </summary>
-    public partial class NspProfileAccessRule
+    public partial class AppServiceNetworkSecurityPerimeterProfileAccessRule
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NspProfileAccessRule"/>. </summary>
-        internal NspProfileAccessRule()
+        /// <summary> Initializes a new instance of <see cref="AppServiceNetworkSecurityPerimeterProfileAccessRule"/>. </summary>
+        internal AppServiceNetworkSecurityPerimeterProfileAccessRule()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NspProfileAccessRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceNetworkSecurityPerimeterProfileAccessRule"/>. </summary>
         /// <param name="name"> Name of the Network Security Perimeter Profile Access Rule. </param>
         /// <param name="properties"> Name of the Network Security Perimeter Profile Access Rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NspProfileAccessRule(string name, NspProfileAccessRuleProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppServiceNetworkSecurityPerimeterProfileAccessRule(string name, AppServiceNetworkSecurityPerimeterProfileAccessRuleProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Properties = properties;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Name of the Network Security Perimeter Profile Access Rule. </summary>
         [WirePath("properties")]
-        public NspProfileAccessRuleProperties Properties { get; }
+        public AppServiceNetworkSecurityPerimeterProfileAccessRuleProperties Properties { get; }
     }
 }

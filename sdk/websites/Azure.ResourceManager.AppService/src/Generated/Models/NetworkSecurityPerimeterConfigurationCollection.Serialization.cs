@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (NetworkSecurityPerimeterConfiguration item in Value)
+            foreach (AppServiceNetworkSecurityPerimeterConfiguration item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            IList<NetworkSecurityPerimeterConfiguration> value = default;
+            IList<AppServiceNetworkSecurityPerimeterConfiguration> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<NetworkSecurityPerimeterConfiguration> array = new List<NetworkSecurityPerimeterConfiguration>();
+                    List<AppServiceNetworkSecurityPerimeterConfiguration> array = new List<AppServiceNetworkSecurityPerimeterConfiguration>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSecurityPerimeterConfiguration.DeserializeNetworkSecurityPerimeterConfiguration(item, options));
+                        array.Add(AppServiceNetworkSecurityPerimeterConfiguration.DeserializeAppServiceNetworkSecurityPerimeterConfiguration(item, options));
                     }
                     value = array;
                     continue;

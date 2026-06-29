@@ -12,25 +12,25 @@ using Azure.ResourceManager.AppService;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Network Security Perimeter Configuration Properties. </summary>
-    public partial class NetworkSecurityPerimeterConfigurationProperties
+    public partial class AppServiceNetworkSecurityPerimeterConfigurationProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationProperties"/>. </summary>
-        internal NetworkSecurityPerimeterConfigurationProperties()
+        /// <summary> Initializes a new instance of <see cref="AppServiceNetworkSecurityPerimeterConfigurationProperties"/>. </summary>
+        internal AppServiceNetworkSecurityPerimeterConfigurationProperties()
         {
-            ProvisioningIssues = new ChangeTrackingList<NspProvisioningIssue>();
+            ProvisioningIssues = new ChangeTrackingList<AppServiceNetworkSecurityPerimeterProfileProvisioningIssue>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceNetworkSecurityPerimeterConfigurationProperties"/>. </summary>
         /// <param name="provisioningState"> Reflects state of association persistence and configuration propagation to App Service Data Plane. </param>
         /// <param name="provisioningIssues"> Reflects any misconfigurations and failures detected while provisioning the association or while processing configuration changes. </param>
         /// <param name="networkSecurityPerimeter"> Associated Network Security Perimeter resource. </param>
         /// <param name="resourceAssociations"> Representation of Network Security Perimeter Association. </param>
         /// <param name="profile"> Associated Network Security Perimeter Profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterConfigurationProperties(string provisioningState, IList<NspProvisioningIssue> provisioningIssues, NetworkSecurityPerimeter networkSecurityPerimeter, NspResourceAssociation resourceAssociations, NspProfile profile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppServiceNetworkSecurityPerimeterConfigurationProperties(string provisioningState, IList<AppServiceNetworkSecurityPerimeterProfileProvisioningIssue> provisioningIssues, AppServiceNetworkSecurityPerimeter networkSecurityPerimeter, AppServiceNetworkSecurityPerimeterProfileResourceAssociation resourceAssociations, AppServiceNetworkSecurityPerimeterProfile profile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ProvisioningIssues = provisioningIssues;
@@ -46,18 +46,18 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Reflects any misconfigurations and failures detected while provisioning the association or while processing configuration changes. </summary>
         [WirePath("provisioningIssues")]
-        public IList<NspProvisioningIssue> ProvisioningIssues { get; }
+        public IList<AppServiceNetworkSecurityPerimeterProfileProvisioningIssue> ProvisioningIssues { get; }
 
         /// <summary> Associated Network Security Perimeter resource. </summary>
         [WirePath("networkSecurityPerimeter")]
-        public NetworkSecurityPerimeter NetworkSecurityPerimeter { get; }
+        public AppServiceNetworkSecurityPerimeter NetworkSecurityPerimeter { get; }
 
         /// <summary> Representation of Network Security Perimeter Association. </summary>
         [WirePath("resourceAssociations")]
-        public NspResourceAssociation ResourceAssociations { get; }
+        public AppServiceNetworkSecurityPerimeterProfileResourceAssociation ResourceAssociations { get; }
 
         /// <summary> Associated Network Security Perimeter Profile. </summary>
         [WirePath("profile")]
-        public NspProfile Profile { get; }
+        public AppServiceNetworkSecurityPerimeterProfile Profile { get; }
     }
 }
