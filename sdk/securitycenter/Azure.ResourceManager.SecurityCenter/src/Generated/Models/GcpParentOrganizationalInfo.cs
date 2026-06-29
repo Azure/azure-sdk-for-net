@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -14,34 +15,35 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public partial class GcpParentOrganizationalInfo : GcpOrganizationalInfo
     {
         /// <summary> Initializes a new instance of <see cref="GcpParentOrganizationalInfo"/>. </summary>
-        public GcpParentOrganizationalInfo()
+        public GcpParentOrganizationalInfo() : base(OrganizationMembershipType.Organization)
         {
             ExcludedProjectNumbers = new ChangeTrackingList<string>();
-            OrganizationMembershipType = OrganizationMembershipType.Organization;
         }
 
         /// <summary> Initializes a new instance of <see cref="GcpParentOrganizationalInfo"/>. </summary>
         /// <param name="organizationMembershipType"> The multi cloud account's membership type in the organization. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="excludedProjectNumbers"> If the multi cloud account is of membership type organization, list of accounts excluded from offering. </param>
         /// <param name="serviceAccountEmailAddress"> The service account email address which represents the organization level permissions container. </param>
         /// <param name="workloadIdentityProviderId"> The GCP workload identity provider id which represents the permissions required to auto provision security connectors. </param>
         /// <param name="organizationName"> GCP organization name. </param>
-        internal GcpParentOrganizationalInfo(OrganizationMembershipType organizationMembershipType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> excludedProjectNumbers, string serviceAccountEmailAddress, string workloadIdentityProviderId, string organizationName) : base(organizationMembershipType, serializedAdditionalRawData)
+        internal GcpParentOrganizationalInfo(OrganizationMembershipType organizationMembershipType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> excludedProjectNumbers, string serviceAccountEmailAddress, string workloadIdentityProviderId, string organizationName) : base(organizationMembershipType, additionalBinaryDataProperties)
         {
             ExcludedProjectNumbers = excludedProjectNumbers;
             ServiceAccountEmailAddress = serviceAccountEmailAddress;
             WorkloadIdentityProviderId = workloadIdentityProviderId;
             OrganizationName = organizationName;
-            OrganizationMembershipType = organizationMembershipType;
         }
 
         /// <summary> If the multi cloud account is of membership type organization, list of accounts excluded from offering. </summary>
         public IList<string> ExcludedProjectNumbers { get; }
+
         /// <summary> The service account email address which represents the organization level permissions container. </summary>
         public string ServiceAccountEmailAddress { get; set; }
+
         /// <summary> The GCP workload identity provider id which represents the permissions required to auto provision security connectors. </summary>
         public string WorkloadIdentityProviderId { get; set; }
+
         /// <summary> GCP organization name. </summary>
         public string OrganizationName { get; }
     }

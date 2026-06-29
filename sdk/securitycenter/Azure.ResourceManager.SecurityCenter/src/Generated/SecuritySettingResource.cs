@@ -6,46 +6,37 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A Class representing a SecuritySetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecuritySettingResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetSecuritySettingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetSecuritySetting method.
+    /// A class representing a SecuritySetting along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecuritySettingResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetSecuritySettings method.
     /// </summary>
     public partial class SecuritySettingResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SecuritySettingResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="settingName"> The settingName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, SecuritySettingName settingName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/settings/{settingName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _securitySettingSettingsClientDiagnostics;
-        private readonly SettingsRestOperations _securitySettingSettingsRestClient;
+        private readonly ClientDiagnostics _settingsClientDiagnostics;
+        private readonly Settings _settingsRestClient;
         private readonly SecuritySettingData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Security/settings";
 
-        /// <summary> Initializes a new instance of the <see cref="SecuritySettingResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SecuritySettingResource for mocking. </summary>
         protected SecuritySettingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecuritySettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecuritySettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecuritySettingResource(ArmClient client, SecuritySettingData data) : this(client, data.Id)
@@ -54,71 +45,91 @@ namespace Azure.ResourceManager.SecurityCenter
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecuritySettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecuritySettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SecuritySettingResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _securitySettingSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string securitySettingSettingsApiVersion);
-            _securitySettingSettingsRestClient = new SettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securitySettingSettingsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string securitySettingApiVersion);
+            _settingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
+            _settingsRestClient = new Settings(_settingsClientDiagnostics, Pipeline, Endpoint, securitySettingApiVersion ?? "2022-05-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual SecuritySettingData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="settingName"> The settingName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, SettingName settingName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/settings/{settingName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Settings of different configurations in Microsoft Defender for Cloud
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/settings/{settingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/settings/{settingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Settings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Settings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-05-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecuritySettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecuritySettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SecuritySettingResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _securitySettingSettingsClientDiagnostics.CreateScope("SecuritySettingResource.Get");
+            using DiagnosticScope scope = _settingsClientDiagnostics.CreateScope("SecuritySettingResource.Get");
             scope.Start();
             try
             {
-                var response = await _securitySettingSettingsRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _settingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecuritySettingData> response = Response.FromValue(SecuritySettingData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecuritySettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Settings of different configurations in Microsoft Defender for Cloud
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/settings/{settingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/settings/{settingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Settings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Settings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-05-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecuritySettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecuritySettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SecuritySettingResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _securitySettingSettingsClientDiagnostics.CreateScope("SecuritySettingResource.Get");
+            using DiagnosticScope scope = _settingsClientDiagnostics.CreateScope("SecuritySettingResource.Get");
             scope.Start();
             try
             {
-                var response = _securitySettingSettingsRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _settingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecuritySettingData> response = Response.FromValue(SecuritySettingData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecuritySettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -169,23 +188,23 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// updating settings about different configurations in Microsoft Defender for Cloud
+        /// Update a SecuritySetting.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/settings/{settingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/settings/{settingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Settings_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> Settings_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-05-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecuritySettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecuritySettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -197,16 +216,24 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securitySettingSettingsClientDiagnostics.CreateScope("SecuritySettingResource.Update");
+            using DiagnosticScope scope = _settingsClientDiagnostics.CreateScope("SecuritySettingResource.Update");
             scope.Start();
             try
             {
-                var response = await _securitySettingSettingsRestClient.UpdateAsync(Id.SubscriptionId, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _securitySettingSettingsRestClient.CreateUpdateRequestUri(Id.SubscriptionId, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityCenterArmOperation<SecuritySettingResource>(Response.FromValue(new SecuritySettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _settingsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, SecuritySettingData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecuritySettingData> response = Response.FromValue(SecuritySettingData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation<SecuritySettingResource> operation = new SecurityCenterArmOperation<SecuritySettingResource>(Response.FromValue(new SecuritySettingResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -217,23 +244,23 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// updating settings about different configurations in Microsoft Defender for Cloud
+        /// Update a SecuritySetting.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/settings/{settingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/settings/{settingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Settings_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> Settings_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-05-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecuritySettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecuritySettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -245,16 +272,24 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securitySettingSettingsClientDiagnostics.CreateScope("SecuritySettingResource.Update");
+            using DiagnosticScope scope = _settingsClientDiagnostics.CreateScope("SecuritySettingResource.Update");
             scope.Start();
             try
             {
-                var response = _securitySettingSettingsRestClient.Update(Id.SubscriptionId, Id.Name, data, cancellationToken);
-                var uri = _securitySettingSettingsRestClient.CreateUpdateRequestUri(Id.SubscriptionId, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityCenterArmOperation<SecuritySettingResource>(Response.FromValue(new SecuritySettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _settingsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, SecuritySettingData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecuritySettingData> response = Response.FromValue(SecuritySettingData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation<SecuritySettingResource> operation = new SecurityCenterArmOperation<SecuritySettingResource>(Response.FromValue(new SecuritySettingResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

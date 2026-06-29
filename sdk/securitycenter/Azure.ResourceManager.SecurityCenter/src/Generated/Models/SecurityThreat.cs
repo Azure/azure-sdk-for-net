@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -14,56 +15,87 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public readonly partial struct SecurityThreat : IEquatable<SecurityThreat>
     {
         private readonly string _value;
+        /// <summary> accountBreach. </summary>
+        private const string AccountBreachValue = "accountBreach";
+        /// <summary> dataExfiltration. </summary>
+        private const string DataExfiltrationValue = "dataExfiltration";
+        /// <summary> dataSpillage. </summary>
+        private const string DataSpillageValue = "dataSpillage";
+        /// <summary> maliciousInsider. </summary>
+        private const string MaliciousInsiderValue = "maliciousInsider";
+        /// <summary> elevationOfPrivilege. </summary>
+        private const string ElevationOfPrivilegeValue = "elevationOfPrivilege";
+        /// <summary> threatResistance. </summary>
+        private const string ThreatResistanceValue = "threatResistance";
+        /// <summary> missingCoverage. </summary>
+        private const string MissingCoverageValue = "missingCoverage";
+        /// <summary> denialOfService. </summary>
+        private const string DenialOfServiceValue = "denialOfService";
 
         /// <summary> Initializes a new instance of <see cref="SecurityThreat"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityThreat(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AccountBreachValue = "accountBreach";
-        private const string DataExfiltrationValue = "dataExfiltration";
-        private const string DataSpillageValue = "dataSpillage";
-        private const string MaliciousInsiderValue = "maliciousInsider";
-        private const string ElevationOfPrivilegeValue = "elevationOfPrivilege";
-        private const string ThreatResistanceValue = "threatResistance";
-        private const string MissingCoverageValue = "missingCoverage";
-        private const string DenialOfServiceValue = "denialOfService";
+            _value = value;
+        }
 
         /// <summary> accountBreach. </summary>
         public static SecurityThreat AccountBreach { get; } = new SecurityThreat(AccountBreachValue);
+
         /// <summary> dataExfiltration. </summary>
         public static SecurityThreat DataExfiltration { get; } = new SecurityThreat(DataExfiltrationValue);
+
         /// <summary> dataSpillage. </summary>
         public static SecurityThreat DataSpillage { get; } = new SecurityThreat(DataSpillageValue);
+
         /// <summary> maliciousInsider. </summary>
         public static SecurityThreat MaliciousInsider { get; } = new SecurityThreat(MaliciousInsiderValue);
+
         /// <summary> elevationOfPrivilege. </summary>
         public static SecurityThreat ElevationOfPrivilege { get; } = new SecurityThreat(ElevationOfPrivilegeValue);
+
         /// <summary> threatResistance. </summary>
         public static SecurityThreat ThreatResistance { get; } = new SecurityThreat(ThreatResistanceValue);
+
         /// <summary> missingCoverage. </summary>
         public static SecurityThreat MissingCoverage { get; } = new SecurityThreat(MissingCoverageValue);
+
         /// <summary> denialOfService. </summary>
         public static SecurityThreat DenialOfService { get; } = new SecurityThreat(DenialOfServiceValue);
+
         /// <summary> Determines if two <see cref="SecurityThreat"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityThreat left, SecurityThreat right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityThreat"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityThreat left, SecurityThreat right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityThreat"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityThreat"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityThreat(string value) => new SecurityThreat(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityThreat"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityThreat?(string value) => value == null ? null : new SecurityThreat(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityThreat other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityThreat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
