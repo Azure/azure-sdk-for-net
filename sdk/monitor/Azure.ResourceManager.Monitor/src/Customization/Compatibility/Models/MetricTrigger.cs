@@ -10,7 +10,6 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-#pragma warning disable CS0618 // This partial class intentionally exposes obsolete compatibility members.
     public partial class MetricTrigger
     {
         private IList<AutoscaleRuleMetricDimension> _dimensions;
@@ -56,5 +55,4 @@ namespace Azure.ResourceManager.Monitor.Models
             set => _dimensions = value;
         }
     }
-#pragma warning restore CS0618
 }

@@ -8,7 +8,6 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-#pragma warning disable CS0618 // This file intentionally restores and bridges the obsolete enum surface.
     // The generated comparison enum is intentionally renamed to MetricTriggerComparisonOperator.
     // Keep this legacy enum with stable numeric values because enum numeric values are binary-compatible API.
     /// <summary> The operator that is used to compare the metric data and the threshold. </summary>
@@ -31,6 +30,7 @@ namespace Azure.ResourceManager.Monitor.Models
     }
 
 #pragma warning disable SA1649 // Keep the compatibility helper next to the restored enum shim.
+#pragma warning disable CS0618 // This helper intentionally bridges the obsolete enum to the generated replacement.
     internal static class MetricTriggerComparisonOperationHelper
     {
         public static MetricTriggerComparisonOperation ToLegacyComparisonOperation(MetricTriggerComparisonOperator value) => value switch
@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.Monitor.Models
             _ => MetricTriggerComparisonOperator.Equals
         };
     }
-#pragma warning restore SA1649
 #pragma warning restore CS0618
+#pragma warning restore SA1649
 }

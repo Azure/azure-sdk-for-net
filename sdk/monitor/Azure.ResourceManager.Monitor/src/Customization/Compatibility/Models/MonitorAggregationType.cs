@@ -9,7 +9,6 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-#pragma warning disable CS0618 // This file intentionally restores and bridges the obsolete enum surface.
     /// <summary> The aggregation type of the metric. </summary>
     [Obsolete("This type is no longer supported. Use MonitorMetricAggregationType for MonitorMetricDefinition and MonitorAggregationKind for SubscriptionScopeMetricDefinition instead.", false)]
     [EditorBrowsable(EditorBrowsableState.Never)]
@@ -30,6 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
     }
 
 #pragma warning disable SA1649 // Keep the compatibility helper next to the restored enum shim.
+#pragma warning disable CS0618 // This helper intentionally bridges the obsolete enum to generated replacement types.
     internal static class MonitorAggregationTypeHelper
     {
         public static MonitorAggregationType? ToLegacyAggregationType(MonitorMetricAggregationType? value)
@@ -116,6 +116,6 @@ namespace Azure.ResourceManager.Monitor.Models
             return result;
         }
     }
-#pragma warning restore SA1649
 #pragma warning restore CS0618
+#pragma warning restore SA1649
 }
