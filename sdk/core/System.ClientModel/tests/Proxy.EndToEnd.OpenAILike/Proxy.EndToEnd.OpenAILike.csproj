@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Mock "OpenAI-like" base library for end-to-end proxy routing tests. Defines a discriminated ResponseTool with known subtypes and an unknown fallback.</Description>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IsTestSupportProject>true</IsTestSupportProject>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\System.ClientModel.csproj" />
+  </ItemGroup>
+
+</Project>
