@@ -1,17 +1,14 @@
-# Repo-provided MCP setup for the eval CI — the override the archetype runs when
-# useCustomMcp=true. Each consuming repo (or language team) customizes this to build or
-# install whatever MCP server(s) its evals drive: a different .NET build, a Java/Maven
-# server, an NPM-installed live server, etc.
-#
-# If you just need the standard azure-sdk-tools MCP, leave useCustomMcp=false and use the
-# default at eng/common/pipelines/templates/steps/eval-build-mcp.yml instead — this file is
-# only for repos whose MCP differs from that.
+# Documented example MCP setup — the default target of the archetype's `mcpSetupTemplate`
+# parameter. Each consuming pipeline points `mcpSetupTemplate` at its own copy of a step like
+# this to build or install whatever MCP server(s) its evals drive: a .NET build, a Java/Maven
+# server, an NPM-installed live server, etc. (azure-sdk-tools' own builds live in
+# eng/pipelines/eval/.)
 #
 # Contract: publish each server's build/install output under
 # $(Build.SourcesDirectory)/artifacts/mcp/<name>. The BuildMcp job ships that whole tree as
 # the `mcp-servers` artifact and every shard re-stages it at the same path, so <name> and the
-# layout must match the relative DLL/exe paths this repo's .vally.yaml environments resolve
-# against. Mock is optional — provide one only if the repo's hermetic evals need it.
+# layout must match the relative DLL/exe paths the repo's .vally.yaml environments resolve
+# against.
 
 parameters:
   - name: mcpStageRoot

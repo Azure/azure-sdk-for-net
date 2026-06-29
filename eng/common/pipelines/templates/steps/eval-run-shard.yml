@@ -30,11 +30,14 @@ parameters:
   - name: nodeVersion
     type: string
     default: 22.x
-  - name: azureServiceConnection
-    # When set, the eval runs inside an AzureCLI@2 task so the agent's MCP tools can
-    # reach real Azure DevOps (the live tier). Empty = plain script (hermetic tiers).
+  - name: evalInvokeTemplate
+    # Path to the step template that actually runs `vally eval` for this shard. Defaults to
+    # the hermetic plain-node runner; a pipeline overrides it to wrap the run at execution
+    # time — the live tier's AzureCLI@2 (real DevOps auth), a chatbot start/stop, a custom
+    # MCP startup. This is the single run-time customization hook, so the orchestrator owns
+    # no service connection (the override does).
     type: string
-    default: ''
+    default: /eng/common/pipelines/templates/steps/eval-invoke.yml
   - name: githubTokenVariable
     # Name of the secret variable (from the DevOps-linked group) the copilot-sdk
     # executor authenticates with. Passed by name so no group is hardcoded (D5).
@@ -67,7 +70,7 @@ steps:
 
   - download: current
     artifact: ${{ parameters.mcpArtifact }}
-    displayName: 'Download MCP server(s)'
+    displayName: 'Download Azure SDK Tools MCP server(s)'
 
   - script: |
       mkdir -p "$(Build.SourcesDirectory)/${{ parameters.mcpStageRoot }}"
@@ -96,38 +99,16 @@ steps:
     env:
       EVAL_ARGS: $(evalArgs)
 
-  # Gate on the eval verdict, not the `vally` exit code (see header comment). The live
-  # tier wraps the same command in AzureCLI@2 so the agent's MCP DevOps calls inherit the
-  # service-connection identity; the hermetic tiers run it as a plain script.
-  - ${{ if ne(parameters.azureServiceConnection, '') }}:
-      - task: AzureCLI@2
-        displayName: 'vally eval $(shardName)'
-        inputs:
-          azureSubscription: ${{ parameters.azureServiceConnection }}
-          scriptType: bash
-          scriptLocation: inlineScript
-          workingDirectory: ${{ parameters.vallyRoot }}
-          inlineScript: |
-            node "$(Build.SourcesDirectory)/${{ parameters.scriptDir }}/invoke-eval-shard.js" \
-              --eval-args "$(evalArgs)" \
-              --shard-name "$(shardName)" \
-              --output-dir "$(Build.SourcesDirectory)/artifacts/vally-results/$(shardName)" \
-              --skill-eval-prefix "$(Build.SourcesDirectory)/${{ parameters.scriptDir }}" \
-              --threshold ${{ parameters.threshold }}
-        env:
-          GITHUB_TOKEN: $(${{ parameters.githubTokenVariable }})
-  - ${{ else }}:
-      - script: |
-          node "$(Build.SourcesDirectory)/${{ parameters.scriptDir }}/invoke-eval-shard.js" \
-            --eval-args "$(evalArgs)" \
-            --shard-name "$(shardName)" \
-            --output-dir "$(Build.SourcesDirectory)/artifacts/vally-results/$(shardName)" \
-            --skill-eval-prefix "$(Build.SourcesDirectory)/${{ parameters.scriptDir }}" \
-            --threshold ${{ parameters.threshold }}
-        displayName: 'vally eval $(shardName)'
-        workingDirectory: ${{ parameters.vallyRoot }}
-        env:
-          GITHUB_TOKEN: $(${{ parameters.githubTokenVariable }})
+  # Run the eval (gate on the VERDICT, not the `vally` exit code — see header comment).
+  # The actual invocation is delegated to evalInvokeTemplate so a pipeline can wrap it at
+  # execution time (live-tier AzureCLI@2 auth, chatbot start/stop, custom MCP startup)
+  # without the shared orchestrator owning a service connection. Default = hermetic node.
+  - template: ${{ parameters.evalInvokeTemplate }}
+    parameters:
+      scriptDir: ${{ parameters.scriptDir }}
+      vallyRoot: ${{ parameters.vallyRoot }}
+      threshold: ${{ parameters.threshold }}
+      githubTokenVariable: ${{ parameters.githubTokenVariable }}
 
   # Always stage just the JUnit (a few KB) — all the Summary stage consumes — so green
   # runs stay tiny. The host job publishes this dir as 'eval-result-$(shardName)' via 1ES
