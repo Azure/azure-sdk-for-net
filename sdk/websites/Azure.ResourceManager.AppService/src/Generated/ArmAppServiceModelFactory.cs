@@ -6967,16 +6967,6 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebAppEnvironmentVariable(name, value, default);
         }
 
-        /// <param name="value"> The SiteContainer items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.SiteContainerCollection"/> instance for mocking. </returns>
-        public static SiteContainerCollection SiteContainerCollection(IEnumerable<SiteContainerData> value = default, Uri nextLink = default)
-        {
-            value ??= new ChangeTrackingList<SiteContainerData>();
-
-            return new SiteContainerCollection((value ?? new ChangeTrackingList<SiteContainerData>()).ToList(), nextLink, default);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>

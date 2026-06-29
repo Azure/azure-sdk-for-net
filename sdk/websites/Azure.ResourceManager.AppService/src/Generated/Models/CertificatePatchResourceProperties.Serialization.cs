@@ -372,11 +372,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("keyVaultId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    keyVaultId = new ResourceIdentifier(prop.Value.GetString());
+                    DeserializeKeyVaultId(prop, ref keyVaultId);
                     continue;
                 }
                 if (prop.NameEquals("keyVaultSecretName"u8))
