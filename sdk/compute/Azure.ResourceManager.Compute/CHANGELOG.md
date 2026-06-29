@@ -1,10 +1,10 @@
 # Release History
 
-## 1.15.0 (2026-06-22)
+## 1.15.0 (2026-06-29)
 
 ### Features Added
 
-- Upgraded api-version tag to `package-2026-03-01`.
+- Upgraded API versions: Compute to `2025-11-01`, Disk to `2025-01-02`, Gallery to `2025-03-03`, and SKU to `2021-07-01`.
 
 ### Breaking Changes
 
