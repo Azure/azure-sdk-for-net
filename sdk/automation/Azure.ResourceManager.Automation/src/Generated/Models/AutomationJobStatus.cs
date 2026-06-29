@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -14,71 +15,112 @@ namespace Azure.ResourceManager.Automation.Models
     public readonly partial struct AutomationJobStatus : IEquatable<AutomationJobStatus>
     {
         private readonly string _value;
+        /// <summary> New. </summary>
+        private const string NewValue = "New";
+        /// <summary> Activating. </summary>
+        private const string ActivatingValue = "Activating";
+        /// <summary> Running. </summary>
+        private const string RunningValue = "Running";
+        /// <summary> Completed. </summary>
+        private const string CompletedValue = "Completed";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Stopped. </summary>
+        private const string StoppedValue = "Stopped";
+        /// <summary> Blocked. </summary>
+        private const string BlockedValue = "Blocked";
+        /// <summary> Suspended. </summary>
+        private const string SuspendedValue = "Suspended";
+        /// <summary> Disconnected. </summary>
+        private const string DisconnectedValue = "Disconnected";
+        /// <summary> Suspending. </summary>
+        private const string SuspendingValue = "Suspending";
+        /// <summary> Stopping. </summary>
+        private const string StoppingValue = "Stopping";
+        /// <summary> Resuming. </summary>
+        private const string ResumingValue = "Resuming";
+        /// <summary> Removing. </summary>
+        private const string RemovingValue = "Removing";
 
         /// <summary> Initializes a new instance of <see cref="AutomationJobStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AutomationJobStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NewValue = "New";
-        private const string ActivatingValue = "Activating";
-        private const string RunningValue = "Running";
-        private const string CompletedValue = "Completed";
-        private const string FailedValue = "Failed";
-        private const string StoppedValue = "Stopped";
-        private const string BlockedValue = "Blocked";
-        private const string SuspendedValue = "Suspended";
-        private const string DisconnectedValue = "Disconnected";
-        private const string SuspendingValue = "Suspending";
-        private const string StoppingValue = "Stopping";
-        private const string ResumingValue = "Resuming";
-        private const string RemovingValue = "Removing";
+            _value = value;
+        }
 
         /// <summary> New. </summary>
         public static AutomationJobStatus New { get; } = new AutomationJobStatus(NewValue);
+
         /// <summary> Activating. </summary>
         public static AutomationJobStatus Activating { get; } = new AutomationJobStatus(ActivatingValue);
+
         /// <summary> Running. </summary>
         public static AutomationJobStatus Running { get; } = new AutomationJobStatus(RunningValue);
+
         /// <summary> Completed. </summary>
         public static AutomationJobStatus Completed { get; } = new AutomationJobStatus(CompletedValue);
+
         /// <summary> Failed. </summary>
         public static AutomationJobStatus Failed { get; } = new AutomationJobStatus(FailedValue);
+
         /// <summary> Stopped. </summary>
         public static AutomationJobStatus Stopped { get; } = new AutomationJobStatus(StoppedValue);
+
         /// <summary> Blocked. </summary>
         public static AutomationJobStatus Blocked { get; } = new AutomationJobStatus(BlockedValue);
+
         /// <summary> Suspended. </summary>
         public static AutomationJobStatus Suspended { get; } = new AutomationJobStatus(SuspendedValue);
+
         /// <summary> Disconnected. </summary>
         public static AutomationJobStatus Disconnected { get; } = new AutomationJobStatus(DisconnectedValue);
+
         /// <summary> Suspending. </summary>
         public static AutomationJobStatus Suspending { get; } = new AutomationJobStatus(SuspendingValue);
+
         /// <summary> Stopping. </summary>
         public static AutomationJobStatus Stopping { get; } = new AutomationJobStatus(StoppingValue);
+
         /// <summary> Resuming. </summary>
         public static AutomationJobStatus Resuming { get; } = new AutomationJobStatus(ResumingValue);
+
         /// <summary> Removing. </summary>
         public static AutomationJobStatus Removing { get; } = new AutomationJobStatus(RemovingValue);
+
         /// <summary> Determines if two <see cref="AutomationJobStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AutomationJobStatus left, AutomationJobStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AutomationJobStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AutomationJobStatus left, AutomationJobStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AutomationJobStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AutomationJobStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AutomationJobStatus(string value) => new AutomationJobStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AutomationJobStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AutomationJobStatus?(string value) => value == null ? null : new AutomationJobStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AutomationJobStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AutomationJobStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

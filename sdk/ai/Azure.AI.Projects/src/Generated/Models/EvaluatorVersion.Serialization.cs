@@ -129,7 +129,7 @@ namespace Azure.AI.Projects.Evaluation
             {
                 writer.WritePropertyName("supported_evaluation_levels"u8);
                 writer.WriteStartArray();
-                foreach (EvaluationLevel item in SupportedEvaluationLevels)
+                foreach (ProjectsEvaluationLevel item in SupportedEvaluationLevels)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -239,7 +239,7 @@ namespace Azure.AI.Projects.Evaluation
             IDictionary<string, string> metadata = default;
             EvaluatorType evaluatorType = default;
             IList<EvaluatorCategory> categories = default;
-            IList<EvaluationLevel> supportedEvaluationLevels = default;
+            IList<ProjectsEvaluationLevel> supportedEvaluationLevels = default;
             EvaluatorDefinition definition = default;
             EvaluatorGenerationArtifacts generationArtifacts = default;
             string createdBy = default;
@@ -300,10 +300,10 @@ namespace Azure.AI.Projects.Evaluation
                     {
                         continue;
                     }
-                    List<EvaluationLevel> array = new List<EvaluationLevel>();
+                    List<ProjectsEvaluationLevel> array = new List<ProjectsEvaluationLevel>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new EvaluationLevel(item.GetString()));
+                        array.Add(new ProjectsEvaluationLevel(item.GetString()));
                     }
                     supportedEvaluationLevels = array;
                     continue;
@@ -388,7 +388,7 @@ namespace Azure.AI.Projects.Evaluation
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 evaluatorType,
                 categories,
-                supportedEvaluationLevels ?? new ChangeTrackingList<EvaluationLevel>(),
+                supportedEvaluationLevels ?? new ChangeTrackingList<ProjectsEvaluationLevel>(),
                 definition,
                 generationArtifacts,
                 createdBy,

@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningDiagnoseResultValue : IUtf8JsonSerializable, IJsonModel<MachineLearningDiagnoseResultValue>
+    /// <summary> The MachineLearningDiagnoseResultValue. </summary>
+    public partial class MachineLearningDiagnoseResultValue : IJsonModel<MachineLearningDiagnoseResultValue>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningDiagnoseResultValue>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MachineLearningDiagnoseResultValue PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningDiagnoseResultValue>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMachineLearningDiagnoseResultValue(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningDiagnoseResultValue)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningDiagnoseResultValue>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningDiagnoseResultValue)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MachineLearningDiagnoseResultValue>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineLearningDiagnoseResultValue IPersistableModel<MachineLearningDiagnoseResultValue>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MachineLearningDiagnoseResultValue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MachineLearningDiagnoseResultValue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,17 +69,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningDiagnoseResultValue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningDiagnoseResultValue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineLearningDiagnoseResultValue)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(UserDefinedRouteResults))
             {
                 writer.WritePropertyName("userDefinedRouteResults"u8);
                 writer.WriteStartArray();
-                foreach (var item in UserDefinedRouteResults)
+                foreach (MachineLearningDiagnoseResult item in UserDefinedRouteResults)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -50,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 writer.WritePropertyName("networkSecurityRuleResults"u8);
                 writer.WriteStartArray();
-                foreach (var item in NetworkSecurityRuleResults)
+                foreach (MachineLearningDiagnoseResult item in NetworkSecurityRuleResults)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -60,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 writer.WritePropertyName("resourceLockResults"u8);
                 writer.WriteStartArray();
-                foreach (var item in ResourceLockResults)
+                foreach (MachineLearningDiagnoseResult item in ResourceLockResults)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -70,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 writer.WritePropertyName("dnsResolutionResults"u8);
                 writer.WriteStartArray();
-                foreach (var item in DnsResolutionResults)
+                foreach (MachineLearningDiagnoseResult item in DnsResolutionResults)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -80,7 +118,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 writer.WritePropertyName("storageAccountResults"u8);
                 writer.WriteStartArray();
-                foreach (var item in StorageAccountResults)
+                foreach (MachineLearningDiagnoseResult item in StorageAccountResults)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -90,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 writer.WritePropertyName("keyVaultResults"u8);
                 writer.WriteStartArray();
-                foreach (var item in KeyVaultResults)
+                foreach (MachineLearningDiagnoseResult item in KeyVaultResults)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -100,7 +138,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 writer.WritePropertyName("containerRegistryResults"u8);
                 writer.WriteStartArray();
-                foreach (var item in ContainerRegistryResults)
+                foreach (MachineLearningDiagnoseResult item in ContainerRegistryResults)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -110,7 +148,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 writer.WritePropertyName("applicationInsightsResults"u8);
                 writer.WriteStartArray();
-                foreach (var item in ApplicationInsightsResults)
+                foreach (MachineLearningDiagnoseResult item in ApplicationInsightsResults)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -120,21 +158,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 writer.WritePropertyName("otherResults"u8);
                 writer.WriteStartArray();
-                foreach (var item in OtherResults)
+                foreach (MachineLearningDiagnoseResult item in OtherResults)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -143,22 +181,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        MachineLearningDiagnoseResultValue IJsonModel<MachineLearningDiagnoseResultValue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineLearningDiagnoseResultValue IJsonModel<MachineLearningDiagnoseResultValue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MachineLearningDiagnoseResultValue JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningDiagnoseResultValue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningDiagnoseResultValue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineLearningDiagnoseResultValue)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMachineLearningDiagnoseResultValue(document.RootElement, options);
         }
 
-        internal static MachineLearningDiagnoseResultValue DeserializeMachineLearningDiagnoseResultValue(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MachineLearningDiagnoseResultValue DeserializeMachineLearningDiagnoseResultValue(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -172,130 +215,129 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IReadOnlyList<MachineLearningDiagnoseResult> containerRegistryResults = default;
             IReadOnlyList<MachineLearningDiagnoseResult> applicationInsightsResults = default;
             IReadOnlyList<MachineLearningDiagnoseResult> otherResults = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("userDefinedRouteResults"u8))
+                if (prop.NameEquals("userDefinedRouteResults"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
                     userDefinedRouteResults = array;
                     continue;
                 }
-                if (property.NameEquals("networkSecurityRuleResults"u8))
+                if (prop.NameEquals("networkSecurityRuleResults"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
                     networkSecurityRuleResults = array;
                     continue;
                 }
-                if (property.NameEquals("resourceLockResults"u8))
+                if (prop.NameEquals("resourceLockResults"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
                     resourceLockResults = array;
                     continue;
                 }
-                if (property.NameEquals("dnsResolutionResults"u8))
+                if (prop.NameEquals("dnsResolutionResults"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
                     dnsResolutionResults = array;
                     continue;
                 }
-                if (property.NameEquals("storageAccountResults"u8))
+                if (prop.NameEquals("storageAccountResults"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
                     storageAccountResults = array;
                     continue;
                 }
-                if (property.NameEquals("keyVaultResults"u8))
+                if (prop.NameEquals("keyVaultResults"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
                     keyVaultResults = array;
                     continue;
                 }
-                if (property.NameEquals("containerRegistryResults"u8))
+                if (prop.NameEquals("containerRegistryResults"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
                     containerRegistryResults = array;
                     continue;
                 }
-                if (property.NameEquals("applicationInsightsResults"u8))
+                if (prop.NameEquals("applicationInsightsResults"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
                     applicationInsightsResults = array;
                     continue;
                 }
-                if (property.NameEquals("otherResults"u8))
+                if (prop.NameEquals("otherResults"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
@@ -304,10 +346,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningDiagnoseResultValue(
                 userDefinedRouteResults ?? new ChangeTrackingList<MachineLearningDiagnoseResult>(),
                 networkSecurityRuleResults ?? new ChangeTrackingList<MachineLearningDiagnoseResult>(),
@@ -318,262 +359,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 containerRegistryResults ?? new ChangeTrackingList<MachineLearningDiagnoseResult>(),
                 applicationInsightsResults ?? new ChangeTrackingList<MachineLearningDiagnoseResult>(),
                 otherResults ?? new ChangeTrackingList<MachineLearningDiagnoseResult>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserDefinedRouteResults), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  userDefinedRouteResults: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(UserDefinedRouteResults))
-                {
-                    if (UserDefinedRouteResults.Any())
-                    {
-                        builder.Append("  userDefinedRouteResults: ");
-                        builder.AppendLine("[");
-                        foreach (var item in UserDefinedRouteResults)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  userDefinedRouteResults: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkSecurityRuleResults), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  networkSecurityRuleResults: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(NetworkSecurityRuleResults))
-                {
-                    if (NetworkSecurityRuleResults.Any())
-                    {
-                        builder.Append("  networkSecurityRuleResults: ");
-                        builder.AppendLine("[");
-                        foreach (var item in NetworkSecurityRuleResults)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  networkSecurityRuleResults: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceLockResults), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  resourceLockResults: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ResourceLockResults))
-                {
-                    if (ResourceLockResults.Any())
-                    {
-                        builder.Append("  resourceLockResults: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ResourceLockResults)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  resourceLockResults: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DnsResolutionResults), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  dnsResolutionResults: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(DnsResolutionResults))
-                {
-                    if (DnsResolutionResults.Any())
-                    {
-                        builder.Append("  dnsResolutionResults: ");
-                        builder.AppendLine("[");
-                        foreach (var item in DnsResolutionResults)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  dnsResolutionResults: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageAccountResults), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  storageAccountResults: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(StorageAccountResults))
-                {
-                    if (StorageAccountResults.Any())
-                    {
-                        builder.Append("  storageAccountResults: ");
-                        builder.AppendLine("[");
-                        foreach (var item in StorageAccountResults)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  storageAccountResults: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVaultResults), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  keyVaultResults: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(KeyVaultResults))
-                {
-                    if (KeyVaultResults.Any())
-                    {
-                        builder.Append("  keyVaultResults: ");
-                        builder.AppendLine("[");
-                        foreach (var item in KeyVaultResults)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  keyVaultResults: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerRegistryResults), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  containerRegistryResults: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ContainerRegistryResults))
-                {
-                    if (ContainerRegistryResults.Any())
-                    {
-                        builder.Append("  containerRegistryResults: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ContainerRegistryResults)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  containerRegistryResults: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApplicationInsightsResults), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  applicationInsightsResults: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ApplicationInsightsResults))
-                {
-                    if (ApplicationInsightsResults.Any())
-                    {
-                        builder.Append("  applicationInsightsResults: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ApplicationInsightsResults)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  applicationInsightsResults: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OtherResults), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  otherResults: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(OtherResults))
-                {
-                    if (OtherResults.Any())
-                    {
-                        builder.Append("  otherResults: ");
-                        builder.AppendLine("[");
-                        foreach (var item in OtherResults)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  otherResults: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<MachineLearningDiagnoseResultValue>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningDiagnoseResultValue>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(MachineLearningDiagnoseResultValue)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        MachineLearningDiagnoseResultValue IPersistableModel<MachineLearningDiagnoseResultValue>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningDiagnoseResultValue>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMachineLearningDiagnoseResultValue(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MachineLearningDiagnoseResultValue)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<MachineLearningDiagnoseResultValue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

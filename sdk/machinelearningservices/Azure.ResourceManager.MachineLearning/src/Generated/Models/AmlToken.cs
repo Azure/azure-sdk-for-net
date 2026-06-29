@@ -14,17 +14,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class AmlToken : MachineLearningIdentityConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="AmlToken"/>. </summary>
-        public AmlToken()
+        public AmlToken() : base(IdentityConfigurationType.AMLToken)
         {
-            IdentityType = IdentityConfigurationType.AmlToken;
         }
 
         /// <summary> Initializes a new instance of <see cref="AmlToken"/>. </summary>
         /// <param name="identityType"> [Required] Specifies the type of identity framework. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AmlToken(IdentityConfigurationType identityType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(identityType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AmlToken(IdentityConfigurationType identityType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(identityType, additionalBinaryDataProperties)
         {
-            IdentityType = identityType;
         }
     }
 }

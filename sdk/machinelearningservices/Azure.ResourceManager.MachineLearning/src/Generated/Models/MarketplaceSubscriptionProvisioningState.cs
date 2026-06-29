@@ -7,57 +7,84 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The MarketplaceSubscriptionProvisioningState. </summary>
+    /// <summary></summary>
     public readonly partial struct MarketplaceSubscriptionProvisioningState : IEquatable<MarketplaceSubscriptionProvisioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MarketplaceSubscriptionProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MarketplaceSubscriptionProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
+        /// <summary> MarketplaceSubscription is being created. </summary>
         private const string CreatingValue = "Creating";
+        /// <summary> MarketplaceSubscription is being deleted. </summary>
         private const string DeletingValue = "Deleting";
+        /// <summary> MarketplaceSubscription is successfully provisioned. </summary>
         private const string SucceededValue = "Succeeded";
+        /// <summary> MarketplaceSubscription provisioning failed. </summary>
         private const string FailedValue = "Failed";
+        /// <summary> MarketplaceSubscription is being updated. </summary>
         private const string UpdatingValue = "Updating";
         private const string CanceledValue = "Canceled";
 
+        /// <summary> Initializes a new instance of <see cref="MarketplaceSubscriptionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MarketplaceSubscriptionProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
         /// <summary> MarketplaceSubscription is being created. </summary>
         public static MarketplaceSubscriptionProvisioningState Creating { get; } = new MarketplaceSubscriptionProvisioningState(CreatingValue);
+
         /// <summary> MarketplaceSubscription is being deleted. </summary>
         public static MarketplaceSubscriptionProvisioningState Deleting { get; } = new MarketplaceSubscriptionProvisioningState(DeletingValue);
+
         /// <summary> MarketplaceSubscription is successfully provisioned. </summary>
         public static MarketplaceSubscriptionProvisioningState Succeeded { get; } = new MarketplaceSubscriptionProvisioningState(SucceededValue);
+
         /// <summary> MarketplaceSubscription provisioning failed. </summary>
         public static MarketplaceSubscriptionProvisioningState Failed { get; } = new MarketplaceSubscriptionProvisioningState(FailedValue);
+
         /// <summary> MarketplaceSubscription is being updated. </summary>
         public static MarketplaceSubscriptionProvisioningState Updating { get; } = new MarketplaceSubscriptionProvisioningState(UpdatingValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> Gets the Canceled. </summary>
         public static MarketplaceSubscriptionProvisioningState Canceled { get; } = new MarketplaceSubscriptionProvisioningState(CanceledValue);
+
         /// <summary> Determines if two <see cref="MarketplaceSubscriptionProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MarketplaceSubscriptionProvisioningState left, MarketplaceSubscriptionProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MarketplaceSubscriptionProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MarketplaceSubscriptionProvisioningState left, MarketplaceSubscriptionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MarketplaceSubscriptionProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MarketplaceSubscriptionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MarketplaceSubscriptionProvisioningState(string value) => new MarketplaceSubscriptionProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MarketplaceSubscriptionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MarketplaceSubscriptionProvisioningState?(string value) => value == null ? null : new MarketplaceSubscriptionProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MarketplaceSubscriptionProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MarketplaceSubscriptionProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

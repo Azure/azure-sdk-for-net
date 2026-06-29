@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The MonitoringFeatureDataType. </summary>
+    /// <summary></summary>
     public readonly partial struct MonitoringFeatureDataType : IEquatable<MonitoringFeatureDataType>
     {
         private readonly string _value;
+        /// <summary> Used for features of numerical data type. </summary>
+        private const string NumericalValue = "Numerical";
+        /// <summary> Used for features of categorical data type. </summary>
+        private const string CategoricalValue = "Categorical";
 
         /// <summary> Initializes a new instance of <see cref="MonitoringFeatureDataType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MonitoringFeatureDataType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NumericalValue = "Numerical";
-        private const string CategoricalValue = "Categorical";
+            _value = value;
+        }
 
         /// <summary> Used for features of numerical data type. </summary>
         public static MonitoringFeatureDataType Numerical { get; } = new MonitoringFeatureDataType(NumericalValue);
+
         /// <summary> Used for features of categorical data type. </summary>
         public static MonitoringFeatureDataType Categorical { get; } = new MonitoringFeatureDataType(CategoricalValue);
+
         /// <summary> Determines if two <see cref="MonitoringFeatureDataType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MonitoringFeatureDataType left, MonitoringFeatureDataType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MonitoringFeatureDataType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MonitoringFeatureDataType left, MonitoringFeatureDataType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitoringFeatureDataType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MonitoringFeatureDataType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MonitoringFeatureDataType(string value) => new MonitoringFeatureDataType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MonitoringFeatureDataType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MonitoringFeatureDataType?(string value) => value == null ? null : new MonitoringFeatureDataType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MonitoringFeatureDataType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MonitoringFeatureDataType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

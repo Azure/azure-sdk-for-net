@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The SourceControlSecurityTokenProperties. </summary>
     public partial class SourceControlSecurityTokenProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SourceControlSecurityTokenProperties"/>. </summary>
         public SourceControlSecurityTokenProperties()
@@ -54,19 +25,21 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="accessToken"> The access token. </param>
         /// <param name="refreshToken"> The refresh token. </param>
         /// <param name="tokenType"> The token type. Must be either PersonalAccessToken or Oauth. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SourceControlSecurityTokenProperties(string accessToken, string refreshToken, SourceControlTokenType? tokenType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SourceControlSecurityTokenProperties(string accessToken, string refreshToken, SourceControlTokenType? tokenType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AccessToken = accessToken;
             RefreshToken = refreshToken;
             TokenType = tokenType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The access token. </summary>
         public string AccessToken { get; set; }
+
         /// <summary> The refresh token. </summary>
         public string RefreshToken { get; set; }
+
         /// <summary> The token type. Must be either PersonalAccessToken or Oauth. </summary>
         public SourceControlTokenType? TokenType { get; set; }
     }

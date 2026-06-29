@@ -1,4 +1,0 @@
-﻿<Solution>
-  <Project Path="src/Azure.Provisioning.PrivateDns.csproj" />
-  <Project Path="tests/Azure.Provisioning.PrivateDns.Tests.csproj" />
-</Solution>

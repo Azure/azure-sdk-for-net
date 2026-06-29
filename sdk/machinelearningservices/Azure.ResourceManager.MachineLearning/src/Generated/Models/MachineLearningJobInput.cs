@@ -7,68 +7,43 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Command job definition.
-    /// Please note <see cref="MachineLearningJobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/>, and <see cref="MachineLearningUriFolderJobInput"/>.
     /// </summary>
     public abstract partial class MachineLearningJobInput
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningJobInput"/>. </summary>
-        protected MachineLearningJobInput()
-        {
-        }
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningJobInput"/>. </summary>
         /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
-        /// <param name="description"> Description for the input. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningJobInput(JobInputType jobInputType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        private protected MachineLearningJobInput(JobInputType jobInputType)
         {
             JobInputType = jobInputType;
-            Description = description;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> [Required] Specifies the type of job. </summary>
-        internal JobInputType JobInputType { get; set; }
+        /// <summary> Initializes a new instance of <see cref="MachineLearningJobInput"/>. </summary>
+        /// <param name="description"> Description for the input. </param>
+        /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningJobInput(string description, JobInputType jobInputType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Description = description;
+            JobInputType = jobInputType;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
         /// <summary> Description for the input. </summary>
         [WirePath("description")]
         public string Description { get; set; }
+
+        /// <summary> [Required] Specifies the type of job. </summary>
+        [WirePath("jobInputType")]
+        internal JobInputType JobInputType { get; set; }
     }
 }

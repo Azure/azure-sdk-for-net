@@ -17,17 +17,23 @@ namespace Azure.AI.Extensions.OpenAI
         {
             Argument.AssertNotNull(azureFunction, nameof(azureFunction));
 
+            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
             AzureFunction = azureFunction;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponsesAzureFunctionTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="azureFunction"> The Azure Function Tool definition. </param>
-        internal ResponsesAzureFunctionTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponsesAzureFunctionDefinition azureFunction) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesAzureFunctionTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, ToolConfig> toolConfigs, ResponsesAzureFunctionDefinition azureFunction) : base(@type, additionalBinaryDataProperties)
         {
+            ToolConfigs = toolConfigs;
             AzureFunction = azureFunction;
         }
+
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public IDictionary<string, ToolConfig> ToolConfigs { get; }
 
         /// <summary> The Azure Function Tool definition. </summary>
         public ResponsesAzureFunctionDefinition AzureFunction { get; set; }

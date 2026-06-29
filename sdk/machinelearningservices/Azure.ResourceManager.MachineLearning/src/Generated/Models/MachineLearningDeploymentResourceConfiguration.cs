@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="instanceCount"> Optional number of instances or nodes used by the compute target. </param>
         /// <param name="instanceType"> Optional type of VM used as supported by the compute target. </param>
         /// <param name="properties"> Additional properties bag. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningDeploymentResourceConfiguration(int? instanceCount, string instanceType, IDictionary<string, BinaryData> properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceCount, instanceType, properties, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningDeploymentResourceConfiguration(int? instanceCount, string instanceType, IDictionary<string, BinaryData> properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(instanceCount, instanceType, properties, additionalBinaryDataProperties)
         {
         }
     }

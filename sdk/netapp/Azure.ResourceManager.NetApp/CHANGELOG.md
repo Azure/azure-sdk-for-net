@@ -1,6 +1,7 @@
 # Release History
 
-## 1.17.0-beta.1 (Unreleased)
+
+## 1.18.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +10,20 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.17.0 (2026-06-23)
+
+### Features Added
+
+- Upgraded api-version to 2026-04-01. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/main/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md.
+- Added `FileAccessLogs` property to `CacheProperties`.
+
+### Breaking Changes
+
+- Cache operation return type changes: Method `NetAppCacheResource.PoolChange()` now returns `Operation<NetAppCacheResource>` instead of `Operation`
+- Cache operation return type changes: Method `NetAppCacheResource.ResetSmbPassword()` now returns `Operation<NetAppCacheResource>` instead of `Operation`
+- Some legacy Elastic and Active Directory compatibility APIs are now runtime compatibility stubs. These members are kept for source compatibility but throw `NotSupportedException` when invoked.
+- Impacted compatibility areas include Elastic compatibility APIs, `NetAppActiveDirectoryConfig*`, `EntraId*`, `CheckElastic*`, and `LdapConfiguration` related compatibility types.
 
 ## 1.16.1 (2026-06-09)
 

@@ -16,8 +16,6 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 {
     internal class ConnectorSettingTests : SecurityCenterManagementTestBase
     {
-        private SecurityCloudConnectorCollection _connectorSettingCollection => DefaultSubscription.GetSecurityCloudConnectors();
-
         public ConnectorSettingTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
         }
@@ -33,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         [Ignore("linked issue: https://github.com/Azure/azure-rest-api-specs/issues/21260")]
         public async Task GetAll()
         {
-            var list = await _connectorSettingCollection.GetAllAsync().ToEnumerableAsync();
+            var list = await DefaultSubscription.GetSecurityConnectorsAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
         }
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,41 +15,64 @@ namespace Azure.ResourceManager.MachineLearning.Models
     internal readonly partial struct DistributionType : IEquatable<DistributionType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DistributionType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DistributionType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string PyTorchValue = "PyTorch";
         private const string TensorFlowValue = "TensorFlow";
         private const string MpiValue = "Mpi";
+        /// <summary> Ray distribution type. </summary>
+        private const string RayValue = "Ray";
 
-        /// <summary> PyTorch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DistributionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DistributionType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the PyTorch. </summary>
         public static DistributionType PyTorch { get; } = new DistributionType(PyTorchValue);
-        /// <summary> TensorFlow. </summary>
+
+        /// <summary> Gets the TensorFlow. </summary>
         public static DistributionType TensorFlow { get; } = new DistributionType(TensorFlowValue);
-        /// <summary> Mpi. </summary>
+
+        /// <summary> Gets the Mpi. </summary>
         public static DistributionType Mpi { get; } = new DistributionType(MpiValue);
+
+        /// <summary> Ray distribution type. </summary>
+        public static DistributionType Ray { get; } = new DistributionType(RayValue);
+
         /// <summary> Determines if two <see cref="DistributionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DistributionType left, DistributionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DistributionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DistributionType left, DistributionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DistributionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DistributionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DistributionType(string value) => new DistributionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DistributionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DistributionType?(string value) => value == null ? null : new DistributionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DistributionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DistributionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
