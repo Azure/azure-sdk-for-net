@@ -107,7 +107,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             collection.Description = "Test collection - UPDATED";
 
             // Replace the collection with the updated version
-            Response<StacCollectionResource> updateResponse = await stacClient.CreateOrReplaceCollectionAsync(
+            Response<StacCollectionResource> updateResponse = await stacClient.ReplaceCollectionAsync(
                 collectionId,
                 collection
             );

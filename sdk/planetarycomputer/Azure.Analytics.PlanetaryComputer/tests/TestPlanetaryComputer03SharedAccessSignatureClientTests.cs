@@ -17,7 +17,6 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
     /// Tests for Shared Access Signature (SAS) operations.
     /// Based on Python test: test_planetary_computer_03_shared_access_signature.py
     /// </summary>
-    [AsyncOnly]
     public class TestPlanetaryComputer03SharedAccessSignatureClientTests : PlanetaryComputerTestBase
     {
         public TestPlanetaryComputer03SharedAccessSignatureClientTests(bool isAsync) : base(isAsync)
@@ -147,42 +146,53 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// <summary>
         /// Test signing an asset HREF using collection thumbnail.
         /// Python equivalent: test_03_get_sign_with_collection_thumbnail
-        /// C# method: GetSign(href, durationInMinutes=null)
+        /// C# method: GetUrlAsync(href)
         /// </summary>
         [Test]
         [Category("SAS")]
         [Category("SharedAccessSignature")]
-        public async Task Test03_03_GetSignWithCollectionThumbnail()
+        public async Task Test03_03_GetUrlWithCollectionThumbnail()
         {
             // Arrange
             PlanetaryComputerProClient client = GetTestClient();
             ManagedStorageSharedAccessSignatureClient sasClient = client.GetManagedStorageSharedAccessSignatureClient();
             StacClient stacClient = client.GetStacClient();
             string collectionId = TestEnvironment.CollectionId;
+            string itemId = TestEnvironment.ItemId;
 
-            TestContext.WriteLine($"Testing GetSign with collection: {collectionId}");
+            TestContext.WriteLine($"Testing GetUrl with collection: {collectionId}, item: {itemId}");
 
-            // Get collection to retrieve thumbnail asset
-            TestContext.WriteLine("Getting collection...");
-            Response<StacCollectionResource> collectionResponse = await stacClient.GetCollectionAsync(collectionId);
-            StacCollectionResource collection = collectionResponse.Value;
+            // Get item to retrieve an asset HREF for signing
+            TestContext.WriteLine("Getting item...");
+            Response<StacItemResource> itemResponse = await stacClient.GetItemAsync(collectionId, itemId);
+            StacItemResource item = itemResponse.Value;
 
-            Assert.That(collection, Is.Not.Null, "Collection should not be null");
-            Assert.That(collection.Assets, Is.Not.Null, "Collection should have assets");
-            Assert.That(collection.Assets.ContainsKey("thumbnail"), Is.True, "Collection should have thumbnail asset");
+            Assert.That(item, Is.Not.Null, "Item should not be null");
+            Assert.That(item.Assets, Is.Not.Null, "Item should have assets");
+            Assert.That(item.Assets.Count, Is.GreaterThan(0), "Item should have at least one asset");
 
-            StacAsset thumbnailAsset = collection.Assets["thumbnail"];
-            string originalHrefString = thumbnailAsset.Href;
+            // Use the first available asset
+            string assetKey = null;
+            StacAsset asset = null;
+            foreach (var kvp in item.Assets)
+            {
+                assetKey = kvp.Key;
+                asset = kvp.Value;
+                break;
+            }
+
+            string originalHrefString = asset.Href;
             Uri originalHref = new Uri(originalHrefString);
+            TestContext.WriteLine($"Asset key: {assetKey}");
             TestContext.WriteLine($"Original HREF: {originalHref}");
-            Assert.That(originalHref, Is.Not.Null, "Thumbnail HREF should not be null");
+            Assert.That(originalHref, Is.Not.Null, "Asset HREF should not be null");
 
             // Act - Sign the HREF
-            TestContext.WriteLine($"Calling GetSign(href={originalHref})");
-            Response<SharedAccessSignatureSignedLink> signResponse = await sasClient.GetSignAsync(originalHref);
+            TestContext.WriteLine($"Calling GetUrl(href={originalHref})");
+            Response<SharedAccessSignatureSignedLink> signResponse = await sasClient.GetUrlAsync(originalHref);
 
             // Assert
-            ValidateResponse(signResponse.GetRawResponse(), "GetSign");
+            ValidateResponse(signResponse.GetRawResponse(), "GetUrl");
             Assert.That(signResponse.GetRawResponse().Status, Is.EqualTo(200), "Expected successful response");
 
             SharedAccessSignatureSignedLink signedLink = signResponse.Value;
@@ -233,7 +243,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// <summary>
         /// Test that a signed HREF can be used to download an asset.
         /// Python equivalent: test_04_signed_href_can_download_asset
-        /// C# method: GetSign(href) followed by HTTP download
+        /// C# method: GetUrlAsync(href) followed by HTTP download
         /// </summary>
         [Test]
         [Category("SAS")]
@@ -245,20 +255,28 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             ManagedStorageSharedAccessSignatureClient sasClient = client.GetManagedStorageSharedAccessSignatureClient();
             StacClient stacClient = client.GetStacClient();
             string collectionId = TestEnvironment.CollectionId;
+            string itemId = TestEnvironment.ItemId;
 
-            TestContext.WriteLine($"Testing signed HREF download with collection: {collectionId}");
+            TestContext.WriteLine($"Testing signed HREF download with collection: {collectionId}, item: {itemId}");
 
-            // Get collection thumbnail
-            TestContext.WriteLine("Getting collection...");
-            Response<StacCollectionResource> collectionResponse = await stacClient.GetCollectionAsync(collectionId);
-            StacCollectionResource collection = collectionResponse.Value;
-            string thumbnailHrefString = collection.Assets["thumbnail"].Href;
-            Uri thumbnailHref = new Uri(thumbnailHrefString);
-            TestContext.WriteLine($"Thumbnail HREF: {thumbnailHref}");
+            // Get item to retrieve an asset HREF
+            TestContext.WriteLine("Getting item...");
+            Response<StacItemResource> itemResponse = await stacClient.GetItemAsync(collectionId, itemId);
+            StacItemResource item = itemResponse.Value;
+
+            // Use the first available asset
+            string assetHrefString = null;
+            foreach (var kvp in item.Assets)
+            {
+                assetHrefString = kvp.Value.Href;
+                break;
+            }
+            Uri assetHref = new Uri(assetHrefString);
+            TestContext.WriteLine($"Asset HREF: {assetHref}");
 
             // Get signed HREF
-            TestContext.WriteLine($"Calling GetSign(href={thumbnailHref})");
-            Response<SharedAccessSignatureSignedLink> signResponse = await sasClient.GetSignAsync(thumbnailHref);
+            TestContext.WriteLine($"Calling GetUrl(href={assetHref})");
+            Response<SharedAccessSignatureSignedLink> signResponse = await sasClient.GetUrlAsync(assetHref);
             Uri signedHref = signResponse.Value.Href;
             TestContext.WriteLine($"Signed HREF: {signedHref}");
 

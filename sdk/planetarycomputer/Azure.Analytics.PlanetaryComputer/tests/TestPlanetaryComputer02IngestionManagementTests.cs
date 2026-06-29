@@ -17,7 +17,6 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
     /// Based on Python test: test_planetary_computer_02_ingestion_management.py
     /// Tests managed identities, sources, ingestion definitions, runs, and operations.
     /// </summary>
-    [AsyncOnly]
     public class TestPlanetaryComputer02IngestionManagementTests : PlanetaryComputerTestBase
     {
         public TestPlanetaryComputer02IngestionManagementTests(bool isAsync) : base(isAsync)
@@ -258,8 +257,28 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             Guid sasSourceId = Guid.NewGuid();
             var sasIngestionSource = new SharedAccessSignatureTokenIngestionSource(sasSourceId, sasConnectionInfo);
 
-            // Act
-            Response<IngestionSource> createResponse = await ingestionClient.CreateSourceAsync(sasIngestionSource);
+            // Act - handle 409 Conflict by deleting existing source and retrying (matches Python pattern)
+            Response<IngestionSource> createResponse;
+            try
+            {
+                createResponse = await ingestionClient.CreateSourceAsync(sasIngestionSource);
+            }
+            catch (RequestFailedException ex) when (ex.Status == 409)
+            {
+                // Extract existing source ID from error message and delete it
+                TestContext.WriteLine($"Conflict detected, cleaning up existing SAS source...");
+                var match = System.Text.RegularExpressions.Regex.Match(ex.Message, @"id '([^']+)'");
+                if (match.Success && Guid.TryParse(match.Groups[1].Value, out Guid existingId))
+                {
+                    await ingestionClient.DeleteSourceAsync(existingId);
+                    TestContext.WriteLine($"Deleted conflicting source: {existingId}");
+                }
+
+                // Retry creation
+                sasSourceId = Guid.NewGuid();
+                sasIngestionSource = new SharedAccessSignatureTokenIngestionSource(sasSourceId, sasConnectionInfo);
+                createResponse = await ingestionClient.CreateSourceAsync(sasIngestionSource);
+            }
 
             // Assert
             Assert.That(createResponse, Is.Not.Null, "Create response should not be null");

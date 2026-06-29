@@ -19,7 +19,6 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
     /// </summary>
     [Category("Tiler")]
     [Category("Mosaics")]
-    [AsyncOnly]
     public class TestPlanetaryComputer05MosaicsTilerTests : PlanetaryComputerTestBase
     {
         public TestPlanetaryComputer05MosaicsTilerTests(bool isAsync) : base(isAsync)
@@ -125,7 +124,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// </summary>
         [Test]
         [Category("SearchInfo")]
-        public async Task Test05_02_GetMosaicsSearchInfo()
+        public async Task Test05_02_GetSearchInfo()
         {
             // Arrange
             var client = GetTestClient();
@@ -146,7 +145,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Registered Search ID: {searchId}");
 
             // Act - Get search info for the registered search
-            Response<TilerStacSearchRegistration> response = await dataClient.GetMosaicsSearchInfoAsync(searchId);
+            Response<TilerStacSearchRegistration> response = await dataClient.GetSearchInfoAsync(searchId);
 
             // Assert
             ValidateResponse(response, "GetMosaicsSearchInfo");
@@ -164,7 +163,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// </summary>
         [Test]
         [Category("TileJson")]
-        public async Task Test05_03_GetMosaicsTileJson()
+        public async Task Test05_03_GetSearchTileJson()
         {
             // Arrange
             var client = GetTestClient();
@@ -183,15 +182,15 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Using search ID: {searchId}");
 
             // Act - Get tile JSON metadata
-            Response<TileJsonMetadata> response = await dataClient.GetMosaicsTileJsonAsync(
+            Response<TileJsonMetadata> response = await dataClient.GetSearchTileJsonAsync(
                 searchId: searchId,
                 tileMatrixSetId: "WebMercatorQuad",
                 assets: new[] { "image" },
-                assetBandIndices: "image|1,2,3",
+                assetBandIndices: new[] { "image|1,2,3" },
                 tileScale: 1,
                 minZoom: 9,
                 tileFormat: TilerImageFormat.Png,
-                collection: collectionId
+                collectionId: collectionId
             );
 
             // Assert
@@ -217,7 +216,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// </summary>
         [Test]
         [Category("MosaicTile")]
-        public async Task Test05_04_GetMosaicsTile()
+        public async Task Test05_04_GetSearchTile()
         {
             // Arrange
             var client = GetTestClient();
@@ -238,7 +237,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Using search ID: {searchId}");
 
             // Act - Get tile image
-            Response<BinaryData> response = await dataClient.GetMosaicsTileAsync(
+            Response<BinaryData> response = await dataClient.GetSearchTileAsync(
                 searchId: searchId,
                 tileMatrixSetId: "WebMercatorQuad",
                 z: 13,
@@ -247,7 +246,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
                 scale: 1,
                 format: "png",
                 assets: new[] { "image" },
-                assetBandIndices: "image|1,2,3",
+                assetBandIndices: new[] { "image|1,2,3" },
                 collection: collectionId
             );
 
@@ -279,7 +278,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// </summary>
         [Test]
         [Category("WmtsCapabilities")]
-        public async Task Test05_05_GetMosaicsWmtsCapabilities()
+        public async Task Test05_05_GetSearchWmtsCapabilities()
         {
             // Arrange
             var client = GetTestClient();
@@ -298,7 +297,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Using search ID: {searchId}");
 
             // Act - Get WMTS capabilities
-            Response<BinaryData> response = await dataClient.GetMosaicsWmtsCapabilitiesAsync(
+            Response<BinaryData> response = await dataClient.GetSearchWmtsCapabilitiesAsync(
                 searchId: searchId,
                 tileMatrixSetId: "WebMercatorQuad",
                 tileFormat: TilerImageFormat.Png,
@@ -306,7 +305,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
                 minZoom: 7,
                 maxZoom: 13,
                 assets: new[] { "image" },
-                assetBandIndices: "image|1,2,3"
+                assetBandIndices: new[] { "image|1,2,3" }
             );
 
             // Assert
@@ -334,7 +333,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// </summary>
         [Test]
         [Category("Assets")]
-        public async Task Test05_06_GetMosaicsAssetsForPoint()
+        public async Task Test05_06_GetSearchPointWithAssets()
         {
             // Arrange
             var client = GetTestClient();
@@ -358,7 +357,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Using search ID: {searchId}");
 
             // Act - Get assets for point
-            Response<IReadOnlyList<StacItemPointAsset>> response = await dataClient.GetMosaicsAssetsForPointAsync(
+            Response<IReadOnlyList<StacItemPointAsset>> response = await dataClient.GetSearchPointWithAssetsAsync(
                 searchId: searchId,
                 longitude: longitude,
                 latitude: latitude,
@@ -400,7 +399,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// </summary>
         [Test]
         [Category("AssetsForTile")]
-        public async Task Test05_07_GetMosaicsAssetsForTile()
+        public async Task Test05_07_GetSearchAssetsForTile()
         {
             // Arrange
             var client = GetTestClient();
@@ -421,7 +420,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Using search ID: {searchId}");
 
             // Act - Get assets for tile
-            Response<IReadOnlyList<TilerAssetGeoJson>> response = await dataClient.GetMosaicsAssetsForTileAsync(
+            Response<IReadOnlyList<TilerAssetGeoJson>> response = await dataClient.GetSearchAssetsForTileAsync(
                 searchId: searchId,
                 tileMatrixSetId: "WebMercatorQuad",
                 z: 13,
@@ -438,216 +437,6 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             TestContext.WriteLine($"Number of assets: {assets.Count}");
             TestContext.WriteLine("Assets for tile retrieved successfully");
-        }
-
-        /// <summary>
-        /// Tests creating a static image from a mosaic search.
-        /// Maps to Python test: test_08_create_static_image
-        /// </summary>
-        [Test]
-        [Category("StaticImage")]
-#if NET462
-        [LiveOnly(Reason = "Difference between request and record entry due to float values")]
-#endif
-        public async Task Test05_08_CreateStaticImage()
-        {
-            // Arrange
-            var client = GetTestClient();
-            var dataClient = client.GetDataClient();
-            string collectionId = TestEnvironment.CollectionId;
-
-            // Define geometry for the static image - coordinates as [[[lon, lat], ...]]
-            // Using values that match .NET Framework serialization precision
-            var coordinates = new List<IList<IList<float>>>
-            {
-                new List<IList<float>>
-                {
-                    new List<float> { -84.4537811f, 33.6567307f },
-                    new List<float> { -84.398056f, 33.6567307f },
-                    new List<float> { -84.398056f, 33.6194572f },
-                    new List<float> { -84.4537811f, 33.6194572f },
-                    new List<float> { -84.4537811f, 33.6567307f }
-                }
-            };
-            var geometry = new PolygonGeometry(coordinates);
-
-            TestContext.WriteLine($"Geometry defined with coordinates");
-
-            // Create CQL2-JSON filter (matching Python implementation)
-            var cqlFilter = new Dictionary<string, BinaryData>
-            {
-                ["op"] = BinaryData.FromString("\"and\""),
-                ["args"] = BinaryData.FromObjectAsJson(new object[]
-                {
-                    new Dictionary<string, object>
-                    {
-                        ["op"] = "=",
-                        ["args"] = new object[]
-                        {
-                            new Dictionary<string, string> { ["property"] = "collection" },
-                            collectionId
-                        }
-                    },
-                    new Dictionary<string, object>
-                    {
-                        ["op"] = "anyinteracts",
-                        ["args"] = new object[]
-                        {
-                            new Dictionary<string, string> { ["property"] = "datetime" },
-                            new Dictionary<string, object>
-                            {
-                                ["interval"] = new[] { "2023-01-01T00:00:00Z", "2023-12-31T00:00:00Z" }
-                            }
-                        }
-                    }
-                })
-            };
-
-            // Create image request - all required parameters in constructor
-            var imageRequest = new ImageParameters(
-                cql: cqlFilter,
-                renderParameters: $"assets=image&asset_bidx=image|1,2,3&collection={collectionId}",
-                columns: 1080,
-                rows: 1080
-            );
-
-            imageRequest.Zoom = 13;
-            imageRequest.Geometry = geometry;
-            imageRequest.ImageSize = "1080x1080";
-            imageRequest.ShowBranding = false;
-
-            TestContext.WriteLine($"Image request: columns={imageRequest.Columns}, rows={imageRequest.Rows}, zoom={imageRequest.Zoom}");
-
-            // Act - Create static image
-            Response<ImageResponse> response = await dataClient.CreateStaticImageAsync(
-                collectionId: collectionId,
-                body: imageRequest
-            );
-
-            // Assert
-            ValidateResponse(response, "CreateStaticImage");
-
-            ImageResponse imageResponse = response.Value;
-            Assert.That(imageResponse, Is.Not.Null, "Image response should not be null");
-            Assert.That(imageResponse.Url, Is.Not.Null, "Image URL should not be null");
-
-            TestContext.WriteLine($"Static image created successfully");
-            TestContext.WriteLine($"Image URL: {imageResponse.Url}");
-        }
-
-        /// <summary>
-        /// Tests retrieving a static image by ID.
-        /// Maps to Python test: test_09_get_static_image
-        /// </summary>
-        [Test]
-        [Category("StaticImage")]
-#if NET462
-        [LiveOnly(Reason = "Difference between request and record entry due to float values")]
-#endif
-        public async Task Test05_09_GetStaticImage()
-        {
-            // Arrange
-            var client = GetTestClient();
-            var dataClient = client.GetDataClient();
-            string collectionId = TestEnvironment.CollectionId;
-
-            // First create a static image to get an ID
-            // Using simpler float values that serialize consistently across .NET Framework and .NET Core
-            var coordinates = new List<IList<IList<float>>>
-            {
-                new List<IList<float>>
-                {
-                    new List<float> { -84.4537811f, 33.6567307f },
-                    new List<float> { -84.398056f, 33.6567307f },
-                    new List<float> { -84.398056f, 33.6194572f },
-                    new List<float> { -84.4537811f, 33.6194572f },
-                    new List<float> { -84.4537811f, 33.6567307f }
-                }
-            };
-            var geometry = new PolygonGeometry(coordinates);
-
-            // Create CQL2-JSON filter (matching Python implementation)
-            var cqlFilter = new Dictionary<string, BinaryData>
-            {
-                ["op"] = BinaryData.FromString("\"and\""),
-                ["args"] = BinaryData.FromObjectAsJson(new object[]
-                {
-                    new Dictionary<string, object>
-                    {
-                        ["op"] = "=",
-                        ["args"] = new object[]
-                        {
-                            new Dictionary<string, string> { ["property"] = "collection" },
-                            collectionId
-                        }
-                    },
-                    new Dictionary<string, object>
-                    {
-                        ["op"] = "anyinteracts",
-                        ["args"] = new object[]
-                        {
-                            new Dictionary<string, string> { ["property"] = "datetime" },
-                            new Dictionary<string, object>
-                            {
-                                ["interval"] = new[] { "2023-01-01T00:00:00Z", "2023-12-31T00:00:00Z" }
-                            }
-                        }
-                    }
-                })
-            };
-
-            var imageRequest = new ImageParameters(
-                cql: cqlFilter,
-                renderParameters: $"assets=image&asset_bidx=image|1,2,3&collection={collectionId}",
-                columns: 1080,
-                rows: 1080
-            );
-            imageRequest.Zoom = 13;
-            imageRequest.Geometry = geometry;
-            imageRequest.ImageSize = "1080x1080";
-            imageRequest.ShowBranding = false;
-
-            Response<ImageResponse> createResponse = await dataClient.CreateStaticImageAsync(
-                collectionId: collectionId,
-                body: imageRequest
-            );
-
-            Uri url = createResponse.Value.Url;
-
-            // Extract image ID from URL - split by '?' to remove query params, then get last path segment
-            string imageId = url.ToString().Split('?')[0].Split('/').Last();
-
-            TestContext.WriteLine($"Created image with ID: {imageId}");
-            TestContext.WriteLine($"Image URL: {url}");
-
-            Assert.That(imageId, Is.Not.Null, "Image ID should not be null");
-            Assert.That(imageId, Is.Not.Empty, "Image ID should not be empty");
-
-            // Act - Get the static image
-            Response<BinaryData> response = await dataClient.GetStaticImageAsync(
-                collectionId: collectionId,
-                id: imageId
-            );
-
-            // Assert
-            ValidateResponse(response, "GetStaticImage");
-
-            BinaryData imageData = response.Value;
-            byte[] imageBytes = imageData.ToArray();
-
-            TestContext.WriteLine($"Image size: {imageBytes.Length} bytes");
-            TestContext.WriteLine($"First 16 bytes (hex): {BitConverter.ToString(imageBytes.Take(16).ToArray()).Replace("-", "")}");
-
-            // Verify PNG magic bytes
-            byte[] pngMagic = new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A };
-            Assert.That(imageBytes.Length, Is.GreaterThan(0), "Image bytes should not be empty");
-
-            for (int i = 0; i < Math.Min(pngMagic.Length, imageBytes.Length); i++)
-            {
-                Assert.That(imageBytes[i], Is.EqualTo(pngMagic[i]), $"PNG magic byte {i} mismatch");
-            }
-
-            TestContext.WriteLine("PNG magic bytes verified successfully");
         }
     }
 }

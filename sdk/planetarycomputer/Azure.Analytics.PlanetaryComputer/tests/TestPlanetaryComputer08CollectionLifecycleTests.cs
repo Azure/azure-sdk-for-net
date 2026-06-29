@@ -16,20 +16,57 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
     [Category("STAC")]
     [Category("Collections")]
     [Category("Lifecycle")]
-    [AsyncOnly]
     public class TestPlanetaryComputer08CollectionLifecycleTests : PlanetaryComputerTestBase
     {
         public TestPlanetaryComputer08CollectionLifecycleTests(bool isAsync) : base(isAsync)
         {
         }
 
+        /// <summary>
+        /// Returns a unique collection ID per async/sync mode to avoid conflicts
+        /// when both modes run in the same test session.
+        /// </summary>
+        private string LifecycleCollectionId => TestEnvironment.LifecycleCollectionId;
+
+        // Tests 01-03 are marked [AsyncOnly] because they share a single collection on the live endpoint.
+        // Running both async and sync modes would cause the second mode's delete to fail with 404
+        // (the collection was already deleted by the first mode). This matches how Python and Java
+        // handle lifecycle tests — they only run once per test method.
+
         [Test]
+        [AsyncOnly]
         [Category("CreateCollection")]
         public async Task Test08_01_BeginCreateCollection()
         {
             var client = GetTestClient();
             var stacClient = client.GetStacClient();
-            string collectionId = TestEnvironment.LifecycleCollectionId;
+            string collectionId = LifecycleCollectionId;
+
+            // Check if collection exists and delete it first (matches Python pattern)
+            try
+            {
+                await stacClient.GetCollectionAsync(collectionId);
+                TestContext.WriteLine($"Collection '{collectionId}' already exists, deleting first...");
+                Operation deleteOp = await stacClient.DeleteCollectionAsync(WaitUntil.Started, collectionId, null);
+                if (Mode != RecordedTestMode.Playback)
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(30));
+                }
+                TestContext.WriteLine($"Deleted existing collection '{collectionId}'");
+            }
+            catch (RequestFailedException ex) when (ex.Status == 404)
+            {
+                TestContext.WriteLine($"Collection '{collectionId}' does not exist, proceeding with creation");
+            }
+            catch (RequestFailedException ex) when (ex.Status == 409)
+            {
+                // Collection is being deleted from a previous run - wait for it to finish
+                TestContext.WriteLine($"Collection '{collectionId}' is being deleted, waiting...");
+                if (Mode != RecordedTestMode.Playback)
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(60));
+                }
+            }
 
             var spatialExtent = new StacExtensionSpatialExtent();
             spatialExtent.BoundingBox.Add(new List<float> { -180.0f, -90.0f, 180.0f, 90.0f });
@@ -49,43 +86,51 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
                 Type = "Collection"
             };
 
+            // Use WaitUntil.Started to avoid LRO final-state GET mismatch during playback.
+            // The LRO mechanism adds a final GET /stac/collections/{id} check in playback mode
+            // that wasn't recorded during the live run (where polling completed the operation).
             Operation createOperation = await stacClient.CreateCollectionAsync(WaitUntil.Started, collection);
 
             if (Mode != RecordedTestMode.Playback)
             {
-                await Task.Delay(TimeSpan.FromSeconds(60));
+                await Task.Delay(TimeSpan.FromSeconds(30));
             }
         }
 
         [Test]
-        [Category("UpdateCollection")]
-        public async Task Test08_02_CreateOrReplaceCollection()
+        [AsyncOnly]
+        [Category("ReplaceCollection")]
+        public async Task Test08_02_ReplaceCollection()
         {
             var client = GetTestClient();
             var stacClient = client.GetStacClient();
-            string collectionId = TestEnvironment.LifecycleCollectionId;
+            string collectionId = LifecycleCollectionId;
 
             Response<StacCollectionResource> getCollectionResponse = await stacClient.GetCollectionAsync(collectionId);
             StacCollectionResource originalCollection = getCollectionResponse.Value;
 
             originalCollection.Description = "Test collection - UPDATED";
 
-            Response<StacCollectionResource> updateResponse = await stacClient.CreateOrReplaceCollectionAsync(collectionId, originalCollection);
+            Response<StacCollectionResource> updateResponse = await stacClient.ReplaceCollectionAsync(collectionId, originalCollection);
         }
 
         [Test]
+        [AsyncOnly]
         [Category("DeleteCollection")]
         public async Task Test08_03_BeginDeleteCollection()
         {
             var client = GetTestClient();
             var stacClient = client.GetStacClient();
-            string collectionId = TestEnvironment.LifecycleCollectionId;
+            string collectionId = LifecycleCollectionId;
 
+            // Use WaitUntil.Started to avoid LRO final-state GET mismatch during playback.
+            // The LRO mechanism adds a final GET /stac/collections/{id} check in playback mode
+            // that wasn't recorded during the live run (where polling completed the operation).
             Operation deleteOperation = await stacClient.DeleteCollectionAsync(WaitUntil.Started, collectionId, null);
 
             if (Mode != RecordedTestMode.Playback)
             {
-                await Task.Delay(TimeSpan.FromSeconds(60));
+                await Task.Delay(TimeSpan.FromSeconds(30));
             }
         }
 

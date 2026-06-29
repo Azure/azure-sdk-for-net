@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 
 namespace Azure.Analytics.PlanetaryComputer.Tests
 {
@@ -29,17 +31,11 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
         /// <summary>
         /// Gets the collection ID for lifecycle operations (create/update/delete).
-        /// Defaults to "sample-lifecycle-collection" when not set via environment.
-        ///
-        /// Note: Uses GetRecordedOptionalVariable() to store value in recording Variables section.
-        /// This matches the pattern used by CollectionId ("naip-atl") which works successfully.
-        /// However, Test08 LRO tests still fail in playback due to test proxy sanitization:
-        /// - Recording phase: AZSDK3447 removal works, recordings contain unsanitized URLs
-        /// - Playback phase: AZSDK3447 still applied, sanitizes collection IDs to "Sanitized"
-        /// This is a C# test framework limitation vs Python (remove_batch_sanitizers affects both phases).
-        /// Run Test08_01/Test08_03 in Live mode or skip via [Category("RecordingMismatch")] filter.
+        /// Uses a simple name without hyphens to avoid triggering the test proxy's
+        /// default sanitizers (AZSDK3430, AZSDK3447) which replace hyphenated path
+        /// segments with "Sanitized" during playback URL matching.
         /// </summary>
-        public string LifecycleCollectionId => GetRecordedOptionalVariable("PLANETARYCOMPUTER_LIFECYCLE_COLLECTION_ID", null) ?? "sample-lifecycle-collection";
+        public string LifecycleCollectionId => "testlifecyclecol";
 
         /// <summary>
         /// Gets the STAC catalog URL for ingestion tests.
@@ -69,5 +65,15 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Marked as secret though typically not sensitive, for consistency.
         /// </summary>
         public string GeocatalogScope => GetRecordedVariable("GEOCATALOG_SCOPE", options => options.IsSecret("https://geocatalog.spatio.azure.com/.default"));
+
+        /// <summary>
+        /// Override developer credential to use AzureCliCredential directly.
+        /// This avoids the macOS broker thread issue and matches the authentication
+        /// pattern used by Python, Java, and JavaScript SDKs (az login).
+        /// </summary>
+        protected override TokenCredential CreateDeveloperCredential()
+        {
+            return new AzureCliCredential();
+        }
     }
 }

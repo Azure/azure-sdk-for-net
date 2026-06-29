@@ -25,7 +25,7 @@ Use the client library for Azure Planetary Computer to:
 Install the client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.Analytics.PlanetaryComputer --prerelease
+dotnet add package Azure.Analytics.PlanetaryComputer
 ```
 
 ### Prerequisites
@@ -73,9 +73,9 @@ The `StacClient` provides operations for managing STAC collections and items:
 - **API Conformance**: Retrieve STAC API conformance classes and landing page information
 - **Collection Configuration**: Configure render options, mosaics, tile settings, and queryables
 
-### TilerClient
+### DataClient
 
-The `TilerClient` provides operations for data visualization and tiling:
+The `DataClient` provides operations for data visualization and tiling:
 
 - **Tile Generation**: Generate map tiles (XYZ, TileJSON, WMTS) from collections, items, and mosaics
 - **Data Visualization**: Create preview images, crop by GeoJSON or bounding box, extract point values
@@ -92,9 +92,9 @@ The `IngestionClient` provides operations for data ingestion management:
 - **Ingestion Runs**: Create and monitor ingestion runs with detailed operation tracking
 - **Managed Identities**: List and manage Azure Managed Identities for secure access
 
-### SharedAccessSignatureClient
+### ManagedStorageSharedAccessSignatureClient
 
-The `SharedAccessSignatureClient` provides operations for secure access:
+The `ManagedStorageSharedAccessSignatureClient` provides operations for secure access:
 
 - **Token Generation**: Generate SAS tokens with configurable duration for collections
 - **Asset Signing**: Sign asset HREFs for secure downloads of managed storage assets
@@ -301,11 +301,114 @@ Response<BinaryData> response = await dataClient.GetTileAsync(
     scale: 1,
     format: "png",
     assets: new[] { "image" },
-    assetBandIndices: "image|1,2,3"
+    assetBandIndices: new[] { "image|1,2,3" }
 );
 
 byte[] tileImage = response.Value.ToArray();
 Console.WriteLine($"Tile image: {tileImage.Length} bytes");
+```
+
+### Extract Point Values
+
+Query pixel values at specific geographic coordinates:
+
+```csharp
+Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
+PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
+DataClient dataClient = client.GetDataClient();
+
+string collectionId = "naip";
+string itemId = "ga_m_3308421_se_16_060_20211114";
+
+// Get point values at specific coordinates
+Response<TilerCoreModelsResponsesPoint> response = await dataClient.GetItemPointAsync(
+    collectionId: collectionId,
+    itemId: itemId,
+    longitude: -84.41f,
+    latitude: 33.65f,
+    assets: new[] { "image" }
+);
+
+TilerCoreModelsResponsesPoint pointData = response.Value;
+Console.WriteLine($"Coordinates: {pointData.Coordinates}");
+Console.WriteLine($"Band names: {string.Join(", ", pointData.BandNames)}");
+Console.WriteLine($"Values: {string.Join(", ", pointData.Values)}");
+```
+
+### Configure Collection Visualization
+
+Set up render options and tile settings for collection visualization:
+
+```csharp
+Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
+PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
+StacClient stacClient = client.GetStacClient();
+
+string collectionId = "my-collection";
+
+// Add a render option for visualizing data
+var renderOption = new RenderConfiguration(id: "true-color", name: "True Color")
+{
+    Type = RenderOptionType.RasterTile,
+    Options = "assets=image&asset_bidx=image|1,2,3&rescale=0,255"
+};
+await stacClient.CreateRenderOptionAsync(collectionId, renderOption);
+
+// Configure tile settings
+var tileSettings = new TileSettings(minZoom: 6, maxItemsPerTile: 10);
+await stacClient.ReplaceTileSettingsAsync(collectionId, tileSettings);
+
+// List all render options for a collection
+Response<IReadOnlyList<RenderConfiguration>> options = await stacClient.GetRenderOptionsAsync(collectionId);
+foreach (RenderConfiguration option in options.Value)
+{
+    Console.WriteLine($"Render option: {option.Id} - {option.Name}");
+}
+```
+
+### Map Legends
+
+Retrieve categorical and continuous map legends:
+
+```csharp
+Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
+PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
+DataClient dataClient = client.GetDataClient();
+
+// Get a class map legend (categorical color map)
+Response<ClassMapLegendResponse> classMapResponse = await dataClient.GetClassMapLegendAsync("mtbs-severity");
+Console.WriteLine($"Legend entries: {classMapResponse.Value.Legend.Count}");
+
+// Get an interval legend (continuous color map)
+Response<IReadOnlyList<IList<IList<long>>>> intervalResponse = await dataClient.GetIntervalLegendAsync("modis-64A1");
+Console.WriteLine($"Interval ranges: {intervalResponse.Value.Count}");
+
+// Get a legend as a PNG image
+Response<BinaryData> legendImage = await dataClient.GetLegendAsync("rdylgn");
+byte[] legendBytes = legendImage.Value.ToArray();
+Console.WriteLine($"Legend image: {legendBytes.Length} bytes");
+```
+
+### Set Up Ingestion Sources
+
+Configure ingestion sources for data import:
+
+```csharp
+Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
+PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
+IngestionClient ingestionClient = client.GetIngestionClient();
+
+// Create a Managed Identity ingestion source
+var source = new ManagedIdentityIngestionSource(
+    id: Guid.NewGuid(),
+    connectionInfo: new ManagedIdentityConnection(
+        containerUri: new Uri("https://mystorage.blob.core.windows.net/geospatial-data"),
+        objectId: Guid.Parse("00000000-0000-0000-0000-000000000000")
+    )
+);
+
+Response<IngestionSource> response = await ingestionClient.CreateSourceAsync(source);
+Console.WriteLine($"Created source: {response.Value.Id}");
 ```
 
 ### Data Ingestion Management

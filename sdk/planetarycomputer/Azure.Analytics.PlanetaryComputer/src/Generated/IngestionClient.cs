@@ -119,7 +119,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Cancel all running operations of a geo-catalog collection
+        /// [Protocol Method] Cancel all pending and running operations across the entire GeoCatalog instance. This is a catalog-wide operation and is not scoped to a specific collection.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -146,7 +146,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Cancel all running operations of a geo-catalog collection
+        /// [Protocol Method] Cancel all pending and running operations across the entire GeoCatalog instance. This is a catalog-wide operation and is not scoped to a specific collection.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -172,7 +172,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
         }
 
-        /// <summary> Cancel all running operations of a geo-catalog collection. </summary>
+        /// <summary> Cancel all pending and running operations across the entire GeoCatalog instance. This is a catalog-wide operation and is not scoped to a specific collection. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response CancelAllOperations(CancellationToken cancellationToken = default)
@@ -180,7 +180,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return CancelAllOperations(cancellationToken.ToRequestContext());
         }
 
-        /// <summary> Cancel all running operations of a geo-catalog collection. </summary>
+        /// <summary> Cancel all pending and running operations across the entire GeoCatalog instance. This is a catalog-wide operation and is not scoped to a specific collection. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> CancelAllOperationsAsync(CancellationToken cancellationToken = default)

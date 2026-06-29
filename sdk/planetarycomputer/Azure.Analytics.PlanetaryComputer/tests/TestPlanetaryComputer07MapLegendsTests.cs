@@ -18,7 +18,6 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
     /// </summary>
     [Category("Tiler")]
     [Category("Legends")]
-    [AsyncOnly]
     public class TestPlanetaryComputer07MapLegendsTests : PlanetaryComputerTestBase
     {
         public TestPlanetaryComputer07MapLegendsTests(bool isAsync) : base(isAsync)

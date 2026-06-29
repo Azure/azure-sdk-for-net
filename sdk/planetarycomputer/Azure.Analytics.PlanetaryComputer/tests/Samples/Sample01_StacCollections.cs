@@ -82,7 +82,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             StacClient stacClient = client.GetStacClient();
 
             // Get STAC conformance classes
-            Response<StacConformanceClasses> response = await stacClient.GetConformanceClassAsync();
+            Response<StacConformanceClasses> response = await stacClient.GetConformanceClassesAsync();
             StacConformanceClasses conformance = response.Value;
 
             Console.WriteLine("STAC Conformance Classes:");
@@ -341,6 +341,96 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             // Delete the mosaic
             await stacClient.DeleteMosaicAsync(collectionId, "custom-mosaic");
             Console.WriteLine("Deleted mosaic");
+            #endregion
+        }
+
+        [Test]
+        [Ignore("Only for sample compilation verification")]
+        public async Task ManagePartitionType()
+        {
+            #region Snippet:Sample01_ManagePartitionType
+#if SNIPPET
+            Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
+            PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
+#else
+            var client = GetTestClient();
+#endif
+            StacClient stacClient = client.GetStacClient();
+            string collectionId = "naip";
+
+            // Get current partition type
+            Response<PartitionType> partitionResponse = await stacClient.GetPartitionTypeAsync(collectionId);
+            Console.WriteLine($"Current partition scheme: {partitionResponse.Value.Scheme}");
+
+            // Update partition type (only works on empty collections)
+            var newPartitionType = new PartitionType { Scheme = PartitionTypeScheme.Year };
+            await stacClient.ReplacePartitionTypeAsync(collectionId, newPartitionType);
+            Console.WriteLine("Partition type updated to Year");
+            #endregion
+        }
+
+        [Test]
+        [Ignore("Only for sample compilation verification")]
+        public async Task ManageTileSettings()
+        {
+            #region Snippet:Sample01_ManageTileSettings
+#if SNIPPET
+            Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
+            PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
+#else
+            var client = GetTestClient();
+#endif
+            StacClient stacClient = client.GetStacClient();
+            string collectionId = "naip";
+
+            // Get current tile settings
+            Response<TileSettings> currentSettings = await stacClient.GetTileSettingsAsync(collectionId);
+            Console.WriteLine($"Current min zoom: {currentSettings.Value.MinZoom}");
+
+            // Update tile settings
+            var newSettings = new TileSettings(minZoom: 6, maxItemsPerTile: 35);
+            Response<TileSettings> updatedSettings = await stacClient.ReplaceTileSettingsAsync(collectionId, newSettings);
+            Console.WriteLine($"Updated max items per tile: {updatedSettings.Value.MaxItemsPerTile}");
+            #endregion
+        }
+
+        [Test]
+        [Ignore("Only for sample compilation verification")]
+        public async Task ManageQueryables()
+        {
+            #region Snippet:Sample01_ManageQueryables
+#if SNIPPET
+            Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
+            PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
+#else
+            var client = GetTestClient();
+#endif
+            StacClient stacClient = client.GetStacClient();
+            string collectionId = "naip";
+
+            // Define a queryable field
+            var definition = new Dictionary<string, BinaryData>
+            {
+                ["type"] = BinaryData.FromString("\"number\""),
+                ["description"] = BinaryData.FromString("\"Cloud cover percentage\"")
+            };
+            var queryable = new StacQueryable("eo:cloud_cover", definition);
+
+            // Create queryables
+            Response<IReadOnlyList<StacQueryable>> createResponse = await stacClient.CreateQueryablesAsync(
+                collectionId, new[] { queryable });
+            Console.WriteLine($"Created {createResponse.Value.Count} queryable(s)");
+
+            // Update (replace) a queryable
+            definition["description"] = BinaryData.FromString("\"Updated cloud cover percentage\"");
+            var updatedQueryable = new StacQueryable("eo:cloud_cover", definition);
+            Response<StacQueryable> replaceResponse = await stacClient.ReplaceQueryableAsync(
+                collectionId, "eo:cloud_cover", updatedQueryable);
+            Console.WriteLine($"Replaced queryable: {replaceResponse.Value.Name}");
+
+            // Delete the queryable
+            await stacClient.DeleteQueryableAsync(collectionId, "eo:cloud_cover");
+            Console.WriteLine("Deleted queryable");
             #endregion
         }
     }

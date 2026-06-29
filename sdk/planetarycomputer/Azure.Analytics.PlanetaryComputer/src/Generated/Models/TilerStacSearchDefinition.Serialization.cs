@@ -104,10 +104,6 @@ namespace Azure.Analytics.PlanetaryComputer
 #endif
             }
             writer.WriteEndObject();
-            writer.WritePropertyName("_where"u8);
-            writer.WriteStringValue(Where);
-            writer.WritePropertyName("orderby"u8);
-            writer.WriteStringValue(OrderBy);
             writer.WritePropertyName("lastused"u8);
             writer.WriteStringValue(LastUsed, "O");
             writer.WritePropertyName("usecount"u8);
@@ -158,8 +154,6 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             string hash = default;
             IDictionary<string, BinaryData> search = default;
-            string @where = default;
-            string orderBy = default;
             DateTimeOffset lastUsed = default;
             int useCount = default;
             MosaicMetadata metadata = default;
@@ -188,16 +182,6 @@ namespace Azure.Analytics.PlanetaryComputer
                     search = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("_where"u8))
-                {
-                    @where = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("orderby"u8))
-                {
-                    orderBy = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("lastused"u8))
                 {
                     lastUsed = prop.Value.GetDateTimeOffset("O");
@@ -221,8 +205,6 @@ namespace Azure.Analytics.PlanetaryComputer
             return new TilerStacSearchDefinition(
                 hash,
                 search,
-                @where,
-                orderBy,
                 lastUsed,
                 useCount,
                 metadata,
