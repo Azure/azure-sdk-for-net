@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public DataCollectionRuleProvisioningState? ProvisioningState { get; }
 
         /// <summary> All the settings that are applicable to the logs agent (AMA). </summary>
-        public IList<AgentSetting> AgentLogs
+        public IList<MonitorAgentSetting> AgentLogs
         {
             get
             {

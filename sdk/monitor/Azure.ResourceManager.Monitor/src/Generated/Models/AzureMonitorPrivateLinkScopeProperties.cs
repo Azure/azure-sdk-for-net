@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="accessModeSettings"> Access mode settings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureMonitorPrivateLinkScopeProperties(PrivateLinkScopeProvisioningState? privateLinkScopeProvisioningState, IReadOnlyList<MonitorPrivateEndpointConnectionData> privateEndpointConnections, MonitorPrivateLinkAccessModeSettings accessModeSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureMonitorPrivateLinkScopeProperties(MonitorPrivateLinkScopeProvisioningState? privateLinkScopeProvisioningState, IReadOnlyList<MonitorPrivateEndpointConnectionData> privateEndpointConnections, MonitorPrivateLinkAccessModeSettings accessModeSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrivateLinkScopeProvisioningState = privateLinkScopeProvisioningState;
             PrivateEndpointConnections = privateEndpointConnections;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Current state of this PrivateLinkScope: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. </summary>
-        public PrivateLinkScopeProvisioningState? PrivateLinkScopeProvisioningState { get; }
+        public MonitorPrivateLinkScopeProvisioningState? PrivateLinkScopeProvisioningState { get; }
 
         /// <summary> List of private endpoint connections. </summary>
         public IReadOnlyList<MonitorPrivateEndpointConnectionData> PrivateEndpointConnections { get; } = new ChangeTrackingList<MonitorPrivateEndpointConnectionData>();

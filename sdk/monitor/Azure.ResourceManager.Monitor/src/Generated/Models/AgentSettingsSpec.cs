@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of <see cref="AgentSettingsSpec"/>. </summary>
         public AgentSettingsSpec()
         {
-            Logs = new ChangeTrackingList<AgentSetting>();
+            Logs = new ChangeTrackingList<MonitorAgentSetting>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentSettingsSpec"/>. </summary>
         /// <param name="logs"> All the settings that are applicable to the logs agent (AMA). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentSettingsSpec(IList<AgentSetting> logs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentSettingsSpec(IList<MonitorAgentSetting> logs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Logs = logs;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> All the settings that are applicable to the logs agent (AMA). </summary>
-        public IList<AgentSetting> Logs { get; }
+        public IList<MonitorAgentSetting> Logs { get; }
     }
 }

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="customProperties"> The properties of an alert payload. </param>
         /// <param name="actionProperties"> The properties of an action properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetricAlertPropertiesPatch(string description, int? severity, bool? isEnabled, IList<string> scopes, TimeSpan? evaluationFrequency, TimeSpan? windowSize, ResourceType? targetResourceType, AzureLocation? targetResourceRegion, MetricAlertCriteria criteria, bool? isAutoMitigateEnabled, ResolveConfiguration resolveConfiguration, IList<MetricAlertAction> actions, DateTimeOffset? lastUpdatedOn, bool? isMigrated, IDictionary<string, string> customProperties, IDictionary<string, string> actionProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetricAlertPropertiesPatch(string description, int? severity, bool? isEnabled, IList<string> scopes, TimeSpan? evaluationFrequency, TimeSpan? windowSize, ResourceType? targetResourceType, AzureLocation? targetResourceRegion, MetricAlertCriteria criteria, bool? isAutoMitigateEnabled, MetricAlertResolveConfiguration resolveConfiguration, IList<MetricAlertAction> actions, DateTimeOffset? lastUpdatedOn, bool? isMigrated, IDictionary<string, string> customProperties, IDictionary<string, string> actionProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Severity = severity;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public bool? IsAutoMitigateEnabled { get; set; }
 
         /// <summary> The configuration for how the alert is resolved. Applicable for PromQLCriteria. </summary>
-        public ResolveConfiguration ResolveConfiguration { get; set; }
+        public MetricAlertResolveConfiguration ResolveConfiguration { get; set; }
 
         /// <summary> The array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </summary>
         public IList<MetricAlertAction> Actions { get; } = new ChangeTrackingList<MetricAlertAction>();

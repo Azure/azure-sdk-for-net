@@ -13,57 +13,52 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The ResolveConfiguration. </summary>
-    public partial class ResolveConfiguration : IJsonModel<ResolveConfiguration>
+    /// <summary> A setting used to control an agent behavior on a host machine. </summary>
+    public partial class MonitorAgentSetting : IJsonModel<MonitorAgentSetting>
     {
-        /// <summary> Initializes a new instance of <see cref="ResolveConfiguration"/> for deserialization. </summary>
-        internal ResolveConfiguration()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResolveConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual MonitorAgentSetting PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResolveConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorAgentSetting>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeResolveConfiguration(document.RootElement, options);
+                        return DeserializeMonitorAgentSetting(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResolveConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorAgentSetting)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResolveConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorAgentSetting>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ResolveConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorAgentSetting)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResolveConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MonitorAgentSetting>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResolveConfiguration IPersistableModel<ResolveConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MonitorAgentSetting IPersistableModel<MonitorAgentSetting>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResolveConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MonitorAgentSetting>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ResolveConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MonitorAgentSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,17 +69,20 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResolveConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorAgentSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResolveConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorAgentSetting)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("autoResolved"u8);
-            writer.WriteBooleanValue(IsAutoResolved);
-            if (Optional.IsDefined(TimeToResolve))
+            if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("timeToResolve"u8);
-                writer.WriteStringValue(TimeToResolve.Value, "P");
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name.Value.ToString());
+            }
+            if (Optional.IsDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStringValue(Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -105,46 +103,46 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResolveConfiguration IJsonModel<ResolveConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MonitorAgentSetting IJsonModel<MonitorAgentSetting>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResolveConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual MonitorAgentSetting JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResolveConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorAgentSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResolveConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorAgentSetting)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResolveConfiguration(document.RootElement, options);
+            return DeserializeMonitorAgentSetting(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ResolveConfiguration DeserializeResolveConfiguration(JsonElement element, ModelReaderWriterOptions options)
+        internal static MonitorAgentSetting DeserializeMonitorAgentSetting(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool isAutoResolved = default;
-            TimeSpan? timeToResolve = default;
+            KnownMonitorAgentSettingName? name = default;
+            string value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("autoResolved"u8))
-                {
-                    isAutoResolved = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("timeToResolve"u8))
+                if (prop.NameEquals("name"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    timeToResolve = prop.Value.GetTimeSpan("P");
+                    name = new KnownMonitorAgentSettingName(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("value"u8))
+                {
+                    value = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -152,7 +150,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResolveConfiguration(isAutoResolved, timeToResolve, additionalBinaryDataProperties);
+            return new MonitorAgentSetting(name, value, additionalBinaryDataProperties);
         }
     }
 }

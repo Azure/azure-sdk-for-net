@@ -17,51 +17,51 @@ namespace Azure.ResourceManager.Monitor.Models
     /// Definition of which Open Telemetry performance counters will be collected and how they will be collected by this data collection rule.
     /// Collected from both Windows and Linux machines where the counter is present.
     /// </summary>
-    public partial class PerformanceCountersOTelDataSource : IJsonModel<PerformanceCountersOTelDataSource>
+    public partial class PerformanceCountersOtelDataSource : IJsonModel<PerformanceCountersOtelDataSource>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PerformanceCountersOTelDataSource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PerformanceCountersOtelDataSource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PerformanceCountersOTelDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PerformanceCountersOtelDataSource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePerformanceCountersOTelDataSource(document.RootElement, options);
+                        return DeserializePerformanceCountersOtelDataSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PerformanceCountersOTelDataSource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PerformanceCountersOtelDataSource)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PerformanceCountersOTelDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PerformanceCountersOtelDataSource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PerformanceCountersOTelDataSource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PerformanceCountersOtelDataSource)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PerformanceCountersOTelDataSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PerformanceCountersOtelDataSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PerformanceCountersOTelDataSource IPersistableModel<PerformanceCountersOTelDataSource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PerformanceCountersOtelDataSource IPersistableModel<PerformanceCountersOtelDataSource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PerformanceCountersOTelDataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PerformanceCountersOtelDataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PerformanceCountersOTelDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PerformanceCountersOtelDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -72,16 +72,16 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PerformanceCountersOTelDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PerformanceCountersOtelDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PerformanceCountersOTelDataSource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PerformanceCountersOtelDataSource)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(Streams))
             {
                 writer.WritePropertyName("streams"u8);
                 writer.WriteStartArray();
-                foreach (KnownPerformanceCountersOTelDataSourceStreams item in Streams)
+                foreach (KnownPerformanceCountersOtelDataSourceStreams item in Streams)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -131,30 +131,30 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PerformanceCountersOTelDataSource IJsonModel<PerformanceCountersOTelDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PerformanceCountersOtelDataSource IJsonModel<PerformanceCountersOtelDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PerformanceCountersOTelDataSource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PerformanceCountersOtelDataSource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PerformanceCountersOTelDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PerformanceCountersOtelDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PerformanceCountersOTelDataSource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PerformanceCountersOtelDataSource)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePerformanceCountersOTelDataSource(document.RootElement, options);
+            return DeserializePerformanceCountersOtelDataSource(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PerformanceCountersOTelDataSource DeserializePerformanceCountersOTelDataSource(JsonElement element, ModelReaderWriterOptions options)
+        internal static PerformanceCountersOtelDataSource DeserializePerformanceCountersOtelDataSource(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<KnownPerformanceCountersOTelDataSourceStreams> streams = default;
+            IList<KnownPerformanceCountersOtelDataSourceStreams> streams = default;
             int? samplingFrequencyInSeconds = default;
             IList<string> counterSpecifiers = default;
             string name = default;
@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    List<KnownPerformanceCountersOTelDataSourceStreams> array = new List<KnownPerformanceCountersOTelDataSourceStreams>();
+                    List<KnownPerformanceCountersOtelDataSourceStreams> array = new List<KnownPerformanceCountersOtelDataSourceStreams>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new KnownPerformanceCountersOTelDataSourceStreams(item.GetString()));
+                        array.Add(new KnownPerformanceCountersOtelDataSourceStreams(item.GetString()));
                     }
                     streams = array;
                     continue;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PerformanceCountersOTelDataSource(streams ?? new ChangeTrackingList<KnownPerformanceCountersOTelDataSourceStreams>(), samplingFrequencyInSeconds, counterSpecifiers ?? new ChangeTrackingList<string>(), name, additionalBinaryDataProperties);
+            return new PerformanceCountersOtelDataSource(streams ?? new ChangeTrackingList<KnownPerformanceCountersOtelDataSourceStreams>(), samplingFrequencyInSeconds, counterSpecifiers ?? new ChangeTrackingList<string>(), name, additionalBinaryDataProperties);
         }
     }
 }

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Monitor
         internal AzureMonitorPrivateLinkScopeProperties Properties { get; set; }
 
         /// <summary> Current state of this PrivateLinkScope: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. </summary>
-        public PrivateLinkScopeProvisioningState? PrivateLinkScopeProvisioningState
+        public MonitorPrivateLinkScopeProvisioningState? PrivateLinkScopeProvisioningState
         {
             get
             {

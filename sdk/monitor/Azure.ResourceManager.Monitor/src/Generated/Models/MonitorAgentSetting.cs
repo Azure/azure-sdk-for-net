@@ -11,24 +11,24 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> A setting used to control an agent behavior on a host machine. </summary>
-    public partial class AgentSetting
+    public partial class MonitorAgentSetting
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AgentSetting"/>. </summary>
-        public AgentSetting()
+        /// <summary> Initializes a new instance of <see cref="MonitorAgentSetting"/>. </summary>
+        public MonitorAgentSetting()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentSetting"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorAgentSetting"/>. </summary>
         /// <param name="name">
         /// The name of the setting.
         /// Must be part of the list of supported settings
         /// </param>
         /// <param name="value"> The value of the setting. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentSetting(KnownAgentSettingName? name, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MonitorAgentSetting(KnownMonitorAgentSettingName? name, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Value = value;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// The name of the setting.
         /// Must be part of the list of supported settings
         /// </summary>
-        public KnownAgentSettingName? Name { get; set; }
+        public KnownMonitorAgentSettingName? Name { get; set; }
 
         /// <summary> The value of the setting. </summary>
         public string Value { get; set; }

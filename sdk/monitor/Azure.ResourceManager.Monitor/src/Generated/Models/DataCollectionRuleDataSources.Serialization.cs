@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             IList<PerfCounterDataSource> performanceCounters = default;
-            IList<PerformanceCountersOTelDataSource> performanceCountersOTel = default;
+            IList<PerformanceCountersOtelDataSource> performanceCountersOTel = default;
             IList<WindowsEventLogDataSource> windowsEventLogs = default;
             IList<SyslogDataSource> syslog = default;
             IList<ExtensionDataSource> extensions = default;
@@ -143,10 +143,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    List<PerformanceCountersOTelDataSource> array = new List<PerformanceCountersOTelDataSource>();
+                    List<PerformanceCountersOtelDataSource> array = new List<PerformanceCountersOtelDataSource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PerformanceCountersOTelDataSource.DeserializePerformanceCountersOTelDataSource(item, options));
+                        array.Add(PerformanceCountersOtelDataSource.DeserializePerformanceCountersOtelDataSource(item, options));
                     }
                     performanceCountersOTel = array;
                     continue;
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             return new DataCollectionRuleDataSources(
                 performanceCounters ?? new ChangeTrackingList<PerfCounterDataSource>(),
-                performanceCountersOTel ?? new ChangeTrackingList<PerformanceCountersOTelDataSource>(),
+                performanceCountersOTel ?? new ChangeTrackingList<PerformanceCountersOtelDataSource>(),
                 windowsEventLogs ?? new ChangeTrackingList<WindowsEventLogDataSource>(),
                 syslog ?? new ChangeTrackingList<SyslogDataSource>(),
                 extensions ?? new ChangeTrackingList<ExtensionDataSource>(),

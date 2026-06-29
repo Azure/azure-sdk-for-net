@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public DataSourcesSpec()
         {
             PerformanceCounters = new ChangeTrackingList<PerfCounterDataSource>();
-            PerformanceCountersOTel = new ChangeTrackingList<PerformanceCountersOTelDataSource>();
+            PerformanceCountersOTel = new ChangeTrackingList<PerformanceCountersOtelDataSource>();
             WindowsEventLogs = new ChangeTrackingList<WindowsEventLogDataSource>();
             Syslog = new ChangeTrackingList<SyslogDataSource>();
             Extensions = new ChangeTrackingList<ExtensionDataSource>();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="otelMetrics"> The list of OTel metrics data source configurations. </param>
         /// <param name="etwProviders"> The list of ETW providers data source configurations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataSourcesSpec(IList<PerfCounterDataSource> performanceCounters, IList<PerformanceCountersOTelDataSource> performanceCountersOTel, IList<WindowsEventLogDataSource> windowsEventLogs, IList<SyslogDataSource> syslog, IList<ExtensionDataSource> extensions, IList<LogFilesDataSource> logFiles, IList<IisLogsDataSource> iisLogs, IList<WindowsFirewallLogsDataSource> windowsFirewallLogs, IList<PrometheusForwarderDataSource> prometheusForwarder, IList<PlatformTelemetryDataSource> platformTelemetry, DataSourcesSpecDataImports dataImports, IList<OtelLogsDataSource> otelLogs, IList<OtelTracesDataSource> otelTraces, IList<OtelMetricsDataSource> otelMetrics, IList<EtwProviderDataSource> etwProviders, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataSourcesSpec(IList<PerfCounterDataSource> performanceCounters, IList<PerformanceCountersOtelDataSource> performanceCountersOTel, IList<WindowsEventLogDataSource> windowsEventLogs, IList<SyslogDataSource> syslog, IList<ExtensionDataSource> extensions, IList<LogFilesDataSource> logFiles, IList<IisLogsDataSource> iisLogs, IList<WindowsFirewallLogsDataSource> windowsFirewallLogs, IList<PrometheusForwarderDataSource> prometheusForwarder, IList<PlatformTelemetryDataSource> platformTelemetry, DataSourcesSpecDataImports dataImports, IList<OtelLogsDataSource> otelLogs, IList<OtelTracesDataSource> otelTraces, IList<OtelMetricsDataSource> otelMetrics, IList<EtwProviderDataSource> etwProviders, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PerformanceCounters = performanceCounters;
             PerformanceCountersOTel = performanceCountersOTel;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public IList<PerfCounterDataSource> PerformanceCounters { get; }
 
         /// <summary> The list of Open Telemetry performance counter data source configurations. </summary>
-        public IList<PerformanceCountersOTelDataSource> PerformanceCountersOTel { get; }
+        public IList<PerformanceCountersOtelDataSource> PerformanceCountersOTel { get; }
 
         /// <summary> The list of Windows Event Log data source configurations. </summary>
         public IList<WindowsEventLogDataSource> WindowsEventLogs { get; }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of <see cref="DataCollectionRuleAgentSettings"/>. </summary>
         /// <param name="logs"> All the settings that are applicable to the logs agent (AMA). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataCollectionRuleAgentSettings(IList<AgentSetting> logs, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(logs, additionalBinaryDataProperties)
+        internal DataCollectionRuleAgentSettings(IList<MonitorAgentSetting> logs, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(logs, additionalBinaryDataProperties)
         {
         }
     }

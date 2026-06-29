@@ -10,24 +10,24 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The ResolveConfiguration. </summary>
-    public partial class ResolveConfiguration
+    /// <summary> The MetricAlertResolveConfiguration. </summary>
+    public partial class MetricAlertResolveConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResolveConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricAlertResolveConfiguration"/>. </summary>
         /// <param name="isAutoResolved"> Indicates whether the alert should be auto resolved. </param>
-        public ResolveConfiguration(bool isAutoResolved)
+        public MetricAlertResolveConfiguration(bool isAutoResolved)
         {
             IsAutoResolved = isAutoResolved;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResolveConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricAlertResolveConfiguration"/>. </summary>
         /// <param name="isAutoResolved"> Indicates whether the alert should be auto resolved. </param>
         /// <param name="timeToResolve"> The time (in ISO 8601 duration format) after which the alert should be auto resolved. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResolveConfiguration(bool isAutoResolved, TimeSpan? timeToResolve, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetricAlertResolveConfiguration(bool isAutoResolved, TimeSpan? timeToResolve, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsAutoResolved = isAutoResolved;
             TimeToResolve = timeToResolve;

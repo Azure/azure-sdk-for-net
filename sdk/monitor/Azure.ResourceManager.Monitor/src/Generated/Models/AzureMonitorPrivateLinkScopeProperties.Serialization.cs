@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            PrivateLinkScopeProvisioningState? privateLinkScopeProvisioningState = default;
+            MonitorPrivateLinkScopeProvisioningState? privateLinkScopeProvisioningState = default;
             IReadOnlyList<MonitorPrivateEndpointConnectionData> privateEndpointConnections = default;
             MonitorPrivateLinkAccessModeSettings accessModeSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    privateLinkScopeProvisioningState = new PrivateLinkScopeProvisioningState(prop.Value.GetString());
+                    privateLinkScopeProvisioningState = new MonitorPrivateLinkScopeProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("privateEndpointConnections"u8))

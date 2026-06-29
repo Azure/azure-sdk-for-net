@@ -12,16 +12,16 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary></summary>
-    public readonly partial struct KnownPerformanceCountersOTelDataSourceStreams : IEquatable<KnownPerformanceCountersOTelDataSourceStreams>
+    public readonly partial struct KnownPerformanceCountersOtelDataSourceStreams : IEquatable<KnownPerformanceCountersOtelDataSourceStreams>
     {
         private readonly string _value;
         /// <summary> Microsoft-OtelPerfMetrics. </summary>
         private const string MicrosoftOtelPerfMetricsValue = "Microsoft-OtelPerfMetrics";
 
-        /// <summary> Initializes a new instance of <see cref="KnownPerformanceCountersOTelDataSourceStreams"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnownPerformanceCountersOtelDataSourceStreams"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public KnownPerformanceCountersOTelDataSourceStreams(string value)
+        public KnownPerformanceCountersOtelDataSourceStreams(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -29,32 +29,32 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Microsoft-OtelPerfMetrics. </summary>
-        public static KnownPerformanceCountersOTelDataSourceStreams MicrosoftOtelPerfMetrics { get; } = new KnownPerformanceCountersOTelDataSourceStreams(MicrosoftOtelPerfMetricsValue);
+        public static KnownPerformanceCountersOtelDataSourceStreams MicrosoftOtelPerfMetrics { get; } = new KnownPerformanceCountersOtelDataSourceStreams(MicrosoftOtelPerfMetricsValue);
 
-        /// <summary> Determines if two <see cref="KnownPerformanceCountersOTelDataSourceStreams"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="KnownPerformanceCountersOtelDataSourceStreams"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(KnownPerformanceCountersOTelDataSourceStreams left, KnownPerformanceCountersOTelDataSourceStreams right) => left.Equals(right);
+        public static bool operator ==(KnownPerformanceCountersOtelDataSourceStreams left, KnownPerformanceCountersOtelDataSourceStreams right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="KnownPerformanceCountersOTelDataSourceStreams"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="KnownPerformanceCountersOtelDataSourceStreams"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(KnownPerformanceCountersOTelDataSourceStreams left, KnownPerformanceCountersOTelDataSourceStreams right) => !left.Equals(right);
+        public static bool operator !=(KnownPerformanceCountersOtelDataSourceStreams left, KnownPerformanceCountersOtelDataSourceStreams right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="KnownPerformanceCountersOTelDataSourceStreams"/>. </summary>
+        /// <summary> Converts a string to a <see cref="KnownPerformanceCountersOtelDataSourceStreams"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KnownPerformanceCountersOTelDataSourceStreams(string value) => new KnownPerformanceCountersOTelDataSourceStreams(value);
+        public static implicit operator KnownPerformanceCountersOtelDataSourceStreams(string value) => new KnownPerformanceCountersOtelDataSourceStreams(value);
 
-        /// <summary> Converts a string to a <see cref="KnownPerformanceCountersOTelDataSourceStreams"/>. </summary>
+        /// <summary> Converts a string to a <see cref="KnownPerformanceCountersOtelDataSourceStreams"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KnownPerformanceCountersOTelDataSourceStreams?(string value) => value == null ? null : new KnownPerformanceCountersOTelDataSourceStreams(value);
+        public static implicit operator KnownPerformanceCountersOtelDataSourceStreams?(string value) => value == null ? null : new KnownPerformanceCountersOtelDataSourceStreams(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is KnownPerformanceCountersOTelDataSourceStreams other && Equals(other);
+        public override bool Equals(object obj) => obj is KnownPerformanceCountersOtelDataSourceStreams other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(KnownPerformanceCountersOTelDataSourceStreams other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(KnownPerformanceCountersOtelDataSourceStreams other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

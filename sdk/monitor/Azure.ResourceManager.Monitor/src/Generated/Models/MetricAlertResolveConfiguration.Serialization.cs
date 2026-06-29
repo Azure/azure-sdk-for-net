@@ -13,52 +13,57 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> This section defines all the references that may be used in other sections of the DCR. </summary>
-    public partial class ReferencesSpec : IJsonModel<ReferencesSpec>
+    /// <summary> The MetricAlertResolveConfiguration. </summary>
+    public partial class MetricAlertResolveConfiguration : IJsonModel<MetricAlertResolveConfiguration>
     {
+        /// <summary> Initializes a new instance of <see cref="MetricAlertResolveConfiguration"/> for deserialization. </summary>
+        internal MetricAlertResolveConfiguration()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ReferencesSpec PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual MetricAlertResolveConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReferencesSpec>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MetricAlertResolveConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeReferencesSpec(document.RootElement, options);
+                        return DeserializeMetricAlertResolveConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReferencesSpec)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricAlertResolveConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReferencesSpec>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MetricAlertResolveConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ReferencesSpec)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricAlertResolveConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ReferencesSpec>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MetricAlertResolveConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ReferencesSpec IPersistableModel<ReferencesSpec>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MetricAlertResolveConfiguration IPersistableModel<MetricAlertResolveConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ReferencesSpec>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MetricAlertResolveConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ReferencesSpec>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MetricAlertResolveConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,25 +74,17 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReferencesSpec>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MetricAlertResolveConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReferencesSpec)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricAlertResolveConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(EnrichmentData))
+            writer.WritePropertyName("autoResolved"u8);
+            writer.WriteBooleanValue(IsAutoResolved);
+            if (Optional.IsDefined(TimeToResolve))
             {
-                writer.WritePropertyName("enrichmentData"u8);
-                writer.WriteObjectValue(EnrichmentData, options);
-            }
-            if (Optional.IsCollectionDefined(ApplicationInsights))
-            {
-                writer.WritePropertyName("applicationInsights"u8);
-                writer.WriteStartArray();
-                foreach (MonitorApplicationInsightsReference item in ApplicationInsights)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("timeToResolve"u8);
+                writer.WriteStringValue(TimeToResolve.Value, "P");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -108,55 +105,46 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ReferencesSpec IJsonModel<ReferencesSpec>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MetricAlertResolveConfiguration IJsonModel<MetricAlertResolveConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ReferencesSpec JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual MetricAlertResolveConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReferencesSpec>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MetricAlertResolveConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReferencesSpec)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricAlertResolveConfiguration)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeReferencesSpec(document.RootElement, options);
+            return DeserializeMetricAlertResolveConfiguration(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ReferencesSpec DeserializeReferencesSpec(JsonElement element, ModelReaderWriterOptions options)
+        internal static MetricAlertResolveConfiguration DeserializeMetricAlertResolveConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ReferencesSpecEnrichmentData enrichmentData = default;
-            IList<MonitorApplicationInsightsReference> applicationInsights = default;
+            bool isAutoResolved = default;
+            TimeSpan? timeToResolve = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("enrichmentData"u8))
+                if (prop.NameEquals("autoResolved"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    enrichmentData = ReferencesSpecEnrichmentData.DeserializeReferencesSpecEnrichmentData(prop.Value, options);
+                    isAutoResolved = prop.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("applicationInsights"u8))
+                if (prop.NameEquals("timeToResolve"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<MonitorApplicationInsightsReference> array = new List<MonitorApplicationInsightsReference>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(MonitorApplicationInsightsReference.DeserializeMonitorApplicationInsightsReference(item, options));
-                    }
-                    applicationInsights = array;
+                    timeToResolve = prop.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (options.Format != "W")
@@ -164,7 +152,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ReferencesSpec(enrichmentData, applicationInsights ?? new ChangeTrackingList<MonitorApplicationInsightsReference>(), additionalBinaryDataProperties);
+            return new MetricAlertResolveConfiguration(isAutoResolved, timeToResolve, additionalBinaryDataProperties);
         }
     }
 }

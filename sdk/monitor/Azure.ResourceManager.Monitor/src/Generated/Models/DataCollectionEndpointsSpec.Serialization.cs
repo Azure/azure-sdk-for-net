@@ -13,52 +13,52 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> A setting used to control an agent behavior on a host machine. </summary>
-    public partial class AgentSetting : IJsonModel<AgentSetting>
+    /// <summary> This defines all the ingestion endpoints that can be used by this rule. </summary>
+    public partial class DataCollectionEndpointsSpec : IJsonModel<DataCollectionEndpointsSpec>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AgentSetting PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DataCollectionEndpointsSpec PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentSetting>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionEndpointsSpec>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAgentSetting(document.RootElement, options);
+                        return DeserializeDataCollectionEndpointsSpec(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgentSetting)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCollectionEndpointsSpec)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentSetting>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionEndpointsSpec>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AgentSetting)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCollectionEndpointsSpec)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AgentSetting>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DataCollectionEndpointsSpec>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentSetting IPersistableModel<AgentSetting>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DataCollectionEndpointsSpec IPersistableModel<DataCollectionEndpointsSpec>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AgentSetting>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DataCollectionEndpointsSpec>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AgentSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DataCollectionEndpointsSpec>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,20 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentSetting>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionEndpointsSpec>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentSetting)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCollectionEndpointsSpec)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Name))
+            if (options.Format != "W" && Optional.IsDefined(LogsIngestion))
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name.Value.ToString());
+                writer.WritePropertyName("logsIngestion"u8);
+                writer.WriteStringValue(LogsIngestion);
             }
-            if (Optional.IsDefined(Value))
+            if (options.Format != "W" && Optional.IsDefined(MetricsIngestion))
             {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStringValue(Value);
+                writer.WritePropertyName("metricsIngestion"u8);
+                writer.WriteStringValue(MetricsIngestion);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,46 +103,42 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentSetting IJsonModel<AgentSetting>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DataCollectionEndpointsSpec IJsonModel<DataCollectionEndpointsSpec>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AgentSetting JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DataCollectionEndpointsSpec JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentSetting>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionEndpointsSpec>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentSetting)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCollectionEndpointsSpec)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAgentSetting(document.RootElement, options);
+            return DeserializeDataCollectionEndpointsSpec(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AgentSetting DeserializeAgentSetting(JsonElement element, ModelReaderWriterOptions options)
+        internal static DataCollectionEndpointsSpec DeserializeDataCollectionEndpointsSpec(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            KnownAgentSettingName? name = default;
-            string value = default;
+            string logsIngestion = default;
+            string metricsIngestion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
+                if (prop.NameEquals("logsIngestion"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    name = new KnownAgentSettingName(prop.Value.GetString());
+                    logsIngestion = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("value"u8))
+                if (prop.NameEquals("metricsIngestion"u8))
                 {
-                    value = prop.Value.GetString();
+                    metricsIngestion = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +146,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AgentSetting(name, value, additionalBinaryDataProperties);
+            return new DataCollectionEndpointsSpec(logsIngestion, metricsIngestion, additionalBinaryDataProperties);
         }
     }
 }

@@ -15,19 +15,19 @@ namespace Azure.ResourceManager.Monitor.Models
     /// Definition of which Open Telemetry performance counters will be collected and how they will be collected by this data collection rule.
     /// Collected from both Windows and Linux machines where the counter is present.
     /// </summary>
-    public partial class PerformanceCountersOTelDataSource
+    public partial class PerformanceCountersOtelDataSource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PerformanceCountersOTelDataSource"/>. </summary>
-        public PerformanceCountersOTelDataSource()
+        /// <summary> Initializes a new instance of <see cref="PerformanceCountersOtelDataSource"/>. </summary>
+        public PerformanceCountersOtelDataSource()
         {
-            Streams = new ChangeTrackingList<KnownPerformanceCountersOTelDataSourceStreams>();
+            Streams = new ChangeTrackingList<KnownPerformanceCountersOtelDataSourceStreams>();
             CounterSpecifiers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PerformanceCountersOTelDataSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PerformanceCountersOtelDataSource"/>. </summary>
         /// <param name="streams">
         /// List of streams that this data source will be sent to.
         /// A stream indicates what schema will be used for this data and usually what table in Log Analytics the data will be sent to.
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PerformanceCountersOTelDataSource(IList<KnownPerformanceCountersOTelDataSourceStreams> streams, int? samplingFrequencyInSeconds, IList<string> counterSpecifiers, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PerformanceCountersOtelDataSource(IList<KnownPerformanceCountersOtelDataSourceStreams> streams, int? samplingFrequencyInSeconds, IList<string> counterSpecifiers, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Streams = streams;
             SamplingFrequencyInSeconds = samplingFrequencyInSeconds;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// List of streams that this data source will be sent to.
         /// A stream indicates what schema will be used for this data and usually what table in Log Analytics the data will be sent to.
         /// </summary>
-        public IList<KnownPerformanceCountersOTelDataSourceStreams> Streams { get; }
+        public IList<KnownPerformanceCountersOtelDataSourceStreams> Streams { get; }
 
         /// <summary> The number of seconds between consecutive counter measurements (samples). </summary>
         public int? SamplingFrequencyInSeconds { get; set; }

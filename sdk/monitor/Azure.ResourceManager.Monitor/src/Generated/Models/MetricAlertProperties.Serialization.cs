@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Monitor.Models
             AzureLocation? targetResourceRegion = default;
             MetricAlertCriteria criteria = default;
             bool? isAutoMitigateEnabled = default;
-            ResolveConfiguration resolveConfiguration = default;
+            MetricAlertResolveConfiguration resolveConfiguration = default;
             IList<MetricAlertAction> actions = default;
             DateTimeOffset? lastUpdatedOn = default;
             bool? isMigrated = default;
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    resolveConfiguration = ResolveConfiguration.DeserializeResolveConfiguration(prop.Value, options);
+                    resolveConfiguration = MetricAlertResolveConfiguration.DeserializeMetricAlertResolveConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("actions"u8))

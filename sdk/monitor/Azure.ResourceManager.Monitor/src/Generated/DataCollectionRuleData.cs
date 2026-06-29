@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> All the settings that are applicable to the logs agent (AMA). </summary>
-        public IList<AgentSetting> AgentLogs
+        public IList<MonitorAgentSetting> AgentLogs
         {
             get
             {

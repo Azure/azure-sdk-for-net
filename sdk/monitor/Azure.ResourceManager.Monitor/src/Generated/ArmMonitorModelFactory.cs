@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="identity"> Managed service identity of the resource. </param>
         /// <param name="eTag"> Resource entity tag (ETag). </param>
         /// <returns> A new <see cref="Monitor.DataCollectionRuleData"/> instance for mocking. </returns>
-        public static DataCollectionRuleData DataCollectionRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, string immutableId = default, ResourceIdentifier dataCollectionEndpointId = default, DataCollectionRuleMetadata metadata = default, DataCollectionRuleEndpoints endpoints = default, DataCollectionRuleReferences references = default, IDictionary<string, DataStreamDeclaration> streamDeclarations = default, DataCollectionRuleDataSources dataSources = default, DataCollectionRuleDirectDataSources directDataSources = default, DataCollectionRuleDestinations destinations = default, IEnumerable<DataFlow> dataFlows = default, DataCollectionRuleProvisioningState? provisioningState = default, IEnumerable<AgentSetting> agentLogs = default, IngestionQuotasLogs ingestionQuotasLogs = default, DataCollectionRuleResourceKind? kind = default, DataCollectionRuleResourceSku sku = default, ManagedServiceIdentity identity = default, ETag? eTag = default)
+        public static DataCollectionRuleData DataCollectionRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, string immutableId = default, ResourceIdentifier dataCollectionEndpointId = default, DataCollectionRuleMetadata metadata = default, DataCollectionRuleEndpoints endpoints = default, DataCollectionRuleReferences references = default, IDictionary<string, DataStreamDeclaration> streamDeclarations = default, DataCollectionRuleDataSources dataSources = default, DataCollectionRuleDirectDataSources directDataSources = default, DataCollectionRuleDestinations destinations = default, IEnumerable<DataFlow> dataFlows = default, DataCollectionRuleProvisioningState? provisioningState = default, IEnumerable<MonitorAgentSetting> agentLogs = default, IngestionQuotasLogs ingestionQuotasLogs = default, DataCollectionRuleResourceKind? kind = default, DataCollectionRuleResourceSku sku = default, ManagedServiceIdentity identity = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     metadata,
                     endpoints,
                     references,
-                    new DataCollectionRuleAgentSettings((agentLogs ?? new ChangeTrackingList<AgentSetting>()).ToList(), default),
+                    new DataCollectionRuleAgentSettings((agentLogs ?? new ChangeTrackingList<MonitorAgentSetting>()).ToList(), default),
                     streamDeclarations ?? new ChangeTrackingDictionary<string, DataStreamDeclaration>(),
                     dataSources,
                     directDataSources,
@@ -482,10 +482,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="logsIngestion"> The ingestion endpoint for logs. </param>
         /// <param name="metricsIngestion"> The ingestion endpoint for metrics. </param>
-        /// <returns> A new <see cref="Models.EndpointsSpec"/> instance for mocking. </returns>
-        public static EndpointsSpec EndpointsSpec(string logsIngestion = default, string metricsIngestion = default)
+        /// <returns> A new <see cref="Models.DataCollectionEndpointsSpec"/> instance for mocking. </returns>
+        public static DataCollectionEndpointsSpec DataCollectionEndpointsSpec(string logsIngestion = default, string metricsIngestion = default)
         {
-            return new EndpointsSpec(logsIngestion, metricsIngestion, default);
+            return new DataCollectionEndpointsSpec(logsIngestion, metricsIngestion, default);
         }
 
         /// <param name="enrichmentDataStorageBlobs"> All the storage blobs used as enrichment data sources. </param>
@@ -500,12 +500,12 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="enrichmentDataStorageBlobs"> All the storage blobs used as enrichment data sources. </param>
         /// <param name="applicationInsights"> Application Insights references to be used on OTel metrics/logs enrichment. </param>
-        /// <returns> A new <see cref="Models.ReferencesSpec"/> instance for mocking. </returns>
-        public static ReferencesSpec ReferencesSpec(IEnumerable<DataCollectionRuleEnrichmentStorageBlob> enrichmentDataStorageBlobs = default, IEnumerable<MonitorApplicationInsightsReference> applicationInsights = default)
+        /// <returns> A new <see cref="Models.DataCollectionReferencesSpec"/> instance for mocking. </returns>
+        public static DataCollectionReferencesSpec DataCollectionReferencesSpec(IEnumerable<DataCollectionRuleEnrichmentStorageBlob> enrichmentDataStorageBlobs = default, IEnumerable<MonitorApplicationInsightsReference> applicationInsights = default)
         {
             applicationInsights ??= new ChangeTrackingList<MonitorApplicationInsightsReference>();
 
-            return new ReferencesSpec(enrichmentDataStorageBlobs is null ? default : new ReferencesSpecEnrichmentData((enrichmentDataStorageBlobs ?? new ChangeTrackingList<DataCollectionRuleEnrichmentStorageBlob>()).ToList(), default), (applicationInsights ?? new ChangeTrackingList<MonitorApplicationInsightsReference>()).ToList(), default);
+            return new DataCollectionReferencesSpec(enrichmentDataStorageBlobs is null ? default : new ReferencesSpecEnrichmentData((enrichmentDataStorageBlobs ?? new ChangeTrackingList<DataCollectionRuleEnrichmentStorageBlob>()).ToList(), default), (applicationInsights ?? new ChangeTrackingList<MonitorApplicationInsightsReference>()).ToList(), default);
         }
 
         /// <param name="resourceId"> Resource Id of the storage account that hosts the blob. </param>
@@ -531,10 +531,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// Must be part of the list of supported settings
         /// </param>
         /// <param name="value"> The value of the setting. </param>
-        /// <returns> A new <see cref="Models.AgentSetting"/> instance for mocking. </returns>
-        public static AgentSetting AgentSetting(KnownAgentSettingName? name = default, string value = default)
+        /// <returns> A new <see cref="Models.MonitorAgentSetting"/> instance for mocking. </returns>
+        public static MonitorAgentSetting MonitorAgentSetting(KnownMonitorAgentSettingName? name = default, string value = default)
         {
-            return new AgentSetting(name, value, default);
+            return new MonitorAgentSetting(name, value, default);
         }
 
         /// <param name="columns"> List of columns used by data in this stream. </param>
@@ -570,10 +570,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="otelMetrics"> The list of OTel metrics data source configurations. </param>
         /// <param name="etwProviders"> The list of ETW providers data source configurations. </param>
         /// <returns> A new <see cref="Models.DataCollectionRuleDataSources"/> instance for mocking. </returns>
-        public static DataCollectionRuleDataSources DataCollectionRuleDataSources(IEnumerable<PerfCounterDataSource> performanceCounters = default, IEnumerable<PerformanceCountersOTelDataSource> performanceCountersOTel = default, IEnumerable<WindowsEventLogDataSource> windowsEventLogs = default, IEnumerable<SyslogDataSource> syslog = default, IEnumerable<ExtensionDataSource> extensions = default, IEnumerable<LogFilesDataSource> logFiles = default, IEnumerable<IisLogsDataSource> iisLogs = default, IEnumerable<WindowsFirewallLogsDataSource> windowsFirewallLogs = default, IEnumerable<PrometheusForwarderDataSource> prometheusForwarder = default, IEnumerable<PlatformTelemetryDataSource> platformTelemetry = default, DataImportSourcesEventHub dataImportsEventHub = default, IEnumerable<OtelLogsDataSource> otelLogs = default, IEnumerable<OtelTracesDataSource> otelTraces = default, IEnumerable<OtelMetricsDataSource> otelMetrics = default, IEnumerable<EtwProviderDataSource> etwProviders = default)
+        public static DataCollectionRuleDataSources DataCollectionRuleDataSources(IEnumerable<PerfCounterDataSource> performanceCounters = default, IEnumerable<PerformanceCountersOtelDataSource> performanceCountersOTel = default, IEnumerable<WindowsEventLogDataSource> windowsEventLogs = default, IEnumerable<SyslogDataSource> syslog = default, IEnumerable<ExtensionDataSource> extensions = default, IEnumerable<LogFilesDataSource> logFiles = default, IEnumerable<IisLogsDataSource> iisLogs = default, IEnumerable<WindowsFirewallLogsDataSource> windowsFirewallLogs = default, IEnumerable<PrometheusForwarderDataSource> prometheusForwarder = default, IEnumerable<PlatformTelemetryDataSource> platformTelemetry = default, DataImportSourcesEventHub dataImportsEventHub = default, IEnumerable<OtelLogsDataSource> otelLogs = default, IEnumerable<OtelTracesDataSource> otelTraces = default, IEnumerable<OtelMetricsDataSource> otelMetrics = default, IEnumerable<EtwProviderDataSource> etwProviders = default)
         {
             performanceCounters ??= new ChangeTrackingList<PerfCounterDataSource>();
-            performanceCountersOTel ??= new ChangeTrackingList<PerformanceCountersOTelDataSource>();
+            performanceCountersOTel ??= new ChangeTrackingList<PerformanceCountersOtelDataSource>();
             windowsEventLogs ??= new ChangeTrackingList<WindowsEventLogDataSource>();
             syslog ??= new ChangeTrackingList<SyslogDataSource>();
             extensions ??= new ChangeTrackingList<ExtensionDataSource>();
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
             return new DataCollectionRuleDataSources(
                 (performanceCounters ?? new ChangeTrackingList<PerfCounterDataSource>()).ToList(),
-                (performanceCountersOTel ?? new ChangeTrackingList<PerformanceCountersOTelDataSource>()).ToList(),
+                (performanceCountersOTel ?? new ChangeTrackingList<PerformanceCountersOtelDataSource>()).ToList(),
                 (windowsEventLogs ?? new ChangeTrackingList<WindowsEventLogDataSource>()).ToList(),
                 (syslog ?? new ChangeTrackingList<SyslogDataSource>()).ToList(),
                 (extensions ?? new ChangeTrackingList<ExtensionDataSource>()).ToList(),
@@ -622,10 +622,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="otelMetrics"> The list of OTel metrics data source configurations. </param>
         /// <param name="etwProviders"> The list of ETW providers data source configurations. </param>
         /// <returns> A new <see cref="Models.DataSourcesSpec"/> instance for mocking. </returns>
-        public static DataSourcesSpec DataSourcesSpec(IEnumerable<PerfCounterDataSource> performanceCounters = default, IEnumerable<PerformanceCountersOTelDataSource> performanceCountersOTel = default, IEnumerable<WindowsEventLogDataSource> windowsEventLogs = default, IEnumerable<SyslogDataSource> syslog = default, IEnumerable<ExtensionDataSource> extensions = default, IEnumerable<LogFilesDataSource> logFiles = default, IEnumerable<IisLogsDataSource> iisLogs = default, IEnumerable<WindowsFirewallLogsDataSource> windowsFirewallLogs = default, IEnumerable<PrometheusForwarderDataSource> prometheusForwarder = default, IEnumerable<PlatformTelemetryDataSource> platformTelemetry = default, DataImportSourcesEventHub dataImportsEventHub = default, IEnumerable<OtelLogsDataSource> otelLogs = default, IEnumerable<OtelTracesDataSource> otelTraces = default, IEnumerable<OtelMetricsDataSource> otelMetrics = default, IEnumerable<EtwProviderDataSource> etwProviders = default)
+        public static DataSourcesSpec DataSourcesSpec(IEnumerable<PerfCounterDataSource> performanceCounters = default, IEnumerable<PerformanceCountersOtelDataSource> performanceCountersOTel = default, IEnumerable<WindowsEventLogDataSource> windowsEventLogs = default, IEnumerable<SyslogDataSource> syslog = default, IEnumerable<ExtensionDataSource> extensions = default, IEnumerable<LogFilesDataSource> logFiles = default, IEnumerable<IisLogsDataSource> iisLogs = default, IEnumerable<WindowsFirewallLogsDataSource> windowsFirewallLogs = default, IEnumerable<PrometheusForwarderDataSource> prometheusForwarder = default, IEnumerable<PlatformTelemetryDataSource> platformTelemetry = default, DataImportSourcesEventHub dataImportsEventHub = default, IEnumerable<OtelLogsDataSource> otelLogs = default, IEnumerable<OtelTracesDataSource> otelTraces = default, IEnumerable<OtelMetricsDataSource> otelMetrics = default, IEnumerable<EtwProviderDataSource> etwProviders = default)
         {
             performanceCounters ??= new ChangeTrackingList<PerfCounterDataSource>();
-            performanceCountersOTel ??= new ChangeTrackingList<PerformanceCountersOTelDataSource>();
+            performanceCountersOTel ??= new ChangeTrackingList<PerformanceCountersOtelDataSource>();
             windowsEventLogs ??= new ChangeTrackingList<WindowsEventLogDataSource>();
             syslog ??= new ChangeTrackingList<SyslogDataSource>();
             extensions ??= new ChangeTrackingList<ExtensionDataSource>();
@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
             return new DataSourcesSpec(
                 (performanceCounters ?? new ChangeTrackingList<PerfCounterDataSource>()).ToList(),
-                (performanceCountersOTel ?? new ChangeTrackingList<PerformanceCountersOTelDataSource>()).ToList(),
+                (performanceCountersOTel ?? new ChangeTrackingList<PerformanceCountersOtelDataSource>()).ToList(),
                 (windowsEventLogs ?? new ChangeTrackingList<WindowsEventLogDataSource>()).ToList(),
                 (syslog ?? new ChangeTrackingList<SyslogDataSource>()).ToList(),
                 (extensions ?? new ChangeTrackingList<ExtensionDataSource>()).ToList(),
@@ -698,13 +698,13 @@ namespace Azure.ResourceManager.Monitor.Models
         /// A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </param>
-        /// <returns> A new <see cref="Models.PerformanceCountersOTelDataSource"/> instance for mocking. </returns>
-        public static PerformanceCountersOTelDataSource PerformanceCountersOTelDataSource(IEnumerable<KnownPerformanceCountersOTelDataSourceStreams> streams = default, int? samplingFrequencyInSeconds = default, IEnumerable<string> counterSpecifiers = default, string name = default)
+        /// <returns> A new <see cref="Models.PerformanceCountersOtelDataSource"/> instance for mocking. </returns>
+        public static PerformanceCountersOtelDataSource PerformanceCountersOtelDataSource(IEnumerable<KnownPerformanceCountersOtelDataSourceStreams> streams = default, int? samplingFrequencyInSeconds = default, IEnumerable<string> counterSpecifiers = default, string name = default)
         {
-            streams ??= new ChangeTrackingList<KnownPerformanceCountersOTelDataSourceStreams>();
+            streams ??= new ChangeTrackingList<KnownPerformanceCountersOtelDataSourceStreams>();
             counterSpecifiers ??= new ChangeTrackingList<string>();
 
-            return new PerformanceCountersOTelDataSource((streams ?? new ChangeTrackingList<KnownPerformanceCountersOTelDataSourceStreams>()).ToList(), samplingFrequencyInSeconds, (counterSpecifiers ?? new ChangeTrackingList<string>()).ToList(), name, default);
+            return new PerformanceCountersOtelDataSource((streams ?? new ChangeTrackingList<KnownPerformanceCountersOtelDataSourceStreams>()).ToList(), samplingFrequencyInSeconds, (counterSpecifiers ?? new ChangeTrackingList<string>()).ToList(), name, default);
         }
 
         /// <param name="streams">
@@ -1371,7 +1371,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="accessModeSettings"> Access mode settings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accessModeSettings"/> is null. </exception>
         /// <returns> A new <see cref="Monitor.MonitorPrivateLinkScopeData"/> instance for mocking. </returns>
-        public static MonitorPrivateLinkScopeData MonitorPrivateLinkScopeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PrivateLinkScopeProvisioningState? privateLinkScopeProvisioningState = default, IEnumerable<MonitorPrivateEndpointConnectionData> privateEndpointConnections = default, MonitorPrivateLinkAccessModeSettings accessModeSettings = default)
+        public static MonitorPrivateLinkScopeData MonitorPrivateLinkScopeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MonitorPrivateLinkScopeProvisioningState? privateLinkScopeProvisioningState = default, IEnumerable<MonitorPrivateEndpointConnectionData> privateEndpointConnections = default, MonitorPrivateLinkAccessModeSettings accessModeSettings = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2245,7 +2245,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="identity"> The identity of the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scopes"/> or <paramref name="criteria"/> is null. </exception>
         /// <returns> A new <see cref="Monitor.MetricAlertData"/> instance for mocking. </returns>
-        public static MetricAlertData MetricAlertData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, int severity = default, bool isEnabled = default, IEnumerable<string> scopes = default, TimeSpan evaluationFrequency = default, TimeSpan? windowSize = default, ResourceType? targetResourceType = default, AzureLocation? targetResourceRegion = default, MetricAlertCriteria criteria = default, bool? isAutoMitigateEnabled = default, ResolveConfiguration resolveConfiguration = default, IEnumerable<MetricAlertAction> actions = default, DateTimeOffset? lastUpdatedOn = default, bool? isMigrated = default, IDictionary<string, string> customProperties = default, IDictionary<string, string> actionProperties = default, ManagedServiceIdentity identity = default)
+        public static MetricAlertData MetricAlertData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, int severity = default, bool isEnabled = default, IEnumerable<string> scopes = default, TimeSpan evaluationFrequency = default, TimeSpan? windowSize = default, ResourceType? targetResourceType = default, AzureLocation? targetResourceRegion = default, MetricAlertCriteria criteria = default, bool? isAutoMitigateEnabled = default, MetricAlertResolveConfiguration resolveConfiguration = default, IEnumerable<MetricAlertAction> actions = default, DateTimeOffset? lastUpdatedOn = default, bool? isMigrated = default, IDictionary<string, string> customProperties = default, IDictionary<string, string> actionProperties = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2475,10 +2475,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="isAutoResolved"> Indicates whether the alert should be auto resolved. </param>
         /// <param name="timeToResolve"> The time (in ISO 8601 duration format) after which the alert should be auto resolved. </param>
-        /// <returns> A new <see cref="Models.ResolveConfiguration"/> instance for mocking. </returns>
-        public static ResolveConfiguration ResolveConfiguration(bool isAutoResolved = default, TimeSpan? timeToResolve = default)
+        /// <returns> A new <see cref="Models.MetricAlertResolveConfiguration"/> instance for mocking. </returns>
+        public static MetricAlertResolveConfiguration MetricAlertResolveConfiguration(bool isAutoResolved = default, TimeSpan? timeToResolve = default)
         {
-            return new ResolveConfiguration(isAutoResolved, timeToResolve, default);
+            return new MetricAlertResolveConfiguration(isAutoResolved, timeToResolve, default);
         }
 
         /// <param name="actionGroupId"> The id of the action group to use. </param>
@@ -2510,7 +2510,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="customProperties"> The properties of an alert payload. </param>
         /// <param name="actionProperties"> The properties of an action properties. </param>
         /// <returns> A new <see cref="Models.MetricAlertPatch"/> instance for mocking. </returns>
-        public static MetricAlertPatch MetricAlertPatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, string description = default, int? severity = default, bool? isEnabled = default, IEnumerable<string> scopes = default, TimeSpan? evaluationFrequency = default, TimeSpan? windowSize = default, ResourceType? targetResourceType = default, AzureLocation? targetResourceRegion = default, MetricAlertCriteria criteria = default, bool? isAutoMitigateEnabled = default, ResolveConfiguration resolveConfiguration = default, IEnumerable<MetricAlertAction> actions = default, DateTimeOffset? lastUpdatedOn = default, bool? isMigrated = default, IDictionary<string, string> customProperties = default, IDictionary<string, string> actionProperties = default)
+        public static MetricAlertPatch MetricAlertPatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, string description = default, int? severity = default, bool? isEnabled = default, IEnumerable<string> scopes = default, TimeSpan? evaluationFrequency = default, TimeSpan? windowSize = default, ResourceType? targetResourceType = default, AzureLocation? targetResourceRegion = default, MetricAlertCriteria criteria = default, bool? isAutoMitigateEnabled = default, MetricAlertResolveConfiguration resolveConfiguration = default, IEnumerable<MetricAlertAction> actions = default, DateTimeOffset? lastUpdatedOn = default, bool? isMigrated = default, IDictionary<string, string> customProperties = default, IDictionary<string, string> actionProperties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 

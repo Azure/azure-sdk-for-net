@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> The configuration for how the alert is resolved. Applicable for PromQLCriteria. </summary>
-        public ResolveConfiguration ResolveConfiguration
+        public MetricAlertResolveConfiguration ResolveConfiguration
         {
             get
             {

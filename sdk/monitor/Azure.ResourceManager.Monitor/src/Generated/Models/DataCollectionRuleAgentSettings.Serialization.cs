@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            IList<AgentSetting> logs = default;
+            IList<MonitorAgentSetting> logs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    List<AgentSetting> array = new List<AgentSetting>();
+                    List<MonitorAgentSetting> array = new List<MonitorAgentSetting>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AgentSetting.DeserializeAgentSetting(item, options));
+                        array.Add(MonitorAgentSetting.DeserializeMonitorAgentSetting(item, options));
                     }
                     logs = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DataCollectionRuleAgentSettings(logs ?? new ChangeTrackingList<AgentSetting>(), additionalBinaryDataProperties);
+            return new DataCollectionRuleAgentSettings(logs ?? new ChangeTrackingList<MonitorAgentSetting>(), additionalBinaryDataProperties);
         }
     }
 }
