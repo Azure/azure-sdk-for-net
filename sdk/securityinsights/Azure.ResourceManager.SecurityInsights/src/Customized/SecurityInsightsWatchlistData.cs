@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
 using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
@@ -11,6 +13,12 @@ namespace Azure.ResourceManager.SecurityInsights
     public partial class SecurityInsightsWatchlistData
     {
         /// <summary> The source of the watchlist. </summary>
-        public Source? Source { get; set; }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Source is no longer supported.")]
+        public Source? Source
+        {
+            get => SourceString is null ? null : new Source(SourceString);
+            set => SourceString = value?.ToString();
+        }
     }
 }
