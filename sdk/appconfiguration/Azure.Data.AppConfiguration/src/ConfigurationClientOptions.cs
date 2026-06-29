@@ -23,6 +23,7 @@ namespace Azure.Data.AppConfiguration
         private const string AppConfigUsGovCloudHostName = "appconfig.azure.us";
         private const string AppConfigChinaCloudHostName = "appconfig.azure.cn";
         private const string AzConfigPublicCloudHostName = "azconfig.io";
+        private const string AppConfigStagingCloudHostName = "appconfig-staging.azure.com";
 
         /// <summary>
         /// The versions of the App Configuration service supported by this client library.
@@ -119,6 +120,8 @@ namespace Azure.Data.AppConfiguration
                     => $"{AppConfigurationAudience.AzureChina}/.default",
                 _ when IsHostInDomain(host, AzConfigPublicCloudHostName)
                     => $"{AppConfigurationAudience.AzurePublicCloud}/.default",
+                _ when IsHostInDomain(host, AppConfigStagingCloudHostName)
+                    => $"https://{AppConfigStagingCloudHostName}/.default",
                 _ => $"{GetAudienceFromHost(host)}/.default"
             };
         }
@@ -131,17 +134,17 @@ namespace Azure.Data.AppConfiguration
 
         // CUSTOM: Derives the Microsoft Entra audience from the endpoint host when no audience
         // is explicitly configured and the host does not match a well-known cloud. The audience
-        // domain is anchored on the first DNS label that begins with "appconfig"/"azconfig", so any
-        // leading labels (such as the store name) are ignored. For example,
-        // "<store>.appconfig.azure.com" yields "https://appconfig.azure.com". Falls back to the
-        // public cloud audience when no recognizable App Configuration marker is present.
+        // domain is anchored on the App Configuration service label ("appconfig"/"azconfig"),
+        // searching right-to-left so that leading store/region labels are ignored even if they
+        // happen to begin with the marker. For example, "<store>.<region>.appconfig.azure.com"
+        // yields "https://appconfig.azure.com". Falls back to the public cloud audience when no
+        // recognizable App Configuration marker is present.
         private static string GetAudienceFromHost(string host)
         {
             string[] labels = host.Split('.');
-            for (int i = 0; i < labels.Length - 1; i++)
+            for (int i = labels.Length - 2; i >= 0; i--)
             {
-                if (labels[i].StartsWith("appconfig", StringComparison.InvariantCultureIgnoreCase) ||
-                    labels[i].StartsWith("azconfig", StringComparison.InvariantCultureIgnoreCase))
+                if (IsAppConfigLabel(labels[i]))
                 {
                     return $"https://{string.Join(".", labels, i, labels.Length - i)}";
                 }
@@ -149,5 +152,12 @@ namespace Azure.Data.AppConfiguration
 
             return AppConfigurationAudience.AzurePublicCloud.ToString();
         }
+
+        // CUSTOM: Matches the App Configuration service label exactly ("appconfig"/"azconfig"), so
+        // look-alike or hyphenated labels such as "appconfigfoo" or "appconfig-test" are not treated
+        // as the service marker.
+        private static bool IsAppConfigLabel(string label) =>
+            label.Equals("appconfig", StringComparison.InvariantCultureIgnoreCase) ||
+            label.Equals("azconfig", StringComparison.InvariantCultureIgnoreCase);
     }
 }

@@ -62,13 +62,16 @@ namespace Azure.Data.AppConfiguration.Tests
                 yield return new TestCaseData("https://contoso.azconfig.io", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
                 yield return new TestCaseData("https://contoso.appconfig.azure.com", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
                 yield return new TestCaseData("https://contoso.appconfig.azure.com/", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
-                // derived audience for hosts that do not match a well-known cloud
-                yield return new TestCaseData("https://contoso.appconfig-test.azure.com", "https://appconfig-test.azure.com/.default");
-                yield return new TestCaseData("https://contoso.appconfig-test.azure.com/", "https://appconfig-test.azure.com/.default");
+                // staging is an explicitly recognized host
+                yield return new TestCaseData("https://contoso.appconfig-staging.azure.com", "https://appconfig-staging.azure.com/.default");
+                yield return new TestCaseData("https://contoso.appconfig-staging.azure.com/", "https://appconfig-staging.azure.com/.default");
+                yield return new TestCaseData("https://appconfig-staging.azure.com", "https://appconfig-staging.azure.com/.default");
+                // derived audience for hosts that do not match a well-known cloud, anchored on the exact appconfig/azconfig marker
                 yield return new TestCaseData("https://contoso.appconfig.sovereign.cloud", "https://appconfig.sovereign.cloud/.default");
                 // derived audience is anchored on the appconfig/azconfig marker, so any leading labels (such as the store name) are ignored
-                yield return new TestCaseData("https://contoso.eastus.appconfig-test.azure.com", "https://appconfig-test.azure.com/.default");
                 yield return new TestCaseData("https://contoso.eastus.appconfig.sovereign.cloud", "https://appconfig.sovereign.cloud/.default");
+                // hyphenated labels other than the recognized staging host are not treated as a marker, so they fall back to the public cloud audience
+                yield return new TestCaseData("https://contoso.appconfig-test.azure.com", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
                 // hosts without an appconfig/azconfig marker fall back to the public cloud audience
                 yield return new TestCaseData("http://other.my.custom.audience", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
                 // well-known cloud suffixes only match on a DNS label boundary, so look-alike hosts are not misclassified
