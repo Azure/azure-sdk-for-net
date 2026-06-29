@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -38,6 +39,16 @@ namespace Azure.ResourceManager.Advisor
             TryGetApiVersion(AdvisorSuppressionContractResource.ResourceType, out string advisorSuppressionContractApiVersion);
             _suppressionContractsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Advisor", AdvisorSuppressionContractResource.ResourceType.Namespace, Diagnostics);
             _suppressionContractsRestClient = new SuppressionContracts(_suppressionContractsClientDiagnostics, Pipeline, Endpoint, advisorSuppressionContractApiVersion ?? "2025-05-01-preview");
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != AdvisorRecommendationResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AdvisorRecommendationResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
