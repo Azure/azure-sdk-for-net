@@ -49,6 +49,10 @@ namespace Azure.Generator.Management.Tests.Providers
             var bodyStatements = validateResourceId!.BodyStatements?.ToDisplayString();
             Assert.That(bodyStatements, Does.Contain("global::Samples.WatchlistResource.ResourceType"));
             Assert.That(bodyStatements, Does.Not.Contain("\"Microsoft.OperationalInsights/workspaces\""));
+
+            var constructor = collection.Constructors.SingleOrDefault(c => c.Signature.Parameters.Any(p => p.Name == "id"));
+            Assert.That(constructor, Is.Not.Null);
+            Assert.That(constructor!.BodyStatements?.ToDisplayString(), Does.Contain("global::Samples.WatchlistItemCollection.ValidateResourceId(id);"));
         }
 
         [TestCase]
