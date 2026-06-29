@@ -113,17 +113,5 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             Assert.That(async () => await client.AcceptNextSessionAsync("queue", options),
                 Throws.InstanceOf<ArgumentException>().And.Message.Contains("specific session"));
         }
-
-        [Test]
-        public async Task AcceptNextSessionThrowsWhenNonExclusiveWithoutToken()
-        {
-            await using var client = new ServiceBusClient("not.real.com", Mock.Of<TokenCredential>());
-            var options = new ServiceBusSessionReceiverOptions { IsSessionExclusive = false };
-
-            // Non-exclusive locking is by-sessionId accept only; it cannot be combined with accepting the next
-            // available session, even without a takeover token.
-            Assert.That(async () => await client.AcceptNextSessionAsync("queue", options),
-                Throws.InstanceOf<ArgumentException>().And.Message.Contains("next available"));
-        }
     }
 }

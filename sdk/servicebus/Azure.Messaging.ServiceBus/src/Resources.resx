@@ -156,9 +156,6 @@
   <data name="SessionLockTokenRequiresSessionId" xml:space="preserve">
     <value>A session lock token can only be supplied when accepting a specific session. It cannot be used when accepting the next available session.</value>
   </data>
-  <data name="NonExclusiveSessionRequiresSessionId" xml:space="preserve">
-    <value>Non-exclusive session locking requires accepting a specific session. It cannot be used when accepting the next available session.</value>
-  </data>
   <data name="TimeoutMustBeNonNegative" xml:space="preserve">
     <value>Argument {0} must be a non-negative timeout value. The provided value was {1}.</value>
   </data>

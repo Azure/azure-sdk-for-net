@@ -430,15 +430,6 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Non-exclusive session locking requires accepting a specific session. It cannot be used when accepting the next available session..
-        /// </summary>
-        internal static string NonExclusiveSessionRequiresSessionId {
-            get {
-                return ResourceManager.GetString("NonExclusiveSessionRequiresSessionId", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to &apos;{0}&apos; is not a supported type..
         /// </summary>
         internal static string NotSupportedPropertyType {

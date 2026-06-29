@@ -95,12 +95,6 @@ namespace Azure.Messaging.ServiceBus
                         throw new ArgumentException(Resources.SessionLockTokenRequiresSessionId, nameof(options));
                     }
                 }
-                else if (!options.IsSessionExclusive && sessionId == null)
-                {
-                    // Non-exclusive locking is only supported when accepting a specific session, not when
-                    // accepting the next available session.
-                    throw new ArgumentException(Resources.NonExclusiveSessionRequiresSessionId, nameof(options));
-                }
             }
 
             var receiver = new ServiceBusSessionReceiver(
