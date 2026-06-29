@@ -8,87 +8,38 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    [PersistableModelProxy(typeof(UnknownAdditionalData))]
-    public partial class SecuritySubAssessmentAdditionalInfo : IUtf8JsonSerializable, IJsonModel<SecuritySubAssessmentAdditionalInfo>
+    /// <summary>
+    /// Details of the sub-assessment
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SqlServerVulnerabilityProperties"/>, <see cref="ContainerRegistryVulnerabilityProperties"/>, and <see cref="ServerVulnerabilityProperties"/>.
+    /// </summary>
+    [PersistableModelProxy(typeof(UnknownSecuritySubAssessmentAdditionalInfo))]
+    public abstract partial class SecuritySubAssessmentAdditionalInfo : IJsonModel<SecuritySubAssessmentAdditionalInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecuritySubAssessmentAdditionalInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<SecuritySubAssessmentAdditionalInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual SecuritySubAssessmentAdditionalInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecuritySubAssessmentAdditionalInfo>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = options.Format == "W" ? ((IPersistableModel<SecuritySubAssessmentAdditionalInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
             {
-                throw new FormatException($"The model {nameof(SecuritySubAssessmentAdditionalInfo)} does not support writing '{format}' format.");
-            }
-
-            writer.WritePropertyName("assessedResourceType"u8);
-            writer.WriteStringValue(AssessedResourceType.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        return DeserializeSecuritySubAssessmentAdditionalInfo(document.RootElement, options);
                     }
-#endif
-                }
+                default:
+                    throw new FormatException($"The model {nameof(SecuritySubAssessmentAdditionalInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
-        SecuritySubAssessmentAdditionalInfo IJsonModel<SecuritySubAssessmentAdditionalInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecuritySubAssessmentAdditionalInfo>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(SecuritySubAssessmentAdditionalInfo)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSecuritySubAssessmentAdditionalInfo(document.RootElement, options);
-        }
-
-        internal static SecuritySubAssessmentAdditionalInfo DeserializeSecuritySubAssessmentAdditionalInfo(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            if (element.TryGetProperty("assessedResourceType", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "ContainerRegistryVulnerability": return ContainerRegistryVulnerabilityProperties.DeserializeContainerRegistryVulnerabilityProperties(element, options);
-                    case "ServerVulnerabilityAssessment": return ServerVulnerabilityProperties.DeserializeServerVulnerabilityProperties(element, options);
-                    case "SqlServerVulnerability": return SqlServerVulnerabilityProperties.DeserializeSqlServerVulnerabilityProperties(element, options);
-                }
-            }
-            return UnknownAdditionalData.DeserializeUnknownAdditionalData(element, options);
-        }
-
-        BinaryData IPersistableModel<SecuritySubAssessmentAdditionalInfo>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SecuritySubAssessmentAdditionalInfo>)this).GetFormatFromOptions(options) : options.Format;
-
+            string format = options.Format == "W" ? ((IPersistableModel<SecuritySubAssessmentAdditionalInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -98,22 +49,40 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
         }
 
-        SecuritySubAssessmentAdditionalInfo IPersistableModel<SecuritySubAssessmentAdditionalInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SecuritySubAssessmentAdditionalInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecuritySubAssessmentAdditionalInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
+            string format = options.Format == "W" ? ((IPersistableModel<SecuritySubAssessmentAdditionalInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSecuritySubAssessmentAdditionalInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SecuritySubAssessmentAdditionalInfo)} does not support reading '{options.Format}' format.");
+                throw new FormatException($"The model {nameof(SecuritySubAssessmentAdditionalInfo)} does not support reading '{format}' format.");
             }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecuritySubAssessmentAdditionalInfo(document.RootElement, options);
         }
 
-        string IPersistableModel<SecuritySubAssessmentAdditionalInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SecuritySubAssessmentAdditionalInfo DeserializeSecuritySubAssessmentAdditionalInfo(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("assessedResourceType"u8, out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "SqlServerVulnerability":
+                        return SqlServerVulnerabilityProperties.DeserializeSqlServerVulnerabilityProperties(element, options);
+                    case "ContainerRegistryVulnerability":
+                        return ContainerRegistryVulnerabilityProperties.DeserializeContainerRegistryVulnerabilityProperties(element, options);
+                    case "ServerVulnerabilityAssessment":
+                        return ServerVulnerabilityProperties.DeserializeServerVulnerabilityProperties(element, options);
+                }
+            }
+            return UnknownSecuritySubAssessmentAdditionalInfo.DeserializeUnknownSecuritySubAssessmentAdditionalInfo(element, options);
+        }
     }
 }

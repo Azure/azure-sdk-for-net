@@ -39,7 +39,7 @@ ToolboxSkillReference reference = new(skill.Name)
 {
     Version = skill.Version
 };
-ToolboxVersion toolBox = toolboxClient.CreateToolboxVersion(
+ToolboxVersion toolBox = toolboxClient.CreateVersion(
     name: "mySkillToolbox",
     tools: [new ToolboxSearchPreviewToolboxTool()],
     skills: [reference],
@@ -73,7 +73,7 @@ ToolboxSkillReference reference = new(skill.Name)
 {
     Version = skill.Version
 };
-ToolboxVersion toolBox = await toolboxClient.CreateToolboxVersionAsync(
+ToolboxVersion toolBox = await toolboxClient.CreateVersionAsync(
     name: "mySkillToolbox",
     tools: [new ToolboxSearchPreviewToolboxTool()],
     skills: [reference],
@@ -231,13 +231,13 @@ Console.WriteLine(latestResponse.GetOutputText());
 Synchronous sample:
 ```C# Snippet:DeleteToolBoxSkill_ToolBoxSkill_Sync
 projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name, force: true);
-toolboxClient.DeleteToolbox(name: toolBox.Name);
+toolboxClient.Delete(name: toolBox.Name);
 skillsClient.DeleteSkill(name: skill.Name);
 ```
 
 Asynchronous sample:
 ```C# Snippet:DeleteToolBoxSkill_ToolBoxSkill_Async
 await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name, force: true);
-await toolboxClient.DeleteToolboxAsync(name: toolBox.Name);
+await toolboxClient.DeleteAsync(name: toolBox.Name);
 await skillsClient.DeleteSkillAsync(name: skill.Name);
 ```

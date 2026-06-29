@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -14,45 +15,82 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public readonly partial struct SecurityAssessmentResourceCategory : IEquatable<SecurityAssessmentResourceCategory>
     {
         private readonly string _value;
+        /// <summary> Compute. </summary>
+        private const string ComputeValue = "Compute";
+        /// <summary> Networking. </summary>
+        private const string NetworkingValue = "Networking";
+        /// <summary> Data. </summary>
+        private const string DataValue = "Data";
+        /// <summary> IdentityAndAccess. </summary>
+        private const string IdentityAndAccessValue = "IdentityAndAccess";
+        /// <summary> IoT. </summary>
+        private const string IoTValue = "IoT";
+        /// <summary> Container. </summary>
+        private const string ContainerValue = "Container";
+        /// <summary> AppServices. </summary>
+        private const string AppServicesValue = "AppServices";
 
         /// <summary> Initializes a new instance of <see cref="SecurityAssessmentResourceCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityAssessmentResourceCategory(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ComputeValue = "Compute";
-        private const string NetworkingValue = "Networking";
-        private const string DataValue = "Data";
-        private const string IdentityAndAccessValue = "IdentityAndAccess";
-        private const string IotValue = "IoT";
+            _value = value;
+        }
 
         /// <summary> Compute. </summary>
         public static SecurityAssessmentResourceCategory Compute { get; } = new SecurityAssessmentResourceCategory(ComputeValue);
+
         /// <summary> Networking. </summary>
         public static SecurityAssessmentResourceCategory Networking { get; } = new SecurityAssessmentResourceCategory(NetworkingValue);
+
         /// <summary> Data. </summary>
         public static SecurityAssessmentResourceCategory Data { get; } = new SecurityAssessmentResourceCategory(DataValue);
+
         /// <summary> IdentityAndAccess. </summary>
         public static SecurityAssessmentResourceCategory IdentityAndAccess { get; } = new SecurityAssessmentResourceCategory(IdentityAndAccessValue);
+
+        /// <summary> IoT. </summary>
+        public static SecurityAssessmentResourceCategory IoT { get; } = new SecurityAssessmentResourceCategory(IoTValue);
+
+        /// <summary> Container. </summary>
+        public static SecurityAssessmentResourceCategory Container { get; } = new SecurityAssessmentResourceCategory(ContainerValue);
+
+        /// <summary> AppServices. </summary>
+        public static SecurityAssessmentResourceCategory AppServices { get; } = new SecurityAssessmentResourceCategory(AppServicesValue);
+
         /// <summary> Determines if two <see cref="SecurityAssessmentResourceCategory"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityAssessmentResourceCategory left, SecurityAssessmentResourceCategory right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityAssessmentResourceCategory"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityAssessmentResourceCategory left, SecurityAssessmentResourceCategory right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityAssessmentResourceCategory"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityAssessmentResourceCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityAssessmentResourceCategory(string value) => new SecurityAssessmentResourceCategory(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityAssessmentResourceCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityAssessmentResourceCategory?(string value) => value == null ? null : new SecurityAssessmentResourceCategory(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityAssessmentResourceCategory other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityAssessmentResourceCategory other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

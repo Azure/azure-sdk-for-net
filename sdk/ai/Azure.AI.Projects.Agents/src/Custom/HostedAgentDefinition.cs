@@ -40,4 +40,8 @@ public partial class HostedAgentDefinition
     }
     /// <summary> [Deprecated] The container image for the hosted agent. This property was added fo backward compatibility only. Please use ContainerConfiguration.Image instead. </summary>
     public string Image { get => ContainerConfiguration?.Image; set => SetContainerImageMayBe(value); }
+    /// <summary>
+    /// The property, retained for back compatibility, not used.
+    /// </summary>
+    public IList<ProjectsAgentTool> Tools { get; }
 }

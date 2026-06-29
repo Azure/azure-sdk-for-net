@@ -36,7 +36,7 @@ public class Sample_ToolBoxSkill : ProjectsOpenAITestBase
         #endregion
         try
         {
-            toolboxClient.DeleteToolbox(name: "mySkillToolbox");
+            toolboxClient.Delete(name: "mySkillToolbox");
         }
         catch { }
         try
@@ -65,7 +65,7 @@ public class Sample_ToolBoxSkill : ProjectsOpenAITestBase
         {
             Version = skill.Version
         };
-        ToolboxVersion toolBox = await toolboxClient.CreateToolboxVersionAsync(
+        ToolboxVersion toolBox = await toolboxClient.CreateVersionAsync(
             name: "mySkillToolbox",
             tools: [new ToolboxSearchPreviewToolboxTool()],
             skills: [reference],
@@ -145,7 +145,7 @@ public class Sample_ToolBoxSkill : ProjectsOpenAITestBase
         #endregion
         #region Snippet:DeleteToolBoxSkill_ToolBoxSkill_Async
         await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name, force: true);
-        await toolboxClient.DeleteToolboxAsync(name: toolBox.Name);
+        await toolboxClient.DeleteAsync(name: toolBox.Name);
         await skillsClient.DeleteSkillAsync(name: skill.Name);
         #endregion
     }
@@ -168,7 +168,7 @@ public class Sample_ToolBoxSkill : ProjectsOpenAITestBase
         ProjectAgentSkills skillsClient = projectClient.AgentAdministrationClient.GetAgentSkills();
         try
         {
-            toolboxClient.DeleteToolbox(name: "mySkillToolbox");
+            toolboxClient.Delete(name: "mySkillToolbox");
         }
         catch { }
         try
@@ -197,7 +197,7 @@ public class Sample_ToolBoxSkill : ProjectsOpenAITestBase
         {
             Version = skill.Version
         };
-        ToolboxVersion toolBox = toolboxClient.CreateToolboxVersion(
+        ToolboxVersion toolBox = toolboxClient.CreateVersion(
             name: "mySkillToolbox",
             tools: [new ToolboxSearchPreviewToolboxTool()],
             skills: [reference],
@@ -277,7 +277,7 @@ public class Sample_ToolBoxSkill : ProjectsOpenAITestBase
         #endregion
         #region Snippet:DeleteToolBoxSkill_ToolBoxSkill_Sync
         projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name, force: true);
-        toolboxClient.DeleteToolbox(name: toolBox.Name);
+        toolboxClient.Delete(name: toolBox.Name);
         skillsClient.DeleteSkill(name: skill.Name);
         #endregion
     }

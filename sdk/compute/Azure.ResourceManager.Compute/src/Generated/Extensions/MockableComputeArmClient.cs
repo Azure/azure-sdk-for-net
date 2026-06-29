@@ -197,15 +197,6 @@ namespace Azure.ResourceManager.Compute.Mocking
             return new CapacityReservationResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="InterconnectBlockResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="InterconnectBlockResource"/> object. </returns>
-        public virtual InterconnectBlockResource GetInterconnectBlockResource(ResourceIdentifier id)
-        {
-            InterconnectBlockResource.ValidateResourceId(id);
-            return new InterconnectBlockResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="VirtualMachineRunCommandResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualMachineRunCommandResource"/> object. </returns>
