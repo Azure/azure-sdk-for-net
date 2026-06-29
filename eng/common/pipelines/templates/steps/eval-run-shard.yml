@@ -12,12 +12,9 @@ parameters:
     type: string
     default: tools/azsdk-cli/Azure.Sdk.Tools.Vally
   - name: scriptDir
+    # The eval glue scripts AND the pinned Vally CLI (npm ci runs here) live together.
     type: string
     default: eng/common/scripts/eval
-  - name: skillEvalDir
-    # Where the pinned Vally CLI is installed from (npm ci against its lockfile).
-    type: string
-    default: eng/common/vally-eval
   - name: mcpArtifact
     type: string
     default: mcp-servers
@@ -63,10 +60,10 @@ steps:
       registryUrl: https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-tools/npm/registry/
 
   # npm ci installs @microsoft/vally-cli AND its locked transitive @github/copilot-sdk
-  # (the executor) into eng/common/vally-eval/node_modules — no global install needed (D9).
+  # (the executor) into eng/common/scripts/eval/node_modules — no global install needed (D9).
   - script: npm ci --userconfig $(Build.SourcesDirectory)/.npmrc
     displayName: 'Install Vally CLI + copilot-sdk (pinned via lockfile)'
-    workingDirectory: ${{ parameters.skillEvalDir }}
+    workingDirectory: ${{ parameters.scriptDir }}
 
   - download: current
     artifact: ${{ parameters.mcpArtifact }}
@@ -115,7 +112,7 @@ steps:
               --eval-args "$(evalArgs)" \
               --shard-name "$(shardName)" \
               --output-dir "$(Build.SourcesDirectory)/artifacts/vally-results/$(shardName)" \
-              --skill-eval-prefix "$(Build.SourcesDirectory)/${{ parameters.skillEvalDir }}" \
+              --skill-eval-prefix "$(Build.SourcesDirectory)/${{ parameters.scriptDir }}" \
               --threshold ${{ parameters.threshold }}
         env:
           GITHUB_TOKEN: $(${{ parameters.githubTokenVariable }})
@@ -125,7 +122,7 @@ steps:
             --eval-args "$(evalArgs)" \
             --shard-name "$(shardName)" \
             --output-dir "$(Build.SourcesDirectory)/artifacts/vally-results/$(shardName)" \
-            --skill-eval-prefix "$(Build.SourcesDirectory)/${{ parameters.skillEvalDir }}" \
+            --skill-eval-prefix "$(Build.SourcesDirectory)/${{ parameters.scriptDir }}" \
             --threshold ${{ parameters.threshold }}
         displayName: 'vally eval $(shardName)'
         workingDirectory: ${{ parameters.vallyRoot }}

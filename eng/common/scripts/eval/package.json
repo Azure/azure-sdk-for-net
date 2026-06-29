@@ -2,12 +2,15 @@
   "name": "@azure-tools/eval-scripts",
   "version": "1.0.0",
   "private": true,
-  "description": "Pipeline glue scripts for the Vally eval CI (matrix sharding, shard runner, JUnit summary). Synced via eng/common; not published.",
+  "description": "Vally eval CI glue scripts (matrix sharding, shard runner, JUnit summary) plus the pinned @microsoft/vally-cli the shards install from the committed lockfile. Synced via eng/common; not published.",
   "type": "module",
   "engines": {
     "node": ">=18"
   },
   "scripts": {
     "test": "node --test"
+  },
+  "devDependencies": {
+    "@microsoft/vally-cli": "0.6.0"
   }
 }

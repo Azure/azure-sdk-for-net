@@ -1,0 +1,51 @@
+# Vally live-tier eval CI — nightly end-to-end run of the live workflow scenarios.
+#
+# Drives the REAL azsdk-cli MCP against real Azure DevOps (AZSDKTOOLS_AGENT_TESTING=true,
+# set in .vally.yaml, keeps writes in the test area). Slow + non-hermetic, so it runs on a
+# nightly schedule rather than per-PR. Same archetype as the mock vertical, parameterized
+# for the live tier: build the cli MCP, glob the live evals, and wrap each shard in
+# AzureCLI@2 so the agent's DevOps calls inherit the service-connection identity.
+#
+# Thin entrypoint (D2): schedule + params + variable group, then `extends` the archetype.
+
+# Nightly only — no CI/PR trigger.
+trigger: none
+pr: none
+
+schedules:
+  - cron: '0 9 * * *'        # 09:00 UTC daily
+    displayName: 'Nightly live eval'
+    branches:
+      include:
+        - main
+    always: true             # run even when main has not changed
+
+parameters:
+  - name: shardBy
+    displayName: 'Shard granularity'
+    type: string
+    default: file
+    values:
+      - file
+      - area
+
+variables:
+  # Managed-pool image selection (LINUXPOOL/LINUXVMIMAGE). Repo-local.
+  - template: /eng/pipelines/templates/variables/image.yml
+  # azuresdk-copilot-github-pat is supplied by AzSDK_Eval_Variable_group, linked at the
+  # ADO pipeline definition.
+
+extends:
+  template: /eng/common/pipelines/templates/stages/archetype-eval.yml
+  parameters:
+    shardBy: ${{ parameters.shardBy }}
+    # vallyRoot defaults to the Vally project; the live evals + .vally.yaml live there.
+    evalGlobs:
+      - 'evals/workflow-scenarios/live/*.eval.yaml'
+    # Run each shard inside AzureCLI@2 so the MCP's DevOps calls are authenticated.
+    # Model auth stays copilot-sdk via GITHUB_TOKEN (the default githubTokenVariable).
+    azureServiceConnection: opensource-api-connection
+    # Live scenarios are slow (eval config sets a 30m timeout); give the job headroom.
+    shardTimeoutInMinutes: 45
+    testRunTitle: 'Vally live workflow-scenario evals'
+    failOnFailedTests: true

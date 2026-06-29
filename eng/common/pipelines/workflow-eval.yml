@@ -1,0 +1,75 @@
+# Workflow-scenario eval CI — Phase 1: the hermetic "mock vertical".
+#
+# Thin entrypoint (D2): trigger + parameters + the variable group, then `extends`
+# the reusable archetype that owns the Eval + Summary stages. All glue logic lives
+# in JavaScript under eng/common/scripts/eval (no PowerShell, D3); the stage/step
+# templates live under eng/common/pipelines/templates so they sync to every repo.
+#
+# Runs the hermetic eval tiers (unit tools + mock workflow scenarios) for the Vally
+# evals in tools/azsdk-cli/Azure.Sdk.Tools.Vally. The live tier is skipped (it needs
+# real auth) — see live-eval.yml for the nightly end-to-end run.
+
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - tools/azsdk-cli/Azure.Sdk.Tools.Vally/**
+      - tools/azsdk-cli/Azure.Sdk.Tools.Mock/**
+      # The mock server reflects over the real tool catalog in the Cli project,
+      # and the skills are loaded via --skill-dir — so changes to either can
+      # move the eval results and must retrigger the gate.
+      - tools/azsdk-cli/Azure.Sdk.Tools.Cli/**
+      - .github/skills/**
+      - eng/common/pipelines/workflow-eval.yml
+      - eng/common/pipelines/templates/steps/eval-build-mcp.yml
+      - eng/common/pipelines/templates/steps/eval-collect-stimuli.yml
+      - eng/common/pipelines/templates/steps/eval-run-shard.yml
+      - eng/common/pipelines/templates/steps/eval-summarize.yml
+      - eng/common/pipelines/templates/stages/archetype-eval.yml
+      - eng/common/scripts/eval/**
+
+pr:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - tools/azsdk-cli/Azure.Sdk.Tools.Vally/**
+      - tools/azsdk-cli/Azure.Sdk.Tools.Mock/**
+      - tools/azsdk-cli/Azure.Sdk.Tools.Cli/**
+      - .github/skills/**
+      - eng/common/pipelines/workflow-eval.yml
+      - eng/common/pipelines/templates/steps/eval-build-mcp.yml
+      - eng/common/pipelines/templates/steps/eval-collect-stimuli.yml
+      - eng/common/pipelines/templates/steps/eval-run-shard.yml
+      - eng/common/pipelines/templates/steps/eval-summarize.yml
+      - eng/common/pipelines/templates/stages/archetype-eval.yml
+      - eng/common/scripts/eval/**
+
+parameters:
+  # How finely to split the run into parallel jobs:
+  #   file = one job per eval file (default; best while the file count is small).
+  #   area = one job per `area` tag (fewer, larger jobs once startup cost dominates).
+  # Switching modes needs no other edits.
+  - name: shardBy
+    displayName: 'Shard granularity'
+    type: string
+    default: file
+    values:
+      - file
+      - area
+
+variables:
+  # Managed-pool image selection: defines LINUXPOOL (azsdk-pool) + LINUXVMIMAGE that
+  # the archetype's jobs reference. Repo-local; each repo supplies its own.
+  - template: /eng/pipelines/templates/variables/image.yml
+  # azuresdk-copilot-github-pat (the model-session PAT) is supplied by
+  # AzSDK_Eval_Variable_group, linked at the ADO pipeline definition.
+
+extends:
+  template: /eng/common/pipelines/templates/stages/archetype-eval.yml
+  parameters:
+    shardBy: ${{ parameters.shardBy }}
+    testRunTitle: 'Workflow-scenario evals (mock vertical)'
