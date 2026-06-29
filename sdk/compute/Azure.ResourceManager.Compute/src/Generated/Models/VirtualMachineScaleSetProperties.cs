@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="lifecycleHooksProfile"> Specifies the lifecycle hooks profile for the virtual machine scale set. </param>
         /// <param name="externalHealthPolicy"> Specifies the external health policy for the virtual machine scale set. </param>
         /// <param name="additionalProperties"></param>
-        internal VirtualMachineScaleSetProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy, ScheduledEventsPolicy scheduledEventsPolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVmProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVms, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, ComputeWriteableSubResourceData proximityPlacementGroup, ComputeWriteableSubResourceData hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, OrchestrationMode? orchestrationMode, SpotRestorePolicy spotRestorePolicy, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy, DateTimeOffset? timeCreated, bool? isMaximumCapacityConstrained, ResiliencyPolicy resiliencyPolicy, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode, ComputeSkuProfile skuProfile, HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement, LifecycleHooksProfile lifecycleHooksProfile, ExternalHealthPolicy externalHealthPolicy, IDictionary<string, BinaryData> additionalProperties)
+        internal VirtualMachineScaleSetProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy, ScheduledEventsPolicy scheduledEventsPolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVmProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVms, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, ComputeWriteableSubResourceData proximityPlacementGroup, ComputeWriteableSubResourceData hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, OrchestrationMode? orchestrationMode, SpotRestorePolicy spotRestorePolicy, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy, DateTimeOffset? timeCreated, bool? isMaximumCapacityConstrained, ResiliencyPolicy resiliencyPolicy, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode, ComputeSkuProfile skuProfile, HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement, LifecycleHooksProfile lifecycleHooksProfile, ComputeExternalHealthPolicy externalHealthPolicy, IDictionary<string, BinaryData> additionalProperties)
         {
             UpgradePolicy = upgradePolicy;
             ScheduledEventsPolicy = scheduledEventsPolicy;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal LifecycleHooksProfile LifecycleHooksProfile { get; set; }
 
         /// <summary> Specifies the external health policy for the virtual machine scale set. </summary>
-        public ExternalHealthPolicy ExternalHealthPolicy { get; set; }
+        public ComputeExternalHealthPolicy ExternalHealthPolicy { get; set; }
 
         /// <summary> Gets the AdditionalProperties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;

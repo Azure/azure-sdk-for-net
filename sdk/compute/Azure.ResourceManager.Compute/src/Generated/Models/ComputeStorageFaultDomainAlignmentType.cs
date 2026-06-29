@@ -12,7 +12,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the storage fault domain alignment type for the disk. </summary>
-    public readonly partial struct StorageFaultDomainAlignmentType : IEquatable<StorageFaultDomainAlignmentType>
+    public readonly partial struct ComputeStorageFaultDomainAlignmentType : IEquatable<ComputeStorageFaultDomainAlignmentType>
     {
         private readonly string _value;
         /// <summary> Disk Storage Fault Domains are mapped to Compute Fault Domains. Deployment fails if disk does not support enough Fault Domains. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Attempt to map Storage Fault Domains to Compute Fault Domains. Disks are unaligned if disk does not support enough Fault Domains. </summary>
         private const string BestEffortAlignedValue = "BestEffortAligned";
 
-        /// <summary> Initializes a new instance of <see cref="StorageFaultDomainAlignmentType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeStorageFaultDomainAlignmentType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StorageFaultDomainAlignmentType(string value)
+        public ComputeStorageFaultDomainAlignmentType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Disk Storage Fault Domains are mapped to Compute Fault Domains. Deployment fails if disk does not support enough Fault Domains. </summary>
-        public static StorageFaultDomainAlignmentType Aligned { get; } = new StorageFaultDomainAlignmentType(AlignedValue);
+        public static ComputeStorageFaultDomainAlignmentType Aligned { get; } = new ComputeStorageFaultDomainAlignmentType(AlignedValue);
 
         /// <summary> Attempt to map Storage Fault Domains to Compute Fault Domains. Disks are unaligned if disk does not support enough Fault Domains. </summary>
-        public static StorageFaultDomainAlignmentType BestEffortAligned { get; } = new StorageFaultDomainAlignmentType(BestEffortAlignedValue);
+        public static ComputeStorageFaultDomainAlignmentType BestEffortAligned { get; } = new ComputeStorageFaultDomainAlignmentType(BestEffortAlignedValue);
 
-        /// <summary> Determines if two <see cref="StorageFaultDomainAlignmentType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeStorageFaultDomainAlignmentType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(StorageFaultDomainAlignmentType left, StorageFaultDomainAlignmentType right) => left.Equals(right);
+        public static bool operator ==(ComputeStorageFaultDomainAlignmentType left, ComputeStorageFaultDomainAlignmentType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="StorageFaultDomainAlignmentType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeStorageFaultDomainAlignmentType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(StorageFaultDomainAlignmentType left, StorageFaultDomainAlignmentType right) => !left.Equals(right);
+        public static bool operator !=(ComputeStorageFaultDomainAlignmentType left, ComputeStorageFaultDomainAlignmentType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="StorageFaultDomainAlignmentType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeStorageFaultDomainAlignmentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageFaultDomainAlignmentType(string value) => new StorageFaultDomainAlignmentType(value);
+        public static implicit operator ComputeStorageFaultDomainAlignmentType(string value) => new ComputeStorageFaultDomainAlignmentType(value);
 
-        /// <summary> Converts a string to a <see cref="StorageFaultDomainAlignmentType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeStorageFaultDomainAlignmentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageFaultDomainAlignmentType?(string value) => value == null ? null : new StorageFaultDomainAlignmentType(value);
+        public static implicit operator ComputeStorageFaultDomainAlignmentType?(string value) => value == null ? null : new ComputeStorageFaultDomainAlignmentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is StorageFaultDomainAlignmentType other && Equals(other);
+        public override bool Equals(object obj) => obj is ComputeStorageFaultDomainAlignmentType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(StorageFaultDomainAlignmentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ComputeStorageFaultDomainAlignmentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
