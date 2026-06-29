@@ -71,6 +71,9 @@ namespace Azure.Data.AppConfiguration.Tests
                 yield return new TestCaseData("https://contoso.eastus.appconfig.sovereign.cloud", "https://appconfig.sovereign.cloud/.default");
                 // hosts without an appconfig/azconfig marker fall back to the public cloud audience
                 yield return new TestCaseData("http://other.my.custom.audience", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
+                // well-known cloud suffixes only match on a DNS label boundary, so look-alike hosts are not misclassified
+                yield return new TestCaseData("https://myazconfig.io", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
+                yield return new TestCaseData("https://contoso.fooappconfig.azure.us", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
                 // china cloud
                 yield return new TestCaseData("http://other-23232.AZconfig.azure.cn", $"{AppConfigurationAudience.AzureChina}/.default");
                 yield return new TestCaseData("https://contoso.azconfig.azure.cn", $"{AppConfigurationAudience.AzureChina}/.default");

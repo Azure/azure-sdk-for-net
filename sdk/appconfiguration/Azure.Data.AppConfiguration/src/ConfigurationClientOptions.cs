@@ -113,15 +113,21 @@ namespace Azure.Data.AppConfiguration
             string host = uri.GetComponents(UriComponents.Host, UriFormat.SafeUnescaped);
             return host switch
             {
-                _ when host.EndsWith(AzConfigUsGovCloudHostName, StringComparison.InvariantCultureIgnoreCase) || host.EndsWith(AppConfigUsGovCloudHostName, StringComparison.InvariantCultureIgnoreCase)
+                _ when IsHostInDomain(host, AzConfigUsGovCloudHostName) || IsHostInDomain(host, AppConfigUsGovCloudHostName)
                     => $"{AppConfigurationAudience.AzureGovernment}/.default",
-                _ when host.EndsWith(AzConfigChinaCloudHostName, StringComparison.InvariantCultureIgnoreCase) || host.EndsWith(AppConfigChinaCloudHostName, StringComparison.InvariantCultureIgnoreCase)
+                _ when IsHostInDomain(host, AzConfigChinaCloudHostName) || IsHostInDomain(host, AppConfigChinaCloudHostName)
                     => $"{AppConfigurationAudience.AzureChina}/.default",
-                _ when host.EndsWith(AzConfigPublicCloudHostName, StringComparison.InvariantCultureIgnoreCase)
+                _ when IsHostInDomain(host, AzConfigPublicCloudHostName)
                     => $"{AppConfigurationAudience.AzurePublicCloud}/.default",
                 _ => $"{GetAudienceFromHost(host)}/.default"
             };
         }
+
+        // CUSTOM: Returns true when the host equals the domain or is a subdomain of it, matching on a
+        // DNS label boundary so unrelated hosts such as "myazconfig.io" are not treated as "azconfig.io".
+        private static bool IsHostInDomain(string host, string domain) =>
+            host.Equals(domain, StringComparison.InvariantCultureIgnoreCase) ||
+            host.EndsWith("." + domain, StringComparison.InvariantCultureIgnoreCase);
 
         // CUSTOM: Derives the Microsoft Entra audience from the endpoint host when no audience
         // is explicitly configured and the host does not match a well-known cloud. The audience
