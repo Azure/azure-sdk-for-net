@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using BenchmarkDotNet.Attributes;
 
@@ -9,7 +10,8 @@ namespace System.ClientModel.Tests.Internal.Perf
 {
     /// <summary>
     /// Benchmarks that measure the overhead of proxy resolution on read/write paths.
-    /// Compares: no proxy vs 1 proxy vs 10 proxies (where the last one handles).
+    /// Compares: no proxy vs a proxy that hits vs proxies that miss (decline) so the model
+    /// does the work, across 1 and 10 registered proxies and a collection element scenario.
     /// The model is intentionally simple so the benchmark isolates proxy lookup cost.
     /// </summary>
     [MemoryDiagnoser]
@@ -17,10 +19,13 @@ namespace System.ClientModel.Tests.Internal.Perf
     {
         private BenchmarkModel _model;
         private BinaryData _data;
+        private BinaryData _collectionData;
 
         private ModelReaderWriterOptions _noProxyOptions;
         private ModelReaderWriterOptions _oneProxyOptions;
+        private ModelReaderWriterOptions _oneProxyMissOptions;
         private ModelReaderWriterOptions _tenProxiesLastWinsOptions;
+        private ModelReaderWriterOptions _tenProxiesAllDeclineOptions;
 
         [GlobalSetup]
         public void Setup()
@@ -42,6 +47,30 @@ namespace System.ClientModel.Tests.Internal.Perf
                 _tenProxiesLastWinsOptions.AddProxy<BenchmarkModel>(new BenchmarkProxy(canHandle: false));
             }
             _tenProxiesLastWinsOptions.AddProxy<BenchmarkModel>(new BenchmarkProxy(canHandle: true));
+
+            // 1 conditional proxy that declines — the model does the work (pure miss overhead)
+            _oneProxyMissOptions = new ModelReaderWriterOptions("J");
+            _oneProxyMissOptions.AddProxy<BenchmarkModel>(new BenchmarkProxy(canHandle: false));
+
+            // 10 conditional proxies that all decline — full chain walk, then the model handles
+            _tenProxiesAllDeclineOptions = new ModelReaderWriterOptions("J");
+            for (int i = 0; i < 10; i++)
+            {
+                _tenProxiesAllDeclineOptions.AddProxy<BenchmarkModel>(new BenchmarkProxy(canHandle: false));
+            }
+
+            // A 10-element array to measure per-element chain overhead on collection reads
+            var collectionJson = new System.Text.StringBuilder("[");
+            for (int i = 0; i < 10; i++)
+            {
+                if (i > 0)
+                {
+                    collectionJson.Append(',');
+                }
+                collectionJson.Append("{\"value\":\"hello\"}");
+            }
+            collectionJson.Append(']');
+            _collectionData = BinaryData.FromString(collectionJson.ToString());
 
             // STJ options for Utf8JsonReader snapshot path benchmarks
             _jsonString = "{\"value\":\"hello\"}";
@@ -88,6 +117,20 @@ namespace System.ClientModel.Tests.Internal.Perf
             return ModelReaderWriter.Write(_model, _tenProxiesLastWinsOptions);
         }
 
+        [Benchmark]
+        [BenchmarkCategory("Write")]
+        public BinaryData Write_OneProxy_Miss()
+        {
+            return ModelReaderWriter.Write(_model, _oneProxyMissOptions);
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("Write")]
+        public BinaryData Write_TenProxies_AllDecline()
+        {
+            return ModelReaderWriter.Write(_model, _tenProxiesAllDeclineOptions);
+        }
+
         // ── Read benchmarks ──
 
         [Benchmark]
@@ -109,6 +152,43 @@ namespace System.ClientModel.Tests.Internal.Perf
         public BenchmarkModel Read_TenProxies_LastWins()
         {
             return ModelReaderWriter.Read<BenchmarkModel>(_data, _tenProxiesLastWinsOptions);
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("Read")]
+        public BenchmarkModel Read_OneProxy_Miss()
+        {
+            return ModelReaderWriter.Read<BenchmarkModel>(_data, _oneProxyMissOptions);
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("Read")]
+        public BenchmarkModel Read_TenProxies_AllDecline()
+        {
+            return ModelReaderWriter.Read<BenchmarkModel>(_data, _tenProxiesAllDeclineOptions);
+        }
+
+        // ── Collection read benchmarks (chain evaluated per element) ──
+
+        [Benchmark]
+        [BenchmarkCategory("Collection")]
+        public List<BenchmarkModel> ReadCollection_NoProxy()
+        {
+            return ModelReaderWriter.Read<List<BenchmarkModel>>(_collectionData, _noProxyOptions)!;
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("Collection")]
+        public List<BenchmarkModel> ReadCollection_OneProxy_Hit()
+        {
+            return ModelReaderWriter.Read<List<BenchmarkModel>>(_collectionData, _oneProxyOptions)!;
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("Collection")]
+        public List<BenchmarkModel> ReadCollection_TenProxies_AllDecline()
+        {
+            return ModelReaderWriter.Read<List<BenchmarkModel>>(_collectionData, _tenProxiesAllDeclineOptions)!;
         }
 
         // ── Minimal model for benchmarking ──
