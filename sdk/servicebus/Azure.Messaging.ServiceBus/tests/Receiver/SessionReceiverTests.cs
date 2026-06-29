@@ -113,5 +113,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             Assert.That(async () => await client.AcceptNextSessionAsync("queue", options),
                 Throws.InstanceOf<ArgumentException>().And.Message.Contains("specific session"));
         }
+
+        [Test]
+        public async Task AcceptNextSessionAllowsNonExclusiveWithoutSessionId()
+        {
+            await using var client = new ServiceBusClient("not.real.com", Mock.Of<TokenCredential>());
+            var options = new ServiceBusSessionReceiverOptions { IsSessionExclusive = false };
+            using var cts = new CancellationTokenSource();
+            cts.Cancel();
+
+            // Accepting the next available session is valid in non-exclusive mode: the broker assigns the lock
+            // token, so there is no client-side requirement to target a specific session. With an already-cancelled
+            // token the call must pass synchronous client-side validation (no ArgumentException) and then observe
+            // cancellation. The removed "non-exclusive requires a specific session" guard ran before the token was
+            // observed, so if it still existed this would throw ArgumentException instead of OperationCanceledException.
+            Assert.That(async () => await client.AcceptNextSessionAsync("queue", options, cts.Token),
+                Throws.InstanceOf<OperationCanceledException>());
+        }
     }
 }
