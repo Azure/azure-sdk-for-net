@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetTcbBaselineAsync(AttestationType,CancellationToken)">
+      <example>
+This sample shows how to call GetTcbBaselineAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TcbBaselines client = new AttestationClient(endpoint, credential).GetTcbBaselinesClient(apiVersion: "2025-06-01");
+
+Response<TcbBaselineResult> response = await client.GetTcbBaselineAsync(AttestationType.SgxEnclave);
+]]></code></example>
+    </member>
+    <member name="GetTcbBaseline(AttestationType,CancellationToken)">
+      <example>
+This sample shows how to call GetTcbBaseline.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TcbBaselines client = new AttestationClient(endpoint, credential).GetTcbBaselinesClient(apiVersion: "2025-06-01");
+
+Response<TcbBaselineResult> response = client.GetTcbBaseline(AttestationType.SgxEnclave);
+]]></code></example>
+    </member>
+    <member name="GetTcbBaselineAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetTcbBaselineAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TcbBaselines client = new AttestationClient(endpoint, credential).GetTcbBaselinesClient(apiVersion: "2025-06-01");
+
+Response response = await client.GetTcbBaselineAsync("SgxEnclave");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetTcbBaseline(string,RequestContext)">
+      <example>
+This sample shows how to call GetTcbBaseline and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TcbBaselines client = new AttestationClient(endpoint, credential).GetTcbBaselinesClient(apiVersion: "2025-06-01");
+
+Response response = client.GetTcbBaseline("SgxEnclave");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>

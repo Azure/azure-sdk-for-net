@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetMetadataConfigurationAsync(CancellationToken)">
+      <example>
+This sample shows how to call GetMetadataConfigurationAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MetadataConfiguration client = new AttestationClient(endpoint, credential).GetMetadataConfigurationClient(apiVersion: "2025-06-01");
+
+Response<OpenIDConfigurationResponse> response = await client.GetMetadataConfigurationAsync();
+]]></code></example>
+    </member>
+    <member name="GetMetadataConfiguration(CancellationToken)">
+      <example>
+This sample shows how to call GetMetadataConfiguration.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MetadataConfiguration client = new AttestationClient(endpoint, credential).GetMetadataConfigurationClient(apiVersion: "2025-06-01");
+
+Response<OpenIDConfigurationResponse> response = client.GetMetadataConfiguration();
+]]></code></example>
+    </member>
+    <member name="GetMetadataConfigurationAsync(RequestContext)">
+      <example>
+This sample shows how to call GetMetadataConfigurationAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MetadataConfiguration client = new AttestationClient(endpoint, credential).GetMetadataConfigurationClient(apiVersion: "2025-06-01");
+
+Response response = await client.GetMetadataConfigurationAsync(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetMetadataConfiguration(RequestContext)">
+      <example>
+This sample shows how to call GetMetadataConfiguration and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MetadataConfiguration client = new AttestationClient(endpoint, credential).GetMetadataConfigurationClient(apiVersion: "2025-06-01");
+
+Response response = client.GetMetadataConfiguration(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>

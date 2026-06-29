@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetPolicyAsync(AttestationType,CancellationToken)">
+      <example>
+This sample shows how to call GetPolicyAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Policy client = new AttestationClient(endpoint, credential).GetPolicyClient(apiVersion: "2025-06-01");
+
+Response<PolicyResponse> response = await client.GetPolicyAsync(AttestationType.SgxEnclave);
+]]></code></example>
+    </member>
+    <member name="GetPolicy(AttestationType,CancellationToken)">
+      <example>
+This sample shows how to call GetPolicy.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Policy client = new AttestationClient(endpoint, credential).GetPolicyClient(apiVersion: "2025-06-01");
+
+Response<PolicyResponse> response = client.GetPolicy(AttestationType.SgxEnclave);
+]]></code></example>
+    </member>
+    <member name="GetPolicyAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetPolicyAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Policy client = new AttestationClient(endpoint, credential).GetPolicyClient(apiVersion: "2025-06-01");
+
+Response response = await client.GetPolicyAsync("SgxEnclave");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetPolicy(string,RequestContext)">
+      <example>
+This sample shows how to call GetPolicy and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Policy client = new AttestationClient(endpoint, credential).GetPolicyClient(apiVersion: "2025-06-01");
+
+Response response = client.GetPolicy("SgxEnclave");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="SetAsync(AttestationType,string,CancellationToken)">
+      <example>
+This sample shows how to call SetAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Policy client = new AttestationClient(endpoint, credential).GetPolicyClient(apiVersion: "2025-06-01");
+
+Response<PolicyResponse> response = await client.SetAsync(AttestationType.SgxEnclave, "eyJhbGciOiAiUlMyNTYiLCAiamt1IjogImh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC9jZXJ0cyIsICJraWQiOiAieWtJd00rcnRNcnhFZkZJVHY2TGZjVG03eWszUkxXRXBkN1lsZmJyTk1JST0iLCAidHlwIjogIkpXVCJ9.eyJhYXMtcG9saWN5SGFzaCI6ICJ2MG9QNG9KWkVKWnh4SXhFNmJiVVAxa1JSbWVfZXgtUHV4NlF0c1U4STdNIiwgImV4cCI6IDE1NzM4NjI5NzQsICJpYXQiOiAxNTczODU5Mzc0LCAiaXNzIjogImh0dHA6Ly9sb2NhbGhvc3Q6ODA4MCIsICJuYmYiOiAxNTczODU5Mzc0fQ.FTMpKwZHJa5l9_Mdxl60FtSDOr9kLRDYw3UAofMXJ-eOEvm4FdNM69YHR6Oy_i1uUEnVDAnMHhR0APTXgKqoR7gDxxfJG_RgiQqsTmQ-ucmXNL2Ck--sH3bz9OfIocPYSN0FBWiq6fgG6iX_oMX1hs-ENsF7B3jSp1nVL8NWtWk");
+]]></code></example>
+    </member>
+    <member name="Set(AttestationType,string,CancellationToken)">
+      <example>
+This sample shows how to call Set.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Policy client = new AttestationClient(endpoint, credential).GetPolicyClient(apiVersion: "2025-06-01");
+
+Response<PolicyResponse> response = client.Set(AttestationType.SgxEnclave, "eyJhbGciOiAiUlMyNTYiLCAiamt1IjogImh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC9jZXJ0cyIsICJraWQiOiAieWtJd00rcnRNcnhFZkZJVHY2TGZjVG03eWszUkxXRXBkN1lsZmJyTk1JST0iLCAidHlwIjogIkpXVCJ9.eyJhYXMtcG9saWN5SGFzaCI6ICJ2MG9QNG9KWkVKWnh4SXhFNmJiVVAxa1JSbWVfZXgtUHV4NlF0c1U4STdNIiwgImV4cCI6IDE1NzM4NjI5NzQsICJpYXQiOiAxNTczODU5Mzc0LCAiaXNzIjogImh0dHA6Ly9sb2NhbGhvc3Q6ODA4MCIsICJuYmYiOiAxNTczODU5Mzc0fQ.FTMpKwZHJa5l9_Mdxl60FtSDOr9kLRDYw3UAofMXJ-eOEvm4FdNM69YHR6Oy_i1uUEnVDAnMHhR0APTXgKqoR7gDxxfJG_RgiQqsTmQ-ucmXNL2Ck--sH3bz9OfIocPYSN0FBWiq6fgG6iX_oMX1hs-ENsF7B3jSp1nVL8NWtWk");
+]]></code></example>
+    </member>
+    <member name="SetAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call SetAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Policy client = new AttestationClient(endpoint, credential).GetPolicyClient(apiVersion: "2025-06-01");
+
+using RequestContent content = RequestContent.Create("eyJhbGciOiAiUlMyNTYiLCAiamt1IjogImh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC9jZXJ0cyIsICJraWQiOiAieWtJd00rcnRNcnhFZkZJVHY2TGZjVG03eWszUkxXRXBkN1lsZmJyTk1JST0iLCAidHlwIjogIkpXVCJ9.eyJhYXMtcG9saWN5SGFzaCI6ICJ2MG9QNG9KWkVKWnh4SXhFNmJiVVAxa1JSbWVfZXgtUHV4NlF0c1U4STdNIiwgImV4cCI6IDE1NzM4NjI5NzQsICJpYXQiOiAxNTczODU5Mzc0LCAiaXNzIjogImh0dHA6Ly9sb2NhbGhvc3Q6ODA4MCIsICJuYmYiOiAxNTczODU5Mzc0fQ.FTMpKwZHJa5l9_Mdxl60FtSDOr9kLRDYw3UAofMXJ-eOEvm4FdNM69YHR6Oy_i1uUEnVDAnMHhR0APTXgKqoR7gDxxfJG_RgiQqsTmQ-ucmXNL2Ck--sH3bz9OfIocPYSN0FBWiq6fgG6iX_oMX1hs-ENsF7B3jSp1nVL8NWtWk");
+Response response = await client.SetAsync("SgxEnclave", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="Set(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call Set and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Policy client = new AttestationClient(endpoint, credential).GetPolicyClient(apiVersion: "2025-06-01");
+
+using RequestContent content = RequestContent.Create("eyJhbGciOiAiUlMyNTYiLCAiamt1IjogImh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC9jZXJ0cyIsICJraWQiOiAieWtJd00rcnRNcnhFZkZJVHY2TGZjVG03eWszUkxXRXBkN1lsZmJyTk1JST0iLCAidHlwIjogIkpXVCJ9.eyJhYXMtcG9saWN5SGFzaCI6ICJ2MG9QNG9KWkVKWnh4SXhFNmJiVVAxa1JSbWVfZXgtUHV4NlF0c1U4STdNIiwgImV4cCI6IDE1NzM4NjI5NzQsICJpYXQiOiAxNTczODU5Mzc0LCAiaXNzIjogImh0dHA6Ly9sb2NhbGhvc3Q6ODA4MCIsICJuYmYiOiAxNTczODU5Mzc0fQ.FTMpKwZHJa5l9_Mdxl60FtSDOr9kLRDYw3UAofMXJ-eOEvm4FdNM69YHR6Oy_i1uUEnVDAnMHhR0APTXgKqoR7gDxxfJG_RgiQqsTmQ-ucmXNL2Ck--sH3bz9OfIocPYSN0FBWiq6fgG6iX_oMX1hs-ENsF7B3jSp1nVL8NWtWk");
+Response response = client.Set("SgxEnclave", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="ResetAsync(AttestationType,string,CancellationToken)">
+      <example>
+This sample shows how to call ResetAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Policy client = new AttestationClient(endpoint, credential).GetPolicyClient(apiVersion: "2025-06-01");
+
+Response<PolicyResponse> response = await client.ResetAsync(AttestationType.SgxEnclave, "eyJhbGciOiJub25lIn0..");
+]]></code></example>
+    </member>
+    <member name="Reset(AttestationType,string,CancellationToken)">
+      <example>
+This sample shows how to call Reset.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Policy client = new AttestationClient(endpoint, credential).GetPolicyClient(apiVersion: "2025-06-01");
+
+Response<PolicyResponse> response = client.Reset(AttestationType.SgxEnclave, "eyJhbGciOiJub25lIn0..");
+]]></code></example>
+    </member>
+    <member name="ResetAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call ResetAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Policy client = new AttestationClient(endpoint, credential).GetPolicyClient(apiVersion: "2025-06-01");
+
+using RequestContent content = RequestContent.Create("eyJhbGciOiJub25lIn0..");
+Response response = await client.ResetAsync("SgxEnclave", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="Reset(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call Reset and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Policy client = new AttestationClient(endpoint, credential).GetPolicyClient(apiVersion: "2025-06-01");
+
+using RequestContent content = RequestContent.Create("eyJhbGciOiJub25lIn0..");
+Response response = client.Reset("SgxEnclave", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>

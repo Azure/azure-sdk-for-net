@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetSigningCertificateAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetSigningCertificateAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SigningCertificates client = new AttestationClient(endpoint, credential).GetSigningCertificatesClient();
+
+Response<JsonWebKeySet> response = await client.GetSigningCertificateAsync(null);
+]]></code></example>
+    </member>
+    <member name="GetSigningCertificate(string,CancellationToken)">
+      <example>
+This sample shows how to call GetSigningCertificate.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SigningCertificates client = new AttestationClient(endpoint, credential).GetSigningCertificatesClient();
+
+Response<JsonWebKeySet> response = client.GetSigningCertificate(null);
+]]></code></example>
+    </member>
+    <member name="GetSigningCertificateAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetSigningCertificateAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SigningCertificates client = new AttestationClient(endpoint, credential).GetSigningCertificatesClient();
+
+Response response = await client.GetSigningCertificateAsync(null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetSigningCertificate(string,RequestContext)">
+      <example>
+This sample shows how to call GetSigningCertificate and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SigningCertificates client = new AttestationClient(endpoint, credential).GetSigningCertificatesClient();
+
+Response response = client.GetSigningCertificate(null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>
