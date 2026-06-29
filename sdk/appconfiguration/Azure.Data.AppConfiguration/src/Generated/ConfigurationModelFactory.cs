@@ -98,7 +98,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="lastModified"> A date representing the last time the feature flag was modified. </param>
         /// <param name="etag"> A value representing the current state of the resource. </param>
         /// <returns> A new <see cref="AppConfiguration.FeatureFlag"/> instance for mocking. </returns>
-        public static FeatureFlag FeatureFlag(string name = default, bool? enabled = default, string label = default, string description = default, FeatureFlagConditions conditions = default, IEnumerable<FeatureFlagVariantDefinition> variants = default, FeatureFlagAllocation allocation = default, FeatureFlagTelemetryConfiguration telemetry = default, IDictionary<string, string> tags = default, DateTimeOffset? lastModified = default, string etag = default)
+        public static FeatureFlag FeatureFlag(string name = default, bool? enabled = default, string label = default, string description = default, FeatureFlagConditions conditions = default, IEnumerable<FeatureFlagVariantDefinition> variants = default, FeatureFlagAllocation allocation = default, FeatureFlagTelemetryConfiguration telemetry = default, IDictionary<string, string> tags = default, DateTimeOffset? lastModified = default, ETag? etag = default)
         {
             variants ??= new ChangeTrackingList<FeatureFlagVariantDefinition>();
             tags ??= new ChangeTrackingDictionary<string, string>();

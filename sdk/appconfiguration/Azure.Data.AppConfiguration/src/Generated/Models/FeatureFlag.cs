@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 
 namespace Azure.Data.AppConfiguration
 {
@@ -36,7 +37,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="lastModified"> A date representing the last time the feature flag was modified. </param>
         /// <param name="etag"> A value representing the current state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FeatureFlag(string name, bool? enabled, string label, string description, FeatureFlagConditions conditions, IList<FeatureFlagVariantDefinition> variants, FeatureFlagAllocation allocation, FeatureFlagTelemetryConfiguration telemetry, IDictionary<string, string> tags, DateTimeOffset? lastModified, string etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FeatureFlag(string name, bool? enabled, string label, string description, FeatureFlagConditions conditions, IList<FeatureFlagVariantDefinition> variants, FeatureFlagAllocation allocation, FeatureFlagTelemetryConfiguration telemetry, IDictionary<string, string> tags, DateTimeOffset? lastModified, ETag? etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Enabled = enabled;
@@ -83,6 +84,6 @@ namespace Azure.Data.AppConfiguration
         public DateTimeOffset? LastModified { get; }
 
         /// <summary> A value representing the current state of the resource. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
     }
 }

@@ -355,7 +355,7 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                MatchConditions matchConditions = onlyIfUnchanged ? new MatchConditions { IfMatch = new ETag(flag.Etag) } : default;
+                MatchConditions matchConditions = onlyIfUnchanged ? new MatchConditions { IfMatch = flag.Etag } : default;
                 return await PutFeatureFlagAsync(name, flag, label, _syncToken, matchConditions, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -388,7 +388,7 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                MatchConditions matchConditions = onlyIfUnchanged ? new MatchConditions { IfMatch = new ETag(flag.Etag) } : default;
+                MatchConditions matchConditions = onlyIfUnchanged ? new MatchConditions { IfMatch = flag.Etag } : default;
                 return PutFeatureFlag(name, flag, label, _syncToken, matchConditions, cancellationToken);
             }
             catch (Exception e)
@@ -412,7 +412,7 @@ namespace Azure.Data.AppConfiguration
         public virtual async Task<Response> DeleteFeatureFlagAsync(FeatureFlag flag, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(flag, nameof(flag));
-            MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = new ETag(flag.Etag) } : default;
+            MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = flag.Etag } : default;
             return await DeleteFeatureFlagAsync(flag.Name, flag.Label, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
@@ -430,7 +430,7 @@ namespace Azure.Data.AppConfiguration
         public virtual Response DeleteFeatureFlag(FeatureFlag flag, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(flag, nameof(flag));
-            MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = new ETag(flag.Etag) } : default;
+            MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = flag.Etag } : default;
             return DeleteFeatureFlag(flag.Name, flag.Label, requestOptions, cancellationToken);
         }
 
@@ -533,7 +533,7 @@ namespace Azure.Data.AppConfiguration
         public virtual async Task<Response<FeatureFlag>> GetFeatureFlagAsync(FeatureFlag flag, bool onlyIfChanged = false, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(flag, nameof(flag));
-            MatchConditions requestOptions = onlyIfChanged ? new MatchConditions { IfNoneMatch = new ETag(flag.Etag) } : default;
+            MatchConditions requestOptions = onlyIfChanged ? new MatchConditions { IfNoneMatch = flag.Etag } : default;
             return await GetFeatureFlagAsync(flag.Name, flag.Label, acceptDateTime: default, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
@@ -550,7 +550,7 @@ namespace Azure.Data.AppConfiguration
         public virtual Response<FeatureFlag> GetFeatureFlag(FeatureFlag flag, bool onlyIfChanged = false, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(flag, nameof(flag));
-            MatchConditions requestOptions = onlyIfChanged ? new MatchConditions { IfNoneMatch = new ETag(flag.Etag) } : default;
+            MatchConditions requestOptions = onlyIfChanged ? new MatchConditions { IfNoneMatch = flag.Etag } : default;
             return GetFeatureFlag(flag.Name, flag.Label, acceptDateTime: default, requestOptions, cancellationToken);
         }
 

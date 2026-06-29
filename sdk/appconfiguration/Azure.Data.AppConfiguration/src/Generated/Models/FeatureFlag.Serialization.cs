@@ -161,7 +161,7 @@ namespace Azure.Data.AppConfiguration
             if (options.Format != "W" && Optional.IsDefined(Etag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(Etag);
+                writer.WriteStringValue(Etag.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -215,7 +215,7 @@ namespace Azure.Data.AppConfiguration
             FeatureFlagTelemetryConfiguration telemetry = default;
             IDictionary<string, string> tags = default;
             DateTimeOffset? lastModified = default;
-            string etag = default;
+            ETag? etag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -316,7 +316,11 @@ namespace Azure.Data.AppConfiguration
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    etag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    etag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
