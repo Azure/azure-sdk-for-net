@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -40,6 +41,16 @@ namespace Azure.ResourceManager.Hci
             TryGetApiVersion(EdgeDeviceJobResource.ResourceType, out string edgeDeviceJobApiVersion);
             _edgeDeviceJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", EdgeDeviceJobResource.ResourceType.Namespace, Diagnostics);
             _edgeDeviceJobsRestClient = new EdgeDeviceJobs(_edgeDeviceJobsClientDiagnostics, Pipeline, Endpoint, edgeDeviceJobApiVersion ?? "2026-05-01-preview");
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != HciEdgeDeviceResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HciEdgeDeviceResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
