@@ -1505,8 +1505,8 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="metricnamespace"> Metric namespace where the metrics you want reside. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SubscriptionScopeMetricDefinition"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SubscriptionScopeMetricDefinition> GetSubscriptionMonitorMetricDefinitionsAsync(this SubscriptionResource subscriptionResource, string region, string metricnamespace = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MonitorSubscriptionScopeMetric"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MonitorSubscriptionScopeMetric> GetSubscriptionMonitorMetricDefinitionsAsync(this SubscriptionResource subscriptionResource, string region, string metricnamespace = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -1525,8 +1525,8 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="metricnamespace"> Metric namespace where the metrics you want reside. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SubscriptionScopeMetricDefinition"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SubscriptionScopeMetricDefinition> GetSubscriptionMonitorMetricDefinitions(this SubscriptionResource subscriptionResource, string region, string metricnamespace = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MonitorSubscriptionScopeMetric"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MonitorSubscriptionScopeMetric> GetSubscriptionMonitorMetricDefinitions(this SubscriptionResource subscriptionResource, string region, string metricnamespace = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

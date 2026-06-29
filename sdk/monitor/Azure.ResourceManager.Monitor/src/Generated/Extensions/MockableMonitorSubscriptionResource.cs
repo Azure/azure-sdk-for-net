@@ -715,8 +715,8 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="region"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="SubscriptionScopeMetricDefinition"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SubscriptionScopeMetricDefinition> GetSubscriptionMonitorMetricDefinitionsAsync(string region, string metricnamespace = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MonitorSubscriptionScopeMetric"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MonitorSubscriptionScopeMetric> GetSubscriptionMonitorMetricDefinitionsAsync(string region, string metricnamespace = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(region, nameof(region));
 
@@ -755,8 +755,8 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="region"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="SubscriptionScopeMetricDefinition"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SubscriptionScopeMetricDefinition> GetSubscriptionMonitorMetricDefinitions(string region, string metricnamespace = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MonitorSubscriptionScopeMetric"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MonitorSubscriptionScopeMetric> GetSubscriptionMonitorMetricDefinitions(string region, string metricnamespace = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(region, nameof(region));
 

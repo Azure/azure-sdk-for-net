@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// Initializes a new instance of <see cref="AlertRuleData"/>.
         /// </summary>
         /// <remarks>This API is no longer supported.</remarks>
+        // The current TypeSpec no longer models the old AlertRule resource, so there is no generated factory overload to delegate to.
         [Obsolete("This API is no longer supported.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Monitor.AlertRuleData AlertRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, string provisioningState, string alertRuleName, bool isEnabled, AlertRuleCondition condition, AlertRuleAction action, IEnumerable<AlertRuleAction> actions, DateTimeOffset? lastUpdatedOn)
@@ -75,6 +76,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// Initializes a new instance of <see cref="DiagnosticSettingsCategoryData"/>.
         /// </summary>
         /// <remarks>This API is no longer supported.</remarks>
+        // The current TypeSpec no longer models the old diagnostic-settings category resource, so there is no generated factory overload to delegate to.
         [Obsolete("This API is no longer supported.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Monitor.DiagnosticSettingsCategoryData DiagnosticSettingsCategoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MonitorCategoryType? categoryType, IEnumerable<string> categoryGroups)
@@ -84,6 +86,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// Initializes a new instance of <see cref="Azure.ResourceManager.Monitor.DiagnosticSettingData"/>.
         /// </summary>
         /// <remarks>This API is no longer supported.</remarks>
+        // Current TypeSpec models only the singleton service diagnostic setting, so the old arbitrary-name DiagnosticSettingData shape has no generated factory to delegate to.
         [Obsolete("This API is no longer supported.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Monitor.DiagnosticSettingData DiagnosticSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier resourceId, ResourceIdentifier storageAccountId, ResourceIdentifier serviceBusRuleId, string logAnalyticsDestinationType, IEnumerable<MetricSettings> metrics, IEnumerable<LogSettings> logs, ResourceIdentifier workspaceId, ResourceIdentifier marketplacePartnerId, string eventHubName)
@@ -93,6 +96,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// Initializes a new instance of <see cref="AlertRulePatch"/>.
         /// </summary>
         /// <remarks>This API is no longer supported.</remarks>
+        // The current TypeSpec no longer models the old AlertRule patch resource, so there is no generated factory overload to delegate to.
         [Obsolete("This API is no longer supported.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AlertRulePatch AlertRulePatch(IDictionary<string, string> tags, string name, string description, string provisioningState, bool? isEnabled, AlertRuleCondition condition, AlertRuleAction action, IEnumerable<AlertRuleAction> actions, DateTimeOffset? lastUpdatedOn)
@@ -102,6 +106,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// Initializes a new instance of <see cref="DataContainer"/>.
         /// </summary>
         /// <remarks>This API is no longer supported.</remarks>
+        // The current TypeSpec no longer models the old VM Insights data-container shape, so there is no generated factory overload to delegate to.
         [Obsolete("This API is no longer supported.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DataContainer DataContainer(DataContainerWorkspace workspace)
@@ -111,6 +116,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// Initializes a new instance of <see cref="DataContainerWorkspace"/>.
         /// </summary>
         /// <remarks>This API is no longer supported.</remarks>
+        // The current TypeSpec no longer models the old VM Insights data-container workspace shape, so there is no generated factory overload to delegate to.
         [Obsolete("This API is no longer supported.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DataContainerWorkspace DataContainerWorkspace(ResourceIdentifier id, AzureLocation location, string customerId)
@@ -120,6 +126,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// Initializes a new instance of <see cref="MonitorIncident"/>.
         /// </summary>
         /// <remarks>This API is no longer supported.</remarks>
+        // The generated MonitorIncident model no longer has the old factory shape, so this removed overload cannot delegate to a generated factory.
         [Obsolete("This API is no longer supported.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MonitorIncident MonitorIncident(string name, string ruleName, bool? isActive, DateTimeOffset? activatedOn, DateTimeOffset? resolvedOn)
@@ -129,6 +136,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// Initializes a new instance of <see cref="MonitorPrivateLinkScopeOperationStatus"/>.
         /// </summary>
         /// <remarks>This API is no longer supported.</remarks>
+        // The private-link operation-status polling endpoint is hidden from the current SDK, so there is no generated factory overload to delegate to.
         [Obsolete("This API is no longer supported.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MonitorPrivateLinkScopeOperationStatus MonitorPrivateLinkScopeOperationStatus(string id, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, string status, ResponseError error)
@@ -138,6 +146,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// Initializes a new instance of <see cref="SubscriptionMonitorMetric"/>.
         /// </summary>
         /// <remarks>This API is no longer supported.</remarks>
+        // The current TypeSpec no longer models the old subscription metric result shape, so there is no generated factory overload to delegate to.
         [Obsolete("This API is no longer supported.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SubscriptionMonitorMetric SubscriptionMonitorMetric(string id, string subscriptionScopeMetricType, MonitorLocalizableString name, string displayDescription, string errorCode, string errorMessage, MonitorMetricUnit unit, IEnumerable<MonitorTimeSeriesElement> timeseries)
@@ -147,6 +156,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// Initializes a new instance of <see cref="VmInsightsOnboardingStatusData"/>.
         /// </summary>
         /// <remarks>This API is no longer supported.</remarks>
+        // The current TypeSpec no longer models the old VM Insights onboarding-status resource, so there is no generated factory overload to delegate to.
         [Obsolete("This API is no longer supported.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Monitor.VmInsightsOnboardingStatusData VmInsightsOnboardingStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier resourceId, OnboardingStatus? onboardingStatus, DataStatus? dataStatus, IEnumerable<DataContainer> data)

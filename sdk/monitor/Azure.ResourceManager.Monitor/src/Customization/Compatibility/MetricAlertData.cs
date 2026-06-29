@@ -14,6 +14,11 @@ namespace Azure.ResourceManager.Monitor
     [CodeGenSuppress("WindowSize")]
     public partial class MetricAlertData
     {
+        // MetricAlertResource.properties is already flattened in TypeSpec, but the generated optional
+        // windowSize property is TimeSpan?. The shipped API exposed non-null TimeSpan, so this custom
+        // property preserves the contract while forwarding to the flattened properties envelope.
+        // The generated constructor omits optional flattened MetricAlertProperties.WindowSize, but
+        // the shipped constructor required it, so this overload preserves source compatibility.
         /// <summary> Initializes a new instance of <see cref="MetricAlertData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="severity"> Alert severity. </param>

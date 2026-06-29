@@ -1783,14 +1783,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="metricAvailabilities"> The collection of what aggregation intervals are available to be queried. </param>
         /// <param name="id"> The resource identifier of the metric definition. </param>
         /// <param name="dimensions"> The name and the display name of the dimension, i.e. it is a localizable string. </param>
-        /// <returns> A new <see cref="Models.SubscriptionScopeMetricDefinition"/> instance for mocking. </returns>
-        public static SubscriptionScopeMetricDefinition SubscriptionScopeMetricDefinition(bool? isDimensionRequired = default, string resourceId = default, string @namespace = default, MonitorLocalizableString name = default, string displayDescription = default, string category = default, MonitorMetricClass? metricClass = default, MonitorMetricUnit? unit = default, MonitorAggregationKind? primaryAggregationKind = default, IEnumerable<MonitorAggregationKind> supportedAggregationKinds = default, IEnumerable<MonitorMetricAvailability> metricAvailabilities = default, string id = default, IEnumerable<MonitorLocalizableString> dimensions = default)
+        /// <returns> A new <see cref="Models.MonitorSubscriptionScopeMetric"/> instance for mocking. </returns>
+        public static MonitorSubscriptionScopeMetric MonitorSubscriptionScopeMetric(bool? isDimensionRequired = default, string resourceId = default, string @namespace = default, MonitorLocalizableString name = default, string displayDescription = default, string category = default, MonitorMetricClass? metricClass = default, MonitorMetricUnit? unit = default, MonitorAggregationKind? primaryAggregationKind = default, IEnumerable<MonitorAggregationKind> supportedAggregationKinds = default, IEnumerable<MonitorMetricAvailability> metricAvailabilities = default, string id = default, IEnumerable<MonitorLocalizableString> dimensions = default)
         {
             supportedAggregationKinds ??= new ChangeTrackingList<MonitorAggregationKind>();
             metricAvailabilities ??= new ChangeTrackingList<MonitorMetricAvailability>();
             dimensions ??= new ChangeTrackingList<MonitorLocalizableString>();
 
-            return new SubscriptionScopeMetricDefinition(
+            return new MonitorSubscriptionScopeMetric(
                 isDimensionRequired,
                 resourceId,
                 @namespace,

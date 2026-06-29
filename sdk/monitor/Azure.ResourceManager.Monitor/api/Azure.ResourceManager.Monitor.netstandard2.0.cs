@@ -891,8 +891,8 @@ namespace Azure.ResourceManager.Monitor
         public static Azure.AsyncPageable<Azure.ResourceManager.Monitor.ScheduledQueryRuleResource> GetScheduledQueryRulesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Monitor.ServiceDiagnosticSettingResource GetServiceDiagnosticSetting(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
         public static Azure.ResourceManager.Monitor.ServiceDiagnosticSettingResource GetServiceDiagnosticSettingResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Monitor.Models.SubscriptionScopeMetricDefinition> GetSubscriptionMonitorMetricDefinitions(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string region, string metricnamespace = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Monitor.Models.SubscriptionScopeMetricDefinition> GetSubscriptionMonitorMetricDefinitionsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string region, string metricnamespace = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Monitor.Models.MonitorSubscriptionScopeMetric> GetSubscriptionMonitorMetricDefinitions(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string region, string metricnamespace = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Monitor.Models.MonitorSubscriptionScopeMetric> GetSubscriptionMonitorMetricDefinitionsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string region, string metricnamespace = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Monitor.Models.EventDataInfo> GetTenantActivityLogs(this Azure.ResourceManager.Resources.TenantResource tenantResource, string filter = null, string select = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Monitor.Models.EventDataInfo> GetTenantActivityLogsAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string filter = null, string select = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ObsoleteAttribute("This API is no longer supported.", false)]
@@ -1515,8 +1515,8 @@ namespace Azure.ResourceManager.Monitor.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.Models.NotificationStatus>> GetNotificationStatusAsync(string notificationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Monitor.ScheduledQueryRuleResource> GetScheduledQueryRules(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Monitor.ScheduledQueryRuleResource> GetScheduledQueryRulesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Monitor.Models.SubscriptionScopeMetricDefinition> GetSubscriptionMonitorMetricDefinitions(string region, string metricnamespace = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Monitor.Models.SubscriptionScopeMetricDefinition> GetSubscriptionMonitorMetricDefinitionsAsync(string region, string metricnamespace = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Monitor.Models.MonitorSubscriptionScopeMetric> GetSubscriptionMonitorMetricDefinitions(string region, string metricnamespace = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Monitor.Models.MonitorSubscriptionScopeMetric> GetSubscriptionMonitorMetricDefinitionsAsync(string region, string metricnamespace = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MockableMonitorTenantResource : Azure.ResourceManager.ArmResource
     {
@@ -1860,6 +1860,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.MonitorSingleMetricBaseline MonitorSingleMetricBaseline(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string timespan = null, System.TimeSpan interval = default(System.TimeSpan), string @namespace = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorTimeSeriesBaseline> baselines = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MonitorSku MonitorSku(string name = null, Azure.ResourceManager.Monitor.Models.MonitorSkuTier? tier = default(Azure.ResourceManager.Monitor.Models.MonitorSkuTier?), string size = null, string family = null, int? capacity = default(int?)) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MonitorSmsReceiver MonitorSmsReceiver(string name = null, string countryCode = null, string phoneNumber = null, Azure.ResourceManager.Monitor.Models.MonitorReceiverStatus? status = default(Azure.ResourceManager.Monitor.Models.MonitorReceiverStatus?)) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.MonitorSubscriptionScopeMetric MonitorSubscriptionScopeMetric(bool? isDimensionRequired = default(bool?), string resourceId = null, string @namespace = null, Azure.ResourceManager.Monitor.Models.MonitorLocalizableString name = null, string displayDescription = null, string category = null, Azure.ResourceManager.Monitor.Models.MonitorMetricClass? metricClass = default(Azure.ResourceManager.Monitor.Models.MonitorMetricClass?), Azure.ResourceManager.Monitor.Models.MonitorMetricUnit? unit = default(Azure.ResourceManager.Monitor.Models.MonitorMetricUnit?), Azure.ResourceManager.Monitor.Models.MonitorAggregationKind? primaryAggregationKind = default(Azure.ResourceManager.Monitor.Models.MonitorAggregationKind?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorAggregationKind> supportedAggregationKinds = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorMetricAvailability> metricAvailabilities = null, string id = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorLocalizableString> dimensions = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MonitorTimeSeriesBaseline MonitorTimeSeriesBaseline(string aggregation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorMetricSingleDimension> dimensions = null, System.Collections.Generic.IEnumerable<System.DateTimeOffset> timestamps = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorSingleBaseline> data = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorBaselineMetadata> metadataValues = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MonitorTimeSeriesElement MonitorTimeSeriesElement(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorMetadataValue> metadatavalues = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorMetricValue> data = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MonitorTimeWindow MonitorTimeWindow(string timeZone = null, System.DateTimeOffset startOn = default(System.DateTimeOffset), System.DateTimeOffset endOn = default(System.DateTimeOffset)) { throw null; }
@@ -1917,7 +1918,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.StaticPromQLCriteria StaticPromQLCriteria(string name = null, string query = null) { throw null; }
         [System.ObsoleteAttribute("This API is no longer supported.", false)]
         public static Azure.ResourceManager.Monitor.Models.SubscriptionMonitorMetric SubscriptionMonitorMetric(string id, string subscriptionScopeMetricType, Azure.ResourceManager.Monitor.Models.MonitorLocalizableString name, string displayDescription, string errorCode, string errorMessage, Azure.ResourceManager.Monitor.Models.MonitorMetricUnit unit, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorTimeSeriesElement> timeseries) { throw null; }
-        public static Azure.ResourceManager.Monitor.Models.SubscriptionScopeMetricDefinition SubscriptionScopeMetricDefinition(bool? isDimensionRequired = default(bool?), string resourceId = null, string @namespace = null, Azure.ResourceManager.Monitor.Models.MonitorLocalizableString name = null, string displayDescription = null, string category = null, Azure.ResourceManager.Monitor.Models.MonitorMetricClass? metricClass = default(Azure.ResourceManager.Monitor.Models.MonitorMetricClass?), Azure.ResourceManager.Monitor.Models.MonitorMetricUnit? unit = default(Azure.ResourceManager.Monitor.Models.MonitorMetricUnit?), Azure.ResourceManager.Monitor.Models.MonitorAggregationKind? primaryAggregationKind = default(Azure.ResourceManager.Monitor.Models.MonitorAggregationKind?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorAggregationKind> supportedAggregationKinds = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorMetricAvailability> metricAvailabilities = null, string id = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorLocalizableString> dimensions = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.SubscriptionScopeMetricsContent SubscriptionScopeMetricsContent(string timespan = null, string interval = null, string metricNames = null, string aggregation = null, string filter = null, int? top = default(int?), string orderBy = null, string rollUpBy = null, Azure.ResourceManager.Monitor.Models.MonitorMetricResultType? resultType = default(Azure.ResourceManager.Monitor.Models.MonitorMetricResultType?), string metricNamespace = null, bool? autoAdjustTimegrain = default(bool?), bool? validateDimensions = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.SyslogDataSource SyslogDataSource(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.SyslogDataSourceStream> streams = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.SyslogDataSourceFacilityName> facilityNames = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.SyslogDataSourceLogLevel> logLevels = null, string transformKql = null, string name = null) { throw null; }
         [System.ObsoleteAttribute("This API is no longer supported.", false)]
@@ -3672,7 +3672,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator !=(Azure.ResourceManager.Monitor.Models.MonitorAggregationKind left, Azure.ResourceManager.Monitor.Models.MonitorAggregationKind right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.ObsoleteAttribute("This type is no longer supported. Use MonitorMetricAggregationType for MonitorMetricDefinition and MonitorAggregationKind for SubscriptionScopeMetricDefinition instead.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported. Use MonitorMetricAggregationType for MonitorMetricDefinition and MonitorAggregationKind for MonitorSubscriptionScopeMetric instead.", false)]
     public enum MonitorAggregationType
     {
         None = 0,
@@ -4945,6 +4945,36 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorSmsReceiver>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorSmsReceiver>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class MonitorSubscriptionScopeMetric : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorSubscriptionScopeMetric>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorSubscriptionScopeMetric>
+    {
+        internal MonitorSubscriptionScopeMetric() { }
+        public string Category { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.MonitorLocalizableString> Dimensions { get { throw null; } }
+        public string DisplayDescription { get { throw null; } }
+        public string Id { get { throw null; } }
+        public bool? IsDimensionRequired { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.MonitorMetricAvailability> MetricAvailabilities { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.MonitorMetricClass? MetricClass { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.MonitorLocalizableString Name { get { throw null; } }
+        public string Namespace { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.MonitorAggregationKind? PrimaryAggregationKind { get { throw null; } }
+        [System.ObsoleteAttribute("This API is no longer supported. Use PrimaryAggregationKind instead.", false)]
+        public Azure.ResourceManager.Monitor.Models.MonitorAggregationType? PrimaryAggregationType { get { throw null; } }
+        public string ResourceId { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.MonitorAggregationKind> SupportedAggregationKinds { get { throw null; } }
+        [System.ObsoleteAttribute("This API is no longer supported and no longer updates the model. Use SupportedAggregationKinds instead.", false)]
+        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.MonitorAggregationType> SupportedAggregationTypes { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.MonitorMetricUnit? Unit { get { throw null; } }
+        protected virtual Azure.ResourceManager.Monitor.Models.MonitorSubscriptionScopeMetric JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Monitor.Models.MonitorSubscriptionScopeMetric PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Monitor.Models.MonitorSubscriptionScopeMetric System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorSubscriptionScopeMetric>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorSubscriptionScopeMetric>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.MonitorSubscriptionScopeMetric System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorSubscriptionScopeMetric>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorSubscriptionScopeMetric>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorSubscriptionScopeMetric>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class MonitorTimeSeriesBaseline : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorTimeSeriesBaseline>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorTimeSeriesBaseline>
     {
         internal MonitorTimeSeriesBaseline() { }
@@ -5973,36 +6003,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public string Timespan { get { throw null; } set { } }
         public int? Top { get { throw null; } set { } }
         public bool? ValidateDimensions { get { throw null; } set { } }
-    }
-    public partial class SubscriptionScopeMetricDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.SubscriptionScopeMetricDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.SubscriptionScopeMetricDefinition>
-    {
-        internal SubscriptionScopeMetricDefinition() { }
-        public string Category { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.MonitorLocalizableString> Dimensions { get { throw null; } }
-        public string DisplayDescription { get { throw null; } }
-        public string Id { get { throw null; } }
-        public bool? IsDimensionRequired { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.MonitorMetricAvailability> MetricAvailabilities { get { throw null; } }
-        public Azure.ResourceManager.Monitor.Models.MonitorMetricClass? MetricClass { get { throw null; } }
-        public Azure.ResourceManager.Monitor.Models.MonitorLocalizableString Name { get { throw null; } }
-        public string Namespace { get { throw null; } }
-        public Azure.ResourceManager.Monitor.Models.MonitorAggregationKind? PrimaryAggregationKind { get { throw null; } }
-        [System.ObsoleteAttribute("This API is no longer supported. Use PrimaryAggregationKind instead.", false)]
-        public Azure.ResourceManager.Monitor.Models.MonitorAggregationType? PrimaryAggregationType { get { throw null; } }
-        public string ResourceId { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.MonitorAggregationKind> SupportedAggregationKinds { get { throw null; } }
-        [System.ObsoleteAttribute("This API is no longer supported and no longer updates the model. Use SupportedAggregationKinds instead.", false)]
-        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.MonitorAggregationType> SupportedAggregationTypes { get { throw null; } }
-        public Azure.ResourceManager.Monitor.Models.MonitorMetricUnit? Unit { get { throw null; } }
-        protected virtual Azure.ResourceManager.Monitor.Models.SubscriptionScopeMetricDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Monitor.Models.SubscriptionScopeMetricDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Monitor.Models.SubscriptionScopeMetricDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.SubscriptionScopeMetricDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.SubscriptionScopeMetricDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Monitor.Models.SubscriptionScopeMetricDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.SubscriptionScopeMetricDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.SubscriptionScopeMetricDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.SubscriptionScopeMetricDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SubscriptionScopeMetricsContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.SubscriptionScopeMetricsContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.SubscriptionScopeMetricsContent>
     {

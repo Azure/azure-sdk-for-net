@@ -14,51 +14,51 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Metric definition class specifies the metadata for a metric. </summary>
-    public partial class SubscriptionScopeMetricDefinition : IJsonModel<SubscriptionScopeMetricDefinition>
+    public partial class MonitorSubscriptionScopeMetric : IJsonModel<MonitorSubscriptionScopeMetric>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SubscriptionScopeMetricDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual MonitorSubscriptionScopeMetric PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionScopeMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorSubscriptionScopeMetric>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSubscriptionScopeMetricDefinition(document.RootElement, options);
+                        return DeserializeMonitorSubscriptionScopeMetric(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionScopeMetricDefinition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorSubscriptionScopeMetric)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionScopeMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorSubscriptionScopeMetric>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionScopeMetricDefinition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorSubscriptionScopeMetric)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SubscriptionScopeMetricDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MonitorSubscriptionScopeMetric>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SubscriptionScopeMetricDefinition IPersistableModel<SubscriptionScopeMetricDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MonitorSubscriptionScopeMetric IPersistableModel<MonitorSubscriptionScopeMetric>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SubscriptionScopeMetricDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MonitorSubscriptionScopeMetric>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SubscriptionScopeMetricDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MonitorSubscriptionScopeMetric>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionScopeMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorSubscriptionScopeMetric>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionScopeMetricDefinition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorSubscriptionScopeMetric)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(IsDimensionRequired))
             {
@@ -173,24 +173,24 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SubscriptionScopeMetricDefinition IJsonModel<SubscriptionScopeMetricDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MonitorSubscriptionScopeMetric IJsonModel<MonitorSubscriptionScopeMetric>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SubscriptionScopeMetricDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual MonitorSubscriptionScopeMetric JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionScopeMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorSubscriptionScopeMetric>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionScopeMetricDefinition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorSubscriptionScopeMetric)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSubscriptionScopeMetricDefinition(document.RootElement, options);
+            return DeserializeMonitorSubscriptionScopeMetric(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SubscriptionScopeMetricDefinition DeserializeSubscriptionScopeMetricDefinition(JsonElement element, ModelReaderWriterOptions options)
+        internal static MonitorSubscriptionScopeMetric DeserializeMonitorSubscriptionScopeMetric(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SubscriptionScopeMetricDefinition(
+            return new MonitorSubscriptionScopeMetric(
                 isDimensionRequired,
                 resourceId,
                 @namespace,

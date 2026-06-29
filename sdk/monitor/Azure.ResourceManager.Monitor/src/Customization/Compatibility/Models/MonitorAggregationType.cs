@@ -9,7 +9,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The aggregation type of the metric. </summary>
-    [Obsolete("This type is no longer supported. Use MonitorMetricAggregationType for MonitorMetricDefinition and MonitorAggregationKind for SubscriptionScopeMetricDefinition instead.", false)]
+    [Obsolete("This type is no longer supported. Use MonitorMetricAggregationType for MonitorMetricDefinition and MonitorAggregationKind for MonitorSubscriptionScopeMetric instead.", false)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public enum MonitorAggregationType
     {

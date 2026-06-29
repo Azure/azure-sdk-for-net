@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionScopeMetricDefinitionCollection"/>. </summary>
         /// <param name="value"> The values for the metric definitions. </param>
-        internal SubscriptionScopeMetricDefinitionCollection(IEnumerable<SubscriptionScopeMetricDefinition> value)
+        internal SubscriptionScopeMetricDefinitionCollection(IEnumerable<MonitorSubscriptionScopeMetric> value)
         {
             Value = value.ToList();
         }
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="value"> The values for the metric definitions. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionScopeMetricDefinitionCollection(IList<SubscriptionScopeMetricDefinition> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SubscriptionScopeMetricDefinitionCollection(IList<MonitorSubscriptionScopeMetric> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> The values for the metric definitions. </summary>
-        public IList<SubscriptionScopeMetricDefinition> Value { get; }
+        public IList<MonitorSubscriptionScopeMetric> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public string NextLink { get; }

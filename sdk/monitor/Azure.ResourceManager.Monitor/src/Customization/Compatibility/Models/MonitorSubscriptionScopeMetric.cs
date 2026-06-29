@@ -10,7 +10,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Monitor.Models
 {
 #pragma warning disable CS0618 // This partial class intentionally exposes obsolete compatibility members.
-    public partial class SubscriptionScopeMetricDefinition
+    public partial class MonitorSubscriptionScopeMetric
     {
         // The generated extensible aggregation type is intentionally renamed to MonitorAggregationKind.
         // Keep the stable enum-typed aggregation properties backed by the generated properties.

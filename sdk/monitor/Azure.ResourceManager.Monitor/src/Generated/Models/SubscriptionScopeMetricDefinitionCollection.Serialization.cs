@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (SubscriptionScopeMetricDefinition item in Value)
+            foreach (MonitorSubscriptionScopeMetric item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            IList<SubscriptionScopeMetricDefinition> value = default;
+            IList<MonitorSubscriptionScopeMetric> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<SubscriptionScopeMetricDefinition> array = new List<SubscriptionScopeMetricDefinition>();
+                    List<MonitorSubscriptionScopeMetric> array = new List<MonitorSubscriptionScopeMetric>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SubscriptionScopeMetricDefinition.DeserializeSubscriptionScopeMetricDefinition(item, options));
+                        array.Add(MonitorSubscriptionScopeMetric.DeserializeMonitorSubscriptionScopeMetric(item, options));
                     }
                     value = array;
                     continue;

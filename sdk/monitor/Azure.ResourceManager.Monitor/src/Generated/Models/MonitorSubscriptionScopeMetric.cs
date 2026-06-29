@@ -12,20 +12,20 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Metric definition class specifies the metadata for a metric. </summary>
-    public partial class SubscriptionScopeMetricDefinition
+    public partial class MonitorSubscriptionScopeMetric
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionScopeMetricDefinition"/>. </summary>
-        internal SubscriptionScopeMetricDefinition()
+        /// <summary> Initializes a new instance of <see cref="MonitorSubscriptionScopeMetric"/>. </summary>
+        internal MonitorSubscriptionScopeMetric()
         {
             SupportedAggregationKinds = new ChangeTrackingList<MonitorAggregationKind>();
             MetricAvailabilities = new ChangeTrackingList<MonitorMetricAvailability>();
             Dimensions = new ChangeTrackingList<MonitorLocalizableString>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionScopeMetricDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorSubscriptionScopeMetric"/>. </summary>
         /// <param name="isDimensionRequired"> Flag to indicate whether the dimension is required. </param>
         /// <param name="resourceId"> The resource identifier of the resource that emitted the metric. </param>
         /// <param name="namespace"> The namespace the metric belongs to. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="id"> The resource identifier of the metric definition. </param>
         /// <param name="dimensions"> The name and the display name of the dimension, i.e. it is a localizable string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionScopeMetricDefinition(bool? isDimensionRequired, string resourceId, string @namespace, MonitorLocalizableString name, string displayDescription, string category, MonitorMetricClass? metricClass, MonitorMetricUnit? unit, MonitorAggregationKind? primaryAggregationKind, IList<MonitorAggregationKind> supportedAggregationKinds, IList<MonitorMetricAvailability> metricAvailabilities, string id, IList<MonitorLocalizableString> dimensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MonitorSubscriptionScopeMetric(bool? isDimensionRequired, string resourceId, string @namespace, MonitorLocalizableString name, string displayDescription, string category, MonitorMetricClass? metricClass, MonitorMetricUnit? unit, MonitorAggregationKind? primaryAggregationKind, IList<MonitorAggregationKind> supportedAggregationKinds, IList<MonitorMetricAvailability> metricAvailabilities, string id, IList<MonitorLocalizableString> dimensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsDimensionRequired = isDimensionRequired;
             ResourceId = resourceId;
