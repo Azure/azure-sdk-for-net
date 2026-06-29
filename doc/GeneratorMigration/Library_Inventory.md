@@ -1,6 +1,6 @@
 # Azure SDK for .NET Libraries Inventory
 
-> **Auto-generated** by `Library_Inventory` on 2026-06-29 07:31:29 UTC.
+> **Auto-generated** by `Library_Inventory` on 2026-06-29 07:53:02 UTC.
 > Run that script to refresh this file.
 
 ## Table of Contents
@@ -18,8 +18,8 @@
 
 - Total libraries: 414
 - Management Plane (MPG): 241
-  - Autorest/Swagger: 52
-  - New Emitter (TypeSpec): 189
+  - Autorest/Swagger: 51
+  - New Emitter (TypeSpec): 190
   - Old TypeSpec: 0
 - Data Plane (DPG): 129
   - Autorest/Swagger: 35
@@ -136,7 +136,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 35
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 189 / 189 (100%)
+**Migration Status**: 190 / 190 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -302,6 +302,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | resources | Azure.ResourceManager.Resources.Policy | ✅ |
 | search | Azure.ResourceManager.Search | ✅ |
 | secretsstoreextension | Azure.ResourceManager.SecretsStoreExtension | ✅ |
+| securitycenter | Azure.ResourceManager.SecurityCenter | ✅ |
 | selfhelp | Azure.ResourceManager.SelfHelp | ✅ |
 | servicebus | Azure.ResourceManager.ServiceBus | ✅ |
 | servicefabric | Azure.ResourceManager.ServiceFabric | ✅ |
@@ -333,7 +334,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 52
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 51
 
 | Service | Library |
 | ------- | ------- |
@@ -377,7 +378,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 52
 | resourcemanager | Azure.ResourceManager |
 | resourcemover | Azure.ResourceManager.ResourceMover |
 | resources | Azure.ResourceManager.Resources |
-| securitycenter | Azure.ResourceManager.SecurityCenter |
 | securitydevops | Azure.ResourceManager.SecurityDevOps |
 | securityinsights | Azure.ResourceManager.SecurityInsights |
 | servicelinker | Azure.ResourceManager.ServiceLinker |
@@ -435,7 +435,7 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | redisenterprise | Azure.Provisioning.RedisEnterprise | Azure.ResourceManager.RedisEnterprise ✅ | Reflection |
 | resourcegraph | Azure.Provisioning.ResourceGraph | Azure.ResourceManager.ResourceGraph ✅ | Reflection |
 | search | Azure.Provisioning.Search | Azure.ResourceManager.Search ✅ | Reflection |
-| securitycenter | Azure.Provisioning.SecurityCenter | Azure.ResourceManager.SecurityCenter | Reflection |
+| securitycenter | Azure.Provisioning.SecurityCenter | Azure.ResourceManager.SecurityCenter ✅ | Reflection |
 | servicebus | Azure.Provisioning.ServiceBus | Azure.ResourceManager.ServiceBus ✅ | Reflection |
 | servicenetworking | Azure.Provisioning.ServiceNetworking | Azure.ResourceManager.ServiceNetworking ✅ | TypeSpec ✅ |
 | signalr | Azure.Provisioning.SignalR | Azure.ResourceManager.SignalR ✅ | Reflection |
