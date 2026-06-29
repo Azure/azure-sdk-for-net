@@ -18,7 +18,7 @@ namespace Azure.Provisioning.Search
         private BicepValue<int> _replicaCount;
         private BicepValue<int> _partitionCount;
         private BicepValue<Uri> _endpoint;
-        private BicepValue<Search.SearchServiceHostingMode> _hostingMode;
+        private BicepValue<SearchServiceHostingMode> _hostingMode;
         private BicepValue<SearchServiceComputeType> _computeType;
         private BicepValue<SearchServicePublicInternetAccess> _publicInternetAccess;
         private BicepValue<SearchServiceStatus> _status;
@@ -31,7 +31,7 @@ namespace Azure.Provisioning.Search
         private SearchAadAuthDataPlaneAuthOptions _authOptions;
         private BicepValue<SearchSemanticSearch> _semanticSearch;
         private BicepList<SearchPrivateEndpointConnection> _privateEndpointConnections;
-        private BicepList<SharedSearchServicePrivateLinkResource> _sharedPrivateLinkResources;
+        private BicepList<SharedSearchServicePrivateLink> _sharedPrivateLinkResources;
         private BicepValue<ETag> _eTag;
         private BicepValue<SearchServiceUpgradeAvailable> _isUpgradeAvailable;
         private BicepValue<DateTimeOffset> _serviceUpgradedOn;
@@ -87,7 +87,7 @@ namespace Azure.Provisioning.Search
         }
 
         /// <summary> Gets or sets the HostingMode. </summary>
-        public BicepValue<Search.SearchServiceHostingMode> HostingMode
+        public BicepValue<SearchServiceHostingMode> HostingMode
         {
             get
             {
@@ -262,7 +262,7 @@ namespace Azure.Provisioning.Search
         }
 
         /// <summary> Gets the SharedPrivateLinkResources. </summary>
-        public BicepList<SharedSearchServicePrivateLinkResource> SharedPrivateLinkResources
+        public BicepList<SharedSearchServicePrivateLink> SharedPrivateLinkResources
         {
             get
             {
@@ -313,7 +313,7 @@ namespace Azure.Provisioning.Search
             _replicaCount = DefineProperty<int>(nameof(ReplicaCount), new string[] { "replicaCount" });
             _partitionCount = DefineProperty<int>(nameof(PartitionCount), new string[] { "partitionCount" });
             _endpoint = DefineProperty<Uri>(nameof(Endpoint), new string[] { "endpoint" });
-            _hostingMode = DefineProperty<Search.SearchServiceHostingMode>(nameof(HostingMode), new string[] { "hostingMode" });
+            _hostingMode = DefineProperty<SearchServiceHostingMode>(nameof(HostingMode), new string[] { "hostingMode" });
             _computeType = DefineProperty<SearchServiceComputeType>(nameof(ComputeType), new string[] { "computeType" });
             _publicInternetAccess = DefineProperty<SearchServicePublicInternetAccess>(nameof(PublicInternetAccess), new string[] { "publicNetworkAccess" });
             _status = DefineProperty<SearchServiceStatus>(nameof(Status), new string[] { "status" }, isOutput: true);
@@ -326,7 +326,7 @@ namespace Azure.Provisioning.Search
             _authOptions = DefineModelProperty<SearchAadAuthDataPlaneAuthOptions>(nameof(AuthOptions), new string[] { "authOptions" });
             _semanticSearch = DefineProperty<SearchSemanticSearch>(nameof(SemanticSearch), new string[] { "semanticSearch" });
             _privateEndpointConnections = DefineListProperty<SearchPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
-            _sharedPrivateLinkResources = DefineListProperty<SharedSearchServicePrivateLinkResource>(nameof(SharedPrivateLinkResources), new string[] { "sharedPrivateLinkResources" }, isOutput: true);
+            _sharedPrivateLinkResources = DefineListProperty<SharedSearchServicePrivateLink>(nameof(SharedPrivateLinkResources), new string[] { "sharedPrivateLinkResources" }, isOutput: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "eTag" }, isOutput: true);
             _isUpgradeAvailable = DefineProperty<SearchServiceUpgradeAvailable>(nameof(IsUpgradeAvailable), new string[] { "upgradeAvailable" });
             _serviceUpgradedOn = DefineProperty<DateTimeOffset>(nameof(ServiceUpgradedOn), new string[] { "serviceUpgradedAt" }, isOutput: true);

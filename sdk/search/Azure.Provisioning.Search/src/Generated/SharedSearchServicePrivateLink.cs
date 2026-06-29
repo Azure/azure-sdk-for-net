@@ -13,7 +13,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Search
 {
     /// <summary> Describes a shared private link resource managed by the Azure AI Search service. </summary>
-    public partial class SharedSearchServicePrivateLinkResource : ProvisionableResource
+    public partial class SharedSearchServicePrivateLink : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
@@ -21,10 +21,10 @@ namespace Azure.Provisioning.Search
         private SharedSearchServicePrivateLinkResourceProperties _properties;
         private ResourceReference<SearchService> _parent;
 
-        /// <summary> Creates a new SharedSearchServicePrivateLinkResource. </summary>
+        /// <summary> Creates a new SharedSearchServicePrivateLink. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public SharedSearchServicePrivateLinkResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Search/searchServices/sharedPrivateLinkResources", resourceVersion ?? "2025-05-01")
+        public SharedSearchServicePrivateLink(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Search/searchServices/sharedPrivateLinkResources", resourceVersion ?? "2025-05-01")
         {
         }
 
@@ -93,7 +93,7 @@ namespace Azure.Provisioning.Search
             }
         }
 
-        /// <summary> Define all the provisionable properties for SharedSearchServicePrivateLinkResource. </summary>
+        /// <summary> Define all the provisionable properties for SharedSearchServicePrivateLink. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -105,17 +105,17 @@ namespace Azure.Provisioning.Search
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing SharedSearchServicePrivateLinkResource. </summary>
+        /// <summary> Creates a reference to an existing SharedSearchServicePrivateLink. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static SharedSearchServicePrivateLinkResource FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static SharedSearchServicePrivateLink FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            SharedSearchServicePrivateLinkResource result = new SharedSearchServicePrivateLinkResource(bicepIdentifier, resourceVersion);
+            SharedSearchServicePrivateLink result = new SharedSearchServicePrivateLink(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for SharedSearchServicePrivateLinkResource that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for SharedSearchServicePrivateLink that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary></summary>

@@ -18,12 +18,6 @@
     <PackageReference Include="Azure.Provisioning" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Remove="Generated\Models\SearchBypass.cs" />
-    <Compile Remove="Generated\Models\SearchEncryptionWithCmkEnforcement.cs" />
-    <Compile Remove="Generated\Models\SearchServiceHostingMode.cs" />
-  </ItemGroup>
-
   <!-- TODO: Consider adding DataPlane dependencies here like:
   <ItemGroup>
     <PackageReference Include="Azure.Search.Documents" />

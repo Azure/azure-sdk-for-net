@@ -14,7 +14,7 @@ namespace Azure.Provisioning.Search
     public partial class SearchServiceNetworkRuleSet : ProvisionableConstruct
     {
         private BicepList<SearchServiceIPRule> _ipRules;
-        private BicepValue<Search.SearchBypass> _bypass;
+        private BicepValue<SearchBypass> _bypass;
 
         /// <summary> Creates a new SearchServiceNetworkRuleSet. </summary>
         public SearchServiceNetworkRuleSet()
@@ -37,7 +37,7 @@ namespace Azure.Provisioning.Search
         }
 
         /// <summary> Gets or sets the Bypass. </summary>
-        public BicepValue<Search.SearchBypass> Bypass
+        public BicepValue<SearchBypass> Bypass
         {
             get
             {
@@ -56,7 +56,7 @@ namespace Azure.Provisioning.Search
         {
             base.DefineProvisionableProperties();
             _ipRules = DefineListProperty<SearchServiceIPRule>(nameof(IPRules), new string[] { "ipRules" });
-            _bypass = DefineProperty<Search.SearchBypass>(nameof(Bypass), new string[] { "bypass" });
+            _bypass = DefineProperty<SearchBypass>(nameof(Bypass), new string[] { "bypass" });
         }
     }
 }

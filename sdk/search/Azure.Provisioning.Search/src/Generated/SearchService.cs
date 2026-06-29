@@ -199,7 +199,7 @@ namespace Azure.Provisioning.Search
         }
 
         /// <summary> Gets or sets the HostingMode. </summary>
-        public BicepValue<Search.SearchServiceHostingMode> HostingMode
+        public BicepValue<SearchServiceHostingMode> HostingMode
         {
             get
             {
@@ -390,6 +390,32 @@ namespace Azure.Provisioning.Search
             }
         }
 
+        /// <summary> Gets the PrivateEndpointConnections. </summary>
+        public BicepList<SearchPrivateEndpointConnection> PrivateEndpointConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SearchServiceProperties();
+                }
+                return Properties.PrivateEndpointConnections;
+            }
+        }
+
+        /// <summary> Gets the SharedPrivateLinkResources. </summary>
+        public BicepList<SharedSearchServicePrivateLink> SharedPrivateLinkResources
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SearchServiceProperties();
+                }
+                return Properties.SharedPrivateLinkResources;
+            }
+        }
+
         /// <summary> Gets the ETag. </summary>
         public BicepValue<ETag> ETag
         {
@@ -400,6 +426,23 @@ namespace Azure.Provisioning.Search
                     Properties = new SearchServiceProperties();
                 }
                 return Properties.ETag;
+            }
+        }
+
+        /// <summary> Gets or sets the IsUpgradeAvailable. </summary>
+        public BicepValue<SearchServiceUpgradeAvailable> IsUpgradeAvailable
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsUpgradeAvailable;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SearchServiceProperties();
+                }
+                Properties.IsUpgradeAvailable = value;
             }
         }
 

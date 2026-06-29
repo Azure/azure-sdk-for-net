@@ -10,7 +10,7 @@ using System.Runtime.Serialization;
 namespace Azure.Provisioning.Search
 {
     /// <summary> Indicates if the dedicated search service has an upgrade available. </summary>
-    internal enum SearchServiceUpgradeAvailable
+    public enum SearchServiceUpgradeAvailable
     {
         /// <summary> An upgrade is currently not available for the dedicated service. </summary>
         [DataMember(Name = "notAvailable")]
