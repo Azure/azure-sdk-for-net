@@ -9,12 +9,11 @@ parameters:
   - name: vallyRoot
     type: string
     default: tools/azsdk-cli/Azure.Sdk.Tools.Vally
-  - name: azureServiceConnection
+  - name: evalInvokeTemplate
+    # Path to the step template that runs `vally eval` for each shard. Threaded to
+    # eval-run-shard.yml; defaults to the hermetic node runner, live overrides it.
     type: string
-    default: ''
-  - name: shardTimeoutInMinutes
-    type: number
-    default: 20
+    default: /eng/common/pipelines/templates/steps/eval-invoke.yml
   - name: maxParallel
     type: number
     default: 10
@@ -29,7 +28,9 @@ jobs:
     # continueOnError lets a single red shard finish without aborting the others —
     # the pass/fail rollup happens in Summary.
     continueOnError: true
-    timeoutInMinutes: ${{ parameters.shardTimeoutInMinutes }}
+    # shardTimeoutInMinutes is an entrypoint-declared variable (hermetic tiers 20, live 45)
+    # rather than a parameter — each thin pipeline sets it in its own `variables` block.
+    timeoutInMinutes: $(shardTimeoutInMinutes)
     strategy:
       matrix: $[ ${{ parameters.Matrix }} ]
       maxParallel: ${{ parameters.maxParallel }}
@@ -51,4 +52,4 @@ jobs:
       - template: /eng/common/pipelines/templates/steps/eval-run-shard.yml
         parameters:
           vallyRoot: ${{ parameters.vallyRoot }}
-          azureServiceConnection: ${{ parameters.azureServiceConnection }}
+          evalInvokeTemplate: ${{ parameters.evalInvokeTemplate }}

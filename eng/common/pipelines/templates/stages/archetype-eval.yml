@@ -5,6 +5,12 @@
 #   Summary - merges every shard's JUnit into one rollup and gates.
 #
 # The consuming repo supplies a thin entrypoint (trigger + params + extends this).
+#
+# REQUIRED entrypoint variable: the thin pipeline MUST declare a `shardTimeoutInMinutes`
+# variable (the per-shard job timeout, e.g. 20 for hermetic tiers, 45 for live). It is a
+# variable rather than a parameter because the live tier overrides it and a parameter
+# default set here at job scope would SHADOW that pipeline-level override. An entrypoint
+# that omits it fails at job init ($(shardTimeoutInMinutes) won't resolve to an integer).
 
 parameters:
   - name: vallyRoot
@@ -23,41 +29,32 @@ parameters:
     values:
       - file
       - area
-  - name: useCustomMcp
-    # false (default): build the standard azure-sdk-tools .NET MCP (Mock + Cli) via the
-    # shared eng/common step, which clones azure-sdk-tools automatically when the pipeline
-    # runs outside it. true: the consuming repo supplies its own MCP build/startup at
-    # eng/common/pipelines/templates/steps/eval-mcp-setup.yml (non-.NET servers, NPM-installed, etc.).
-    type: boolean
-    default: false
-  - name: azureServiceConnection
-    # Set for the live tier so shards run inside AzureCLI@2 (real DevOps). Empty = script.
+  - name: mcpSetupTemplate
+    # Path to the step template that builds/installs the MCP server(s) this pipeline's evals
+    # drive, then publishes each under artifacts/mcp/<name> (the contract every shard
+    # re-stages). This is the ONLY MCP knob the orchestrator exposes: it stays agnostic to
+    # *how* the server is produced (any language, build, or package manager), so a consuming
+    # repo just points it at its own setup step. The default is a documented example.
     type: string
-    default: ''
-  - name: shardTimeoutInMinutes
-    # LLM-driven shards can hang; cap well under the default agent slot.
-    type: number
-    default: 20
-  - name: maxParallel
-    # Concurrent shard legs. Lower for the live tier (long, real-DevOps legs).
-    type: number
-    default: 10
-  - name: testRunTitle
+    default: /eng/common/pipelines/templates/steps/eval-mcp-setup.yml
+  - name: evalInvokeTemplate
+    # Path to the step template that runs `vally eval` for each shard (threaded to the
+    # shard job). The default is the hermetic plain-node runner; the live tier points it at
+    # an AzureCLI@2-wrapped copy so the real MCP's DevOps calls are authenticated. This is
+    # the one run-time hook, so the orchestrator exposes no service-connection knob — the
+    # override owns it. It also covers a chatbot start/stop or a custom MCP startup.
     type: string
-    default: 'Vally tool-scenario evals (mock vertical)'
+    default: /eng/common/pipelines/templates/steps/eval-invoke.yml
   - name: failOnFailedTests
     type: boolean
     default: false
-  - name: Use1ESOfficial
-    # Official template on the internal project (full SDL), Unofficial elsewhere. The
-    # 1es-redirect template picks the right one; consumers rarely need to override this.
-    type: boolean
-    default: true
 
 extends:
   template: /eng/pipelines/templates/stages/1es-redirect.yml
   parameters:
-    Use1ESOfficial: ${{ parameters.Use1ESOfficial }}
+    # Official template on the internal project (full SDL), Unofficial elsewhere; the
+    # 1es-redirect template picks the right one. Eval pipelines never need the override.
+    Use1ESOfficial: true
     stages:
       - stage: Prepare
         displayName: 'Build MCP'
@@ -76,15 +73,11 @@ extends:
                   artifactName: mcp-servers
                   targetPath: $(Build.SourcesDirectory)/artifacts/mcp
             steps:
-              - ${{ if parameters.useCustomMcp }}:
-                  # Consuming repo supplies its own MCP build/startup (non-.NET servers, an
-                  # NPM-installed live server, etc.). It must publish each server under
-                  # artifacts/mcp/<name> so the shards re-stage it at the expected path.
-                  - template: /eng/common/pipelines/templates/steps/eval-mcp-setup.yml
-              - ${{ else }}:
-                  # Default: build the azure-sdk-tools Mock + Cli .NET MCP servers (clones
-                  # azure-sdk-tools automatically when the pipeline runs outside it).
-                  - template: /eng/common/pipelines/templates/steps/eval-build-mcp.yml
+              # The pipeline supplies the MCP build/install via mcpSetupTemplate; it must
+              # publish each server under artifacts/mcp/<name> so the shards re-stage it at
+              # the path the eval environments resolve against. The orchestrator stays
+              # agnostic to language/build tooling.
+              - template: ${{ parameters.mcpSetupTemplate }}
 
           # Glob eval files into the fan-out matrix (parallel with BuildMcp). The Eval stage
           # reads it cross-stage and fans out eval-shard.yml.
@@ -101,9 +94,7 @@ extends:
           - template: /eng/common/pipelines/templates/jobs/eval-shard.yml
             parameters:
               vallyRoot: ${{ parameters.vallyRoot }}
-              azureServiceConnection: ${{ parameters.azureServiceConnection }}
-              shardTimeoutInMinutes: ${{ parameters.shardTimeoutInMinutes }}
-              maxParallel: ${{ parameters.maxParallel }}
+              evalInvokeTemplate: ${{ parameters.evalInvokeTemplate }}
 
       - stage: Summary
         displayName: 'Summarize results'
@@ -119,5 +110,4 @@ extends:
             steps:
               - template: /eng/common/pipelines/templates/steps/eval-summarize.yml
                 parameters:
-                  testRunTitle: ${{ parameters.testRunTitle }}
                   failOnFailedTests: ${{ parameters.failOnFailedTests }}

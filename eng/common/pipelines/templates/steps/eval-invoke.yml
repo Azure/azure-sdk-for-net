@@ -1,0 +1,37 @@
+# Default run-time invocation for one eval shard: run `vally eval` as a plain script and let
+# invoke-eval-shard.js gate on the VERDICT (results.jsonl), not the `vally` exit code — Vally
+# can exit 1 on a teardown timeout after a passing run, and that flake must not turn a green
+# shard red.
+#
+# This is the hermetic-tier runner and the default target of eval-run-shard.yml's
+# `evalInvokeTemplate`. A pipeline that must wrap the run at execution time — live-tier Azure
+# auth, a chatbot start/stop, a custom MCP startup — points evalInvokeTemplate at its own copy
+# of a step like this (see eng/pipelines/eval/eval-invoke-live.yml). The override owns any
+# service connection, so the shared orchestrator stays auth-agnostic.
+
+parameters:
+  - name: scriptDir
+    type: string
+    default: eng/common/scripts/eval
+  - name: vallyRoot
+    type: string
+    default: tools/azsdk-cli/Azure.Sdk.Tools.Vally
+  - name: threshold
+    type: string
+    default: '0.8'
+  - name: githubTokenVariable
+    type: string
+    default: azuresdk-copilot-github-pat
+
+steps:
+  - script: |
+      node "$(Build.SourcesDirectory)/${{ parameters.scriptDir }}/invoke-eval-shard.js" \
+        --eval-args "$(evalArgs)" \
+        --shard-name "$(shardName)" \
+        --output-dir "$(Build.SourcesDirectory)/artifacts/vally-results/$(shardName)" \
+        --skill-eval-prefix "$(Build.SourcesDirectory)/${{ parameters.scriptDir }}" \
+        --threshold ${{ parameters.threshold }}
+    displayName: 'vally eval $(shardName)'
+    workingDirectory: ${{ parameters.vallyRoot }}
+    env:
+      GITHUB_TOKEN: $(${{ parameters.githubTokenVariable }})
