@@ -35,20 +35,32 @@ namespace Azure.ResourceManager.Monitor.Models
         [Obsolete("This API is no longer supported. Use the MonitorMetricDefinition overload that takes MonitorMetricAggregationType primaryAggregationKind and IEnumerable<MonitorMetricAggregationType> supportedAggregationKinds instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MonitorMetricDefinition MonitorMetricDefinition(bool? isDimensionRequired = default, string resourceId = default, string @namespace = default, MonitorLocalizableString name = default, string displayDescription = default, string category = default, MonitorMetricClass? metricClass = default, MonitorMetricUnit? unit = default, MonitorAggregationType? primaryAggregationType = default, IEnumerable<MonitorAggregationType> supportedAggregationTypes = default, IEnumerable<MonitorMetricAvailability> metricAvailabilities = default, string id = default, IEnumerable<MonitorLocalizableString> dimensions = default)
-            => MonitorMetricDefinition(
-                isDimensionRequired,
-                resourceId,
-                @namespace,
-                name,
-                displayDescription,
-                category,
-                metricClass,
-                unit,
-                MonitorAggregationTypeHelper.FromLegacyAggregationType(primaryAggregationType),
-                MonitorAggregationTypeHelper.FromLegacyAggregationTypes(supportedAggregationTypes),
-                metricAvailabilities,
-                id,
-                dimensions);
+        {
+            List<MonitorMetricAggregationType> supportedAggregationKinds = null;
+            if (supportedAggregationTypes is not null)
+            {
+                supportedAggregationKinds = new List<MonitorMetricAggregationType>();
+                foreach (MonitorAggregationType value in supportedAggregationTypes)
+                {
+                    supportedAggregationKinds.Add(MonitorAggregationTypeHelper.FromLegacyAggregationType(value));
+                }
+            }
+
+            return MonitorMetricDefinition(
+                    isDimensionRequired,
+                    resourceId,
+                    @namespace,
+                    name,
+                    displayDescription,
+                    category,
+                    metricClass,
+                    unit,
+                    MonitorAggregationTypeHelper.FromLegacyAggregationType(primaryAggregationType),
+                    supportedAggregationKinds,
+                    metricAvailabilities,
+                    id,
+                    dimensions);
+        }
 
         /// <summary>
         /// Initializes a new instance of <see cref="AlertRuleData"/>.

@@ -5991,7 +5991,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public Azure.ResourceManager.Monitor.Models.MonitorAggregationType? PrimaryAggregationType { get { throw null; } }
         public string ResourceId { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.MonitorAggregationKind> SupportedAggregationKinds { get { throw null; } }
-        [System.ObsoleteAttribute("This API is no longer supported. Use SupportedAggregationKinds instead.", false)]
+        [System.ObsoleteAttribute("This API is no longer supported and no longer updates the model. Use SupportedAggregationKinds instead.", false)]
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.MonitorAggregationType> SupportedAggregationTypes { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.MonitorMetricUnit? Unit { get { throw null; } }
         protected virtual Azure.ResourceManager.Monitor.Models.SubscriptionScopeMetricDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

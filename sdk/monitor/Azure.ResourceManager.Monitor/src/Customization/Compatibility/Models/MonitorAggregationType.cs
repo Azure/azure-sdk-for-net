@@ -45,21 +45,6 @@ namespace Azure.ResourceManager.Monitor.Models
             _ => MonitorAggregationType.None
         };
 
-        public static IReadOnlyList<MonitorAggregationType> ToLegacyAggregationTypes(IEnumerable<MonitorMetricAggregationType> values)
-        {
-            if (values is null)
-            {
-                return default;
-            }
-
-            List<MonitorAggregationType> result = new List<MonitorAggregationType>();
-            foreach (MonitorMetricAggregationType value in values)
-            {
-                result.Add(ToLegacyAggregationType(value));
-            }
-            return result;
-        }
-
         public static MonitorMetricAggregationType? FromLegacyAggregationType(MonitorAggregationType? value)
             => value.HasValue ? FromLegacyAggregationType(value.Value) : null;
 
@@ -73,21 +58,6 @@ namespace Azure.ResourceManager.Monitor.Models
             _ => MonitorMetricAggregationType.None
         };
 
-        public static IEnumerable<MonitorMetricAggregationType> FromLegacyAggregationTypes(IEnumerable<MonitorAggregationType> values)
-        {
-            if (values is null)
-            {
-                return default;
-            }
-
-            List<MonitorMetricAggregationType> result = new List<MonitorMetricAggregationType>();
-            foreach (MonitorAggregationType value in values)
-            {
-                result.Add(FromLegacyAggregationType(value));
-            }
-            return result;
-        }
-
         public static MonitorAggregationType? ToLegacyAggregationType(MonitorAggregationKind? value)
             => value.HasValue ? ToLegacyAggregationType(value.Value) : null;
 
@@ -100,21 +70,6 @@ namespace Azure.ResourceManager.Monitor.Models
             "Total" => MonitorAggregationType.Total,
             _ => MonitorAggregationType.None
         };
-
-        public static IList<MonitorAggregationType> ToLegacyAggregationTypes(IEnumerable<MonitorAggregationKind> values)
-        {
-            if (values is null)
-            {
-                return default;
-            }
-
-            List<MonitorAggregationType> result = new List<MonitorAggregationType>();
-            foreach (MonitorAggregationKind value in values)
-            {
-                result.Add(ToLegacyAggregationType(value));
-            }
-            return result;
-        }
     }
 #pragma warning restore CS0618
 #pragma warning restore SA1649

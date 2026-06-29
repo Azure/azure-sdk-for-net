@@ -22,7 +22,23 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> The collection of what aggregation types are supported. </summary>
         [Obsolete("This API is no longer supported. Use SupportedAggregationKinds instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public IReadOnlyList<MonitorAggregationType> SupportedAggregationTypes => MonitorAggregationTypeHelper.ToLegacyAggregationTypes(SupportedAggregationKinds);
+        public IReadOnlyList<MonitorAggregationType> SupportedAggregationTypes
+        {
+            get
+            {
+                if (SupportedAggregationKinds is null)
+                {
+                    return default;
+                }
+
+                List<MonitorAggregationType> result = new List<MonitorAggregationType>();
+                foreach (MonitorMetricAggregationType value in SupportedAggregationKinds)
+                {
+                    result.Add(MonitorAggregationTypeHelper.ToLegacyAggregationType(value));
+                }
+                return result;
+            }
+        }
     }
 #pragma warning restore CS0618
 }
