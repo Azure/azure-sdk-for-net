@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="externalHealthPolicy"> Specifies the external health policy for the virtual machine scale set. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetProperties"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetProperties VirtualMachineScaleSetProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy = default, ScheduledEventsPolicy scheduledEventsPolicy = default, AutomaticRepairsPolicy automaticRepairsPolicy = default, VirtualMachineScaleSetVmProfile virtualMachineProfile = default, string provisioningState = default, bool? overprovision = default, bool? doNotRunExtensionsOnOverprovisionedVms = default, string uniqueId = default, bool? singlePlacementGroup = default, bool? zoneBalance = default, int? platformFaultDomainCount = default, ResourceIdentifier proximityPlacementGroupId = default, ResourceIdentifier hostGroupId = default, AdditionalCapabilities additionalCapabilities = default, ScaleInPolicy scaleInPolicy = default, OrchestrationMode? orchestrationMode = default, SpotRestorePolicy spotRestorePolicy = default, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy = default, DateTimeOffset? timeCreated = default, bool? isMaximumCapacityConstrained = default, ResiliencyPolicy resiliencyPolicy = default, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode = default, ComputeSkuProfile skuProfile = default, HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement = default, IEnumerable<LifecycleHook> lifecycleHooks = default, ExternalHealthPolicy externalHealthPolicy = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static VirtualMachineScaleSetProperties VirtualMachineScaleSetProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy = default, ScheduledEventsPolicy scheduledEventsPolicy = default, AutomaticRepairsPolicy automaticRepairsPolicy = default, VirtualMachineScaleSetVmProfile virtualMachineProfile = default, string provisioningState = default, bool? overprovision = default, bool? doNotRunExtensionsOnOverprovisionedVms = default, string uniqueId = default, bool? singlePlacementGroup = default, bool? zoneBalance = default, int? platformFaultDomainCount = default, ResourceIdentifier proximityPlacementGroupId = default, ResourceIdentifier hostGroupId = default, AdditionalCapabilities additionalCapabilities = default, ScaleInPolicy scaleInPolicy = default, OrchestrationMode? orchestrationMode = default, SpotRestorePolicy spotRestorePolicy = default, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy = default, DateTimeOffset? timeCreated = default, bool? isMaximumCapacityConstrained = default, ResiliencyPolicy resiliencyPolicy = default, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode = default, ComputeSkuProfile skuProfile = default, HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement = default, IEnumerable<VirtualMachineScaleSetLifecycleHook> lifecycleHooks = default, ExternalHealthPolicy externalHealthPolicy = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Compute.Models
                 zonalPlatformFaultDomainAlignMode,
                 skuProfile,
                 highSpeedInterconnectPlacement,
-                lifecycleHooks is null ? default : new LifecycleHooksProfile((lifecycleHooks ?? new ChangeTrackingList<LifecycleHook>()).ToList(), default),
+                lifecycleHooks is null ? default : new LifecycleHooksProfile((lifecycleHooks ?? new ChangeTrackingList<VirtualMachineScaleSetLifecycleHook>()).ToList(), default),
                 externalHealthPolicy,
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
@@ -951,13 +951,13 @@ namespace Azure.ResourceManager.Compute.Models
             return new ComputeSkuProfileVmSize(name, rank, default);
         }
 
-        /// <param name="vmScaleSetLifecycleHookEventType"> Specifies the type of the lifecycle hook. </param>
+        /// <param name="virtualMachineScaleSetLifecycleHookEventType"> Specifies the type of the lifecycle hook. </param>
         /// <param name="waitDuration"> Specifies the time duration a virtual machine scale set lifecycle hook event sent to the customer waits for a response from the customer. It should be in ISO 8601 format. </param>
         /// <param name="defaultAction"> Specifies the action that will be applied to a target resource in the virtual machine scale set lifecycle hook event if the platform does not receive a response from the customer for the target resource before waitUntil. </param>
-        /// <returns> A new <see cref="Models.LifecycleHook"/> instance for mocking. </returns>
-        public static LifecycleHook LifecycleHook(VmScaleSetLifecycleHookEventType? vmScaleSetLifecycleHookEventType = default, TimeSpan? waitDuration = default, LifecycleHookAction? defaultAction = default)
+        /// <returns> A new <see cref="Models.VirtualMachineScaleSetLifecycleHook"/> instance for mocking. </returns>
+        public static VirtualMachineScaleSetLifecycleHook VirtualMachineScaleSetLifecycleHook(VirtualMachineScaleSetLifecycleHookEventType? virtualMachineScaleSetLifecycleHookEventType = default, TimeSpan? waitDuration = default, VirtualMachineScaleSetLifecycleHookAction? defaultAction = default)
         {
-            return new LifecycleHook(vmScaleSetLifecycleHookEventType, waitDuration, defaultAction, default);
+            return new VirtualMachineScaleSetLifecycleHook(virtualMachineScaleSetLifecycleHookEventType, waitDuration, defaultAction, default);
         }
 
         /// <param name="enabled"> If true, external health is enabled for this scale set. Cannot be set to true on instances where another health monitoring source is active (ApplicationHealth extension or SLB). Defaults to false. </param>
@@ -1057,7 +1057,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="skuProfile"> Specifies the sku profile for the virtual machine scale set. </param>
         /// <param name="lifecycleHooks"> Specifies the lifecycle hooks configured for the virtual machine scale set. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetPatchProperties"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetPatchProperties VirtualMachineScaleSetPatchProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy = default, AutomaticRepairsPolicy automaticRepairsPolicy = default, VirtualMachineScaleSetUpdateVmProfile virtualMachineProfile = default, bool? overprovision = default, bool? doNotRunExtensionsOnOverprovisionedVms = default, bool? singlePlacementGroup = default, AdditionalCapabilities additionalCapabilities = default, ScaleInPolicy scaleInPolicy = default, ResourceIdentifier proximityPlacementGroupId = default, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy = default, SpotRestorePolicy spotRestorePolicy = default, ResiliencyPolicy resiliencyPolicy = default, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode = default, ComputeSkuProfile skuProfile = default, IEnumerable<LifecycleHook> lifecycleHooks = default)
+        public static VirtualMachineScaleSetPatchProperties VirtualMachineScaleSetPatchProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy = default, AutomaticRepairsPolicy automaticRepairsPolicy = default, VirtualMachineScaleSetUpdateVmProfile virtualMachineProfile = default, bool? overprovision = default, bool? doNotRunExtensionsOnOverprovisionedVms = default, bool? singlePlacementGroup = default, AdditionalCapabilities additionalCapabilities = default, ScaleInPolicy scaleInPolicy = default, ResourceIdentifier proximityPlacementGroupId = default, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy = default, SpotRestorePolicy spotRestorePolicy = default, ResiliencyPolicy resiliencyPolicy = default, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode = default, ComputeSkuProfile skuProfile = default, IEnumerable<VirtualMachineScaleSetLifecycleHook> lifecycleHooks = default)
         {
             return new VirtualMachineScaleSetPatchProperties(
                 upgradePolicy,
@@ -1074,7 +1074,7 @@ namespace Azure.ResourceManager.Compute.Models
                 resiliencyPolicy,
                 zonalPlatformFaultDomainAlignMode,
                 skuProfile,
-                lifecycleHooks is null ? default : new LifecycleHooksProfile((lifecycleHooks ?? new ChangeTrackingList<LifecycleHook>()).ToList(), default),
+                lifecycleHooks is null ? default : new LifecycleHooksProfile((lifecycleHooks ?? new ChangeTrackingList<VirtualMachineScaleSetLifecycleHook>()).ToList(), default),
                 default);
         }
 
@@ -1576,7 +1576,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Defines the virtual machine scale set lifecycle hook event properties. </param>
         /// <returns> A new <see cref="Compute.VirtualMachineScaleSetLifecycleHookEventData"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetLifecycleHookEventData VirtualMachineScaleSetLifecycleHookEventData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, VmScaleSetLifecycleHookEventProperties properties = default)
+        public static VirtualMachineScaleSetLifecycleHookEventData VirtualMachineScaleSetLifecycleHookEventData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, VirtualMachineScaleSetLifecycleHookEventProperties properties = default)
         {
             return new VirtualMachineScaleSetLifecycleHookEventData(
                 id,
@@ -1598,12 +1598,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// Denotes the priority of the virtual machine scale set lifecycle hook event for the Auto OS Upgrade scheduled on the virtual machine scale set.
         /// </param>
         /// <param name="state"> Specifies the state of the virtual machine scale set lifecycle hook event. </param>
-        /// <returns> A new <see cref="Models.VmScaleSetLifecycleHookEventProperties"/> instance for mocking. </returns>
-        public static VmScaleSetLifecycleHookEventProperties VmScaleSetLifecycleHookEventProperties(VmScaleSetLifecycleHookEventType? eventType = default, string waitUntil = default, string maxWaitUntil = default, string timeCreated = default, LifecycleHookAction? defaultAction = default, IEnumerable<VirtualMachineScaleSetLifecycleHookEventTarget> targetResources = default, string additionalContextPriority = default, VmScaleSetLifecycleHookEventState? state = default)
+        /// <returns> A new <see cref="Models.VirtualMachineScaleSetLifecycleHookEventProperties"/> instance for mocking. </returns>
+        public static VirtualMachineScaleSetLifecycleHookEventProperties VirtualMachineScaleSetLifecycleHookEventProperties(VirtualMachineScaleSetLifecycleHookEventType? eventType = default, string waitUntil = default, string maxWaitUntil = default, string timeCreated = default, VirtualMachineScaleSetLifecycleHookAction? defaultAction = default, IEnumerable<VirtualMachineScaleSetLifecycleHookEventTarget> targetResources = default, string additionalContextPriority = default, VirtualMachineScaleSetLifecycleHookEventState? state = default)
         {
             targetResources ??= new ChangeTrackingList<VirtualMachineScaleSetLifecycleHookEventTarget>();
 
-            return new VmScaleSetLifecycleHookEventProperties(
+            return new VirtualMachineScaleSetLifecycleHookEventProperties(
                 eventType,
                 waitUntil,
                 maxWaitUntil,
@@ -1618,7 +1618,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="resourceId"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
         /// <param name="actionState"> State of the lifecycle hook for the target resource. The customer can patch this property to move the lifecycle hook to a terminal state. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetLifecycleHookEventTarget"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetLifecycleHookEventTarget VirtualMachineScaleSetLifecycleHookEventTarget(ResourceIdentifier resourceId = default, LifecycleHookActionState? actionState = default)
+        public static VirtualMachineScaleSetLifecycleHookEventTarget VirtualMachineScaleSetLifecycleHookEventTarget(ResourceIdentifier resourceId = default, VirtualMachineScaleSetLifecycleHookActionState? actionState = default)
         {
             return new VirtualMachineScaleSetLifecycleHookEventTarget(resourceId is null ? default : new ComputeApiEntityReference(resourceId, default), actionState, default);
         }
@@ -1635,9 +1635,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// Denotes the priority of the virtual machine scale set lifecycle hook event for the Auto OS Upgrade scheduled on the virtual machine scale set.
         /// </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetLifecycleHookEventPatch"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetLifecycleHookEventPatch VirtualMachineScaleSetLifecycleHookEventPatch(VmScaleSetLifecycleHookEventType? eventType = default, string waitUntil = default, string maxWaitUntil = default, string timeCreated = default, LifecycleHookAction? defaultAction = default, IEnumerable<VirtualMachineScaleSetLifecycleHookEventTarget> targetResources = default, VmScaleSetLifecycleHookEventState? state = default, string additionalContextPriority = default)
+        public static VirtualMachineScaleSetLifecycleHookEventPatch VirtualMachineScaleSetLifecycleHookEventPatch(VirtualMachineScaleSetLifecycleHookEventType? eventType = default, string waitUntil = default, string maxWaitUntil = default, string timeCreated = default, VirtualMachineScaleSetLifecycleHookAction? defaultAction = default, IEnumerable<VirtualMachineScaleSetLifecycleHookEventTarget> targetResources = default, VirtualMachineScaleSetLifecycleHookEventState? state = default, string additionalContextPriority = default)
         {
-            return new VirtualMachineScaleSetLifecycleHookEventPatch(eventType is null && waitUntil is null && maxWaitUntil is null && timeCreated is null && defaultAction is null && targetResources is null && additionalContextPriority is null && state is null ? default : new VmScaleSetLifecycleHookEventProperties(
+            return new VirtualMachineScaleSetLifecycleHookEventPatch(eventType is null && waitUntil is null && maxWaitUntil is null && timeCreated is null && defaultAction is null && targetResources is null && additionalContextPriority is null && state is null ? default : new VirtualMachineScaleSetLifecycleHookEventProperties(
                 eventType,
                 waitUntil,
                 maxWaitUntil,

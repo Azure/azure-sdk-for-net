@@ -12,7 +12,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The states that a virtual machine scale set lifecycle hook event can be in. This is not settable by the customer. It is set only by the platform. </summary>
-    public readonly partial struct VmScaleSetLifecycleHookEventState : IEquatable<VmScaleSetLifecycleHookEventState>
+    public readonly partial struct VirtualMachineScaleSetLifecycleHookEventState : IEquatable<VirtualMachineScaleSetLifecycleHookEventState>
     {
         private readonly string _value;
         /// <summary> The lifecycle hook event is active. E.g., waiting on a response from the customer. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The lifecycle hook event is completed. i.e., all the target resources in the event have moved to a terminal state. </summary>
         private const string CompletedValue = "Completed";
 
-        /// <summary> Initializes a new instance of <see cref="VmScaleSetLifecycleHookEventState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetLifecycleHookEventState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VmScaleSetLifecycleHookEventState(string value)
+        public VirtualMachineScaleSetLifecycleHookEventState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The lifecycle hook event is active. E.g., waiting on a response from the customer. </summary>
-        public static VmScaleSetLifecycleHookEventState Active { get; } = new VmScaleSetLifecycleHookEventState(ActiveValue);
+        public static VirtualMachineScaleSetLifecycleHookEventState Active { get; } = new VirtualMachineScaleSetLifecycleHookEventState(ActiveValue);
 
         /// <summary> The lifecycle hook event is completed. i.e., all the target resources in the event have moved to a terminal state. </summary>
-        public static VmScaleSetLifecycleHookEventState Completed { get; } = new VmScaleSetLifecycleHookEventState(CompletedValue);
+        public static VirtualMachineScaleSetLifecycleHookEventState Completed { get; } = new VirtualMachineScaleSetLifecycleHookEventState(CompletedValue);
 
-        /// <summary> Determines if two <see cref="VmScaleSetLifecycleHookEventState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="VirtualMachineScaleSetLifecycleHookEventState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(VmScaleSetLifecycleHookEventState left, VmScaleSetLifecycleHookEventState right) => left.Equals(right);
+        public static bool operator ==(VirtualMachineScaleSetLifecycleHookEventState left, VirtualMachineScaleSetLifecycleHookEventState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="VmScaleSetLifecycleHookEventState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="VirtualMachineScaleSetLifecycleHookEventState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(VmScaleSetLifecycleHookEventState left, VmScaleSetLifecycleHookEventState right) => !left.Equals(right);
+        public static bool operator !=(VirtualMachineScaleSetLifecycleHookEventState left, VirtualMachineScaleSetLifecycleHookEventState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="VmScaleSetLifecycleHookEventState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="VirtualMachineScaleSetLifecycleHookEventState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VmScaleSetLifecycleHookEventState(string value) => new VmScaleSetLifecycleHookEventState(value);
+        public static implicit operator VirtualMachineScaleSetLifecycleHookEventState(string value) => new VirtualMachineScaleSetLifecycleHookEventState(value);
 
-        /// <summary> Converts a string to a <see cref="VmScaleSetLifecycleHookEventState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="VirtualMachineScaleSetLifecycleHookEventState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VmScaleSetLifecycleHookEventState?(string value) => value == null ? null : new VmScaleSetLifecycleHookEventState(value);
+        public static implicit operator VirtualMachineScaleSetLifecycleHookEventState?(string value) => value == null ? null : new VirtualMachineScaleSetLifecycleHookEventState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is VmScaleSetLifecycleHookEventState other && Equals(other);
+        public override bool Equals(object obj) => obj is VirtualMachineScaleSetLifecycleHookEventState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(VmScaleSetLifecycleHookEventState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(VirtualMachineScaleSetLifecycleHookEventState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
