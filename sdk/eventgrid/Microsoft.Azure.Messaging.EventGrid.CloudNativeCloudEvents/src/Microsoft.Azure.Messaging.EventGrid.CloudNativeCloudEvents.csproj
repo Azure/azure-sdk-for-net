@@ -29,7 +29,7 @@
 
     <!--
       Required because the shared Azure.Core DiagnosticScope.cs uses ActivityContext.TryParse(isRemote:),
-      which needs System.Diagnostics.DiagnosticSource 9.0+; netstandard2.0 otherwise resolves an older version.
+      which is available since System.Diagnostics.DiagnosticSource 7.0; netstandard2.0 otherwise resolves an older version. The version is centrally managed.
     -->
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />
   </ItemGroup>
