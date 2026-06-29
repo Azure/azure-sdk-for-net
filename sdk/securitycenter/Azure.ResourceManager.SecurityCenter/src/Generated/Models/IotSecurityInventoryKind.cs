@@ -12,7 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Types for inventory kind. </summary>
-    public readonly partial struct InventoryKind : IEquatable<InventoryKind>
+    public readonly partial struct IotSecurityInventoryKind : IEquatable<IotSecurityInventoryKind>
     {
         private readonly string _value;
         /// <summary> AzureDevOpsOrganization. </summary>
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> GitHubRepository. </summary>
         private const string GitHubRepositoryValue = "GitHubRepository";
 
-        /// <summary> Initializes a new instance of <see cref="InventoryKind"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecurityInventoryKind"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public InventoryKind(string value)
+        public IotSecurityInventoryKind(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -37,44 +37,44 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> AzureDevOpsOrganization. </summary>
-        public static InventoryKind AzureDevOpsOrganization { get; } = new InventoryKind(AzureDevOpsOrganizationValue);
+        public static IotSecurityInventoryKind AzureDevOpsOrganization { get; } = new IotSecurityInventoryKind(AzureDevOpsOrganizationValue);
 
         /// <summary> AzureDevOpsProject. </summary>
-        public static InventoryKind AzureDevOpsProject { get; } = new InventoryKind(AzureDevOpsProjectValue);
+        public static IotSecurityInventoryKind AzureDevOpsProject { get; } = new IotSecurityInventoryKind(AzureDevOpsProjectValue);
 
         /// <summary> AzureDevOpsRepository. </summary>
-        public static InventoryKind AzureDevOpsRepository { get; } = new InventoryKind(AzureDevOpsRepositoryValue);
+        public static IotSecurityInventoryKind AzureDevOpsRepository { get; } = new IotSecurityInventoryKind(AzureDevOpsRepositoryValue);
 
         /// <summary> GitHubOwner. </summary>
-        public static InventoryKind GitHubOwner { get; } = new InventoryKind(GitHubOwnerValue);
+        public static IotSecurityInventoryKind GitHubOwner { get; } = new IotSecurityInventoryKind(GitHubOwnerValue);
 
         /// <summary> GitHubRepository. </summary>
-        public static InventoryKind GitHubRepository { get; } = new InventoryKind(GitHubRepositoryValue);
+        public static IotSecurityInventoryKind GitHubRepository { get; } = new IotSecurityInventoryKind(GitHubRepositoryValue);
 
-        /// <summary> Determines if two <see cref="InventoryKind"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="IotSecurityInventoryKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(InventoryKind left, InventoryKind right) => left.Equals(right);
+        public static bool operator ==(IotSecurityInventoryKind left, IotSecurityInventoryKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="InventoryKind"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="IotSecurityInventoryKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(InventoryKind left, InventoryKind right) => !left.Equals(right);
+        public static bool operator !=(IotSecurityInventoryKind left, IotSecurityInventoryKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="InventoryKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="IotSecurityInventoryKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InventoryKind(string value) => new InventoryKind(value);
+        public static implicit operator IotSecurityInventoryKind(string value) => new IotSecurityInventoryKind(value);
 
-        /// <summary> Converts a string to a <see cref="InventoryKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="IotSecurityInventoryKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InventoryKind?(string value) => value == null ? null : new InventoryKind(value);
+        public static implicit operator IotSecurityInventoryKind?(string value) => value == null ? null : new IotSecurityInventoryKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is InventoryKind other && Equals(other);
+        public override bool Equals(object obj) => obj is IotSecurityInventoryKind other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(InventoryKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(IotSecurityInventoryKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

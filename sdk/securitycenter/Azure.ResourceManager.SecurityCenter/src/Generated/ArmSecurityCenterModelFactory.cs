@@ -1515,7 +1515,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="isDeprecated"> Optional. True if the plan is deprecated. If there are replacing plans they will appear in `replacedBy` property. </param>
         /// <param name="replacedBy"> Optional. List of plans that replace this plan. This property exists only if this plan is deprecated. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityCenterPricingData"/> instance for mocking. </returns>
-        public static SecurityCenterPricingData SecurityCenterPricingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SecurityCenterPricingTier? pricingTier = default, string subPlan = default, TimeSpan? freeTrialRemainingTime = default, DateTimeOffset? enablementOn = default, SecurityPolicyEnforce? enforce = default, SecurityCenterPricingInheritance? inherited = default, string inheritedFrom = default, ResourcesCoverageStatus? resourcesCoverageStatus = default, IEnumerable<SecurityConnectorExtension> extensions = default, bool? isDeprecated = default, IEnumerable<string> replacedBy = default)
+        public static SecurityCenterPricingData SecurityCenterPricingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SecurityCenterPricingTier? pricingTier = default, string subPlan = default, TimeSpan? freeTrialRemainingTime = default, DateTimeOffset? enablementOn = default, SecurityPolicyEnforce? enforce = default, SecurityCenterPricingInheritance? inherited = default, string inheritedFrom = default, SecurityCenterResourcesCoverageStatus? resourcesCoverageStatus = default, IEnumerable<SecurityConnectorExtension> extensions = default, bool? isDeprecated = default, IEnumerable<string> replacedBy = default)
         {
             return new SecurityCenterPricingData(
                 id,
@@ -2812,7 +2812,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// Will be ignored if agentless auto-discovery is enabled.
         /// </param>
         /// <returns> A new <see cref="Models.AgentlessConfiguration"/> instance for mocking. </returns>
-        public static AgentlessConfiguration AgentlessConfiguration(AgentlessEnablement? agentlessEnabled = default, AutoDiscovery? agentlessAutoDiscovery = default, IEnumerable<string> scanners = default, InventoryListKind? inventoryListType = default, IEnumerable<InventoryList> inventoryList = default)
+        public static AgentlessConfiguration AgentlessConfiguration(AgentlessEnablement? agentlessEnabled = default, AutoDiscovery? agentlessAutoDiscovery = default, IEnumerable<string> scanners = default, IotSecurityInventoryListKind? inventoryListType = default, IEnumerable<InventoryList> inventoryList = default)
         {
             scanners ??= new ChangeTrackingList<string>();
             inventoryList ??= new ChangeTrackingList<InventoryList>();
@@ -2829,7 +2829,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="inventoryKind"> Types for inventory kind. </param>
         /// <param name="value"> Gets or sets the value for inventory type. </param>
         /// <returns> A new <see cref="Models.InventoryList"/> instance for mocking. </returns>
-        public static InventoryList InventoryList(InventoryKind? inventoryKind = default, string value = default)
+        public static InventoryList InventoryList(IotSecurityInventoryKind? inventoryKind = default, string value = default)
         {
             return new InventoryList(inventoryKind, value, default);
         }
@@ -3290,7 +3290,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="policySetDefinitionId"> The policy set definition id associated with the standard. </param>
         /// <param name="metadata"> The security standard metadata. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityStandardData"/> instance for mocking. </returns>
-        public static SecurityStandardData SecurityStandardData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, StandardType? standardType = default, string description = default, IEnumerable<PartialAssessmentProperties> assessments = default, IEnumerable<StandardSupportedCloud> cloudProviders = default, string policySetDefinitionId = default, StandardMetadata metadata = default)
+        public static SecurityStandardData SecurityStandardData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, SecurityStandardType? standardType = default, string description = default, IEnumerable<PartialAssessmentProperties> assessments = default, IEnumerable<StandardSupportedCloud> cloudProviders = default, string policySetDefinitionId = default, StandardMetadata metadata = default)
         {
             return new SecurityStandardData(
                 id,
@@ -3374,7 +3374,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="complianceOn"> Attestation compliance date. </param>
         /// <param name="evidence"> Array of links to attestation evidence. </param>
         /// <returns> A new <see cref="Models.StandardAssignmentAttestationInfo"/> instance for mocking. </returns>
-        public static StandardAssignmentAttestationInfo StandardAssignmentAttestationInfo(AttestationComplianceState? complianceState = default, string assessmentKey = default, DateTimeOffset? complianceOn = default, IEnumerable<AttestationEvidence> evidence = default)
+        public static StandardAssignmentAttestationInfo StandardAssignmentAttestationInfo(StandardAssignmentAttestationComplianceState? complianceState = default, string assessmentKey = default, DateTimeOffset? complianceOn = default, IEnumerable<AttestationEvidence> evidence = default)
         {
             evidence ??= new ChangeTrackingList<AttestationEvidence>();
 
@@ -4053,7 +4053,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="automatedResponse"> Optional. Specifies the automated response action to take when malware is detected. </param>
         /// <param name="operationStatus"> Upon failure or partial success. Additional data describing Malware Scanning enable/disable operation. </param>
         /// <returns> A new <see cref="Models.MalwareScanningProperties"/> instance for mocking. </returns>
-        public static MalwareScanningProperties MalwareScanningProperties(OnUploadProperties onUpload = default, ResourceIdentifier scanResultsEventGridTopicResourceId = default, BlobScanResultsConfig? blobScanResultsOptions = default, AutomatedResponseType? automatedResponse = default, SecurityCenterOperationStatus operationStatus = default)
+        public static MalwareScanningProperties MalwareScanningProperties(OnUploadProperties onUpload = default, ResourceIdentifier scanResultsEventGridTopicResourceId = default, BlobScanResultsConfig? blobScanResultsOptions = default, MalwareScanningAutomatedResponseType? automatedResponse = default, SecurityCenterOperationStatus operationStatus = default)
         {
             return new MalwareScanningProperties(
                 onUpload,
@@ -4910,7 +4910,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="operationId"> Gets or sets the operation id. </param>
         /// <param name="scanStatus"> The scan operation status. </param>
         /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentScanOperationResultProperties"/> instance for mocking. </returns>
-        public static SqlVulnerabilityAssessmentScanOperationResultProperties SqlVulnerabilityAssessmentScanOperationResultProperties(string operationId = default, ScanOperationStatus? scanStatus = default)
+        public static SqlVulnerabilityAssessmentScanOperationResultProperties SqlVulnerabilityAssessmentScanOperationResultProperties(string operationId = default, SqlVulnerabilityAssessmentScanOperationStatus? scanStatus = default)
         {
             return new SqlVulnerabilityAssessmentScanOperationResultProperties(operationId, scanStatus, default);
         }

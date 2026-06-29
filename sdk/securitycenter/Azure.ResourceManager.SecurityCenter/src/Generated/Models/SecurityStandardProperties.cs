@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="policySetDefinitionId"> The policy set definition id associated with the standard. </param>
         /// <param name="metadata"> The security standard metadata. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityStandardProperties(string displayName, StandardType? standardType, string description, IList<PartialAssessmentProperties> assessments, IList<StandardSupportedCloud> cloudProviders, string policySetDefinitionId, StandardMetadata metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityStandardProperties(string displayName, SecurityStandardType? standardType, string description, IList<PartialAssessmentProperties> assessments, IList<StandardSupportedCloud> cloudProviders, string policySetDefinitionId, StandardMetadata metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             StandardType = standardType;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public string DisplayName { get; set; }
 
         /// <summary> Standard type (Custom or Default or Compliance only currently). </summary>
-        public StandardType? StandardType { get; }
+        public SecurityStandardType? StandardType { get; }
 
         /// <summary> Description of the standard. </summary>
         public string Description { get; set; }

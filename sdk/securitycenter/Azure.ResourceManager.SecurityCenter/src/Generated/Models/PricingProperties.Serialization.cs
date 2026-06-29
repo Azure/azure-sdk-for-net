@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             SecurityPolicyEnforce? enforce = default;
             SecurityCenterPricingInheritance? inherited = default;
             string inheritedFrom = default;
-            ResourcesCoverageStatus? resourcesCoverageStatus = default;
+            SecurityCenterResourcesCoverageStatus? resourcesCoverageStatus = default;
             IList<SecurityConnectorExtension> extensions = default;
             bool? isDeprecated = default;
             IReadOnlyList<string> replacedBy = default;
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    resourcesCoverageStatus = new ResourcesCoverageStatus(prop.Value.GetString());
+                    resourcesCoverageStatus = new SecurityCenterResourcesCoverageStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("extensions"u8))

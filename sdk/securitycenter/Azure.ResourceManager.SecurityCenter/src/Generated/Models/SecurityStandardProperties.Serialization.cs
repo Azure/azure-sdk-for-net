@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             string displayName = default;
-            StandardType? standardType = default;
+            SecurityStandardType? standardType = default;
             string description = default;
             IList<PartialAssessmentProperties> assessments = default;
             IList<StandardSupportedCloud> cloudProviders = default;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    standardType = new StandardType(prop.Value.GetString());
+                    standardType = new SecurityStandardType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("description"u8))

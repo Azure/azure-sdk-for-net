@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="isDeprecated"> Optional. True if the plan is deprecated. If there are replacing plans they will appear in `replacedBy` property. </param>
         /// <param name="replacedBy"> Optional. List of plans that replace this plan. This property exists only if this plan is deprecated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PricingProperties(SecurityCenterPricingTier pricingTier, string subPlan, TimeSpan? freeTrialRemainingTime, DateTimeOffset? enablementOn, SecurityPolicyEnforce? enforce, SecurityCenterPricingInheritance? inherited, string inheritedFrom, ResourcesCoverageStatus? resourcesCoverageStatus, IList<SecurityConnectorExtension> extensions, bool? isDeprecated, IReadOnlyList<string> replacedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PricingProperties(SecurityCenterPricingTier pricingTier, string subPlan, TimeSpan? freeTrialRemainingTime, DateTimeOffset? enablementOn, SecurityPolicyEnforce? enforce, SecurityCenterPricingInheritance? inherited, string inheritedFrom, SecurityCenterResourcesCoverageStatus? resourcesCoverageStatus, IList<SecurityConnectorExtension> extensions, bool? isDeprecated, IReadOnlyList<string> replacedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PricingTier = pricingTier;
             SubPlan = subPlan;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public string InheritedFrom { get; }
 
         /// <summary> This field is available for subscription-level only, and reflects the coverage status of the resources under the subscription. Please note: The "pricingTier" field reflects the plan status of the subscription. However, since the plan status can also be defined at the resource level, there might be misalignment between the subscription's plan status and the resource status. This field helps indicate the coverage status of the resources. </summary>
-        public ResourcesCoverageStatus? ResourcesCoverageStatus { get; }
+        public SecurityCenterResourcesCoverageStatus? ResourcesCoverageStatus { get; }
 
         /// <summary> Optional. List of extensions offered under a plan. </summary>
         public IList<SecurityConnectorExtension> Extensions { get; } = new ChangeTrackingList<SecurityConnectorExtension>();

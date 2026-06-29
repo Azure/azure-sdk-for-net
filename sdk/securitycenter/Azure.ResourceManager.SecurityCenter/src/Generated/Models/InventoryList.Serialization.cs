@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            InventoryKind? inventoryKind = default;
+            IotSecurityInventoryKind? inventoryKind = default;
             string value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    inventoryKind = new InventoryKind(prop.Value.GetString());
+                    inventoryKind = new IotSecurityInventoryKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("value"u8))

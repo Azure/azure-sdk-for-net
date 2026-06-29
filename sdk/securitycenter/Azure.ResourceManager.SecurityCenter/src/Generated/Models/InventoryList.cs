@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="inventoryKind"> Types for inventory kind. </param>
         /// <param name="value"> Gets or sets the value for inventory type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InventoryList(InventoryKind? inventoryKind, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InventoryList(IotSecurityInventoryKind? inventoryKind, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InventoryKind = inventoryKind;
             Value = value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Types for inventory kind. </summary>
-        public InventoryKind? InventoryKind { get; set; }
+        public IotSecurityInventoryKind? InventoryKind { get; set; }
 
         /// <summary> Gets or sets the value for inventory type. </summary>
         public string Value { get; set; }

@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             AgentlessEnablement? agentlessEnabled = default;
             AutoDiscovery? agentlessAutoDiscovery = default;
             IList<string> scanners = default;
-            InventoryListKind? inventoryListType = default;
+            IotSecurityInventoryListKind? inventoryListType = default;
             IList<InventoryList> inventoryList = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    inventoryListType = new InventoryListKind(prop.Value.GetString());
+                    inventoryListType = new IotSecurityInventoryListKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("inventoryList"u8))

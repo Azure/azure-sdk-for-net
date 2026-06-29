@@ -12,7 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Standard type (Custom or Default or Compliance only currently). </summary>
-    public readonly partial struct StandardType : IEquatable<StandardType>
+    public readonly partial struct SecurityStandardType : IEquatable<SecurityStandardType>
     {
         private readonly string _value;
         /// <summary> Custom. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Compliance. </summary>
         private const string ComplianceValue = "Compliance";
 
-        /// <summary> Initializes a new instance of <see cref="StandardType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityStandardType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StandardType(string value)
+        public SecurityStandardType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Custom. </summary>
-        public static StandardType Custom { get; } = new StandardType(CustomValue);
+        public static SecurityStandardType Custom { get; } = new SecurityStandardType(CustomValue);
 
         /// <summary> Default. </summary>
-        public static StandardType Default { get; } = new StandardType(DefaultValue);
+        public static SecurityStandardType Default { get; } = new SecurityStandardType(DefaultValue);
 
         /// <summary> Compliance. </summary>
-        public static StandardType Compliance { get; } = new StandardType(ComplianceValue);
+        public static SecurityStandardType Compliance { get; } = new SecurityStandardType(ComplianceValue);
 
-        /// <summary> Determines if two <see cref="StandardType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="SecurityStandardType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(StandardType left, StandardType right) => left.Equals(right);
+        public static bool operator ==(SecurityStandardType left, SecurityStandardType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="StandardType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="SecurityStandardType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(StandardType left, StandardType right) => !left.Equals(right);
+        public static bool operator !=(SecurityStandardType left, SecurityStandardType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="StandardType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SecurityStandardType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StandardType(string value) => new StandardType(value);
+        public static implicit operator SecurityStandardType(string value) => new SecurityStandardType(value);
 
-        /// <summary> Converts a string to a <see cref="StandardType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SecurityStandardType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StandardType?(string value) => value == null ? null : new StandardType(value);
+        public static implicit operator SecurityStandardType?(string value) => value == null ? null : new SecurityStandardType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is StandardType other && Equals(other);
+        public override bool Equals(object obj) => obj is SecurityStandardType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(StandardType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SecurityStandardType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

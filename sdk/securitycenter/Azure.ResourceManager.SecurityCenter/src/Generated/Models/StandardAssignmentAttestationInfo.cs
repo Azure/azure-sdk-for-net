@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="complianceOn"> Attestation compliance date. </param>
         /// <param name="evidence"> Array of links to attestation evidence. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StandardAssignmentAttestationInfo(AttestationComplianceState? complianceState, AssignedAssessmentItem assignedAssessment, DateTimeOffset? complianceOn, IList<AttestationEvidence> evidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StandardAssignmentAttestationInfo(StandardAssignmentAttestationComplianceState? complianceState, AssignedAssessmentItem assignedAssessment, DateTimeOffset? complianceOn, IList<AttestationEvidence> evidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ComplianceState = complianceState;
             AssignedAssessment = assignedAssessment;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Attest category of this assignment. </summary>
-        public AttestationComplianceState? ComplianceState { get; set; }
+        public StandardAssignmentAttestationComplianceState? ComplianceState { get; set; }
 
         /// <summary> Component item with key as applied to this standard assignment over the given scope. </summary>
         internal AssignedAssessmentItem AssignedAssessment { get; set; }

@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            AttestationComplianceState? complianceState = default;
+            StandardAssignmentAttestationComplianceState? complianceState = default;
             AssignedAssessmentItem assignedAssessment = default;
             DateTimeOffset? complianceOn = default;
             IList<AttestationEvidence> evidence = default;
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    complianceState = new AttestationComplianceState(prop.Value.GetString());
+                    complianceState = new StandardAssignmentAttestationComplianceState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("assignedAssessment"u8))

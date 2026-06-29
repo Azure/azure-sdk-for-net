@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Standard type (Custom or Default or Compliance only currently). </summary>
-        public StandardType? StandardType
+        public SecurityStandardType? StandardType
         {
             get
             {

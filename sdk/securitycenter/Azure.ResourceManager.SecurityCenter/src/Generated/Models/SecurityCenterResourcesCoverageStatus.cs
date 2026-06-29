@@ -12,7 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> This field is available for subscription-level only, and reflects the coverage status of the resources under the subscription. Please note: The "pricingTier" field reflects the plan status of the subscription. However, since the plan status can also be defined at the resource level, there might be misalignment between the subscription's plan status and the resource status. This field helps indicate the coverage status of the resources. </summary>
-    public readonly partial struct ResourcesCoverageStatus : IEquatable<ResourcesCoverageStatus>
+    public readonly partial struct SecurityCenterResourcesCoverageStatus : IEquatable<SecurityCenterResourcesCoverageStatus>
     {
         private readonly string _value;
         /// <summary> This value indicates that all resources associated with the subscription have the Defender plan enabled. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> This value indicates that the Defender plan is disabled for all resources under the subscription. None of the resources are protected by the Defender plan. </summary>
         private const string NotCoveredValue = "NotCovered";
 
-        /// <summary> Initializes a new instance of <see cref="ResourcesCoverageStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterResourcesCoverageStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ResourcesCoverageStatus(string value)
+        public SecurityCenterResourcesCoverageStatus(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> This value indicates that all resources associated with the subscription have the Defender plan enabled. </summary>
-        public static ResourcesCoverageStatus FullyCovered { get; } = new ResourcesCoverageStatus(FullyCoveredValue);
+        public static SecurityCenterResourcesCoverageStatus FullyCovered { get; } = new SecurityCenterResourcesCoverageStatus(FullyCoveredValue);
 
         /// <summary> This value indicates that some resources under the subscription have the Defender plan enabled, while others have it disabled. There is a mixed coverage status among resources. </summary>
-        public static ResourcesCoverageStatus PartiallyCovered { get; } = new ResourcesCoverageStatus(PartiallyCoveredValue);
+        public static SecurityCenterResourcesCoverageStatus PartiallyCovered { get; } = new SecurityCenterResourcesCoverageStatus(PartiallyCoveredValue);
 
         /// <summary> This value indicates that the Defender plan is disabled for all resources under the subscription. None of the resources are protected by the Defender plan. </summary>
-        public static ResourcesCoverageStatus NotCovered { get; } = new ResourcesCoverageStatus(NotCoveredValue);
+        public static SecurityCenterResourcesCoverageStatus NotCovered { get; } = new SecurityCenterResourcesCoverageStatus(NotCoveredValue);
 
-        /// <summary> Determines if two <see cref="ResourcesCoverageStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="SecurityCenterResourcesCoverageStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ResourcesCoverageStatus left, ResourcesCoverageStatus right) => left.Equals(right);
+        public static bool operator ==(SecurityCenterResourcesCoverageStatus left, SecurityCenterResourcesCoverageStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ResourcesCoverageStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="SecurityCenterResourcesCoverageStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ResourcesCoverageStatus left, ResourcesCoverageStatus right) => !left.Equals(right);
+        public static bool operator !=(SecurityCenterResourcesCoverageStatus left, SecurityCenterResourcesCoverageStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ResourcesCoverageStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SecurityCenterResourcesCoverageStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourcesCoverageStatus(string value) => new ResourcesCoverageStatus(value);
+        public static implicit operator SecurityCenterResourcesCoverageStatus(string value) => new SecurityCenterResourcesCoverageStatus(value);
 
-        /// <summary> Converts a string to a <see cref="ResourcesCoverageStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SecurityCenterResourcesCoverageStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourcesCoverageStatus?(string value) => value == null ? null : new ResourcesCoverageStatus(value);
+        public static implicit operator SecurityCenterResourcesCoverageStatus?(string value) => value == null ? null : new SecurityCenterResourcesCoverageStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ResourcesCoverageStatus other && Equals(other);
+        public override bool Equals(object obj) => obj is SecurityCenterResourcesCoverageStatus other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ResourcesCoverageStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SecurityCenterResourcesCoverageStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

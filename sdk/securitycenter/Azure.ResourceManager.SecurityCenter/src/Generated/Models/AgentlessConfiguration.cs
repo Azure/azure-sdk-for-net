@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// Will be ignored if agentless auto-discovery is enabled.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentlessConfiguration(AgentlessEnablement? agentlessEnabled, AutoDiscovery? agentlessAutoDiscovery, IList<string> scanners, InventoryListKind? inventoryListType, IList<InventoryList> inventoryList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentlessConfiguration(AgentlessEnablement? agentlessEnabled, AutoDiscovery? agentlessAutoDiscovery, IList<string> scanners, IotSecurityInventoryListKind? inventoryListType, IList<InventoryList> inventoryList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AgentlessEnabled = agentlessEnabled;
             AgentlessAutoDiscovery = agentlessAutoDiscovery;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public IList<string> Scanners { get; }
 
         /// <summary> Types for inventory list. </summary>
-        public InventoryListKind? InventoryListType { get; set; }
+        public IotSecurityInventoryListKind? InventoryListType { get; set; }
 
         /// <summary>
         /// Gets or sets the inventory list for inclusion or exclusion from Agentless.

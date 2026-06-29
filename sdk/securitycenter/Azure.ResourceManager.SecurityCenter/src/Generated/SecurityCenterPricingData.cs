@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> This field is available for subscription-level only, and reflects the coverage status of the resources under the subscription. Please note: The "pricingTier" field reflects the plan status of the subscription. However, since the plan status can also be defined at the resource level, there might be misalignment between the subscription's plan status and the resource status. This field helps indicate the coverage status of the resources. </summary>
-        public ResourcesCoverageStatus? ResourcesCoverageStatus
+        public SecurityCenterResourcesCoverageStatus? ResourcesCoverageStatus
         {
             get
             {
