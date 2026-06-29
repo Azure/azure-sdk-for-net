@@ -22,7 +22,6 @@ Azure.AI.Language.QuestionAnswering.Inference
 Azure.AI.OpenAI
 Azure.AI.OpenAI.Assistants
 Azure.AI.TextAnalytics
-Azure.AI.TextAnalytics.Legacy.Shared
 Azure.AI.VoiceLive.Snippets
 Azure.Analytics.Purview.DataMap
 Azure.Analytics.Synapse.Artifacts
