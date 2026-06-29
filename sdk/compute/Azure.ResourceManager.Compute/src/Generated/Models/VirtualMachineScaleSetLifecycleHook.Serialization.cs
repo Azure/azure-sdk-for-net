@@ -13,52 +13,52 @@ using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Specifies the external health policy for the virtual machine scale set. </summary>
-    public partial class ExternalHealthPolicy : IJsonModel<ExternalHealthPolicy>
+    /// <summary> Describes a lifecycle hook. </summary>
+    public partial class VirtualMachineScaleSetLifecycleHook : IJsonModel<VirtualMachineScaleSetLifecycleHook>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExternalHealthPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual VirtualMachineScaleSetLifecycleHook PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExternalHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetLifecycleHook>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeExternalHealthPolicy(document.RootElement, options);
+                        return DeserializeVirtualMachineScaleSetLifecycleHook(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExternalHealthPolicy)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetLifecycleHook)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExternalHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetLifecycleHook>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ExternalHealthPolicy)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetLifecycleHook)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExternalHealthPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<VirtualMachineScaleSetLifecycleHook>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExternalHealthPolicy IPersistableModel<ExternalHealthPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        VirtualMachineScaleSetLifecycleHook IPersistableModel<VirtualMachineScaleSetLifecycleHook>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExternalHealthPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VirtualMachineScaleSetLifecycleHook>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ExternalHealthPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VirtualMachineScaleSetLifecycleHook>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,25 +69,25 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExternalHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetLifecycleHook>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExternalHealthPolicy)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetLifecycleHook)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(VirtualMachineScaleSetLifecycleHookEventType))
             {
-                writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(VirtualMachineScaleSetLifecycleHookEventType.Value.ToString());
             }
-            if (Optional.IsDefined(ExpiryDuration))
+            if (Optional.IsDefined(WaitDuration))
             {
-                writer.WritePropertyName("expiryDuration"u8);
-                writer.WriteStringValue(ExpiryDuration.Value, "P");
+                writer.WritePropertyName("waitDuration"u8);
+                writer.WriteStringValue(WaitDuration.Value, "P");
             }
-            if (Optional.IsDefined(GracePeriod))
+            if (Optional.IsDefined(DefaultAction))
             {
-                writer.WritePropertyName("gracePeriod"u8);
-                writer.WriteStringValue(GracePeriod.Value, "P");
+                writer.WritePropertyName("defaultAction"u8);
+                writer.WriteStringValue(DefaultAction.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -108,60 +108,60 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExternalHealthPolicy IJsonModel<ExternalHealthPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        VirtualMachineScaleSetLifecycleHook IJsonModel<VirtualMachineScaleSetLifecycleHook>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExternalHealthPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual VirtualMachineScaleSetLifecycleHook JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExternalHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetLifecycleHook>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExternalHealthPolicy)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetLifecycleHook)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExternalHealthPolicy(document.RootElement, options);
+            return DeserializeVirtualMachineScaleSetLifecycleHook(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ExternalHealthPolicy DeserializeExternalHealthPolicy(JsonElement element, ModelReaderWriterOptions options)
+        internal static VirtualMachineScaleSetLifecycleHook DeserializeVirtualMachineScaleSetLifecycleHook(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool? enabled = default;
-            TimeSpan? expiryDuration = default;
-            TimeSpan? gracePeriod = default;
+            VirtualMachineScaleSetLifecycleHookEventType? virtualMachineScaleSetLifecycleHookEventType = default;
+            TimeSpan? waitDuration = default;
+            VirtualMachineScaleSetLifecycleHookAction? defaultAction = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("enabled"u8))
+                if (prop.NameEquals("type"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    virtualMachineScaleSetLifecycleHookEventType = new VirtualMachineScaleSetLifecycleHookEventType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("expiryDuration"u8))
+                if (prop.NameEquals("waitDuration"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    expiryDuration = prop.Value.GetTimeSpan("P");
+                    waitDuration = prop.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (prop.NameEquals("gracePeriod"u8))
+                if (prop.NameEquals("defaultAction"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    gracePeriod = prop.Value.GetTimeSpan("P");
+                    defaultAction = new VirtualMachineScaleSetLifecycleHookAction(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExternalHealthPolicy(enabled, expiryDuration, gracePeriod, additionalBinaryDataProperties);
+            return new VirtualMachineScaleSetLifecycleHook(virtualMachineScaleSetLifecycleHookEventType, waitDuration, defaultAction, additionalBinaryDataProperties);
         }
     }
 }

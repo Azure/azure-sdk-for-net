@@ -1,14 +1,19 @@
 # Release History
 
-## 1.15.0-beta.2 (Unreleased)
+## 1.15.0 (2026-06-29)
 
 ### Features Added
 
+- Upgraded Compute API version from `2025-04-01` to `2025-11-01`.
+
 ### Breaking Changes
 
-### Bugs Fixed
+- This is the first GA release generated from TypeSpec. Some obsolete APIs were added as migration compatibility shims and are not supported by the TypeSpec-generated SDK; please review obsolete messages for replacement guidance.
+- Cloud Services (classic) APIs are no longer supported by the TypeSpec-generated SDK and are preserved only as obsolete compatibility shims.
 
 ### Other Changes
+
+- Migrated code generation from AutoRest to TypeSpec.
 
 ## 1.15.0-beta.1 (2026-04-24)
 

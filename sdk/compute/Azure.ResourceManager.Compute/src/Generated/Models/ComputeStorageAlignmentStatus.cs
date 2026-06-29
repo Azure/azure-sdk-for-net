@@ -12,7 +12,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the storage alignment status for the disk. </summary>
-    public readonly partial struct StorageAlignmentStatus : IEquatable<StorageAlignmentStatus>
+    public readonly partial struct ComputeStorageAlignmentStatus : IEquatable<ComputeStorageAlignmentStatus>
     {
         private readonly string _value;
         /// <summary> Disk does not have Storage Fault Domain to Compute Fault Domain mapping. A single Storage Fault Domain failure may impact all VMs that reference this disk profile. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Disk has Storage Fault Domain to Compute Fault Domain mapping. Storage Fault Domain failure is contained to VMs in a single Compute Fault Domain. </summary>
         private const string AlignedValue = "Aligned";
 
-        /// <summary> Initializes a new instance of <see cref="StorageAlignmentStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeStorageAlignmentStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StorageAlignmentStatus(string value)
+        public ComputeStorageAlignmentStatus(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Disk does not have Storage Fault Domain to Compute Fault Domain mapping. A single Storage Fault Domain failure may impact all VMs that reference this disk profile. </summary>
-        public static StorageAlignmentStatus Unaligned { get; } = new StorageAlignmentStatus(UnalignedValue);
+        public static ComputeStorageAlignmentStatus Unaligned { get; } = new ComputeStorageAlignmentStatus(UnalignedValue);
 
         /// <summary> Disk has Storage Fault Domain to Compute Fault Domain mapping. Storage Fault Domain failure is contained to VMs in a single Compute Fault Domain. </summary>
-        public static StorageAlignmentStatus Aligned { get; } = new StorageAlignmentStatus(AlignedValue);
+        public static ComputeStorageAlignmentStatus Aligned { get; } = new ComputeStorageAlignmentStatus(AlignedValue);
 
-        /// <summary> Determines if two <see cref="StorageAlignmentStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeStorageAlignmentStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(StorageAlignmentStatus left, StorageAlignmentStatus right) => left.Equals(right);
+        public static bool operator ==(ComputeStorageAlignmentStatus left, ComputeStorageAlignmentStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="StorageAlignmentStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeStorageAlignmentStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(StorageAlignmentStatus left, StorageAlignmentStatus right) => !left.Equals(right);
+        public static bool operator !=(ComputeStorageAlignmentStatus left, ComputeStorageAlignmentStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="StorageAlignmentStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeStorageAlignmentStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageAlignmentStatus(string value) => new StorageAlignmentStatus(value);
+        public static implicit operator ComputeStorageAlignmentStatus(string value) => new ComputeStorageAlignmentStatus(value);
 
-        /// <summary> Converts a string to a <see cref="StorageAlignmentStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeStorageAlignmentStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageAlignmentStatus?(string value) => value == null ? null : new StorageAlignmentStatus(value);
+        public static implicit operator ComputeStorageAlignmentStatus?(string value) => value == null ? null : new ComputeStorageAlignmentStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is StorageAlignmentStatus other && Equals(other);
+        public override bool Equals(object obj) => obj is ComputeStorageAlignmentStatus other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(StorageAlignmentStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ComputeStorageAlignmentStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -442,6 +442,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         patch.Tags.Add(tag);
                     }
+                    PrepareTagPatch(patch, current);
                     patch.Tags[key] = value;
                     ArmOperation<GalleryImageResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -490,6 +491,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         patch.Tags.Add(tag);
                     }
+                    PrepareTagPatch(patch, current);
                     patch.Tags[key] = value;
                     ArmOperation<GalleryImageResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -533,6 +535,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     GalleryImageData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     GalleryImagePatch patch = new GalleryImagePatch();
+                    PrepareTagPatch(patch, current);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<GalleryImageResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -576,6 +579,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     GalleryImageData current = Get(cancellationToken: cancellationToken).Value.Data;
                     GalleryImagePatch patch = new GalleryImagePatch();
+                    PrepareTagPatch(patch, current);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<GalleryImageResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -622,6 +626,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         patch.Tags.Add(tag);
                     }
+                    PrepareTagPatch(patch, current);
                     patch.Tags.Remove(key);
                     ArmOperation<GalleryImageResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -668,6 +673,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         patch.Tags.Add(tag);
                     }
+                    PrepareTagPatch(patch, current);
                     patch.Tags.Remove(key);
                     ArmOperation<GalleryImageResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());

@@ -134,11 +134,6 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("hardwareProfile"u8);
                 writer.WriteObjectValue(HardwareProfile, options);
             }
-            if (Optional.IsDefined(InterconnectBlockProfile))
-            {
-                writer.WritePropertyName("interconnectBlockProfile"u8);
-                writer.WriteObjectValue(InterconnectBlockProfile, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -193,7 +188,6 @@ namespace Azure.ResourceManager.Compute.Models
             ComputeScheduledEventsProfile scheduledEventsProfile = default;
             string userData = default;
             VirtualMachineScaleSetHardwareProfile hardwareProfile = default;
-            InterconnectBlockProfile interconnectBlockProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -297,15 +291,6 @@ namespace Azure.ResourceManager.Compute.Models
                     hardwareProfile = VirtualMachineScaleSetHardwareProfile.DeserializeVirtualMachineScaleSetHardwareProfile(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("interconnectBlockProfile"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    interconnectBlockProfile = InterconnectBlockProfile.DeserializeInterconnectBlockProfile(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -324,7 +309,6 @@ namespace Azure.ResourceManager.Compute.Models
                 scheduledEventsProfile,
                 userData,
                 hardwareProfile,
-                interconnectBlockProfile,
                 additionalBinaryDataProperties);
         }
     }
