@@ -275,7 +275,7 @@ if ($failedPackages.Count -gt 0) {
                 }
 
                 if ($issue.Prompt) {
-                    Write-Host "      Prompt: $($issue.Prompt)"
+                    Write-Host "        Use this prompt template to fix: $($issue.Prompt)"
                 }
             }
         } elseif ($failedPackage.ResponseError) {
