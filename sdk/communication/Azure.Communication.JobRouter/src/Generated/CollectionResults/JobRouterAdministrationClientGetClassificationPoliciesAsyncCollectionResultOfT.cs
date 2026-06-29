@@ -49,8 +49,8 @@ namespace Azure.Communication.JobRouter
                     yield break;
                 }
                 PagedClassificationPolicy result = (PagedClassificationPolicy)response;
-                yield return Page<ClassificationPolicy>.FromValues((IReadOnlyList<ClassificationPolicy>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ClassificationPolicy>.FromValues((IReadOnlyList<ClassificationPolicy>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

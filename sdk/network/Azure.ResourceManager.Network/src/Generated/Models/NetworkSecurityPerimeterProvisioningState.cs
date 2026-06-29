@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct NetworkSecurityPerimeterProvisioningState : IEquatable<NetworkSecurityPerimeterProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Creating. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Updating. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Accepted. </summary>
+        private const string AcceptedValue = "Accepted";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkSecurityPerimeterProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string CreatingValue = "Creating";
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string AcceptedValue = "Accepted";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> Succeeded. </summary>
         public static NetworkSecurityPerimeterProvisioningState Succeeded { get; } = new NetworkSecurityPerimeterProvisioningState(SucceededValue);
+
         /// <summary> Creating. </summary>
         public static NetworkSecurityPerimeterProvisioningState Creating { get; } = new NetworkSecurityPerimeterProvisioningState(CreatingValue);
+
         /// <summary> Updating. </summary>
         public static NetworkSecurityPerimeterProvisioningState Updating { get; } = new NetworkSecurityPerimeterProvisioningState(UpdatingValue);
+
         /// <summary> Deleting. </summary>
         public static NetworkSecurityPerimeterProvisioningState Deleting { get; } = new NetworkSecurityPerimeterProvisioningState(DeletingValue);
+
         /// <summary> Accepted. </summary>
         public static NetworkSecurityPerimeterProvisioningState Accepted { get; } = new NetworkSecurityPerimeterProvisioningState(AcceptedValue);
+
         /// <summary> Failed. </summary>
         public static NetworkSecurityPerimeterProvisioningState Failed { get; } = new NetworkSecurityPerimeterProvisioningState(FailedValue);
+
         /// <summary> Determines if two <see cref="NetworkSecurityPerimeterProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkSecurityPerimeterProvisioningState left, NetworkSecurityPerimeterProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkSecurityPerimeterProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkSecurityPerimeterProvisioningState left, NetworkSecurityPerimeterProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkSecurityPerimeterProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkSecurityPerimeterProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkSecurityPerimeterProvisioningState(string value) => new NetworkSecurityPerimeterProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkSecurityPerimeterProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkSecurityPerimeterProvisioningState?(string value) => value == null ? null : new NetworkSecurityPerimeterProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkSecurityPerimeterProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkSecurityPerimeterProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

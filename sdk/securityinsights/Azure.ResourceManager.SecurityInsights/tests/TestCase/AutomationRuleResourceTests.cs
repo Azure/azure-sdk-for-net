@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             var workspace = await GetWorkspaceResourceAsync(resourceGroup);
             var sOS = await GetSentinelOnboardingStateResourceAsync(operationalInsights);
             //1.Get
-            var automationName = Recording.GenerateAssetName("testautomationrule-");
+            var automationName = GenerateAssetNameFromRecording("testautomationrule-", "automationRules");
             var automation1 = await CreateAutomationRuleAsync(operationalInsights, automationName);
             SecurityInsightsAutomationRuleResource automation = await automation1.GetAsync();
 

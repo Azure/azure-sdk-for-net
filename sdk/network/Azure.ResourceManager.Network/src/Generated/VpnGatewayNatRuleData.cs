@@ -7,80 +7,131 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the VpnGatewayNatRule data model.
-    /// VpnGatewayNatRule Resource.
-    /// </summary>
+    /// <summary> VpnGatewayNatRule Resource. </summary>
     public partial class VpnGatewayNatRuleData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of <see cref="VpnGatewayNatRuleData"/>. </summary>
         public VpnGatewayNatRuleData()
         {
-            InternalMappings = new ChangeTrackingList<VpnNatRuleMapping>();
-            ExternalMappings = new ChangeTrackingList<VpnNatRuleMapping>();
-            EgressVpnSiteLinkConnections = new ChangeTrackingList<WritableSubResource>();
-            IngressVpnSiteLinkConnections = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VpnGatewayNatRuleData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="provisioningState"> The provisioning state of the NAT Rule resource. </param>
-        /// <param name="vpnNatRuleType"> The type of NAT rule for VPN NAT. </param>
-        /// <param name="mode"> The Source NAT direction of a VPN NAT. </param>
-        /// <param name="internalMappings"> The private IP address internal mapping for NAT. </param>
-        /// <param name="externalMappings"> The private IP address external mapping for NAT. </param>
-        /// <param name="ipConfigurationId"> The IP Configuration ID this NAT rule applies to. </param>
-        /// <param name="egressVpnSiteLinkConnections"> List of egress VpnSiteLinkConnections. </param>
-        /// <param name="ingressVpnSiteLinkConnections"> List of ingress VpnSiteLinkConnections. </param>
-        internal VpnGatewayNatRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, NetworkProvisioningState? provisioningState, VpnNatRuleType? vpnNatRuleType, VpnNatRuleMode? mode, IList<VpnNatRuleMapping> internalMappings, IList<VpnNatRuleMapping> externalMappings, string ipConfigurationId, IReadOnlyList<WritableSubResource> egressVpnSiteLinkConnections, IReadOnlyList<WritableSubResource> ingressVpnSiteLinkConnections) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of the VpnGateway NAT rule. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal VpnGatewayNatRuleData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, VpnGatewayNatRuleProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            ProvisioningState = provisioningState;
-            VpnNatRuleType = vpnNatRuleType;
-            Mode = mode;
-            InternalMappings = internalMappings;
-            ExternalMappings = externalMappings;
-            IPConfigurationId = ipConfigurationId;
-            EgressVpnSiteLinkConnections = egressVpnSiteLinkConnections;
-            IngressVpnSiteLinkConnections = ingressVpnSiteLinkConnections;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> Properties of the VpnGateway NAT rule. </summary>
+        [WirePath("properties")]
+        internal VpnGatewayNatRuleProperties Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> The provisioning state of the NAT Rule resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The type of NAT rule for VPN NAT. </summary>
         [WirePath("properties.type")]
-        public VpnNatRuleType? VpnNatRuleType { get; set; }
+        public VpnNatRuleType? VpnNatRuleType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VpnNatRuleType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnGatewayNatRuleProperties();
+                }
+                Properties.VpnNatRuleType = value;
+            }
+        }
+
         /// <summary> The Source NAT direction of a VPN NAT. </summary>
         [WirePath("properties.mode")]
-        public VpnNatRuleMode? Mode { get; set; }
+        public VpnNatRuleMode? Mode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Mode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnGatewayNatRuleProperties();
+                }
+                Properties.Mode = value;
+            }
+        }
+
         /// <summary> The private IP address internal mapping for NAT. </summary>
         [WirePath("properties.internalMappings")]
-        public IList<VpnNatRuleMapping> InternalMappings { get; }
+        public IList<VpnNatRuleMapping> InternalMappings
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnGatewayNatRuleProperties();
+                }
+                return Properties.InternalMappings;
+            }
+        }
+
         /// <summary> The private IP address external mapping for NAT. </summary>
         [WirePath("properties.externalMappings")]
-        public IList<VpnNatRuleMapping> ExternalMappings { get; }
+        public IList<VpnNatRuleMapping> ExternalMappings
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnGatewayNatRuleProperties();
+                }
+                return Properties.ExternalMappings;
+            }
+        }
+
         /// <summary> The IP Configuration ID this NAT rule applies to. </summary>
         [WirePath("properties.ipConfigurationId")]
-        public string IPConfigurationId { get; set; }
-        /// <summary> List of egress VpnSiteLinkConnections. </summary>
-        [WirePath("properties.egressVpnSiteLinkConnections")]
-        public IReadOnlyList<WritableSubResource> EgressVpnSiteLinkConnections { get; }
-        /// <summary> List of ingress VpnSiteLinkConnections. </summary>
-        [WirePath("properties.ingressVpnSiteLinkConnections")]
-        public IReadOnlyList<WritableSubResource> IngressVpnSiteLinkConnections { get; }
+        public string IpConfigurationId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IpConfigurationId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnGatewayNatRuleProperties();
+                }
+                Properties.IpConfigurationId = value;
+            }
+        }
     }
 }

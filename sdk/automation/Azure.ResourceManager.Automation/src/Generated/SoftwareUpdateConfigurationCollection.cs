@@ -6,15 +6,13 @@
 #nullable disable
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Automation.Models;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Automation
 {
@@ -23,53 +21,51 @@ namespace Azure.ResourceManager.Automation
     /// Each <see cref="SoftwareUpdateConfigurationResource"/> in the collection will belong to the same instance of <see cref="AutomationAccountResource"/>.
     /// To get a <see cref="SoftwareUpdateConfigurationCollection"/> instance call the GetSoftwareUpdateConfigurations method from an instance of <see cref="AutomationAccountResource"/>.
     /// </summary>
-    public partial class SoftwareUpdateConfigurationCollection : ArmCollection, IEnumerable<SoftwareUpdateConfigurationCollectionItem>, IAsyncEnumerable<SoftwareUpdateConfigurationCollectionItem>
+    public partial class SoftwareUpdateConfigurationCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _softwareUpdateConfigurationClientDiagnostics;
-        private readonly SoftwareUpdateConfigurationsRestOperations _softwareUpdateConfigurationRestClient;
+        private readonly ClientDiagnostics _softwareUpdateConfigurationsClientDiagnostics;
+        private readonly SoftwareUpdateConfigurations _softwareUpdateConfigurationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SoftwareUpdateConfigurationCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationCollection for mocking. </summary>
         protected SoftwareUpdateConfigurationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SoftwareUpdateConfigurationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SoftwareUpdateConfigurationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _softwareUpdateConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", SoftwareUpdateConfigurationResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SoftwareUpdateConfigurationResource.ResourceType, out string softwareUpdateConfigurationApiVersion);
-            _softwareUpdateConfigurationRestClient = new SoftwareUpdateConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, softwareUpdateConfigurationApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _softwareUpdateConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", SoftwareUpdateConfigurationResource.ResourceType.Namespace, Diagnostics);
+            _softwareUpdateConfigurationsRestClient = new SoftwareUpdateConfigurations(_softwareUpdateConfigurationsClientDiagnostics, Pipeline, Endpoint, softwareUpdateConfigurationApiVersion ?? "2024-10-23");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != AutomationAccountResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AutomationAccountResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AutomationAccountResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create a new software update configuration with the name given in the URI.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurations/{softwareUpdateConfigurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurations/{softwareUpdateConfigurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SoftwareUpdateConfigurations_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> SoftwareUpdateConfigurations_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SoftwareUpdateConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,23 +74,31 @@ namespace Azure.ResourceManager.Automation
         /// <param name="data"> Request body. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="softwareUpdateConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="softwareUpdateConfigurationName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SoftwareUpdateConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string softwareUpdateConfigurationName, SoftwareUpdateConfigurationData data, string clientRequestId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="softwareUpdateConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<SoftwareUpdateConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string softwareUpdateConfigurationName, SoftwareUpdateConfigurationData data, string clientRequestId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(softwareUpdateConfigurationName, nameof(softwareUpdateConfigurationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _softwareUpdateConfigurationClientDiagnostics.CreateScope("SoftwareUpdateConfigurationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _softwareUpdateConfigurationsClientDiagnostics.CreateScope("SoftwareUpdateConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _softwareUpdateConfigurationRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, data, clientRequestId, cancellationToken).ConfigureAwait(false);
-                var uri = _softwareUpdateConfigurationRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, data, clientRequestId);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AutomationArmOperation<SoftwareUpdateConfigurationResource>(Response.FromValue(new SoftwareUpdateConfigurationResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, SoftwareUpdateConfigurationData.ToRequestContent(data), clientRequestId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SoftwareUpdateConfigurationData> response = Response.FromValue(SoftwareUpdateConfigurationData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AutomationArmOperation<SoftwareUpdateConfigurationResource> operation = new AutomationArmOperation<SoftwareUpdateConfigurationResource>(Response.FromValue(new SoftwareUpdateConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -108,20 +112,16 @@ namespace Azure.ResourceManager.Automation
         /// Create a new software update configuration with the name given in the URI.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurations/{softwareUpdateConfigurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurations/{softwareUpdateConfigurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SoftwareUpdateConfigurations_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> SoftwareUpdateConfigurations_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SoftwareUpdateConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,23 +130,31 @@ namespace Azure.ResourceManager.Automation
         /// <param name="data"> Request body. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="softwareUpdateConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="softwareUpdateConfigurationName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SoftwareUpdateConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string softwareUpdateConfigurationName, SoftwareUpdateConfigurationData data, string clientRequestId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="softwareUpdateConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<SoftwareUpdateConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string softwareUpdateConfigurationName, SoftwareUpdateConfigurationData data, string clientRequestId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(softwareUpdateConfigurationName, nameof(softwareUpdateConfigurationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _softwareUpdateConfigurationClientDiagnostics.CreateScope("SoftwareUpdateConfigurationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _softwareUpdateConfigurationsClientDiagnostics.CreateScope("SoftwareUpdateConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _softwareUpdateConfigurationRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, data, clientRequestId, cancellationToken);
-                var uri = _softwareUpdateConfigurationRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, data, clientRequestId);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AutomationArmOperation<SoftwareUpdateConfigurationResource>(Response.FromValue(new SoftwareUpdateConfigurationResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, SoftwareUpdateConfigurationData.ToRequestContent(data), clientRequestId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SoftwareUpdateConfigurationData> response = Response.FromValue(SoftwareUpdateConfigurationData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AutomationArmOperation<SoftwareUpdateConfigurationResource> operation = new AutomationArmOperation<SoftwareUpdateConfigurationResource>(Response.FromValue(new SoftwareUpdateConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -160,39 +168,43 @@ namespace Azure.ResourceManager.Automation
         /// Get a single software update configuration by name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurations/{softwareUpdateConfigurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurations/{softwareUpdateConfigurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SoftwareUpdateConfigurations_GetByName</description>
+        /// <term> Operation Id. </term>
+        /// <description> SoftwareUpdateConfigurations_GetByName. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SoftwareUpdateConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="softwareUpdateConfigurationName"> The name of the software update configuration to be created. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="softwareUpdateConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="softwareUpdateConfigurationName"/> is null. </exception>
-        public virtual async Task<Response<SoftwareUpdateConfigurationResource>> GetAsync(string softwareUpdateConfigurationName, string clientRequestId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="softwareUpdateConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<SoftwareUpdateConfigurationResource>> GetAsync(string softwareUpdateConfigurationName, string clientRequestId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(softwareUpdateConfigurationName, nameof(softwareUpdateConfigurationName));
 
-            using var scope = _softwareUpdateConfigurationClientDiagnostics.CreateScope("SoftwareUpdateConfigurationCollection.Get");
+            using DiagnosticScope scope = _softwareUpdateConfigurationsClientDiagnostics.CreateScope("SoftwareUpdateConfigurationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _softwareUpdateConfigurationRestClient.GetByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, clientRequestId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, clientRequestId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SoftwareUpdateConfigurationData> response = Response.FromValue(SoftwareUpdateConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SoftwareUpdateConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -206,39 +218,43 @@ namespace Azure.ResourceManager.Automation
         /// Get a single software update configuration by name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurations/{softwareUpdateConfigurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurations/{softwareUpdateConfigurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SoftwareUpdateConfigurations_GetByName</description>
+        /// <term> Operation Id. </term>
+        /// <description> SoftwareUpdateConfigurations_GetByName. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SoftwareUpdateConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="softwareUpdateConfigurationName"> The name of the software update configuration to be created. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="softwareUpdateConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="softwareUpdateConfigurationName"/> is null. </exception>
-        public virtual Response<SoftwareUpdateConfigurationResource> Get(string softwareUpdateConfigurationName, string clientRequestId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="softwareUpdateConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<SoftwareUpdateConfigurationResource> Get(string softwareUpdateConfigurationName, string clientRequestId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(softwareUpdateConfigurationName, nameof(softwareUpdateConfigurationName));
 
-            using var scope = _softwareUpdateConfigurationClientDiagnostics.CreateScope("SoftwareUpdateConfigurationCollection.Get");
+            using DiagnosticScope scope = _softwareUpdateConfigurationsClientDiagnostics.CreateScope("SoftwareUpdateConfigurationCollection.Get");
             scope.Start();
             try
             {
-                var response = _softwareUpdateConfigurationRestClient.GetByName(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, clientRequestId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, clientRequestId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SoftwareUpdateConfigurationData> response = Response.FromValue(SoftwareUpdateConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SoftwareUpdateConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -249,102 +265,54 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary>
-        /// Get all software update configurations for the account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SoftwareUpdateConfigurations_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SoftwareUpdateConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SoftwareUpdateConfigurationCollectionItem"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SoftwareUpdateConfigurationCollectionItem> GetAllAsync(string clientRequestId = null, string filter = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _softwareUpdateConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientRequestId, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SoftwareUpdateConfigurationCollectionItem.DeserializeSoftwareUpdateConfigurationCollectionItem(e), _softwareUpdateConfigurationClientDiagnostics, Pipeline, "SoftwareUpdateConfigurationCollection.GetAll", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get all software update configurations for the account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SoftwareUpdateConfigurations_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SoftwareUpdateConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SoftwareUpdateConfigurationCollectionItem"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SoftwareUpdateConfigurationCollectionItem> GetAll(string clientRequestId = null, string filter = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _softwareUpdateConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientRequestId, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SoftwareUpdateConfigurationCollectionItem.DeserializeSoftwareUpdateConfigurationCollectionItem(e), _softwareUpdateConfigurationClientDiagnostics, Pipeline, "SoftwareUpdateConfigurationCollection.GetAll", "value", null, cancellationToken);
-        }
-
-        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurations/{softwareUpdateConfigurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurations/{softwareUpdateConfigurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SoftwareUpdateConfigurations_GetByName</description>
+        /// <term> Operation Id. </term>
+        /// <description> SoftwareUpdateConfigurations_GetByName. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SoftwareUpdateConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="softwareUpdateConfigurationName"> The name of the software update configuration to be created. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="softwareUpdateConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="softwareUpdateConfigurationName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string softwareUpdateConfigurationName, string clientRequestId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="softwareUpdateConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string softwareUpdateConfigurationName, string clientRequestId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(softwareUpdateConfigurationName, nameof(softwareUpdateConfigurationName));
 
-            using var scope = _softwareUpdateConfigurationClientDiagnostics.CreateScope("SoftwareUpdateConfigurationCollection.Exists");
+            using DiagnosticScope scope = _softwareUpdateConfigurationsClientDiagnostics.CreateScope("SoftwareUpdateConfigurationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _softwareUpdateConfigurationRestClient.GetByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, clientRequestId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, clientRequestId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SoftwareUpdateConfigurationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SoftwareUpdateConfigurationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SoftwareUpdateConfigurationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -358,37 +326,51 @@ namespace Azure.ResourceManager.Automation
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurations/{softwareUpdateConfigurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurations/{softwareUpdateConfigurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SoftwareUpdateConfigurations_GetByName</description>
+        /// <term> Operation Id. </term>
+        /// <description> SoftwareUpdateConfigurations_GetByName. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SoftwareUpdateConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="softwareUpdateConfigurationName"> The name of the software update configuration to be created. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="softwareUpdateConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="softwareUpdateConfigurationName"/> is null. </exception>
-        public virtual Response<bool> Exists(string softwareUpdateConfigurationName, string clientRequestId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="softwareUpdateConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string softwareUpdateConfigurationName, string clientRequestId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(softwareUpdateConfigurationName, nameof(softwareUpdateConfigurationName));
 
-            using var scope = _softwareUpdateConfigurationClientDiagnostics.CreateScope("SoftwareUpdateConfigurationCollection.Exists");
+            using DiagnosticScope scope = _softwareUpdateConfigurationsClientDiagnostics.CreateScope("SoftwareUpdateConfigurationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _softwareUpdateConfigurationRestClient.GetByName(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, clientRequestId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, clientRequestId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SoftwareUpdateConfigurationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SoftwareUpdateConfigurationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SoftwareUpdateConfigurationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -402,39 +384,55 @@ namespace Azure.ResourceManager.Automation
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurations/{softwareUpdateConfigurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurations/{softwareUpdateConfigurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SoftwareUpdateConfigurations_GetByName</description>
+        /// <term> Operation Id. </term>
+        /// <description> SoftwareUpdateConfigurations_GetByName. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SoftwareUpdateConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="softwareUpdateConfigurationName"> The name of the software update configuration to be created. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="softwareUpdateConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="softwareUpdateConfigurationName"/> is null. </exception>
-        public virtual async Task<NullableResponse<SoftwareUpdateConfigurationResource>> GetIfExistsAsync(string softwareUpdateConfigurationName, string clientRequestId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="softwareUpdateConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<SoftwareUpdateConfigurationResource>> GetIfExistsAsync(string softwareUpdateConfigurationName, string clientRequestId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(softwareUpdateConfigurationName, nameof(softwareUpdateConfigurationName));
 
-            using var scope = _softwareUpdateConfigurationClientDiagnostics.CreateScope("SoftwareUpdateConfigurationCollection.GetIfExists");
+            using DiagnosticScope scope = _softwareUpdateConfigurationsClientDiagnostics.CreateScope("SoftwareUpdateConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _softwareUpdateConfigurationRestClient.GetByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, clientRequestId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, clientRequestId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SoftwareUpdateConfigurationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SoftwareUpdateConfigurationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SoftwareUpdateConfigurationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SoftwareUpdateConfigurationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SoftwareUpdateConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -448,39 +446,55 @@ namespace Azure.ResourceManager.Automation
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurations/{softwareUpdateConfigurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurations/{softwareUpdateConfigurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SoftwareUpdateConfigurations_GetByName</description>
+        /// <term> Operation Id. </term>
+        /// <description> SoftwareUpdateConfigurations_GetByName. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SoftwareUpdateConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="softwareUpdateConfigurationName"> The name of the software update configuration to be created. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="softwareUpdateConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="softwareUpdateConfigurationName"/> is null. </exception>
-        public virtual NullableResponse<SoftwareUpdateConfigurationResource> GetIfExists(string softwareUpdateConfigurationName, string clientRequestId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="softwareUpdateConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<SoftwareUpdateConfigurationResource> GetIfExists(string softwareUpdateConfigurationName, string clientRequestId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(softwareUpdateConfigurationName, nameof(softwareUpdateConfigurationName));
 
-            using var scope = _softwareUpdateConfigurationClientDiagnostics.CreateScope("SoftwareUpdateConfigurationCollection.GetIfExists");
+            using DiagnosticScope scope = _softwareUpdateConfigurationsClientDiagnostics.CreateScope("SoftwareUpdateConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _softwareUpdateConfigurationRestClient.GetByName(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, clientRequestId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, clientRequestId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SoftwareUpdateConfigurationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SoftwareUpdateConfigurationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SoftwareUpdateConfigurationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SoftwareUpdateConfigurationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SoftwareUpdateConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -488,21 +502,6 @@ namespace Azure.ResourceManager.Automation
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        IEnumerator<SoftwareUpdateConfigurationCollectionItem> IEnumerable<SoftwareUpdateConfigurationCollectionItem>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<SoftwareUpdateConfigurationCollectionItem> IAsyncEnumerable<SoftwareUpdateConfigurationCollectionItem>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

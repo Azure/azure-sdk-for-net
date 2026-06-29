@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The ServerlessEndpointProperties. </summary>
     public partial class ServerlessEndpointProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServerlessEndpointProperties"/>. </summary>
         /// <param name="authMode"> [Required] Specifies the authentication mode for the Serverless endpoint. </param>
@@ -53,71 +25,69 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ServerlessEndpointProperties"/>. </summary>
-        /// <param name="modelSettings"> The model settings (model id) for the model being serviced on the ServerlessEndpoint. </param>
         /// <param name="authMode"> [Required] Specifies the authentication mode for the Serverless endpoint. </param>
-        /// <param name="inferenceEndpoint"> The inference uri to target when making requests against the serverless endpoint. </param>
-        /// <param name="provisioningState"> Provisioning state for the endpoint. </param>
-        /// <param name="endpointState"> The current state of the ServerlessEndpoint. </param>
-        /// <param name="marketplaceSubscriptionId"> The MarketplaceSubscription Azure ID associated to this ServerlessEndpoint. </param>
         /// <param name="contentSafety"> Specifies the content safety options. If omitted, the default content safety settings will be configured. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServerlessEndpointProperties(ModelSettings modelSettings, ServerlessInferenceEndpointAuthMode authMode, ServerlessInferenceEndpoint inferenceEndpoint, MachineLearningEndpointProvisioningState? provisioningState, ServerlessEndpointState? endpointState, string marketplaceSubscriptionId, ContentSafety contentSafety, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="endpointState"> The current state of the ServerlessEndpoint. </param>
+        /// <param name="inferenceEndpoint"> The inference uri to target when making requests against the serverless endpoint. </param>
+        /// <param name="marketplaceSubscriptionId"> The MarketplaceSubscription Azure ID associated to this ServerlessEndpoint. </param>
+        /// <param name="modelSettings"> The model settings (model id) for the model being serviced on the ServerlessEndpoint. </param>
+        /// <param name="provisioningState"> State of endpoint provisioning. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ServerlessEndpointProperties(ServerlessInferenceEndpointAuthMode authMode, ContentSafety contentSafety, ServerlessEndpointState? endpointState, ServerlessInferenceEndpoint inferenceEndpoint, string marketplaceSubscriptionId, ModelSettings modelSettings, MachineLearningEndpointProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ModelSettings = modelSettings;
             AuthMode = authMode;
-            InferenceEndpoint = inferenceEndpoint;
-            ProvisioningState = provisioningState;
-            EndpointState = endpointState;
-            MarketplaceSubscriptionId = marketplaceSubscriptionId;
             ContentSafety = contentSafety;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ServerlessEndpointProperties"/> for deserialization. </summary>
-        internal ServerlessEndpointProperties()
-        {
-        }
-
-        /// <summary> The model settings (model id) for the model being serviced on the ServerlessEndpoint. </summary>
-        internal ModelSettings ModelSettings { get; set; }
-        /// <summary> The unique model identifier that this ServerlessEndpoint should provision. </summary>
-        [WirePath("modelSettings.modelId")]
-        public string ModelId
-        {
-            get => ModelSettings is null ? default : ModelSettings.ModelId;
-            set
-            {
-                if (ModelSettings is null)
-                    ModelSettings = new ModelSettings();
-                ModelSettings.ModelId = value;
-            }
+            EndpointState = endpointState;
+            InferenceEndpoint = inferenceEndpoint;
+            MarketplaceSubscriptionId = marketplaceSubscriptionId;
+            ModelSettings = modelSettings;
+            ProvisioningState = provisioningState;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> [Required] Specifies the authentication mode for the Serverless endpoint. </summary>
         [WirePath("authMode")]
         public ServerlessInferenceEndpointAuthMode AuthMode { get; set; }
-        /// <summary> The inference uri to target when making requests against the serverless endpoint. </summary>
-        [WirePath("inferenceEndpoint")]
-        public ServerlessInferenceEndpoint InferenceEndpoint { get; }
-        /// <summary> Provisioning state for the endpoint. </summary>
-        [WirePath("provisioningState")]
-        public MachineLearningEndpointProvisioningState? ProvisioningState { get; }
+
+        /// <summary> Specifies the content safety options. If omitted, the default content safety settings will be configured. </summary>
+        [WirePath("contentSafety")]
+        public ContentSafety ContentSafety { get; set; }
+
         /// <summary> The current state of the ServerlessEndpoint. </summary>
         [WirePath("endpointState")]
         public ServerlessEndpointState? EndpointState { get; }
+
+        /// <summary> The inference uri to target when making requests against the serverless endpoint. </summary>
+        [WirePath("inferenceEndpoint")]
+        public ServerlessInferenceEndpoint InferenceEndpoint { get; }
+
         /// <summary> The MarketplaceSubscription Azure ID associated to this ServerlessEndpoint. </summary>
         [WirePath("marketplaceSubscriptionId")]
         public string MarketplaceSubscriptionId { get; }
-        /// <summary> Specifies the content safety options. If omitted, the default content safety settings will be configured. </summary>
-        internal ContentSafety ContentSafety { get; set; }
-        /// <summary> [Required] Specifies the status of content safety. </summary>
-        [WirePath("contentSafety.contentSafetyStatus")]
-        public ContentSafetyStatus? ContentSafetyStatus
+
+        /// <summary> The model settings (model id) for the model being serviced on the ServerlessEndpoint. </summary>
+        [WirePath("modelSettings")]
+        internal ModelSettings ModelSettings { get; set; }
+
+        /// <summary> State of endpoint provisioning. </summary>
+        [WirePath("provisioningState")]
+        public MachineLearningEndpointProvisioningState? ProvisioningState { get; }
+
+        /// <summary> The unique model identifier that this ServerlessEndpoint should provision. </summary>
+        [WirePath("modelSettings.modelId")]
+        public string ModelId
         {
-            get => ContentSafety is null ? default(ContentSafetyStatus?) : ContentSafety.ContentSafetyStatus;
+            get
+            {
+                return ModelSettings is null ? default : ModelSettings.ModelId;
+            }
             set
             {
-                ContentSafety = value.HasValue ? new ContentSafety(value.Value) : null;
+                if (ModelSettings is null)
+                {
+                    ModelSettings = new ModelSettings();
+                }
+                ModelSettings.ModelId = value;
             }
         }
     }

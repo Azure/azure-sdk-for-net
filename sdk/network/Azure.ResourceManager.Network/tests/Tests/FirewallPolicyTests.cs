@@ -50,11 +50,9 @@ namespace Azure.ResourceManager.Network.Tests
                 AddressSpace = new VirtualNetworkAddressSpace() { AddressPrefixes = { "10.26.0.0/16", } },
                 Subnets =
                 {
-                    new SubnetData() { Name = "Default", AddressPrefix = "10.26.1.0/26", },
+                    new SubnetData() {AddressPrefix = "10.26.1.0/26", },
                     new SubnetData()
-                    {
-                        Name = "AzureFirewallSubnet",
-                        AddressPrefix = "10.26.2.0/26",
+                    {AddressPrefix = "10.26.2.0/26",
                     },
                 },
             };
@@ -87,7 +85,6 @@ namespace Azure.ResourceManager.Network.Tests
             firewallData.IPConfigurations.Add(
                 new AzureFirewallIPConfiguration()
                 {
-                    Name = "fwpip",
                     PublicIPAddress = new WritableSubResource() { Id = _publicIPAddressIdentifier },
                     Subnet = new WritableSubResource()
                     {
@@ -134,7 +131,7 @@ namespace Azure.ResourceManager.Network.Tests
             data.Location = AzureLocation.WestUS2;
             await _resourceGroup
                 .GetFirewallPolicies()
-                .CreateOrUpdateAsync(WaitUntil.Completed, FirewallPolicyName, data);
+                .CreateOrUpdateAsync(WaitUntil.Completed, FirewallPolicyName, data, System.Threading.CancellationToken.None);
         }
 
         [Test]
@@ -149,8 +146,8 @@ namespace Azure.ResourceManager.Network.Tests
             policyData.ThreatIntelMode = AzureFirewallThreatIntelMode.Alert;
             var policy = await _resourceGroup
                 .GetFirewallPolicies()
-                .CreateOrUpdateAsync(WaitUntil.Completed, policyName, policyData);
-            Assert.AreEqual(FirewallPolicySkuTier.Standard.ToString(), policy.Value.Data.Sku.Tier.ToString());
+                .CreateOrUpdateAsync(WaitUntil.Completed, policyName, policyData, System.Threading.CancellationToken.None);
+            Assert.AreEqual(FirewallPolicySkuTier.Standard.ToString(), policy.Value.Data.SkuTier.ToString());
             Assert.AreEqual(AzureFirewallThreatIntelMode.Alert.ToString(), policy.Value.Data.ThreatIntelMode.ToString());
             var rcg = new FirewallPolicyRuleCollectionGroupData()
             {
@@ -174,20 +171,16 @@ namespace Azure.ResourceManager.Network.Tests
                                         Port = 443,
                                     }
                                 },
-                                WebCategories = { "Hacking" },
-                                Name = "rule1",
-                                Description = "Deny inbound rule",
+                                WebCategories = { "Hacking" },Description = "Deny inbound rule",
                             }
-                        },
-                        Name = "RuleCollectionGroup",
-                    }
+                        },}
                 }
             };
             var policyResource = await _resourceGroup.GetFirewallPolicies().GetAsync(policyName);
             var client = GetArmClient();
             var rcgResponse = await client
                 .GetFirewallPolicyRuleCollectionGroupResource(FirewallPolicyRuleCollectionGroupResource.CreateResourceIdentifier(_resourceGroupIdentifier.SubscriptionId, _resourceGroupIdentifier.Name, policyName, "RuleCollectionGroup"))
-                .UpdateAsync(WaitUntil.Completed, rcg);
+                .UpdateAsync(WaitUntil.Completed, rcg, System.Threading.CancellationToken.None);
             Assert.AreEqual(
                 rcgResponse.Value.Data.ProvisioningState.ToString(),
                 NetworkProvisioningState.Succeeded.ToString()
@@ -197,7 +190,7 @@ namespace Azure.ResourceManager.Network.Tests
                 ThreatIntelMode = AzureFirewallThreatIntelMode.Deny,
             };
             var draftResource = new FirewallPolicyDraftResource(client, FirewallPolicyDraftResource.CreateResourceIdentifier(_resourceGroupIdentifier.SubscriptionId, _resourceGroupIdentifier.Name, policyName));
-            await draftResource.CreateOrUpdateAsync(WaitUntil.Completed, policyDraft);
+            await draftResource.CreateOrUpdateAsync(WaitUntil.Completed, policyDraft, System.Threading.CancellationToken.None);
             var rcgPolicyDraft = new FirewallPolicyRuleCollectionGroupDraftData()
             {
                 Priority = 111,
@@ -220,21 +213,17 @@ namespace Azure.ResourceManager.Network.Tests
                                         Port = 443,
                                     }
                                 },
-                                WebCategories = { "Hacking" },
-                                Name = "rule1",
-                                Description = "Deny inbound rule",
+                                WebCategories = { "Hacking" },Description = "Deny inbound rule",
                             }
-                        },
-                        Name = "RuleCollectionGroup",
-                    }
+                        },}
                 }
             };
             var rcgDraftResource = new FirewallPolicyRuleCollectionGroupDraftResource(
                 client,
                 FirewallPolicyRuleCollectionGroupDraftResource.CreateResourceIdentifier(_resourceGroupIdentifier.SubscriptionId, _resourceGroupIdentifier.Name, policyName, "RuleCollectionGroup")
             );
-            await rcgDraftResource.CreateOrUpdateAsync(WaitUntil.Completed, rcgPolicyDraft);
-            await policyResource.Value.DeployFirewallPolicyDeploymentAsync(WaitUntil.Completed);
+            await rcgDraftResource.CreateOrUpdateAsync(WaitUntil.Completed, rcgPolicyDraft, System.Threading.CancellationToken.None);
+            await policyResource.Value.DeployFirewallPolicyDeploymentAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
             var updatedPolicy = await _resourceGroup.GetFirewallPolicies().GetAsync(policyName);
             Assert.AreEqual(
                 updatedPolicy.Value.Data.ThreatIntelMode.ToString(),

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct DataFactoryTriggerRuntimeState : IEquatable<DataFactoryTriggerRuntimeState>
     {
         private readonly string _value;
+        /// <summary> Started. </summary>
+        private const string StartedValue = "Started";
+        /// <summary> Stopped. </summary>
+        private const string StoppedValue = "Stopped";
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryTriggerRuntimeState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataFactoryTriggerRuntimeState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StartedValue = "Started";
-        private const string StoppedValue = "Stopped";
-        private const string DisabledValue = "Disabled";
+            _value = value;
+        }
 
         /// <summary> Started. </summary>
         public static DataFactoryTriggerRuntimeState Started { get; } = new DataFactoryTriggerRuntimeState(StartedValue);
+
         /// <summary> Stopped. </summary>
         public static DataFactoryTriggerRuntimeState Stopped { get; } = new DataFactoryTriggerRuntimeState(StoppedValue);
+
         /// <summary> Disabled. </summary>
         public static DataFactoryTriggerRuntimeState Disabled { get; } = new DataFactoryTriggerRuntimeState(DisabledValue);
+
         /// <summary> Determines if two <see cref="DataFactoryTriggerRuntimeState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataFactoryTriggerRuntimeState left, DataFactoryTriggerRuntimeState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataFactoryTriggerRuntimeState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataFactoryTriggerRuntimeState left, DataFactoryTriggerRuntimeState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataFactoryTriggerRuntimeState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataFactoryTriggerRuntimeState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataFactoryTriggerRuntimeState(string value) => new DataFactoryTriggerRuntimeState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataFactoryTriggerRuntimeState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataFactoryTriggerRuntimeState?(string value) => value == null ? null : new DataFactoryTriggerRuntimeState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataFactoryTriggerRuntimeState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataFactoryTriggerRuntimeState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

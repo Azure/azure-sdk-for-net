@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ApplicationGatewayFirewallMode : IEquatable<ApplicationGatewayFirewallMode>
     {
         private readonly string _value;
+        /// <summary> Detection. </summary>
+        private const string DetectionValue = "Detection";
+        /// <summary> Prevention. </summary>
+        private const string PreventionValue = "Prevention";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApplicationGatewayFirewallMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DetectionValue = "Detection";
-        private const string PreventionValue = "Prevention";
+            _value = value;
+        }
 
         /// <summary> Detection. </summary>
         public static ApplicationGatewayFirewallMode Detection { get; } = new ApplicationGatewayFirewallMode(DetectionValue);
+
         /// <summary> Prevention. </summary>
         public static ApplicationGatewayFirewallMode Prevention { get; } = new ApplicationGatewayFirewallMode(PreventionValue);
+
         /// <summary> Determines if two <see cref="ApplicationGatewayFirewallMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApplicationGatewayFirewallMode left, ApplicationGatewayFirewallMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApplicationGatewayFirewallMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApplicationGatewayFirewallMode left, ApplicationGatewayFirewallMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationGatewayFirewallMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApplicationGatewayFirewallMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApplicationGatewayFirewallMode(string value) => new ApplicationGatewayFirewallMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApplicationGatewayFirewallMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApplicationGatewayFirewallMode?(string value) => value == null ? null : new ApplicationGatewayFirewallMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApplicationGatewayFirewallMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApplicationGatewayFirewallMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

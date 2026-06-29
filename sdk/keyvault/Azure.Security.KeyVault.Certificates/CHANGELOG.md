@@ -1,5 +1,16 @@
 # Release History
 
+## 4.10.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+- Internal: the `CertificateClient` transport now delegates to a TypeSpec-generated implementation. All public method signatures, return types, exception contracts, default service version, on-the-wire requests, and OpenTelemetry / `DiagnosticListener` activity names are unchanged for existing callers. `CertificateClientOptions` (custom retry, transport, diagnostics allow-lists, `AddPolicy` entries) continues to flow end-to-end into the new pipeline. A small set of additive types from the new transport layer (`AzureSecurityKeyVaultCertificatesContext`, `KeyVaultCertificatesModelFactory`, and `IJsonModel<PlatformManaged>` / `IPersistableModel<PlatformManaged>` on `PlatformManaged`) appears on the public surface; these are net additions that existing customer code is unaffected by — same pattern as `Azure.Security.KeyVault.Administration`.
 ## 4.10.0-beta.1 (2026-06-04)
 
 ### Features Added

@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Manifest artifact properties. </summary>
     public partial class ManifestArtifactFormat
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManifestArtifactFormat"/>. </summary>
         public ManifestArtifactFormat()
@@ -54,19 +25,21 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="artifactName"> The artifact name. </param>
         /// <param name="artifactType"> The artifact type. </param>
         /// <param name="artifactVersion"> The artifact version. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManifestArtifactFormat(string artifactName, ArtifactType? artifactType, string artifactVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManifestArtifactFormat(string artifactName, ArtifactType? artifactType, string artifactVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ArtifactName = artifactName;
             ArtifactType = artifactType;
             ArtifactVersion = artifactVersion;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The artifact name. </summary>
         public string ArtifactName { get; set; }
+
         /// <summary> The artifact type. </summary>
         public ArtifactType? ArtifactType { get; set; }
+
         /// <summary> The artifact version. </summary>
         public string ArtifactVersion { get; set; }
     }

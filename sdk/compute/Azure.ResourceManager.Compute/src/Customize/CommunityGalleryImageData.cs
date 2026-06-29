@@ -3,14 +3,20 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Compute
 {
-    // we have this customization here to change its namespace to avoid breaking changes
+    // Backward compatibility: the previously shipped SDK exposed this data type in the root namespace.
+    // The generated TypeSpec model is otherwise placed under Models; CodeGenType keeps the public API shape.
+    // Suppress the generated parent resource-key helper because the Swagger payload has no parentName property
+    // and the old SDK did not expose it.
     [CodeGenType("CommunityGalleryImageData")]
+    [CodeGenSuppress("ParentName")]
     public partial class CommunityGalleryImageData
     {
         /// <summary> This is the gallery image definition identifier. </summary>
@@ -31,5 +37,27 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ResourceIdentifier Id { get; internal set; }
+
+        // Backward compatibility: the previously shipped SDK exposed ArtifactTags as IReadOnlyDictionary.
+        // Suppress the generated IDictionary property and keep the read-only return type to avoid a binary break.
+        /// <summary> The artifact tags of a community gallery resource. </summary>
+        public IReadOnlyDictionary<string, string> ArtifactTags
+        {
+            get
+            {
+                return Properties is null ? new ChangeTrackingDictionary<string, string>() : Properties.ArtifactTags as IReadOnlyDictionary<string, string>;
+            }
+        }
+
+        // Backward compatibility: the previously shipped SDK exposed Features as IReadOnlyList.
+        // Suppress the generated IList property and keep the read-only return type to avoid a binary break.
+        /// <summary> A list of gallery image features. </summary>
+        public IReadOnlyList<GalleryImageFeature> Features
+        {
+            get
+            {
+                return Properties is null ? new ChangeTrackingList<GalleryImageFeature>() : Properties.Features as IReadOnlyList<GalleryImageFeature>;
+            }
+        }
     }
 }

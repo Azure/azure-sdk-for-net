@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,62 +15,97 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct PaymentTermsEligibilityCode : IEquatable<PaymentTermsEligibilityCode>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> OverlappingPaymentTerms. </summary>
+        private const string OverlappingPaymentTermsValue = "OverlappingPaymentTerms";
+        /// <summary> InvalidDateFormat. </summary>
+        private const string InvalidDateFormatValue = "InvalidDateFormat";
+        /// <summary> InvalidDateRange. </summary>
+        private const string InvalidDateRangeValue = "InvalidDateRange";
+        /// <summary> InactiveBillingAccount. </summary>
+        private const string InactiveBillingAccountValue = "InactiveBillingAccount";
+        /// <summary> InvalidBillingAccountType. </summary>
+        private const string InvalidBillingAccountTypeValue = "InvalidBillingAccountType";
+        /// <summary> NullOrEmptyPaymentTerms. </summary>
+        private const string NullOrEmptyPaymentTermsValue = "NullOrEmptyPaymentTerms";
+        /// <summary> BillingAccountNotFound. </summary>
+        private const string BillingAccountNotFoundValue = "BillingAccountNotFound";
+        /// <summary> IneligibleBillingAccountStatus. </summary>
+        private const string IneligibleBillingAccountStatusValue = "IneligibleBillingAccountStatus";
+        /// <summary> InvalidTerms. </summary>
+        private const string InvalidTermsValue = "InvalidTerms";
 
         /// <summary> Initializes a new instance of <see cref="PaymentTermsEligibilityCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PaymentTermsEligibilityCode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string OverlappingPaymentTermsValue = "OverlappingPaymentTerms";
-        private const string InvalidDateFormatValue = "InvalidDateFormat";
-        private const string InvalidDateRangeValue = "InvalidDateRange";
-        private const string InactiveBillingAccountValue = "InactiveBillingAccount";
-        private const string InvalidBillingAccountTypeValue = "InvalidBillingAccountType";
-        private const string NullOrEmptyPaymentTermsValue = "NullOrEmptyPaymentTerms";
-        private const string BillingAccountNotFoundValue = "BillingAccountNotFound";
-        private const string IneligibleBillingAccountStatusValue = "IneligibleBillingAccountStatus";
-        private const string InvalidTermsValue = "InvalidTerms";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static PaymentTermsEligibilityCode Other { get; } = new PaymentTermsEligibilityCode(OtherValue);
+
         /// <summary> OverlappingPaymentTerms. </summary>
         public static PaymentTermsEligibilityCode OverlappingPaymentTerms { get; } = new PaymentTermsEligibilityCode(OverlappingPaymentTermsValue);
+
         /// <summary> InvalidDateFormat. </summary>
         public static PaymentTermsEligibilityCode InvalidDateFormat { get; } = new PaymentTermsEligibilityCode(InvalidDateFormatValue);
+
         /// <summary> InvalidDateRange. </summary>
         public static PaymentTermsEligibilityCode InvalidDateRange { get; } = new PaymentTermsEligibilityCode(InvalidDateRangeValue);
+
         /// <summary> InactiveBillingAccount. </summary>
         public static PaymentTermsEligibilityCode InactiveBillingAccount { get; } = new PaymentTermsEligibilityCode(InactiveBillingAccountValue);
+
         /// <summary> InvalidBillingAccountType. </summary>
         public static PaymentTermsEligibilityCode InvalidBillingAccountType { get; } = new PaymentTermsEligibilityCode(InvalidBillingAccountTypeValue);
+
         /// <summary> NullOrEmptyPaymentTerms. </summary>
         public static PaymentTermsEligibilityCode NullOrEmptyPaymentTerms { get; } = new PaymentTermsEligibilityCode(NullOrEmptyPaymentTermsValue);
+
         /// <summary> BillingAccountNotFound. </summary>
         public static PaymentTermsEligibilityCode BillingAccountNotFound { get; } = new PaymentTermsEligibilityCode(BillingAccountNotFoundValue);
+
         /// <summary> IneligibleBillingAccountStatus. </summary>
         public static PaymentTermsEligibilityCode IneligibleBillingAccountStatus { get; } = new PaymentTermsEligibilityCode(IneligibleBillingAccountStatusValue);
+
         /// <summary> InvalidTerms. </summary>
         public static PaymentTermsEligibilityCode InvalidTerms { get; } = new PaymentTermsEligibilityCode(InvalidTermsValue);
+
         /// <summary> Determines if two <see cref="PaymentTermsEligibilityCode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PaymentTermsEligibilityCode left, PaymentTermsEligibilityCode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PaymentTermsEligibilityCode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PaymentTermsEligibilityCode left, PaymentTermsEligibilityCode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PaymentTermsEligibilityCode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PaymentTermsEligibilityCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PaymentTermsEligibilityCode(string value) => new PaymentTermsEligibilityCode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PaymentTermsEligibilityCode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PaymentTermsEligibilityCode?(string value) => value == null ? null : new PaymentTermsEligibilityCode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PaymentTermsEligibilityCode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PaymentTermsEligibilityCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

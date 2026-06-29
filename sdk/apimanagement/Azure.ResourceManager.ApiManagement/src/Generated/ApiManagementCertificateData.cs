@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary>
-    /// A class representing the ApiManagementCertificate data model.
-    /// Certificate details.
-    /// </summary>
+    /// <summary> Certificate details. </summary>
     public partial class ApiManagementCertificateData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementCertificateData"/>. </summary>
         public ApiManagementCertificateData()
@@ -57,41 +25,95 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementCertificateData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="subject"> Subject attribute of the certificate. </param>
-        /// <param name="thumbprint"> Thumbprint of the certificate. </param>
-        /// <param name="expireOn">
-        /// Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        ///
-        /// </param>
-        /// <param name="keyVaultDetails"> KeyVault location details of the certificate. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string subject, string thumbprint, DateTimeOffset? expireOn, KeyVaultContractProperties keyVaultDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Certificate properties details. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CertificateContractProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Subject = subject;
-            Thumbprint = thumbprint;
-            ExpireOn = expireOn;
-            KeyVaultDetails = keyVaultDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Certificate properties details. </summary>
+        [WirePath("properties")]
+        internal CertificateContractProperties Properties { get; set; }
 
         /// <summary> Subject attribute of the certificate. </summary>
         [WirePath("properties.subject")]
-        public string Subject { get; set; }
+        public string Subject
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Subject;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificateContractProperties();
+                }
+                Properties.Subject = value;
+            }
+        }
+
         /// <summary> Thumbprint of the certificate. </summary>
         [WirePath("properties.thumbprint")]
-        public string Thumbprint { get; set; }
-        /// <summary>
-        /// Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        ///
-        /// </summary>
+        public string Thumbprint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Thumbprint;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificateContractProperties();
+                }
+                Properties.Thumbprint = value;
+            }
+        }
+
+        /// <summary> Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("properties.expirationDate")]
-        public DateTimeOffset? ExpireOn { get; set; }
+        public DateTimeOffset? ExpireOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpireOn;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new CertificateContractProperties();
+                    }
+                    Properties.ExpireOn = value.Value;
+                }
+            }
+        }
+
         /// <summary> KeyVault location details of the certificate. </summary>
         [WirePath("properties.keyVault")]
-        public KeyVaultContractProperties KeyVaultDetails { get; set; }
+        public KeyVaultContractProperties KeyVaultDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KeyVaultDetails;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificateContractProperties();
+                }
+                Properties.KeyVaultDetails = value;
+            }
+        }
     }
 }

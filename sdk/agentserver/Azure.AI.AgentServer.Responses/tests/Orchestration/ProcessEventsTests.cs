@@ -204,7 +204,7 @@ public class ProcessEventsTests : IDisposable
         await ConsumeProcessedEvents(new CreateResponse(), execution, context, publisher);
 
         // Background + store: should have persisted at response.created time
-        var stored = await _provider.GetResponseAsync("resp_proc_08", IsolationContext.Empty);
+        var stored = await _provider.GetResponseAsync("resp_proc_08", PlatformContext.Empty);
         Assert.That(stored, Is.Not.Null);
     }
 

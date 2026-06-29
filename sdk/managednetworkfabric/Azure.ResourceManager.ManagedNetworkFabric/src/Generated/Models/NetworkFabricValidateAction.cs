@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct NetworkFabricValidateAction : IEquatable<NetworkFabricValidateAction>
     {
         private readonly string _value;
+        /// <summary> ValidateAction-Cabling. </summary>
+        private const string CablingValue = "Cabling";
+        /// <summary> ValidateAction-Configuration. </summary>
+        private const string ConfigurationValue = "Configuration";
+        /// <summary> ValidateAction-Connectivity. </summary>
+        private const string ConnectivityValue = "Connectivity";
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricValidateAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkFabricValidateAction(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CablingValue = "Cabling";
-        private const string ConfigurationValue = "Configuration";
-        private const string ConnectivityValue = "Connectivity";
+            _value = value;
+        }
 
         /// <summary> ValidateAction-Cabling. </summary>
         public static NetworkFabricValidateAction Cabling { get; } = new NetworkFabricValidateAction(CablingValue);
+
         /// <summary> ValidateAction-Configuration. </summary>
         public static NetworkFabricValidateAction Configuration { get; } = new NetworkFabricValidateAction(ConfigurationValue);
+
         /// <summary> ValidateAction-Connectivity. </summary>
         public static NetworkFabricValidateAction Connectivity { get; } = new NetworkFabricValidateAction(ConnectivityValue);
+
         /// <summary> Determines if two <see cref="NetworkFabricValidateAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkFabricValidateAction left, NetworkFabricValidateAction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkFabricValidateAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkFabricValidateAction left, NetworkFabricValidateAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkFabricValidateAction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkFabricValidateAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkFabricValidateAction(string value) => new NetworkFabricValidateAction(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkFabricValidateAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkFabricValidateAction?(string value) => value == null ? null : new NetworkFabricValidateAction(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkFabricValidateAction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkFabricValidateAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

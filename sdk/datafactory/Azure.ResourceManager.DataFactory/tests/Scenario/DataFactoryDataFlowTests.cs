@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return result.Value;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task DataFlow_ExecuteDataFlow_Create()
         {
             await DataFlowCreate("dataflow", (DataFactoryResource dataFactory, string datasetSourceName1, string datasetSourceName2, string datasetSinkName1, string datasetSinkName2) =>

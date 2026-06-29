@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct FirewallPolicyRuleNetworkProtocol : IEquatable<FirewallPolicyRuleNetworkProtocol>
     {
         private readonly string _value;
+        /// <summary> TCP. </summary>
+        private const string TCPValue = "TCP";
+        /// <summary> UDP. </summary>
+        private const string UDPValue = "UDP";
+        /// <summary> Any. </summary>
+        private const string AnyValue = "Any";
+        /// <summary> ICMP. </summary>
+        private const string ICMPValue = "ICMP";
 
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyRuleNetworkProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FirewallPolicyRuleNetworkProtocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string TcpValue = "TCP";
-        private const string UdpValue = "UDP";
-        private const string AnyValue = "Any";
-        private const string IcmpValue = "ICMP";
-
         /// <summary> TCP. </summary>
-        public static FirewallPolicyRuleNetworkProtocol Tcp { get; } = new FirewallPolicyRuleNetworkProtocol(TcpValue);
+        public static FirewallPolicyRuleNetworkProtocol TCP { get; } = new FirewallPolicyRuleNetworkProtocol(TCPValue);
+
         /// <summary> UDP. </summary>
-        public static FirewallPolicyRuleNetworkProtocol Udp { get; } = new FirewallPolicyRuleNetworkProtocol(UdpValue);
+        public static FirewallPolicyRuleNetworkProtocol UDP { get; } = new FirewallPolicyRuleNetworkProtocol(UDPValue);
+
         /// <summary> Any. </summary>
         public static FirewallPolicyRuleNetworkProtocol Any { get; } = new FirewallPolicyRuleNetworkProtocol(AnyValue);
+
         /// <summary> ICMP. </summary>
-        public static FirewallPolicyRuleNetworkProtocol Icmp { get; } = new FirewallPolicyRuleNetworkProtocol(IcmpValue);
+        public static FirewallPolicyRuleNetworkProtocol ICMP { get; } = new FirewallPolicyRuleNetworkProtocol(ICMPValue);
+
         /// <summary> Determines if two <see cref="FirewallPolicyRuleNetworkProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FirewallPolicyRuleNetworkProtocol left, FirewallPolicyRuleNetworkProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FirewallPolicyRuleNetworkProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FirewallPolicyRuleNetworkProtocol left, FirewallPolicyRuleNetworkProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FirewallPolicyRuleNetworkProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FirewallPolicyRuleNetworkProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FirewallPolicyRuleNetworkProtocol(string value) => new FirewallPolicyRuleNetworkProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FirewallPolicyRuleNetworkProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FirewallPolicyRuleNetworkProtocol?(string value) => value == null ? null : new FirewallPolicyRuleNetworkProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FirewallPolicyRuleNetworkProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FirewallPolicyRuleNetworkProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

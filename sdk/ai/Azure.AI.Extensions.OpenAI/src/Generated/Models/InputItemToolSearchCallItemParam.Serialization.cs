@@ -89,7 +89,7 @@ namespace Azure.AI.Extensions.OpenAI
             if (Optional.IsDefined(Execution))
             {
                 writer.WritePropertyName("execution"u8);
-                writer.WriteStringValue(Execution.Value.ToSerialString());
+                writer.WriteStringValue(Execution.Value.ToString());
             }
             writer.WritePropertyName("arguments"u8);
             writer.WriteObjectValue(Arguments, options);
@@ -165,7 +165,7 @@ namespace Azure.AI.Extensions.OpenAI
                     {
                         continue;
                     }
-                    execution = prop.Value.GetString().ToResponsesToolSearchExecutionType();
+                    execution = new ResponsesToolSearchExecutionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("arguments"u8))

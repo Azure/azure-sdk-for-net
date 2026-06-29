@@ -148,6 +148,12 @@ namespace Azure.Security.KeyVault.Secrets
         /// </summary>
         public IDictionary<string, string> Tags => LazyInitializer.EnsureInitialized(ref _tags);
 
+        // Refactor-safe accessor for the backing tag dictionary used by SecretMapper
+        // when serializing PATCH bodies. Returning null when the customer never touched
+        // .Tags preserves the legacy "only emit a tags object if non-empty" wire shape
+        // (Tags getter would otherwise eagerly allocate an empty dictionary).
+        internal IDictionary<string, string> TagsIfSet => _tags;
+
         /// <summary>
         /// Parses the key identifier into the <see cref="VaultUri"/>, <see cref="Name"/>, and <see cref="Version"/> of the key.
         /// </summary>

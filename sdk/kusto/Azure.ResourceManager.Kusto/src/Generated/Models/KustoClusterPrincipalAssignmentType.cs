@@ -7,42 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    /// <summary> The type of resource, Microsoft.Kusto/clusters/principalAssignments. </summary>
+    /// <summary></summary>
     public readonly partial struct KustoClusterPrincipalAssignmentType : IEquatable<KustoClusterPrincipalAssignmentType>
     {
         private readonly string _value;
+        /// <summary> Microsoft.Kusto/clusters/principalAssignments. </summary>
+        private const string MicrosoftKustoClustersPrincipalAssignmentsValue = "Microsoft.Kusto/clusters/principalAssignments";
 
         /// <summary> Initializes a new instance of <see cref="KustoClusterPrincipalAssignmentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KustoClusterPrincipalAssignmentType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MicrosoftKustoClustersPrincipalAssignmentsValue = "Microsoft.Kusto/clusters/principalAssignments";
+            _value = value;
+        }
 
         /// <summary> Microsoft.Kusto/clusters/principalAssignments. </summary>
         public static KustoClusterPrincipalAssignmentType MicrosoftKustoClustersPrincipalAssignments { get; } = new KustoClusterPrincipalAssignmentType(MicrosoftKustoClustersPrincipalAssignmentsValue);
+
         /// <summary> Determines if two <see cref="KustoClusterPrincipalAssignmentType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KustoClusterPrincipalAssignmentType left, KustoClusterPrincipalAssignmentType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KustoClusterPrincipalAssignmentType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KustoClusterPrincipalAssignmentType left, KustoClusterPrincipalAssignmentType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KustoClusterPrincipalAssignmentType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KustoClusterPrincipalAssignmentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KustoClusterPrincipalAssignmentType(string value) => new KustoClusterPrincipalAssignmentType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KustoClusterPrincipalAssignmentType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KustoClusterPrincipalAssignmentType?(string value) => value == null ? null : new KustoClusterPrincipalAssignmentType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KustoClusterPrincipalAssignmentType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KustoClusterPrincipalAssignmentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

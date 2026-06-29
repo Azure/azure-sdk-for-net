@@ -7,21 +7,14 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The FeatureDataType. </summary>
+    /// <summary></summary>
     public readonly partial struct FeatureDataType : IEquatable<FeatureDataType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="FeatureDataType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public FeatureDataType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string StringValue = "String";
         private const string IntegerValue = "Integer";
         private const string LongValue = "Long";
@@ -31,39 +24,70 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string DatetimeValue = "Datetime";
         private const string BooleanValue = "Boolean";
 
-        /// <summary> String. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureDataType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public FeatureDataType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the String. </summary>
         public static FeatureDataType String { get; } = new FeatureDataType(StringValue);
-        /// <summary> Integer. </summary>
+
+        /// <summary> Gets the Integer. </summary>
         public static FeatureDataType Integer { get; } = new FeatureDataType(IntegerValue);
-        /// <summary> Long. </summary>
+
+        /// <summary> Gets the Long. </summary>
         public static FeatureDataType Long { get; } = new FeatureDataType(LongValue);
-        /// <summary> Float. </summary>
+
+        /// <summary> Gets the Float. </summary>
         public static FeatureDataType Float { get; } = new FeatureDataType(FloatValue);
-        /// <summary> Double. </summary>
+
+        /// <summary> Gets the Double. </summary>
         public static FeatureDataType Double { get; } = new FeatureDataType(DoubleValue);
-        /// <summary> Binary. </summary>
+
+        /// <summary> Gets the Binary. </summary>
         public static FeatureDataType Binary { get; } = new FeatureDataType(BinaryValue);
-        /// <summary> Datetime. </summary>
+
+        /// <summary> Gets the Datetime. </summary>
         public static FeatureDataType Datetime { get; } = new FeatureDataType(DatetimeValue);
-        /// <summary> Boolean. </summary>
+
+        /// <summary> Gets the Boolean. </summary>
         public static FeatureDataType Boolean { get; } = new FeatureDataType(BooleanValue);
+
         /// <summary> Determines if two <see cref="FeatureDataType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FeatureDataType left, FeatureDataType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FeatureDataType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FeatureDataType left, FeatureDataType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FeatureDataType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FeatureDataType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FeatureDataType(string value) => new FeatureDataType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FeatureDataType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FeatureDataType?(string value) => value == null ? null : new FeatureDataType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FeatureDataType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FeatureDataType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

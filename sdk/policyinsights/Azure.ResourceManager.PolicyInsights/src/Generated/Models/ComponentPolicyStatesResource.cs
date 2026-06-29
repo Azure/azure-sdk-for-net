@@ -7,42 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary> The ComponentPolicyStatesResource. </summary>
+    /// <summary></summary>
     public readonly partial struct ComponentPolicyStatesResource : IEquatable<ComponentPolicyStatesResource>
     {
         private readonly string _value;
+        /// <summary> latest. </summary>
+        private const string LatestValue = "latest";
 
         /// <summary> Initializes a new instance of <see cref="ComponentPolicyStatesResource"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ComponentPolicyStatesResource(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LatestValue = "latest";
+            _value = value;
+        }
 
         /// <summary> latest. </summary>
         public static ComponentPolicyStatesResource Latest { get; } = new ComponentPolicyStatesResource(LatestValue);
+
         /// <summary> Determines if two <see cref="ComponentPolicyStatesResource"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComponentPolicyStatesResource left, ComponentPolicyStatesResource right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ComponentPolicyStatesResource"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComponentPolicyStatesResource left, ComponentPolicyStatesResource right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ComponentPolicyStatesResource"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ComponentPolicyStatesResource"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ComponentPolicyStatesResource(string value) => new ComponentPolicyStatesResource(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ComponentPolicyStatesResource"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ComponentPolicyStatesResource?(string value) => value == null ? null : new ComponentPolicyStatesResource(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ComponentPolicyStatesResource other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ComponentPolicyStatesResource other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -16,6 +16,9 @@ namespace Azure.ResourceManager.NetApp.Models
     // properties; preserve them here for backward compatibility.
     public partial class NetAppAccountPatch : TrackedResourceData
     {
+        private EntraIdConfigPatch _entraIdConfig;
+        private LdapConfiguration _ldapConfiguration;
+
         // ProvisioningState/DisableShowmount were read-only on the GA model. The new patch
         // type omits them entirely, so these stubs preserve source compatibility while
         // throwing on access — callers should read provisioning state from NetAppAccountData.
@@ -33,5 +36,19 @@ namespace Azure.ResourceManager.NetApp.Models
         [Obsolete("This property is obsolete and will be removed in a future release. Read MultiAdStatus from NetAppAccountData instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public MultiAdStatus? MultiAdStatus => throw new NotSupportedException("MultiAdStatus is no longer available on NetAppAccountPatch. Read it from NetAppAccountData instead.");
+
+        /// <summary> Entra ID configuration. </summary>
+        public EntraIdConfigPatch EntraIdConfig
+        {
+            get => _entraIdConfig;
+            set => _entraIdConfig = value;
+        }
+
+        /// <summary> LDAP configuration. </summary>
+        public LdapConfiguration LdapConfiguration
+        {
+            get => _ldapConfiguration;
+            set => _ldapConfiguration = value;
+        }
     }
 }

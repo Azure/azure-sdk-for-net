@@ -12,14 +12,14 @@ namespace Azure.AI.Extensions.OpenAI
     {
         /// <summary> Initializes a new instance of <see cref="OutputItemMcpApprovalResponseResource"/>. </summary>
         /// <param name="approvalRequestId"> The ID of the approval request being answered. </param>
-        /// <param name="approve"> Whether the request was approved. </param>
+        /// <param name="isApproved"> Whether the request was approved. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="approvalRequestId"/> is null. </exception>
-        public OutputItemMcpApprovalResponseResource(string approvalRequestId, bool approve) : base(AgentResponseItemKind.McpApprovalResponse)
+        public OutputItemMcpApprovalResponseResource(string approvalRequestId, bool isApproved) : base(AgentResponseItemKind.McpApprovalResponse)
         {
             Argument.AssertNotNull(approvalRequestId, nameof(approvalRequestId));
 
             ApprovalRequestId = approvalRequestId;
-            Approve = approve;
+            IsApproved = isApproved;
         }
 
         /// <summary> Initializes a new instance of <see cref="OutputItemMcpApprovalResponseResource"/>. </summary>
@@ -29,12 +29,12 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="responseId"> The response on which the item is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="approvalRequestId"> The ID of the approval request being answered. </param>
-        /// <param name="approve"> Whether the request was approved. </param>
+        /// <param name="isApproved"> Whether the request was approved. </param>
         /// <param name="reason"></param>
-        internal OutputItemMcpApprovalResponseResource(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string approvalRequestId, bool approve, string reason) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal OutputItemMcpApprovalResponseResource(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string approvalRequestId, bool isApproved, string reason) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             ApprovalRequestId = approvalRequestId;
-            Approve = approve;
+            IsApproved = isApproved;
             Reason = reason;
         }
 
@@ -42,7 +42,7 @@ namespace Azure.AI.Extensions.OpenAI
         public string ApprovalRequestId { get; set; }
 
         /// <summary> Whether the request was approved. </summary>
-        public bool Approve { get; set; }
+        public bool IsApproved { get; set; }
 
         /// <summary> Gets or sets the Reason. </summary>
         public string Reason { get; set; }

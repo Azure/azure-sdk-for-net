@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The PolicyExportFormat. </summary>
+    /// <summary></summary>
     public readonly partial struct PolicyExportFormat : IEquatable<PolicyExportFormat>
     {
         private readonly string _value;
+        /// <summary> The contents are inline and Content type is an XML document. </summary>
+        private const string XmlValue = "xml";
+        /// <summary> The contents are inline and Content type is a non XML encoded policy document. </summary>
+        private const string RawXmlValue = "rawxml";
 
         /// <summary> Initializes a new instance of <see cref="PolicyExportFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PolicyExportFormat(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string XmlValue = "xml";
-        private const string RawXmlValue = "rawxml";
+            _value = value;
+        }
 
         /// <summary> The contents are inline and Content type is an XML document. </summary>
         public static PolicyExportFormat Xml { get; } = new PolicyExportFormat(XmlValue);
+
         /// <summary> The contents are inline and Content type is a non XML encoded policy document. </summary>
         public static PolicyExportFormat RawXml { get; } = new PolicyExportFormat(RawXmlValue);
+
         /// <summary> Determines if two <see cref="PolicyExportFormat"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PolicyExportFormat left, PolicyExportFormat right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PolicyExportFormat"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PolicyExportFormat left, PolicyExportFormat right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PolicyExportFormat"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PolicyExportFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PolicyExportFormat(string value) => new PolicyExportFormat(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PolicyExportFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PolicyExportFormat?(string value) => value == null ? null : new PolicyExportFormat(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PolicyExportFormat other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PolicyExportFormat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

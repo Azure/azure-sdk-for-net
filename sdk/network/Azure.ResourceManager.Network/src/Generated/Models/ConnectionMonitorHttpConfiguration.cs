@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Describes the HTTP configuration. </summary>
     public partial class ConnectionMonitorHttpConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorHttpConfiguration"/>. </summary>
         public ConnectionMonitorHttpConfiguration()
@@ -59,35 +31,36 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="requestHeaders"> The HTTP headers to transmit with the request. </param>
         /// <param name="validStatusCodeRanges"> HTTP status codes to consider successful. For instance, "2xx,301-304,418". </param>
         /// <param name="preferHttps"> Value indicating whether HTTPS is preferred over HTTP in cases where the choice is not explicit. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionMonitorHttpConfiguration(int? port, NetworkHttpConfigurationMethod? method, string path, IList<NetworkWatcherHttpHeader> requestHeaders, IList<string> validStatusCodeRanges, bool? preferHttps, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectionMonitorHttpConfiguration(int? port, NetworkHttpConfigurationMethod? @method, string path, IList<NetworkWatcherHttpHeader> requestHeaders, IList<string> validStatusCodeRanges, bool? preferHttps, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Port = port;
-            Method = method;
+            Method = @method;
             Path = path;
             RequestHeaders = requestHeaders;
             ValidStatusCodeRanges = validStatusCodeRanges;
             PreferHttps = preferHttps;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The port to connect to. </summary>
         [WirePath("port")]
         public int? Port { get; set; }
+
         /// <summary> The HTTP method to use. </summary>
         [WirePath("method")]
         public NetworkHttpConfigurationMethod? Method { get; set; }
+
         /// <summary> The path component of the URI. For instance, "/dir1/dir2". </summary>
         [WirePath("path")]
         public string Path { get; set; }
+
         /// <summary> The HTTP headers to transmit with the request. </summary>
         [WirePath("requestHeaders")]
         public IList<NetworkWatcherHttpHeader> RequestHeaders { get; }
+
         /// <summary> HTTP status codes to consider successful. For instance, "2xx,301-304,418". </summary>
         [WirePath("validStatusCodeRanges")]
         public IList<string> ValidStatusCodeRanges { get; }
-        /// <summary> Value indicating whether HTTPS is preferred over HTTP in cases where the choice is not explicit. </summary>
-        [WirePath("preferHTTPS")]
-        public bool? PreferHttps { get; set; }
     }
 }

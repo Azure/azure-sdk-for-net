@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningKubernetesOnlineDeployment : IUtf8JsonSerializable, IJsonModel<MachineLearningKubernetesOnlineDeployment>
+    /// <summary> Properties specific to a KubernetesOnlineDeployment. </summary>
+    public partial class MachineLearningKubernetesOnlineDeployment : MachineLearningOnlineDeploymentProperties, IJsonModel<MachineLearningKubernetesOnlineDeployment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningKubernetesOnlineDeployment>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override MachineLearningEndpointDeploymentProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningKubernetesOnlineDeployment>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMachineLearningKubernetesOnlineDeployment(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningKubernetesOnlineDeployment)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningKubernetesOnlineDeployment>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningKubernetesOnlineDeployment)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MachineLearningKubernetesOnlineDeployment>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineLearningKubernetesOnlineDeployment IPersistableModel<MachineLearningKubernetesOnlineDeployment>.Create(BinaryData data, ModelReaderWriterOptions options) => (MachineLearningKubernetesOnlineDeployment)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MachineLearningKubernetesOnlineDeployment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MachineLearningKubernetesOnlineDeployment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,677 +69,296 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningKubernetesOnlineDeployment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningKubernetesOnlineDeployment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineLearningKubernetesOnlineDeployment)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(ContainerResourceRequirements))
             {
-                if (ContainerResourceRequirements != null)
-                {
-                    writer.WritePropertyName("containerResourceRequirements"u8);
-                    writer.WriteObjectValue(ContainerResourceRequirements, options);
-                }
-                else
-                {
-                    writer.WriteNull("containerResourceRequirements");
-                }
+                writer.WritePropertyName("containerResourceRequirements"u8);
+                writer.WriteObjectValue(ContainerResourceRequirements, options);
             }
         }
 
-        MachineLearningKubernetesOnlineDeployment IJsonModel<MachineLearningKubernetesOnlineDeployment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineLearningKubernetesOnlineDeployment IJsonModel<MachineLearningKubernetesOnlineDeployment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MachineLearningKubernetesOnlineDeployment)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override MachineLearningEndpointDeploymentProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningKubernetesOnlineDeployment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningKubernetesOnlineDeployment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineLearningKubernetesOnlineDeployment)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMachineLearningKubernetesOnlineDeployment(document.RootElement, options);
         }
 
-        internal static MachineLearningKubernetesOnlineDeployment DeserializeMachineLearningKubernetesOnlineDeployment(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MachineLearningKubernetesOnlineDeployment DeserializeMachineLearningKubernetesOnlineDeployment(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            MachineLearningContainerResourceRequirements containerResourceRequirements = default;
-            MachineLearningEndpointComputeType endpointComputeType = default;
-            MachineLearningOnlineScaleSettings scaleSettings = default;
-            MachineLearningOnlineRequestSettings requestSettings = default;
-            string modelMountPath = default;
-            bool? appInsightsEnabled = default;
-            MachineLearningProbeSettings livenessProbe = default;
-            MachineLearningProbeSettings readinessProbe = default;
-            MachineLearningDeploymentProvisioningState? provisioningState = default;
-            string instanceType = default;
-            string model = default;
-            MachineLearningEgressPublicNetworkAccessType? egressPublicNetworkAccess = default;
-            DataCollector dataCollector = default;
-            string description = default;
-            IDictionary<string, string> properties = default;
             MachineLearningCodeConfiguration codeConfiguration = default;
+            string description = default;
             string environmentId = default;
             IDictionary<string, string> environmentVariables = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, string> properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool? appInsightsEnabled = default;
+            DataCollector dataCollector = default;
+            MachineLearningEgressPublicNetworkAccessType? egressPublicNetworkAccess = default;
+            MachineLearningEndpointComputeType endpointComputeType = default;
+            string instanceType = default;
+            MachineLearningProbeSettings livenessProbe = default;
+            string model = default;
+            string modelMountPath = default;
+            MachineLearningDeploymentProvisioningState? provisioningState = default;
+            MachineLearningProbeSettings readinessProbe = default;
+            MachineLearningOnlineRequestSettings requestSettings = default;
+            MachineLearningOnlineScaleSettings scaleSettings = default;
+            MachineLearningProbeSettings startupProbe = default;
+            MachineLearningContainerResourceRequirements containerResourceRequirements = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("containerResourceRequirements"u8))
+                if (prop.NameEquals("codeConfiguration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        containerResourceRequirements = null;
-                        continue;
-                    }
-                    containerResourceRequirements = MachineLearningContainerResourceRequirements.DeserializeMachineLearningContainerResourceRequirements(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("endpointComputeType"u8))
-                {
-                    endpointComputeType = new MachineLearningEndpointComputeType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("scaleSettings"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        scaleSettings = null;
-                        continue;
-                    }
-                    scaleSettings = MachineLearningOnlineScaleSettings.DeserializeMachineLearningOnlineScaleSettings(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("requestSettings"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        requestSettings = null;
-                        continue;
-                    }
-                    requestSettings = MachineLearningOnlineRequestSettings.DeserializeMachineLearningOnlineRequestSettings(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("modelMountPath"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        modelMountPath = null;
-                        continue;
-                    }
-                    modelMountPath = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("appInsightsEnabled"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    appInsightsEnabled = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("livenessProbe"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        livenessProbe = null;
-                        continue;
-                    }
-                    livenessProbe = MachineLearningProbeSettings.DeserializeMachineLearningProbeSettings(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("readinessProbe"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        readinessProbe = null;
-                        continue;
-                    }
-                    readinessProbe = MachineLearningProbeSettings.DeserializeMachineLearningProbeSettings(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("provisioningState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    provisioningState = new MachineLearningDeploymentProvisioningState(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("instanceType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        instanceType = null;
-                        continue;
-                    }
-                    instanceType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("model"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        model = null;
-                        continue;
-                    }
-                    model = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("egressPublicNetworkAccess"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    egressPublicNetworkAccess = new MachineLearningEgressPublicNetworkAccessType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("dataCollector"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        dataCollector = null;
-                        continue;
-                    }
-                    dataCollector = DataCollector.DeserializeDataCollector(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("description"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        description = null;
-                        continue;
-                    }
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        properties = null;
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    properties = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("codeConfiguration"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         codeConfiguration = null;
                         continue;
                     }
-                    codeConfiguration = MachineLearningCodeConfiguration.DeserializeMachineLearningCodeConfiguration(property.Value, options);
+                    codeConfiguration = MachineLearningCodeConfiguration.DeserializeMachineLearningCodeConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("environmentId"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        description = null;
+                        continue;
+                    }
+                    description = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("environmentId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         environmentId = null;
                         continue;
                     }
-                    environmentId = property.Value.GetString();
+                    environmentId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("environmentVariables"u8))
+                if (prop.NameEquals("environmentVariables"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        environmentVariables = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     environmentVariables = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
+                    }
+                    properties = dictionary;
+                    continue;
+                }
+                if (prop.NameEquals("appInsightsEnabled"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    appInsightsEnabled = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("dataCollector"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        dataCollector = null;
+                        continue;
+                    }
+                    dataCollector = DataCollector.DeserializeDataCollector(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("egressPublicNetworkAccess"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    egressPublicNetworkAccess = new MachineLearningEgressPublicNetworkAccessType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("endpointComputeType"u8))
+                {
+                    endpointComputeType = new MachineLearningEndpointComputeType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("instanceType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        instanceType = null;
+                        continue;
+                    }
+                    instanceType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("livenessProbe"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        livenessProbe = null;
+                        continue;
+                    }
+                    livenessProbe = MachineLearningProbeSettings.DeserializeMachineLearningProbeSettings(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("model"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        model = null;
+                        continue;
+                    }
+                    model = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("modelMountPath"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        modelMountPath = null;
+                        continue;
+                    }
+                    modelMountPath = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("provisioningState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new MachineLearningDeploymentProvisioningState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("readinessProbe"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        readinessProbe = null;
+                        continue;
+                    }
+                    readinessProbe = MachineLearningProbeSettings.DeserializeMachineLearningProbeSettings(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("requestSettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        requestSettings = null;
+                        continue;
+                    }
+                    requestSettings = MachineLearningOnlineRequestSettings.DeserializeMachineLearningOnlineRequestSettings(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("scaleSettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        scaleSettings = null;
+                        continue;
+                    }
+                    scaleSettings = MachineLearningOnlineScaleSettings.DeserializeMachineLearningOnlineScaleSettings(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("startupProbe"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        startupProbe = null;
+                        continue;
+                    }
+                    startupProbe = MachineLearningProbeSettings.DeserializeMachineLearningProbeSettings(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("containerResourceRequirements"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        containerResourceRequirements = null;
+                        continue;
+                    }
+                    containerResourceRequirements = MachineLearningContainerResourceRequirements.DeserializeMachineLearningContainerResourceRequirements(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningKubernetesOnlineDeployment(
-                description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
                 codeConfiguration,
+                description,
                 environmentId,
                 environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
-                serializedAdditionalRawData,
-                endpointComputeType,
-                scaleSettings,
-                requestSettings,
-                modelMountPath,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties,
                 appInsightsEnabled,
-                livenessProbe,
-                readinessProbe,
-                provisioningState,
-                instanceType,
-                model,
-                egressPublicNetworkAccess,
                 dataCollector,
+                egressPublicNetworkAccess,
+                endpointComputeType,
+                instanceType,
+                livenessProbe,
+                model,
+                modelMountPath,
+                provisioningState,
+                readinessProbe,
+                requestSettings,
+                scaleSettings,
+                startupProbe,
                 containerResourceRequirements);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerResourceRequirements), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  containerResourceRequirements: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ContainerResourceRequirements))
-                {
-                    builder.Append("  containerResourceRequirements: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ContainerResourceRequirements, options, 2, false, "  containerResourceRequirements: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndpointComputeType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  endpointComputeType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  endpointComputeType: ");
-                builder.AppendLine($"'{EndpointComputeType.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScaleSettings), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  scaleSettings: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ScaleSettings))
-                {
-                    builder.Append("  scaleSettings: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ScaleSettings, options, 2, false, "  scaleSettings: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestSettings), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  requestSettings: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RequestSettings))
-                {
-                    builder.Append("  requestSettings: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, RequestSettings, options, 2, false, "  requestSettings: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ModelMountPath), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  modelMountPath: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ModelMountPath))
-                {
-                    builder.Append("  modelMountPath: ");
-                    if (ModelMountPath.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ModelMountPath}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ModelMountPath}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppInsightsEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  appInsightsEnabled: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AppInsightsEnabled))
-                {
-                    builder.Append("  appInsightsEnabled: ");
-                    var boolValue = AppInsightsEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LivenessProbe), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  livenessProbe: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LivenessProbe))
-                {
-                    builder.Append("  livenessProbe: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, LivenessProbe, options, 2, false, "  livenessProbe: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReadinessProbe), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  readinessProbe: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ReadinessProbe))
-                {
-                    builder.Append("  readinessProbe: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ReadinessProbe, options, 2, false, "  readinessProbe: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("  provisioningState: ");
-                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InstanceType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  instanceType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(InstanceType))
-                {
-                    builder.Append("  instanceType: ");
-                    if (InstanceType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{InstanceType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{InstanceType}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Model), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  model: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Model))
-                {
-                    builder.Append("  model: ");
-                    if (Model.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Model}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Model}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EgressPublicNetworkAccess), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  egressPublicNetworkAccess: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EgressPublicNetworkAccess))
-                {
-                    builder.Append("  egressPublicNetworkAccess: ");
-                    builder.AppendLine($"'{EgressPublicNetworkAccess.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataCollector), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  dataCollector: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DataCollector))
-                {
-                    builder.Append("  dataCollector: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, DataCollector, options, 2, false, "  dataCollector: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  description: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Description))
-                {
-                    builder.Append("  description: ");
-                    if (Description.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Description}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Description}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Properties), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  properties: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Properties))
-                {
-                    if (Properties.Any())
-                    {
-                        builder.Append("  properties: ");
-                        builder.AppendLine("{");
-                        foreach (var item in Properties)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Value.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("'''");
-                                builder.AppendLine($"{item.Value}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"'{item.Value}'");
-                            }
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CodeConfiguration), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  codeConfiguration: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CodeConfiguration))
-                {
-                    builder.Append("  codeConfiguration: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, CodeConfiguration, options, 2, false, "  codeConfiguration: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnvironmentId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  environmentId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EnvironmentId))
-                {
-                    builder.Append("  environmentId: ");
-                    if (EnvironmentId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{EnvironmentId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{EnvironmentId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnvironmentVariables), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  environmentVariables: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(EnvironmentVariables))
-                {
-                    if (EnvironmentVariables.Any())
-                    {
-                        builder.Append("  environmentVariables: ");
-                        builder.AppendLine("{");
-                        foreach (var item in EnvironmentVariables)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Value.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("'''");
-                                builder.AppendLine($"{item.Value}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"'{item.Value}'");
-                            }
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<MachineLearningKubernetesOnlineDeployment>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningKubernetesOnlineDeployment>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(MachineLearningKubernetesOnlineDeployment)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        MachineLearningKubernetesOnlineDeployment IPersistableModel<MachineLearningKubernetesOnlineDeployment>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningKubernetesOnlineDeployment>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMachineLearningKubernetesOnlineDeployment(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MachineLearningKubernetesOnlineDeployment)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<MachineLearningKubernetesOnlineDeployment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

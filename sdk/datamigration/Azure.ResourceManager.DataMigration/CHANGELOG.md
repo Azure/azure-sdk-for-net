@@ -1,5 +1,15 @@
 # Release History
 
+## 1.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+- Added support for `DatabaseMigrationCosmosDbMongo` and `MigrationService` resources.
+
+### Other Changes
+
+- Migrated SDK generation from AutoRest/Swagger to TypeSpec.
+
 ## 1.0.1 (2026-06-03)
 
 ### Other Changes

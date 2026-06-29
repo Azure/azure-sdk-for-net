@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class StaticCidrResource : IJsonModel<StaticCidrData>
     {
-        private static StaticCidrData s_dataDeserializationInstance;
-        private static StaticCidrData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<StaticCidrData> s_dataDeserializationInstance;
 
+        private static IJsonModel<StaticCidrData> DataDeserializationInstance => s_dataDeserializationInstance ??= new StaticCidrData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StaticCidrData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StaticCidrData>)Data).Write(writer, options);
 
-        StaticCidrData IJsonModel<StaticCidrData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StaticCidrData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StaticCidrData IJsonModel<StaticCidrData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<StaticCidrData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StaticCidrData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         StaticCidrData IPersistableModel<StaticCidrData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StaticCidrData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<StaticCidrData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StaticCidrData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StaticCidrData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

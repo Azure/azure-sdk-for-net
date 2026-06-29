@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="networkProfile"> NetworkProfile - describes the network update configuration the virtual machine instance. </param>
         /// <param name="osProfile"> OsProfile - describes the update configuration of the operating system. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmInstancePatchProperties(HciVmInstanceHardwareProfileUpdate hardwareProfile, StorageProfileUpdate storageProfile, NetworkProfileUpdate networkProfile, HciVmOSProfile osProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciVmInstancePatchProperties(HciVmInstanceHardwareProfilePatch hardwareProfile, StorageProfileUpdate storageProfile, NetworkProfileUpdate networkProfile, HciVmOSProfile osProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HardwareProfile = hardwareProfile;
             StorageProfile = storageProfile;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         }
 
         /// <summary> HardwareProfile - Specifies the hardware settings for the virtual machine instance. </summary>
-        public HciVmInstanceHardwareProfileUpdate HardwareProfile { get; set; }
+        public HciVmInstanceHardwareProfilePatch HardwareProfile { get; set; }
 
         /// <summary> StorageProfile - Specifies the storage settings for the virtual machine instance. </summary>
         internal StorageProfileUpdate StorageProfile { get; set; }
