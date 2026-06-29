@@ -1,4 +1,0 @@
-# Intentional breaking change for FeatureFlagFilter parameters map type.
-# The service contract defines filter parameters as string-to-string.
-MembersMustExist : Member 'public void Azure.Data.AppConfiguration.FeatureFlagFilter..ctor(System.String, System.Collections.Generic.IDictionary<System.String, System.Object>)' does not exist in the implementation but it does exist in the contract.
-MembersMustExist : Member 'public System.Collections.Generic.IDictionary<System.String, System.Object> Azure.Data.AppConfiguration.FeatureFlagFilter.Parameters.get()' does not exist in the implementation but it does exist in the contract.
