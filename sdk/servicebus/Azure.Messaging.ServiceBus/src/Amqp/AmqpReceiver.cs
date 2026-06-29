@@ -13,6 +13,7 @@ using System.Transactions;
 using Azure.Core;
 using Azure.Core.Diagnostics;
 using Azure.Core.Shared;
+using Azure.Messaging.ServiceBus.Amqp.Framing;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Azure.Messaging.ServiceBus.Primitives;
@@ -41,6 +42,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <c>true</c> if the receiver is closed; otherwise, <c>false</c>.
         /// </value>
         public bool IsClosed => _closed;
+
+        static AmqpReceiver()
+        {
+            // The non-exclusive session filter is a described composite type that the service echoes back on the
+            // attach response, so it must be registered before any attach response is decoded.
+            AmqpCodec.RegisterKnownTypes(
+                AmqpNonExclusiveSessionFilterCodec.Name,
+                AmqpNonExclusiveSessionFilterCodec.Code,
+                () => new AmqpNonExclusiveSessionFilterCodec());
+        }
 
         private volatile bool _closed;
 
@@ -265,42 +276,53 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         ? new DateTime(lockedUntilUtcTicks, DateTimeKind.Utc)
                         : DateTime.MinValue;
 
-                    // A non-exclusive session is assigned a lock token by the service, returned as a link property
-                    // on attach. An exclusive session (the default) is never assigned one, so SessionLockToken
-                    // stays null and we skip both the read and the back-compat check below.
+                    var source = (Source)link.Settings.Source;
+
+                    // A non-exclusive session is identified by the composite filter echoed back on attach, carrying
+                    // the assigned session id and lock token. An exclusive session (the default) is never assigned a
+                    // token, so SessionLockToken stays null and the session id comes from the standard session filter.
                     if (!_isSessionExclusive)
                     {
-                        SessionLockToken = link.Settings.Properties.TryGetValue<Guid>(
-                            AmqpClientConstants.SessionLockTokenName, out var assignedSessionLockToken)
-                            ? assignedSessionLockToken
-                            : null;
+                        if (source.FilterSet.TryGetValue<AmqpNonExclusiveSessionFilterCodec>(
+                                AmqpClientConstants.NonExclusiveSessionFilterName, out var nonExclusiveFilter))
+                        {
+                            SessionLockToken = nonExclusiveFilter.LockToken;
+                            SessionId = nonExclusiveFilter.SessionId;
+                        }
 
                         // Fail loudly if non-exclusive mode was requested but the service did not honor it (for
-                        // example, an older gateway that ignores the filter). This is a defensive backstop: the
-                        // service-side change is required to be globally available before this feature is released,
-                        // so this should never occur.
+                        // example, an older gateway that ignores the filter and grants an exclusive lock with no
+                        // token echoed back). The service-side change is required to be globally available before
+                        // this feature is released, so this should never occur.
                         if (SessionLockToken == null)
                         {
                             link.Session.SafeClose();
                             throw new NotSupportedException(Resources.NonExclusiveSessionModeNotSupported);
                         }
-                    }
 
-                    var source = (Source)link.Settings.Source;
-                    if (!source.FilterSet.TryGetValue<string>(AmqpClientConstants.SessionFilterName, out var tempSessionId))
-                    {
-                        link.Session.SafeClose();
-                        throw new ServiceBusException(true, Resources.SessionFilterMissing);
+                        if (SessionId == null)
+                        {
+                            link.Session.SafeClose();
+                            throw new ServiceBusException(true, Resources.AmqpFieldSessionId);
+                        }
                     }
+                    else
+                    {
+                        if (!source.FilterSet.TryGetValue<string>(AmqpClientConstants.SessionFilterName, out var tempSessionId))
+                        {
+                            link.Session.SafeClose();
+                            throw new ServiceBusException(true, Resources.SessionFilterMissing);
+                        }
 
-                    if (tempSessionId == null)
-                    {
-                        link.Session.SafeClose();
-                        throw new ServiceBusException(true, Resources.AmqpFieldSessionId);
+                        if (tempSessionId == null)
+                        {
+                            link.Session.SafeClose();
+                            throw new ServiceBusException(true, Resources.AmqpFieldSessionId);
+                        }
+                        // This will only have changed if sessionId was left blank when constructing the session
+                        // receiver.
+                        SessionId = tempSessionId;
                     }
-                    // This will only have changed if sessionId was left blank when constructing the session
-                    // receiver.
-                    SessionId = tempSessionId;
                 }
                 ServiceBusEventSource.Log.CreateReceiveLinkComplete(Identifier, SessionId);
                 link.Closed += OnReceiverLinkClosed;

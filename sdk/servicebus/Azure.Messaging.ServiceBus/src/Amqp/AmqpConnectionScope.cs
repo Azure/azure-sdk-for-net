@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Diagnostics;
+using Azure.Messaging.ServiceBus.Amqp.Framing;
 using Azure.Messaging.ServiceBus.Authorization;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
@@ -696,19 +697,18 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // even if supplied sessionId is null, we need to add the Session filter if it is a session receiver
                 if (isSessionReceiver)
                 {
-                    filters.Add(AmqpClientConstants.SessionFilterName, sessionId);
-
-                    // Opt into non-exclusive session locking. The filter is omitted for exclusive sessions (the
-                    // default) to preserve back-compatibility with services that predate this feature.
-                    if (!isSessionExclusive)
+                    if (isSessionExclusive)
                     {
-                        filters.Add(AmqpClientConstants.SessionExclusiveModeName, false);
+                        filters.Add(AmqpClientConstants.SessionFilterName, sessionId);
                     }
-
-                    // Present a session lock token to cooperatively take over a non-exclusive session.
-                    if (sessionLockToken.HasValue)
+                    else
                     {
-                        filters.Add(AmqpClientConstants.SessionLockTokenName, sessionLockToken.Value);
+                        // Non-exclusive locking: a single composite filter carries the session id and (for takeover)
+                        // the lock token. Presence of this filter implies non-exclusive mode. The plain session
+                        // filter is omitted so services that predate this feature simply ignore the unknown filter.
+                        filters.Add(
+                            AmqpClientConstants.NonExclusiveSessionFilterName,
+                            new AmqpNonExclusiveSessionFilterCodec { SessionId = sessionId, LockToken = sessionLockToken });
                     }
                 }
 

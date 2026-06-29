@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Amqp;
+using Azure.Messaging.ServiceBus.Amqp.Framing;
 using Azure.Messaging.ServiceBus.Authorization;
 using Azure.Messaging.ServiceBus.Core;
 using Microsoft.Azure.Amqp;
@@ -353,10 +354,10 @@ namespace Azure.Messaging.ServiceBus.Tests
                 sessionLockToken: sessionLockToken);
 
             var filterSet = ((Microsoft.Azure.Amqp.Framing.Source)link.Settings.Source).FilterSet;
-            Assert.That(filterSet.TryGetValue<bool>(AmqpClientConstants.SessionExclusiveModeName, out var exclusiveMode), Is.True, "The non-exclusive mode filter should be present.");
-            Assert.That(exclusiveMode, Is.False, "The non-exclusive mode filter should be set to false.");
-            Assert.That(filterSet.TryGetValue<Guid>(AmqpClientConstants.SessionLockTokenName, out var token), Is.True, "The session lock token filter should be present.");
-            Assert.That(token, Is.EqualTo(sessionLockToken), "The session lock token filter should match the supplied token.");
+            Assert.That(filterSet.TryGetValue<AmqpNonExclusiveSessionFilterCodec>(AmqpClientConstants.NonExclusiveSessionFilterName, out var nonExclusiveFilter), Is.True, "The non-exclusive session filter should be present.");
+            Assert.That(nonExclusiveFilter.SessionId, Is.EqualTo("sessionId"), "The composite filter should carry the session id.");
+            Assert.That(nonExclusiveFilter.LockToken, Is.EqualTo(sessionLockToken), "The composite filter should carry the supplied lock token.");
+            Assert.That(filterSet.TryGetValue<string>(AmqpClientConstants.SessionFilterName, out _), Is.False, "The plain session filter should be omitted for a non-exclusive session.");
         }
 
         /// <summary>
@@ -383,8 +384,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             var filterSet = ((Microsoft.Azure.Amqp.Framing.Source)link.Settings.Source).FilterSet;
             Assert.That(filterSet.TryGetValue<string>(AmqpClientConstants.SessionFilterName, out _), Is.True, "The session filter should still be present for an exclusive session.");
-            Assert.That(filterSet.TryGetValue<bool>(AmqpClientConstants.SessionExclusiveModeName, out _), Is.False, "The non-exclusive mode filter should be absent for an exclusive session.");
-            Assert.That(filterSet.TryGetValue<Guid>(AmqpClientConstants.SessionLockTokenName, out _), Is.False, "The session lock token filter should be absent for an exclusive session.");
+            Assert.That(filterSet.TryGetValue<AmqpNonExclusiveSessionFilterCodec>(AmqpClientConstants.NonExclusiveSessionFilterName, out _), Is.False, "The non-exclusive session filter should be absent for an exclusive session.");
         }
 
         /// <summary>
@@ -411,10 +411,9 @@ namespace Azure.Messaging.ServiceBus.Tests
                 sessionLockToken: null);
 
             var filterSet = ((Microsoft.Azure.Amqp.Framing.Source)link.Settings.Source).FilterSet;
-            Assert.That(filterSet.TryGetValue<string>(AmqpClientConstants.SessionFilterName, out _), Is.True, "The session filter should be present.");
-            Assert.That(filterSet.TryGetValue<bool>(AmqpClientConstants.SessionExclusiveModeName, out var exclusiveMode), Is.True, "The non-exclusive mode filter should be present for a fresh non-exclusive acquire.");
-            Assert.That(exclusiveMode, Is.False, "The non-exclusive mode filter should be false.");
-            Assert.That(filterSet.TryGetValue<Guid>(AmqpClientConstants.SessionLockTokenName, out _), Is.False, "No token filter should be present when none is presented.");
+            Assert.That(filterSet.TryGetValue<AmqpNonExclusiveSessionFilterCodec>(AmqpClientConstants.NonExclusiveSessionFilterName, out var nonExclusiveFilter), Is.True, "The non-exclusive session filter should be present for a fresh acquire.");
+            Assert.That(nonExclusiveFilter.SessionId, Is.EqualTo("sessionId"), "The composite filter should carry the session id.");
+            Assert.That(nonExclusiveFilter.LockToken, Is.Null, "No token should be present when none is presented.");
         }
 
         /// <summary>
@@ -545,15 +544,14 @@ namespace Azure.Messaging.ServiceBus.Tests
                     ItExpr.IsAny<CancellationToken>())
                 .Callback(new InvocationAction(invocation =>
                 {
-                    // Simulate the service honoring the non-exclusive session on attach: echo back a session id in
-                    // the session filter and assign a lock token as a link property, so the receiver's non-exclusive
-                    // token read can be exercised without a live link. (The session-id accept path leaves a non-null
-                    // Properties bag and a session filter with a null value; we populate both here.)
+                    // Simulate the service honoring the non-exclusive session on attach: echo back the composite
+                    // non-exclusive session filter carrying the assigned session id and lock token, so the receiver's
+                    // non-exclusive read can be exercised without a live link.
                     if (assignedSessionLockToken.HasValue)
                     {
                         var openedLink = (ReceivingAmqpLink)invocation.Arguments[0];
-                        ((Microsoft.Azure.Amqp.Framing.Source)openedLink.Settings.Source).FilterSet[AmqpClientConstants.SessionFilterName] = "sessionId";
-                        openedLink.Settings.Properties[AmqpClientConstants.SessionLockTokenName] = assignedSessionLockToken.Value;
+                        ((Microsoft.Azure.Amqp.Framing.Source)openedLink.Settings.Source).FilterSet[AmqpClientConstants.NonExclusiveSessionFilterName] =
+                            new AmqpNonExclusiveSessionFilterCodec { SessionId = "sessionId", LockToken = assignedSessionLockToken.Value };
                     }
                 }))
                 .Returns(Task.CompletedTask)
