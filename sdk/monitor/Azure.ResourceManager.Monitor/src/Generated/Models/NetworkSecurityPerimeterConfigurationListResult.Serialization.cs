@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSecurityPerimeterConfiguration item in Value)
+                foreach (MonitorNetworkSecurityPerimeterConfigurationData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            IList<NetworkSecurityPerimeterConfiguration> value = default;
+            IList<MonitorNetworkSecurityPerimeterConfigurationData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    List<NetworkSecurityPerimeterConfiguration> array = new List<NetworkSecurityPerimeterConfiguration>();
+                    List<MonitorNetworkSecurityPerimeterConfigurationData> array = new List<MonitorNetworkSecurityPerimeterConfigurationData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSecurityPerimeterConfiguration.DeserializeNetworkSecurityPerimeterConfiguration(item, options));
+                        array.Add(MonitorNetworkSecurityPerimeterConfigurationData.DeserializeMonitorNetworkSecurityPerimeterConfigurationData(item, options));
                     }
                     value = array;
                     continue;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NetworkSecurityPerimeterConfigurationListResult(value ?? new ChangeTrackingList<NetworkSecurityPerimeterConfiguration>(), nextLink, additionalBinaryDataProperties);
+            return new NetworkSecurityPerimeterConfigurationListResult(value ?? new ChangeTrackingList<MonitorNetworkSecurityPerimeterConfigurationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

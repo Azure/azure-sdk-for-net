@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationListResult"/>. </summary>
         internal NetworkSecurityPerimeterConfigurationListResult()
         {
-            Value = new ChangeTrackingList<NetworkSecurityPerimeterConfiguration>();
+            Value = new ChangeTrackingList<MonitorNetworkSecurityPerimeterConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationListResult"/>. </summary>
         /// <param name="value"> Array of network security perimeter results. </param>
         /// <param name="nextLink"> The link used to get the next page of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterConfigurationListResult(IList<NetworkSecurityPerimeterConfiguration> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkSecurityPerimeterConfigurationListResult(IList<MonitorNetworkSecurityPerimeterConfigurationData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Array of network security perimeter results. </summary>
-        public IList<NetworkSecurityPerimeterConfiguration> Value { get; }
+        public IList<MonitorNetworkSecurityPerimeterConfigurationData> Value { get; }
 
         /// <summary> The link used to get the next page of results. </summary>
         public Uri NextLink { get; }

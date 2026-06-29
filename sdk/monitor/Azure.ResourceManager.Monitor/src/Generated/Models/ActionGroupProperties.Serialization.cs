@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("incidentReceivers"u8);
                 writer.WriteStartArray();
-                foreach (IncidentReceiver item in IncidentReceivers)
+                foreach (MonitorIncidentReceiver item in IncidentReceivers)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Monitor.Models
             IList<MonitorAzureFunctionReceiver> azureFunctionReceivers = default;
             IList<MonitorArmRoleReceiver> armRoleReceivers = default;
             IList<MonitorEventHubReceiver> eventHubReceivers = default;
-            IList<IncidentReceiver> incidentReceivers = default;
+            IList<MonitorIncidentReceiver> incidentReceivers = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -432,10 +432,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    List<IncidentReceiver> array = new List<IncidentReceiver>();
+                    List<MonitorIncidentReceiver> array = new List<MonitorIncidentReceiver>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IncidentReceiver.DeserializeIncidentReceiver(item, options));
+                        array.Add(MonitorIncidentReceiver.DeserializeMonitorIncidentReceiver(item, options));
                     }
                     incidentReceivers = array;
                     continue;
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 azureFunctionReceivers ?? new ChangeTrackingList<MonitorAzureFunctionReceiver>(),
                 armRoleReceivers ?? new ChangeTrackingList<MonitorArmRoleReceiver>(),
                 eventHubReceivers ?? new ChangeTrackingList<MonitorEventHubReceiver>(),
-                incidentReceivers ?? new ChangeTrackingList<IncidentReceiver>(),
+                incidentReceivers ?? new ChangeTrackingList<MonitorIncidentReceiver>(),
                 additionalBinaryDataProperties);
         }
     }

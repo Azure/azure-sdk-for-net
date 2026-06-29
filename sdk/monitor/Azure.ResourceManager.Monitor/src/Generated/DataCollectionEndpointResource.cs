@@ -498,11 +498,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<NetworkSecurityPerimeterConfiguration>> GetNSPAsync(string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MonitorNetworkSecurityPerimeterConfigurationData>> GetNetworkSecurityPerimeterConfigurationAsync(string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkSecurityPerimeterConfigurationName, nameof(networkSecurityPerimeterConfigurationName));
 
-            using DiagnosticScope scope = _nspDataCollectionEndpointClientDiagnostics.CreateScope("DataCollectionEndpointResource.GetNSP");
+            using DiagnosticScope scope = _nspDataCollectionEndpointClientDiagnostics.CreateScope("DataCollectionEndpointResource.GetNetworkSecurityPerimeterConfiguration");
             scope.Start();
             try
             {
@@ -510,9 +510,9 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nspDataCollectionEndpointRestClient.CreateGetNSPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                HttpMessage message = _nspDataCollectionEndpointRestClient.CreateGetNetworkSecurityPerimeterConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<NetworkSecurityPerimeterConfiguration> response = Response.FromValue(NetworkSecurityPerimeterConfiguration.FromResponse(result), result);
+                Response<MonitorNetworkSecurityPerimeterConfigurationData> response = Response.FromValue(MonitorNetworkSecurityPerimeterConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -551,11 +551,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<NetworkSecurityPerimeterConfiguration> GetNSP(string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
+        public virtual Response<MonitorNetworkSecurityPerimeterConfigurationData> GetNetworkSecurityPerimeterConfiguration(string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkSecurityPerimeterConfigurationName, nameof(networkSecurityPerimeterConfigurationName));
 
-            using DiagnosticScope scope = _nspDataCollectionEndpointClientDiagnostics.CreateScope("DataCollectionEndpointResource.GetNSP");
+            using DiagnosticScope scope = _nspDataCollectionEndpointClientDiagnostics.CreateScope("DataCollectionEndpointResource.GetNetworkSecurityPerimeterConfiguration");
             scope.Start();
             try
             {
@@ -563,9 +563,9 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nspDataCollectionEndpointRestClient.CreateGetNSPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                HttpMessage message = _nspDataCollectionEndpointRestClient.CreateGetNetworkSecurityPerimeterConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<NetworkSecurityPerimeterConfiguration> response = Response.FromValue(NetworkSecurityPerimeterConfiguration.FromResponse(result), result);
+                Response<MonitorNetworkSecurityPerimeterConfigurationData> response = Response.FromValue(MonitorNetworkSecurityPerimeterConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -601,20 +601,20 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkSecurityPerimeterConfiguration"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkSecurityPerimeterConfiguration> GetNSPAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MonitorNetworkSecurityPerimeterConfigurationData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MonitorNetworkSecurityPerimeterConfigurationData> GetNetworkSecurityPerimeterConfigurationsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new NspDataCollectionEndpointGetNSPAsyncCollectionResultOfT(
+            return new NspDataCollectionEndpointGetNetworkSecurityPerimeterConfigurationsAsyncCollectionResultOfT(
                 _nspDataCollectionEndpointRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "DataCollectionEndpointResource.GetNSP");
+                "DataCollectionEndpointResource.GetNetworkSecurityPerimeterConfigurations");
         }
 
         /// <summary>
@@ -639,20 +639,20 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkSecurityPerimeterConfiguration"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkSecurityPerimeterConfiguration> GetNSP(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MonitorNetworkSecurityPerimeterConfigurationData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MonitorNetworkSecurityPerimeterConfigurationData> GetNetworkSecurityPerimeterConfigurations(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new NspDataCollectionEndpointGetNSPCollectionResultOfT(
+            return new NspDataCollectionEndpointGetNetworkSecurityPerimeterConfigurationsCollectionResultOfT(
                 _nspDataCollectionEndpointRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "DataCollectionEndpointResource.GetNSP");
+                "DataCollectionEndpointResource.GetNetworkSecurityPerimeterConfigurations");
         }
 
         /// <summary>
@@ -681,11 +681,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation> ReconcileNSPAsync(WaitUntil waitUntil, string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> ReconcileNetworkSecurityPerimeterConfigurationAsync(WaitUntil waitUntil, string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkSecurityPerimeterConfigurationName, nameof(networkSecurityPerimeterConfigurationName));
 
-            using DiagnosticScope scope = _nspDataCollectionEndpointClientDiagnostics.CreateScope("DataCollectionEndpointResource.ReconcileNSP");
+            using DiagnosticScope scope = _nspDataCollectionEndpointClientDiagnostics.CreateScope("DataCollectionEndpointResource.ReconcileNetworkSecurityPerimeterConfiguration");
             scope.Start();
             try
             {
@@ -693,7 +693,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nspDataCollectionEndpointRestClient.CreateReconcileNSPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                HttpMessage message = _nspDataCollectionEndpointRestClient.CreateReconcileNetworkSecurityPerimeterConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MonitorArmOperation operation = new MonitorArmOperation(_nspDataCollectionEndpointClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -735,11 +735,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation ReconcileNSP(WaitUntil waitUntil, string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
+        public virtual ArmOperation ReconcileNetworkSecurityPerimeterConfiguration(WaitUntil waitUntil, string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkSecurityPerimeterConfigurationName, nameof(networkSecurityPerimeterConfigurationName));
 
-            using DiagnosticScope scope = _nspDataCollectionEndpointClientDiagnostics.CreateScope("DataCollectionEndpointResource.ReconcileNSP");
+            using DiagnosticScope scope = _nspDataCollectionEndpointClientDiagnostics.CreateScope("DataCollectionEndpointResource.ReconcileNetworkSecurityPerimeterConfiguration");
             scope.Start();
             try
             {
@@ -747,7 +747,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nspDataCollectionEndpointRestClient.CreateReconcileNSPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                HttpMessage message = _nspDataCollectionEndpointRestClient.CreateReconcileNetworkSecurityPerimeterConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MonitorArmOperation operation = new MonitorArmOperation(_nspDataCollectionEndpointClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

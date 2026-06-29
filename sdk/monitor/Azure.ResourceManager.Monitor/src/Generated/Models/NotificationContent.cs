@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
             AzureFunctionReceivers = new ChangeTrackingList<MonitorAzureFunctionReceiver>();
             ArmRoleReceivers = new ChangeTrackingList<MonitorArmRoleReceiver>();
             EventHubReceivers = new ChangeTrackingList<MonitorEventHubReceiver>();
-            IncidentReceivers = new ChangeTrackingList<IncidentReceiver>();
+            IncidentReceivers = new ChangeTrackingList<MonitorIncidentReceiver>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationContent"/>. </summary>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="eventHubReceivers"> The list of event hub receivers that are part of this action group. </param>
         /// <param name="incidentReceivers"> The list of incident receivers that are part of this action group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationContent(string alertType, IList<MonitorEmailReceiver> emailReceivers, IList<MonitorSmsReceiver> smsReceivers, IList<MonitorWebhookReceiver> webhookReceivers, IList<MonitorItsmReceiver> itsmReceivers, IList<MonitorAzureAppPushReceiver> azureAppPushReceivers, IList<MonitorAutomationRunbookReceiver> automationRunbookReceivers, IList<MonitorVoiceReceiver> voiceReceivers, IList<MonitorLogicAppReceiver> logicAppReceivers, IList<MonitorAzureFunctionReceiver> azureFunctionReceivers, IList<MonitorArmRoleReceiver> armRoleReceivers, IList<MonitorEventHubReceiver> eventHubReceivers, IList<IncidentReceiver> incidentReceivers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NotificationContent(string alertType, IList<MonitorEmailReceiver> emailReceivers, IList<MonitorSmsReceiver> smsReceivers, IList<MonitorWebhookReceiver> webhookReceivers, IList<MonitorItsmReceiver> itsmReceivers, IList<MonitorAzureAppPushReceiver> azureAppPushReceivers, IList<MonitorAutomationRunbookReceiver> automationRunbookReceivers, IList<MonitorVoiceReceiver> voiceReceivers, IList<MonitorLogicAppReceiver> logicAppReceivers, IList<MonitorAzureFunctionReceiver> azureFunctionReceivers, IList<MonitorArmRoleReceiver> armRoleReceivers, IList<MonitorEventHubReceiver> eventHubReceivers, IList<MonitorIncidentReceiver> incidentReceivers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AlertType = alertType;
             EmailReceivers = emailReceivers;
@@ -109,6 +109,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public IList<MonitorEventHubReceiver> EventHubReceivers { get; }
 
         /// <summary> The list of incident receivers that are part of this action group. </summary>
-        public IList<IncidentReceiver> IncidentReceivers { get; }
+        public IList<MonitorIncidentReceiver> IncidentReceivers { get; }
     }
 }

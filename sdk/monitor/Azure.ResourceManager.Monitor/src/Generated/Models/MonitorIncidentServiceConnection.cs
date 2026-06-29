@@ -12,16 +12,16 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The connection info for Incident Receiver. </summary>
-    public partial class IncidentServiceConnection
+    public partial class MonitorIncidentServiceConnection
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IncidentServiceConnection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorIncidentServiceConnection"/>. </summary>
         /// <param name="name"> The name of the connection. </param>
         /// <param name="id"> GUID value representing the connection ID for the incident management service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="id"/> is null. </exception>
-        public IncidentServiceConnection(string name, string id)
+        public MonitorIncidentServiceConnection(string name, string id)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(id, nameof(id));
@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.Monitor.Models
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IncidentServiceConnection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorIncidentServiceConnection"/>. </summary>
         /// <param name="name"> The name of the connection. </param>
         /// <param name="id"> GUID value representing the connection ID for the incident management service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IncidentServiceConnection(string name, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MonitorIncidentServiceConnection(string name, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Id = id;

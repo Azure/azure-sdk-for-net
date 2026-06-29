@@ -14,56 +14,56 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> An Incident receiver. </summary>
-    public partial class IncidentReceiver : IJsonModel<IncidentReceiver>
+    public partial class MonitorIncidentReceiver : IJsonModel<MonitorIncidentReceiver>
     {
-        /// <summary> Initializes a new instance of <see cref="IncidentReceiver"/> for deserialization. </summary>
-        internal IncidentReceiver()
+        /// <summary> Initializes a new instance of <see cref="MonitorIncidentReceiver"/> for deserialization. </summary>
+        internal MonitorIncidentReceiver()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IncidentReceiver PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual MonitorIncidentReceiver PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IncidentReceiver>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorIncidentReceiver>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeIncidentReceiver(document.RootElement, options);
+                        return DeserializeMonitorIncidentReceiver(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IncidentReceiver)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorIncidentReceiver)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IncidentReceiver>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorIncidentReceiver>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(IncidentReceiver)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorIncidentReceiver)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IncidentReceiver>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MonitorIncidentReceiver>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IncidentReceiver IPersistableModel<IncidentReceiver>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MonitorIncidentReceiver IPersistableModel<MonitorIncidentReceiver>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IncidentReceiver>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MonitorIncidentReceiver>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<IncidentReceiver>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MonitorIncidentReceiver>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IncidentReceiver>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorIncidentReceiver>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IncidentReceiver)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorIncidentReceiver)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -117,32 +117,32 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IncidentReceiver IJsonModel<IncidentReceiver>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MonitorIncidentReceiver IJsonModel<MonitorIncidentReceiver>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IncidentReceiver JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual MonitorIncidentReceiver JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IncidentReceiver>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorIncidentReceiver>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IncidentReceiver)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorIncidentReceiver)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIncidentReceiver(document.RootElement, options);
+            return DeserializeMonitorIncidentReceiver(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static IncidentReceiver DeserializeIncidentReceiver(JsonElement element, ModelReaderWriterOptions options)
+        internal static MonitorIncidentReceiver DeserializeMonitorIncidentReceiver(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
-            IncidentServiceConnection connection = default;
-            IncidentManagementService incidentManagementService = default;
+            MonitorIncidentServiceConnection connection = default;
+            MonitorIncidentManagementService incidentManagementService = default;
             IDictionary<string, string> mappings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -154,12 +154,12 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (prop.NameEquals("connection"u8))
                 {
-                    connection = IncidentServiceConnection.DeserializeIncidentServiceConnection(prop.Value, options);
+                    connection = MonitorIncidentServiceConnection.DeserializeMonitorIncidentServiceConnection(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("incidentManagementService"u8))
                 {
-                    incidentManagementService = new IncidentManagementService(prop.Value.GetString());
+                    incidentManagementService = new MonitorIncidentManagementService(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("mappings"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new IncidentReceiver(name, connection, incidentManagementService, mappings, additionalBinaryDataProperties);
+            return new MonitorIncidentReceiver(name, connection, incidentManagementService, mappings, additionalBinaryDataProperties);
         }
     }
 }

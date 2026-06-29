@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> The list of incident receivers that are part of this action group. </summary>
-        public IList<IncidentReceiver> IncidentReceivers
+        public IList<MonitorIncidentReceiver> IncidentReceivers
         {
             get
             {

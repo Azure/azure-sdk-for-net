@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetNSPRequest(Guid subscriptionId, string resourceGroupName, string actionGroupName, string networkSecurityPerimeterConfigurationName, RequestContext context)
+        internal HttpMessage CreateGetNetworkSecurityPerimeterConfigurationRequest(Guid subscriptionId, string resourceGroupName, string actionGroupName, string networkSecurityPerimeterConfigurationName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Monitor
             return message;
         }
 
-        internal HttpMessage CreateGetNSPRequest(Guid subscriptionId, string resourceGroupName, string actionGroupName, RequestContext context)
+        internal HttpMessage CreateGetNetworkSecurityPerimeterConfigurationsRequest(Guid subscriptionId, string resourceGroupName, string actionGroupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor
             return message;
         }
 
-        internal HttpMessage CreateNextGetNSPRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string actionGroupName, RequestContext context)
+        internal HttpMessage CreateNextGetNetworkSecurityPerimeterConfigurationsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string actionGroupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Monitor
             return message;
         }
 
-        internal HttpMessage CreateReconcileNSPRequest(Guid subscriptionId, string resourceGroupName, string actionGroupName, string networkSecurityPerimeterConfigurationName, RequestContext context)
+        internal HttpMessage CreateReconcileNetworkSecurityPerimeterConfigurationRequest(Guid subscriptionId, string resourceGroupName, string actionGroupName, string networkSecurityPerimeterConfigurationName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

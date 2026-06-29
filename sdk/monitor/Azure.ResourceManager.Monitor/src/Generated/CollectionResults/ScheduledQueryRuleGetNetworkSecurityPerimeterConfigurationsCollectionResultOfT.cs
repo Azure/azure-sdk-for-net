@@ -14,37 +14,37 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    internal partial class NspActionGroupGetNSPCollectionResultOfT : Pageable<NetworkSecurityPerimeterConfiguration>
+    internal partial class ScheduledQueryRuleGetNetworkSecurityPerimeterConfigurationsCollectionResultOfT : Pageable<MonitorNetworkSecurityPerimeterConfigurationData>
     {
-        private readonly NspActionGroup _client;
+        private readonly ScheduledQueryRule _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
-        private readonly string _actionGroupName;
+        private readonly string _ruleName;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of NspActionGroupGetNSPCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The NspActionGroup client used to send requests. </param>
+        /// <summary> Initializes a new instance of ScheduledQueryRuleGetNetworkSecurityPerimeterConfigurationsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ScheduledQueryRule client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="actionGroupName"> The name of the action group. </param>
+        /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public NspActionGroupGetNSPCollectionResultOfT(NspActionGroup client, Guid subscriptionId, string resourceGroupName, string actionGroupName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ScheduledQueryRuleGetNetworkSecurityPerimeterConfigurationsCollectionResultOfT(ScheduledQueryRule client, Guid subscriptionId, string resourceGroupName, string ruleName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
-            _actionGroupName = actionGroupName;
+            _ruleName = ruleName;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of NspActionGroupGetNSPCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ScheduledQueryRuleGetNetworkSecurityPerimeterConfigurationsCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of NspActionGroupGetNSPCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<NetworkSecurityPerimeterConfiguration>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ScheduledQueryRuleGetNetworkSecurityPerimeterConfigurationsCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<MonitorNetworkSecurityPerimeterConfigurationData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Monitor
                     yield break;
                 }
                 NetworkSecurityPerimeterConfigurationListResult result = NetworkSecurityPerimeterConfigurationListResult.FromResponse(response);
-                yield return Page<NetworkSecurityPerimeterConfiguration>.FromValues((IReadOnlyList<NetworkSecurityPerimeterConfiguration>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<MonitorNetworkSecurityPerimeterConfigurationData>.FromValues((IReadOnlyList<MonitorNetworkSecurityPerimeterConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetNSPRequest(nextLink, _subscriptionId, _resourceGroupName, _actionGroupName, _context) : _client.CreateGetNSPRequest(_subscriptionId, _resourceGroupName, _actionGroupName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetNetworkSecurityPerimeterConfigurationsRequest(nextLink, _subscriptionId, _resourceGroupName, _ruleName, _context) : _client.CreateGetNetworkSecurityPerimeterConfigurationsRequest(_subscriptionId, _resourceGroupName, _ruleName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

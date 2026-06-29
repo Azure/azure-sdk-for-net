@@ -221,10 +221,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"></param>
-        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterConfiguration"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterConfiguration NetworkSecurityPerimeterConfiguration(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MonitorNetworkSecurityPerimeterConfigurationProperties properties = default)
+        /// <returns> A new <see cref="Models.MonitorNetworkSecurityPerimeterConfigurationData"/> instance for mocking. </returns>
+        public static MonitorNetworkSecurityPerimeterConfigurationData MonitorNetworkSecurityPerimeterConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MonitorNetworkSecurityPerimeterConfigurationProperties properties = default)
         {
-            return new NetworkSecurityPerimeterConfiguration(
+            return new MonitorNetworkSecurityPerimeterConfigurationData(
                 id,
                 name,
                 resourceType,
@@ -2846,7 +2846,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="incidentReceivers"> The list of incident receivers that are part of this action group. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Monitor.ActionGroupData"/> instance for mocking. </returns>
-        public static ActionGroupData ActionGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string groupShortName = default, bool? isEnabled = default, IEnumerable<MonitorEmailReceiver> emailReceivers = default, IEnumerable<MonitorSmsReceiver> smsReceivers = default, IEnumerable<MonitorWebhookReceiver> webhookReceivers = default, IEnumerable<MonitorItsmReceiver> itsmReceivers = default, IEnumerable<MonitorAzureAppPushReceiver> azureAppPushReceivers = default, IEnumerable<MonitorAutomationRunbookReceiver> automationRunbookReceivers = default, IEnumerable<MonitorVoiceReceiver> voiceReceivers = default, IEnumerable<MonitorLogicAppReceiver> logicAppReceivers = default, IEnumerable<MonitorAzureFunctionReceiver> azureFunctionReceivers = default, IEnumerable<MonitorArmRoleReceiver> armRoleReceivers = default, IEnumerable<MonitorEventHubReceiver> eventHubReceivers = default, IEnumerable<IncidentReceiver> incidentReceivers = default, ManagedServiceIdentity identity = default)
+        public static ActionGroupData ActionGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string groupShortName = default, bool? isEnabled = default, IEnumerable<MonitorEmailReceiver> emailReceivers = default, IEnumerable<MonitorSmsReceiver> smsReceivers = default, IEnumerable<MonitorWebhookReceiver> webhookReceivers = default, IEnumerable<MonitorItsmReceiver> itsmReceivers = default, IEnumerable<MonitorAzureAppPushReceiver> azureAppPushReceivers = default, IEnumerable<MonitorAutomationRunbookReceiver> automationRunbookReceivers = default, IEnumerable<MonitorVoiceReceiver> voiceReceivers = default, IEnumerable<MonitorLogicAppReceiver> logicAppReceivers = default, IEnumerable<MonitorAzureFunctionReceiver> azureFunctionReceivers = default, IEnumerable<MonitorArmRoleReceiver> armRoleReceivers = default, IEnumerable<MonitorEventHubReceiver> eventHubReceivers = default, IEnumerable<MonitorIncidentReceiver> incidentReceivers = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2871,7 +2871,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     (azureFunctionReceivers ?? new ChangeTrackingList<MonitorAzureFunctionReceiver>()).ToList(),
                     (armRoleReceivers ?? new ChangeTrackingList<MonitorArmRoleReceiver>()).ToList(),
                     (eventHubReceivers ?? new ChangeTrackingList<MonitorEventHubReceiver>()).ToList(),
-                    (incidentReceivers ?? new ChangeTrackingList<IncidentReceiver>()).ToList(),
+                    (incidentReceivers ?? new ChangeTrackingList<MonitorIncidentReceiver>()).ToList(),
                     default),
                 identity,
                 default);
@@ -3047,20 +3047,20 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="connection"> The incident service connection. </param>
         /// <param name="incidentManagementService"> The incident management service type. </param>
         /// <param name="mappings"> Field mappings for the incident service. </param>
-        /// <returns> A new <see cref="Models.IncidentReceiver"/> instance for mocking. </returns>
-        public static IncidentReceiver IncidentReceiver(string name = default, IncidentServiceConnection connection = default, IncidentManagementService incidentManagementService = default, IDictionary<string, string> mappings = default)
+        /// <returns> A new <see cref="Models.MonitorIncidentReceiver"/> instance for mocking. </returns>
+        public static MonitorIncidentReceiver MonitorIncidentReceiver(string name = default, MonitorIncidentServiceConnection connection = default, MonitorIncidentManagementService incidentManagementService = default, IDictionary<string, string> mappings = default)
         {
             mappings ??= new ChangeTrackingDictionary<string, string>();
 
-            return new IncidentReceiver(name, connection, incidentManagementService, mappings ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new MonitorIncidentReceiver(name, connection, incidentManagementService, mappings ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <param name="name"> The name of the connection. </param>
         /// <param name="id"> GUID value representing the connection ID for the incident management service. </param>
-        /// <returns> A new <see cref="Models.IncidentServiceConnection"/> instance for mocking. </returns>
-        public static IncidentServiceConnection IncidentServiceConnection(string name = default, string id = default)
+        /// <returns> A new <see cref="Models.MonitorIncidentServiceConnection"/> instance for mocking. </returns>
+        public static MonitorIncidentServiceConnection MonitorIncidentServiceConnection(string name = default, string id = default)
         {
-            return new IncidentServiceConnection(name, id, default);
+            return new MonitorIncidentServiceConnection(name, id, default);
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -3088,7 +3088,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="eventHubReceivers"> The list of event hub receivers that are part of this action group. </param>
         /// <param name="incidentReceivers"> The list of incident receivers that are part of this action group. </param>
         /// <returns> A new <see cref="Models.NotificationContent"/> instance for mocking. </returns>
-        public static NotificationContent NotificationContent(string alertType = default, IEnumerable<MonitorEmailReceiver> emailReceivers = default, IEnumerable<MonitorSmsReceiver> smsReceivers = default, IEnumerable<MonitorWebhookReceiver> webhookReceivers = default, IEnumerable<MonitorItsmReceiver> itsmReceivers = default, IEnumerable<MonitorAzureAppPushReceiver> azureAppPushReceivers = default, IEnumerable<MonitorAutomationRunbookReceiver> automationRunbookReceivers = default, IEnumerable<MonitorVoiceReceiver> voiceReceivers = default, IEnumerable<MonitorLogicAppReceiver> logicAppReceivers = default, IEnumerable<MonitorAzureFunctionReceiver> azureFunctionReceivers = default, IEnumerable<MonitorArmRoleReceiver> armRoleReceivers = default, IEnumerable<MonitorEventHubReceiver> eventHubReceivers = default, IEnumerable<IncidentReceiver> incidentReceivers = default)
+        public static NotificationContent NotificationContent(string alertType = default, IEnumerable<MonitorEmailReceiver> emailReceivers = default, IEnumerable<MonitorSmsReceiver> smsReceivers = default, IEnumerable<MonitorWebhookReceiver> webhookReceivers = default, IEnumerable<MonitorItsmReceiver> itsmReceivers = default, IEnumerable<MonitorAzureAppPushReceiver> azureAppPushReceivers = default, IEnumerable<MonitorAutomationRunbookReceiver> automationRunbookReceivers = default, IEnumerable<MonitorVoiceReceiver> voiceReceivers = default, IEnumerable<MonitorLogicAppReceiver> logicAppReceivers = default, IEnumerable<MonitorAzureFunctionReceiver> azureFunctionReceivers = default, IEnumerable<MonitorArmRoleReceiver> armRoleReceivers = default, IEnumerable<MonitorEventHubReceiver> eventHubReceivers = default, IEnumerable<MonitorIncidentReceiver> incidentReceivers = default)
         {
             emailReceivers ??= new ChangeTrackingList<MonitorEmailReceiver>();
             smsReceivers ??= new ChangeTrackingList<MonitorSmsReceiver>();
@@ -3101,7 +3101,7 @@ namespace Azure.ResourceManager.Monitor.Models
             azureFunctionReceivers ??= new ChangeTrackingList<MonitorAzureFunctionReceiver>();
             armRoleReceivers ??= new ChangeTrackingList<MonitorArmRoleReceiver>();
             eventHubReceivers ??= new ChangeTrackingList<MonitorEventHubReceiver>();
-            incidentReceivers ??= new ChangeTrackingList<IncidentReceiver>();
+            incidentReceivers ??= new ChangeTrackingList<MonitorIncidentReceiver>();
 
             return new NotificationContent(
                 alertType,
@@ -3116,7 +3116,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 (azureFunctionReceivers ?? new ChangeTrackingList<MonitorAzureFunctionReceiver>()).ToList(),
                 (armRoleReceivers ?? new ChangeTrackingList<MonitorArmRoleReceiver>()).ToList(),
                 (eventHubReceivers ?? new ChangeTrackingList<MonitorEventHubReceiver>()).ToList(),
-                (incidentReceivers ?? new ChangeTrackingList<IncidentReceiver>()).ToList(),
+                (incidentReceivers ?? new ChangeTrackingList<MonitorIncidentReceiver>()).ToList(),
                 default);
         }
 
