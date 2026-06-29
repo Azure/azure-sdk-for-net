@@ -121,7 +121,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.IsFalse(flag);
         }
 
-        [Ignore("need a re-recording")]
         [TestCase(false)]
         [TestCase(true)]
         public async Task AddRemoveTag(bool? useTagResource)
