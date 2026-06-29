@@ -6,7 +6,6 @@
     <PackageId>Azure.Messaging.WebPubSub.Client</PackageId>
     <Description>Client for Azure WebPubSub</Description>
     <PackageTags>azure;webpubsub.client</PackageTags>
-    <NoWarn>$(NoWarn);0067</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
