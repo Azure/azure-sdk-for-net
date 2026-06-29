@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class RawGraphicalRunbookContent : IUtf8JsonSerializable, IJsonModel<RawGraphicalRunbookContent>
+    /// <summary> Raw Graphical Runbook content. </summary>
+    public partial class RawGraphicalRunbookContent : IJsonModel<RawGraphicalRunbookContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RawGraphicalRunbookContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RawGraphicalRunbookContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RawGraphicalRunbookContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRawGraphicalRunbookContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RawGraphicalRunbookContent)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RawGraphicalRunbookContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAutomationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RawGraphicalRunbookContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RawGraphicalRunbookContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RawGraphicalRunbookContent IPersistableModel<RawGraphicalRunbookContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RawGraphicalRunbookContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RawGraphicalRunbookContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RawGraphicalRunbookContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RawGraphicalRunbookContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RawGraphicalRunbookContent)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(SchemaVersion))
             {
                 writer.WritePropertyName("schemaVersion"u8);
@@ -49,15 +89,15 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("runbookType"u8);
                 writer.WriteStringValue(RunbookType.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -66,22 +106,27 @@ namespace Azure.ResourceManager.Automation.Models
             }
         }
 
-        RawGraphicalRunbookContent IJsonModel<RawGraphicalRunbookContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RawGraphicalRunbookContent IJsonModel<RawGraphicalRunbookContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RawGraphicalRunbookContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RawGraphicalRunbookContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RawGraphicalRunbookContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RawGraphicalRunbookContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRawGraphicalRunbookContent(document.RootElement, options);
         }
 
-        internal static RawGraphicalRunbookContent DeserializeRawGraphicalRunbookContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RawGraphicalRunbookContent DeserializeRawGraphicalRunbookContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -89,67 +134,34 @@ namespace Azure.ResourceManager.Automation.Models
             string schemaVersion = default;
             string runbookDefinition = default;
             GraphRunbookType? runbookType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("schemaVersion"u8))
+                if (prop.NameEquals("schemaVersion"u8))
                 {
-                    schemaVersion = property.Value.GetString();
+                    schemaVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runbookDefinition"u8))
+                if (prop.NameEquals("runbookDefinition"u8))
                 {
-                    runbookDefinition = property.Value.GetString();
+                    runbookDefinition = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runbookType"u8))
+                if (prop.NameEquals("runbookType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    runbookType = new GraphRunbookType(property.Value.GetString());
+                    runbookType = new GraphRunbookType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new RawGraphicalRunbookContent(schemaVersion, runbookDefinition, runbookType, serializedAdditionalRawData);
+            return new RawGraphicalRunbookContent(schemaVersion, runbookDefinition, runbookType, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<RawGraphicalRunbookContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RawGraphicalRunbookContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAutomationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RawGraphicalRunbookContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        RawGraphicalRunbookContent IPersistableModel<RawGraphicalRunbookContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RawGraphicalRunbookContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRawGraphicalRunbookContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RawGraphicalRunbookContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<RawGraphicalRunbookContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

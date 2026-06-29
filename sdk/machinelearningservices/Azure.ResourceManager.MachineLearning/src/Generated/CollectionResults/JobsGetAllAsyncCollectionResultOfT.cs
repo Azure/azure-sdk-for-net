@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning
     internal partial class JobsGetAllAsyncCollectionResultOfT : AsyncPageable<MachineLearningJobData>
     {
         private readonly Jobs _client;
-        private readonly Guid _subscriptionId;
+        private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _workspaceName;
         private readonly string _skip;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="properties"> Comma-separated list of user property names (and optionally values). Example: prop1,prop2=value2. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public JobsGetAllAsyncCollectionResultOfT(Jobs client, Guid subscriptionId, string resourceGroupName, string workspaceName, string skip, string jobType, string tag, string listViewType, string properties, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public JobsGetAllAsyncCollectionResultOfT(Jobs client, string subscriptionId, string resourceGroupName, string workspaceName, string skip, string jobType, string tag, string listViewType, string properties, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

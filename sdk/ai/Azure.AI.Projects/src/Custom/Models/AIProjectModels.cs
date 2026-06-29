@@ -469,37 +469,37 @@ namespace Azure.AI.Projects
         /// <summary> Start or retrieve a pending upload for a model version. </summary>
         /// <param name="name"> Name of the model. </param>
         /// <param name="version"> Version of the model. </param>
-        /// <param name="pendingUploadRequest"></param>
+        /// <param name="pendingUploadContent"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="pendingUploadRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="pendingUploadContent"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<ModelPendingUploadResponse> StartModelPendingUpload(string name, string version, ModelPendingUploadRequest pendingUploadRequest, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<ModelPendingUploadResult> StartModelPendingUpload(string name, string version, ModelPendingUploadContent pendingUploadContent, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(pendingUploadRequest, nameof(pendingUploadRequest));
+            Argument.AssertNotNull(pendingUploadContent, nameof(pendingUploadContent));
 
-            ClientResult result = StartModelPendingUpload(name, version, pendingUploadRequest, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((ModelPendingUploadResponse)result, result.GetRawResponse());
+            ClientResult result = StartModelPendingUpload(name, version, pendingUploadContent, cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((ModelPendingUploadResult)result, result.GetRawResponse());
         }
 
         /// <summary> Start or retrieve a pending upload for a model version. </summary>
         /// <param name="name"> Name of the model. </param>
         /// <param name="version"> Version of the model. </param>
-        /// <param name="pendingUploadRequest"></param>
+        /// <param name="pendingUploadContent"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="pendingUploadRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="pendingUploadContent"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ModelPendingUploadResponse>> StartModelPendingUploadAsync(string name, string version, ModelPendingUploadRequest pendingUploadRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<ModelPendingUploadResult>> StartModelPendingUploadAsync(string name, string version, ModelPendingUploadContent pendingUploadContent, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(pendingUploadRequest, nameof(pendingUploadRequest));
+            Argument.AssertNotNull(pendingUploadContent, nameof(pendingUploadContent));
 
-            ClientResult result = await StartModelPendingUploadAsync(name, version, pendingUploadRequest, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((ModelPendingUploadResponse)result, result.GetRawResponse());
+            ClientResult result = await StartModelPendingUploadAsync(name, version, pendingUploadContent, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((ModelPendingUploadResult)result, result.GetRawResponse());
         }
 
         /// <summary>

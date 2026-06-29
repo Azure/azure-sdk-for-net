@@ -10,13 +10,70 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AutomationConnectionTypeCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<AutomationConnectionTypeCreateOrUpdateContent>
+    /// <summary> The parameters supplied to the create or update connection type operation. </summary>
+    public partial class AutomationConnectionTypeCreateOrUpdateContent : IJsonModel<AutomationConnectionTypeCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationConnectionTypeCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="AutomationConnectionTypeCreateOrUpdateContent"/> for deserialization. </summary>
+        internal AutomationConnectionTypeCreateOrUpdateContent()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AutomationConnectionTypeCreateOrUpdateContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AutomationConnectionTypeCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAutomationConnectionTypeCreateOrUpdateContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AutomationConnectionTypeCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AutomationConnectionTypeCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAutomationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AutomationConnectionTypeCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AutomationConnectionTypeCreateOrUpdateContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AutomationConnectionTypeCreateOrUpdateContent IPersistableModel<AutomationConnectionTypeCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AutomationConnectionTypeCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="automationConnectionTypeCreateOrUpdateContent"> The <see cref="AutomationConnectionTypeCreateOrUpdateContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(AutomationConnectionTypeCreateOrUpdateContent automationConnectionTypeCreateOrUpdateContent)
+        {
+            if (automationConnectionTypeCreateOrUpdateContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(automationConnectionTypeCreateOrUpdateContent, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AutomationConnectionTypeCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,39 +85,24 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AutomationConnectionTypeCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AutomationConnectionTypeCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AutomationConnectionTypeCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(IsGlobal))
+            writer.WriteObjectValue(Properties, options);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("isGlobal"u8);
-                writer.WriteBooleanValue(IsGlobal.Value);
-            }
-            writer.WritePropertyName("fieldDefinitions"u8);
-            writer.WriteStartObject();
-            foreach (var item in FieldDefinitions)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value, options);
-            }
-            writer.WriteEndObject();
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -69,107 +111,52 @@ namespace Azure.ResourceManager.Automation.Models
             }
         }
 
-        AutomationConnectionTypeCreateOrUpdateContent IJsonModel<AutomationConnectionTypeCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AutomationConnectionTypeCreateOrUpdateContent IJsonModel<AutomationConnectionTypeCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AutomationConnectionTypeCreateOrUpdateContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AutomationConnectionTypeCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AutomationConnectionTypeCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AutomationConnectionTypeCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAutomationConnectionTypeCreateOrUpdateContent(document.RootElement, options);
         }
 
-        internal static AutomationConnectionTypeCreateOrUpdateContent DeserializeAutomationConnectionTypeCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AutomationConnectionTypeCreateOrUpdateContent DeserializeAutomationConnectionTypeCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
-            bool? isGlobal = default;
-            IDictionary<string, AutomationConnectionFieldDefinition> fieldDefinitions = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            ConnectionTypeCreateOrUpdateProperties properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("isGlobal"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isGlobal = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("fieldDefinitions"u8))
-                        {
-                            Dictionary<string, AutomationConnectionFieldDefinition> dictionary = new Dictionary<string, AutomationConnectionFieldDefinition>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, AutomationConnectionFieldDefinition.DeserializeAutomationConnectionFieldDefinition(property1.Value, options));
-                            }
-                            fieldDefinitions = dictionary;
-                            continue;
-                        }
-                    }
+                    properties = ConnectionTypeCreateOrUpdateProperties.DeserializeConnectionTypeCreateOrUpdateProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new AutomationConnectionTypeCreateOrUpdateContent(name, isGlobal, fieldDefinitions, serializedAdditionalRawData);
+            return new AutomationConnectionTypeCreateOrUpdateContent(name, properties, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<AutomationConnectionTypeCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AutomationConnectionTypeCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAutomationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AutomationConnectionTypeCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AutomationConnectionTypeCreateOrUpdateContent IPersistableModel<AutomationConnectionTypeCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AutomationConnectionTypeCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAutomationConnectionTypeCreateOrUpdateContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AutomationConnectionTypeCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AutomationConnectionTypeCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

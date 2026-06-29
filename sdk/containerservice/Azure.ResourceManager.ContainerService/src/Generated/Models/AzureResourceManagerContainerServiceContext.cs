@@ -301,6 +301,7 @@ namespace Azure.ResourceManager.ContainerService
     [ModelReaderWriterBuildable(typeof(SnapshotListResult))]
     [ModelReaderWriterBuildable(typeof(SnapshotProperties))]
     [ModelReaderWriterBuildable(typeof(SysctlConfig))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TrustedAccessRoleBindingListResult))]
     [ModelReaderWriterBuildable(typeof(TrustedAccessRoleBindingProperties))]
     [ModelReaderWriterBuildable(typeof(TrustedAccessRoleListResult))]
@@ -310,7 +311,6 @@ namespace Azure.ResourceManager.ContainerService
     [ModelReaderWriterBuildable(typeof(VmSkusListResult))]
     [ModelReaderWriterBuildable(typeof(WindowsGmsaProfile))]
     [ModelReaderWriterBuildable(typeof(WritableSubResource))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerContainerServiceContext : ModelReaderWriterContext
     {
     }

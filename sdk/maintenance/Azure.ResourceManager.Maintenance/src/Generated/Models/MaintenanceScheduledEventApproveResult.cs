@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    /// <summary> Response of scheduled event acknowledge. </summary>
+    /// <summary> Response of ScheduledEvents acknowledge. </summary>
     public partial class MaintenanceScheduledEventApproveResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

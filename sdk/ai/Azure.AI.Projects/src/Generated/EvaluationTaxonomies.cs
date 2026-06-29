@@ -282,38 +282,6 @@ namespace Azure.AI.Projects.Evaluation
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Creates or replaces the specified evaluation taxonomy with the provided definition. </summary>
-        /// <param name="name"> The name of the evaluation taxonomy. </param>
-        /// <param name="taxonomy"> The evaluation taxonomy. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="taxonomy"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<EvaluationTaxonomy> Create(string name, EvaluationTaxonomy taxonomy, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(taxonomy, nameof(taxonomy));
-
-            ClientResult result = Create(name, taxonomy, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((EvaluationTaxonomy)result, result.GetRawResponse());
-        }
-
-        /// <summary> Creates or replaces the specified evaluation taxonomy with the provided definition. </summary>
-        /// <param name="name"> The name of the evaluation taxonomy. </param>
-        /// <param name="taxonomy"> The evaluation taxonomy. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="taxonomy"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<EvaluationTaxonomy>> CreateAsync(string name, EvaluationTaxonomy taxonomy, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(taxonomy, nameof(taxonomy));
-
-            ClientResult result = await CreateAsync(name, taxonomy, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((EvaluationTaxonomy)result, result.GetRawResponse());
-        }
-
         /// <summary>
         /// [Protocol Method] Update an evaluation taxonomy.
         /// <list type="bullet">

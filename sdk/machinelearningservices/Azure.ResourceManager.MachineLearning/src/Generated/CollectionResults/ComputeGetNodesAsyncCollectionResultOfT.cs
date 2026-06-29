@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning
     internal partial class ComputeGetNodesAsyncCollectionResultOfT : AsyncPageable<AmlComputeNodeInformation>
     {
         private readonly Compute _client;
-        private readonly Guid _subscriptionId;
+        private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _workspaceName;
         private readonly string _computeName;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="computeName"> Name of the Azure Machine Learning compute. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ComputeGetNodesAsyncCollectionResultOfT(Compute client, Guid subscriptionId, string resourceGroupName, string workspaceName, string computeName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ComputeGetNodesAsyncCollectionResultOfT(Compute client, string subscriptionId, string resourceGroupName, string workspaceName, string computeName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

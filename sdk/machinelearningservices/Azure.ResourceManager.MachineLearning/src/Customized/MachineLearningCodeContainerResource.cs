@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.MachineLearning
     {
         // Customized: preserve GA MachineLearning-prefixed child accessors. These wrappers sit over
         // generated child-resource accessors, not standalone REST operations that client.tsp can rename.
-        public virtual MachineLearningCodeVersionCollection GetMachineLearningCodeVersions() => GetCodeVersions();
+        public virtual MachineLearningCodeVersionCollection GetMachineLearningCodeVersions() => new MachineLearningCodeVersionCollection(Client, Id);
 
         /// <summary> Gets a code version. </summary>
         [ForwardsClientCalls]
-        public virtual Task<Response<MachineLearningCodeVersionResource>> GetMachineLearningCodeVersionAsync(string version, CancellationToken cancellationToken = default) => GetCodeVersionAsync(version, cancellationToken);
+        public virtual Task<Response<MachineLearningCodeVersionResource>> GetMachineLearningCodeVersionAsync(string version, CancellationToken cancellationToken = default) => GetMachineLearningCodeVersions().GetAsync(version, cancellationToken);
 
         /// <summary> Gets a code version. </summary>
         [ForwardsClientCalls]
-        public virtual Response<MachineLearningCodeVersionResource> GetMachineLearningCodeVersion(string version, CancellationToken cancellationToken = default) => GetCodeVersion(version, cancellationToken);
+        public virtual Response<MachineLearningCodeVersionResource> GetMachineLearningCodeVersion(string version, CancellationToken cancellationToken = default) => GetMachineLearningCodeVersions().Get(version, cancellationToken);
     }
 }

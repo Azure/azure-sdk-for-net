@@ -73,9 +73,9 @@ namespace Azure.ResourceManager.RedisEnterprise
     [ModelReaderWriterBuildable(typeof(RedisEnterpriseSkuDetailsList))]
     [ModelReaderWriterBuildable(typeof(RedisPersistenceSettings))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownRedisEnterpriseMigrationProperties))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerRedisEnterpriseContext : ModelReaderWriterContext
     {
     }

@@ -120,6 +120,11 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("blueprint_reference"u8);
                 writer.WriteObjectValue(BlueprintReference, options);
             }
+            if (Optional.IsDefined(Draft))
+            {
+                writer.WritePropertyName("draft"u8);
+                writer.WriteBooleanValue(Draft.Value);
+            }
             if (Optional.IsDefined(AgentEndpoint))
             {
                 writer.WritePropertyName("agent_endpoint"u8);
@@ -178,6 +183,7 @@ namespace Azure.AI.Projects.Agents
             string description = default;
             ProjectsAgentDefinition definition = default;
             AgentBlueprintReference blueprintReference = default;
+            bool? draft = default;
             AgentEndpointConfiguration agentEndpoint = default;
             AgentCard agentCard = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -237,6 +243,15 @@ namespace Azure.AI.Projects.Agents
                     blueprintReference = AgentBlueprintReference.DeserializeAgentBlueprintReference(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("draft"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    draft = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (prop.NameEquals("agent_endpoint"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -267,6 +282,7 @@ namespace Azure.AI.Projects.Agents
                 description,
                 definition,
                 blueprintReference,
+                draft,
                 agentEndpoint,
                 agentCard,
                 additionalBinaryDataProperties);

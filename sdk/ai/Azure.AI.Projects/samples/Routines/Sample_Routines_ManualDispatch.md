@@ -35,32 +35,32 @@ ProjectsAgentVersion agentVersion = (await projectClient.AgentAdministrationClie
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateRoutine_RoutinesManualDispatch_Sync
-RoutineAction action = new InvokeAgentResponsesApiRoutineAction
+RoutineAction action = new AgentResponsesApiRoutineAction
 {
     AgentName = agentVersion.Name,
 };
 ProjectsRoutineOptions routineOptions = new(action: action, description: "Routine used by manual dispatch sample.", enabled: true);
 routineOptions.Triggers.Add("manual", new CustomRoutineTrigger(provider: "manual", parameters: new Dictionary<string, BinaryData>()));
-ProjectsRoutine created = routinesClient.CreateOrUpdateRoutine(
-    routineName: routineName,
+ProjectsRoutine created = routinesClient.CreateOrUpdate(
+    name: routineName,
     options: routineOptions
 );
-Console.WriteLine($"Created routine: {created.Name} enabled={created.Enabled}.");
+Console.WriteLine($"Created routine: {created.Name} enabled={created.IsEnabled}.");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateRoutine_RoutinesManualDispatch_Async
-RoutineAction action = new InvokeAgentResponsesApiRoutineAction
+RoutineAction action = new AgentResponsesApiRoutineAction
 {
     AgentName = agentVersion.Name,
 };
 ProjectsRoutineOptions routineOptions = new(action: action, description: "Routine used by manual dispatch sample.", enabled: true);
 routineOptions.Triggers.Add("manual", new CustomRoutineTrigger(provider: "manual", parameters: new Dictionary<string, BinaryData>()));
-ProjectsRoutine created = await routinesClient.CreateOrUpdateRoutineAsync(
-    routineName: routineName,
+ProjectsRoutine created = await routinesClient.CreateOrUpdateAsync(
+    name: routineName,
     options: routineOptions
 );
-Console.WriteLine($"Created routine: {created.Name} enabled={created.Enabled}.");
+Console.WriteLine($"Created routine: {created.Name} enabled={created.IsEnabled}.");
 ```
 
 4. Manually dispatch the task.
@@ -68,13 +68,13 @@ Console.WriteLine($"Created routine: {created.Name} enabled={created.Enabled}.")
 
 Synchronous sample:
 ```C# Snippet:Sample_DispatchTask_RoutinesManualDispatch_Sync
-DispatchRoutineResponse dispatch = routinesClient.DispatchAsyncRoutine(routineName: created.Name, payload: new InvokeAgentResponsesApiDispatchPayload(BinaryData.FromObjectAsJson("Hello, Tell me a joke.")));
+DispatchRoutineResult dispatch = routinesClient.Dispatch(name: created.Name, payload: new AgentResponsesApiDispatchPayload(BinaryData.FromObjectAsJson("Hello, Tell me a joke.")));
 Console.WriteLine($"Dispatched the routine. Dispatch ID {dispatch.DispatchId}, task ID: {dispatch.TaskId}.");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_DispatchTask_RoutinesManualDispatch_Async
-DispatchRoutineResponse dispatch = await routinesClient.DispatchAsyncRoutineAsync(routineName: created.Name, payload: new InvokeAgentResponsesApiDispatchPayload(BinaryData.FromObjectAsJson("Hello, Tell me a joke.")));
+DispatchRoutineResult dispatch = await routinesClient.DispatchAsync(name: created.Name, payload: new AgentResponsesApiDispatchPayload(BinaryData.FromObjectAsJson("Hello, Tell me a joke.")));
 Console.WriteLine($"Dispatched the routine. Dispatch ID {dispatch.DispatchId}, task ID: {dispatch.TaskId}.");
 ```
 
@@ -89,7 +89,7 @@ RoutineRun completedRun = null;
 while (DateTime.UtcNow < deadline)
 {
     Thread.Sleep(500);
-    foreach (RoutineRun run in projectClient.Routines.GetRoutineRuns(routineName: created.Name))
+    foreach (RoutineRun run in projectClient.Routines.GetRoutineRuns(name: created.Name))
     {
         Console.WriteLine($"    - run ID {run.Id}, status: {run.Status}, trigger type: {run.TriggerType}, triggered at: {run.TriggeredAt?.ToString() ?? "<Not triggered yet>"}, ended at: {run.EndedAt?.ToString() ?? "<Not ended yet>"}");
         if (string.Equals(run.Status, "finished", StringComparison.InvariantCultureIgnoreCase) ||
@@ -127,7 +127,7 @@ RoutineRun completedRun = null;
 while (DateTime.UtcNow < deadline)
 {
     await Task.Delay(500);
-    await foreach (RoutineRun run in projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name))
+    await foreach (RoutineRun run in projectClient.Routines.GetRoutineRunsAsync(name: created.Name))
     {
         Console.WriteLine($"    - run ID {run.Id}, status: {run.Status}, trigger type: {run.TriggerType}, triggered at: {run.TriggeredAt?.ToString() ?? "<Not triggered yet>"}, ended at: {run.EndedAt?.ToString() ?? "<Not ended yet>"}");
         if (string.Equals(run.Status, "finished", StringComparison.InvariantCultureIgnoreCase) ||
@@ -189,12 +189,12 @@ Console.WriteLine($"The response Id is {completedRun.ResponseId}");
 
 Synchronous sample:
 ```C# Snippet:Sample_DeleteRoutine_RoutinesManualDispatch_Sync
-routinesClient.DeleteRoutine(routineName);
+routinesClient.Delete(routineName);
 Console.WriteLine("Routine deleted");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_DeleteRoutine_RoutinesManualDispatch_Async
-await routinesClient.DeleteRoutineAsync(routineName);
+await routinesClient.DeleteAsync(routineName);
 Console.WriteLine("Routine deleted");
 ```

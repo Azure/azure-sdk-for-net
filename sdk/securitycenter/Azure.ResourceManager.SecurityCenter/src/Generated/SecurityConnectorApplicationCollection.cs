@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
@@ -25,50 +26,52 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class SecurityConnectorApplicationCollection : ArmCollection, IEnumerable<SecurityConnectorApplicationResource>, IAsyncEnumerable<SecurityConnectorApplicationResource>
     {
         private readonly ClientDiagnostics _securityConnectorApplicationClientDiagnostics;
-        private readonly SecurityConnectorApplicationsRestOperations _securityConnectorApplicationRestClient;
+        private readonly SecurityConnectorApplication _securityConnectorApplicationRestClient;
+        private readonly ClientDiagnostics _securityConnectorApplicationsClientDiagnostics;
+        private readonly SecurityConnectorApplications _securityConnectorApplicationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityConnectorApplicationCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SecurityConnectorApplicationCollection for mocking. </summary>
         protected SecurityConnectorApplicationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityConnectorApplicationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityConnectorApplicationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SecurityConnectorApplicationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _securityConnectorApplicationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityConnectorApplicationResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SecurityConnectorApplicationResource.ResourceType, out string securityConnectorApplicationApiVersion);
-            _securityConnectorApplicationRestClient = new SecurityConnectorApplicationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityConnectorApplicationApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _securityConnectorApplicationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityConnectorApplicationResource.ResourceType.Namespace, Diagnostics);
+            _securityConnectorApplicationRestClient = new SecurityConnectorApplication(_securityConnectorApplicationClientDiagnostics, Pipeline, Endpoint, securityConnectorApplicationApiVersion ?? "2022-07-01-preview");
+            _securityConnectorApplicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityConnectorApplicationResource.ResourceType.Namespace, Diagnostics);
+            _securityConnectorApplicationsRestClient = new SecurityConnectorApplications(_securityConnectorApplicationsClientDiagnostics, Pipeline, Endpoint, securityConnectorApplicationApiVersion ?? "2022-07-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SecurityConnectorResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SecurityConnectorResource.ResourceType), nameof(id));
+            if (id.ResourceType != "Microsoft.Security/securityConnectors")
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, "Microsoft.Security/securityConnectors"), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or update a security Application on the given security connector.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityConnectorApplications_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityConnectorApplication_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityConnectorApplicationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,23 +79,31 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
         /// <param name="data"> Application over a subscription scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<SecurityConnectorApplicationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applicationId, SecurityApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _securityConnectorApplicationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationId, data, cancellationToken).ConfigureAwait(false);
-                var uri = _securityConnectorApplicationRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationId, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityCenterArmOperation<SecurityConnectorApplicationResource>(Response.FromValue(new SecurityConnectorApplicationResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityConnectorApplicationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, applicationId, SecurityApplicationData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityApplicationData> response = Response.FromValue(SecurityApplicationData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation<SecurityConnectorApplicationResource> operation = new SecurityCenterArmOperation<SecurityConnectorApplicationResource>(Response.FromValue(new SecurityConnectorApplicationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,20 +117,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Creates or update a security Application on the given security connector.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityConnectorApplications_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityConnectorApplication_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityConnectorApplicationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,23 +134,31 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
         /// <param name="data"> Application over a subscription scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<SecurityConnectorApplicationResource> CreateOrUpdate(WaitUntil waitUntil, string applicationId, SecurityApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _securityConnectorApplicationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationId, data, cancellationToken);
-                var uri = _securityConnectorApplicationRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationId, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityCenterArmOperation<SecurityConnectorApplicationResource>(Response.FromValue(new SecurityConnectorApplicationResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityConnectorApplicationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, applicationId, SecurityApplicationData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityApplicationData> response = Response.FromValue(SecurityApplicationData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation<SecurityConnectorApplicationResource> operation = new SecurityCenterArmOperation<SecurityConnectorApplicationResource>(Response.FromValue(new SecurityConnectorApplicationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,38 +172,42 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Get a specific application for the requested scope by applicationId
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityConnectorApplications_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityConnectorApplication_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityConnectorApplicationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SecurityConnectorApplicationResource>> GetAsync(string applicationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
-            using var scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationCollection.Get");
+            using DiagnosticScope scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _securityConnectorApplicationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityConnectorApplicationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, applicationId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityApplicationData> response = Response.FromValue(SecurityApplicationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityConnectorApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,38 +221,42 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Get a specific application for the requested scope by applicationId
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityConnectorApplications_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityConnectorApplication_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityConnectorApplicationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SecurityConnectorApplicationResource> Get(string applicationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
-            using var scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationCollection.Get");
+            using DiagnosticScope scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationCollection.Get");
             scope.Start();
             try
             {
-                var response = _securityConnectorApplicationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityConnectorApplicationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, applicationId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityApplicationData> response = Response.FromValue(SecurityApplicationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityConnectorApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,50 +270,50 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Get a list of all relevant applications over a security connector level scope
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityConnectorApplications_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityConnectorApplication_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityConnectorApplicationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityConnectorApplicationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityConnectorApplicationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityConnectorApplicationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityConnectorApplicationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityConnectorApplicationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityConnectorApplicationResource(Client, SecurityApplicationData.DeserializeSecurityApplicationData(e)), _securityConnectorApplicationClientDiagnostics, Pipeline, "SecurityConnectorApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SecurityApplicationData, SecurityConnectorApplicationResource>(new SecurityConnectorApplicationsGetAllAsyncCollectionResultOfT(
+                _securityConnectorApplicationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SecurityConnectorApplicationCollection.GetAll"), data => new SecurityConnectorApplicationResource(Client, data));
         }
 
         /// <summary>
         /// Get a list of all relevant applications over a security connector level scope
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityConnectorApplications_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityConnectorApplication_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityConnectorApplicationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,45 +321,67 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="SecurityConnectorApplicationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityConnectorApplicationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityConnectorApplicationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityConnectorApplicationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityConnectorApplicationResource(Client, SecurityApplicationData.DeserializeSecurityApplicationData(e)), _securityConnectorApplicationClientDiagnostics, Pipeline, "SecurityConnectorApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SecurityApplicationData, SecurityConnectorApplicationResource>(new SecurityConnectorApplicationsGetAllCollectionResultOfT(
+                _securityConnectorApplicationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SecurityConnectorApplicationCollection.GetAll"), data => new SecurityConnectorApplicationResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityConnectorApplications_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityConnectorApplication_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityConnectorApplicationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string applicationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
-            using var scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationCollection.Exists");
+            using DiagnosticScope scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _securityConnectorApplicationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityConnectorApplicationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, applicationId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SecurityApplicationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityApplicationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityApplicationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -350,36 +395,50 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityConnectorApplications_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityConnectorApplication_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityConnectorApplicationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string applicationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
-            using var scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationCollection.Exists");
+            using DiagnosticScope scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _securityConnectorApplicationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityConnectorApplicationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, applicationId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SecurityApplicationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityApplicationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityApplicationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -393,38 +452,54 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityConnectorApplications_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityConnectorApplication_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityConnectorApplicationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SecurityConnectorApplicationResource>> GetIfExistsAsync(string applicationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
-            using var scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationCollection.GetIfExists");
+            using DiagnosticScope scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _securityConnectorApplicationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityConnectorApplicationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, applicationId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SecurityApplicationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityApplicationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityApplicationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SecurityConnectorApplicationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityConnectorApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -438,38 +513,54 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityConnectorApplications_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityConnectorApplication_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityConnectorApplicationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SecurityConnectorApplicationResource> GetIfExists(string applicationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
-            using var scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationCollection.GetIfExists");
+            using DiagnosticScope scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _securityConnectorApplicationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityConnectorApplicationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, applicationId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SecurityApplicationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityApplicationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityApplicationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SecurityConnectorApplicationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityConnectorApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -489,6 +580,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SecurityConnectorApplicationResource> IAsyncEnumerable<SecurityConnectorApplicationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

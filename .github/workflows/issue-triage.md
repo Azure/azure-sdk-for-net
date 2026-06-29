@@ -18,7 +18,10 @@ on:
   roles: all
   reaction: eyes
 
-permissions: read-all
+permissions:
+  copilot-requests: write
+  contents: read
+  issues: read
 
 network:
   allowed:
@@ -64,7 +67,7 @@ safe-outputs:
           type: string
       steps:
         - name: Post mention comment
-          uses: actions/github-script@v9
+          uses: actions/github-script@v9.0.0
           env:
             DISPATCH_ISSUE_NUMBER: "${{ github.event.inputs.issue_number || '' }}"
           with:
@@ -307,8 +310,8 @@ Labels classification is distinguished by color. Actively inspect label colors w
 ### Excluded Category and Service Labels
 
 The following labels require human judgment and are never assigned by automatic triage:
-- **"Central-EngSys"** (color #ffeb77): For non-service issues such as engineering systems, scripts, workflows, or pipelines in the /eng folder. 
-- **"Service"** (color #ffeb77): For issues with the REST API or Azure service behavior outside SDK control. 
+- **"Central-EngSys"** (color #ffeb77): For non-service issues such as engineering systems, scripts, workflows, or pipelines in the /eng folder.
+- **"Service"** (color #ffeb77): For issues with the REST API or Azure service behavior outside SDK control.
 
 If any of these labels are part of the most confident label prediction, treat the prediction as low confidence and fall back to applying "needs-triage" only.  Any labels applied in earlier steps should be removed, leaving ONLY `needs-triage`
 

@@ -5,8 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Service-managed provenance artifacts produced by an evaluator generation job. Present only on EvaluatorVersion resources created via the generation pipeline. The combined-JSONL Foundry Dataset is read-only and resolves to a versioned dataset in a service-reserved namespace. </summary>
     public partial class EvaluatorGenerationArtifacts
@@ -15,29 +16,29 @@ namespace Azure.AI.Projects
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EvaluatorGenerationArtifacts"/>. </summary>
-        /// <param name="dataset"> Reference to the single Foundry Dataset (one combined JSONL file, version-aligned to `EvaluatorVersion.version`) holding all artifacts produced by the generation pipeline. Each row in the JSONL carries a `kind` field discriminating its content (e.g. `spec`, `tools`, `context`). </param>
-        /// <param name="kinds"> The kinds of rows present in `dataset`. Always contains `"spec"` (the generated evaluation specification, a Markdown document describing what the evaluator measures). May additionally contain `"tools"` (when the generation pipeline produced or inferred OpenAI tool schemas) and/or `"context"` (when supplementary materials such as file uploads or trace samples were used during generation). </param>
-        internal EvaluatorGenerationArtifacts(DatasetReference dataset, IEnumerable<string> kinds)
+        /// <param name="reference"> Reference to the single Foundry Dataset (one combined JSONL file, version-aligned to `EvaluatorVersion.version`) holding all artifacts produced by the generation pipeline. Each row in the JSONL carries a `kind` field discriminating its content (e.g. `spec`, `tools`, `context`). </param>
+        /// <param name="datasetRowKinds"> The kinds of rows present in `dataset`. Always contains `"spec"` (the generated evaluation specification, a Markdown document describing what the evaluator measures). May additionally contain `"tools"` (when the generation pipeline produced or inferred OpenAI tool schemas) and/or `"context"` (when supplementary materials such as file uploads or trace samples were used during generation). </param>
+        internal EvaluatorGenerationArtifacts(DatasetReference reference, IEnumerable<string> datasetRowKinds)
         {
-            Dataset = dataset;
-            Kinds = kinds.ToList();
+            Reference = reference;
+            DatasetRowKinds = datasetRowKinds.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="EvaluatorGenerationArtifacts"/>. </summary>
-        /// <param name="dataset"> Reference to the single Foundry Dataset (one combined JSONL file, version-aligned to `EvaluatorVersion.version`) holding all artifacts produced by the generation pipeline. Each row in the JSONL carries a `kind` field discriminating its content (e.g. `spec`, `tools`, `context`). </param>
-        /// <param name="kinds"> The kinds of rows present in `dataset`. Always contains `"spec"` (the generated evaluation specification, a Markdown document describing what the evaluator measures). May additionally contain `"tools"` (when the generation pipeline produced or inferred OpenAI tool schemas) and/or `"context"` (when supplementary materials such as file uploads or trace samples were used during generation). </param>
+        /// <param name="reference"> Reference to the single Foundry Dataset (one combined JSONL file, version-aligned to `EvaluatorVersion.version`) holding all artifacts produced by the generation pipeline. Each row in the JSONL carries a `kind` field discriminating its content (e.g. `spec`, `tools`, `context`). </param>
+        /// <param name="datasetRowKinds"> The kinds of rows present in `dataset`. Always contains `"spec"` (the generated evaluation specification, a Markdown document describing what the evaluator measures). May additionally contain `"tools"` (when the generation pipeline produced or inferred OpenAI tool schemas) and/or `"context"` (when supplementary materials such as file uploads or trace samples were used during generation). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluatorGenerationArtifacts(DatasetReference dataset, IList<string> kinds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EvaluatorGenerationArtifacts(DatasetReference reference, IList<string> datasetRowKinds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Dataset = dataset;
-            Kinds = kinds;
+            Reference = reference;
+            DatasetRowKinds = datasetRowKinds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Reference to the single Foundry Dataset (one combined JSONL file, version-aligned to `EvaluatorVersion.version`) holding all artifacts produced by the generation pipeline. Each row in the JSONL carries a `kind` field discriminating its content (e.g. `spec`, `tools`, `context`). </summary>
-        public DatasetReference Dataset { get; }
+        public DatasetReference Reference { get; }
 
         /// <summary> The kinds of rows present in `dataset`. Always contains `"spec"` (the generated evaluation specification, a Markdown document describing what the evaluator measures). May additionally contain `"tools"` (when the generation pipeline produced or inferred OpenAI tool schemas) and/or `"context"` (when supplementary materials such as file uploads or trace samples were used during generation). </summary>
-        public IList<string> Kinds { get; }
+        public IList<string> DatasetRowKinds { get; }
     }
 }

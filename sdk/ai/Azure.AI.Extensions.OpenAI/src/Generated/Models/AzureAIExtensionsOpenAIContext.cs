@@ -340,6 +340,7 @@ namespace Azure.AI.Extensions.OpenAI
     [ModelReaderWriterBuildable(typeof(ToolChoiceMCP))]
     [ModelReaderWriterBuildable(typeof(ToolChoiceWebSearchPreview))]
     [ModelReaderWriterBuildable(typeof(ToolChoiceWebSearchPreview20250311))]
+    [ModelReaderWriterBuildable(typeof(ToolConfig))]
     [ModelReaderWriterBuildable(typeof(TypeParam))]
     [ModelReaderWriterBuildable(typeof(UnknownAgentResponseItem))]
     [ModelReaderWriterBuildable(typeof(UnknownAnnotation))]

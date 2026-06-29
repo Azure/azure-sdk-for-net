@@ -30,7 +30,7 @@ public class SamplesRoutineBase : ProjectsClientTestBase
         List<string> routines = await projectClient.Routines.GetRoutinesAsync().Where(x => x.Name.StartsWith(SAMPLE_ROUTINE_NAME_PREFIX)).Select(x => x.Name).ToListAsync();
         foreach (string routineName in routines)
         {
-            await projectClient.Routines.DeleteRoutineAsync(routineName);
+            await projectClient.Routines.DeleteAsync(routineName);
         }
     }
 }

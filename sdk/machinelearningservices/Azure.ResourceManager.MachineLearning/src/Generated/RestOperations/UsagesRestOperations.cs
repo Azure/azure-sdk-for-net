@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetMachineLearningUsagesRequest(Guid subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateGetMachineLearningUsagesRequest(string subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/usages", false);
             if (_apiVersion != null)
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning
             return message;
         }
 
-        internal HttpMessage CreateNextGetMachineLearningUsagesRequest(Uri nextPage, Guid subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateNextGetMachineLearningUsagesRequest(Uri nextPage, string subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

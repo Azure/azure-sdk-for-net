@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    /// <summary> MachineLearningEndpointResource is a preview-only resource. </summary>
+    /// <summary> EndpointResourcePropertiesBasicResource is a preview-only resource. </summary>
     public partial class MachineLearningEndpointData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

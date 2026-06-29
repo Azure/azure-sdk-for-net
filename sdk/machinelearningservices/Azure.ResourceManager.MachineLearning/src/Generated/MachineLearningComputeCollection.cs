@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning
     /// <summary>
     /// A class representing a collection of <see cref="MachineLearningComputeResource"/> and their operations.
     /// Each <see cref="MachineLearningComputeResource"/> in the collection will belong to the same instance of <see cref="MachineLearningWorkspaceResource"/>.
-    /// To get a <see cref="MachineLearningComputeCollection"/> instance call the GetComputeResources method from an instance of <see cref="MachineLearningWorkspaceResource"/>.
+    /// To get a <see cref="MachineLearningComputeCollection"/> instance call the GetMachineLearningComputes method from an instance of <see cref="MachineLearningWorkspaceResource"/>.
     /// </summary>
     public partial class MachineLearningComputeCollection : ArmCollection, IEnumerable<MachineLearningComputeResource>, IAsyncEnumerable<MachineLearningComputeResource>
     {
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MachineLearningComputeCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(MachineLearningComputeResource.ResourceType, out string computeResourceApiVersion);
+            TryGetApiVersion(MachineLearningComputeResource.ResourceType, out string machineLearningComputeApiVersion);
             _computeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearningComputeResource.ResourceType.Namespace, Diagnostics);
-            _computeRestClient = new Compute(_computeClientDiagnostics, Pipeline, Endpoint, computeResourceApiVersion ?? "2026-03-15-preview");
+            _computeRestClient = new Compute(_computeClientDiagnostics, Pipeline, Endpoint, machineLearningComputeApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _computeRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, computeName, MachineLearningComputeData.ToRequestContent(data), context);
+                HttpMessage message = _computeRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, computeName, MachineLearningComputeData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MachineLearningArmOperation<MachineLearningComputeResource> operation = new MachineLearningArmOperation<MachineLearningComputeResource>(
                     new MachineLearningComputeResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _computeRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, computeName, MachineLearningComputeData.ToRequestContent(data), context);
+                HttpMessage message = _computeRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, computeName, MachineLearningComputeData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MachineLearningArmOperation<MachineLearningComputeResource> operation = new MachineLearningArmOperation<MachineLearningComputeResource>(
                     new MachineLearningComputeResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _computeRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, computeName, context);
+                HttpMessage message = _computeRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, computeName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MachineLearningComputeData> response = Response.FromValue(MachineLearningComputeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _computeRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, computeName, context);
+                HttpMessage message = _computeRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, computeName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MachineLearningComputeData> response = Response.FromValue(MachineLearningComputeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.MachineLearning
             };
             return new AsyncPageableWrapper<MachineLearningComputeData, MachineLearningComputeResource>(new ComputeGetAllAsyncCollectionResultOfT(
                 _computeRestClient,
-                Guid.Parse(Id.SubscriptionId),
+                Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Name,
                 skip,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.MachineLearning
             };
             return new PageableWrapper<MachineLearningComputeData, MachineLearningComputeResource>(new ComputeGetAllCollectionResultOfT(
                 _computeRestClient,
-                Guid.Parse(Id.SubscriptionId),
+                Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Name,
                 skip,
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _computeRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, computeName, context);
+                HttpMessage message = _computeRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, computeName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MachineLearningComputeData> response = default;
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _computeRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, computeName, context);
+                HttpMessage message = _computeRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, computeName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MachineLearningComputeData> response = default;
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _computeRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, computeName, context);
+                HttpMessage message = _computeRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, computeName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MachineLearningComputeData> response = default;
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _computeRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, computeName, context);
+                HttpMessage message = _computeRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, computeName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MachineLearningComputeData> response = default;

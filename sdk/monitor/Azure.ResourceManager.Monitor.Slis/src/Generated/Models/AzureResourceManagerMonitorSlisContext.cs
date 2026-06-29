@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.Monitor.Slis
     [ModelReaderWriterBuildable(typeof(SliSignalSource))]
     [ModelReaderWriterBuildable(typeof(SliSpatialAggregation))]
     [ModelReaderWriterBuildable(typeof(SliTemporalAggregation))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(WindowUptimeCriteria))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerMonitorSlisContext : ModelReaderWriterContext
     {
     }

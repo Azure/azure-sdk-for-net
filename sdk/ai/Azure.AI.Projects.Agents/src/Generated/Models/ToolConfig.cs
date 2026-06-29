@@ -19,7 +19,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Initializes a new instance of <see cref="ToolConfig"/>. </summary>
-        /// <param name="pin">
+        /// <param name="isPinned">
         /// When true, the tool is always included in agent context and visible in `tools/list`.
         /// When false (default), the tool is hidden from `tools/list` and only discoverable via `tool_search`.
         /// </param>
@@ -28,9 +28,9 @@ namespace Azure.AI.Projects.Agents
         /// to improve discoverability. Does not alter `tools/list` output.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ToolConfig(bool? pin, string additionalSearchText, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ToolConfig(bool? isPinned, string additionalSearchText, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Pin = pin;
+            IsPinned = isPinned;
             AdditionalSearchText = additionalSearchText;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -39,7 +39,7 @@ namespace Azure.AI.Projects.Agents
         /// When true, the tool is always included in agent context and visible in `tools/list`.
         /// When false (default), the tool is hidden from `tools/list` and only discoverable via `tool_search`.
         /// </summary>
-        public bool? Pin { get; set; }
+        public bool? IsPinned { get; set; }
 
         /// <summary>
         /// Additional text indexed for tool_search. Supplements the native tool description

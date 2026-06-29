@@ -16,24 +16,24 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="OptimizationJobProgress"/>. </summary>
         /// <param name="candidatesCompleted"> Number of candidates whose evaluation has completed so far. </param>
         /// <param name="bestScore"> Best score observed so far across all candidates. </param>
-        /// <param name="elapsedSeconds"> Wall-clock time elapsed in seconds since the job began executing. </param>
-        internal OptimizationJobProgress(int candidatesCompleted, double bestScore, double elapsedSeconds)
+        /// <param name="elapsedSecondsInternal"> Wall-clock time elapsed in seconds since the job began executing. </param>
+        internal OptimizationJobProgress(int candidatesCompleted, double bestScore, double elapsedSecondsInternal)
         {
             CandidatesCompleted = candidatesCompleted;
             BestScore = bestScore;
-            ElapsedSeconds = elapsedSeconds;
+            ElapsedSecondsInternal = elapsedSecondsInternal;
         }
 
         /// <summary> Initializes a new instance of <see cref="OptimizationJobProgress"/>. </summary>
         /// <param name="candidatesCompleted"> Number of candidates whose evaluation has completed so far. </param>
         /// <param name="bestScore"> Best score observed so far across all candidates. </param>
-        /// <param name="elapsedSeconds"> Wall-clock time elapsed in seconds since the job began executing. </param>
+        /// <param name="elapsedSecondsInternal"> Wall-clock time elapsed in seconds since the job began executing. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OptimizationJobProgress(int candidatesCompleted, double bestScore, double elapsedSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OptimizationJobProgress(int candidatesCompleted, double bestScore, double elapsedSecondsInternal, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CandidatesCompleted = candidatesCompleted;
             BestScore = bestScore;
-            ElapsedSeconds = elapsedSeconds;
+            ElapsedSecondsInternal = elapsedSecondsInternal;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,8 +42,5 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Best score observed so far across all candidates. </summary>
         public double BestScore { get; }
-
-        /// <summary> Wall-clock time elapsed in seconds since the job began executing. </summary>
-        public double ElapsedSeconds { get; }
     }
 }

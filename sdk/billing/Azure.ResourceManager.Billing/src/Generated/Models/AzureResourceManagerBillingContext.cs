@@ -296,6 +296,7 @@ namespace Azure.ResourceManager.Billing
     [ModelReaderWriterBuildable(typeof(SubscriptionPolicyProperties))]
     [ModelReaderWriterBuildable(typeof(SubscriptionPolicyResource))]
     [ModelReaderWriterBuildable(typeof(SubscriptionRenewalTermDetails))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TransactionListResult))]
     [ModelReaderWriterBuildable(typeof(TransactionPropertiesAzureCreditApplied))]
     [ModelReaderWriterBuildable(typeof(TransactionPropertiesConsumptionCommitmentDecremented))]
@@ -309,7 +310,6 @@ namespace Azure.ResourceManager.Billing
     [ModelReaderWriterBuildable(typeof(TransferProperties))]
     [ModelReaderWriterBuildable(typeof(ValidateTransferListResponse))]
     [ModelReaderWriterBuildable(typeof(ValidateTransferResponseProperties))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerBillingContext : ModelReaderWriterContext
     {
     }

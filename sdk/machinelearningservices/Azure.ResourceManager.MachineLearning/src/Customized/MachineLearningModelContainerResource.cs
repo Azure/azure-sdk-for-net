@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.MachineLearning
     public partial class MachineLearningModelContainerResource
     {
         // Customized: keep the historical MachineLearning* method names for source compatibility.
-        public virtual MachineLearningModelVersionCollection GetMachineLearningModelVersions() => GetModelVersions();
+        public virtual MachineLearningModelVersionCollection GetMachineLearningModelVersions() => new MachineLearningModelVersionCollection(Client, Id);
         /// <summary> Gets a model version. </summary>
         [ForwardsClientCalls]
-        public virtual Task<Response<MachineLearningModelVersionResource>> GetMachineLearningModelVersionAsync(string version, CancellationToken cancellationToken = default) => GetModelVersionAsync(version, cancellationToken);
+        public virtual Task<Response<MachineLearningModelVersionResource>> GetMachineLearningModelVersionAsync(string version, CancellationToken cancellationToken = default) => GetMachineLearningModelVersions().GetAsync(version, cancellationToken);
         /// <summary> Gets a model version. </summary>
         [ForwardsClientCalls]
-        public virtual Response<MachineLearningModelVersionResource> GetMachineLearningModelVersion(string version, CancellationToken cancellationToken = default) => GetModelVersion(version, cancellationToken);
+        public virtual Response<MachineLearningModelVersionResource> GetMachineLearningModelVersion(string version, CancellationToken cancellationToken = default) => GetMachineLearningModelVersions().Get(version, cancellationToken);
     }
 }
