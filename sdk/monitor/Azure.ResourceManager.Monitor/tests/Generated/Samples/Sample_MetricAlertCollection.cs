@@ -197,7 +197,7 @@ WebHookProperties =
                 })
             {
                 Description = "This is the description of the rule1",
-                ResolveConfiguration = new ResolveConfiguration(true)
+                ResolveConfiguration = new MetricAlertResolveConfiguration(true)
                 {
                     TimeToResolve = XmlConvert.ToTimeSpan("PT10M"),
                 },
@@ -214,11 +214,11 @@ ActionGroupId = new ResourceIdentifier("/subscriptions/14ddf0c5-77c5-4b53-84f6-e
 {
 ["Email.Sujbect"] = "my custom email subject"
 },
-                Identity = new Azure.ResourceManager.Monitor.Models.Identity(IdentityType.UserAssigned)
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned)
                 {
                     UserAssignedIdentities =
 {
-["/subscriptions/2f1a501a-6e1d-4f37-a445-462d7f8a563d/resourceGroups/AdisTest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/msi-test-euap"] = new UserIdentityProperties()
+[new ResourceIdentifier("/subscriptions/2f1a501a-6e1d-4f37-a445-462d7f8a563d/resourceGroups/AdisTest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/msi-test-euap")] = new UserAssignedIdentity()
 },
                 },
                 Tags = { },
@@ -273,7 +273,7 @@ IgnoreDataBefore = DateTimeOffset.Parse("2019-04-04T21:00:00.000Z"),
                 })
             {
                 Description = "This is the description of the rule1",
-                ResolveConfiguration = new ResolveConfiguration(true)
+                ResolveConfiguration = new MetricAlertResolveConfiguration(true)
                 {
                     TimeToResolve = XmlConvert.ToTimeSpan("PT10M"),
                 },
@@ -290,11 +290,11 @@ ActionGroupId = new ResourceIdentifier("/subscriptions/14ddf0c5-77c5-4b53-84f6-e
 {
 ["Email.Sujbect"] = "my custom email subject"
 },
-                Identity = new Azure.ResourceManager.Monitor.Models.Identity(IdentityType.UserAssigned)
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned)
                 {
                     UserAssignedIdentities =
 {
-["/subscriptions/2f1a501a-6e1d-4f37-a445-462d7f8a563d/resourceGroups/AdisTest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/msi-test-euap"] = new UserIdentityProperties()
+[new ResourceIdentifier("/subscriptions/2f1a501a-6e1d-4f37-a445-462d7f8a563d/resourceGroups/AdisTest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/msi-test-euap")] = new UserAssignedIdentity()
 },
                 },
                 Tags = { },
@@ -346,7 +346,7 @@ ActionGroupId = new ResourceIdentifier("/subscriptions/14ddf0c5-77c5-4b53-84f6-e
                 })
             {
                 Description = "This is the description of the rule1",
-                ResolveConfiguration = new ResolveConfiguration(true)
+                ResolveConfiguration = new MetricAlertResolveConfiguration(true)
                 {
                     TimeToResolve = XmlConvert.ToTimeSpan("PT10M"),
                 },
@@ -363,11 +363,11 @@ ActionGroupId = new ResourceIdentifier("/subscriptions/14ddf0c5-77c5-4b53-84f6-e
 {
 ["Email.Sujbect"] = "my custom email subject"
 },
-                Identity = new Azure.ResourceManager.Monitor.Models.Identity(IdentityType.UserAssigned)
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned)
                 {
                     UserAssignedIdentities =
 {
-["/subscriptions/2f1a501a-6e1d-4f37-a445-462d7f8a563d/resourceGroups/AdisTest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/msi-test-euap"] = new UserIdentityProperties()
+[new ResourceIdentifier("/subscriptions/2f1a501a-6e1d-4f37-a445-462d7f8a563d/resourceGroups/AdisTest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/msi-test-euap")] = new UserAssignedIdentity()
 },
                 },
                 Tags = { },
@@ -419,7 +419,7 @@ ActionGroupId = new ResourceIdentifier("/subscriptions/14ddf0c5-77c5-4b53-84f6-e
                 })
             {
                 Description = "This is the description of the rule1",
-                ResolveConfiguration = new ResolveConfiguration(true)
+                ResolveConfiguration = new MetricAlertResolveConfiguration(true)
                 {
                     TimeToResolve = XmlConvert.ToTimeSpan("PT10M"),
                 },
@@ -436,11 +436,11 @@ ActionGroupId = new ResourceIdentifier("/subscriptions/14ddf0c5-77c5-4b53-84f6-e
 {
 ["Email.Sujbect"] = "my custom email subject"
 },
-                Identity = new Azure.ResourceManager.Monitor.Models.Identity(IdentityType.UserAssigned)
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned)
                 {
                     UserAssignedIdentities =
 {
-["/subscriptions/2f1a501a-6e1d-4f37-a445-462d7f8a563d/resourceGroups/AdisTest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/msi-test-euap"] = new UserIdentityProperties()
+[new ResourceIdentifier("/subscriptions/2f1a501a-6e1d-4f37-a445-462d7f8a563d/resourceGroups/AdisTest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/msi-test-euap")] = new UserAssignedIdentity()
 },
                 },
                 Tags = { },
