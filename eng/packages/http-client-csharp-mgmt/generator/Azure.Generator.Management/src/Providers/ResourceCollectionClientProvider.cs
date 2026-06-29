@@ -12,6 +12,7 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.ManagementGroups;
 using Humanizer;
+using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -311,8 +312,7 @@ namespace Azure.Generator.Management.Providers
                 bodyStatements.Add(clientInfo.RestClientField.Assign(New.Instance(clientInfo.RestClientProvider.Type, clientInfo.DiagnosticsField, thisCollection.Pipeline(), thisCollection.Endpoint(), effectiveApiVersion)).Terminate());
             }
 
-            // skip resource Id validation for extension resource without parent resource type, since we don't have enough information to validate the resource Id. For example, for an extension resource with resource scope of extension and no parent resource type specified, the resource Id pattern could be something like /{scope}/providers/Microsoft.ABC/def/{defName}, in this case we don't know what the {scope} is, it could be subscription, resource group, or even a management group, so we can't validate the resource Id.
-            if (_resourceMetadata.ParentResourceId is not null || _resourceMetadata.Scope.Kind != ResourceScope.Extension || _resourceMetadata.Scope.ScopeResourceType is not null)
+            if (TryGetResourceIdValidationType(out _))
             {
                 bodyStatements.Add(Static(Type).As<ArmCollection>().ValidateResourceId(idParameter).Terminate());
             }
@@ -349,18 +349,33 @@ namespace Azure.Generator.Management.Providers
             }
         }
 
-        protected override MethodProvider[] BuildMethods()
+        private bool TryGetResourceIdValidationType(out ValueExpression resourceType)
         {
-            var methods = new List<MethodProvider>();
             var parentResourceCsharpType = GetParentResourceType(_resourceMetadata, _resource);
             if (_resourceMetadata.ParentResourceId is not null || _resourceMetadata.Scope.Kind != ResourceScope.Extension)
             {
-                methods.Add(ResourceMethodSnippets.BuildValidateResourceIdMethod(this, Static(parentResourceCsharpType!).As<ArmResource>().ResourceType()));
+                resourceType = Static(parentResourceCsharpType!).As<ArmResource>().ResourceType();
+                return true;
             }
-            // For extension resource with known parent resource type, we can also generate a ValidateResourceId method
-            else if (_resourceMetadata.Scope.ScopeResourceType is { } parentResourceType)
+
+            // For extension resources with a known parent scope type, validate against that scope.
+            // Generic-scope extension resources do not have enough information to validate.
+            if (_resourceMetadata.Scope.ScopeResourceType is { } parentResourceType)
             {
-                methods.Add(ResourceMethodSnippets.BuildValidateResourceIdMethod(this, Literal(parentResourceType)));
+                resourceType = Literal(parentResourceType);
+                return true;
+            }
+
+            resourceType = null!;
+            return false;
+        }
+
+        protected override MethodProvider[] BuildMethods()
+        {
+            var methods = new List<MethodProvider>();
+            if (TryGetResourceIdValidationType(out var resourceType))
+            {
+                methods.Add(ResourceMethodSnippets.BuildValidateResourceIdMethod(this, resourceType));
             }
 
             methods.AddRange(BuildCreateOrUpdateMethods());
