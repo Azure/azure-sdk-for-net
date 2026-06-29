@@ -754,7 +754,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Base evaluator configuration with discriminator
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.CodeBasedEvaluatorDefinition"/>, <see cref="Evaluation.PromptBasedEvaluatorDefinition"/>, and <see cref="Projects.RubricBasedEvaluatorDefinition"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.CodeBasedEvaluatorDefinition"/>, <see cref="Evaluation.PromptBasedEvaluatorDefinition"/>, <see cref="Projects.RubricBasedEvaluatorDefinition"/>, and <see cref="Evaluation.EndpointBasedEvaluatorDefinition"/>.
         /// </summary>
         /// <param name="type"> The type of evaluator definition. </param>
         /// <param name="initParameters"> The JSON schema (Draft 2020-12) for the evaluator's input parameters. This includes parameters like type, properties, required. </param>
@@ -863,6 +863,25 @@ namespace Azure.AI.Projects
         public static EvaluationsDimension EvaluationsDimension(string id = default, string description = default, int weight = default, bool? isAlwaysApplicable = default)
         {
             return new EvaluationsDimension(id, description, weight, isAlwaysApplicable, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Endpoint-based evaluator definition. The customer owns and hosts an HTTP endpoint that implements the evaluation contract. The evaluator references a Project Connection by name; the connection stores the endpoint URL and credentials (API Key or Entra ID). At execution time, the service resolves the connection to obtain the endpoint URL and authentication details, then calls the endpoint for each evaluation row. </summary>
+        /// <param name="initParameters"> The JSON schema (Draft 2020-12) for the evaluator's input parameters. This includes parameters like type, properties, required. </param>
+        /// <param name="dataSchema"> The JSON schema (Draft 2020-12) for the evaluator's input data. This includes parameters like type, properties, required. </param>
+        /// <param name="metrics"> List of output metrics produced by this evaluator. </param>
+        /// <param name="connectionName"> Name of the Project Connection that stores the endpoint URL and credentials. The connection must exist on the project and have a non-empty target URL. Supported auth types: ApiKey (sends `api-key` header) and AAD/Entra ID (acquires a bearer token via the project's Managed Identity). </param>
+        /// <returns> A new <see cref="Evaluation.EndpointBasedEvaluatorDefinition"/> instance for mocking. </returns>
+        public static EndpointBasedEvaluatorDefinition EndpointBasedEvaluatorDefinition(BinaryData initParameters = default, BinaryData dataSchema = default, IDictionary<string, EvaluatorMetric> metrics = default, string connectionName = default)
+        {
+            metrics ??= new ChangeTrackingDictionary<string, EvaluatorMetric>();
+
+            return new EndpointBasedEvaluatorDefinition(
+                EvaluatorDefinitionType.Endpoint,
+                initParameters,
+                dataSchema,
+                metrics,
+                additionalBinaryDataProperties: null,
+                connectionName);
         }
 
         /// <summary> Service-managed provenance artifacts produced by an evaluator generation job. Present only on EvaluatorVersion resources created via the generation pipeline. The combined-JSONL Foundry Dataset is read-only and resolves to a versioned dataset in a service-reserved namespace. </summary>
