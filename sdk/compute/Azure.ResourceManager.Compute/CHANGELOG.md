@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Upgraded API versions: Compute to `2025-11-01`, Disk to `2025-01-02`, Gallery to `2025-03-03`, and SKU to `2021-07-01`.
+- Upgraded Compute API version from `2025-04-01` to `2025-11-01`.
 
 ### Breaking Changes
 
