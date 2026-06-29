@@ -10,16 +10,75 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class GovernanceRuleData : IUtf8JsonSerializable, IJsonModel<GovernanceRuleData>
+    /// <summary> Governance rule over a given scope. </summary>
+    public partial class GovernanceRuleData : ResourceData, IJsonModel<GovernanceRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GovernanceRuleData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GovernanceRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeGovernanceRuleData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GovernanceRuleData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GovernanceRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(GovernanceRuleData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GovernanceRuleData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GovernanceRuleData IPersistableModel<GovernanceRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => (GovernanceRuleData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GovernanceRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="governanceRuleData"> The <see cref="GovernanceRuleData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(GovernanceRuleData governanceRuleData)
+        {
+            if (governanceRuleData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(governanceRuleData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GovernanceRuleData"/> from. </param>
+        internal static GovernanceRuleData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeGovernanceRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GovernanceRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,392 +90,120 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GovernanceRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GovernanceRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GovernanceRuleData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId.Value);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsDefined(RemediationTimeframe))
-            {
-                writer.WritePropertyName("remediationTimeframe"u8);
-                writer.WriteStringValue(RemediationTimeframe);
-            }
-            if (Optional.IsDefined(IsGracePeriod))
-            {
-                writer.WritePropertyName("isGracePeriod"u8);
-                writer.WriteBooleanValue(IsGracePeriod.Value);
-            }
-            if (Optional.IsDefined(RulePriority))
-            {
-                writer.WritePropertyName("rulePriority"u8);
-                writer.WriteNumberValue(RulePriority.Value);
-            }
-            if (Optional.IsDefined(IsDisabled))
-            {
-                writer.WritePropertyName("isDisabled"u8);
-                writer.WriteBooleanValue(IsDisabled.Value);
-            }
-            if (Optional.IsDefined(RuleType))
-            {
-                writer.WritePropertyName("ruleType"u8);
-                writer.WriteStringValue(RuleType.Value.ToString());
-            }
-            if (Optional.IsDefined(SourceResourceType))
-            {
-                writer.WritePropertyName("sourceResourceType"u8);
-                writer.WriteStringValue(SourceResourceType.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(ExcludedScopes))
-            {
-                writer.WritePropertyName("excludedScopes"u8);
-                writer.WriteStartArray();
-                foreach (var item in ExcludedScopes)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(ConditionSets))
-            {
-                writer.WritePropertyName("conditionSets"u8);
-                writer.WriteStartArray();
-                foreach (var item in ConditionSets)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
-                writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IncludeMemberScopes))
-            {
-                writer.WritePropertyName("includeMemberScopes"u8);
-                writer.WriteBooleanValue(IncludeMemberScopes.Value);
-            }
-            if (Optional.IsDefined(OwnerSource))
-            {
-                writer.WritePropertyName("ownerSource"u8);
-                writer.WriteObjectValue(OwnerSource, options);
-            }
-            if (Optional.IsDefined(GovernanceEmailNotification))
-            {
-                writer.WritePropertyName("governanceEmailNotification"u8);
-                writer.WriteObjectValue(GovernanceEmailNotification, options);
-            }
-            if (Optional.IsDefined(Metadata))
-            {
-                writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata, options);
-            }
-            writer.WriteEndObject();
         }
 
-        GovernanceRuleData IJsonModel<GovernanceRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GovernanceRuleData IJsonModel<GovernanceRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GovernanceRuleData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GovernanceRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GovernanceRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GovernanceRuleData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeGovernanceRuleData(document.RootElement, options);
         }
 
-        internal static GovernanceRuleData DeserializeGovernanceRuleData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static GovernanceRuleData DeserializeGovernanceRuleData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            Guid? tenantId = default;
-            string displayName = default;
-            string description = default;
-            string remediationTimeframe = default;
-            bool? isGracePeriod = default;
-            int? rulePriority = default;
-            bool? isDisabled = default;
-            GovernanceRuleType? ruleType = default;
-            GovernanceRuleSourceResourceType? sourceResourceType = default;
-            IList<string> excludedScopes = default;
-            IList<BinaryData> conditionSets = default;
-            bool? includeMemberScopes = default;
-            GovernanceRuleOwnerSource ownerSource = default;
-            GovernanceRuleEmailNotification governanceEmailNotification = default;
-            GovernanceRuleMetadata metadata = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            GovernanceRuleProperties properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSecurityCenterContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("tenantId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            tenantId = property0.Value.GetGuid();
-                            continue;
-                        }
-                        if (property0.NameEquals("displayName"u8))
-                        {
-                            displayName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("description"u8))
-                        {
-                            description = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("remediationTimeframe"u8))
-                        {
-                            remediationTimeframe = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("isGracePeriod"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isGracePeriod = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("rulePriority"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            rulePriority = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("isDisabled"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isDisabled = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("ruleType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            ruleType = new GovernanceRuleType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("sourceResourceType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sourceResourceType = new GovernanceRuleSourceResourceType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("excludedScopes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            excludedScopes = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("conditionSets"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<BinaryData> array = new List<BinaryData>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(BinaryData.FromString(item.GetRawText()));
-                                }
-                            }
-                            conditionSets = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("includeMemberScopes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            includeMemberScopes = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("ownerSource"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            ownerSource = GovernanceRuleOwnerSource.DeserializeGovernanceRuleOwnerSource(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("governanceEmailNotification"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            governanceEmailNotification = GovernanceRuleEmailNotification.DeserializeGovernanceRuleEmailNotification(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("metadata"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            metadata = GovernanceRuleMetadata.DeserializeGovernanceRuleMetadata(property0.Value, options);
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSecurityCenterContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = GovernanceRuleProperties.DeserializeGovernanceRuleProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new GovernanceRuleData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                tenantId,
-                displayName,
-                description,
-                remediationTimeframe,
-                isGracePeriod,
-                rulePriority,
-                isDisabled,
-                ruleType,
-                sourceResourceType,
-                excludedScopes ?? new ChangeTrackingList<string>(),
-                conditionSets ?? new ChangeTrackingList<BinaryData>(),
-                includeMemberScopes,
-                ownerSource,
-                governanceEmailNotification,
-                metadata,
-                serializedAdditionalRawData);
+                properties,
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<GovernanceRuleData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GovernanceRuleData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(GovernanceRuleData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        GovernanceRuleData IPersistableModel<GovernanceRuleData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GovernanceRuleData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeGovernanceRuleData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(GovernanceRuleData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<GovernanceRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

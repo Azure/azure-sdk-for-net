@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityCenter
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class SecurityAutomationCollection : ArmCollection, IEnumerable<SecurityAutomationResource>, IAsyncEnumerable<SecurityAutomationResource>
     {
-        private readonly ClientDiagnostics _securityAutomationAutomationsClientDiagnostics;
-        private readonly AutomationsRestOperations _securityAutomationAutomationsRestClient;
+        private readonly ClientDiagnostics _automationsClientDiagnostics;
+        private readonly Automations _automationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityAutomationCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SecurityAutomationCollection for mocking. </summary>
         protected SecurityAutomationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityAutomationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAutomationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SecurityAutomationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _securityAutomationAutomationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityAutomationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SecurityAutomationResource.ResourceType, out string securityAutomationAutomationsApiVersion);
-            _securityAutomationAutomationsRestClient = new AutomationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityAutomationAutomationsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(SecurityAutomationResource.ResourceType, out string securityAutomationApiVersion);
+            _automationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityAutomationResource.ResourceType.Namespace, Diagnostics);
+            _automationsRestClient = new Automations(_automationsClientDiagnostics, Pipeline, Endpoint, securityAutomationApiVersion ?? "2023-12-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates a security automation. If a security automation is already created and a subsequent request is issued for the same automation id, then it will be updated.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations/{automationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations/{automationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Automations_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Automations_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityAutomationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,23 +76,31 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="automationName"> The security automation name. </param>
         /// <param name="data"> The security automation resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="automationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="automationName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="automationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<SecurityAutomationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string automationName, SecurityAutomationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(automationName, nameof(automationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityAutomationAutomationsClientDiagnostics.CreateScope("SecurityAutomationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _automationsClientDiagnostics.CreateScope("SecurityAutomationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _securityAutomationAutomationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, automationName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _securityAutomationAutomationsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, automationName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityCenterArmOperation<SecurityAutomationResource>(Response.FromValue(new SecurityAutomationResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _automationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, automationName, SecurityAutomationData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityAutomationData> response = Response.FromValue(SecurityAutomationData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation<SecurityAutomationResource> operation = new SecurityCenterArmOperation<SecurityAutomationResource>(Response.FromValue(new SecurityAutomationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -107,20 +114,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Creates or updates a security automation. If a security automation is already created and a subsequent request is issued for the same automation id, then it will be updated.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations/{automationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations/{automationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Automations_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Automations_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityAutomationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,23 +131,31 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="automationName"> The security automation name. </param>
         /// <param name="data"> The security automation resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="automationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="automationName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="automationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<SecurityAutomationResource> CreateOrUpdate(WaitUntil waitUntil, string automationName, SecurityAutomationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(automationName, nameof(automationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityAutomationAutomationsClientDiagnostics.CreateScope("SecurityAutomationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _automationsClientDiagnostics.CreateScope("SecurityAutomationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _securityAutomationAutomationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, automationName, data, cancellationToken);
-                var uri = _securityAutomationAutomationsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, automationName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityCenterArmOperation<SecurityAutomationResource>(Response.FromValue(new SecurityAutomationResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _automationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, automationName, SecurityAutomationData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityAutomationData> response = Response.FromValue(SecurityAutomationData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation<SecurityAutomationResource> operation = new SecurityCenterArmOperation<SecurityAutomationResource>(Response.FromValue(new SecurityAutomationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -158,38 +169,42 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Retrieves information about the model of a security automation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations/{automationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations/{automationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Automations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Automations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityAutomationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="automationName"> The security automation name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="automationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="automationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="automationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SecurityAutomationResource>> GetAsync(string automationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(automationName, nameof(automationName));
 
-            using var scope = _securityAutomationAutomationsClientDiagnostics.CreateScope("SecurityAutomationCollection.Get");
+            using DiagnosticScope scope = _automationsClientDiagnostics.CreateScope("SecurityAutomationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _securityAutomationAutomationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, automationName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _automationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, automationName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityAutomationData> response = Response.FromValue(SecurityAutomationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityAutomationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -203,38 +218,42 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Retrieves information about the model of a security automation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations/{automationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations/{automationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Automations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Automations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityAutomationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="automationName"> The security automation name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="automationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="automationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="automationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SecurityAutomationResource> Get(string automationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(automationName, nameof(automationName));
 
-            using var scope = _securityAutomationAutomationsClientDiagnostics.CreateScope("SecurityAutomationCollection.Get");
+            using DiagnosticScope scope = _automationsClientDiagnostics.CreateScope("SecurityAutomationCollection.Get");
             scope.Start();
             try
             {
-                var response = _securityAutomationAutomationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, automationName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _automationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, automationName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityAutomationData> response = Response.FromValue(SecurityAutomationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityAutomationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,50 +267,44 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Lists all the security automations in the specified resource group. Use the 'nextLink' property in the response to get the next page of security automations for the specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Automations_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> Automations_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityAutomationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityAutomationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityAutomationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityAutomationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityAutomationAutomationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityAutomationAutomationsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityAutomationResource(Client, SecurityAutomationData.DeserializeSecurityAutomationData(e)), _securityAutomationAutomationsClientDiagnostics, Pipeline, "SecurityAutomationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SecurityAutomationData, SecurityAutomationResource>(new AutomationsGetByResourceGroupAsyncCollectionResultOfT(_automationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityAutomationCollection.GetAll"), data => new SecurityAutomationResource(Client, data));
         }
 
         /// <summary>
         /// Lists all the security automations in the specified resource group. Use the 'nextLink' property in the response to get the next page of security automations for the specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Automations_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> Automations_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityAutomationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,45 +312,61 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="SecurityAutomationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityAutomationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityAutomationAutomationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityAutomationAutomationsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityAutomationResource(Client, SecurityAutomationData.DeserializeSecurityAutomationData(e)), _securityAutomationAutomationsClientDiagnostics, Pipeline, "SecurityAutomationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SecurityAutomationData, SecurityAutomationResource>(new AutomationsGetByResourceGroupCollectionResultOfT(_automationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityAutomationCollection.GetAll"), data => new SecurityAutomationResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations/{automationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations/{automationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Automations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Automations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityAutomationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="automationName"> The security automation name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="automationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="automationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="automationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string automationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(automationName, nameof(automationName));
 
-            using var scope = _securityAutomationAutomationsClientDiagnostics.CreateScope("SecurityAutomationCollection.Exists");
+            using DiagnosticScope scope = _automationsClientDiagnostics.CreateScope("SecurityAutomationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _securityAutomationAutomationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, automationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _automationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, automationName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SecurityAutomationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityAutomationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityAutomationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -351,36 +380,50 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations/{automationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations/{automationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Automations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Automations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityAutomationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="automationName"> The security automation name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="automationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="automationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="automationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string automationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(automationName, nameof(automationName));
 
-            using var scope = _securityAutomationAutomationsClientDiagnostics.CreateScope("SecurityAutomationCollection.Exists");
+            using DiagnosticScope scope = _automationsClientDiagnostics.CreateScope("SecurityAutomationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _securityAutomationAutomationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, automationName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _automationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, automationName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SecurityAutomationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityAutomationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityAutomationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -394,38 +437,54 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations/{automationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations/{automationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Automations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Automations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityAutomationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="automationName"> The security automation name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="automationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="automationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="automationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SecurityAutomationResource>> GetIfExistsAsync(string automationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(automationName, nameof(automationName));
 
-            using var scope = _securityAutomationAutomationsClientDiagnostics.CreateScope("SecurityAutomationCollection.GetIfExists");
+            using DiagnosticScope scope = _automationsClientDiagnostics.CreateScope("SecurityAutomationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _securityAutomationAutomationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, automationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _automationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, automationName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SecurityAutomationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityAutomationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityAutomationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SecurityAutomationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityAutomationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -439,38 +498,54 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations/{automationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations/{automationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Automations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Automations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityAutomationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="automationName"> The security automation name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="automationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="automationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="automationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SecurityAutomationResource> GetIfExists(string automationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(automationName, nameof(automationName));
 
-            using var scope = _securityAutomationAutomationsClientDiagnostics.CreateScope("SecurityAutomationCollection.GetIfExists");
+            using DiagnosticScope scope = _automationsClientDiagnostics.CreateScope("SecurityAutomationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _securityAutomationAutomationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, automationName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _automationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, automationName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SecurityAutomationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityAutomationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityAutomationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SecurityAutomationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityAutomationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -490,6 +565,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SecurityAutomationResource> IAsyncEnumerable<SecurityAutomationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
