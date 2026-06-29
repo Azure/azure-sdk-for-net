@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.FrontDoor
     }
     public partial class FrontDoorData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.FrontDoorData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorData>
     {
-        public FrontDoorData() { }
         public FrontDoorData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.FrontDoorBackendPool> BackendPools { get { throw null; } }
         public Azure.ResourceManager.FrontDoor.Models.BackendPoolsSettings BackendPoolsSettings { get { throw null; } set { } }
@@ -70,7 +69,6 @@ namespace Azure.ResourceManager.FrontDoor
     }
     public partial class FrontDoorExperimentData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.FrontDoorExperimentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorExperimentData>
     {
-        public FrontDoorExperimentData() { }
         public FrontDoorExperimentData(Azure.Core.AzureLocation location) { }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentState? EnabledState { get { throw null; } set { } }
@@ -169,7 +167,6 @@ namespace Azure.ResourceManager.FrontDoor
     }
     public partial class FrontDoorNetworkExperimentProfileData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileData>
     {
-        public FrontDoorNetworkExperimentProfileData() { }
         public FrontDoorNetworkExperimentProfileData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentState? EnabledState { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } set { } }
@@ -319,7 +316,6 @@ namespace Azure.ResourceManager.FrontDoor
     }
     public partial class FrontDoorWebApplicationFirewallPolicyData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyData>
     {
-        public FrontDoorWebApplicationFirewallPolicyData() { }
         public FrontDoorWebApplicationFirewallPolicyData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.FrontDoorManagedRuleSetException> Exceptions { get { throw null; } }
@@ -1335,7 +1331,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
     }
     public partial class FrontDoorTimeSeriesInfo : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesInfo>
     {
-        public FrontDoorTimeSeriesInfo() { }
         public FrontDoorTimeSeriesInfo(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesInfoAggregationInterval? AggregationInterval { get { throw null; } set { } }
         public string Country { get { throw null; } set { } }
@@ -1630,7 +1625,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
     }
     public partial class LatencyScorecard : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.LatencyScorecard>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.LatencyScorecard>
     {
-        public LatencyScorecard() { }
         public LatencyScorecard(Azure.Core.AzureLocation location) { }
         public string Country { get { throw null; } }
         public string Description { get { throw null; } }
@@ -1848,7 +1842,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
     }
     public partial class ManagedRuleSetDefinition : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.ManagedRuleSetDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.ManagedRuleSetDefinition>
     {
-        public ManagedRuleSetDefinition() { }
         public ManagedRuleSetDefinition(Azure.Core.AzureLocation location) { }
         public string ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.FrontDoor.Models.ManagedRuleGroupDefinition> RuleGroups { get { throw null; } }
@@ -1939,7 +1932,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
     }
     public partial class PreconfiguredEndpoint : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.PreconfiguredEndpoint>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.PreconfiguredEndpoint>
     {
-        public PreconfiguredEndpoint() { }
         public PreconfiguredEndpoint(Azure.Core.AzureLocation location) { }
         public string Backend { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }

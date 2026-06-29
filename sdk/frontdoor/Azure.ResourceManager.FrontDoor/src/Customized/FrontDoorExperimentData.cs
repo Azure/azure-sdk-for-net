@@ -16,6 +16,12 @@ namespace Azure.ResourceManager.FrontDoor
     // removing the spec-side alternateType for Microsoft.Network.Resource.
     public partial class FrontDoorExperimentData : TrackedResourceData
     {
+        // The generated public parameterless constructor was not part of the shipped API. Keep this
+        // constructor internal so generation has an implementation hook without expanding public API.
+        internal FrontDoorExperimentData()
+        {
+        }
+
         /// <summary> Initializes a new instance of <see cref="FrontDoorExperimentData"/>. </summary>
         /// <param name="location"> The location. </param>
         public FrontDoorExperimentData(AzureLocation location) : base(location)

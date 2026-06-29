@@ -16,6 +16,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
     // removing the spec-side alternateType for Microsoft.Network.Resource.
     public partial class FrontDoorTimeSeriesInfo : TrackedResourceData
     {
+        // The generated public parameterless constructor was not part of the shipped API. Keep this
+        // constructor internal so generation has an implementation hook without expanding public API.
+        internal FrontDoorTimeSeriesInfo()
+        {
+        }
+
         /// <summary> Initializes a new instance of <see cref="FrontDoorTimeSeriesInfo"/>. </summary>
         /// <param name="location"> The location. </param>
         public FrontDoorTimeSeriesInfo(AzureLocation location) : base(location)

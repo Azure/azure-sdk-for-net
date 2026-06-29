@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.FrontDoor
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorData"/>. </summary>
-        public FrontDoorData()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FrontDoorData"/>. </summary>
         /// <param name="properties"> Properties of the Front Door Load Balancer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal FrontDoorData(FrontDoorProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)

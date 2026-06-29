@@ -16,6 +16,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
     // removing the spec-side alternateType for Microsoft.Network.Resource.
     public partial class LatencyScorecard : TrackedResourceData
     {
+        // The generated public parameterless constructor was not part of the shipped API. Keep this
+        // constructor internal so generation has an implementation hook without expanding public API.
+        internal LatencyScorecard()
+        {
+        }
+
         /// <summary> Initializes a new instance of <see cref="LatencyScorecard"/>. </summary>
         /// <param name="location"> The location. </param>
         public LatencyScorecard(AzureLocation location) : base(location)

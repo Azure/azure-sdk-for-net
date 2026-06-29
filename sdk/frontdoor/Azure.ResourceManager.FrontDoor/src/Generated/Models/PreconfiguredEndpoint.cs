@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PreconfiguredEndpoint"/>. </summary>
-        public PreconfiguredEndpoint()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PreconfiguredEndpoint"/>. </summary>
         /// <param name="properties"> The properties of a preconfiguredEndpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal PreconfiguredEndpoint(PreconfiguredEndpointProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)

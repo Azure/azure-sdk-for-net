@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedRuleSetDefinition"/>. </summary>
-        public ManagedRuleSetDefinition()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ManagedRuleSetDefinition"/>. </summary>
         /// <param name="properties"> Properties for a managed rule set definition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ManagedRuleSetDefinition(ManagedRuleSetDefinitionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)

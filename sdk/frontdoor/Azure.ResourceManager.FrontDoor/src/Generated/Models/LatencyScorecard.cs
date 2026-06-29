@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LatencyScorecard"/>. </summary>
-        public LatencyScorecard()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="LatencyScorecard"/>. </summary>
         /// <param name="properties"> The properties of a latency scorecard. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal LatencyScorecard(LatencyScorecardProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)

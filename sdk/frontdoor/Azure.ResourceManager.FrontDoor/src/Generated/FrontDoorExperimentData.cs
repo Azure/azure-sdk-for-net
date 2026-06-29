@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.FrontDoor
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorExperimentData"/>. </summary>
-        public FrontDoorExperimentData()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FrontDoorExperimentData"/>. </summary>
         /// <param name="properties"> The properties of an Experiment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal FrontDoorExperimentData(ExperimentProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
