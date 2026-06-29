@@ -353,7 +353,7 @@ namespace Azure.Generator.Management.Providers
         {
             var methods = new List<MethodProvider>();
             var parentResourceCsharpType = GetParentResourceType(_resourceMetadata, _resource);
-            if (_resourceMetadata.Scope.Kind != ResourceScope.Extension)
+            if (_resourceMetadata.ParentResourceId is not null || _resourceMetadata.Scope.Kind != ResourceScope.Extension)
             {
                 methods.Add(ResourceMethodSnippets.BuildValidateResourceIdMethod(this, Static(parentResourceCsharpType!).As<ArmResource>().ResourceType()));
             }
