@@ -130,7 +130,7 @@ namespace Azure.Data.AppConfiguration
         // DNS label boundary so unrelated hosts such as "myazconfig.io" are not treated as "azconfig.io".
         private static bool IsHostInDomain(string host, string domain) =>
             host.Equals(domain, StringComparison.InvariantCultureIgnoreCase) ||
-            host.EndsWith("." + domain, StringComparison.InvariantCultureIgnoreCase);
+            host.EndsWith($".{domain}", StringComparison.InvariantCultureIgnoreCase);
 
         // CUSTOM: Derives the Microsoft Entra audience from the endpoint host when no audience
         // is explicitly configured and the host does not match a well-known cloud. The audience
