@@ -1,0 +1,34 @@
+# Globs the eval files into a fan-out matrix (output var detect.matrix). Runs in Prepare
+# alongside BuildMcp; the Eval stage consumes it cross-stage and fans out eval-shard.yml.
+# Eval-specific globber (collect-stimuli.js) rather than the package-oriented matrix scripts.
+
+parameters:
+  - name: GenerateJobName
+    # Match this against the stageDependencies path the Eval stage reads.
+    type: string
+    default: 'generate_eval_matrix'
+  - name: vallyRoot
+    type: string
+    default: tools/azsdk-cli/Azure.Sdk.Tools.Vally
+  - name: evalGlobs
+    type: object
+    default: []
+  - name: shardBy
+    type: string
+    default: file
+
+jobs:
+  - job: ${{ parameters.GenerateJobName }}
+    displayName: 'Glob eval files -> matrix'
+    pool:
+      name: $(LINUXPOOL)
+      image: $(LINUXVMIMAGE)
+      os: linux
+    steps:
+      - template: /eng/common/pipelines/templates/steps/eval-collect-stimuli.yml
+        parameters:
+          pathBase: $(Build.SourcesDirectory)/${{ parameters.vallyRoot }}
+          evalGlobs: ${{ parameters.evalGlobs }}
+          shardBy: ${{ parameters.shardBy }}
+          outputVariableName: matrix
+          stepName: detect

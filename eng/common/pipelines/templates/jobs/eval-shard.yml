@@ -1,0 +1,54 @@
+# Fan-out shard job dispatched by generate-eval-matrix.yml. One leg per shard runs the
+# evals from vallyRoot and publishes per-leg JUnit (always) + transcripts (on failure).
+
+parameters:
+  - name: Matrix
+    # Cross-stage matrix from the Prepare generate job.
+    type: string
+    default: stageDependencies.Prepare.generate_eval_matrix.outputs['detect.matrix']
+  - name: vallyRoot
+    type: string
+    default: tools/azsdk-cli/Azure.Sdk.Tools.Vally
+  - name: azureServiceConnection
+    type: string
+    default: ''
+  - name: shardTimeoutInMinutes
+    type: number
+    default: 20
+  - name: maxParallel
+    type: number
+    default: 10
+
+jobs:
+  - job: RunShard
+    displayName: 'Eval'
+    pool:
+      name: $(LINUXPOOL)
+      image: $(LINUXVMIMAGE)
+      os: linux
+    # continueOnError lets a single red shard finish without aborting the others —
+    # the pass/fail rollup happens in Summary.
+    continueOnError: true
+    timeoutInMinutes: ${{ parameters.shardTimeoutInMinutes }}
+    strategy:
+      matrix: $[ ${{ parameters.Matrix }} ]
+      maxParallel: ${{ parameters.maxParallel }}
+    # Per-leg artifacts (matrix injects $(shardName)). JUnit always; transcripts
+    # only on a genuine failure. Both staged by the eval-run-shard.yml steps.
+    templateContext:
+      outputs:
+        - output: pipelineArtifact
+          displayName: 'Publish $(shardName) JUnit'
+          artifactName: 'eval-result-$(shardName)'
+          targetPath: $(Build.ArtifactStagingDirectory)/junit
+          condition: always()
+        - output: pipelineArtifact
+          displayName: 'Publish $(shardName) transcripts (on failure)'
+          artifactName: 'eval-debug-$(shardName)'
+          targetPath: $(Build.ArtifactStagingDirectory)/debug
+          condition: failed()
+    steps:
+      - template: /eng/common/pipelines/templates/steps/eval-run-shard.yml
+        parameters:
+          vallyRoot: ${{ parameters.vallyRoot }}
+          azureServiceConnection: ${{ parameters.azureServiceConnection }}

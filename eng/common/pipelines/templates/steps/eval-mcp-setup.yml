@@ -4,7 +4,7 @@
 # server, an NPM-installed live server, etc.
 #
 # If you just need the standard azure-sdk-tools MCP, leave useCustomMcp=false and use the
-# default at eng/common/pipelines/templates/steps/vally-build-mcp.yml instead — this file is
+# default at eng/common/pipelines/templates/steps/eval-build-mcp.yml instead — this file is
 # only for repos whose MCP differs from that.
 #
 # Contract: publish each server's build/install output under

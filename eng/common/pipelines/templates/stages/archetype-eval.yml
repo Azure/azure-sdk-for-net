@@ -1,7 +1,7 @@
 # Reusable orchestrator for the eval CI. Three stages:
-#   Prepare - BuildMcp + Detect run in parallel (build the MCP server(s); glob eval
-#             files into a shard matrix).
-#   Eval    - RunShard fans out one job per shard from the Prepare matrix.
+#   Prepare - BuildMcp + generate-eval-matrix run in parallel (build the MCP server(s);
+#             glob eval files into a fan-out matrix).
+#   Eval    - eval-shard fans out one job per shard from the Prepare matrix.
 #   Summary - merges every shard's JUnit into one rollup and gates.
 #
 # The consuming repo supplies a thin entrypoint (trigger + params + extends this).
@@ -38,6 +38,10 @@ parameters:
     # LLM-driven shards can hang; cap well under the default agent slot.
     type: number
     default: 20
+  - name: maxParallel
+    # Concurrent shard legs. Lower for the live tier (long, real-DevOps legs).
+    type: number
+    default: 10
   - name: testRunTitle
     type: string
     default: 'Vally tool-scenario evals (mock vertical)'
@@ -56,7 +60,7 @@ extends:
     Use1ESOfficial: ${{ parameters.Use1ESOfficial }}
     stages:
       - stage: Prepare
-        displayName: 'Build MCP + detect shards'
+        displayName: 'Build MCP'
         jobs:
           - job: BuildMcp
             displayName: 'Build + publish MCP server(s)'
@@ -80,59 +84,26 @@ extends:
               - ${{ else }}:
                   # Default: build the azure-sdk-tools Mock + Cli .NET MCP servers (clones
                   # azure-sdk-tools automatically when the pipeline runs outside it).
-                  - template: /eng/common/pipelines/templates/steps/vally-build-mcp.yml
+                  - template: /eng/common/pipelines/templates/steps/eval-build-mcp.yml
 
-          - job: Detect
-            displayName: 'Glob eval files -> matrix'
-            pool:
-              name: $(LINUXPOOL)
-              image: $(LINUXVMIMAGE)
-              os: linux
-            steps:
-              - template: /eng/common/pipelines/templates/steps/vally-collect-stimuli.yml
-                parameters:
-                  pathBase: $(Build.SourcesDirectory)/${{ parameters.vallyRoot }}
-                  evalGlobs: ${{ parameters.evalGlobs }}
-                  shardBy: ${{ parameters.shardBy }}
-                  outputVariableName: matrix
-                  stepName: detect
+          # Glob eval files into the fan-out matrix (parallel with BuildMcp). The Eval stage
+          # reads it cross-stage and fans out eval-shard.yml.
+          - template: /eng/common/pipelines/templates/jobs/generate-eval-matrix.yml
+            parameters:
+              vallyRoot: ${{ parameters.vallyRoot }}
+              evalGlobs: ${{ parameters.evalGlobs }}
+              shardBy: ${{ parameters.shardBy }}
 
       - stage: Eval
         displayName: 'Run eval shards'
         dependsOn: Prepare
         jobs:
-          - job: RunShard
-            displayName: 'Eval'
-            pool:
-              name: $(LINUXPOOL)
-              image: $(LINUXVMIMAGE)
-              os: linux
-            # continueOnError lets a single red shard finish without aborting the others —
-            # the pass/fail rollup happens in Summary.
-            continueOnError: true
-            timeoutInMinutes: ${{ parameters.shardTimeoutInMinutes }}
-            strategy:
-              matrix: $[ stageDependencies.Prepare.Detect.outputs['detect.matrix'] ]
-              maxParallel: 10
-            # Per-leg artifacts (matrix injects $(shardName)). JUnit always; transcripts
-            # only on a genuine failure. Both staged by the vally-run-shard.yml steps.
-            templateContext:
-              outputs:
-                - output: pipelineArtifact
-                  displayName: 'Publish $(shardName) JUnit'
-                  artifactName: 'eval-result-$(shardName)'
-                  targetPath: $(Build.ArtifactStagingDirectory)/junit
-                  condition: always()
-                - output: pipelineArtifact
-                  displayName: 'Publish $(shardName) transcripts (on failure)'
-                  artifactName: 'eval-debug-$(shardName)'
-                  targetPath: $(Build.ArtifactStagingDirectory)/debug
-                  condition: failed()
-            steps:
-              - template: /eng/common/pipelines/templates/steps/vally-run-shard.yml
-                parameters:
-                  vallyRoot: ${{ parameters.vallyRoot }}
-                  azureServiceConnection: ${{ parameters.azureServiceConnection }}
+          - template: /eng/common/pipelines/templates/jobs/eval-shard.yml
+            parameters:
+              vallyRoot: ${{ parameters.vallyRoot }}
+              azureServiceConnection: ${{ parameters.azureServiceConnection }}
+              shardTimeoutInMinutes: ${{ parameters.shardTimeoutInMinutes }}
+              maxParallel: ${{ parameters.maxParallel }}
 
       - stage: Summary
         displayName: 'Summarize results'
@@ -146,7 +117,7 @@ extends:
               image: $(LINUXVMIMAGE)
               os: linux
             steps:
-              - template: /eng/common/pipelines/templates/steps/vally-summarize.yml
+              - template: /eng/common/pipelines/templates/steps/eval-summarize.yml
                 parameters:
                   testRunTitle: ${{ parameters.testRunTitle }}
                   failOnFailedTests: ${{ parameters.failOnFailedTests }}
