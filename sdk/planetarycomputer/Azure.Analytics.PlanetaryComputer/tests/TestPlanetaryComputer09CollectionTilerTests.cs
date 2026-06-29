@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -179,7 +178,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             byte[] imageBytes = response.Value.ToArray();
             TestContext.WriteLine($"Tile size: {imageBytes.Length} bytes");
 
-            Assert.That(imageBytes.Length, Is.GreaterThan(0), "Tile bytes should not be empty");
+            Assert.That(imageBytes.Length, Is.GreaterThanOrEqualTo(8), "Tile bytes should be at least 8 bytes to contain a PNG header");
 
             // Verify PNG magic bytes
             byte[] pngMagic = new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A };

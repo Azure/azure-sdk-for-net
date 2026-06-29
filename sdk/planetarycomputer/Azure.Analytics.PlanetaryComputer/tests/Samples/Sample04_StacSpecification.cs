@@ -539,16 +539,16 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
                 assets: assets);
 
             // Create the item (long-running operation)
-            Operation createOperation = await stacClient.CreateItemAsync(WaitUntil.Completed, collectionId, item);
+            await stacClient.CreateItemAsync(WaitUntil.Completed, collectionId, item);
             Console.WriteLine($"Created item: {itemId}");
 
             // Replace (update) the item
             item.Properties.Datetime = "2024-06-15T00:00:00Z";
-            Operation replaceOperation = await stacClient.ReplaceItemAsync(WaitUntil.Completed, collectionId, itemId, item);
+            await stacClient.ReplaceItemAsync(WaitUntil.Completed, collectionId, itemId, item);
             Console.WriteLine($"Replaced item: {itemId}");
 
             // Delete the item
-            Operation deleteOperation = await stacClient.DeleteItemAsync(WaitUntil.Completed, collectionId, itemId);
+            await stacClient.DeleteItemAsync(WaitUntil.Completed, collectionId, itemId);
             Console.WriteLine($"Deleted item: {itemId}");
             #endregion
         }

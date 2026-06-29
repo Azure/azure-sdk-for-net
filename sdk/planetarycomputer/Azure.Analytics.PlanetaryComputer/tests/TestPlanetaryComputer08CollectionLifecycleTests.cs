@@ -47,7 +47,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             {
                 await stacClient.GetCollectionAsync(collectionId);
                 TestContext.WriteLine($"Collection '{collectionId}' already exists, deleting first...");
-                Operation deleteOp = await stacClient.DeleteCollectionAsync(WaitUntil.Started, collectionId, null);
+                await stacClient.DeleteCollectionAsync(WaitUntil.Started, collectionId, null);
                 if (Mode != RecordedTestMode.Playback)
                 {
                     await Task.Delay(TimeSpan.FromSeconds(30));
@@ -89,7 +89,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             // Use WaitUntil.Started to avoid LRO final-state GET mismatch during playback.
             // The LRO mechanism adds a final GET /stac/collections/{id} check in playback mode
             // that wasn't recorded during the live run (where polling completed the operation).
-            Operation createOperation = await stacClient.CreateCollectionAsync(WaitUntil.Started, collection);
+            await stacClient.CreateCollectionAsync(WaitUntil.Started, collection);
 
             if (Mode != RecordedTestMode.Playback)
             {
@@ -112,6 +112,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             originalCollection.Description = "Test collection - UPDATED";
 
             Response<StacCollectionResource> updateResponse = await stacClient.ReplaceCollectionAsync(collectionId, originalCollection);
+            ValidateResponse(updateResponse, "ReplaceCollection");
         }
 
         [Test]
@@ -126,7 +127,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             // Use WaitUntil.Started to avoid LRO final-state GET mismatch during playback.
             // The LRO mechanism adds a final GET /stac/collections/{id} check in playback mode
             // that wasn't recorded during the live run (where polling completed the operation).
-            Operation deleteOperation = await stacClient.DeleteCollectionAsync(WaitUntil.Started, collectionId, null);
+            await stacClient.DeleteCollectionAsync(WaitUntil.Started, collectionId, null);
 
             if (Mode != RecordedTestMode.Playback)
             {
