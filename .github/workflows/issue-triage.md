@@ -226,6 +226,8 @@ Note the issue number — you must include it in every safe-output tool call:
 - For `add_labels`, `remove_labels`, and `add_comment`: pass it as `item_number`
 - For `assign_to_user` and `close_issue`: pass it as `issue_number`
 
+> Note: the `safe-outputs` frontmatter keys use kebab-case (e.g., `add-comment`), while the runtime tool names you call use snake_case (e.g., `add_comment`).
+
 Retrieve the issue using the `get_issue` tool
 
 **Precondition checks** — exit without further action if any are true:
