@@ -25,6 +25,7 @@ overrides:
       - GFET
       - GFPET
       - Gnbu
+      - Haline
       - LAEA
       - Lanczos
       - Lcmap
@@ -60,6 +61,7 @@ overrides:
       - Terrainrgb
       - tilejson
       - Tilejson
+      - Topo
       - unscale
       - Usgs
       - Viirs
