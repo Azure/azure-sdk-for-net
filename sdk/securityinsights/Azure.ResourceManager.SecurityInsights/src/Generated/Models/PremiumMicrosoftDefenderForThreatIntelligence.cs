@@ -84,11 +84,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The flag to indicate whether the tenant has the premium SKU required to access this connector. </summary>
         [WirePath("properties.requiredSKUsPresent")]
-        public bool? RequiredSKUsPresent
+        public bool? IsRequiredSKUsPresent
         {
             get
             {
-                return Properties is null ? default : Properties.RequiredSKUsPresent;
+                return Properties is null ? default : Properties.IsRequiredSKUsPresent;
             }
             set
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     Properties = new PremiumMdtiDataConnectorProperties();
                 }
-                Properties.RequiredSKUsPresent = value;
+                Properties.IsRequiredSKUsPresent = value;
             }
         }
 

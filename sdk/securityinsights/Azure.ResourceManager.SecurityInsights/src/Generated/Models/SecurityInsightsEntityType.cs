@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Entity represents cloud application in the system. </summary>
         private const string CloudApplicationValue = "CloudApplication";
         /// <summary> Entity represents dns in the system. </summary>
-        private const string DNSValue = "DNS";
+        private const string DnsValue = "DNS";
         /// <summary> Entity represents file hash in the system. </summary>
         private const string FileHashValue = "FileHash";
         /// <summary> Entity represents ip in the system. </summary>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Entity represents security group in the system. </summary>
         private const string SecurityGroupValue = "SecurityGroup";
         /// <summary> Entity represents url in the system. </summary>
-        private const string URLValue = "URL";
+        private const string UrlValue = "URL";
         /// <summary> Entity represents IoT device in the system. </summary>
         private const string IoTDeviceValue = "IoTDevice";
         /// <summary> Entity represents security alert in the system. </summary>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static SecurityInsightsEntityType CloudApplication { get; } = new SecurityInsightsEntityType(CloudApplicationValue);
 
         /// <summary> Entity represents dns in the system. </summary>
-        public static SecurityInsightsEntityType DNS { get; } = new SecurityInsightsEntityType(DNSValue);
+        public static SecurityInsightsEntityType Dns { get; } = new SecurityInsightsEntityType(DnsValue);
 
         /// <summary> Entity represents file hash in the system. </summary>
         public static SecurityInsightsEntityType FileHash { get; } = new SecurityInsightsEntityType(FileHashValue);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static SecurityInsightsEntityType SecurityGroup { get; } = new SecurityInsightsEntityType(SecurityGroupValue);
 
         /// <summary> Entity represents url in the system. </summary>
-        public static SecurityInsightsEntityType URL { get; } = new SecurityInsightsEntityType(URLValue);
+        public static SecurityInsightsEntityType Url { get; } = new SecurityInsightsEntityType(UrlValue);
 
         /// <summary> Entity represents IoT device in the system. </summary>
         public static SecurityInsightsEntityType IoTDevice { get; } = new SecurityInsightsEntityType(IoTDeviceValue);

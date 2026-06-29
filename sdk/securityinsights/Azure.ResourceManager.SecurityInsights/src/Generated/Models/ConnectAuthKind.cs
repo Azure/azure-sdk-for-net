@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> OAuth2. </summary>
         private const string OAuth2Value = "OAuth2";
         /// <summary> APIKey. </summary>
-        private const string APIKeyValue = "APIKey";
+        private const string ApiKeyValue = "APIKey";
 
         /// <summary> Initializes a new instance of <see cref="ConnectAuthKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static ConnectAuthKind OAuth2 { get; } = new ConnectAuthKind(OAuth2Value);
 
         /// <summary> APIKey. </summary>
-        public static ConnectAuthKind APIKey { get; } = new ConnectAuthKind(APIKeyValue);
+        public static ConnectAuthKind ApiKey { get; } = new ConnectAuthKind(ApiKeyValue);
 
         /// <summary> Determines if two <see cref="ConnectAuthKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

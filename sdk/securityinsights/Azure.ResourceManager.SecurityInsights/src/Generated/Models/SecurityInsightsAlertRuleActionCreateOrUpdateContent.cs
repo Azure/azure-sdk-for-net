@@ -15,7 +15,7 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Action for alert rule. </summary>
-    public partial class SecurityInsightsAlertRuleActionCreateOrUpdateContent : ResourceWithEtag
+    public partial class SecurityInsightsAlertRuleActionCreateOrUpdateContent : SecurityInsightsResourceWithEtag
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertRuleActionCreateOrUpdateContent"/>. </summary>
         public SecurityInsightsAlertRuleActionCreateOrUpdateContent()

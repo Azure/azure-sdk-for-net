@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("lookbackPeriod"u8);
             writer.WriteStringValue(LookbackPeriod, "O");
-            if (Optional.IsDefined(RequiredSKUsPresent))
+            if (Optional.IsDefined(IsRequiredSKUsPresent))
             {
                 writer.WritePropertyName("requiredSKUsPresent"u8);
-                writer.WriteBooleanValue(RequiredSKUsPresent.Value);
+                writer.WriteBooleanValue(IsRequiredSKUsPresent.Value);
             }
             writer.WritePropertyName("dataTypes"u8);
             writer.WriteObjectValue(DataTypes, options);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Guid tenantId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DateTimeOffset lookbackPeriod = default;
-            bool? requiredSKUsPresent = default;
+            bool? isRequiredSKUsPresent = default;
             PremiumMdtiDataConnectorDataTypes dataTypes = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    requiredSKUsPresent = prop.Value.GetBoolean();
+                    isRequiredSKUsPresent = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("dataTypes"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PremiumMdtiDataConnectorProperties(tenantId, additionalBinaryDataProperties, lookbackPeriod, requiredSKUsPresent, dataTypes);
+            return new PremiumMdtiDataConnectorProperties(tenantId, additionalBinaryDataProperties, lookbackPeriod, isRequiredSKUsPresent, dataTypes);
         }
     }
 }

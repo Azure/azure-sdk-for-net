@@ -15,7 +15,7 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Metadata patch request body. </summary>
-    public partial class MetadataPatch : ResourceWithEtag
+    public partial class MetadataPatch : SecurityInsightsResourceWithEtag
     {
         /// <summary> Initializes a new instance of <see cref="MetadataPatch"/>. </summary>
         public MetadataPatch()

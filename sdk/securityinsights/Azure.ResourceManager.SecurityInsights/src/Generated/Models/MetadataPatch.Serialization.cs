@@ -18,7 +18,7 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Metadata patch request body. </summary>
-    public partial class MetadataPatch : ResourceWithEtag, IJsonModel<MetadataPatch>
+    public partial class MetadataPatch : SecurityInsightsResourceWithEtag, IJsonModel<MetadataPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

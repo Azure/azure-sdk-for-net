@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ActivityCustomEntityQuery"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownCustomEntityQuery))]
-    public abstract partial class CustomEntityQuery : ResourceWithEtag, IJsonModel<CustomEntityQuery>
+    public abstract partial class CustomEntityQuery : SecurityInsightsResourceWithEtag, IJsonModel<CustomEntityQuery>
     {
         /// <summary> Initializes a new instance of <see cref="CustomEntityQuery"/> for deserialization. </summary>
         internal CustomEntityQuery()

@@ -2580,10 +2580,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="eTag"> Etag of the azure resource. </param>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <param name="lookbackPeriod"> The lookback period for the feed to be imported. The date-time to begin importing the feed from, for example: 2024-01-01T00:00:00.000Z. </param>
-        /// <param name="requiredSKUsPresent"> The flag to indicate whether the tenant has the premium SKU required to access this connector. </param>
+        /// <param name="isRequiredSKUsPresent"> The flag to indicate whether the tenant has the premium SKU required to access this connector. </param>
         /// <param name="dataTypesConnectorState"> Describe whether this data type connection is enabled or not. </param>
         /// <returns> A new <see cref="Models.PremiumMicrosoftDefenderForThreatIntelligence"/> instance for mocking. </returns>
-        public static PremiumMicrosoftDefenderForThreatIntelligence PremiumMicrosoftDefenderForThreatIntelligence(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? eTag = default, Guid? tenantId = default, DateTimeOffset? lookbackPeriod = default, bool? requiredSKUsPresent = default, SecurityInsightsDataTypeConnectionState? dataTypesConnectorState = default)
+        public static PremiumMicrosoftDefenderForThreatIntelligence PremiumMicrosoftDefenderForThreatIntelligence(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? eTag = default, Guid? tenantId = default, DateTimeOffset? lookbackPeriod = default, bool? isRequiredSKUsPresent = default, SecurityInsightsDataTypeConnectionState? dataTypesConnectorState = default)
         {
             return new PremiumMicrosoftDefenderForThreatIntelligence(
                 id,
@@ -2593,7 +2593,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 default,
                 eTag,
                 default,
-                tenantId is null && lookbackPeriod is null && requiredSKUsPresent is null && dataTypesConnectorState is null ? default : new PremiumMdtiDataConnectorProperties(tenantId.GetValueOrDefault(), default, lookbackPeriod.GetValueOrDefault(), requiredSKUsPresent, new PremiumMdtiDataConnectorDataTypes(new PremiumMdtiDataConnectorDataTypesConnector(dataTypesConnectorState.GetValueOrDefault(), default), default)));
+                tenantId is null && lookbackPeriod is null && isRequiredSKUsPresent is null && dataTypesConnectorState is null ? default : new PremiumMdtiDataConnectorProperties(tenantId.GetValueOrDefault(), default, lookbackPeriod.GetValueOrDefault(), isRequiredSKUsPresent, new PremiumMdtiDataConnectorDataTypes(new PremiumMdtiDataConnectorDataTypesConnector(dataTypesConnectorState.GetValueOrDefault(), default), default)));
         }
 
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
@@ -4758,10 +4758,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="eTag"> Etag of the azure resource. </param>
-        /// <returns> A new <see cref="Models.ResourceWithEtag"/> instance for mocking. </returns>
-        public static ResourceWithEtag ResourceWithEtag(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? eTag = default)
+        /// <returns> A new <see cref="Models.SecurityInsightsResourceWithEtag"/> instance for mocking. </returns>
+        public static SecurityInsightsResourceWithEtag SecurityInsightsResourceWithEtag(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? eTag = default)
         {
-            return new ResourceWithEtag(
+            return new SecurityInsightsResourceWithEtag(
                 id,
                 name,
                 resourceType,

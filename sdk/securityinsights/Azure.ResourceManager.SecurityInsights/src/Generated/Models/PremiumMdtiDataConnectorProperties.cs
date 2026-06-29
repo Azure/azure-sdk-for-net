@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="lookbackPeriod"> The lookback period for the feed to be imported. The date-time to begin importing the feed from, for example: 2024-01-01T00:00:00.000Z. </param>
-        /// <param name="requiredSKUsPresent"> The flag to indicate whether the tenant has the premium SKU required to access this connector. </param>
+        /// <param name="isRequiredSKUsPresent"> The flag to indicate whether the tenant has the premium SKU required to access this connector. </param>
         /// <param name="dataTypes"> The available data types for the connector. </param>
-        internal PremiumMdtiDataConnectorProperties(Guid tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset lookbackPeriod, bool? requiredSKUsPresent, PremiumMdtiDataConnectorDataTypes dataTypes) : base(tenantId, additionalBinaryDataProperties)
+        internal PremiumMdtiDataConnectorProperties(Guid tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset lookbackPeriod, bool? isRequiredSKUsPresent, PremiumMdtiDataConnectorDataTypes dataTypes) : base(tenantId, additionalBinaryDataProperties)
         {
             LookbackPeriod = lookbackPeriod;
-            RequiredSKUsPresent = requiredSKUsPresent;
+            IsRequiredSKUsPresent = isRequiredSKUsPresent;
             DataTypes = dataTypes;
         }
 
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The flag to indicate whether the tenant has the premium SKU required to access this connector. </summary>
         [WirePath("requiredSKUsPresent")]
-        public bool? RequiredSKUsPresent { get; set; }
+        public bool? IsRequiredSKUsPresent { get; set; }
 
         /// <summary> The available data types for the connector. </summary>
         [WirePath("dataTypes")]

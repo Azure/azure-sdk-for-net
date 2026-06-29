@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// Specific entity query that supports put requests.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ActivityCustomEntityQuery"/>.
     /// </summary>
-    public abstract partial class CustomEntityQuery : ResourceWithEtag
+    public abstract partial class CustomEntityQuery : SecurityInsightsResourceWithEtag
     {
         /// <summary> Initializes a new instance of <see cref="CustomEntityQuery"/>. </summary>
         /// <param name="kind"> the entity query kind. </param>

@@ -18,7 +18,7 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Action for alert rule. </summary>
-    public partial class SecurityInsightsAlertRuleActionCreateOrUpdateContent : ResourceWithEtag, IJsonModel<SecurityInsightsAlertRuleActionCreateOrUpdateContent>
+    public partial class SecurityInsightsAlertRuleActionCreateOrUpdateContent : SecurityInsightsResourceWithEtag, IJsonModel<SecurityInsightsAlertRuleActionCreateOrUpdateContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
