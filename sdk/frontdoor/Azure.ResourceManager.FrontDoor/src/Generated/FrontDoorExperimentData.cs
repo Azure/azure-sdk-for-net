@@ -7,30 +7,29 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.FrontDoor.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
     /// <summary> Defines the properties of an Experiment. </summary>
-    public partial class FrontDoorExperimentData : Resource
+    public partial class FrontDoorExperimentData : TrackedResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="FrontDoorExperimentData"/>. </summary>
         public FrontDoorExperimentData()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorExperimentData"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties of an Experiment. </param>
-        internal FrontDoorExperimentData(ResourceIdentifier id, string name, string @type, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExperimentProperties properties) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorExperimentData(ExperimentProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The properties of an Experiment. </summary>

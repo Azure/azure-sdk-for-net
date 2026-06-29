@@ -9,33 +9,16 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.FrontDoor;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Defines the properties of a preconfigured endpoint. </summary>
-    public partial class PreconfiguredEndpoint : ResourcewithSettableName, IJsonModel<PreconfiguredEndpoint>
+    public partial class PreconfiguredEndpoint : TrackedResourceData, IJsonModel<PreconfiguredEndpoint>
     {
-        /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResourcewithSettableName PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PreconfiguredEndpoint>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePreconfiguredEndpoint(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PreconfiguredEndpoint)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PreconfiguredEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -50,10 +33,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<PreconfiguredEndpoint>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PreconfiguredEndpoint IPersistableModel<PreconfiguredEndpoint>.Create(BinaryData data, ModelReaderWriterOptions options) => (PreconfiguredEndpoint)PersistableModelCreateCore(data, options);
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PreconfiguredEndpoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -66,40 +45,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteEndObject();
         }
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PreconfiguredEndpoint>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(PreconfiguredEndpoint)} does not support writing '{format}' format.");
-            }
-            base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
-            }
-        }
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PreconfiguredEndpoint IJsonModel<PreconfiguredEndpoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PreconfiguredEndpoint)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResourcewithSettableName JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PreconfiguredEndpoint>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(PreconfiguredEndpoint)} does not support reading '{format}' format.");
-            }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePreconfiguredEndpoint(document.RootElement, options);
-        }
-
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static PreconfiguredEndpoint DeserializePreconfiguredEndpoint(JsonElement element, ModelReaderWriterOptions options)
@@ -108,60 +53,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            ResourceIdentifier id = default;
-            string name = default;
-            string @type = default;
-            string location = default;
-            IDictionary<string, string> tags = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             PreconfiguredEndpointProperties properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("id"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("tags"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
-                        }
-                    }
-                    tags = dictionary;
-                    continue;
-                }
                 if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -176,14 +71,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PreconfiguredEndpoint(
-                id,
-                name,
-                @type,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                additionalBinaryDataProperties,
-                properties);
+            return new PreconfiguredEndpoint(properties, additionalBinaryDataProperties);
         }
     }
 }

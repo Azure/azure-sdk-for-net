@@ -8,32 +8,31 @@
 using System;
 using System.Collections.Generic;
 using Azure;
-using Azure.Core;
 using Azure.ResourceManager.FrontDoor.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
     /// <summary> Defines an Network Experiment Profile and lists of Experiments. </summary>
-    public partial class FrontDoorNetworkExperimentProfileData : ResourcewithSettableName
+    public partial class FrontDoorNetworkExperimentProfileData : TrackedResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="FrontDoorNetworkExperimentProfileData"/>. </summary>
         public FrontDoorNetworkExperimentProfileData()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorNetworkExperimentProfileData"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties of a Profile. </param>
         /// <param name="eTag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
-        internal FrontDoorNetworkExperimentProfileData(ResourceIdentifier id, string name, string @type, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ProfileProperties properties, ETag? eTag) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorNetworkExperimentProfileData(ProfileProperties properties, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             ETag = eTag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The properties of a Profile. </summary>

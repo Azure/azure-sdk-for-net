@@ -7,30 +7,29 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.FrontDoor;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Defines the LatencyScorecard. </summary>
-    public partial class LatencyScorecard : Resource
+    public partial class LatencyScorecard : TrackedResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="LatencyScorecard"/>. </summary>
         public LatencyScorecard()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="LatencyScorecard"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties of a latency scorecard. </param>
-        internal LatencyScorecard(ResourceIdentifier id, string name, string @type, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, LatencyScorecardProperties properties) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LatencyScorecard(LatencyScorecardProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The properties of a latency scorecard. </summary>

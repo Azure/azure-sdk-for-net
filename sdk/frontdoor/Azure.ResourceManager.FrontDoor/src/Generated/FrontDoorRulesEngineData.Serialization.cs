@@ -12,31 +12,15 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.FrontDoor.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
     /// <summary> A rules engine configuration containing a list of rules that will run to modify the runtime behavior of the request and response. </summary>
-    public partial class FrontDoorRulesEngineData : BasicResource, IJsonModel<FrontDoorRulesEngineData>
+    public partial class FrontDoorRulesEngineData : ResourceData, IJsonModel<FrontDoorRulesEngineData>
     {
-        /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BasicResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorRulesEngineData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeFrontDoorRulesEngineData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FrontDoorRulesEngineData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<FrontDoorRulesEngineData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -50,10 +34,6 @@ namespace Azure.ResourceManager.FrontDoor
 
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<FrontDoorRulesEngineData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        FrontDoorRulesEngineData IPersistableModel<FrontDoorRulesEngineData>.Create(BinaryData data, ModelReaderWriterOptions options) => (FrontDoorRulesEngineData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FrontDoorRulesEngineData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -84,40 +64,6 @@ namespace Azure.ResourceManager.FrontDoor
             writer.WriteEndObject();
         }
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorRulesEngineData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(FrontDoorRulesEngineData)} does not support writing '{format}' format.");
-            }
-            base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
-            }
-        }
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        FrontDoorRulesEngineData IJsonModel<FrontDoorRulesEngineData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (FrontDoorRulesEngineData)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BasicResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorRulesEngineData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(FrontDoorRulesEngineData)} does not support reading '{format}' format.");
-            }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFrontDoorRulesEngineData(document.RootElement, options);
-        }
-
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static FrontDoorRulesEngineData DeserializeFrontDoorRulesEngineData(JsonElement element, ModelReaderWriterOptions options)
@@ -126,32 +72,10 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 return null;
             }
-            ResourceIdentifier id = default;
-            string name = default;
-            string @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             RulesEngineProperties properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("id"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -166,7 +90,7 @@ namespace Azure.ResourceManager.FrontDoor
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FrontDoorRulesEngineData(id, name, @type, additionalBinaryDataProperties, properties);
+            return new FrontDoorRulesEngineData(properties, additionalBinaryDataProperties);
         }
     }
 }

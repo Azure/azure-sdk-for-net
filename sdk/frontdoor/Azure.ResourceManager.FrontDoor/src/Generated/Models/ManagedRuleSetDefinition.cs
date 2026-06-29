@@ -7,30 +7,29 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.FrontDoor;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Describes the a managed rule set definition. </summary>
-    public partial class ManagedRuleSetDefinition : Resource
+    public partial class ManagedRuleSetDefinition : TrackedResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ManagedRuleSetDefinition"/>. </summary>
         public ManagedRuleSetDefinition()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedRuleSetDefinition"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties for a managed rule set definition. </param>
-        internal ManagedRuleSetDefinition(ResourceIdentifier id, string name, string @type, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ManagedRuleSetDefinitionProperties properties) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedRuleSetDefinition(ManagedRuleSetDefinitionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties for a managed rule set definition. </summary>

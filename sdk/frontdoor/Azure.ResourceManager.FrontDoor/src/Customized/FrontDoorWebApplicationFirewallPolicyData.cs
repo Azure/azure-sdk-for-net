@@ -6,39 +6,39 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
-using Azure.ResourceManager.FrontDoor.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
     // The shipped SDK inherited TrackedResourceData. This partial restores that base type after
     // removing the spec-side alternateType for Microsoft.Network.Resource.
-    public partial class FrontDoorData : TrackedResourceData
+    public partial class FrontDoorWebApplicationFirewallPolicyData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of <see cref="FrontDoorData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorWebApplicationFirewallPolicyData"/>. </summary>
         /// <param name="location"> The location. </param>
-        public FrontDoorData(AzureLocation location) : base(location)
+        public FrontDoorWebApplicationFirewallPolicyData(AzureLocation location) : base(location)
         {
         }
 
         // This method body is copied from the generated PersistableModelCreateCore; the customization changes
-        // only the return type from FrontDoorData to ResourceData so it matches TrackedResourceData.
+        // only the return type from FrontDoorWebApplicationFirewallPolicyData to ResourceData so it matches TrackedResourceData.
         // Remove this workaround after https://github.com/Azure/azure-sdk-for-net/issues/60297 is fixed.
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorWebApplicationFirewallPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeFrontDoorData(document.RootElement, options);
+                        return DeserializeFrontDoorWebApplicationFirewallPolicyData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicyData)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -49,15 +49,25 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorWebApplicationFirewallPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicyData)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
+            }
+            if (Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku"u8);
+                writer.WriteObjectValue(Sku, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -77,27 +87,27 @@ namespace Azure.ResourceManager.FrontDoor
         }
 
         // This method body is copied from the generated JsonModelCreateCore; the customization changes
-            // only the return type from FrontDoorData to ResourceData so it matches TrackedResourceData.
+            // only the return type from FrontDoorWebApplicationFirewallPolicyData to ResourceData so it matches TrackedResourceData.
             // Remove this workaround after https://github.com/Azure/azure-sdk-for-net/issues/60297 is fixed.
             /// <param name="reader"> The JSON reader. </param>
             /// <param name="options"> The client options for reading and writing models. </param>
             protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             {
-                string format = options.Format == "W" ? ((IPersistableModel<FrontDoorData>)this).GetFormatFromOptions(options) : options.Format;
+                string format = options.Format == "W" ? ((IPersistableModel<FrontDoorWebApplicationFirewallPolicyData>)this).GetFormatFromOptions(options) : options.Format;
                 if (format != "J")
                 {
-                    throw new FormatException($"The model {nameof(FrontDoorData)} does not support reading '{format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicyData)} does not support reading '{format}' format.");
                 }
                 using JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return DeserializeFrontDoorData(document.RootElement, options);
+                return DeserializeFrontDoorWebApplicationFirewallPolicyData(document.RootElement, options);
             }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FrontDoorData IPersistableModel<FrontDoorData>.Create(BinaryData data, ModelReaderWriterOptions options) => (FrontDoorData)PersistableModelCreateCore(data, options);
+        FrontDoorWebApplicationFirewallPolicyData IPersistableModel<FrontDoorWebApplicationFirewallPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => (FrontDoorWebApplicationFirewallPolicyData)PersistableModelCreateCore(data, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FrontDoorData IJsonModel<FrontDoorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (FrontDoorData)JsonModelCreateCore(ref reader, options);
+        FrontDoorWebApplicationFirewallPolicyData IJsonModel<FrontDoorWebApplicationFirewallPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (FrontDoorWebApplicationFirewallPolicyData)JsonModelCreateCore(ref reader, options);
     }
 }
