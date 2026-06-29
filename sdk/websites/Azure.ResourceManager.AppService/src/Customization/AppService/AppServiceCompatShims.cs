@@ -5,9 +5,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
@@ -78,100 +75,6 @@ namespace Azure.ResourceManager.AppService
         public static AsyncPageable<TOut> ProjectAsyncPageable<TIn, TOut>(AsyncPageable<TIn> inner, Func<TIn, TOut> convert)
         {
             return new ProjectedAsyncPageable<TIn, TOut>(inner, convert);
-        }
-
-        private sealed class ProjectedArmOperation<TIn, TOut> : ArmOperation<TOut>
-        {
-            private readonly ArmOperation<TIn> _inner;
-            private readonly Func<TIn, TOut> _convert;
-
-            public ProjectedArmOperation(ArmOperation<TIn> inner, Func<TIn, TOut> convert)
-            {
-                _inner = inner;
-                _convert = convert;
-            }
-
-            public override TOut Value => _convert(_inner.Value);
-            public override bool HasValue => _inner.HasValue;
-            public override string Id => _inner.Id;
-            public override bool HasCompleted => _inner.HasCompleted;
-            public override Response GetRawResponse() => _inner.GetRawResponse();
-            public override Response UpdateStatus(CancellationToken cancellationToken = default) => _inner.UpdateStatus(cancellationToken);
-            public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _inner.UpdateStatusAsync(cancellationToken);
-            public override Response<TOut> WaitForCompletion(CancellationToken cancellationToken = default)
-            {
-                Response<TIn> r = _inner.WaitForCompletion(cancellationToken);
-                return Response.FromValue(_convert(r.Value), r.GetRawResponse());
-            }
-            public override Response<TOut> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken)
-            {
-                Response<TIn> r = _inner.WaitForCompletion(pollingInterval, cancellationToken);
-                return Response.FromValue(_convert(r.Value), r.GetRawResponse());
-            }
-            public override async ValueTask<Response<TOut>> WaitForCompletionAsync(CancellationToken cancellationToken = default)
-            {
-                Response<TIn> r = await _inner.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(_convert(r.Value), r.GetRawResponse());
-            }
-            public override async ValueTask<Response<TOut>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
-            {
-                Response<TIn> r = await _inner.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(_convert(r.Value), r.GetRawResponse());
-            }
-            public override Response WaitForCompletionResponse(CancellationToken cancellationToken = default) => _inner.WaitForCompletionResponse(cancellationToken);
-            public override Response WaitForCompletionResponse(TimeSpan pollingInterval, CancellationToken cancellationToken) => _inner.WaitForCompletionResponse(pollingInterval, cancellationToken);
-            public override ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken = default) => _inner.WaitForCompletionResponseAsync(cancellationToken);
-            public override ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) => _inner.WaitForCompletionResponseAsync(pollingInterval, cancellationToken);
-        }
-
-        private sealed class ProjectedPageable<TIn, TOut> : Pageable<TOut>
-        {
-            private readonly Pageable<TIn> _inner;
-            private readonly Func<TIn, TOut> _convert;
-
-            public ProjectedPageable(Pageable<TIn> inner, Func<TIn, TOut> convert)
-            {
-                _inner = inner;
-                _convert = convert;
-            }
-
-            public override IEnumerable<Page<TOut>> AsPages(string continuationToken = null, int? pageSizeHint = null)
-            {
-                foreach (var page in _inner.AsPages(continuationToken, pageSizeHint))
-                {
-                    var converted = new List<TOut>(page.Values.Count);
-                    foreach (var v in page.Values)
-                    {
-                        converted.Add(_convert(v));
-                    }
-                    yield return Page<TOut>.FromValues(converted, page.ContinuationToken, page.GetRawResponse());
-                }
-            }
-        }
-
-        private sealed class ProjectedAsyncPageable<TIn, TOut> : AsyncPageable<TOut>
-        {
-            private readonly AsyncPageable<TIn> _inner;
-            private readonly Func<TIn, TOut> _convert;
-
-            public ProjectedAsyncPageable(AsyncPageable<TIn> inner, Func<TIn, TOut> convert)
-            {
-                _inner = inner;
-                _convert = convert;
-            }
-
-            public override async IAsyncEnumerable<Page<TOut>> AsPages(string continuationToken = null, int? pageSizeHint = null)
-            {
-                await foreach (var page in _inner.AsPages(continuationToken, pageSizeHint).ConfigureAwait(false))
-                {
-                    var converted = new List<TOut>(page.Values.Count);
-                    foreach (var v in page.Values)
-                    {
-                        converted.Add(_convert(v));
-                    }
-                    yield return Page<TOut>.FromValues(converted, page.ContinuationToken, page.GetRawResponse());
-                }
-            }
         }
     }
 }
