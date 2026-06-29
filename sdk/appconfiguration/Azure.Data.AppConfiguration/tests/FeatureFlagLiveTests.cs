@@ -24,12 +24,12 @@ namespace Azure.Data.AppConfiguration.Tests
 
         private FeatureFlagClient GetClient(bool skipInstrumentation = false)
         {
-            ConfigurationClientOptions clientOptions = new ConfigurationClientOptions(_serviceVersion);
-            ConfigurationClientOptions options = InstrumentClientOptions(clientOptions);
+            FeatureFlagClientOptions clientOptions = new FeatureFlagClientOptions(
+                Enum.Parse<FeatureFlagClientOptions.ServiceVersion>(_serviceVersion.ToString()));
+            FeatureFlagClientOptions options = InstrumentClientOptions(clientOptions);
             // Set audience AFTER InstrumentClientOptions, as it might reset the options
             options.Audience = TestEnvironment.GetAudience();
-            ConfigurationClient configurationClient = new ConfigurationClient(new System.Uri(TestEnvironment.Endpoint), TestEnvironment.Credential, options);
-            FeatureFlagClient client = configurationClient.GetFeatureFlagClient();
+            FeatureFlagClient client = new FeatureFlagClient(new System.Uri(TestEnvironment.Endpoint), TestEnvironment.Credential, options);
             // Conditional paging relies on the concrete pageable type, which client instrumentation
             // wraps; such tests opt out of instrumentation and provide explicit sync/async variants.
             return skipInstrumentation ? client : InstrumentClient(client);
@@ -538,7 +538,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
         // FeatureFlag.Etag is an init-time-only property, so we round-trip through the model factory
         // to obtain a flag instance whose Etag matches the server's value.
-        private static FeatureFlag CloneWithEtag(FeatureFlag source, string etag)
+        private static FeatureFlag CloneWithEtag(FeatureFlag source, ETag? etag)
         {
             return ConfigurationModelFactory.FeatureFlag(
                 name: source.Name,

@@ -18,9 +18,8 @@ namespace Azure.Data.AppConfiguration
     // their place while reusing the generated protocol methods and pageable types.
     /// <summary>
     /// The <see cref="FeatureFlagClient"/> allows you to create, retrieve, update, and delete
-    /// <see cref="FeatureFlag"/> entities in an Azure App Configuration store. It can be created
-    /// directly, just like a <see cref="ConfigurationClient"/>, or obtained from an existing
-    /// <see cref="ConfigurationClient"/> via <see cref="ConfigurationClient.GetFeatureFlagClient"/>.
+    /// <see cref="FeatureFlag"/> entities in an Azure App Configuration store. It is created
+    /// directly, just like a <see cref="ConfigurationClient"/>.
     /// </summary>
     [CodeGenSuppress("GetFeatureFlags", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(MatchConditions), typeof(IEnumerable<>), typeof(CancellationToken))]
     [CodeGenSuppress("GetFeatureFlagsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(MatchConditions), typeof(IEnumerable<>), typeof(CancellationToken))]
@@ -32,7 +31,6 @@ namespace Azure.Data.AppConfiguration
     {
         private const string OTelAttributeKey = "az.appconfiguration.key";
         private const string AcceptDateTimeFormat = "R";
-        private readonly string _syncToken;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FeatureFlagClient"/> class for mocking.
@@ -90,12 +88,6 @@ namespace Azure.Data.AppConfiguration
                 endpoint,
                 options.Version)
         {
-        }
-
-        internal FeatureFlagClient(ConfigurationClient client)
-            : this(client.ClientDiagnostics, client.Pipeline, client.EndpointValue, client.ApiVersionValue)
-        {
-            _syncToken = client.SyncTokenValue;
         }
 
         private static ClientDiagnostics CreateDiagnostics(FeatureFlagClientOptions options)
@@ -160,20 +152,16 @@ namespace Azure.Data.AppConfiguration
 
             HttpMessage FirstPageRequest(MatchConditions conditions, int? pageSizeHint)
             {
-                return CreateGetFeatureFlagsRequest(name, label, _syncToken, null, acceptDatetime, select, conditions, tags, context);
+                return CreateGetFeatureFlagsRequest(name, label, null, null, acceptDatetime, select, conditions, tags, context);
             }
 
             HttpMessage NextPageRequest(MatchConditions conditions, int? pageSizeHint, string nextLink)
             {
-                HttpMessage message = CreateNextGetFeatureFlagsRequest(new Uri(nextLink, UriKind.RelativeOrAbsolute), name, label, _syncToken, null, acceptDatetime, select, conditions, tags, context);
+                HttpMessage message = CreateNextGetFeatureFlagsRequest(new Uri(nextLink, UriKind.RelativeOrAbsolute), name, label, null, null, acceptDatetime, select, conditions, tags, context);
 
                 // The generated next-page request only carries the continuation link, so the
-                // per-call headers must be re-applied to honor sync tokens, point-in-time reads,
-                // and the per-page match conditions used by conditional paging.
-                if (_syncToken != null)
-                {
-                    message.Request.Headers.SetValue("Sync-Token", _syncToken);
-                }
+                // per-call headers must be re-applied to honor point-in-time reads and the
+                // per-page match conditions used by conditional paging.
                 if (acceptDatetime != null)
                 {
                     message.Request.Headers.SetValue("Accept-Datetime", acceptDatetime);
@@ -266,7 +254,7 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 MatchConditions matchConditions = new MatchConditions { IfNoneMatch = ETag.All };
-                return await PutFeatureFlagAsync(name, flag, label, _syncToken, matchConditions, cancellationToken).ConfigureAwait(false);
+                return await PutFeatureFlagAsync(name, flag, label, null, matchConditions, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -295,7 +283,7 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 MatchConditions matchConditions = new MatchConditions { IfNoneMatch = ETag.All };
-                return PutFeatureFlag(name, flag, label, _syncToken, matchConditions, cancellationToken);
+                return PutFeatureFlag(name, flag, label, null, matchConditions, cancellationToken);
             }
             catch (Exception e)
             {
@@ -356,7 +344,7 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 MatchConditions matchConditions = onlyIfUnchanged ? new MatchConditions { IfMatch = flag.Etag } : default;
-                return await PutFeatureFlagAsync(name, flag, label, _syncToken, matchConditions, cancellationToken).ConfigureAwait(false);
+                return await PutFeatureFlagAsync(name, flag, label, null, matchConditions, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -389,7 +377,7 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 MatchConditions matchConditions = onlyIfUnchanged ? new MatchConditions { IfMatch = flag.Etag } : default;
-                return PutFeatureFlag(name, flag, label, _syncToken, matchConditions, cancellationToken);
+                return PutFeatureFlag(name, flag, label, null, matchConditions, cancellationToken);
             }
             catch (Exception e)
             {
@@ -442,7 +430,7 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                return await DeleteFeatureFlagAsync(name, label, _syncToken, requestOptions?.IfMatch, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+                return await DeleteFeatureFlagAsync(name, label, null, requestOptions?.IfMatch, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -459,7 +447,7 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                return DeleteFeatureFlag(name, label, _syncToken, requestOptions?.IfMatch, cancellationToken.ToRequestContext());
+                return DeleteFeatureFlag(name, label, null, requestOptions?.IfMatch, cancellationToken.ToRequestContext());
             }
             catch (Exception e)
             {
@@ -485,7 +473,7 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                return await DeleteFeatureFlagAsync(name, label, _syncToken, ifMatch: default, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+                return await DeleteFeatureFlagAsync(name, label, null, ifMatch: default, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -511,7 +499,7 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                return DeleteFeatureFlag(name, label, _syncToken, ifMatch: default, cancellationToken.ToRequestContext());
+                return DeleteFeatureFlag(name, label, null, ifMatch: default, cancellationToken.ToRequestContext());
             }
             catch (Exception e)
             {
@@ -593,7 +581,7 @@ namespace Azure.Data.AppConfiguration
 
                 string dateTime = acceptDateTime.HasValue ? acceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
 
-                Response response = await GetFeatureFlagAsync(name, label, @select: default, _syncToken, dateTime, conditions, tags: default, context).ConfigureAwait(false);
+                Response response = await GetFeatureFlagAsync(name, label, @select: default, null, dateTime, conditions, tags: default, context).ConfigureAwait(false);
 
                 return response.Status switch
                 {
@@ -622,7 +610,7 @@ namespace Azure.Data.AppConfiguration
 
                 string dateTime = acceptDateTime.HasValue ? acceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
 
-                Response response = GetFeatureFlag(name, label, @select: default, _syncToken, dateTime, conditions, tags: default, context);
+                Response response = GetFeatureFlag(name, label, @select: default, null, dateTime, conditions, tags: default, context);
 
                 return response.Status switch
                 {
@@ -655,7 +643,7 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                Response result = await GetFeatureFlagAsync(name, label, @select: default, _syncToken, acceptDatetime: default, matchConditions: default, tags: default, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+                Response result = await GetFeatureFlagAsync(name, label, @select: default, null, acceptDatetime: default, matchConditions: default, tags: default, cancellationToken.ToRequestContext()).ConfigureAwait(false);
                 return Response.FromValue((FeatureFlag)result, result);
             }
             catch (Exception e)
@@ -682,7 +670,7 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                Response result = GetFeatureFlag(name, label, @select: default, _syncToken, acceptDatetime: default, matchConditions: default, tags: default, cancellationToken.ToRequestContext());
+                Response result = GetFeatureFlag(name, label, @select: default, null, acceptDatetime: default, matchConditions: default, tags: default, cancellationToken.ToRequestContext());
                 return Response.FromValue((FeatureFlag)result, result);
             }
             catch (Exception e)

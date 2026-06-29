@@ -22,7 +22,6 @@ namespace Azure.Data.AppConfiguration
         private const string AuthorizationHeader = "Connection String";
         private static readonly string[] AuthorizationScopes = new string[] { "https://azconfig.io/.default" };
         private readonly string _apiVersion;
-        private FeatureFlagClient _cachedFeatureFlagClient;
 
         /// <summary> Initializes a new instance of ConfigurationClient for mocking. </summary>
         protected ConfigurationClient()
@@ -826,12 +825,6 @@ namespace Azure.Data.AppConfiguration
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Initializes a new instance of FeatureFlagClient. </summary>
-        public virtual FeatureFlagClient GetFeatureFlagClient()
-        {
-            return Volatile.Read(ref _cachedFeatureFlagClient) ?? Interlocked.CompareExchange(ref _cachedFeatureFlagClient, new FeatureFlagClient(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedFeatureFlagClient;
         }
     }
 }

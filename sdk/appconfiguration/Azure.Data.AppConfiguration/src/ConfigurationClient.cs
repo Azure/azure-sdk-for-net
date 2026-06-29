@@ -94,16 +94,14 @@ namespace Azure.Data.AppConfiguration
     [CodeGenSuppress("CheckRevisionsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<SettingFields>), typeof(IEnumerable<string>), typeof(RequestContext))]
     [CodeGenSuppress("GetConfigurationSettings", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(MatchConditions), typeof(IEnumerable<>), typeof(RequestContext))]
     [CodeGenSuppress("GetConfigurationSettingsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(MatchConditions), typeof(IEnumerable<>), typeof(RequestContext))]
+    [CodeGenSuppress("GetFeatureFlagClient")]
+    [CodeGenSuppress("_cachedFeatureFlagClient")]
 
     public partial class ConfigurationClient
     {
         private const string OTelAttributeKey = "az.appconfiguration.key";
         private readonly SyncTokenPolicy _syncTokenPolicy;
         private readonly string _syncToken;
-
-        internal Uri EndpointValue => _endpoint;
-        internal string ApiVersionValue => _apiVersion;
-        internal string SyncTokenValue => _syncToken;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationClient"/> class.
