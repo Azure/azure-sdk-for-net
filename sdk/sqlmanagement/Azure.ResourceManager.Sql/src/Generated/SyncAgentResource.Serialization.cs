@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class SyncAgentResource : IJsonModel<SyncAgentData>
     {
-        private static SyncAgentData s_dataDeserializationInstance;
-        private static SyncAgentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SyncAgentData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SyncAgentData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SyncAgentData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SyncAgentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SyncAgentData>)Data).Write(writer, options);
 
-        SyncAgentData IJsonModel<SyncAgentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SyncAgentData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SyncAgentData IJsonModel<SyncAgentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SyncAgentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SyncAgentData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SyncAgentData IPersistableModel<SyncAgentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SyncAgentData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SyncAgentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SyncAgentData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SyncAgentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

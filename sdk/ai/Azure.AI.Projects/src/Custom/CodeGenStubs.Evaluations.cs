@@ -22,6 +22,12 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("EvalRunResultSummary")] public partial class EvalRunResultSummary { }
 [CodeGenType("EvaluationComparisonInsightRequest")] public partial class EvaluationComparisonInsightRequest { }
 [CodeGenType("EvaluationComparisonInsightResult")] public partial class EvaluationComparisonInsightResult { }
+[CodeGenType("EvaluatorCredentialRequest")] public partial class EvaluationCredentialContent { }
+[CodeGenType("EvaluatorGenerationArtifacts")] public partial class EvaluatorGenerationArtifacts { }
+[CodeGenType("EvaluatorGenerationInputs")] public partial class EvaluatorGenerationInputs { }
+[CodeGenType("EvaluatorGenerationJobSource")] public partial class EvaluatorGenerationJobSource { }
+[CodeGenType("EvaluatorGenerationTokenUsage")] public partial class EvaluatorGenerationTokenUsage{ }
+[CodeGenType("EvaluationLevel")] public readonly partial struct ProjectsEvaluationLevel { }
 [CodeGenType("EvaluationResultSample")] public partial class EvaluationResultSample { }
 [CodeGenType("EvaluationRule")] public partial class EvaluationRule { }
 [CodeGenType("EvaluationRuleAction")] public abstract partial class EvaluationRuleAction { }
@@ -63,6 +69,7 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("PagedRedTeam")] internal partial class PagedRedTeam { }
 [CodeGenType("PagedSchedule")] internal partial class PagedSchedule { }
 [CodeGenType("PagedScheduleRun")] internal partial class PagedScheduleRun { }
+/// <summary> Represents an insight produced by a project insight run. </summary>
 [CodeGenType("ProjectInsight")] public partial class ProjectInsight { }
 [CodeGenType("RecurrenceSchedule")] public abstract partial class RecurrenceSchedule { }
 [CodeGenType("RecurrenceTrigger")] public partial class RecurrenceTrigger { }

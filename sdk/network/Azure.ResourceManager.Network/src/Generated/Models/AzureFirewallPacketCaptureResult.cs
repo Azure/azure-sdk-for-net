@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response of an Azure Firewall Packet Capture Operation. </summary>
     public partial class AzureFirewallPacketCaptureResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AzureFirewallPacketCaptureResult"/>. </summary>
         internal AzureFirewallPacketCaptureResult()
@@ -53,17 +25,18 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="AzureFirewallPacketCaptureResult"/>. </summary>
         /// <param name="statusCode"> The response code of the performed packet capture operation. </param>
         /// <param name="message"> Localized Message String of The Result Of The Azure Firewall Packet Capture Operation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureFirewallPacketCaptureResult(AzureFirewallPacketCaptureResultCode? statusCode, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AzureFirewallPacketCaptureResult(AzureFirewallPacketCaptureResultCode? statusCode, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StatusCode = statusCode;
             Message = message;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The response code of the performed packet capture operation. </summary>
         [WirePath("statusCode")]
         public AzureFirewallPacketCaptureResultCode? StatusCode { get; }
+
         /// <summary> Localized Message String of The Result Of The Azure Firewall Packet Capture Operation. </summary>
         [WirePath("message")]
         public string Message { get; }

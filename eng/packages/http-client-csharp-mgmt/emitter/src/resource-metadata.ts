@@ -35,6 +35,10 @@ export function getVariableSegmentName(segment: string): string {
   return segment.slice(1, -1);
 }
 
+function literalSegmentsEqual(left: string, right: string): boolean {
+  return left.toLowerCase() === right.toLowerCase();
+}
+
 /**
  * Represents a parsed ARM request path with pre-computed segment information.
  *
@@ -107,7 +111,7 @@ export class RequestPath {
         isVariableSegment(other.segments[i])
       ) {
         count++;
-      } else if (this.segments[i] === other.segments[i]) {
+      } else if (literalSegmentsEqual(this.segments[i], other.segments[i])) {
         count++;
       } else {
         break;
@@ -143,7 +147,8 @@ export class RequestPath {
       ) {
         continue;
       }
-      if (this.segments[i] !== other.segments[i]) return false;
+      if (!literalSegmentsEqual(this.segments[i], other.segments[i]))
+        return false;
     }
     return true;
   }
@@ -190,7 +195,7 @@ export class RequestPath {
     return (
       this.length === 0 ||
       (this.length === 2 &&
-        this.segments[0] === "tenants" &&
+        literalSegmentsEqual(this.segments[0], "tenants") &&
         isVariableSegment(this.segments[1]))
     );
   }
@@ -198,7 +203,7 @@ export class RequestPath {
   isSubscriptionPath(): boolean {
     return (
       this.length === 2 &&
-      this.segments[0] === "subscriptions" &&
+      literalSegmentsEqual(this.segments[0], "subscriptions") &&
       isVariableSegment(this.segments[1])
     );
   }
@@ -206,9 +211,9 @@ export class RequestPath {
   isResourceGroupPath(): boolean {
     return (
       this.length === 4 &&
-      this.segments[0] === "subscriptions" &&
+      literalSegmentsEqual(this.segments[0], "subscriptions") &&
       isVariableSegment(this.segments[1]) &&
-      this.segments[2] === "resourceGroups" &&
+      literalSegmentsEqual(this.segments[2], "resourceGroups") &&
       isVariableSegment(this.segments[3])
     );
   }
@@ -216,9 +221,9 @@ export class RequestPath {
   isManagementGroupPath(): boolean {
     return (
       this.length === 4 &&
-      this.segments[0] === "providers" &&
-      this.segments[1] === "Microsoft.Management" &&
-      this.segments[2] === "managementGroups" &&
+      literalSegmentsEqual(this.segments[0], "providers") &&
+      literalSegmentsEqual(this.segments[1], "Microsoft.Management") &&
+      literalSegmentsEqual(this.segments[2], "managementGroups") &&
       isVariableSegment(this.segments[3])
     );
   }
@@ -273,7 +278,7 @@ export class RequestPath {
         return "Microsoft.Resources/subscriptions";
       } else if (this.isResourceGroupPath()) {
         return "Microsoft.Resources/resourceGroups";
-      } else if (this.segments[0] === "tenants") {
+      } else if (literalSegmentsEqual(this.segments[0], "tenants")) {
         return "Microsoft.Resources/tenants";
       }
       return undefined;
@@ -812,9 +817,11 @@ function operationPathEndsWithResourceType(
   resourceType: string
 ): boolean {
   const lastTypeSegment = resourceType.split("/").at(-1);
+  const lastOperationSegment = operationPath.segments.at(-1);
   return (
     lastTypeSegment !== undefined &&
-    operationPath.segments[operationPath.length - 1] === lastTypeSegment
+    lastOperationSegment !== undefined &&
+    literalSegmentsEqual(lastOperationSegment, lastTypeSegment)
   );
 }
 
@@ -1202,7 +1209,7 @@ function postProcessExpandedArmResources(
     const validCandidates: RequestPath[] = [];
 
     for (const candidatePath of resourceInstancePaths) {
-      if (canBeListResourceScope(listOp.operationPath, candidatePath)) {
+      if (candidatePath.isPrefixOf(listOp.operationPath)) {
         validCandidates.push(candidatePath);
       }
     }
@@ -1292,42 +1299,6 @@ function postProcessExpandedArmResources(
   }
 
   return filteredResources;
-}
-
-/**
- * Helper function to determine if a resource path can be the scope for a list operation.
- * The resource path must be a prefix of the list operation path.
- */
-function canBeListResourceScope(
-  listPath: RequestPath,
-  resourceInstancePath: RequestPath
-): boolean {
-  // Check if resourceInstancePath is a prefix of listPath
-  if (listPath.length < resourceInstancePath.length) {
-    return false;
-  }
-  for (let i = 0; i < resourceInstancePath.length; i++) {
-    // if both segments are variables, we consider it as a match
-    if (
-      isVariableSegment(listPath.segments[i]) &&
-      isVariableSegment(resourceInstancePath.segments[i])
-    ) {
-      continue;
-    }
-    // if one of them is a variable, the other is not, we consider it as not a match
-    if (
-      isVariableSegment(listPath.segments[i]) ||
-      isVariableSegment(resourceInstancePath.segments[i])
-    ) {
-      return false;
-    }
-    // both are fixed strings, they must match
-    if (listPath.segments[i] !== resourceInstancePath.segments[i]) {
-      return false;
-    }
-  }
-  // here it means every segment in resourceInstancePath matches the corresponding segment in listPath
-  return true;
 }
 
 /**

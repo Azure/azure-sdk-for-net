@@ -2,14 +2,64 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
-    public enum ResponsesToolSearchExecutionType
+    public readonly partial struct ResponsesToolSearchExecutionType : IEquatable<ResponsesToolSearchExecutionType>
     {
-        /// <summary> Server. </summary>
-        Server,
-        /// <summary> Client. </summary>
-        Client
+        private readonly string _value;
+        private const string ServerValue = "server";
+        private const string ClientValue = "client";
+
+        /// <summary> Initializes a new instance of <see cref="ResponsesToolSearchExecutionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ResponsesToolSearchExecutionType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Server. </summary>
+        public static ResponsesToolSearchExecutionType Server { get; } = new ResponsesToolSearchExecutionType(ServerValue);
+
+        /// <summary> Gets the Client. </summary>
+        public static ResponsesToolSearchExecutionType Client { get; } = new ResponsesToolSearchExecutionType(ClientValue);
+
+        /// <summary> Determines if two <see cref="ResponsesToolSearchExecutionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(ResponsesToolSearchExecutionType left, ResponsesToolSearchExecutionType right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="ResponsesToolSearchExecutionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(ResponsesToolSearchExecutionType left, ResponsesToolSearchExecutionType right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="ResponsesToolSearchExecutionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResponsesToolSearchExecutionType(string value) => new ResponsesToolSearchExecutionType(value);
+
+        /// <summary> Converts a string to a <see cref="ResponsesToolSearchExecutionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResponsesToolSearchExecutionType?(string value) => value == null ? null : new ResponsesToolSearchExecutionType(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is ResponsesToolSearchExecutionType other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(ResponsesToolSearchExecutionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

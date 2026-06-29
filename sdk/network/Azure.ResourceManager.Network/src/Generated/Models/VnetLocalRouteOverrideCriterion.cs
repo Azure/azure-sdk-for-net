@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct VnetLocalRouteOverrideCriterion : IEquatable<VnetLocalRouteOverrideCriterion>
     {
         private readonly string _value;
+        /// <summary> Contains. </summary>
+        private const string ContainsValue = "Contains";
+        /// <summary> Equal. </summary>
+        private const string EqualValue = "Equal";
 
         /// <summary> Initializes a new instance of <see cref="VnetLocalRouteOverrideCriterion"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VnetLocalRouteOverrideCriterion(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ContainsValue = "Contains";
-        private const string EqualValue = "Equal";
+            _value = value;
+        }
 
         /// <summary> Contains. </summary>
         public static VnetLocalRouteOverrideCriterion Contains { get; } = new VnetLocalRouteOverrideCriterion(ContainsValue);
+
         /// <summary> Equal. </summary>
         public static VnetLocalRouteOverrideCriterion Equal { get; } = new VnetLocalRouteOverrideCriterion(EqualValue);
+
         /// <summary> Determines if two <see cref="VnetLocalRouteOverrideCriterion"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VnetLocalRouteOverrideCriterion left, VnetLocalRouteOverrideCriterion right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VnetLocalRouteOverrideCriterion"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VnetLocalRouteOverrideCriterion left, VnetLocalRouteOverrideCriterion right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VnetLocalRouteOverrideCriterion"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VnetLocalRouteOverrideCriterion"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VnetLocalRouteOverrideCriterion(string value) => new VnetLocalRouteOverrideCriterion(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VnetLocalRouteOverrideCriterion"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VnetLocalRouteOverrideCriterion?(string value) => value == null ? null : new VnetLocalRouteOverrideCriterion(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VnetLocalRouteOverrideCriterion other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VnetLocalRouteOverrideCriterion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

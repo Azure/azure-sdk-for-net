@@ -671,7 +671,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(item.Content, Is.EqualTo(newContent));
         Assert.That(item.Scope, Is.EqualTo(MEMORY_STORE_SCOPE));
         // Delete
-        DeleteMemoryResponse delResult = await projectClient.MemoryStores.DeleteMemoryAsync(name: store.Name, memoryId: customerData.MemoryId);
+        MemoryDeletionResult delResult = await projectClient.MemoryStores.DeleteMemoryAsync(name: store.Name, memoryId: customerData.MemoryId);
         Assert.That(delResult.Deleted, Is.True);
         Assert.That(
             (await projectClient.MemoryStores.GetMemoriesAsync(name: store.Name, scope: MEMORY_STORE_SCOPE).ToEnumerableAsync())
@@ -1597,13 +1597,16 @@ public class AgentsTests : AgentsTestBase
         AgentEndpointConfiguration config = new()
         {
             VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
-            Protocols = { AgentEndpointProtocol.Responses }
+            ProtocolConfiguration = new()
+            {
+                Responses = new()
+            }
         };
         PatchAgentOptions patchOptions = new()
         {
             AgentEndpoint = config,
         };
-        ProjectsAgentRecord patchedRecord = await projectClient.AgentAdministrationClient.PatchAgentObjectAsync(
+        ProjectsAgentRecord patchedRecord = await projectClient.AgentAdministrationClient.PatchAgentAsync(
             agentName: agentVersion.Name,
             patchAgentOptions: patchOptions);
         ProjectOpenAIClientOptions responsesOptions = CreateTestProjectOpenAIClientOptions(

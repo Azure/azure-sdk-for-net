@@ -66,11 +66,11 @@ namespace Azure.Security.CodeTransparency
         async ValueTask<OperationState> IOperation.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             Response response = async
-                ? await _client.GetOperationAsync(
+                ? await _client.GetOperationV09Async(
                         Id,
                         new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow })
                     .ConfigureAwait(false)
-                : _client.GetOperation(Id, new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow });
+                : _client.GetOperationV09(Id, new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow });
 
             if (response.Status != (int)HttpStatusCode.OK &&
                 response.Status != (int)HttpStatusCode.Created &&

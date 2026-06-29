@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Renamed `ActivateBringYourOwnRootRequest` to `ActivateBringYourOwnRootContent` and `DeviceCredentialsRevokeRequest` to `DeviceCredentialsRevokeContent` to follow Azure SDK model-naming guidelines (input models use a `Content` suffix). These types were introduced in the preview line and have not shipped in a stable release.
+
 ### Bugs Fixed
 
 ### Other Changes

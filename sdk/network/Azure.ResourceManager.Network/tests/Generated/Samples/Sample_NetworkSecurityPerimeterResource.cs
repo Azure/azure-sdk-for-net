@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkSecurityPerimeterResource networkSecurityPerimeter = client.GetNetworkSecurityPerimeterResource(networkSecurityPerimeterResourceId);
 
             // invoke the operation
-            await networkSecurityPerimeter.DeleteAsync(WaitUntil.Completed);
+            await networkSecurityPerimeter.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }

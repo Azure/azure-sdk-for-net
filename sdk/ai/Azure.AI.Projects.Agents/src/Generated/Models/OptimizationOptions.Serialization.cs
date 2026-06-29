@@ -70,10 +70,10 @@ namespace Azure.AI.Projects.Agents
             {
                 throw new FormatException($"The model {nameof(OptimizationOptions)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(MaxIterations))
+            if (Optional.IsDefined(MaxCandidates))
             {
-                writer.WritePropertyName("max_iterations"u8);
-                writer.WriteNumberValue(MaxIterations.Value);
+                writer.WritePropertyName("max_candidates"u8);
+                writer.WriteNumberValue(MaxCandidates.Value);
             }
             if (Optional.IsCollectionDefined(OptimizationConfig))
             {
@@ -155,21 +155,21 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            int? maxIterations = default;
+            int? maxCandidates = default;
             IDictionary<string, BinaryData> optimizationConfig = default;
             string evalModel = default;
             string optimizationModel = default;
-            EvaluationLevel? evaluationLevel = default;
+            AgentsEvaluationLevel? evaluationLevel = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("max_iterations"u8))
+                if (prop.NameEquals("max_candidates"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxIterations = prop.Value.GetInt32();
+                    maxCandidates = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("optimization_config"u8))
@@ -209,7 +209,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    evaluationLevel = new EvaluationLevel(prop.Value.GetString());
+                    evaluationLevel = new AgentsEvaluationLevel(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -218,7 +218,7 @@ namespace Azure.AI.Projects.Agents
                 }
             }
             return new OptimizationOptions(
-                maxIterations,
+                maxCandidates,
                 optimizationConfig ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 evalModel,
                 optimizationModel,

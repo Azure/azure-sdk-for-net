@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct VpnAuthenticationType : IEquatable<VpnAuthenticationType>
     {
         private readonly string _value;
+        /// <summary> Certificate. </summary>
+        private const string CertificateValue = "Certificate";
+        /// <summary> Radius. </summary>
+        private const string RadiusValue = "Radius";
+        /// <summary> AAD. </summary>
+        private const string AADValue = "AAD";
 
         /// <summary> Initializes a new instance of <see cref="VpnAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VpnAuthenticationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CertificateValue = "Certificate";
-        private const string RadiusValue = "Radius";
-        private const string AadValue = "AAD";
+            _value = value;
+        }
 
         /// <summary> Certificate. </summary>
         public static VpnAuthenticationType Certificate { get; } = new VpnAuthenticationType(CertificateValue);
+
         /// <summary> Radius. </summary>
         public static VpnAuthenticationType Radius { get; } = new VpnAuthenticationType(RadiusValue);
-        /// <summary> AAD. </summary>
-        public static VpnAuthenticationType Aad { get; } = new VpnAuthenticationType(AadValue);
+
         /// <summary> Determines if two <see cref="VpnAuthenticationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VpnAuthenticationType left, VpnAuthenticationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VpnAuthenticationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VpnAuthenticationType left, VpnAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VpnAuthenticationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VpnAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VpnAuthenticationType(string value) => new VpnAuthenticationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VpnAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VpnAuthenticationType?(string value) => value == null ? null : new VpnAuthenticationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VpnAuthenticationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VpnAuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

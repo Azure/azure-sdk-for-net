@@ -36,7 +36,7 @@ namespace Azure.AI.Projects.Agents
         public ClientPipeline Pipeline { get; }
 
         /// <summary>
-        /// [Protocol Method] Retrieves a skill.
+        /// [Protocol Method] Retrieves the specified skill and its current configuration.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -58,7 +58,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieves a skill.
+        /// [Protocol Method] Retrieves the specified skill and its current configuration.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -79,7 +79,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Retrieves a skill. </summary>
+        /// <summary> Retrieves the specified skill and its current configuration. </summary>
         /// <param name="name"> The unique name of the skill. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -93,7 +93,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromValue((AgentsSkill)result, result.GetRawResponse());
         }
 
-        /// <summary> Retrieves a skill. </summary>
+        /// <summary> Retrieves the specified skill and its current configuration. </summary>
         /// <param name="name"> The unique name of the skill. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -108,7 +108,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Update a skill.
+        /// [Protocol Method] Modifies the specified skill's configuration.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -122,17 +122,17 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult UpdateSkill(string name, BinaryContent content, RequestOptions options = null)
+        public virtual ClientResult UpdateDefaultVersion(string name, BinaryContent content, RequestOptions options = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateSkillRequest(name, content, options);
+            using PipelineMessage message = CreateUpdateDefaultVersionRequest(name, content, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
-        /// [Protocol Method] Update a skill.
+        /// [Protocol Method] Modifies the specified skill's configuration.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -146,51 +146,51 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> UpdateSkillAsync(string name, BinaryContent content, RequestOptions options = null)
+        public virtual async Task<ClientResult> UpdateDefaultVersionAsync(string name, BinaryContent content, RequestOptions options = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateSkillRequest(name, content, options);
+            using PipelineMessage message = CreateUpdateDefaultVersionRequest(name, content, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Update a skill. </summary>
+        /// <summary> Modifies the specified skill's configuration. </summary>
         /// <param name="name"> The name of the skill to update. </param>
         /// <param name="defaultVersion"> The version identifier that the skill should point to. When set, the skill's default version will resolve to this version instead of the latest. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="defaultVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="defaultVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<AgentsSkill> UpdateSkill(string name, string defaultVersion, CancellationToken cancellationToken = default)
+        public virtual ClientResult<AgentsSkill> UpdateDefaultVersion(string name, string defaultVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(defaultVersion, nameof(defaultVersion));
 
             UpdateSkillRequest spreadModel = new UpdateSkillRequest(defaultVersion, default);
-            ClientResult result = UpdateSkill(name, spreadModel, cancellationToken.ToRequestOptions());
+            ClientResult result = UpdateDefaultVersion(name, spreadModel, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((AgentsSkill)result, result.GetRawResponse());
         }
 
-        /// <summary> Update a skill. </summary>
+        /// <summary> Modifies the specified skill's configuration. </summary>
         /// <param name="name"> The name of the skill to update. </param>
         /// <param name="defaultVersion"> The version identifier that the skill should point to. When set, the skill's default version will resolve to this version instead of the latest. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="defaultVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="defaultVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<AgentsSkill>> UpdateSkillAsync(string name, string defaultVersion, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<AgentsSkill>> UpdateDefaultVersionAsync(string name, string defaultVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(defaultVersion, nameof(defaultVersion));
 
             UpdateSkillRequest spreadModel = new UpdateSkillRequest(defaultVersion, default);
-            ClientResult result = await UpdateSkillAsync(name, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await UpdateDefaultVersionAsync(name, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((AgentsSkill)result, result.GetRawResponse());
         }
 
         /// <summary>
-        /// [Protocol Method] Deletes a skill.
+        /// [Protocol Method] Removes the specified skill and its associated versions.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -212,7 +212,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Deletes a skill.
+        /// [Protocol Method] Removes the specified skill and its associated versions.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -233,32 +233,32 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Deletes a skill. </summary>
+        /// <summary> Removes the specified skill and its associated versions. </summary>
         /// <param name="name"> The unique name of the skill. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<DeleteSkillResponse> DeleteSkill(string name, CancellationToken cancellationToken = default)
+        public virtual ClientResult<SkillDeletionResult> DeleteSkill(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             ClientResult result = DeleteSkill(name, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((DeleteSkillResponse)result, result.GetRawResponse());
+            return ClientResult.FromValue((SkillDeletionResult)result, result.GetRawResponse());
         }
 
-        /// <summary> Deletes a skill. </summary>
+        /// <summary> Removes the specified skill and its associated versions. </summary>
         /// <param name="name"> The unique name of the skill. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<DeleteSkillResponse>> DeleteSkillAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<SkillDeletionResult>> DeleteSkillAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             ClientResult result = await DeleteSkillAsync(name, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((DeleteSkillResponse)result, result.GetRawResponse());
+            return ClientResult.FromValue((SkillDeletionResult)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -312,16 +312,16 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Creates a new version of a skill. If the skill does not exist, it will be created. </summary>
         /// <param name="name"> The name of the skill. If the skill does not exist, it will be created. </param>
         /// <param name="inlineContent"> Inline skill content for simple skills without file uploads. Foundry-specific extension. </param>
-        /// <param name="default"> Whether to set this version as the default. </param>
+        /// <param name="isDefault"> Whether to set this version as the default. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<SkillVersion> CreateSkillVersion(string name, SkillInlineContent inlineContent = default, bool? @default = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult<SkillVersion> CreateSkillVersion(string name, SkillInlineContent inlineContent = default, bool? isDefault = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            CreateSkillVersionRequest spreadModel = new CreateSkillVersionRequest(inlineContent, @default, default);
+            CreateSkillVersionRequest spreadModel = new CreateSkillVersionRequest(inlineContent, isDefault, default);
             ClientResult result = CreateSkillVersion(name, spreadModel, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((SkillVersion)result, result.GetRawResponse());
         }
@@ -329,16 +329,16 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Creates a new version of a skill. If the skill does not exist, it will be created. </summary>
         /// <param name="name"> The name of the skill. If the skill does not exist, it will be created. </param>
         /// <param name="inlineContent"> Inline skill content for simple skills without file uploads. Foundry-specific extension. </param>
-        /// <param name="default"> Whether to set this version as the default. </param>
+        /// <param name="isDefault"> Whether to set this version as the default. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<SkillVersion>> CreateSkillVersionAsync(string name, SkillInlineContent inlineContent = default, bool? @default = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<SkillVersion>> CreateSkillVersionAsync(string name, SkillInlineContent inlineContent = default, bool? isDefault = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            CreateSkillVersionRequest spreadModel = new CreateSkillVersionRequest(inlineContent, @default, default);
+            CreateSkillVersionRequest spreadModel = new CreateSkillVersionRequest(inlineContent, isDefault, default);
             ClientResult result = await CreateSkillVersionAsync(name, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((SkillVersion)result, result.GetRawResponse());
         }
@@ -355,14 +355,15 @@ namespace Azure.AI.Projects.Agents
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="content"/> or <paramref name="contentType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult CreateSkillVersionFromFiles(string name, BinaryContent content, string contentType, RequestOptions options = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
 
             using PipelineMessage message = CreateCreateSkillVersionFromFilesRequest(name, content, contentType, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
@@ -380,21 +381,22 @@ namespace Azure.AI.Projects.Agents
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="content"/> or <paramref name="contentType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> CreateSkillVersionFromFilesAsync(string name, BinaryContent content, string contentType, RequestOptions options = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
 
             using PipelineMessage message = CreateCreateSkillVersionFromFilesRequest(name, content, contentType, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary>
-        /// [Protocol Method] List all versions of a skill.
+        /// [Protocol Method] Returns the available versions for the specified skill.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -440,7 +442,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] List all versions of a skill.
+        /// [Protocol Method] Returns the available versions for the specified skill.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -485,7 +487,7 @@ namespace Azure.AI.Projects.Agents
                 options);
         }
 
-        /// <summary> List all versions of a skill. </summary>
+        /// <summary> Returns the available versions for the specified skill. </summary>
         /// <param name="name"> The name of the skill to list versions for. </param>
         /// <param name="limit">
         /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
@@ -523,7 +525,7 @@ namespace Azure.AI.Projects.Agents
                 cancellationToken.ToRequestOptions());
         }
 
-        /// <summary> List all versions of a skill. </summary>
+        /// <summary> Returns the available versions for the specified skill. </summary>
         /// <param name="name"> The name of the skill to list versions for. </param>
         /// <param name="limit">
         /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
@@ -562,7 +564,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieve a specific version of a skill.
+        /// [Protocol Method] Retrieves the specified version of a skill by name and version identifier.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -586,7 +588,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieve a specific version of a skill.
+        /// [Protocol Method] Retrieves the specified version of a skill by name and version identifier.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -609,7 +611,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Retrieve a specific version of a skill. </summary>
+        /// <summary> Retrieves the specified version of a skill by name and version identifier. </summary>
         /// <param name="name"> The name of the skill. </param>
         /// <param name="version"> The version identifier to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -625,7 +627,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromValue((SkillVersion)result, result.GetRawResponse());
         }
 
-        /// <summary> Retrieve a specific version of a skill. </summary>
+        /// <summary> Retrieves the specified version of a skill by name and version identifier. </summary>
         /// <param name="name"> The name of the skill. </param>
         /// <param name="version"> The version identifier to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -642,7 +644,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Download the zip content for the default version of a skill.
+        /// [Protocol Method] Downloads the zip content for the default version of a skill.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -664,7 +666,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Download the zip content for the default version of a skill.
+        /// [Protocol Method] Downloads the zip content for the default version of a skill.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -685,7 +687,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Download the zip content for the default version of a skill. </summary>
+        /// <summary> Downloads the zip content for the default version of a skill. </summary>
         /// <param name="name"> The name of the skill. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -699,7 +701,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
         }
 
-        /// <summary> Download the zip content for the default version of a skill. </summary>
+        /// <summary> Downloads the zip content for the default version of a skill. </summary>
         /// <param name="name"> The name of the skill. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -714,7 +716,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Download the zip content for a specific version of a skill.
+        /// [Protocol Method] Downloads the zip content for a specific version of a skill.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -738,7 +740,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Download the zip content for a specific version of a skill.
+        /// [Protocol Method] Downloads the zip content for a specific version of a skill.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -761,7 +763,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Download the zip content for a specific version of a skill. </summary>
+        /// <summary> Downloads the zip content for a specific version of a skill. </summary>
         /// <param name="name"> The name of the skill. </param>
         /// <param name="version"> The version to download content for. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -777,7 +779,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
         }
 
-        /// <summary> Download the zip content for a specific version of a skill. </summary>
+        /// <summary> Downloads the zip content for a specific version of a skill. </summary>
         /// <param name="name"> The name of the skill. </param>
         /// <param name="version"> The version to download content for. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -794,7 +796,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Delete a specific version of a skill.
+        /// [Protocol Method] Removes the specified version of a skill.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -818,7 +820,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Delete a specific version of a skill.
+        /// [Protocol Method] Removes the specified version of a skill.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -841,36 +843,36 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Delete a specific version of a skill. </summary>
+        /// <summary> Removes the specified version of a skill. </summary>
         /// <param name="name"> The name of the skill. </param>
         /// <param name="version"> The version identifier to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<DeleteSkillVersionResponse> DeleteSkillVersion(string name, string version, CancellationToken cancellationToken = default)
+        public virtual ClientResult<SkillVersionDeletionResult> DeleteSkillVersion(string name, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             ClientResult result = DeleteSkillVersion(name, version, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((DeleteSkillVersionResponse)result, result.GetRawResponse());
+            return ClientResult.FromValue((SkillVersionDeletionResult)result, result.GetRawResponse());
         }
 
-        /// <summary> Delete a specific version of a skill. </summary>
+        /// <summary> Removes the specified version of a skill. </summary>
         /// <param name="name"> The name of the skill. </param>
         /// <param name="version"> The version identifier to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<DeleteSkillVersionResponse>> DeleteSkillVersionAsync(string name, string version, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<SkillVersionDeletionResult>> DeleteSkillVersionAsync(string name, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             ClientResult result = await DeleteSkillVersionAsync(name, version, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((DeleteSkillVersionResponse)result, result.GetRawResponse());
+            return ClientResult.FromValue((SkillVersionDeletionResult)result, result.GetRawResponse());
         }
     }
 }

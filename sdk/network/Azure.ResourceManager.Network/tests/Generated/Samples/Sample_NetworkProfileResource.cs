@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkProfileResource networkProfile = client.GetNetworkProfileResource(networkProfileResourceId);
 
             // invoke the operation
-            await networkProfile.DeleteAsync(WaitUntil.Completed);
+            await networkProfile.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }

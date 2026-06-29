@@ -47,18 +47,20 @@ namespace Azure.ResourceManager.Qumulo.Models
         /// <param name="storageSkuName"> Storage Sku. </param>
         /// <param name="userDetails"> User Details. </param>
         /// <param name="delegatedSubnetId"> Delegated subnet id for Vnet injection. </param>
+        /// <param name="performanceTier"> Pre-Provisioned Performance of the Resource. </param>
         /// <param name="clusterLoginUri"> File system Id of the resource. </param>
         /// <param name="privateIPs"> Private IPs of the resource. </param>
         /// <param name="adminPassword"> Initial administrator password of the resource. </param>
         /// <param name="availabilityZone"> Availability zone. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileSystemResourceProperties(MarketplaceDetails marketplaceDetails, QumuloArmProvisioningState? armProvisioningState, string storageSkuName, QumuloUserDetails userDetails, string delegatedSubnetId, Uri clusterLoginUri, IList<IPAddress> privateIPs, string adminPassword, string availabilityZone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileSystemResourceProperties(MarketplaceDetails marketplaceDetails, QumuloArmProvisioningState? armProvisioningState, string storageSkuName, QumuloUserDetails userDetails, string delegatedSubnetId, string performanceTier, Uri clusterLoginUri, IList<IPAddress> privateIPs, string adminPassword, string availabilityZone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MarketplaceDetails = marketplaceDetails;
             ArmProvisioningState = armProvisioningState;
             StorageSkuName = storageSkuName;
             UserDetails = userDetails;
             DelegatedSubnetId = delegatedSubnetId;
+            PerformanceTier = performanceTier;
             ClusterLoginUri = clusterLoginUri;
             PrivateIPs = privateIPs;
             AdminPassword = adminPassword;
@@ -80,6 +82,9 @@ namespace Azure.ResourceManager.Qumulo.Models
 
         /// <summary> Delegated subnet id for Vnet injection. </summary>
         public string DelegatedSubnetId { get; set; }
+
+        /// <summary> Pre-Provisioned Performance of the Resource. </summary>
+        public string PerformanceTier { get; set; }
 
         /// <summary> File system Id of the resource. </summary>
         public Uri ClusterLoginUri { get; set; }

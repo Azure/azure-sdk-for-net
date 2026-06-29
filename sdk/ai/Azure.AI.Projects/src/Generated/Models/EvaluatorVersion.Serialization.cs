@@ -125,6 +125,16 @@ namespace Azure.AI.Projects.Evaluation
                 writer.WriteStringValue(item.ToString());
             }
             writer.WriteEndArray();
+            if (Optional.IsCollectionDefined(SupportedEvaluationLevels))
+            {
+                writer.WritePropertyName("supported_evaluation_levels"u8);
+                writer.WriteStartArray();
+                foreach (ProjectsEvaluationLevel item in SupportedEvaluationLevels)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
             writer.WritePropertyName("definition"u8);
             writer.WriteObjectValue(Definition, options);
             if (options.Format != "W" && Optional.IsDefined(GenerationArtifacts))
@@ -229,6 +239,7 @@ namespace Azure.AI.Projects.Evaluation
             IDictionary<string, string> metadata = default;
             EvaluatorType evaluatorType = default;
             IList<EvaluatorCategory> categories = default;
+            IList<ProjectsEvaluationLevel> supportedEvaluationLevels = default;
             EvaluatorDefinition definition = default;
             EvaluatorGenerationArtifacts generationArtifacts = default;
             string createdBy = default;
@@ -281,6 +292,20 @@ namespace Azure.AI.Projects.Evaluation
                         array.Add(new EvaluatorCategory(item.GetString()));
                     }
                     categories = array;
+                    continue;
+                }
+                if (prop.NameEquals("supported_evaluation_levels"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ProjectsEvaluationLevel> array = new List<ProjectsEvaluationLevel>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(new ProjectsEvaluationLevel(item.GetString()));
+                    }
+                    supportedEvaluationLevels = array;
                     continue;
                 }
                 if (prop.NameEquals("definition"u8))
@@ -363,6 +388,7 @@ namespace Azure.AI.Projects.Evaluation
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 evaluatorType,
                 categories,
+                supportedEvaluationLevels ?? new ChangeTrackingList<ProjectsEvaluationLevel>(),
                 definition,
                 generationArtifacts,
                 createdBy,

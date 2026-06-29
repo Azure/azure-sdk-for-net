@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct EnrollmentAuthLevelState : IEquatable<EnrollmentAuthLevelState>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> MicrosoftAccountOnly. </summary>
+        private const string MicrosoftAccountOnlyValue = "MicrosoftAccountOnly";
+        /// <summary> MixedAccount. </summary>
+        private const string MixedAccountValue = "MixedAccount";
+        /// <summary> OrganizationalAccountCrossTenant. </summary>
+        private const string OrganizationalAccountCrossTenantValue = "OrganizationalAccountCrossTenant";
+        /// <summary> OrganizationalAccountOnly. </summary>
+        private const string OrganizationalAccountOnlyValue = "OrganizationalAccountOnly";
 
         /// <summary> Initializes a new instance of <see cref="EnrollmentAuthLevelState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EnrollmentAuthLevelState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string MicrosoftAccountOnlyValue = "MicrosoftAccountOnly";
-        private const string MixedAccountValue = "MixedAccount";
-        private const string OrganizationalAccountCrossTenantValue = "OrganizationalAccountCrossTenant";
-        private const string OrganizationalAccountOnlyValue = "OrganizationalAccountOnly";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static EnrollmentAuthLevelState Other { get; } = new EnrollmentAuthLevelState(OtherValue);
+
         /// <summary> MicrosoftAccountOnly. </summary>
         public static EnrollmentAuthLevelState MicrosoftAccountOnly { get; } = new EnrollmentAuthLevelState(MicrosoftAccountOnlyValue);
+
         /// <summary> MixedAccount. </summary>
         public static EnrollmentAuthLevelState MixedAccount { get; } = new EnrollmentAuthLevelState(MixedAccountValue);
+
         /// <summary> OrganizationalAccountCrossTenant. </summary>
         public static EnrollmentAuthLevelState OrganizationalAccountCrossTenant { get; } = new EnrollmentAuthLevelState(OrganizationalAccountCrossTenantValue);
+
         /// <summary> OrganizationalAccountOnly. </summary>
         public static EnrollmentAuthLevelState OrganizationalAccountOnly { get; } = new EnrollmentAuthLevelState(OrganizationalAccountOnlyValue);
+
         /// <summary> Determines if two <see cref="EnrollmentAuthLevelState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EnrollmentAuthLevelState left, EnrollmentAuthLevelState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EnrollmentAuthLevelState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EnrollmentAuthLevelState left, EnrollmentAuthLevelState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EnrollmentAuthLevelState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EnrollmentAuthLevelState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EnrollmentAuthLevelState(string value) => new EnrollmentAuthLevelState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EnrollmentAuthLevelState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EnrollmentAuthLevelState?(string value) => value == null ? null : new EnrollmentAuthLevelState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EnrollmentAuthLevelState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EnrollmentAuthLevelState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

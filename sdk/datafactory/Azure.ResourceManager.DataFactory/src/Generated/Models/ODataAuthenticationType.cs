@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct ODataAuthenticationType : IEquatable<ODataAuthenticationType>
     {
         private readonly string _value;
+        /// <summary> Basic. </summary>
+        private const string BasicValue = "Basic";
+        /// <summary> Anonymous. </summary>
+        private const string AnonymousValue = "Anonymous";
+        /// <summary> Windows. </summary>
+        private const string WindowsValue = "Windows";
+        /// <summary> AadServicePrincipal. </summary>
+        private const string AadServicePrincipalValue = "AadServicePrincipal";
+        /// <summary> ManagedServiceIdentity. </summary>
+        private const string ManagedServiceIdentityValue = "ManagedServiceIdentity";
 
         /// <summary> Initializes a new instance of <see cref="ODataAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ODataAuthenticationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BasicValue = "Basic";
-        private const string AnonymousValue = "Anonymous";
-        private const string WindowsValue = "Windows";
-        private const string AadServicePrincipalValue = "AadServicePrincipal";
-        private const string ManagedServiceIdentityValue = "ManagedServiceIdentity";
+            _value = value;
+        }
 
         /// <summary> Basic. </summary>
         public static ODataAuthenticationType Basic { get; } = new ODataAuthenticationType(BasicValue);
+
         /// <summary> Anonymous. </summary>
         public static ODataAuthenticationType Anonymous { get; } = new ODataAuthenticationType(AnonymousValue);
+
         /// <summary> Windows. </summary>
         public static ODataAuthenticationType Windows { get; } = new ODataAuthenticationType(WindowsValue);
+
         /// <summary> AadServicePrincipal. </summary>
         public static ODataAuthenticationType AadServicePrincipal { get; } = new ODataAuthenticationType(AadServicePrincipalValue);
+
         /// <summary> ManagedServiceIdentity. </summary>
         public static ODataAuthenticationType ManagedServiceIdentity { get; } = new ODataAuthenticationType(ManagedServiceIdentityValue);
+
         /// <summary> Determines if two <see cref="ODataAuthenticationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ODataAuthenticationType left, ODataAuthenticationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ODataAuthenticationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ODataAuthenticationType left, ODataAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ODataAuthenticationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ODataAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ODataAuthenticationType(string value) => new ODataAuthenticationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ODataAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ODataAuthenticationType?(string value) => value == null ? null : new ODataAuthenticationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ODataAuthenticationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ODataAuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

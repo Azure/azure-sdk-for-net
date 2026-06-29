@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Regenerated the Azure Resource Manager Security client library from TypeSpec.
+
 ## 1.2.0-beta.7 (2026-04-29)
 
 ### Other Changes

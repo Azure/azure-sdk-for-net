@@ -76,31 +76,31 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Create an optimization job. Returns 201 with the queued job. Honours `Operation-Id` for idempotent retry. </summary>
-        /// <param name="inputs"> The optimization job inputs. </param>
+        /// <param name="job"> The job to create. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<OptimizationJob> Create(OptimizationJobInputs inputs, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<OptimizationJob> Create(OptimizationJob job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = Create(inputs, foundryFeatures?.ToSerialString(), operationId, cancellationToken.ToRequestOptions());
+            ClientResult result = Create(job, foundryFeatures?.ToString(), operationId, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((OptimizationJob)result, result.GetRawResponse());
         }
 
         /// <summary> Create an optimization job. Returns 201 with the queued job. Honours `Operation-Id` for idempotent retry. </summary>
-        /// <param name="inputs"> The optimization job inputs. </param>
+        /// <param name="job"> The job to create. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<OptimizationJob>> CreateAsync(OptimizationJobInputs inputs, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<OptimizationJob>> CreateAsync(OptimizationJob job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = await CreateAsync(inputs, foundryFeatures?.ToSerialString(), operationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await CreateAsync(job, foundryFeatures?.ToString(), operationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((OptimizationJob)result, result.GetRawResponse());
         }
 
         /// <summary>
-        /// [Protocol Method] Get an optimization job by id. Returns 202 while in progress, 200 when terminal.
+        /// [Protocol Method] Get an optimization job by id.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -119,7 +119,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Get an optimization job by id. Returns 202 while in progress, 200 when terminal.
+        /// [Protocol Method] Get an optimization job by id.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -137,30 +137,30 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Get an optimization job by id. Returns 202 while in progress, 200 when terminal. </summary>
+        /// <summary> Get an optimization job by id. </summary>
         /// <param name="jobId"> The ID of the job. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         internal virtual ClientResult<OptimizationJob> Get(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = Get(jobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            ClientResult result = Get(jobId, foundryFeatures?.ToString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((OptimizationJob)result, result.GetRawResponse());
         }
 
-        /// <summary> Get an optimization job by id. Returns 202 while in progress, 200 when terminal. </summary>
+        /// <summary> Get an optimization job by id. </summary>
         /// <param name="jobId"> The ID of the job. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         internal virtual async Task<ClientResult<OptimizationJob>> GetAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = await GetAsync(jobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await GetAsync(jobId, foundryFeatures?.ToString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((OptimizationJob)result, result.GetRawResponse());
         }
 
         /// <summary>
-        /// [Protocol Method] Request cancellation. Idempotent on terminal states.
+        /// [Protocol Method] Request cancellation of a running or queued job. Returns an error if the job is already in a terminal state.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -179,7 +179,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Request cancellation. Idempotent on terminal states.
+        /// [Protocol Method] Request cancellation of a running or queued job. Returns an error if the job is already in a terminal state.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -197,25 +197,25 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Request cancellation. Idempotent on terminal states. </summary>
+        /// <summary> Request cancellation of a running or queued job. Returns an error if the job is already in a terminal state. </summary>
         /// <param name="jobId"> The ID of the job to cancel. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         internal virtual ClientResult<OptimizationJob> Cancel(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = Cancel(jobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            ClientResult result = Cancel(jobId, foundryFeatures?.ToString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((OptimizationJob)result, result.GetRawResponse());
         }
 
-        /// <summary> Request cancellation. Idempotent on terminal states. </summary>
+        /// <summary> Request cancellation of a running or queued job. Returns an error if the job is already in a terminal state. </summary>
         /// <param name="jobId"> The ID of the job to cancel. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         internal virtual async Task<ClientResult<OptimizationJob>> CancelAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = await CancelAsync(jobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await CancelAsync(jobId, foundryFeatures?.ToString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((OptimizationJob)result, result.GetRawResponse());
         }
 
@@ -229,13 +229,12 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="jobId"> The ID of the job to delete. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="force"> When true, force-delete even if the job is in a non-terminal state. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult Delete(string jobId, string foundryFeatures, bool? force, RequestOptions options)
+        internal virtual ClientResult Delete(string jobId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateDeleteRequest(jobId, foundryFeatures, force, options);
+            using PipelineMessage message = CreateDeleteRequest(jobId, foundryFeatures, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -249,496 +248,33 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="jobId"> The ID of the job to delete. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="force"> When true, force-delete even if the job is in a non-terminal state. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> DeleteAsync(string jobId, string foundryFeatures, bool? force, RequestOptions options)
+        internal virtual async Task<ClientResult> DeleteAsync(string jobId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateDeleteRequest(jobId, foundryFeatures, force, options);
+            using PipelineMessage message = CreateDeleteRequest(jobId, foundryFeatures, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Delete the job and its candidate artifacts. Cancels first if non-terminal. </summary>
         /// <param name="jobId"> The ID of the job to delete. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="force"> When true, force-delete even if the job is in a non-terminal state. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult Delete(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, bool? force = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult Delete(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            return Delete(jobId, foundryFeatures?.ToSerialString(), force, cancellationToken.ToRequestOptions());
+            return Delete(jobId, foundryFeatures?.ToString(), cancellationToken.ToRequestOptions());
         }
 
         /// <summary> Delete the job and its candidate artifacts. Cancels first if non-terminal. </summary>
         /// <param name="jobId"> The ID of the job to delete. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="force"> When true, force-delete even if the job is in a non-terminal state. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult> DeleteAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, bool? force = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult> DeleteAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            return await DeleteAsync(jobId, foundryFeatures?.ToSerialString(), force, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// [Protocol Method] List candidates produced by a job.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="jobId"> The optimization job id. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="limit">
-        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
-        /// default is 20.
-        /// </param>
-        /// <param name="order">
-        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-        /// for descending order.
-        /// </param>
-        /// <param name="after">
-        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
-        /// </param>
-        /// <param name="before">
-        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
-        /// </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult GetCandidates(string jobId, string foundryFeatures, int? limit, string order, string after, string before, RequestOptions options)
-        {
-            using PipelineMessage message = CreateGetCandidatesRequest(jobId, foundryFeatures, limit, order, after, before, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-        }
-
-        /// <summary>
-        /// [Protocol Method] List candidates produced by a job.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="jobId"> The optimization job id. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="limit">
-        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
-        /// default is 20.
-        /// </param>
-        /// <param name="order">
-        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-        /// for descending order.
-        /// </param>
-        /// <param name="after">
-        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
-        /// </param>
-        /// <param name="before">
-        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
-        /// </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> GetCandidatesAsync(string jobId, string foundryFeatures, int? limit, string order, string after, string before, RequestOptions options)
-        {
-            using PipelineMessage message = CreateGetCandidatesRequest(jobId, foundryFeatures, limit, order, after, before, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-        }
-
-        /// <summary> List candidates produced by a job. </summary>
-        /// <param name="jobId"> The optimization job id. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="limit">
-        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
-        /// default is 20.
-        /// </param>
-        /// <param name="order">
-        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-        /// for descending order.
-        /// </param>
-        /// <param name="after">
-        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
-        /// </param>
-        /// <param name="before">
-        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<AgentsPagedResultOptimizationCandidate> GetCandidates(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
-        {
-            ClientResult result = GetCandidates(jobId, foundryFeatures?.ToSerialString(), limit, order?.ToString(), after, before, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((AgentsPagedResultOptimizationCandidate)result, result.GetRawResponse());
-        }
-
-        /// <summary> List candidates produced by a job. </summary>
-        /// <param name="jobId"> The optimization job id. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="limit">
-        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
-        /// default is 20.
-        /// </param>
-        /// <param name="order">
-        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-        /// for descending order.
-        /// </param>
-        /// <param name="after">
-        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
-        /// </param>
-        /// <param name="before">
-        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<AgentsPagedResultOptimizationCandidate>> GetCandidatesAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
-        {
-            ClientResult result = await GetCandidatesAsync(jobId, foundryFeatures?.ToSerialString(), limit, order?.ToString(), after, before, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((AgentsPagedResultOptimizationCandidate)result, result.GetRawResponse());
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get a single candidate's metadata, manifest, and promotion info.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="jobId"> The optimization job id. </param>
-        /// <param name="candidateId"> The candidate id. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult GetCandidate(string jobId, string candidateId, string foundryFeatures, RequestOptions options)
-        {
-            using PipelineMessage message = CreateGetCandidateRequest(jobId, candidateId, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get a single candidate's metadata, manifest, and promotion info.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="jobId"> The optimization job id. </param>
-        /// <param name="candidateId"> The candidate id. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> GetCandidateAsync(string jobId, string candidateId, string foundryFeatures, RequestOptions options)
-        {
-            using PipelineMessage message = CreateGetCandidateRequest(jobId, candidateId, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-        }
-
-        /// <summary> Get a single candidate's metadata, manifest, and promotion info. </summary>
-        /// <param name="jobId"> The optimization job id. </param>
-        /// <param name="candidateId"> The candidate id. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<CandidateMetadata> GetCandidate(string jobId, string candidateId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            ClientResult result = GetCandidate(jobId, candidateId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((CandidateMetadata)result, result.GetRawResponse());
-        }
-
-        /// <summary> Get a single candidate's metadata, manifest, and promotion info. </summary>
-        /// <param name="jobId"> The optimization job id. </param>
-        /// <param name="candidateId"> The candidate id. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<CandidateMetadata>> GetCandidateAsync(string jobId, string candidateId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            ClientResult result = await GetCandidateAsync(jobId, candidateId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((CandidateMetadata)result, result.GetRawResponse());
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get the candidate's deploy config JSON. Used to compose `agents.create_version(...)` from a candidate.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="jobId"> The optimization job id. </param>
-        /// <param name="candidateId"> The candidate id. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult GetCandidateConfig(string jobId, string candidateId, string foundryFeatures, RequestOptions options)
-        {
-            using PipelineMessage message = CreateGetCandidateConfigRequest(jobId, candidateId, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get the candidate's deploy config JSON. Used to compose `agents.create_version(...)` from a candidate.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="jobId"> The optimization job id. </param>
-        /// <param name="candidateId"> The candidate id. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> GetCandidateConfigAsync(string jobId, string candidateId, string foundryFeatures, RequestOptions options)
-        {
-            using PipelineMessage message = CreateGetCandidateConfigRequest(jobId, candidateId, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-        }
-
-        /// <summary> Get the candidate's deploy config JSON. Used to compose `agents.create_version(...)` from a candidate. </summary>
-        /// <param name="jobId"> The optimization job id. </param>
-        /// <param name="candidateId"> The candidate id. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<CandidateDeployConfig> GetCandidateConfig(string jobId, string candidateId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            ClientResult result = GetCandidateConfig(jobId, candidateId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((CandidateDeployConfig)result, result.GetRawResponse());
-        }
-
-        /// <summary> Get the candidate's deploy config JSON. Used to compose `agents.create_version(...)` from a candidate. </summary>
-        /// <param name="jobId"> The optimization job id. </param>
-        /// <param name="candidateId"> The candidate id. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<CandidateDeployConfig>> GetCandidateConfigAsync(string jobId, string candidateId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            ClientResult result = await GetCandidateConfigAsync(jobId, candidateId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((CandidateDeployConfig)result, result.GetRawResponse());
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get full per-task evaluation results for a candidate.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="jobId"> The optimization job id. </param>
-        /// <param name="candidateId"> The candidate id. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult GetCandidateResults(string jobId, string candidateId, string foundryFeatures, RequestOptions options)
-        {
-            using PipelineMessage message = CreateGetCandidateResultsRequest(jobId, candidateId, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get full per-task evaluation results for a candidate.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="jobId"> The optimization job id. </param>
-        /// <param name="candidateId"> The candidate id. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> GetCandidateResultsAsync(string jobId, string candidateId, string foundryFeatures, RequestOptions options)
-        {
-            using PipelineMessage message = CreateGetCandidateResultsRequest(jobId, candidateId, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-        }
-
-        /// <summary> Get full per-task evaluation results for a candidate. </summary>
-        /// <param name="jobId"> The optimization job id. </param>
-        /// <param name="candidateId"> The candidate id. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<CandidateResults> GetCandidateResults(string jobId, string candidateId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            ClientResult result = GetCandidateResults(jobId, candidateId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((CandidateResults)result, result.GetRawResponse());
-        }
-
-        /// <summary> Get full per-task evaluation results for a candidate. </summary>
-        /// <param name="jobId"> The optimization job id. </param>
-        /// <param name="candidateId"> The candidate id. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<CandidateResults>> GetCandidateResultsAsync(string jobId, string candidateId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            ClientResult result = await GetCandidateResultsAsync(jobId, candidateId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((CandidateResults)result, result.GetRawResponse());
-        }
-
-        /// <summary>
-        /// [Protocol Method] Stream a specific file from the candidate's blob directory.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="jobId"> The optimization job id. </param>
-        /// <param name="candidateId"> The candidate id. </param>
-        /// <param name="path"> Relative path of the file to download (e.g. 'files/examples.jsonl'). </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult GetCandidateFile(string jobId, string candidateId, string path, string foundryFeatures, RequestOptions options)
-        {
-            using PipelineMessage message = CreateGetCandidateFileRequest(jobId, candidateId, path, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-        }
-
-        /// <summary>
-        /// [Protocol Method] Stream a specific file from the candidate's blob directory.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="jobId"> The optimization job id. </param>
-        /// <param name="candidateId"> The candidate id. </param>
-        /// <param name="path"> Relative path of the file to download (e.g. 'files/examples.jsonl'). </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> GetCandidateFileAsync(string jobId, string candidateId, string path, string foundryFeatures, RequestOptions options)
-        {
-            using PipelineMessage message = CreateGetCandidateFileRequest(jobId, candidateId, path, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-        }
-
-        /// <summary> Stream a specific file from the candidate's blob directory. </summary>
-        /// <param name="jobId"> The optimization job id. </param>
-        /// <param name="candidateId"> The candidate id. </param>
-        /// <param name="path"> Relative path of the file to download (e.g. 'files/examples.jsonl'). </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<BinaryData> GetCandidateFile(string jobId, string candidateId, string path, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            ClientResult result = GetCandidateFile(jobId, candidateId, path, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
-        }
-
-        /// <summary> Stream a specific file from the candidate's blob directory. </summary>
-        /// <param name="jobId"> The optimization job id. </param>
-        /// <param name="candidateId"> The candidate id. </param>
-        /// <param name="path"> Relative path of the file to download (e.g. 'files/examples.jsonl'). </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<BinaryData>> GetCandidateFileAsync(string jobId, string candidateId, string path, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            ClientResult result = await GetCandidateFileAsync(jobId, candidateId, path, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
-        }
-
-        /// <summary>
-        /// [Protocol Method] Promotes a candidate, recording the deployment timestamp and target agent version.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="jobId"> The optimization job id. </param>
-        /// <param name="candidateId"> The candidate id to promote. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult PromoteCandidate(string jobId, string candidateId, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
-        {
-            using PipelineMessage message = CreatePromoteCandidateRequest(jobId, candidateId, content, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-        }
-
-        /// <summary>
-        /// [Protocol Method] Promotes a candidate, recording the deployment timestamp and target agent version.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="jobId"> The optimization job id. </param>
-        /// <param name="candidateId"> The candidate id to promote. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> PromoteCandidateAsync(string jobId, string candidateId, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
-        {
-            using PipelineMessage message = CreatePromoteCandidateRequest(jobId, candidateId, content, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-        }
-
-        /// <summary> Promotes a candidate, recording the deployment timestamp and target agent version. </summary>
-        /// <param name="jobId"> The optimization job id. </param>
-        /// <param name="candidateId"> The candidate id to promote. </param>
-        /// <param name="candidateRequest"> Promotion details. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<PromoteCandidateResponse> PromoteCandidate(string jobId, string candidateId, PromoteCandidateRequest candidateRequest, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            ClientResult result = PromoteCandidate(jobId, candidateId, candidateRequest, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((PromoteCandidateResponse)result, result.GetRawResponse());
-        }
-
-        /// <summary> Promotes a candidate, recording the deployment timestamp and target agent version. </summary>
-        /// <param name="jobId"> The optimization job id. </param>
-        /// <param name="candidateId"> The candidate id to promote. </param>
-        /// <param name="candidateRequest"> Promotion details. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<PromoteCandidateResponse>> PromoteCandidateAsync(string jobId, string candidateId, PromoteCandidateRequest candidateRequest, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            ClientResult result = await PromoteCandidateAsync(jobId, candidateId, candidateRequest, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((PromoteCandidateResponse)result, result.GetRawResponse());
+            return await DeleteAsync(jobId, foundryFeatures?.ToString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         }
     }
 }

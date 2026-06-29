@@ -10,6 +10,14 @@
 
 ### Other Changes
 
+- Migrated the library generation from AutoRest to TypeSpec.
+
+## 1.2.3 (2026-06-09)
+
+### Features Added
+
+- Make `Azure.ResourceManager.PrivateDns` AOT-compatible.
+
 ## 1.2.2 (2026-04-28)
 
 ### Other Changes

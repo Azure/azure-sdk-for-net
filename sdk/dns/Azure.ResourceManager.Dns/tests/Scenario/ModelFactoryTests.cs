@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             BasicAssert(cname);
             Assert.AreEqual(id, cname.Id);
             Assert.AreEqual(resourceType, cname.ResourceType);
-            Assert.AreEqual(aliasValue, cname.DnsCnameRecord.Cname);
+            Assert.AreEqual(aliasValue, cname.Cname);
         }
 
         [Test]

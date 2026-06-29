@@ -7,21 +7,21 @@
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    /// <summary> The ClearRange. </summary>
     internal partial class ClearRange
     {
         /// <summary> Initializes a new instance of <see cref="ClearRange"/>. </summary>
-        /// <param name="start"></param>
-        /// <param name="end"></param>
+        /// <param name="start"> Start of the range. </param>
+        /// <param name="end"> End of the range. </param>
         internal ClearRange(long start, long end)
         {
             Start = start;
             End = end;
         }
 
-        /// <summary> Gets the start. </summary>
+        /// <summary> Start of the range. </summary>
         public long Start { get; }
-        /// <summary> Gets the end. </summary>
+
+        /// <summary> End of the range. </summary>
         public long End { get; }
     }
 }

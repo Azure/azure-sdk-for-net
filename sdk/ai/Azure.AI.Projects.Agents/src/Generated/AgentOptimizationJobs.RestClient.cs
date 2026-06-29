@@ -11,13 +11,10 @@ namespace Azure.AI.Projects.Agents
     public partial class AgentOptimizationJobs
     {
         private static PipelineMessageClassifier _pipelineMessageClassifier200;
-        private static PipelineMessageClassifier _pipelineMessageClassifier200202;
         private static PipelineMessageClassifier _pipelineMessageClassifier201;
         private static PipelineMessageClassifier _pipelineMessageClassifier204;
 
         private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
-
-        private static PipelineMessageClassifier PipelineMessageClassifier200202 => _pipelineMessageClassifier200202 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200, 202 });
 
         private static PipelineMessageClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 201 });
 
@@ -59,7 +56,7 @@ namespace Azure.AI.Projects.Agents
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200202);
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
             if (foundryFeatures != null)
             {
@@ -136,16 +133,12 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateDeleteRequest(string jobId, string foundryFeatures, bool? force, RequestOptions options)
+        internal PipelineMessage CreateDeleteRequest(string jobId, string foundryFeatures, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/agent_optimization_jobs/", false);
             uri.AppendPath(jobId, true);
-            if (force != null)
-            {
-                uri.AppendQuery("force", TypeFormatters.ConvertToString(force), true);
-            }
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -156,166 +149,6 @@ namespace Azure.AI.Projects.Agents
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
-            message.Apply(options);
-            return message;
-        }
-
-        internal PipelineMessage CreateGetCandidatesRequest(string jobId, string foundryFeatures, int? limit, string order, string after, string before, RequestOptions options)
-        {
-            ClientUriBuilder uri = new ClientUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/agent_optimization_jobs/", false);
-            uri.AppendPath(jobId, true);
-            uri.AppendPath("/candidates", false);
-            if (limit != null)
-            {
-                uri.AppendQuery("limit", TypeFormatters.ConvertToString(limit), true);
-            }
-            if (order != null)
-            {
-                uri.AppendQuery("order", order, true);
-            }
-            if (after != null)
-            {
-                uri.AppendQuery("after", after, true);
-            }
-            if (before != null)
-            {
-                uri.AppendQuery("before", before, true);
-            }
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
-            PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
-            {
-                request.Headers.Set("Foundry-Features", foundryFeatures);
-            }
-            request.Headers.Set("Accept", "application/json");
-            message.Apply(options);
-            return message;
-        }
-
-        internal PipelineMessage CreateGetCandidateRequest(string jobId, string candidateId, string foundryFeatures, RequestOptions options)
-        {
-            ClientUriBuilder uri = new ClientUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/agent_optimization_jobs/", false);
-            uri.AppendPath(jobId, true);
-            uri.AppendPath("/candidates/", false);
-            uri.AppendPath(candidateId, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
-            PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
-            {
-                request.Headers.Set("Foundry-Features", foundryFeatures);
-            }
-            request.Headers.Set("Accept", "application/json");
-            message.Apply(options);
-            return message;
-        }
-
-        internal PipelineMessage CreateGetCandidateConfigRequest(string jobId, string candidateId, string foundryFeatures, RequestOptions options)
-        {
-            ClientUriBuilder uri = new ClientUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/agent_optimization_jobs/", false);
-            uri.AppendPath(jobId, true);
-            uri.AppendPath("/candidates/", false);
-            uri.AppendPath(candidateId, true);
-            uri.AppendPath("/config", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
-            PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
-            {
-                request.Headers.Set("Foundry-Features", foundryFeatures);
-            }
-            request.Headers.Set("Accept", "application/json");
-            message.Apply(options);
-            return message;
-        }
-
-        internal PipelineMessage CreateGetCandidateResultsRequest(string jobId, string candidateId, string foundryFeatures, RequestOptions options)
-        {
-            ClientUriBuilder uri = new ClientUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/agent_optimization_jobs/", false);
-            uri.AppendPath(jobId, true);
-            uri.AppendPath("/candidates/", false);
-            uri.AppendPath(candidateId, true);
-            uri.AppendPath("/results", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
-            PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
-            {
-                request.Headers.Set("Foundry-Features", foundryFeatures);
-            }
-            request.Headers.Set("Accept", "application/json");
-            message.Apply(options);
-            return message;
-        }
-
-        internal PipelineMessage CreateGetCandidateFileRequest(string jobId, string candidateId, string path, string foundryFeatures, RequestOptions options)
-        {
-            ClientUriBuilder uri = new ClientUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/agent_optimization_jobs/", false);
-            uri.AppendPath(jobId, true);
-            uri.AppendPath("/candidates/", false);
-            uri.AppendPath(candidateId, true);
-            uri.AppendPath("/files", false);
-            uri.AppendQuery("path", path, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
-            PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
-            {
-                request.Headers.Set("Foundry-Features", foundryFeatures);
-            }
-            request.Headers.Set("Accept", "application/octet-stream");
-            message.Apply(options);
-            return message;
-        }
-
-        internal PipelineMessage CreatePromoteCandidateRequest(string jobId, string candidateId, BinaryContent content, string foundryFeatures, RequestOptions options)
-        {
-            ClientUriBuilder uri = new ClientUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/agent_optimization_jobs/", false);
-            uri.AppendPath(jobId, true);
-            uri.AppendPath("/candidates/", false);
-            uri.AppendPath(candidateId, true);
-            uri.AppendPath(":promote", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
-            PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
-            {
-                request.Headers.Set("Foundry-Features", foundryFeatures);
-            }
-            request.Headers.Set("Content-Type", "application/json");
-            request.Headers.Set("Accept", "application/json");
-            request.Content = content;
             message.Apply(options);
             return message;
         }

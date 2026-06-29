@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class PolicySignaturesOverridesForIdpsResource : IJsonModel<PolicySignaturesOverridesForIdpsData>
     {
-        private static PolicySignaturesOverridesForIdpsData s_dataDeserializationInstance;
-        private static PolicySignaturesOverridesForIdpsData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<PolicySignaturesOverridesForIdpsData> s_dataDeserializationInstance;
 
+        private static IJsonModel<PolicySignaturesOverridesForIdpsData> DataDeserializationInstance => s_dataDeserializationInstance ??= new PolicySignaturesOverridesForIdpsData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PolicySignaturesOverridesForIdpsData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PolicySignaturesOverridesForIdpsData>)Data).Write(writer, options);
 
-        PolicySignaturesOverridesForIdpsData IJsonModel<PolicySignaturesOverridesForIdpsData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PolicySignaturesOverridesForIdpsData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PolicySignaturesOverridesForIdpsData IJsonModel<PolicySignaturesOverridesForIdpsData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<PolicySignaturesOverridesForIdpsData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PolicySignaturesOverridesForIdpsData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         PolicySignaturesOverridesForIdpsData IPersistableModel<PolicySignaturesOverridesForIdpsData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PolicySignaturesOverridesForIdpsData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<PolicySignaturesOverridesForIdpsData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PolicySignaturesOverridesForIdpsData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PolicySignaturesOverridesForIdpsData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

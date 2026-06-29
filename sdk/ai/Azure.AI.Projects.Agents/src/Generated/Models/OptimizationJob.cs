@@ -14,57 +14,58 @@ namespace Azure.AI.Projects.Agents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OptimizationJob"/>. </summary>
-        internal OptimizationJob()
+        public OptimizationJob()
         {
+            Warnings = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OptimizationJob"/>. </summary>
         /// <param name="id"> Server-assigned unique identifier. </param>
+        /// <param name="inputs"> Caller-supplied inputs. </param>
+        /// <param name="result"> Result produced on success. </param>
         /// <param name="status"> Current lifecycle status. </param>
         /// <param name="error"> Error details — populated only on failure. </param>
-        /// <param name="result"> Result produced on success. </param>
-        /// <param name="inputs"> Caller-supplied inputs. </param>
         /// <param name="createdAt"> The timestamp when the job was created, represented in Unix time. </param>
-        /// <param name="updatedAt"> The timestamp when the job was last updated (status, progress, or result change), represented in Unix time. </param>
-        /// <param name="progress"> Progress while in flight. Absent in terminal states. </param>
-        /// <param name="dataset"> Metadata about the dataset used for this optimization job. </param>
+        /// <param name="updatedAt"> The timestamp when the job was last updated, represented in Unix time. </param>
+        /// <param name="progress"> Progress snapshot. May be present in terminal states reflecting last-known progress. </param>
+        /// <param name="warnings"> Non-fatal warnings emitted at any point during optimization. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OptimizationJob(string id, JobStatus status, FoundryOpenAIError error, OptimizationJobResult result, OptimizationJobInputs inputs, DateTimeOffset createdAt, DateTimeOffset? updatedAt, OptimizationJobProgress progress, DatasetInfo dataset, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OptimizationJob(string id, OptimizationJobInputs inputs, OptimizationJobResult result, AgentsJobStatus status, FoundryOpenAIError error, DateTimeOffset createdAt, DateTimeOffset updatedAt, OptimizationJobProgress progress, IReadOnlyList<string> warnings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
+            Inputs = inputs;
+            Result = result;
             Status = status;
             Error = error;
-            Result = result;
-            Inputs = inputs;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
             Progress = progress;
-            Dataset = dataset;
+            Warnings = warnings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Server-assigned unique identifier. </summary>
         public string Id { get; }
 
-        /// <summary> Current lifecycle status. </summary>
-        public JobStatus Status { get; }
+        /// <summary> Caller-supplied inputs. </summary>
+        public OptimizationJobInputs Inputs { get; set; }
 
         /// <summary> Result produced on success. </summary>
         public OptimizationJobResult Result { get; }
 
-        /// <summary> Caller-supplied inputs. </summary>
-        public OptimizationJobInputs Inputs { get; }
+        /// <summary> Current lifecycle status. </summary>
+        public AgentsJobStatus Status { get; }
 
         /// <summary> The timestamp when the job was created, represented in Unix time. </summary>
         public DateTimeOffset CreatedAt { get; }
 
-        /// <summary> The timestamp when the job was last updated (status, progress, or result change), represented in Unix time. </summary>
-        public DateTimeOffset? UpdatedAt { get; }
+        /// <summary> The timestamp when the job was last updated, represented in Unix time. </summary>
+        public DateTimeOffset UpdatedAt { get; }
 
-        /// <summary> Progress while in flight. Absent in terminal states. </summary>
+        /// <summary> Progress snapshot. May be present in terminal states reflecting last-known progress. </summary>
         public OptimizationJobProgress Progress { get; }
 
-        /// <summary> Metadata about the dataset used for this optimization job. </summary>
-        public DatasetInfo Dataset { get; }
+        /// <summary> Non-fatal warnings emitted at any point during optimization. </summary>
+        public IReadOnlyList<string> Warnings { get; }
     }
 }

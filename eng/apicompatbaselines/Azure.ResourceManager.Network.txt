@@ -1,0 +1,5 @@
+# Uppercase IDPS duplicate types were accidentally introduced during migration and are not used by public APIs.
+TypesMustExist : Type 'Azure.ResourceManager.Network.Models.FirewallPolicyIDPSQuerySortOrder' does not exist in the implementation but it does exist in the contract.
+TypesMustExist : Type 'Azure.ResourceManager.Network.Models.FirewallPolicyIDPSSignatureDirection' does not exist in the implementation but it does exist in the contract.
+TypesMustExist : Type 'Azure.ResourceManager.Network.Models.FirewallPolicyIDPSSignatureMode' does not exist in the implementation but it does exist in the contract.
+TypesMustExist : Type 'Azure.ResourceManager.Network.Models.FirewallPolicyIDPSSignatureSeverity' does not exist in the implementation but it does exist in the contract.

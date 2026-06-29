@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary>
     /// Cluster Job properties
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="HciConfigureSdnIntegrationJobProperties"/> and <see cref="HciConfigureCvmJobProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="HciConfigureSdnIntegrationJobProperties"/>, <see cref="HciConfigureCvmJobProperties"/>, <see cref="HciAddServerJobProperties"/>, <see cref="HciRepairServerJobProperties"/>, <see cref="GpuCreatePartitionJobProperties"/>, <see cref="GpuSwitchModeJobProperties"/>, <see cref="VmConnectProvisionJobProperties"/>, and <see cref="VmConnectRemoveJobProperties"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownClusterJobProperties))]
     public abstract partial class ClusterJobProperties : IJsonModel<ClusterJobProperties>
@@ -169,6 +169,18 @@ namespace Azure.ResourceManager.Hci.Models
                         return HciConfigureSdnIntegrationJobProperties.DeserializeHciConfigureSdnIntegrationJobProperties(element, options);
                     case "ConfigureCVM":
                         return HciConfigureCvmJobProperties.DeserializeHciConfigureCvmJobProperties(element, options);
+                    case "AddServer":
+                        return HciAddServerJobProperties.DeserializeHciAddServerJobProperties(element, options);
+                    case "RepairServer":
+                        return HciRepairServerJobProperties.DeserializeHciRepairServerJobProperties(element, options);
+                    case "GpuCreatePartition":
+                        return GpuCreatePartitionJobProperties.DeserializeGpuCreatePartitionJobProperties(element, options);
+                    case "GpuSwitchMode":
+                        return GpuSwitchModeJobProperties.DeserializeGpuSwitchModeJobProperties(element, options);
+                    case "VmConnectProvision":
+                        return VmConnectProvisionJobProperties.DeserializeVmConnectProvisionJobProperties(element, options);
+                    case "VmConnectRemove":
+                        return VmConnectRemoveJobProperties.DeserializeVmConnectRemoveJobProperties(element, options);
                 }
             }
             return UnknownClusterJobProperties.DeserializeUnknownClusterJobProperties(element, options);

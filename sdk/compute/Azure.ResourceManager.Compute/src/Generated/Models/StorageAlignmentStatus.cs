@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Compute.Models
     public readonly partial struct StorageAlignmentStatus : IEquatable<StorageAlignmentStatus>
     {
         private readonly string _value;
+        /// <summary> Disk does not have Storage Fault Domain to Compute Fault Domain mapping. A single Storage Fault Domain failure may impact all VMs that reference this disk profile. </summary>
+        private const string UnalignedValue = "Unaligned";
+        /// <summary> Disk has Storage Fault Domain to Compute Fault Domain mapping. Storage Fault Domain failure is contained to VMs in a single Compute Fault Domain. </summary>
+        private const string AlignedValue = "Aligned";
 
         /// <summary> Initializes a new instance of <see cref="StorageAlignmentStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StorageAlignmentStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnalignedValue = "Unaligned";
-        private const string AlignedValue = "Aligned";
+            _value = value;
+        }
 
         /// <summary> Disk does not have Storage Fault Domain to Compute Fault Domain mapping. A single Storage Fault Domain failure may impact all VMs that reference this disk profile. </summary>
         public static StorageAlignmentStatus Unaligned { get; } = new StorageAlignmentStatus(UnalignedValue);
+
         /// <summary> Disk has Storage Fault Domain to Compute Fault Domain mapping. Storage Fault Domain failure is contained to VMs in a single Compute Fault Domain. </summary>
         public static StorageAlignmentStatus Aligned { get; } = new StorageAlignmentStatus(AlignedValue);
+
         /// <summary> Determines if two <see cref="StorageAlignmentStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageAlignmentStatus left, StorageAlignmentStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageAlignmentStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageAlignmentStatus left, StorageAlignmentStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageAlignmentStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageAlignmentStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageAlignmentStatus(string value) => new StorageAlignmentStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StorageAlignmentStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageAlignmentStatus?(string value) => value == null ? null : new StorageAlignmentStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageAlignmentStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageAlignmentStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

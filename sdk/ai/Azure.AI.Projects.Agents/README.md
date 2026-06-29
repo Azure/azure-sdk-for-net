@@ -24,7 +24,8 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
   - [Prompt Agents](#prompt-agents)
   - [Hosted Agents](#hosted-agents)
     - [Hosted Agents from Docker images](#hosted-docker-based)
-    - [Hosted Agents from Code](#hosted-code-based) 
+    - [Hosted Agents from Code](#hosted-code-based)
+  - [External Agents](#external-agents)
   - [Toolboxes](#toolboxes)
   - [Sessions](#sessions)
   - [Skills](#skills)
@@ -143,34 +144,7 @@ The code above will result in creation of `ProjectsAgentVersion` object, which i
 
 ### Hosted Agents
 
-**Note:** This feature is in the preview, to use it, please disable the `AAIP001` warning.
-
-```C#
-#pragma warning disable AAIP001
-```
-
 Hosted agents simplify the custom agent deployment on fully controlled environment [see more](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/hosted-agents).
-
-To use hosted agent we need to provide the `Foundry-Features` header in our REST requests. It can be done using `PipelinePolicy`.
-
-```C# Snippet:Sample_Agents_ExperimentalHeader
-internal class FeaturePolicy(string feature) : PipelinePolicy
-{
-    private const string _FEATURE_HEADER = "Foundry-Features";
-
-    public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        message.Request.Headers.Add(_FEATURE_HEADER, feature);
-        ProcessNext(message, pipeline, currentIndex);
-    }
-
-    public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        message.Request.Headers.Add(_FEATURE_HEADER, feature);
-        await ProcessNextAsync(message, pipeline, currentIndex);
-    }
-}
-```
 
 #### Hosted Agents from Docker images<a id="hosted-docker-based"></a>
 To create the hosted agent from existing Docker image, please use the `HostedAgentDefinition` while creating the AgentVersion object.
@@ -193,9 +167,7 @@ private static HostedAgentDefinition GetAgentDefinition(string dockerImage)
 The next code will deploy the hosted Agent.
 ```C# Snippet:Sample_Agents_Deployment_HostedAgent
 Uri uriEndpoint = new(projectEndpoint);
-AgentAdministrationClientOptions options = new();
-options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview"), PipelinePosition.PerCall);
-AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 HostedAgentDefinition agentDefinition = GetAgentDefinition(
     dockerImage: dockerImage
 );
@@ -232,7 +204,7 @@ azure-ai-agentserver-responses
 Prepare the metadata for Agent:
 
 ```C# Snippet:Sample_CodeAgentMetadata_CodeAgent
-private static CreateAgentVersionFromCodeMetadata GetAgentMetadata()
+private static AgentVersionFromCodeMetadata GetAgentMetadata()
 {
     HostedAgentDefinition agentDefinition = new(
         cpu: "0.5",
@@ -246,18 +218,16 @@ private static CreateAgentVersionFromCodeMetadata GetAgentMetadata()
             dependencyResolution: CodeDependencyResolution.RemoteBuild
         ),
     };
-    CreateAgentVersionFromCodeMetadata metadata = new(agentDefinition);
+    AgentVersionFromCodeMetadata metadata = new(agentDefinition);
     metadata.Metadata["enableVnextExperience"] = "true";
     return metadata;
 }
 ```
 
-Deployment of the agent from code requires `Foundry-Features` header to be `HostedAgents=V1Preview,CodeAgents=V1Preview`.
+Deploy the Agent.
 
 ```C# Snippet:Sample_CodeAgentDeployment_CodeAgent_Async
-AgentAdministrationClientOptions options = new();
-options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview,CodeAgents=V1Preview"), PipelinePosition.PerCall);
-AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ProjectsAgentVersion agentVersion = await agentsClient.CreateAgentVersionFromCodeAsync(
     agentName: "myCodeAgent",
     filePath: GetDirectory(Path.Combine(["AgentsCode"])),
@@ -274,22 +244,51 @@ if (agentVersion.Status != AgentVersionStatus.Active)
 }
 ```
 
-### Toolboxes
+### External Agents
 
-**Note:** This is a preview feature and require the `Foundry-Features` request header to contain `Toolboxes=V1Preview`.
+**Note:** This is a preview feature and requires the `Foundry-Features` request header to contain `ExternalAgents=V1Preview`.
 The `AAIP001` warning needs to be ignored.
 
+In this example we will demonstrate management of External Agents step by step. External Agents are the third-party Agents
+hosted outside Foundry (for example, on GCP or AWS). Registration is metadata-only: Foundry records the agent definition to
+light up observability experiences (traces, evaluations) over customer-emitted OpenTelemetry data.
+
+To create External Agent, we need to provide the `ExternalAgentDefinition` with `OpenTelemetry` agent identifier,
+used to attribute customer-emitted spans to this Foundry agent, in the `CreateAgentVersionAsync` or `CreateAgentVersion` method.
+
+```C# Snippet:Sample_CreateAgentVersion_ExternalAgentsCRUD_Async
+ExternalAgentDefinition agentDefinition = new()
+{
+    OtelAgentId = "sample-external-agent",
+};
+ProjectsAgentVersionCreationOptions agentOptions = new(agentDefinition)
+{
+    Description = "External agent registered by the azure-ai-projects sample.",
+    Metadata = {
+        { "sample", "external_agents_crud" },
+        { "status", "created" }
+    }
+};
+ProjectsAgentVersion agentVersion = await agentsClient.CreateAgentVersionAsync(
+    agentName: "myExternalAgent1",
+    options: agentOptions);
+Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
+```
+
+### Toolboxes
+
 Toolboxes allow us to store tools in Azure so that they can be retrieved and used by the Agents.
-As for the Hosted Agent we will need to set the experimental header, but in this scenario the header is `Toolboxes=V1Preview`,  we also need to disable the `AAIP001` warning.
 
 In the example below we create two versions of MCP tool and save it to Azure.
 ```C# Snippet:Sample_CreateToolbox_ToolboxesAgentsCRUD_Async
-ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
-    serverLabel: "api-specs",
-    serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-    toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
-));
-ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
+MCPToolboxTool tool = new(serverLabel: "api-specs")
+{
+    Name = "mcp-tool",
+    Description = "Sample MCP tool",
+    ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+    ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+};
+ToolboxVersion toolBox1 = await toolboxClient.CreateVersionAsync(
     name: toolboxName,
     tools: [tool],
     description: "Example toolbox created by the azure-ai-projects sample.",
@@ -297,7 +296,7 @@ ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
         {"team", "Engineers"}
     }
 );
-ToolboxVersion toolBox2 = await toolboxClient.CreateToolboxVersionAsync(
+ToolboxVersion toolBox2 = await toolboxClient.CreateVersionAsync(
     name: toolboxName,
     tools: [tool],
     description: "Another toolbox created by the azure-ai-projects sample.",
@@ -314,21 +313,18 @@ There are two objects which help to work with the Toolboxes: `ToolboxRecord` and
 name, it contains the default version of the Toolbox.
 
 ```C# Snippet:Sample_GetToolbox_ToolboxesAgentsCRUD_Async
-ToolboxRecord record = await toolboxClient.GetToolboxAsync(name: toolBox1.Name);
+ToolboxRecord record = await toolboxClient.GetAsync(name: toolBox1.Name);
 Console.WriteLine($"The default version for a toolbox {record.Name} is {record.DefaultVersion}");
 ```
 
 The name of Toolbox and its version allow to get the `ToolboxVersion`, containing the tools, which can be used by Agent.
 
 ```C# Snippet:Sample_GetToolboxVersion_ToolboxesAgentsCRUD_Async
-ToolboxVersion toolBox = await toolboxClient.GetToolboxVersionAsync(record.Name, record.DefaultVersion);
+ToolboxVersion toolBox = await toolboxClient.GetVersionAsync(record.Name, record.DefaultVersion);
 Console.WriteLine($"Retrieved toolbox: {toolBox.Name} ({toolBox.Id})");
 ```
 
 ### Sessions
-
-**Note:** This is a preview feature and require the `Foundry-Features` request header to contain `HostedAgents=V1Preview`.
-The `AAIP001` warning needs to be ignored.
 
 Sessions allow multiple users to use the same hosted Agent within their own sandboxed environment. In the example below we create two
 sessions for the same agent version.
@@ -363,48 +359,27 @@ while (session2.Status != AgentSessionStatus.Failed && session2.Status != AgentS
 It is also possible to upload the files to the session store, so that it will only be accessible inside its session.
 To use this feature we need to create the `AgentSessionFiles` client:
 
-```C# Snippet:Sample_CreateClient_SessionFiles
-var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-var hostedAgentName = System.Environment.GetEnvironmentVariable("HOSTED_AGENT_NAME");
-var hostedAgentVersion = System.Environment.GetEnvironmentVariable("HOSTED_AGENT_VERSION");
-AgentAdministrationClientOptions options = new();
-options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview,AgentEndpoints=V1Preview"), PipelinePosition.PerCall);
-AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
-AgentSessionFiles sessionClient = agentsClient.GetAgentSessionFiles();
-```
-
-We can use it to upload the files.
-
-```C# Snippet:Sample_Upload_SessionFiles_Async
-string filePath = "sample_file_for_upload1.txt";
-File.WriteAllText(
-    path: filePath,
-    contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-SessionFileWriteResponse writeResponse = await sessionClient.UploadSessionFileAsync(
-        agentName: agentVersion.Name,
-        sessionId: session.AgentSessionId,
-        sessionStoragePath: filePath,
-        localPath: filePath
-    );
-Console.WriteLine($"The file was written to path {writeResponse.Path}, file length is {writeResponse.BytesWritten}.");
-File.Delete(filePath);
-filePath = "sample_file_for_upload2.txt";
-File.WriteAllText(
-    path: filePath,
-    contents: "The word 'grape' uses the code 111222, while the word 'mango' uses the code 222111.");
-writeResponse = await sessionClient.UploadSessionFileAsync(
+```C# Snippet:Sample_CreateAgentAndSession_SessionFiles_Async
+ProjectsAgentVersion agentVersion = await agentsClient.GetAgentVersionAsync(
+    agentName: hostedAgentName,
+    agentVersion: hostedAgentVersion);
+string sessionId = Guid.NewGuid().ToString("N");
+ProjectAgentSession session = await agentsClient.CreateSessionAsync(
     agentName: agentVersion.Name,
-    sessionId: session.AgentSessionId,
-    sessionStoragePath: $"{filePath}",
-    localPath: filePath
+    agentSessionId: sessionId,
+    versionIndicator: new VersionRefIndicator(agentVersion.Version)
 );
-Console.WriteLine($"The file was written to path {writeResponse.Path}, file length is {writeResponse.BytesWritten}.");
-File.Delete(filePath);
+AgentSessionFiles sessionClient = agentsClient.GetAgentSessionFiles(agentVersion.Name, session.AgentSessionId);
+while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
+{
+    await Task.Delay(TimeSpan.FromMilliseconds(500));
+    session = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
+}
 ```
 
 ### Skills
 
-**Note:** This is a preview feature and require the `Foundry-Features` request header to contain `Skills=V1Preview`.
+**Note:** This is a preview feature and requires the `Foundry-Features` request header to contain `Skills=V1Preview`.
 The `AAIP001` warning needs to be ignored.
 
 The skills can be used to provide the portable packages of instructions for Agents. `Azure.AI.Projects.Agents` allows
@@ -432,7 +407,7 @@ For more information on skills please see the [Microsoft learning](https://learn
 
 ### Agent endpoints
 
-**Note:** This is a preview feature and require the `Foundry-Features` request header to contain `AgentEndpoints=V1Preview`.
+**Note:** This is a preview feature and requires the `Foundry-Features` request header to contain `AgentEndpoints=V1Preview`.
 The `AAIP001` warning needs to be ignored. In the sample below the `Foundry-Features` header needs to be `HostedAgents=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview`
 because we are using three experimental features: hosted agents, skills and Agent endpoints.
 
@@ -463,14 +438,17 @@ SkillInlineContent content = new(
 SkillVersion simpleSkill = await skillsClient.CreateSkillVersionAsync(name: "simpleSkill", inlineContent: content);
 ```
 
-3. We will create configure hosted agent so that it will use the 100% of traffic to the endpoint and will also
+3. We will create configure hosted agent so that it will use the 74% of traffic to the endpoint and will also
 make it aware of the skill we have created.
 
 ```C# Snippet:Sample_CreateEndpoint_AgentsEndpoint_Async
 AgentEndpointConfiguration config = new()
 {
-    VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
-    Protocols = {AgentEndpointProtocol.Responses}
+    VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 74)]),
+    ProtocolConfiguration = new()
+    {
+        Responses = new()
+    }
 };
 AgentCard card = new(version: "1", [new AgentCardSkill(id: simpleSkill.Id, name: SKILL)]);
 PatchAgentOptions patchOptions = new()
@@ -478,7 +456,7 @@ PatchAgentOptions patchOptions = new()
     AgentEndpoint = config,
     AgentCard = card
 };
-ProjectsAgentRecord patchedRecord = await agentsClient.PatchAgentObjectAsync(
+ProjectsAgentRecord patchedRecord = await agentsClient.PatchAgentAsync(
     agentName: hostedAgentName,
     patchAgentOptions: patchOptions);
 Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");

@@ -149,7 +149,8 @@ function IsNugetPackageVersionPublished ($pkgId, $pkgVersion)
     return $False
   }
 
-  return $existingVersions.Contains($pkgVersion)
+  # Normalize to an array so a single returned version is checked as an exact item, not a substring.
+  return @($existingVersions).Contains($pkgVersion)
 }
 
 # Parse out package publishing information given a nupkg ZIP format.
@@ -344,10 +345,10 @@ function GetExistingPackageVersions ($PackageName, $GroupId=$null)
     $PackageName = $PackageName.ToLower()
     $uri = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/flat2/${PackageName}/index.json"
     $existingVersion = Invoke-RestMethod -MaximumRetryCount 3 -RetryIntervalSec 10 -Method GET -Uri $uri
-    return $existingVersion.versions
+    return @($existingVersion.versions)
   }
   catch {
-    if ($_.Exception.Response.StatusCode -ne 404)
+    if ($_.Exception.Response.StatusCode -notin (401, 404))
     {
       LogError "Failed to retrieve package versions for ${PackageName}. $($_.Exception.Message)"
       throw

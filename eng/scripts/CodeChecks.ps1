@@ -162,6 +162,65 @@ try {
         Write-Host "Skipping snippet and API listing generation for tools directory"
     }
 
+    Write-Host "Validating IncludeAutorestDependency usage"
+    # Known libraries that still legitimately declare IncludeAutorestDependency because their hand-written
+    # custom code (or frozen, formerly-generated code) relies on AutoRest-provided types such as
+    # Autorest.CSharp.Core.GeneratorPageableHelpers or the CodeGen* attributes (CodeGenMember, CodeGenType,
+    # CodeGenClient, CodeGenSuppress, CodeGenModel). These types are not emitted by the current TypeSpec
+    # generators, so the AutoRest package is still required to compile. This is tracked tech debt: entries
+    # must be removed from this list once the generators emit those types (see Azure.ResourceManager.PostgreSql
+    # for the target GeneratorPageableHelpers bridge pattern). Do NOT add new entries here.
+    $autorestDependencyExceptions = @(
+        # Management libraries with hand-written custom code using AutoRest types
+        "Azure.ResourceManager.MySql",
+        "Azure.ResourceManager.OracleDatabase",
+        "Azure.ResourceManager.PaloAltoNetworks.Ngfw",
+        # Data-plane libraries with generation disabled whose frozen code uses AutoRest CodeGen* attributes
+        "Azure.AI.Inference",
+        "Azure.AI.OpenAI",
+        "Azure.AI.OpenAI.Assistants",
+        "Azure.AI.Personalizer",
+        "Azure.AI.Vision.Face"
+    )
+    $serviceRoot = Join-Path "$PSScriptRoot/../../sdk" $ServiceDirectory | Resolve-Path
+    $serviceRoot `
+        | % { Get-ChildItem $_ -Filter "*.csproj" -Recurse } `
+        | % {
+            $csproj = $_
+            $autorestProp = Select-String -Path $csproj.FullName -Pattern '<IncludeAutorestDependency>([^<]*)</IncludeAutorestDependency>'
+            if (($autorestDependencyExceptions -notcontains $csproj.BaseName) -and $autorestProp) {
+                $autorestValue = $autorestProp.Matches[0].Groups[1].Value.Trim()
+
+                # Walk up from the project file looking for a tsp-location.yaml, which marks
+                # a TypeSpec-generated library. The search is bounded by the service directory root rather
+                # than a fixed depth, so it works regardless of how deeply the project file is nested.
+                $dir = $csproj.Directory
+                $tspLocation = $null
+                while ($dir -ne $null) {
+                    $candidate = Join-Path $dir.FullName "tsp-location.yaml"
+                    if (Test-Path $candidate) { $tspLocation = $candidate; break }
+                    if ($dir.FullName -eq $serviceRoot.Path) { break }
+                    $dir = $dir.Parent
+                }
+
+                if ($tspLocation) {
+                    # TypeSpec-generated libraries must not pull in the AutoRest dependency.
+                    LogError `
+"Project '$($csproj.FullName)' declares the 'IncludeAutorestDependency' property but is a TypeSpec-generated`
+    library (a 'tsp-location.yaml' exists at '$tspLocation'). TypeSpec-generated libraries must not use AutoRest.`
+    Remove the <IncludeAutorestDependency> property from the project file."
+                }
+                elseif ($autorestValue -eq 'true' -and -not (Test-Path (Join-Path $csproj.Directory.FullName "autorest.md"))) {
+                    # An AutoRest-generated library (IncludeAutorestDependency=true, no tsp-location.yaml)
+                    # must have an autorest.md generator configuration next to its project file.
+                    LogError `
+"Project '$($csproj.FullName)' sets '<IncludeAutorestDependency>true</IncludeAutorestDependency>' but has neither a`
+    'tsp-location.yaml' (TypeSpec) nor an 'autorest.md' (AutoRest) next to the project file. Either add the missing`
+    generator configuration, or remove the <IncludeAutorestDependency> property if the library is not generated."
+                }
+            }
+        }
+
     Write-Host "Validating installation instructions"
     Join-Path "$PSScriptRoot/../../sdk" $ServiceDirectory  `
         | Resolve-Path `

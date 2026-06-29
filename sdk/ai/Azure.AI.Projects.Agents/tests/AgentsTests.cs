@@ -41,42 +41,85 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
-    public async Task TestAgentCRUD()
+    [TestCase(true)]
+    [TestCase(false)]
+    public async Task TestAgentCRUD(bool useExternalAgent)
     {
         AgentAdministrationClient agentsClient = GetTestClient();
-        ProjectsAgentDefinition emptyAgentDefinition = new DeclarativeAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME);
+        ProjectsAgentDefinition emptyAgentDefinition = useExternalAgent ? new ExternalAgentDefinition() { OtelAgentId = "foo"} :  new DeclarativeAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME);
 
-        const string emptyPromptAgentName = "TestNoVersionAgentFromDotnetTests";
-        try
-        {
-            await agentsClient.DeleteAgentAsync(emptyPromptAgentName);
-        }
-        catch (ClientResultException)
-        {
-            // We do not have the agent to begin with.
-        }
         ProjectsAgentVersion newAgentVersion = await agentsClient.CreateAgentVersionAsync(
-            emptyPromptAgentName,
+            AGENT_NAME2,
             new ProjectsAgentVersionCreationOptions(emptyAgentDefinition)
             {
                 Metadata = { ["delete_me"] = "please " },
             });
         Assert.That(newAgentVersion?.Id, Is.Not.Null.And.Not.Empty);
 
-        ProjectsAgentRecord retrievedAgent = await agentsClient.GetAgentAsync(emptyPromptAgentName);
+        ProjectsAgentRecord retrievedAgent = await agentsClient.GetAgentAsync(AGENT_NAME2);
         Assert.That(retrievedAgent?.Id, Is.EqualTo(newAgentVersion.Name));
-
-        await agentsClient.DeleteAgentAsync(newAgentVersion.Name);
 
         ProjectsAgentVersion agentVersion = await agentsClient.CreateAgentVersionAsync(AGENT_NAME, new ProjectsAgentVersionCreationOptions(emptyAgentDefinition));
         Assert.That(AGENT_NAME, Is.EqualTo(agentVersion.Name));
-        ProjectsAgentVersion agentVersionObject_ = await agentsClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
-        Assert.That(AGENT_NAME, Is.EqualTo(agentVersionObject_.Name));
-        Assert.That(agentVersion.Version, Is.EqualTo(agentVersionObject_.Version));
         Assert.That(agentVersion.Description, Is.Empty);
         Assert.That(agentVersion.Metadata, Is.Empty);
-        await agentsClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
-        Assert.ThrowsAsync<ClientResultException>(async () => await agentsClient.GetAgentVersionAsync(agentVersion.Name, agentVersion.Version));
+        agentVersion = await agentsClient.CreateAgentVersionAsync(AGENT_NAME, new ProjectsAgentVersionCreationOptions(emptyAgentDefinition)
+        {
+            Metadata = { { "foo", "bar" } }
+        });
+        // Get Version
+        ProjectsAgentVersion agentVersionObject_ = await agentsClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        ValidateDefinition(agentVersionObject_, useExternalAgent);
+        Assert.That(agentVersionObject_.Name, Is.EqualTo(AGENT_NAME));
+        Assert.That(agentVersionObject_.Version, Is.EqualTo(agentVersion.Version));
+        // Get
+        ProjectsAgentRecord agentObject_ = await agentsClient.GetAgentAsync(agentName: agentVersion.Name);
+        ValidateDefinition(agentObject_.Versions.Latest, useExternalAgent);
+        Assert.That(agentObject_.Name, Is.EqualTo(AGENT_NAME));
+        // List Agents
+        ProjectsAgentKind goodKind = useExternalAgent ? ProjectsAgentKind.External : ProjectsAgentKind.Prompt;
+        ProjectsAgentKind badKind = ProjectsAgentKind.Workflow;
+        List<ProjectsAgentRecord> records = await agentsClient.GetAgentsAsync(kind: badKind).ToListAsync();
+        List<ProjectsAgentRecord> test = [.. records.Where(x => string.Equals(x.Name, AGENT_NAME))];
+        Assert.That(test, Has.Count.EqualTo(0));
+        records = await agentsClient.GetAgentsAsync(kind: goodKind).ToListAsync();
+        test = [.. records.Where(x => string.Equals(x.Name, AGENT_NAME))];
+        Assert.That(test, Has.Count.EqualTo(1));
+        ValidateDefinition(test[0].Versions.Latest, useExternalAgent);
+        test = [.. records.Where(x => string.Equals(x.Name, AGENT_NAME2))];
+        Assert.That(test, Has.Count.EqualTo(1));
+        ValidateDefinition(test[0].Versions.Latest, useExternalAgent);
+
+        // List Versions
+        List<ProjectsAgentVersion> recordVersions = await agentsClient.GetAgentVersionsAsync(agentName: AGENT_NAME2).ToListAsync();
+        Assert.That(recordVersions, Has.Count.EqualTo(1));
+        ValidateDefinition(recordVersions[0], useExternalAgent);
+
+        recordVersions = await agentsClient.GetAgentVersionsAsync(agentName: AGENT_NAME).ToListAsync();
+        Assert.That(recordVersions, Has.Count.EqualTo(2));
+        ValidateDefinition(recordVersions[0], useExternalAgent);
+        // DeleteVersion
+        string expectedVersion = recordVersions[1].Version;
+        await agentsClient.DeleteAgentVersionAsync(agentName: AGENT_NAME, agentVersion: recordVersions[0].Version);
+        recordVersions = await agentsClient.GetAgentVersionsAsync(agentName: AGENT_NAME).ToListAsync();
+        Assert.That(recordVersions, Has.Count.EqualTo(1));
+        Assert.That(recordVersions[0].Version, Is.EqualTo(expectedVersion));
+        // Delete
+        await agentsClient.DeleteAgentAsync(agentName: AGENT_NAME2);
+        records = await agentsClient.GetAgentsAsync(kind: goodKind).Where(x => string.Equals(x.Name, AGENT_NAME2)).ToListAsync();
+        Assert.That(records, Has.Count.EqualTo(0));
+    }
+
+    private static void ValidateDefinition(ProjectsAgentVersion agent, bool useExternalAgent)
+    {
+        if (useExternalAgent)
+        {
+            Assert.That(agent.Definition, Is.InstanceOf<ExternalAgentDefinition>());
+        }
+        else
+        {
+            Assert.That(agent.Definition, Is.InstanceOf<DeclarativeAgentDefinition>());
+        }
     }
 
     [RecordedTest]
@@ -86,21 +129,23 @@ public class AgentsTests : AgentsTestBase
         AgentToolboxes toolboxClient = agentsClient.GetAgentToolboxes();
         try
         {
-            await toolboxClient.DeleteToolboxAsync("mcp1");
+            await toolboxClient.DeleteAsync("mcp1");
         }
         catch { }
         try
         {
-            await toolboxClient.DeleteToolboxAsync("mcp2");
+            await toolboxClient.DeleteAsync("mcp2");
         }
         catch { }
-        ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
-            serverLabel: "api-specs",
-            serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
-        ));
+        MCPToolboxTool tool = new(serverLabel: "api-specs")
+        {
+            Name = "mcp-tool",
+            Description = "Test mcp tool",
+            ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+        };
         // Create
-        ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
+        ToolboxVersion toolBox1 = await toolboxClient.CreateVersionAsync(
             name: "mcp1",
             tools: [tool],
             description: "Example toolbox created by the azure-ai-projects sample.",
@@ -108,7 +153,7 @@ public class AgentsTests : AgentsTestBase
                 {"team", "Engineers"}
             }
         );
-        ToolboxVersion toolBox2 = await toolboxClient.CreateToolboxVersionAsync(
+        ToolboxVersion toolBox2 = await toolboxClient.CreateVersionAsync(
             name: "mcp2",
             tools: [tool],
             description: "Example toolbox created by the azure-ai-projects sample.",
@@ -116,7 +161,7 @@ public class AgentsTests : AgentsTestBase
                 {"team", "Engineers"}
             }
         );
-        ToolboxVersion toolBox3 = await toolboxClient.CreateToolboxVersionAsync(
+        ToolboxVersion toolBox3 = await toolboxClient.CreateVersionAsync(
             name: "mcp2",
             tools: [tool],
             description: "Example toolbox created by the azure-ai-projects sample.",
@@ -124,28 +169,28 @@ public class AgentsTests : AgentsTestBase
                 {"team", "Engineers"}
             }
         );
-        ToolboxRecord record = await toolboxClient.GetToolboxAsync(name: toolBox2.Name);
+        ToolboxRecord record = await toolboxClient.GetAsync(name: toolBox2.Name);
         Assert.That(record.Name, Is.EqualTo(toolBox3.Name));
         string newVersion = string.Equals(record.DefaultVersion, "1") ? "2" : "1";
         // Update
-        record = await toolboxClient.UpdateToolboxAsync(record.Name, newVersion);
+        record = await toolboxClient.UpdateDefaultVersionAsync(record.Name, newVersion);
         Assert.That(record.Name, Is.EqualTo(toolBox2.Name));
         Assert.That(record.DefaultVersion, Is.EqualTo(newVersion));
         // Get
-        record = await toolboxClient.GetToolboxAsync("mcp2");
+        record = await toolboxClient.GetAsync("mcp2");
         Assert.That(record.Name, Is.EqualTo("mcp2"));
         Assert.That(record.DefaultVersion, Is.EqualTo(newVersion));
         // List
-        HashSet<string> recordNames = [.. await toolboxClient.GetToolboxesAsync().Select(x => x.Name).ToListAsync()];
+        HashSet<string> recordNames = [.. await toolboxClient.GetAllAsync().Select(x => x.Name).ToListAsync()];
         Assert.That(recordNames, Does.Contain("mcp1"));
         Assert.That(recordNames, Does.Contain("mcp2"));
         // Delete
-        await toolboxClient.DeleteToolboxAsync("mcp1");
-        recordNames = [.. await toolboxClient.GetToolboxesAsync().Select(x => x.Name).ToListAsync()];
+        await toolboxClient.DeleteAsync("mcp1");
+        recordNames = [.. await toolboxClient.GetAllAsync().Select(x => x.Name).ToListAsync()];
         Assert.That(recordNames, Does.Not.Contains("mcp1"));
         Assert.That(recordNames, Does.Contain("mcp2"));
-        await toolboxClient.DeleteToolboxAsync("mcp2");
-        recordNames = [.. await toolboxClient.GetToolboxesAsync().Select(x => x.Name).ToListAsync()];
+        await toolboxClient.DeleteAsync("mcp2");
+        recordNames = [.. await toolboxClient.GetAllAsync().Select(x => x.Name).ToListAsync()];
         Assert.That(recordNames, Does.Not.Contains("mcp1"));
         Assert.That(recordNames, Does.Not.Contains("mcp2"));
     }
@@ -157,16 +202,18 @@ public class AgentsTests : AgentsTestBase
         AgentToolboxes toolboxClient = agentsClient.GetAgentToolboxes();
         try
         {
-            await toolboxClient.DeleteToolboxAsync("mcp");
+            await toolboxClient.DeleteAsync("mcp");
         }
         catch { }
-        ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
-            serverLabel: "api-specs",
-            serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
-        ));
+        MCPToolboxTool tool = new(serverLabel: "api-specs")
+        {
+            Name = "mcp-tool",
+            Description = "Test mcp tool",
+            ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+        };
         // Create
-        ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
+        ToolboxVersion toolBox1 = await toolboxClient.CreateVersionAsync(
             name: "mcp",
             tools: [tool],
             description: "Example toolbox created by the azure-ai-projects sample.",
@@ -178,7 +225,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(toolBox1.Version, Is.EqualTo("1"));
         Assert.That(toolBox1.Metadata, Does.ContainKey("team"));
         Assert.That(toolBox1.Metadata["team"], Is.EqualTo("Engineers"));
-        ToolboxVersion toolBox2 = await toolboxClient.CreateToolboxVersionAsync(
+        ToolboxVersion toolBox2 = await toolboxClient.CreateVersionAsync(
             name: "mcp",
             tools: [tool],
             description: "Example toolbox created by the azure-ai-projects sample.",
@@ -191,13 +238,13 @@ public class AgentsTests : AgentsTestBase
         Assert.That(toolBox2.Metadata, Does.ContainKey("team"));
         Assert.That(toolBox2.Metadata["team"], Is.EqualTo("Data Scientists"));
         // Get
-        ToolboxVersion toolBox = await toolboxClient.GetToolboxVersionAsync(name: "mcp", version: "1");
+        ToolboxVersion toolBox = await toolboxClient.GetVersionAsync(name: "mcp", version: "1");
         Assert.That(toolBox.Name, Is.EqualTo("mcp"));
         Assert.That(toolBox.Version, Is.EqualTo("1"));
         Assert.That(toolBox.Metadata, Does.ContainKey("team"));
         Assert.That(toolBox.Metadata["team"], Is.EqualTo("Engineers"));
         // List
-        List<ToolboxVersion> versions = await toolboxClient.GetToolboxVersionsAsync(toolboxName: "mcp").ToListAsync();
+        List<ToolboxVersion> versions = await toolboxClient.GetVersionsAsync(name: "mcp").ToListAsync();
         Assert.That(versions.Count, Is.EqualTo(2));
         if (string.Equals(versions[0].Version, "1"))
         {
@@ -218,14 +265,14 @@ public class AgentsTests : AgentsTestBase
         Assert.That(toolBox2.Metadata, Does.ContainKey("team"));
         Assert.That(toolBox2.Metadata["team"], Is.EqualTo("Data Scientists"));
         // Delete
-        ToolboxRecord record = await toolboxClient.GetToolboxAsync("mcp");
+        ToolboxRecord record = await toolboxClient.GetAsync("mcp");
         string deleteVersion = string.Equals(record.DefaultVersion, toolBox1.Version) ? toolBox2.Version : toolBox1.Version;
-        await toolboxClient.DeleteToolboxVersionAsync(name: "mcp", version: deleteVersion);
-        HashSet<string> versionNumbers = [.. await toolboxClient.GetToolboxVersionsAsync(toolboxName: "mcp").Select(x => x.Version).ToListAsync()];
+        await toolboxClient.DeleteVersionAsync(name: "mcp", version: deleteVersion);
+        HashSet<string> versionNumbers = [.. await toolboxClient.GetVersionsAsync(name: "mcp").Select(x => x.Version).ToListAsync()];
         Assert.That(versionNumbers, Does.Not.Contains(deleteVersion));
         Assert.That(versionNumbers, Does.Contain(string.Equals(deleteVersion, "2") ? "1" : "2"));
-        await toolboxClient.DeleteToolboxAsync(name: record.Name);
-        Assert.ThrowsAsync<ClientResultException>(async () => await toolboxClient.GetToolboxVersionsAsync(toolboxName: "mcp").ToListAsync());
+        await toolboxClient.DeleteAsync(name: record.Name);
+        Assert.ThrowsAsync<ClientResultException>(async () => await toolboxClient.GetVersionsAsync(name: "mcp").ToListAsync());
     }
 
     [Test]
@@ -285,29 +332,21 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.CodeInterpreter)]
     [TestCase(ToolType.CodeInterpreterGen)]
     [TestCase(ToolType.FileSearch)]
-    // [TestCase(ToolType.ImageGeneration)] Not supported in toolsets.
     [TestCase(ToolType.WebSearch)]
-    // [TestCase(ToolType.WebSearchPreview)] Not supported in toolsets.
-    // [TestCase(ToolType.Memory)] Not supported in toolsets.
     [TestCase(ToolType.AzureAISearch)]
-    // [TestCase(ToolType.BingGrounding)] Not supported in toolsets.
-    // [TestCase(ToolType.BingGroundingCustom)] Not supported in toolsets.
     [TestCase(ToolType.OpenAPI)]
-    // [TestCase(ToolType.Sharepoint)] Not supported in toolsets.
-    // [TestCase(ToolType.BrowserAutomation)] Not supported in toolsets.
-    // [TestCase(ToolType.MicrosoftFabric)] Not supported in toolsets.
     [TestCase(ToolType.A2A)]
-    // [TestCase(ToolType.AzureFunction)] Not supported in toolsets.
-    // [TestCase(ToolType.FunctionCall)] Not supported in toolsets.
     [TestCase(ToolType.MCP)]
-    // [TestCase(ToolType.ComputerUse)] Not supported in toolsets.
+    [TestCase(ToolType.BrowserAutomation)]
+    [TestCase(ToolType.WorkIQ)]
+    [TestCase(ToolType.FabricIQ)]
+    [TestCase(ToolType.ReminderPreview)]
     public async Task TestToolsetVariety(ToolType toolType)
     {
         AgentAdministrationClient agentsClient = GetTestClient();
         AgentToolboxes toolboxClient = agentsClient.GetAgentToolboxes();
-        ResponseTool oaiTool = GetAgentToolDefinition(toolType);
-        ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(oaiTool);
-        ToolboxVersion toolBox = await toolboxClient.CreateToolboxVersionAsync(
+        ToolboxTool tool = GetAgentToolDefinition(toolType);
+        ToolboxVersion toolBox = await toolboxClient.CreateVersionAsync(
             name: TOOLBOX,
             tools: [tool],
             description: $"{toolType}"
@@ -316,21 +355,21 @@ public class AgentsTests : AgentsTestBase
         Assert.That(toolBox.Description, Is.EqualTo($"{toolType}"));
         Assert.That(toolBox.Tools.Count, Is.EqualTo(1));
         Assert.That(toolBox.Tools[0].GetType(), Is.EqualTo(tool.GetType()));
-        toolBox = await toolboxClient.GetToolboxVersionAsync(name: TOOLBOX, version: toolBox.Version);
+        toolBox = await toolboxClient.GetVersionAsync(name: TOOLBOX, version: toolBox.Version);
         Assert.That(toolBox.Name, Is.EqualTo(TOOLBOX));
         Assert.That(toolBox.Description, Is.EqualTo($"{toolType}"));
         Assert.That(toolBox.Tools.Count, Is.EqualTo(1));
         Assert.That(toolBox.Tools[0].GetType(), Is.EqualTo(tool.GetType()));
-        // Use trhe tool to create an Agent
+        // Use the tool to create an Agent
         DeclarativeAgentDefinition definition = new(TestEnvironment.FOUNDRY_MODEL_NAME)
         {
-            Tools = { toolBox.Tools[0] }
+            Tools = { ProjectsAgentTool.AsProjectTool(toolBox.Tools[0]) }
         };
         ProjectsAgentVersion agentVersion = await agentsClient.CreateAgentVersionAsync(AGENT_NAME, new ProjectsAgentVersionCreationOptions(definition));
         if (agentVersion.Definition is DeclarativeAgentDefinition declarativeDefinition)
         {
-            Assert.That(declarativeDefinition.Tools.Count(), Is.EqualTo(1));
-            Assert.That(declarativeDefinition.Tools[0].GetType(), Is.EqualTo(oaiTool.GetType()));
+            Assert.That(declarativeDefinition.Tools, Has.Count.EqualTo(1));
+            Assert.That(declarativeDefinition.Tools[0].GetType(), Is.EqualTo(((ResponseTool)ProjectsAgentTool.AsProjectTool(toolBox.Tools[0])).GetType()));
         }
         else
         {
@@ -343,16 +382,18 @@ public class AgentsTests : AgentsTestBase
     {
         AgentAdministrationClient agentsClient = GetTestClient();
         AgentToolboxes toolboxClient = agentsClient.GetAgentToolboxes();
-        List<ToolboxRecord> records = await toolboxClient.GetToolboxesAsync().ToListAsync();
+        List<ToolboxRecord> records = await toolboxClient.GetAllAsync().ToListAsync();
         int created = 0;
-        ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
-            serverLabel: "api-specs",
-            serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
-        ));
+        MCPToolboxTool tool = new(serverLabel: "api-specs")
+        {
+            Name = "mcp-tool",
+            Description = "Test MCP tool",
+            ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+        };
         while (records.Count + created <= PAGE_SIZE)
         {
-            await toolboxClient.CreateToolboxVersionAsync(
+            await toolboxClient.CreateVersionAsync(
                 name: $"{TOOLBOX}_{created}",
                 tools: [tool],
                 description: "Example toolbox created by the azure-ai-projects sample.",
@@ -363,25 +404,25 @@ public class AgentsTests : AgentsTestBase
             created++;
         }
         int newSize = records.Count + created;
-        records = await toolboxClient.GetToolboxesAsync(limit: PAGE_SIZE, order: AgentListOrder.Ascending).ToListAsync();
+        records = await toolboxClient.GetAllAsync(limit: PAGE_SIZE, order: AgentListOrder.Ascending).ToListAsync();
         Assert.That(records.Count, Is.EqualTo(newSize));
         // Go forward.
-        List<ToolboxRecord> forward = await toolboxClient.GetToolboxesAsync(order: AgentListOrder.Ascending, after: records[0].Id, limit: PAGE_SIZE).ToListAsync();
+        List<ToolboxRecord> forward = await toolboxClient.GetAllAsync(order: AgentListOrder.Ascending, after: records[0].Id, limit: PAGE_SIZE).ToListAsync();
         Assert.That(forward.Count, Is.EqualTo(records.Count - 1));
         Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
         Assert.That(forward[forward.Count - 1].Id, Is.EqualTo(records[records.Count - 1].Id));
         // Two limits:
-        forward = await toolboxClient.GetToolboxesAsync(order: AgentListOrder.Ascending, after: records[0].Id, before: records[3].Id, limit: PAGE_SIZE).ToListAsync();
+        forward = await toolboxClient.GetAllAsync(order: AgentListOrder.Ascending, after: records[0].Id, before: records[3].Id, limit: PAGE_SIZE).ToListAsync();
         Assert.That(forward.Count, Is.EqualTo(2));
         Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
         Assert.That(forward[1].Id, Is.EqualTo(records[2].Id));
         // Go backwards.
-        List<ToolboxRecord> backwards = await toolboxClient.GetToolboxesAsync(order: AgentListOrder.Descending, before: records[0].Id, limit: PAGE_SIZE).ToListAsync();
+        List<ToolboxRecord> backwards = await toolboxClient.GetAllAsync(order: AgentListOrder.Descending, before: records[0].Id, limit: PAGE_SIZE).ToListAsync();
         Assert.That(backwards.Count, Is.EqualTo(records.Count - 1));
         Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 1].Id));
         Assert.That(backwards[backwards.Count - 1].Id, Is.EqualTo(records[1].Id));
         // Two limits.
-        backwards = await toolboxClient.GetToolboxesAsync(order: AgentListOrder.Descending, after: records[records.Count -1].Id, before: records[records.Count - 4].Id, limit: PAGE_SIZE).ToListAsync();
+        backwards = await toolboxClient.GetAllAsync(order: AgentListOrder.Descending, after: records[records.Count -1].Id, before: records[records.Count - 4].Id, limit: PAGE_SIZE).ToListAsync();
         Assert.That(backwards.Count, Is.EqualTo(2));
         Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 2].Id));
         Assert.That(backwards[1].Id, Is.EqualTo(records[records.Count - 3].Id));
@@ -392,16 +433,18 @@ public class AgentsTests : AgentsTestBase
     {
         AgentAdministrationClient agentsClient = GetTestClient();
         AgentToolboxes toolboxClient = agentsClient.GetAgentToolboxes();
-        List<ToolboxVersion> records = await toolboxClient.GetToolboxVersionsAsync(toolboxName: TOOLBOX, order: AgentListOrder.Ascending).ToListAsync();
+        List<ToolboxVersion> records = await toolboxClient.GetVersionsAsync(name: TOOLBOX, order: AgentListOrder.Ascending).ToListAsync();
         int created = 0;
-        ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
-            serverLabel: "api-specs",
-            serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
-        ));
+        MCPToolboxTool tool = new(serverLabel: "api-specs")
+        {
+            Name = "mcp-tool",
+            Description = "Test MCP tool",
+            ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+        };
         while (records.Count + created <= PAGE_SIZE)
         {
-            await toolboxClient.CreateToolboxVersionAsync(
+            await toolboxClient.CreateVersionAsync(
                 name: TOOLBOX,
                 tools: [tool],
                 description: "Example toolbox created by the azure-ai-projects sample.",
@@ -412,30 +455,31 @@ public class AgentsTests : AgentsTestBase
             created++;
         }
         int newSize = records.Count + created;
-        records = await toolboxClient.GetToolboxVersionsAsync(toolboxName: TOOLBOX, limit: PAGE_SIZE, order: AgentListOrder.Ascending).ToListAsync();
+        records = await toolboxClient.GetVersionsAsync(name: TOOLBOX, limit: PAGE_SIZE, order: AgentListOrder.Ascending).ToListAsync();
         Assert.That(records.Count, Is.EqualTo(newSize));
         // Go forward.
-        List<ToolboxVersion> forward = await toolboxClient.GetToolboxVersionsAsync(toolboxName: TOOLBOX, order: AgentListOrder.Ascending, after: records[0].Id, limit: PAGE_SIZE).ToListAsync();
+        List<ToolboxVersion> forward = await toolboxClient.GetVersionsAsync(name: TOOLBOX, order: AgentListOrder.Ascending, after: records[0].Id, limit: PAGE_SIZE).ToListAsync();
         Assert.That(forward.Count, Is.EqualTo(records.Count - 1));
         Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
         Assert.That(forward[forward.Count - 1].Id, Is.EqualTo(records[records.Count - 1].Id));
         // Two limits:
-        forward = await toolboxClient.GetToolboxVersionsAsync(toolboxName: TOOLBOX, order: AgentListOrder.Ascending, after: records[0].Id, before: records[3].Id, limit: PAGE_SIZE).ToListAsync();
+        forward = await toolboxClient.GetVersionsAsync(name: TOOLBOX, order: AgentListOrder.Ascending, after: records[0].Id, before: records[3].Id, limit: PAGE_SIZE).ToListAsync();
         Assert.That(forward.Count, Is.EqualTo(2));
         Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
         Assert.That(forward[1].Id, Is.EqualTo(records[2].Id));
         // Go backwards.
-        List<ToolboxVersion> backwards = await toolboxClient.GetToolboxVersionsAsync(toolboxName: TOOLBOX, order: AgentListOrder.Descending, before: records[0].Id, limit: PAGE_SIZE).ToListAsync();
+        List<ToolboxVersion> backwards = await toolboxClient.GetVersionsAsync(name: TOOLBOX, order: AgentListOrder.Descending, before: records[0].Id, limit: PAGE_SIZE).ToListAsync();
         Assert.That(backwards.Count, Is.EqualTo(records.Count - 1));
         Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 1].Id));
         Assert.That(backwards[backwards.Count - 1].Id, Is.EqualTo(records[1].Id));
         // Two limits.
-        backwards = await toolboxClient.GetToolboxVersionsAsync(toolboxName: TOOLBOX, order: AgentListOrder.Descending, after: records[records.Count - 1].Id, before: records[records.Count - 4].Id, limit: PAGE_SIZE).ToListAsync();
+        backwards = await toolboxClient.GetVersionsAsync(name: TOOLBOX, order: AgentListOrder.Descending, after: records[records.Count - 1].Id, before: records[records.Count - 4].Id, limit: PAGE_SIZE).ToListAsync();
         Assert.That(backwards.Count, Is.EqualTo(2));
         Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 2].Id));
         Assert.That(backwards[1].Id, Is.EqualTo(records[records.Count - 3].Id));
     }
 
+    [Ignore("Blocked by the ADO Item 5384172.")]
     [RecordedTest]
     public async Task TestPatchHostedAgent()
     {
@@ -445,7 +489,10 @@ public class AgentsTests : AgentsTestBase
         AgentEndpointConfiguration config = new()
         {
             VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 74)]),
-            Protocols = { AgentEndpointProtocol.Responses }
+            ProtocolConfiguration = new()
+            {
+                Responses = new()
+            }
         };
         SkillInlineContent content = new(
             description: "Calculates the sum of two numbers.",
@@ -467,11 +514,13 @@ public class AgentsTests : AgentsTestBase
             AgentEndpoint = config,
             AgentCard = card,
         };
-        ProjectsAgentRecord patchedRecord = await agentsClient.PatchAgentObjectAsync(
+        ProjectsAgentRecord patchedRecord = await agentsClient.PatchAgentAsync(
             agentName: agentVersion.Name,
             patchAgentOptions: patchOptions);
-        Assert.That(patchedRecord.AgentEndpoint.Protocols, Has.Count.EqualTo(1));
-        Assert.That(patchedRecord.AgentEndpoint.Protocols[0], Is.EqualTo(AgentEndpointProtocol.Responses));
+        Assert.That(patchedRecord.AgentEndpoint.ProtocolConfiguration.Responses, Is.Not.Null);
+        Assert.That(patchedRecord.AgentEndpoint.ProtocolConfiguration.Invocations, Is.Null);
+        Assert.That(patchedRecord.AgentEndpoint.ProtocolConfiguration.A2a, Is.Null);
+        Assert.That(patchedRecord.AgentEndpoint.ProtocolConfiguration.Mcp, Is.Null);
         Assert.That(patchedRecord.AgentEndpoint.VersionSelector.VersionSelectionRules, Has.Count.EqualTo(1));
         Assert.That(patchedRecord.AgentEndpoint.VersionSelector.VersionSelectionRules[0], Is.InstanceOf(typeof(FixedRatioVersionSelectionRule)));
         Assert.That(((FixedRatioVersionSelectionRule)patchedRecord.AgentEndpoint.VersionSelector.VersionSelectionRules[0]).TrafficPercentage, Is.EqualTo(74));
@@ -633,19 +682,17 @@ public class AgentsTests : AgentsTestBase
     public async Task TestSessionFilesCRUD()
     {
         AgentAdministrationClient agentsClient = GetTestClient();
-        AgentSessionFiles filesClient = agentsClient.GetAgentSessionFiles();
         ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient, "01");
         ProjectAgentSession session = await agentsClient.CreateSessionAsync(
             agentName: agentVersion.Name,
             versionIndicator: new VersionRefIndicator(agentVersion.Version)
         );
+        AgentSessionFiles filesClient = agentsClient.GetAgentSessionFiles(agentVersion.Name, session.AgentSessionId);
         string fileLocalPath = GetTestFile("weather_openapi.json");
         string file1 = "file1.json", file2 = "file2.json";
         int fileLength = File.ReadAllBytes(fileLocalPath).Length;
         //Create
-        SessionFileWriteResponse writeResponse = await filesClient.UploadSessionFileAsync(
-            agentName: agentVersion.Name,
-            sessionId: session.AgentSessionId,
+        SessionFileWriteResponse writeResponse = await filesClient.UploadAsync(
             sessionStoragePath: $"storage/{file1}",
             localPath: fileLocalPath
         );
@@ -653,25 +700,21 @@ public class AgentsTests : AgentsTestBase
         Assert.That(writeResponse.BytesWritten, Is.EqualTo(fileLength));
         fileLocalPath = GetTestFile("test.txt");
         fileLength = File.ReadAllBytes(fileLocalPath).Length;
-        writeResponse = await filesClient.UploadSessionFileAsync(
-            agentName: agentVersion.Name,
-            sessionId: session.AgentSessionId,
+        writeResponse = await filesClient.UploadAsync(
             sessionStoragePath: $"storage/{file2}",
             localPath: fileLocalPath
         );
         Assert.That(writeResponse.Path, Is.EqualTo($"storage/{file2}"));
         Assert.That(writeResponse.BytesWritten, Is.EqualTo(fileLength));
         // List
-        AsyncCollectionResult<SessionDirectoryEntry> response = filesClient.GetSessionFilesAsync(agentName: agentVersion.Name, agentSessionId: session.AgentSessionId, sessionStoragePath: "storage");
+        AsyncCollectionResult<SessionDirectoryEntry> response = filesClient.GetAllAsync(sessionStoragePath: "storage");
         List<string> lstEntries = await response.Select(x => x.Name).ToListAsync();
         Assert.That(lstEntries, Does.Contain(file1));
         Assert.That(lstEntries, Does.Contain(file2));
         // Download
         string temporaryFile = Path.GetTempFileName();
         File.Delete(temporaryFile);
-        BinaryData dataBin = await filesClient.DownloadSessionFileAsync(
-            agentName: agentVersion.Name,
-            sessionId: session.AgentSessionId,
+        BinaryData dataBin = await filesClient.DownloadAsync(
             sessionStoragePath: $"storage/{file2}",
             localPath: temporaryFile
         );
@@ -680,13 +723,13 @@ public class AgentsTests : AgentsTestBase
         data = dataBin.ToString();
         Assert.That(data, Is.EqualTo("The test file\n"));
         // Delete
-        await filesClient.DeleteSessionFileAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: $"storage/{file2}");
-        response = filesClient.GetSessionFilesAsync(agentName: agentVersion.Name, agentSessionId: session.AgentSessionId, sessionStoragePath: "storage");
+        await filesClient.DeleteAsync(localPath: $"storage/{file2}");
+        response = filesClient.GetAllAsync(sessionStoragePath: "storage");
         lstEntries = await response.Select(x => x.Name).ToListAsync();
         Assert.That(lstEntries, Has.Count.EqualTo(1));
         Assert.That(lstEntries[0], Is.EqualTo(file1));
-        await filesClient.DeleteSessionFileAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: $"storage/{file1}");
-        response = filesClient.GetSessionFilesAsync(agentName: agentVersion.Name, agentSessionId: session.AgentSessionId, sessionStoragePath: "storage");
+        await filesClient.DeleteAsync(localPath: $"storage/{file1}");
+        response = filesClient.GetAllAsync(sessionStoragePath: "storage");
         Assert.That(await response.ToListAsync(), Has.Count.EqualTo(0));
         await agentsClient.DeleteSessionAsync(
             agentName: agentVersion.Name,
@@ -698,27 +741,25 @@ public class AgentsTests : AgentsTestBase
     public async Task TestSessionFilePagination()
     {
         AgentAdministrationClient agentsClient = GetTestClient();
-        AgentSessionFiles filesClient = agentsClient.GetAgentSessionFiles();
         ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient, "01");
         ProjectAgentSession session = await agentsClient.CreateSessionAsync(
             agentName: agentVersion.Name,
             versionIndicator: new VersionRefIndicator(agentVersion.Version)
         );
+        AgentSessionFiles filesClient = agentsClient.GetAgentSessionFiles(agentVersion.Name, session.AgentSessionId);
         string fileLocalPath = GetTestFile("test.txt");
         int fileLength = File.ReadAllBytes(fileLocalPath).Length;
         // Make sure that chronological order is the reverse of session ID alphanumeric order.
         for (int i = 0; i < PAGE_SIZE + 1; i++)
         {
-            SessionFileWriteResponse writeResponse = await filesClient.UploadSessionFileAsync(
-                agentName: agentVersion.Name,
-                sessionId: session.AgentSessionId,
+            SessionFileWriteResponse writeResponse = await filesClient.UploadAsync(
                 sessionStoragePath: $"storage/file{i}.json",
                 localPath: fileLocalPath
             );
             Assert.That(writeResponse.Path, Is.EqualTo($"storage/file{i}.json"));
             Assert.That(writeResponse.BytesWritten, Is.EqualTo(fileLength));
         }
-        List<SessionDirectoryEntry> records = await filesClient.GetSessionFilesAsync(agentName: agentVersion.Name, agentSessionId: session.AgentSessionId, sessionStoragePath: "storage", limit: PAGE_SIZE, order: AgentListOrder.Ascending).ToListAsync();
+        List<SessionDirectoryEntry> records = await filesClient.GetAllAsync(sessionStoragePath: "storage", limit: PAGE_SIZE, order: AgentListOrder.Ascending).ToListAsync();
         Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1));
         // Go forward.
         //List<SessionDirectoryEntry> forward = await filesClient.GetSessionFilesAsync(agentName: agentVersion.Name, agentSessionId: session.AgentSessionId, sessionStoragePath: "storage", order: AgentListOrder.Ascending, after: records[0].Name, limit: PAGE_SIZE).ToListAsync();
@@ -838,13 +879,13 @@ public class AgentsTests : AgentsTestBase
                 """
         );
         SkillVersion updatedVersion = await skillsClient.CreateSkillVersionAsync(name: codeSkillName, inlineContent: content);
-        AgentsSkill skill = await skillsClient.UpdateSkillAsync(name: codeSkillName, defaultVersion: updatedVersion.Version);
+        AgentsSkill skill = await skillsClient.UpdateDefaultVersionAsync(name: codeSkillName, defaultVersion: updatedVersion.Version);
         Assert.That(skill.Name, Is.EqualTo(codeSkillName));
         Assert.That(skill.Description, Is.EqualTo("Calculates the product of two numbers."));
-        skill = await skillsClient.UpdateSkillAsync(name: codeSkillName, defaultVersion: oldVersion);
+        skill = await skillsClient.UpdateDefaultVersionAsync(name: codeSkillName, defaultVersion: oldVersion);
         Assert.That(skill.Name, Is.EqualTo(codeSkillName));
         Assert.That(skill.Description, Is.EqualTo("Calculates the sum of two numbers."));
-        await skillsClient.UpdateSkillAsync(name: codeSkillName, defaultVersion: updatedVersion.Version);
+        await skillsClient.UpdateDefaultVersionAsync(name: codeSkillName, defaultVersion: updatedVersion.Version);
         // Get
         AgentsSkill retrievedSkill = await skillsClient.GetSkillAsync(name: codeSkillName);
         Assert.That(retrievedSkill.Name, Is.EqualTo(codeSkillName));

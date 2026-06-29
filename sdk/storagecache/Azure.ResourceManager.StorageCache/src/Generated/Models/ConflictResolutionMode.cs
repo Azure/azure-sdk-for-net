@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.StorageCache.Models
     public readonly partial struct ConflictResolutionMode : IEquatable<ConflictResolutionMode>
     {
         private readonly string _value;
+        /// <summary> Fail. </summary>
+        private const string FailValue = "Fail";
+        /// <summary> Skip. </summary>
+        private const string SkipValue = "Skip";
+        /// <summary> OverwriteIfDirty. </summary>
+        private const string OverwriteIfDirtyValue = "OverwriteIfDirty";
+        /// <summary> OverwriteAlways. </summary>
+        private const string OverwriteAlwaysValue = "OverwriteAlways";
 
         /// <summary> Initializes a new instance of <see cref="ConflictResolutionMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConflictResolutionMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string FailValue = "Fail";
-        private const string SkipValue = "Skip";
-        private const string OverwriteIfDirtyValue = "OverwriteIfDirty";
-        private const string OverwriteAlwaysValue = "OverwriteAlways";
+            _value = value;
+        }
 
         /// <summary> Fail. </summary>
         public static ConflictResolutionMode Fail { get; } = new ConflictResolutionMode(FailValue);
+
         /// <summary> Skip. </summary>
         public static ConflictResolutionMode Skip { get; } = new ConflictResolutionMode(SkipValue);
+
         /// <summary> OverwriteIfDirty. </summary>
         public static ConflictResolutionMode OverwriteIfDirty { get; } = new ConflictResolutionMode(OverwriteIfDirtyValue);
+
         /// <summary> OverwriteAlways. </summary>
         public static ConflictResolutionMode OverwriteAlways { get; } = new ConflictResolutionMode(OverwriteAlwaysValue);
+
         /// <summary> Determines if two <see cref="ConflictResolutionMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConflictResolutionMode left, ConflictResolutionMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConflictResolutionMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConflictResolutionMode left, ConflictResolutionMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConflictResolutionMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConflictResolutionMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConflictResolutionMode(string value) => new ConflictResolutionMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConflictResolutionMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConflictResolutionMode?(string value) => value == null ? null : new ConflictResolutionMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConflictResolutionMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConflictResolutionMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
