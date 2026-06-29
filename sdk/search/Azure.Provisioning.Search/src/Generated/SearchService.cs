@@ -390,32 +390,6 @@ namespace Azure.Provisioning.Search
             }
         }
 
-        /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<SearchPrivateEndpointConnection> PrivateEndpointConnections
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new SearchServiceProperties();
-                }
-                return Properties.PrivateEndpointConnections;
-            }
-        }
-
-        /// <summary> Gets the SharedPrivateLinkResources. </summary>
-        public BicepList<SharedSearchServicePrivateLink> SharedPrivateLinkResources
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new SearchServiceProperties();
-                }
-                return Properties.SharedPrivateLinkResources;
-            }
-        }
-
         /// <summary> Gets the ETag. </summary>
         public BicepValue<ETag> ETag
         {
