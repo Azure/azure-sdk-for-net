@@ -265,7 +265,7 @@ var collection = new StacCollectionResource(
 };
 
 // Start collection creation (asynchronous operation)
-Operation createOperation = await stacClient.CreateCollectionAsync(
+await stacClient.CreateCollectionAsync(
     WaitUntil.Started,
     collection
 );
