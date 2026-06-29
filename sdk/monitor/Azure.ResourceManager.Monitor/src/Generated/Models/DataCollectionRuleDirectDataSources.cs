@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// The specification of direct data sources.
     /// This property is optional and can be omitted.
     /// </summary>
-    public partial class DataCollectionRuleDirectDataSources : DirectDataSourcesSpec
+    public partial class DataCollectionRuleDirectDataSources : DataCollectionRuleDirectDataSourcesBase
     {
         /// <summary> Initializes a new instance of <see cref="DataCollectionRuleDirectDataSources"/>. </summary>
         public DataCollectionRuleDirectDataSources()

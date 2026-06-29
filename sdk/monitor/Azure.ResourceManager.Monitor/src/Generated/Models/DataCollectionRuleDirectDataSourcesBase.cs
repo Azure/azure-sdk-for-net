@@ -12,25 +12,25 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Specification of direct data sources that will be collected. </summary>
-    public partial class DirectDataSourcesSpec
+    public partial class DataCollectionRuleDirectDataSourcesBase
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DirectDataSourcesSpec"/>. </summary>
-        public DirectDataSourcesSpec()
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleDirectDataSourcesBase"/>. </summary>
+        public DataCollectionRuleDirectDataSourcesBase()
         {
             OtelMetrics = new ChangeTrackingList<OtelMetricsDirectDataSource>();
             OtelLogs = new ChangeTrackingList<OtelLogsDirectDataSource>();
             OtelTraces = new ChangeTrackingList<OtelTracesDirectDataSource>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DirectDataSourcesSpec"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleDirectDataSourcesBase"/>. </summary>
         /// <param name="otelMetrics"> The list of OTel metrics data source configurations. </param>
         /// <param name="otelLogs"> The list of OTel logs data source configurations. </param>
         /// <param name="otelTraces"> The list of OTel traces data source configurations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DirectDataSourcesSpec(IList<OtelMetricsDirectDataSource> otelMetrics, IList<OtelLogsDirectDataSource> otelLogs, IList<OtelTracesDirectDataSource> otelTraces, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataCollectionRuleDirectDataSourcesBase(IList<OtelMetricsDirectDataSource> otelMetrics, IList<OtelLogsDirectDataSource> otelLogs, IList<OtelTracesDirectDataSource> otelTraces, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OtelMetrics = otelMetrics;
             OtelLogs = otelLogs;

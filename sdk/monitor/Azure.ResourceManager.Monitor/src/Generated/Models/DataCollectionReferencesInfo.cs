@@ -12,22 +12,22 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> This section defines all the references that may be used in other sections of the DCR. </summary>
-    public partial class DataCollectionReferencesSpec
+    public partial class DataCollectionReferencesInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DataCollectionReferencesSpec"/>. </summary>
-        public DataCollectionReferencesSpec()
+        /// <summary> Initializes a new instance of <see cref="DataCollectionReferencesInfo"/>. </summary>
+        public DataCollectionReferencesInfo()
         {
             ApplicationInsights = new ChangeTrackingList<MonitorApplicationInsightsReference>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataCollectionReferencesSpec"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionReferencesInfo"/>. </summary>
         /// <param name="enrichmentData"> All the enrichment data sources referenced in data flows. </param>
         /// <param name="applicationInsights"> Application Insights references to be used on OTel metrics/logs enrichment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataCollectionReferencesSpec(ReferencesSpecEnrichmentData enrichmentData, IList<MonitorApplicationInsightsReference> applicationInsights, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataCollectionReferencesInfo(ReferencesSpecEnrichmentData enrichmentData, IList<MonitorApplicationInsightsReference> applicationInsights, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EnrichmentData = enrichmentData;
             ApplicationInsights = applicationInsights;

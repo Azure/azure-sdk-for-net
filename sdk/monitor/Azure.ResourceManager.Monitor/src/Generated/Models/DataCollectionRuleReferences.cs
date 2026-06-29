@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Defines all the references that may be used in other sections of the DCR. </summary>
-    public partial class DataCollectionRuleReferences : DataCollectionReferencesSpec
+    public partial class DataCollectionRuleReferences : DataCollectionReferencesInfo
     {
         /// <summary> Initializes a new instance of <see cref="DataCollectionRuleReferences"/>. </summary>
         public DataCollectionRuleReferences()

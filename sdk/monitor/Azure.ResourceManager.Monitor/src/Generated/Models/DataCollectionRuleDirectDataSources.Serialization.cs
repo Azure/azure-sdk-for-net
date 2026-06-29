@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.Monitor.Models
     /// The specification of direct data sources.
     /// This property is optional and can be omitted.
     /// </summary>
-    public partial class DataCollectionRuleDirectDataSources : DirectDataSourcesSpec, IJsonModel<DataCollectionRuleDirectDataSources>
+    public partial class DataCollectionRuleDirectDataSources : DataCollectionRuleDirectDataSourcesBase, IJsonModel<DataCollectionRuleDirectDataSources>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DirectDataSourcesSpec PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override DataCollectionRuleDirectDataSourcesBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleDirectDataSources>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DirectDataSourcesSpec JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override DataCollectionRuleDirectDataSourcesBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleDirectDataSources>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

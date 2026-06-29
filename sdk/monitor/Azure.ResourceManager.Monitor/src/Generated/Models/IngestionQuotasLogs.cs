@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The IngestionQuotasLogs. </summary>
-    public partial class IngestionQuotasLogs : LogsQuotaSpec
+    public partial class IngestionQuotasLogs : LogsQuotaInfo
     {
         /// <summary> Initializes a new instance of <see cref="IngestionQuotasLogs"/>. </summary>
         internal IngestionQuotasLogs()

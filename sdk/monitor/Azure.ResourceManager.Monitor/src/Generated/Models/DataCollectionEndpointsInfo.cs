@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> This defines all the ingestion endpoints that can be used by this rule. </summary>
-    public partial class DataCollectionEndpointsSpec
+    public partial class DataCollectionEndpointsInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DataCollectionEndpointsSpec"/>. </summary>
-        internal DataCollectionEndpointsSpec()
+        /// <summary> Initializes a new instance of <see cref="DataCollectionEndpointsInfo"/>. </summary>
+        internal DataCollectionEndpointsInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataCollectionEndpointsSpec"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionEndpointsInfo"/>. </summary>
         /// <param name="logsIngestion"> The ingestion endpoint for logs. </param>
         /// <param name="metricsIngestion"> The ingestion endpoint for metrics. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataCollectionEndpointsSpec(string logsIngestion, string metricsIngestion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataCollectionEndpointsInfo(string logsIngestion, string metricsIngestion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LogsIngestion = logsIngestion;
             MetricsIngestion = metricsIngestion;

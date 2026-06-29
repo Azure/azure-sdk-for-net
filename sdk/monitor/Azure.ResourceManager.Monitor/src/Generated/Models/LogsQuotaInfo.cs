@@ -10,22 +10,22 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The LogsQuotaSpec. </summary>
-    public partial class LogsQuotaSpec
+    /// <summary> The LogsQuotaInfo. </summary>
+    public partial class LogsQuotaInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LogsQuotaSpec"/>. </summary>
-        internal LogsQuotaSpec()
+        /// <summary> Initializes a new instance of <see cref="LogsQuotaInfo"/>. </summary>
+        internal LogsQuotaInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="LogsQuotaSpec"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogsQuotaInfo"/>. </summary>
         /// <param name="maxSizePerMinuteInGB"></param>
         /// <param name="maxRequestsPerMinute"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LogsQuotaSpec(string maxSizePerMinuteInGB, string maxRequestsPerMinute, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LogsQuotaInfo(string maxSizePerMinuteInGB, string maxRequestsPerMinute, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaxSizePerMinuteInGB = maxSizePerMinuteInGB;
             MaxRequestsPerMinute = maxRequestsPerMinute;

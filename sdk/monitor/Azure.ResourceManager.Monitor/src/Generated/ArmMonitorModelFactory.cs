@@ -482,10 +482,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="logsIngestion"> The ingestion endpoint for logs. </param>
         /// <param name="metricsIngestion"> The ingestion endpoint for metrics. </param>
-        /// <returns> A new <see cref="Models.DataCollectionEndpointsSpec"/> instance for mocking. </returns>
-        public static DataCollectionEndpointsSpec DataCollectionEndpointsSpec(string logsIngestion = default, string metricsIngestion = default)
+        /// <returns> A new <see cref="Models.DataCollectionEndpointsInfo"/> instance for mocking. </returns>
+        public static DataCollectionEndpointsInfo DataCollectionEndpointsInfo(string logsIngestion = default, string metricsIngestion = default)
         {
-            return new DataCollectionEndpointsSpec(logsIngestion, metricsIngestion, default);
+            return new DataCollectionEndpointsInfo(logsIngestion, metricsIngestion, default);
         }
 
         /// <param name="enrichmentDataStorageBlobs"> All the storage blobs used as enrichment data sources. </param>
@@ -500,12 +500,12 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="enrichmentDataStorageBlobs"> All the storage blobs used as enrichment data sources. </param>
         /// <param name="applicationInsights"> Application Insights references to be used on OTel metrics/logs enrichment. </param>
-        /// <returns> A new <see cref="Models.DataCollectionReferencesSpec"/> instance for mocking. </returns>
-        public static DataCollectionReferencesSpec DataCollectionReferencesSpec(IEnumerable<DataCollectionRuleEnrichmentStorageBlob> enrichmentDataStorageBlobs = default, IEnumerable<MonitorApplicationInsightsReference> applicationInsights = default)
+        /// <returns> A new <see cref="Models.DataCollectionReferencesInfo"/> instance for mocking. </returns>
+        public static DataCollectionReferencesInfo DataCollectionReferencesInfo(IEnumerable<DataCollectionRuleEnrichmentStorageBlob> enrichmentDataStorageBlobs = default, IEnumerable<MonitorApplicationInsightsReference> applicationInsights = default)
         {
             applicationInsights ??= new ChangeTrackingList<MonitorApplicationInsightsReference>();
 
-            return new DataCollectionReferencesSpec(enrichmentDataStorageBlobs is null ? default : new ReferencesSpecEnrichmentData((enrichmentDataStorageBlobs ?? new ChangeTrackingList<DataCollectionRuleEnrichmentStorageBlob>()).ToList(), default), (applicationInsights ?? new ChangeTrackingList<MonitorApplicationInsightsReference>()).ToList(), default);
+            return new DataCollectionReferencesInfo(enrichmentDataStorageBlobs is null ? default : new ReferencesSpecEnrichmentData((enrichmentDataStorageBlobs ?? new ChangeTrackingList<DataCollectionRuleEnrichmentStorageBlob>()).ToList(), default), (applicationInsights ?? new ChangeTrackingList<MonitorApplicationInsightsReference>()).ToList(), default);
         }
 
         /// <param name="resourceId"> Resource Id of the storage account that hosts the blob. </param>
@@ -1047,14 +1047,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="otelMetrics"> The list of OTel metrics data source configurations. </param>
         /// <param name="otelLogs"> The list of OTel logs data source configurations. </param>
         /// <param name="otelTraces"> The list of OTel traces data source configurations. </param>
-        /// <returns> A new <see cref="Models.DirectDataSourcesSpec"/> instance for mocking. </returns>
-        public static DirectDataSourcesSpec DirectDataSourcesSpec(IEnumerable<OtelMetricsDirectDataSource> otelMetrics = default, IEnumerable<OtelLogsDirectDataSource> otelLogs = default, IEnumerable<OtelTracesDirectDataSource> otelTraces = default)
+        /// <returns> A new <see cref="Models.DataCollectionRuleDirectDataSourcesBase"/> instance for mocking. </returns>
+        public static DataCollectionRuleDirectDataSourcesBase DataCollectionRuleDirectDataSourcesBase(IEnumerable<OtelMetricsDirectDataSource> otelMetrics = default, IEnumerable<OtelLogsDirectDataSource> otelLogs = default, IEnumerable<OtelTracesDirectDataSource> otelTraces = default)
         {
             otelMetrics ??= new ChangeTrackingList<OtelMetricsDirectDataSource>();
             otelLogs ??= new ChangeTrackingList<OtelLogsDirectDataSource>();
             otelTraces ??= new ChangeTrackingList<OtelTracesDirectDataSource>();
 
-            return new DirectDataSourcesSpec((otelMetrics ?? new ChangeTrackingList<OtelMetricsDirectDataSource>()).ToList(), (otelLogs ?? new ChangeTrackingList<OtelLogsDirectDataSource>()).ToList(), (otelTraces ?? new ChangeTrackingList<OtelTracesDirectDataSource>()).ToList(), default);
+            return new DataCollectionRuleDirectDataSourcesBase((otelMetrics ?? new ChangeTrackingList<OtelMetricsDirectDataSource>()).ToList(), (otelLogs ?? new ChangeTrackingList<OtelLogsDirectDataSource>()).ToList(), (otelTraces ?? new ChangeTrackingList<OtelTracesDirectDataSource>()).ToList(), default);
         }
 
         /// <param name="streams"> List of streams that this data source will be sent to. </param>
@@ -1337,10 +1337,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="maxSizePerMinuteInGB"></param>
         /// <param name="maxRequestsPerMinute"></param>
-        /// <returns> A new <see cref="Models.LogsQuotaSpec"/> instance for mocking. </returns>
-        public static LogsQuotaSpec LogsQuotaSpec(string maxSizePerMinuteInGB = default, string maxRequestsPerMinute = default)
+        /// <returns> A new <see cref="Models.LogsQuotaInfo"/> instance for mocking. </returns>
+        public static LogsQuotaInfo LogsQuotaInfo(string maxSizePerMinuteInGB = default, string maxRequestsPerMinute = default)
         {
-            return new LogsQuotaSpec(maxSizePerMinuteInGB, maxRequestsPerMinute, default);
+            return new LogsQuotaInfo(maxSizePerMinuteInGB, maxRequestsPerMinute, default);
         }
 
         /// <param name="name"> The name of the SKU. Ex - P3. It is typically a letter+number code. </param>

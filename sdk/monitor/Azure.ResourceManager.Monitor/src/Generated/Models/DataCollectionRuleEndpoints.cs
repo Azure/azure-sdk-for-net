@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Defines the ingestion endpoints to send data to via this rule. </summary>
-    public partial class DataCollectionRuleEndpoints : DataCollectionEndpointsSpec
+    public partial class DataCollectionRuleEndpoints : DataCollectionEndpointsInfo
     {
         /// <summary> Initializes a new instance of <see cref="DataCollectionRuleEndpoints"/>. </summary>
         internal DataCollectionRuleEndpoints()

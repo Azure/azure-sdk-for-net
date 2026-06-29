@@ -14,51 +14,51 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Specification of direct data sources that will be collected. </summary>
-    public partial class DirectDataSourcesSpec : IJsonModel<DirectDataSourcesSpec>
+    public partial class DataCollectionRuleDirectDataSourcesBase : IJsonModel<DataCollectionRuleDirectDataSourcesBase>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DirectDataSourcesSpec PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DataCollectionRuleDirectDataSourcesBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DirectDataSourcesSpec>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleDirectDataSourcesBase>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDirectDataSourcesSpec(document.RootElement, options);
+                        return DeserializeDataCollectionRuleDirectDataSourcesBase(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DirectDataSourcesSpec)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCollectionRuleDirectDataSourcesBase)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DirectDataSourcesSpec>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleDirectDataSourcesBase>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DirectDataSourcesSpec)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCollectionRuleDirectDataSourcesBase)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DirectDataSourcesSpec>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DataCollectionRuleDirectDataSourcesBase>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DirectDataSourcesSpec IPersistableModel<DirectDataSourcesSpec>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DataCollectionRuleDirectDataSourcesBase IPersistableModel<DataCollectionRuleDirectDataSourcesBase>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DirectDataSourcesSpec>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DataCollectionRuleDirectDataSourcesBase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DirectDataSourcesSpec>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DataCollectionRuleDirectDataSourcesBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DirectDataSourcesSpec>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleDirectDataSourcesBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DirectDataSourcesSpec)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCollectionRuleDirectDataSourcesBase)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(OtelMetrics))
             {
@@ -123,24 +123,24 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DirectDataSourcesSpec IJsonModel<DirectDataSourcesSpec>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DataCollectionRuleDirectDataSourcesBase IJsonModel<DataCollectionRuleDirectDataSourcesBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DirectDataSourcesSpec JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DataCollectionRuleDirectDataSourcesBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DirectDataSourcesSpec>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleDirectDataSourcesBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DirectDataSourcesSpec)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCollectionRuleDirectDataSourcesBase)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDirectDataSourcesSpec(document.RootElement, options);
+            return DeserializeDataCollectionRuleDirectDataSourcesBase(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DirectDataSourcesSpec DeserializeDirectDataSourcesSpec(JsonElement element, ModelReaderWriterOptions options)
+        internal static DataCollectionRuleDirectDataSourcesBase DeserializeDataCollectionRuleDirectDataSourcesBase(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DirectDataSourcesSpec(otelMetrics ?? new ChangeTrackingList<OtelMetricsDirectDataSource>(), otelLogs ?? new ChangeTrackingList<OtelLogsDirectDataSource>(), otelTraces ?? new ChangeTrackingList<OtelTracesDirectDataSource>(), additionalBinaryDataProperties);
+            return new DataCollectionRuleDirectDataSourcesBase(otelMetrics ?? new ChangeTrackingList<OtelMetricsDirectDataSource>(), otelLogs ?? new ChangeTrackingList<OtelLogsDirectDataSource>(), otelTraces ?? new ChangeTrackingList<OtelTracesDirectDataSource>(), additionalBinaryDataProperties);
         }
     }
 }
