@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> Gets the resource data. </summary>
-        public virtual MonitorWorkspaceResourceData Data => throw new NotSupportedException(MovedMessage);
+        public virtual MonitorWorkspaceResourceData Data { get; }
 
         /// <summary> Gets whether the resource has data. </summary>
-        public virtual bool HasData => throw new NotSupportedException(MovedMessage);
+        public virtual bool HasData { get; }
 
         /// <summary> Creates a resource identifier for a MonitorWorkspace resource. </summary>
         /// <param name="subscriptionId"> The subscription id. </param>
