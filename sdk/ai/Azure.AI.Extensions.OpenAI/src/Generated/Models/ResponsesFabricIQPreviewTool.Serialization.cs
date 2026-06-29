@@ -83,10 +83,10 @@ namespace Azure.AI.Extensions.OpenAI
                 writer.WritePropertyName("server_label"u8);
                 writer.WriteStringValue(ServerLabel);
             }
-            if (Optional.IsDefined(ServerUrl))
+            if (Optional.IsDefined(ServerUri))
             {
                 writer.WritePropertyName("server_url"u8);
-                writer.WriteStringValue(ServerUrl.AbsoluteUri);
+                writer.WriteStringValue(ServerUri.AbsoluteUri);
             }
             if (Optional.IsDefined(RequireApproval))
             {
@@ -131,7 +131,7 @@ namespace Azure.AI.Extensions.OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string projectConnectionId = default;
             string serverLabel = default;
-            Uri serverUrl = default;
+            Uri serverUri = default;
             BinaryData requireApproval = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -156,7 +156,7 @@ namespace Azure.AI.Extensions.OpenAI
                     {
                         continue;
                     }
-                    serverUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    serverUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("require_approval"u8))
@@ -179,7 +179,7 @@ namespace Azure.AI.Extensions.OpenAI
                 additionalBinaryDataProperties,
                 projectConnectionId,
                 serverLabel,
-                serverUrl,
+                serverUri,
                 requireApproval);
         }
     }

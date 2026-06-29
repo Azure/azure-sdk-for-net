@@ -463,7 +463,7 @@ public class ResponseContext
     public virtual Task<IReadOnlyList<Item>> GetInputItemsAsync(bool resolveReferences = true, CancellationToken cancellationToken = default);
     public virtual Task<string> GetInputTextAsync(bool resolveReferences = true, CancellationToken cancellationToken = default);
     public virtual Task<IReadOnlyList<OutputItem>> GetHistoryAsync(CancellationToken cancellationToken = default);
-    public virtual IsolationContext Isolation { get; }
+    public virtual PlatformContext PlatformContext { get; }
     public virtual IReadOnlyDictionary<string, string> ClientHeaders { get; }
     public virtual IReadOnlyDictionary<string, StringValues> QueryParameters { get; }
 }
