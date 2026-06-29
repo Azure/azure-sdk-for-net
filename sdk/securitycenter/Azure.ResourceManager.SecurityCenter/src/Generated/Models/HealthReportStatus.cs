@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="statusChangeOn"> The date of when the status of the health report was changed in the last time. </param>
         /// <param name="firstEvaluationOn"> The date of when the resource of the health report was scanned in the first time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HealthReportStatus(StatusName? code, string reason, DateTimeOffset? lastScannedOn, DateTimeOffset? statusChangeOn, DateTimeOffset? firstEvaluationOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HealthReportStatus(SecurityCenterHealthStatus? code, string reason, DateTimeOffset? lastScannedOn, DateTimeOffset? statusChangeOn, DateTimeOffset? firstEvaluationOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Reason = reason;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> The status of the health report. </summary>
-        public StatusName? Code { get; }
+        public SecurityCenterHealthStatus? Code { get; }
 
         /// <summary> The reason of the given status. </summary>
         public string Reason { get; }

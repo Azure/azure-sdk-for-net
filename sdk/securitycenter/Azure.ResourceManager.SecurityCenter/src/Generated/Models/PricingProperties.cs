@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="isDeprecated"> Optional. True if the plan is deprecated. If there are replacing plans they will appear in `replacedBy` property. </param>
         /// <param name="replacedBy"> Optional. List of plans that replace this plan. This property exists only if this plan is deprecated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PricingProperties(SecurityCenterPricingTier pricingTier, string subPlan, TimeSpan? freeTrialRemainingTime, DateTimeOffset? enablementOn, SecurityPolicyEnforce? enforce, Inherited? inherited, string inheritedFrom, ResourcesCoverageStatus? resourcesCoverageStatus, IList<SecurityConnectorExtension> extensions, bool? isDeprecated, IReadOnlyList<string> replacedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PricingProperties(SecurityCenterPricingTier pricingTier, string subPlan, TimeSpan? freeTrialRemainingTime, DateTimeOffset? enablementOn, SecurityPolicyEnforce? enforce, SecurityCenterPricingInheritance? inherited, string inheritedFrom, ResourcesCoverageStatus? resourcesCoverageStatus, IList<SecurityConnectorExtension> extensions, bool? isDeprecated, IReadOnlyList<string> replacedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PricingTier = pricingTier;
             SubPlan = subPlan;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public SecurityPolicyEnforce? Enforce { get; set; }
 
         /// <summary> "inherited" = "True" indicates that the current scope inherits its pricing configuration from its parent. The ID of the parent scope that provides the inherited configuration is displayed in the "inheritedFrom" field. On the other hand, "inherited" = "False" indicates that the current scope has its own pricing configuration explicitly set, and does not inherit from its parent. This field is read only and available only for resource-level pricing. </summary>
-        public Inherited? Inherited { get; }
+        public SecurityCenterPricingInheritance? Inherited { get; }
 
         /// <summary> The id of the scope inherited from. "Null" if not inherited. This field is only available for resource-level pricing. </summary>
         public string InheritedFrom { get; }

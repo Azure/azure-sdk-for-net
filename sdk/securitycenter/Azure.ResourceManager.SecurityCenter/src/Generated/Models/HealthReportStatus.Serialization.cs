@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            StatusName? code = default;
+            SecurityCenterHealthStatus? code = default;
             string reason = default;
             DateTimeOffset? lastScannedOn = default;
             DateTimeOffset? statusChangeOn = default;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    code = new StatusName(prop.Value.GetString());
+                    code = new SecurityCenterHealthStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("reason"u8))

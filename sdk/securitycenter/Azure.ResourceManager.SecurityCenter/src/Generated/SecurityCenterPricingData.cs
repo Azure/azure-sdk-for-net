@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> "inherited" = "True" indicates that the current scope inherits its pricing configuration from its parent. The ID of the parent scope that provides the inherited configuration is displayed in the "inheritedFrom" field. On the other hand, "inherited" = "False" indicates that the current scope has its own pricing configuration explicitly set, and does not inherit from its parent. This field is read only and available only for resource-level pricing. </summary>
-        public Inherited? Inherited
+        public SecurityCenterPricingInheritance? Inherited
         {
             get
             {

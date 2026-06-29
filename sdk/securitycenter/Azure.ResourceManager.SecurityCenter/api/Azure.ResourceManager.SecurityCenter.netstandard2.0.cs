@@ -2781,7 +2781,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public Azure.ResourceManager.SecurityCenter.Models.SecurityPolicyEnforce? Enforce { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.SecurityConnectorExtension> Extensions { get { throw null; } }
         public System.TimeSpan? FreeTrialRemainingTime { get { throw null; } }
-        public Azure.ResourceManager.SecurityCenter.Models.Inherited? Inherited { get { throw null; } }
+        public Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingInheritance? Inherited { get { throw null; } }
         public string InheritedFrom { get { throw null; } }
         public bool? IsDeprecated { get { throw null; } }
         public Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier? PricingTier { get { throw null; } set { } }
@@ -5150,7 +5150,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleOwnerSource GovernanceRuleOwnerSource(Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleOwnerSourceType? sourceType = default(Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleOwnerSourceType?), string value = null) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.HealthDataClassification HealthDataClassification(string component = null, string scenario = null, string scope = null) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.HealthReportData HealthReportData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.SecurityCenter.Models.SecurityCloudResourceDetails resourceDetails = null, Azure.ResourceManager.SecurityCenter.Models.SecurityConnectorEnvironmentDetails environmentDetails = null, Azure.ResourceManager.SecurityCenter.Models.HealthDataClassification healthDataClassification = null, Azure.ResourceManager.SecurityCenter.Models.HealthReportStatus status = null, System.Collections.Generic.IEnumerable<string> affectedDefendersPlans = null, System.Collections.Generic.IEnumerable<string> affectedDefendersSubPlans = null, System.Collections.Generic.IReadOnlyDictionary<string, string> reportAdditionalData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.Models.SecurityHealthIssue> issues = null) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.Models.HealthReportStatus HealthReportStatus(Azure.ResourceManager.SecurityCenter.Models.StatusName? code = default(Azure.ResourceManager.SecurityCenter.Models.StatusName?), string reason = null, System.DateTimeOffset? lastScannedOn = default(System.DateTimeOffset?), System.DateTimeOffset? statusChangeOn = default(System.DateTimeOffset?), System.DateTimeOffset? firstEvaluationOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.Models.HealthReportStatus HealthReportStatus(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterHealthStatus? code = default(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterHealthStatus?), string reason = null, System.DateTimeOffset? lastScannedOn = default(System.DateTimeOffset?), System.DateTimeOffset? statusChangeOn = default(System.DateTimeOffset?), System.DateTimeOffset? firstEvaluationOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.HttpC2DMessagesNotInAllowedRange HttpC2DMessagesNotInAllowedRange(string displayName = null, string description = null, bool isEnabled = false, int minThreshold = 0, int maxThreshold = 0, System.TimeSpan timeWindowSize = default(System.TimeSpan)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.HttpC2DRejectedMessagesNotInAllowedRange HttpC2DRejectedMessagesNotInAllowedRange(string displayName = null, string description = null, bool isEnabled = false, int minThreshold = 0, int maxThreshold = 0, System.TimeSpan timeWindowSize = default(System.TimeSpan)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.HttpD2CMessagesNotInAllowedRange HttpD2CMessagesNotInAllowedRange(string displayName = null, string description = null, bool isEnabled = false, int minThreshold = 0, int maxThreshold = 0, System.TimeSpan timeWindowSize = default(System.TimeSpan)) { throw null; }
@@ -5259,10 +5259,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.SecurityCenterAssignmentData SecurityCenterAssignmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, string description = null, string scope = null, string effect = null, System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), System.BinaryData metadata = null, string assignedStandardId = null, string assignedComponentKey = null, string additionalDataExemptionCategory = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string kind = null, Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudOffering SecurityCenterCloudOffering(string offeringType = null, string description = null) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.SecurityCenterLocationData SecurityCenterLocationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.BinaryData properties = null) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterOperationResult SecurityCenterOperationResult(Azure.ResourceManager.SecurityCenter.Models.OperationResultStatus? status = default(Azure.ResourceManager.SecurityCenter.Models.OperationResultStatus?)) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterOperationResult SecurityCenterOperationResult(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterOperationResultStatus? status = default(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterOperationResultStatus?)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterOperationStatus SecurityCenterOperationStatus(string code = null, string message = null) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPatchTags SecurityCenterPatchTags(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.SecurityCenterPricingData SecurityCenterPricingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier? pricingTier = default(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier?), string subPlan = null, System.TimeSpan? freeTrialRemainingTime = default(System.TimeSpan?), System.DateTimeOffset? enablementOn = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityCenter.Models.SecurityPolicyEnforce? enforce = default(Azure.ResourceManager.SecurityCenter.Models.SecurityPolicyEnforce?), Azure.ResourceManager.SecurityCenter.Models.Inherited? inherited = default(Azure.ResourceManager.SecurityCenter.Models.Inherited?), string inheritedFrom = null, Azure.ResourceManager.SecurityCenter.Models.ResourcesCoverageStatus? resourcesCoverageStatus = default(Azure.ResourceManager.SecurityCenter.Models.ResourcesCoverageStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.Models.SecurityConnectorExtension> extensions = null, bool? isDeprecated = default(bool?), System.Collections.Generic.IEnumerable<string> replacedBy = null) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.SecurityCenterPricingData SecurityCenterPricingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier? pricingTier = default(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier?), string subPlan = null, System.TimeSpan? freeTrialRemainingTime = default(System.TimeSpan?), System.DateTimeOffset? enablementOn = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityCenter.Models.SecurityPolicyEnforce? enforce = default(Azure.ResourceManager.SecurityCenter.Models.SecurityPolicyEnforce?), Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingInheritance? inherited = default(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingInheritance?), string inheritedFrom = null, Azure.ResourceManager.SecurityCenter.Models.ResourcesCoverageStatus? resourcesCoverageStatus = default(Azure.ResourceManager.SecurityCenter.Models.ResourcesCoverageStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.Models.SecurityConnectorExtension> extensions = null, bool? isDeprecated = default(bool?), System.Collections.Generic.IEnumerable<string> replacedBy = null) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.SecurityCenterPrivateEndpointConnectionData SecurityCenterPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<string> groupIds = null, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPrivateEndpointConnectionProvisioningState?), Azure.Core.ResourceIdentifier privateEndpointId = null) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.SecurityCenterPrivateLinkResourceData SecurityCenterPrivateLinkResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.SecurityCenter.Models.SecurityCenterProvisioningState? provisioningState = default(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.SecurityCenterPrivateEndpointConnectionData> privateEndpointConnections = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.PrivateLinkGroupData> privateLinkResources = null, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPublicNetworkAccess?)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPrivateLinkServiceConnectionState SecurityCenterPrivateLinkServiceConnectionState(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPrivateEndpointServiceConnectionStatus? status = default(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPrivateEndpointServiceConnectionStatus?), string description = null, string actionsRequired = null) { throw null; }
@@ -7695,7 +7695,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public partial class HealthReportStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.HealthReportStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.HealthReportStatus>
     {
         internal HealthReportStatus() { }
-        public Azure.ResourceManager.SecurityCenter.Models.StatusName? Code { get { throw null; } }
+        public Azure.ResourceManager.SecurityCenter.Models.SecurityCenterHealthStatus? Code { get { throw null; } }
         public System.DateTimeOffset? FirstEvaluationOn { get { throw null; } }
         public System.DateTimeOffset? LastScannedOn { get { throw null; } }
         public string Reason { get { throw null; } }
@@ -7901,23 +7901,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         public IngestionSettingToken() { }
         public string Token { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Inherited : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.Inherited>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Inherited(string value) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.Models.Inherited False { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.Inherited True { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.Inherited other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.Inherited left, Azure.ResourceManager.SecurityCenter.Models.Inherited right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.Inherited (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.Inherited? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.Inherited left, Azure.ResourceManager.SecurityCenter.Models.Inherited right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct InheritFromParentState : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.InheritFromParentState>
@@ -8741,24 +8724,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         Azure.ResourceManager.SecurityCenter.Models.OnUploadProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.OnUploadProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.OnUploadProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.OnUploadProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OperationResultStatus : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.OperationResultStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public OperationResultStatus(string value) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.Models.OperationResultStatus Canceled { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.OperationResultStatus Failed { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.OperationResultStatus Succeeded { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.OperationResultStatus other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.OperationResultStatus left, Azure.ResourceManager.SecurityCenter.Models.OperationResultStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.OperationResultStatus (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.OperationResultStatus? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.OperationResultStatus left, Azure.ResourceManager.SecurityCenter.Models.OperationResultStatus right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class PartialAssessmentProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.PartialAssessmentProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.PartialAssessmentProperties>
     {
@@ -10264,6 +10229,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterFileProtectionMode>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SecurityCenterHealthStatus : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterHealthStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SecurityCenterHealthStatus(string value) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterHealthStatus Healthy { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterHealthStatus NotApplicable { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterHealthStatus NotHealthy { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterHealthStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterHealthStatus left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterHealthStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityCenterHealthStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityCenterHealthStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterHealthStatus left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterHealthStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SecurityCenterKind : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterKind>
     {
         private readonly object _dummy;
@@ -10282,7 +10265,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public partial class SecurityCenterOperationResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterOperationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterOperationResult>
     {
         internal SecurityCenterOperationResult() { }
-        public Azure.ResourceManager.SecurityCenter.Models.OperationResultStatus? Status { get { throw null; } }
+        public Azure.ResourceManager.SecurityCenter.Models.SecurityCenterOperationResultStatus? Status { get { throw null; } }
         protected virtual Azure.ResourceManager.SecurityCenter.Models.SecurityCenterOperationResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.SecurityCenter.Models.SecurityCenterOperationResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10292,6 +10275,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         Azure.ResourceManager.SecurityCenter.Models.SecurityCenterOperationResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterOperationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterOperationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterOperationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SecurityCenterOperationResultStatus : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterOperationResultStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SecurityCenterOperationResultStatus(string value) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterOperationResultStatus Canceled { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterOperationResultStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterOperationResultStatus Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterOperationResultStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterOperationResultStatus left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterOperationResultStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityCenterOperationResultStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityCenterOperationResultStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterOperationResultStatus left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterOperationResultStatus right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class SecurityCenterOperationStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterOperationStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterOperationStatus>
     {
@@ -10321,6 +10322,23 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPatchTags System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPatchTags>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPatchTags>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPatchTags>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SecurityCenterPricingInheritance : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingInheritance>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SecurityCenterPricingInheritance(string value) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingInheritance False { get { throw null; } }
+        public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingInheritance True { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingInheritance other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingInheritance left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingInheritance right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingInheritance (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingInheritance? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingInheritance left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingInheritance right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SecurityCenterPricingTier : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier>
@@ -11658,24 +11676,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.StandardType (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.StandardType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.StandardType left, Azure.ResourceManager.SecurityCenter.Models.StandardType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct StatusName : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.StatusName>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public StatusName(string value) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.Models.StatusName Healthy { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.StatusName NotApplicable { get { throw null; } }
-        public static Azure.ResourceManager.SecurityCenter.Models.StatusName NotHealthy { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.StatusName other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.StatusName left, Azure.ResourceManager.SecurityCenter.Models.StatusName right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.StatusName (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.StatusName? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.StatusName left, Azure.ResourceManager.SecurityCenter.Models.StatusName right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class SubAssessmentStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.SubAssessmentStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.SubAssessmentStatus>

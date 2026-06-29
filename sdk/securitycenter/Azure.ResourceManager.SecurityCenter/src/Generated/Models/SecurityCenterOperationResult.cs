@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="SecurityCenterOperationResult"/>. </summary>
         /// <param name="status"> The status of the long run operation result of governance rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityCenterOperationResult(OperationResultStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityCenterOperationResult(SecurityCenterOperationResultStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The status of the long run operation result of governance rule. </summary>
-        public OperationResultStatus? Status { get; }
+        public SecurityCenterOperationResultStatus? Status { get; }
     }
 }

@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            OperationResultStatus? status = default;
+            SecurityCenterOperationResultStatus? status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    status = new OperationResultStatus(prop.Value.GetString());
+                    status = new SecurityCenterOperationResultStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

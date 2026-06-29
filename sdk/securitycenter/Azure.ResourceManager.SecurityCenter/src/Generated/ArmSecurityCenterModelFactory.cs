@@ -702,7 +702,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="status"> The status of the long run operation result of governance rule. </param>
         /// <returns> A new <see cref="Models.SecurityCenterOperationResult"/> instance for mocking. </returns>
-        public static SecurityCenterOperationResult SecurityCenterOperationResult(OperationResultStatus? status = default)
+        public static SecurityCenterOperationResult SecurityCenterOperationResult(SecurityCenterOperationResultStatus? status = default)
         {
             return new SecurityCenterOperationResult(status, default);
         }
@@ -781,7 +781,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="statusChangeOn"> The date of when the status of the health report was changed in the last time. </param>
         /// <param name="firstEvaluationOn"> The date of when the resource of the health report was scanned in the first time. </param>
         /// <returns> A new <see cref="Models.HealthReportStatus"/> instance for mocking. </returns>
-        public static HealthReportStatus HealthReportStatus(StatusName? code = default, string reason = default, DateTimeOffset? lastScannedOn = default, DateTimeOffset? statusChangeOn = default, DateTimeOffset? firstEvaluationOn = default)
+        public static HealthReportStatus HealthReportStatus(SecurityCenterHealthStatus? code = default, string reason = default, DateTimeOffset? lastScannedOn = default, DateTimeOffset? statusChangeOn = default, DateTimeOffset? firstEvaluationOn = default)
         {
             return new HealthReportStatus(
                 code,
@@ -1515,7 +1515,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="isDeprecated"> Optional. True if the plan is deprecated. If there are replacing plans they will appear in `replacedBy` property. </param>
         /// <param name="replacedBy"> Optional. List of plans that replace this plan. This property exists only if this plan is deprecated. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityCenterPricingData"/> instance for mocking. </returns>
-        public static SecurityCenterPricingData SecurityCenterPricingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SecurityCenterPricingTier? pricingTier = default, string subPlan = default, TimeSpan? freeTrialRemainingTime = default, DateTimeOffset? enablementOn = default, SecurityPolicyEnforce? enforce = default, Inherited? inherited = default, string inheritedFrom = default, ResourcesCoverageStatus? resourcesCoverageStatus = default, IEnumerable<SecurityConnectorExtension> extensions = default, bool? isDeprecated = default, IEnumerable<string> replacedBy = default)
+        public static SecurityCenterPricingData SecurityCenterPricingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SecurityCenterPricingTier? pricingTier = default, string subPlan = default, TimeSpan? freeTrialRemainingTime = default, DateTimeOffset? enablementOn = default, SecurityPolicyEnforce? enforce = default, SecurityCenterPricingInheritance? inherited = default, string inheritedFrom = default, ResourcesCoverageStatus? resourcesCoverageStatus = default, IEnumerable<SecurityConnectorExtension> extensions = default, bool? isDeprecated = default, IEnumerable<string> replacedBy = default)
         {
             return new SecurityCenterPricingData(
                 id,

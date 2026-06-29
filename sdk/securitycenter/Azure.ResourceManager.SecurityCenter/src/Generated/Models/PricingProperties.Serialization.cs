@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             TimeSpan? freeTrialRemainingTime = default;
             DateTimeOffset? enablementOn = default;
             SecurityPolicyEnforce? enforce = default;
-            Inherited? inherited = default;
+            SecurityCenterPricingInheritance? inherited = default;
             string inheritedFrom = default;
             ResourcesCoverageStatus? resourcesCoverageStatus = default;
             IList<SecurityConnectorExtension> extensions = default;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    inherited = new Inherited(prop.Value.GetString());
+                    inherited = new SecurityCenterPricingInheritance(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("inheritedFrom"u8))
