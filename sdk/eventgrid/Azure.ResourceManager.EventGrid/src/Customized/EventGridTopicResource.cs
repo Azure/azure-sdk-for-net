@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.EventGrid
                 return Response.FromValue(new EventGridTopicResource(Client, response.Value), response.GetRawResponse());
             }
 
-            EventGridTopicPatch patch = CreatePatchWithTags(Data.Tags);
+            EventGridTopicData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
+            EventGridTopicPatch patch = CreatePatchWithTags(current.Tags);
             patch.Tags[key] = value;
             await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
             return await GetAsync(cancellationToken).ConfigureAwait(false);
@@ -69,7 +70,8 @@ namespace Azure.ResourceManager.EventGrid
                 return Response.FromValue(new EventGridTopicResource(Client, response.Value), response.GetRawResponse());
             }
 
-            EventGridTopicPatch patch = CreatePatchWithTags(Data.Tags);
+            EventGridTopicData current = Get(cancellationToken).Value.Data;
+            EventGridTopicPatch patch = CreatePatchWithTags(current.Tags);
             patch.Tags[key] = value;
             Update(WaitUntil.Completed, patch, cancellationToken);
             return Get(cancellationToken);
@@ -95,7 +97,8 @@ namespace Azure.ResourceManager.EventGrid
                 return Response.FromValue(new EventGridTopicResource(Client, response.Value), response.GetRawResponse());
             }
 
-            EventGridTopicPatch patch = CreatePatchWithTags(Data.Tags);
+            EventGridTopicData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
+            EventGridTopicPatch patch = CreatePatchWithTags(current.Tags);
             patch.Tags.Remove(key);
             await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
             return await GetAsync(cancellationToken).ConfigureAwait(false);
@@ -121,7 +124,8 @@ namespace Azure.ResourceManager.EventGrid
                 return Response.FromValue(new EventGridTopicResource(Client, response.Value), response.GetRawResponse());
             }
 
-            EventGridTopicPatch patch = CreatePatchWithTags(Data.Tags);
+            EventGridTopicData current = Get(cancellationToken).Value.Data;
+            EventGridTopicPatch patch = CreatePatchWithTags(current.Tags);
             patch.Tags.Remove(key);
             Update(WaitUntil.Completed, patch, cancellationToken);
             return Get(cancellationToken);

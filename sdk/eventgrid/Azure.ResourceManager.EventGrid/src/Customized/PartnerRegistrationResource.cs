@@ -25,7 +25,8 @@ namespace Azure.ResourceManager.EventGrid
         public virtual async Task<Response<PartnerRegistrationResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
-            PartnerRegistrationPatch patch = CreatePatchWithTags(Data.Tags);
+            PartnerRegistrationData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
+            PartnerRegistrationPatch patch = CreatePatchWithTags(current.Tags);
             patch.Tags[key] = value;
             await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
             return await GetAsync(cancellationToken).ConfigureAwait(false);
@@ -36,7 +37,8 @@ namespace Azure.ResourceManager.EventGrid
         public virtual Response<PartnerRegistrationResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
-            PartnerRegistrationPatch patch = CreatePatchWithTags(Data.Tags);
+            PartnerRegistrationData current = Get(cancellationToken).Value.Data;
+            PartnerRegistrationPatch patch = CreatePatchWithTags(current.Tags);
             patch.Tags[key] = value;
             Update(WaitUntil.Completed, patch, cancellationToken);
             return Get(cancellationToken);
@@ -47,7 +49,8 @@ namespace Azure.ResourceManager.EventGrid
         public virtual async Task<Response<PartnerRegistrationResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
-            PartnerRegistrationPatch patch = CreatePatchWithTags(Data.Tags);
+            PartnerRegistrationData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
+            PartnerRegistrationPatch patch = CreatePatchWithTags(current.Tags);
             patch.Tags.Remove(key);
             await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
             return await GetAsync(cancellationToken).ConfigureAwait(false);
@@ -58,7 +61,8 @@ namespace Azure.ResourceManager.EventGrid
         public virtual Response<PartnerRegistrationResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
-            PartnerRegistrationPatch patch = CreatePatchWithTags(Data.Tags);
+            PartnerRegistrationData current = Get(cancellationToken).Value.Data;
+            PartnerRegistrationPatch patch = CreatePatchWithTags(current.Tags);
             patch.Tags.Remove(key);
             Update(WaitUntil.Completed, patch, cancellationToken);
             return Get(cancellationToken);
