@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.EventGrid.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventGrid
 {
@@ -29,6 +30,14 @@ namespace Azure.ResourceManager.EventGrid
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
+            if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+            {
+                Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues[key] = value;
+                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                return await GetAsync(cancellationToken).ConfigureAwait(false);
+            }
+
             NamespaceTopicEventSubscriptionPatch patch = await CreateTagPatchAsync(cancellationToken).ConfigureAwait(false);
             patch.Tags[key] = value;
 
@@ -47,6 +56,14 @@ namespace Azure.ResourceManager.EventGrid
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
+            if (CanUseTagResource(cancellationToken))
+            {
+                Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                originalTags.Value.Data.TagValues[key] = value;
+                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                return Get(cancellationToken);
+            }
+
             NamespaceTopicEventSubscriptionPatch patch = CreateTagPatch(cancellationToken);
             patch.Tags[key] = value;
 
@@ -62,6 +79,15 @@ namespace Azure.ResourceManager.EventGrid
         public virtual async Task<Response<NamespaceTopicEventSubscriptionResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
+
+            if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+            {
+                await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                return await GetAsync(cancellationToken).ConfigureAwait(false);
+            }
 
             NamespaceTopicEventSubscriptionPatch patch = new NamespaceTopicEventSubscriptionPatch();
             foreach (KeyValuePair<string, string> tag in tags)
@@ -82,6 +108,15 @@ namespace Azure.ResourceManager.EventGrid
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
+            if (CanUseTagResource(cancellationToken))
+            {
+                GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                return Get(cancellationToken);
+            }
+
             NamespaceTopicEventSubscriptionPatch patch = new NamespaceTopicEventSubscriptionPatch();
             foreach (KeyValuePair<string, string> tag in tags)
             {
@@ -101,6 +136,14 @@ namespace Azure.ResourceManager.EventGrid
         {
             Argument.AssertNotNull(key, nameof(key));
 
+            if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+            {
+                Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues.Remove(key);
+                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                return await GetAsync(cancellationToken).ConfigureAwait(false);
+            }
+
             NamespaceTopicEventSubscriptionPatch patch = await CreateTagPatchAsync(cancellationToken).ConfigureAwait(false);
             patch.Tags.Remove(key);
 
@@ -116,6 +159,14 @@ namespace Azure.ResourceManager.EventGrid
         public virtual Response<NamespaceTopicEventSubscriptionResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
+
+            if (CanUseTagResource(cancellationToken))
+            {
+                Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                originalTags.Value.Data.TagValues.Remove(key);
+                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                return Get(cancellationToken);
+            }
 
             NamespaceTopicEventSubscriptionPatch patch = CreateTagPatch(cancellationToken);
             patch.Tags.Remove(key);

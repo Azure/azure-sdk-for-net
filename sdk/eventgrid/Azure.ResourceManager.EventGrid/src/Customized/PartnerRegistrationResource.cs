@@ -3,12 +3,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager.EventGrid.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventGrid
 {
@@ -25,6 +28,21 @@ namespace Azure.ResourceManager.EventGrid
         public virtual async Task<Response<PartnerRegistrationResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
+            if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+            {
+                Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues[key] = value;
+                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PartnerRegistrationData> response = Response.FromValue(PartnerRegistrationData.FromResponse(result), result);
+                return Response.FromValue(new PartnerRegistrationResource(Client, response.Value), response.GetRawResponse());
+            }
+
             PartnerRegistrationData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
             PartnerRegistrationPatch patch = CreatePatchWithTags(current.Tags);
             patch.Tags[key] = value;
@@ -37,6 +55,21 @@ namespace Azure.ResourceManager.EventGrid
         public virtual Response<PartnerRegistrationResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
+            if (CanUseTagResource(cancellationToken))
+            {
+                Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                originalTags.Value.Data.TagValues[key] = value;
+                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PartnerRegistrationData> response = Response.FromValue(PartnerRegistrationData.FromResponse(result), result);
+                return Response.FromValue(new PartnerRegistrationResource(Client, response.Value), response.GetRawResponse());
+            }
+
             PartnerRegistrationData current = Get(cancellationToken).Value.Data;
             PartnerRegistrationPatch patch = CreatePatchWithTags(current.Tags);
             patch.Tags[key] = value;
@@ -49,6 +82,21 @@ namespace Azure.ResourceManager.EventGrid
         public virtual async Task<Response<PartnerRegistrationResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
+            if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+            {
+                Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues.Remove(key);
+                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PartnerRegistrationData> response = Response.FromValue(PartnerRegistrationData.FromResponse(result), result);
+                return Response.FromValue(new PartnerRegistrationResource(Client, response.Value), response.GetRawResponse());
+            }
+
             PartnerRegistrationData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
             PartnerRegistrationPatch patch = CreatePatchWithTags(current.Tags);
             patch.Tags.Remove(key);
@@ -61,6 +109,21 @@ namespace Azure.ResourceManager.EventGrid
         public virtual Response<PartnerRegistrationResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
+            if (CanUseTagResource(cancellationToken))
+            {
+                Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                originalTags.Value.Data.TagValues.Remove(key);
+                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PartnerRegistrationData> response = Response.FromValue(PartnerRegistrationData.FromResponse(result), result);
+                return Response.FromValue(new PartnerRegistrationResource(Client, response.Value), response.GetRawResponse());
+            }
+
             PartnerRegistrationData current = Get(cancellationToken).Value.Data;
             PartnerRegistrationPatch patch = CreatePatchWithTags(current.Tags);
             patch.Tags.Remove(key);
@@ -73,6 +136,22 @@ namespace Azure.ResourceManager.EventGrid
         public virtual async Task<Response<PartnerRegistrationResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
+            if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+            {
+                await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PartnerRegistrationData> response = Response.FromValue(PartnerRegistrationData.FromResponse(result), result);
+                return Response.FromValue(new PartnerRegistrationResource(Client, response.Value), response.GetRawResponse());
+            }
+
             PartnerRegistrationPatch patch = CreatePatchWithTags(tags);
             await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
             return await GetAsync(cancellationToken).ConfigureAwait(false);
@@ -83,6 +162,22 @@ namespace Azure.ResourceManager.EventGrid
         public virtual Response<PartnerRegistrationResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
+            if (CanUseTagResource(cancellationToken))
+            {
+                GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PartnerRegistrationData> response = Response.FromValue(PartnerRegistrationData.FromResponse(result), result);
+                return Response.FromValue(new PartnerRegistrationResource(Client, response.Value), response.GetRawResponse());
+            }
+
             PartnerRegistrationPatch patch = CreatePatchWithTags(tags);
             Update(WaitUntil.Completed, patch, cancellationToken);
             return Get(cancellationToken);
