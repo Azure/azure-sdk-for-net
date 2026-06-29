@@ -52,8 +52,8 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
                     yield break;
                 }
                 FooListResult result = FooListResult.FromResponse(response);
-                yield return Page<FooData>.FromValues((IReadOnlyList<FooData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<FooData>.FromValues((IReadOnlyList<FooData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

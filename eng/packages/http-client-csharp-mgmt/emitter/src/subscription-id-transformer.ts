@@ -177,8 +177,7 @@ function removeSubscriptionIdFromClientChain(client: InputClient): void {
  */
 function removeSubscriptionIdFromClient(client: InputClient): void {
   const clientParams = client.parameters as unknown as
-    | InputParameterLike[]
-    | undefined;
+    InputParameterLike[] | undefined;
   if (!clientParams) {
     return;
   }
