@@ -1686,5 +1686,90 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(flattened!.Type.IsNullable, Is.True,
                 "Required value-type property flattened from an optional parent should be exposed as Nullable<T>");
         }
+
+        /// <summary>
+        /// Regression test for the name-conflict bug where the flattened envelope contains an
+        /// inner property whose name is identical to the envelope property itself
+        /// (e.g. <c>properties</c> on an outer model that has a <c>properties: { ..., properties: Record&lt;string&gt; }</c> shape).
+        /// Before the fix, the inner colliding leaf was emitted with the same C# name as the
+        /// outer wrapper, producing two members named <c>Properties</c> on the same model and
+        /// silently dropping the sibling flattened properties from the public surface.
+        /// After the fix, the colliding leaf is emitted with a disambiguated combined name,
+        /// preserving all sibling flattened members.
+        /// </summary>
+        [Test]
+        public void TestFlattenDisambiguatesNameConflictWithWrapper()
+        {
+            // Inner model has multiple public sub-properties, one of which is literally
+            // named "properties" — the same name as the wrapper envelope below.
+            var unitProp = InputFactory.Property("unit", InputPrimitiveType.String, isRequired: false, serializedName: "unit");
+            var kindProp = InputFactory.Property("kind", InputPrimitiveType.String, isRequired: false, serializedName: "kind");
+            var collidingProp = InputFactory.Property("properties", new InputDictionaryType("dict", InputPrimitiveType.String, InputPrimitiveType.String), isRequired: false, serializedName: "properties");
+            var innerModel = InputFactory.Model(
+                "WidgetProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [unitProp, kindProp, collidingProp]);
+
+            var wrapperProp = InputFactory.Property("properties", innerModel, isRequired: false, serializedName: "properties");
+            ApplyFlattenDecorator(wrapperProp);
+
+            var parentModel = InputFactory.Model(
+                "Widget",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [wrapperProp]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, innerModel]);
+
+            var model = plugin.Object.TypeFactory.CreateModel(parentModel);
+            Assert.That(model, Is.Not.Null);
+
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(visitTypeCore, Is.Not.Null);
+
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore!.Invoke(visitor, [model]);
+            }
+
+            // No two members on the same model may share a C# name (regardless of accessibility).
+            var nameGroups = model!.Properties
+                .GroupBy(p => p.Name, StringComparer.Ordinal)
+                .Where(g => g.Count() > 1)
+                .ToList();
+            Assert.That(nameGroups, Is.Empty,
+                $"Duplicate property names found on model: [{string.Join(", ", nameGroups.Select(g => g.Key))}]");
+
+            // The non-colliding flattened siblings must still be present as public members.
+            Assert.That(
+                model.Properties.Any(p => p.Name == "Unit" && p.Modifiers.HasFlag(MethodSignatureModifiers.Public)),
+                Is.True,
+                "Expected flattened 'Unit' property to remain on public surface");
+            Assert.That(
+                model.Properties.Any(p => p.Name == "Kind" && p.Modifiers.HasFlag(MethodSignatureModifiers.Public)),
+                Is.True,
+                "Expected flattened 'Kind' property to remain on public surface");
+
+            // The colliding leaf must be emitted under a disambiguated name (not "Properties",
+            // which is taken by the wrapper). The exact combined name is produced by
+            // PropertyHelpers.GetCombinedPropertyName; here we verify only that it differs from
+            // "Properties" and references a dictionary value type (the inner colliding type).
+            var disambiguated = model.Properties.SingleOrDefault(p =>
+                p.Modifiers.HasFlag(MethodSignatureModifiers.Public) &&
+                p.Type.IsDictionary &&
+                p.Name != "Properties");
+            Assert.That(disambiguated, Is.Not.Null,
+                "Expected the colliding inner 'properties' dictionary to be emitted under a disambiguated name");
+
+            // The wrapper itself must be retained as an internal property (used by serialization).
+            var wrapper = model.Properties.SingleOrDefault(p => p.Name == "Properties");
+            Assert.That(wrapper, Is.Not.Null, "Wrapper 'Properties' must be retained on the model");
+            Assert.That(
+                wrapper!.Modifiers.HasFlag(MethodSignatureModifiers.Internal),
+                Is.True,
+                "Wrapper 'Properties' should be demoted to internal after flatten");
+        }
     }
 }

@@ -611,6 +611,22 @@ namespace Azure.Generator.Management.Visitors
 
         private void PropertyFlatten(ModelProvider model, ModelProvider propertyModel, IReadOnlyList<PropertyProvider> innerProperties, Dictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap, PropertyProvider internalProperty)
         {
+            // Build the set of names already in use on this model so we can disambiguate
+            // colliding flatten-leaf names. This includes the wrapper property itself
+            // (about to be made internal at the end of this method, but it still occupies
+            // that C# name and two members on the same type cannot share a name regardless
+            // of accessibility), all other model properties, and any flatten-leaf names
+            // chosen by earlier iterations / by sibling internal properties processed in
+            // the enclosing FlattenModel loop.
+            var usedNames = new HashSet<string>(model.Properties.Select(p => p.Name), StringComparer.Ordinal);
+            foreach (var entries in propertyMap.Values)
+            {
+                foreach (var entry in entries)
+                {
+                    usedNames.Add(entry.FlattenedProperty.Name);
+                }
+            }
+
             foreach (var innerProperty in innerProperties)
             {
                 if (!innerProperty.Modifiers.HasFlag(MethodSignatureModifiers.Public))
@@ -625,7 +641,18 @@ namespace Azure.Generator.Management.Visitors
                 UpdateFlattenTypeCollectionProperty(internalProperty, innerProperty, model);
                 // flatten the property to public and associate it with the internal property
                 var (_, includeGetterNullCheck, _) = PropertyHelpers.GetFlags(internalProperty, innerProperty);
-                var flattenPropertyName = innerProperty.Name; // TODO: handle name conflicts
+                var flattenPropertyName = innerProperty.Name;
+                if (usedNames.Contains(flattenPropertyName))
+                {
+                    // Name conflict with an existing model member (usually the wrapper
+                    // itself, e.g. an envelope `properties` whose inner type also has a
+                    // `properties` member) or with another flattened sibling. Fall back
+                    // to a combined name so we don't emit two members with the same C#
+                    // name on this model, which would otherwise silently produce broken
+                    // generated code (missing/duplicate properties, wrong WirePath).
+                    flattenPropertyName = PropertyHelpers.GetCombinedPropertyName(innerProperty, internalProperty);
+                }
+                usedNames.Add(flattenPropertyName);
 
                 // The flattened public property is nullable iff the wrapping parent may be
                 // absent at runtime (see ShouldLiftToNullable). This applies symmetrically
