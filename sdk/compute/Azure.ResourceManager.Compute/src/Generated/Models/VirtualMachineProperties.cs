@@ -48,12 +48,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="scheduledEventsProfile"> Specifies Scheduled Event related configurations. </param>
         /// <param name="userData"> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. Minimum api-version: 2021-03-01. </param>
         /// <param name="capacityReservation"> Specifies information about the capacity reservation that is used to allocate virtual machine. Minimum api-version: 2021-04-01. </param>
-        /// <param name="interconnectBlockProfile"> Specifies information about the Interconnect Block that is used to allocate the Virtual Machine. Minimum api-version: 2026-03-01. </param>
         /// <param name="applicationProfile"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
         /// <param name="timeCreated"> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </param>
         /// <param name="resiliencyProfile"> Resiliency profile for the virtual machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineProperties(VirtualMachineHardwareProfile hardwareProfile, ScheduledEventsPolicy scheduledEventsPolicy, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, VirtualMachineNetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, ComputeWriteableSubResourceData availabilitySet, ComputeWriteableSubResourceData virtualMachineScaleSet, ComputeWriteableSubResourceData proximityPlacementGroup, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, BillingProfile billingProfile, ComputeWriteableSubResourceData host, ComputeWriteableSubResourceData hostGroup, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId, string extensionsTimeBudget, int? platformFaultDomain, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, InterconnectBlockProfile interconnectBlockProfile, ApplicationProfile applicationProfile, DateTimeOffset? timeCreated, ResiliencyProfile resiliencyProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineProperties(VirtualMachineHardwareProfile hardwareProfile, ScheduledEventsPolicy scheduledEventsPolicy, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, VirtualMachineNetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, ComputeWriteableSubResourceData availabilitySet, ComputeWriteableSubResourceData virtualMachineScaleSet, ComputeWriteableSubResourceData proximityPlacementGroup, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, BillingProfile billingProfile, ComputeWriteableSubResourceData host, ComputeWriteableSubResourceData hostGroup, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId, string extensionsTimeBudget, int? platformFaultDomain, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, DateTimeOffset? timeCreated, ResiliencyProfile resiliencyProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HardwareProfile = hardwareProfile;
             ScheduledEventsPolicy = scheduledEventsPolicy;
@@ -80,7 +79,6 @@ namespace Azure.ResourceManager.Compute.Models
             ScheduledEventsProfile = scheduledEventsProfile;
             UserData = userData;
             CapacityReservation = capacityReservation;
-            InterconnectBlockProfile = interconnectBlockProfile;
             ApplicationProfile = applicationProfile;
             TimeCreated = timeCreated;
             ResiliencyProfile = resiliencyProfile;
@@ -161,9 +159,6 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Specifies information about the capacity reservation that is used to allocate virtual machine. Minimum api-version: 2021-04-01. </summary>
         internal CapacityReservationProfile CapacityReservation { get; set; }
-
-        /// <summary> Specifies information about the Interconnect Block that is used to allocate the Virtual Machine. Minimum api-version: 2026-03-01. </summary>
-        internal InterconnectBlockProfile InterconnectBlockProfile { get; set; }
 
         /// <summary> Specifies the gallery applications that should be made available to the VM/VMSS. </summary>
         internal ApplicationProfile ApplicationProfile { get; set; }
@@ -287,23 +282,6 @@ namespace Azure.ResourceManager.Compute.Models
                     CapacityReservation = new CapacityReservationProfile();
                 }
                 CapacityReservation.CapacityReservationGroupId = value;
-            }
-        }
-
-        /// <summary> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
-        public ResourceIdentifier InterconnectBlockId
-        {
-            get
-            {
-                return InterconnectBlockProfile is null ? default : InterconnectBlockProfile.InterconnectBlockId;
-            }
-            set
-            {
-                if (InterconnectBlockProfile is null)
-                {
-                    InterconnectBlockProfile = new InterconnectBlockProfile();
-                }
-                InterconnectBlockProfile.InterconnectBlockId = value;
             }
         }
 

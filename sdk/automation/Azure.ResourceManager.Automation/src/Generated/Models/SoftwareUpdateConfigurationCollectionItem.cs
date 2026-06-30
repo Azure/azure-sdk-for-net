@@ -14,89 +14,108 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Software update configuration collection item properties. </summary>
     public partial class SoftwareUpdateConfigurationCollectionItem
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationCollectionItem"/>. </summary>
-        internal SoftwareUpdateConfigurationCollectionItem()
+        /// <param name="properties"> Software update configuration properties. </param>
+        internal SoftwareUpdateConfigurationCollectionItem(SoftwareUpdateConfigurationCollectionItemProperties properties)
         {
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationCollectionItem"/>. </summary>
         /// <param name="name"> Name of the software update configuration. </param>
         /// <param name="id"> Resource Id of the software update configuration. </param>
-        /// <param name="updateConfiguration"> Update specific properties of the software update configuration. </param>
-        /// <param name="tasks"> Pre and Post Tasks defined. </param>
-        /// <param name="frequency"> execution frequency of the schedule associated with the software update configuration. </param>
-        /// <param name="startOn"> the start time of the update. </param>
-        /// <param name="createdOn"> Creation time of the software update configuration, which only appears in the response. </param>
-        /// <param name="lastModifiedOn"> Last time software update configuration was modified, which only appears in the response. </param>
-        /// <param name="provisioningState"> Provisioning state for the software update configuration, which only appears in the response. </param>
-        /// <param name="nextRunOn"> ext run time of the update. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SoftwareUpdateConfigurationCollectionItem(string name, ResourceIdentifier id, SoftwareUpdateConfigurationSpecificProperties updateConfiguration, SoftwareUpdateConfigurationTasks tasks, AutomationScheduleFrequency? frequency, DateTimeOffset? startOn, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string provisioningState, DateTimeOffset? nextRunOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Software update configuration properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SoftwareUpdateConfigurationCollectionItem(string name, ResourceIdentifier id, SoftwareUpdateConfigurationCollectionItemProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Id = id;
-            UpdateConfiguration = updateConfiguration;
-            Tasks = tasks;
-            Frequency = frequency;
-            StartOn = startOn;
-            CreatedOn = createdOn;
-            LastModifiedOn = lastModifiedOn;
-            ProvisioningState = provisioningState;
-            NextRunOn = nextRunOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the software update configuration. </summary>
         public string Name { get; }
+
         /// <summary> Resource Id of the software update configuration. </summary>
         public ResourceIdentifier Id { get; }
+
+        /// <summary> Software update configuration properties. </summary>
+        internal SoftwareUpdateConfigurationCollectionItemProperties Properties { get; }
+
         /// <summary> Update specific properties of the software update configuration. </summary>
-        public SoftwareUpdateConfigurationSpecificProperties UpdateConfiguration { get; }
+        public SoftwareUpdateConfigurationSpecificProperties UpdateConfiguration
+        {
+            get
+            {
+                return Properties.UpdateConfiguration;
+            }
+        }
+
         /// <summary> Pre and Post Tasks defined. </summary>
-        public SoftwareUpdateConfigurationTasks Tasks { get; }
+        public SoftwareUpdateConfigurationTasks Tasks
+        {
+            get
+            {
+                return Properties.Tasks;
+            }
+        }
+
         /// <summary> execution frequency of the schedule associated with the software update configuration. </summary>
-        public AutomationScheduleFrequency? Frequency { get; }
+        public AutomationScheduleFrequency? Frequency
+        {
+            get
+            {
+                return Properties.Frequency;
+            }
+        }
+
         /// <summary> the start time of the update. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartOn
+        {
+            get
+            {
+                return Properties.StartOn;
+            }
+        }
+
         /// <summary> Creation time of the software update configuration, which only appears in the response. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties.CreatedOn;
+            }
+        }
+
         /// <summary> Last time software update configuration was modified, which only appears in the response. </summary>
-        public DateTimeOffset? LastModifiedOn { get; }
+        public DateTimeOffset? LastModifiedOn
+        {
+            get
+            {
+                return Properties.LastModifiedOn;
+            }
+        }
+
         /// <summary> Provisioning state for the software update configuration, which only appears in the response. </summary>
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> ext run time of the update. </summary>
-        public DateTimeOffset? NextRunOn { get; }
+        public DateTimeOffset? NextRunOn
+        {
+            get
+            {
+                return Properties.NextRunOn;
+            }
+        }
     }
 }

@@ -1,19 +1,41 @@
 # Release History
 
-## 1.15.0 (Unreleased)
+## 1.16.0-beta.1 (Unreleased)
 
 ### Features Added
 
-- Upgraded api-version tags: `Compute` to `2026-03-01`, `ComputeDisk` to `2026-03-02`, and `ComputeGallery` to `2025-12-03`.
+- Upgraded API versions: Compute to `2026-03-01`, Disk to `2026-03-02`, and Gallery to `2025-12-03`.
 - Added snapshot immutability policy support, including `SnapshotResource.UpdateImmutabilityPolicy`, `SnapshotResource.UpdateImmutabilityPolicyLock`, `ImmutabilityPolicy`, `ImmutabilityPolicyType`, `ImmutabilityPolicyContent`, and `ImmutabilityPolicyLockContent`.
 - Added shared gallery invite accept/reject extension methods.
 - Added `ConfidentialVmVersion` on `DiskSecurityProfile`.
 - Added `ImmutabilityPolicy` on `SnapshotProperties`.
+
+## 1.15.0 (2026-06-29)
+
+### Features Added
+
+- Upgraded Compute API version from `2025-04-01` to `2025-11-01`.
+
+### Breaking Changes
+
+- This is the first GA release generated from TypeSpec. Some obsolete APIs were added as migration compatibility shims and are not supported by the TypeSpec-generated SDK; please review obsolete messages for replacement guidance.
+- Cloud Services (classic) APIs are no longer supported by the TypeSpec-generated SDK and are preserved only as obsolete compatibility shims.
+
+### Other Changes
+
+- Migrated code generation from AutoRest to TypeSpec.
+
+## 1.15.0-beta.1 (2026-04-24)
+
+### Features Added
+
+- Upgraded api-version tag to `package-2025-11-01-with-cloudservice`.
 - Added new resource type `VmScaleSetLifecycleHookEvent` along with its corresponding `VmScaleSetLifecycleHookEventResource`, `VmScaleSetLifecycleHookEventCollection`, and `VmScaleSetLifecycleHookEventData` classes for managing Virtual Machine Scale Set lifecycle hook events.
 - Added new classes to support lifecycle hooks on Virtual Machine Scale Sets: `LifecycleHook`, `LifecycleHooksProfile`, `VmScaleSetLifecycleHookEventProperties`, `VmScaleSetLifecycleHookEventAdditionalContext`, `VirtualMachineScaleSetLifecycleHookEventTarget`, and `VirtualMachineScaleSetLifecycleHookEventPatch`.
 - Added new enums `LifecycleHookAction`, `LifecycleHookActionState`, `VmScaleSetLifecycleHookEventType`, and `VmScaleSetLifecycleHookEventState`.
-- Added new classes `ResiliencyProfile`, `OperationRecoverySettings`, `ReimageRecoveryPolicy`, `RestartRecoveryPolicy`, `StartRecoveryPolicy`, `ZoneMovement`, and `ComputeExternalHealthPolicy` for configuring VM Scale Set resiliency, recovery, and health behavior.
-- Added new enums `ComputeStorageFaultDomainAlignmentType` and `ComputeStorageAlignmentStatus`.
+- Added new classes `ResiliencyProfile`, `OperationRecoverySettings`, `ReimageRecoveryPolicy`, `RestartRecoveryPolicy`, `StartRecoveryPolicy`, and `ZoneMovement` for configuring VM Scale Set resiliency and recovery behavior.
+- Added new class `ExternalHealthPolicy`.
+- Added new enums `StorageFaultDomainAlignmentType` and `StorageAlignmentStatus`.
 - Added `LifecycleHooks` and `ExternalHealthPolicy` properties to `VirtualMachineScaleSetProperties` class.
 - Added `LifecycleHooks` property to `VirtualMachineScaleSetPatchProperties` class.
 - Added `Placement` property to `VirtualMachineScaleSetPatch` class.

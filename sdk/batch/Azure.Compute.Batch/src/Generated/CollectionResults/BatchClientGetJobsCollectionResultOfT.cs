@@ -73,8 +73,8 @@ namespace Azure.Compute.Batch
                     yield break;
                 }
                 BatchJobListResult result = (BatchJobListResult)response;
-                yield return Page<BatchJob>.FromValues((IReadOnlyList<BatchJob>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.OdataNextLink;
+                yield return Page<BatchJob>.FromValues((IReadOnlyList<BatchJob>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

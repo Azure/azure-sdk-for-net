@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.EventGrid.Models
     public readonly partial struct NetworkSecurityPerimeterConfigurationIssueSeverity : IEquatable<NetworkSecurityPerimeterConfigurationIssueSeverity>
     {
         private readonly string _value;
+        /// <summary> Warning. </summary>
+        private const string WarningValue = "Warning";
+        /// <summary> Error. </summary>
+        private const string ErrorValue = "Error";
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationIssueSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkSecurityPerimeterConfigurationIssueSeverity(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string WarningValue = "Warning";
-        private const string ErrorValue = "Error";
+            _value = value;
+        }
 
         /// <summary> Warning. </summary>
         public static NetworkSecurityPerimeterConfigurationIssueSeverity Warning { get; } = new NetworkSecurityPerimeterConfigurationIssueSeverity(WarningValue);
+
         /// <summary> Error. </summary>
         public static NetworkSecurityPerimeterConfigurationIssueSeverity Error { get; } = new NetworkSecurityPerimeterConfigurationIssueSeverity(ErrorValue);
+
         /// <summary> Determines if two <see cref="NetworkSecurityPerimeterConfigurationIssueSeverity"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkSecurityPerimeterConfigurationIssueSeverity left, NetworkSecurityPerimeterConfigurationIssueSeverity right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkSecurityPerimeterConfigurationIssueSeverity"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkSecurityPerimeterConfigurationIssueSeverity left, NetworkSecurityPerimeterConfigurationIssueSeverity right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkSecurityPerimeterConfigurationIssueSeverity"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkSecurityPerimeterConfigurationIssueSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkSecurityPerimeterConfigurationIssueSeverity(string value) => new NetworkSecurityPerimeterConfigurationIssueSeverity(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkSecurityPerimeterConfigurationIssueSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkSecurityPerimeterConfigurationIssueSeverity?(string value) => value == null ? null : new NetworkSecurityPerimeterConfigurationIssueSeverity(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkSecurityPerimeterConfigurationIssueSeverity other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkSecurityPerimeterConfigurationIssueSeverity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

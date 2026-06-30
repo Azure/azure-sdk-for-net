@@ -9,7 +9,7 @@ namespace Azure.Security.KeyVault.Certificates
     /// <summary>
     /// An action that will be executed.
     /// </summary>
-    public readonly struct CertificatePolicyAction : IEquatable<CertificatePolicyAction>
+    public readonly partial struct CertificatePolicyAction : IEquatable<CertificatePolicyAction>
     {
         internal const string AutoRenewValue = "AutoRenew";
         internal const string EmailContactsValue = "EmailContacts";

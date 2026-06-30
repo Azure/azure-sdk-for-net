@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class ClientAuthenticationSettings : IUtf8JsonSerializable, IJsonModel<ClientAuthenticationSettings>
+    /// <summary> Client authentication settings for namespace resource. </summary>
+    public partial class ClientAuthenticationSettings : IJsonModel<ClientAuthenticationSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClientAuthenticationSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ClientAuthenticationSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ClientAuthenticationSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeClientAuthenticationSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ClientAuthenticationSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ClientAuthenticationSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEventGridContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ClientAuthenticationSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ClientAuthenticationSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ClientAuthenticationSettings IPersistableModel<ClientAuthenticationSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ClientAuthenticationSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ClientAuthenticationSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,17 +69,16 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClientAuthenticationSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClientAuthenticationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ClientAuthenticationSettings)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(AlternativeAuthenticationNameSources))
             {
                 writer.WritePropertyName("alternativeAuthenticationNameSources"u8);
                 writer.WriteStartArray();
-                foreach (var item in AlternativeAuthenticationNameSources)
+                foreach (AlternativeAuthenticationNameSource item in AlternativeAuthenticationNameSources)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -56,15 +94,15 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("webhookAuthentication"u8);
                 writer.WriteObjectValue(WebhookAuthentication, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -73,22 +111,27 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
         }
 
-        ClientAuthenticationSettings IJsonModel<ClientAuthenticationSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ClientAuthenticationSettings IJsonModel<ClientAuthenticationSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ClientAuthenticationSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClientAuthenticationSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClientAuthenticationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ClientAuthenticationSettings)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeClientAuthenticationSettings(document.RootElement, options);
         }
 
-        internal static ClientAuthenticationSettings DeserializeClientAuthenticationSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ClientAuthenticationSettings DeserializeClientAuthenticationSettings(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -96,150 +139,47 @@ namespace Azure.ResourceManager.EventGrid.Models
             IList<AlternativeAuthenticationNameSource> alternativeAuthenticationNameSources = default;
             CustomJwtAuthenticationSettings customJwtAuthentication = default;
             WebhookAuthenticationSettings webhookAuthentication = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("alternativeAuthenticationNameSources"u8))
+                if (prop.NameEquals("alternativeAuthenticationNameSources"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<AlternativeAuthenticationNameSource> array = new List<AlternativeAuthenticationNameSource>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new AlternativeAuthenticationNameSource(item.GetString()));
                     }
                     alternativeAuthenticationNameSources = array;
                     continue;
                 }
-                if (property.NameEquals("customJwtAuthentication"u8))
+                if (prop.NameEquals("customJwtAuthentication"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    customJwtAuthentication = CustomJwtAuthenticationSettings.DeserializeCustomJwtAuthenticationSettings(property.Value, options);
+                    customJwtAuthentication = CustomJwtAuthenticationSettings.DeserializeCustomJwtAuthenticationSettings(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("webhookAuthentication"u8))
+                if (prop.NameEquals("webhookAuthentication"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    webhookAuthentication = WebhookAuthenticationSettings.DeserializeWebhookAuthenticationSettings(property.Value, options);
+                    webhookAuthentication = WebhookAuthenticationSettings.DeserializeWebhookAuthenticationSettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ClientAuthenticationSettings(alternativeAuthenticationNameSources ?? new ChangeTrackingList<AlternativeAuthenticationNameSource>(), customJwtAuthentication, webhookAuthentication, serializedAdditionalRawData);
+            return new ClientAuthenticationSettings(alternativeAuthenticationNameSources ?? new ChangeTrackingList<AlternativeAuthenticationNameSource>(), customJwtAuthentication, webhookAuthentication, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AlternativeAuthenticationNameSources), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  alternativeAuthenticationNameSources: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(AlternativeAuthenticationNameSources))
-                {
-                    if (AlternativeAuthenticationNameSources.Any())
-                    {
-                        builder.Append("  alternativeAuthenticationNameSources: ");
-                        builder.AppendLine("[");
-                        foreach (var item in AlternativeAuthenticationNameSources)
-                        {
-                            builder.AppendLine($"    '{item.ToString()}'");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomJwtAuthentication), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  customJwtAuthentication: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CustomJwtAuthentication))
-                {
-                    builder.Append("  customJwtAuthentication: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, CustomJwtAuthentication, options, 2, false, "  customJwtAuthentication: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WebhookAuthentication), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  webhookAuthentication: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(WebhookAuthentication))
-                {
-                    builder.Append("  webhookAuthentication: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, WebhookAuthentication, options, 2, false, "  webhookAuthentication: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ClientAuthenticationSettings>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ClientAuthenticationSettings>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEventGridContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ClientAuthenticationSettings)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ClientAuthenticationSettings IPersistableModel<ClientAuthenticationSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ClientAuthenticationSettings>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeClientAuthenticationSettings(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ClientAuthenticationSettings)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ClientAuthenticationSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

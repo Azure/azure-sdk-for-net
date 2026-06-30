@@ -39,11 +39,14 @@ public static class AgentHostMiddlewareExtensions
     public static IServiceCollection AddAgentServerCore(this IServiceCollection services)
     {
         services.TryAddSingleton<ServerVersionRegistry>();
+        services.TryAddSingleton<RequestContextMiddleware>();
         services.TryAddSingleton<RequestIdMiddleware>();
         services.TryAddSingleton<ServerVersionMiddleware>();
         services.TryAddSingleton<RequestIdBaggagePropagator>();
         services.TryAddSingleton<W3CBaggagePropagator>();
         services.TryAddSingleton<InboundRequestLoggingMiddleware>();
+        // Transient so it can be added to any HttpClient via AddHttpMessageHandler.
+        services.TryAddTransient<FoundryCallIdHandler>();
         services.Configure<AgentHostOptions>(_ => { });
         return services;
     }
@@ -57,6 +60,10 @@ public static class AgentHostMiddlewareExtensions
     /// <returns>The application builder for chaining.</returns>
     public static IApplicationBuilder UseAgentServerCore(this IApplicationBuilder app)
     {
+        // Capture platform identity headers into the request-scoped
+        // FoundryAgentRequestContext before anything else so the call id is
+        // available to the handler and to outbound Foundry-bound clients.
+        app.UseMiddleware<RequestContextMiddleware>();
         app.UseMiddleware<RequestIdMiddleware>();
         app.UseMiddleware<ServerVersionMiddleware>();
         app.UseMiddleware<W3CBaggagePropagator>();

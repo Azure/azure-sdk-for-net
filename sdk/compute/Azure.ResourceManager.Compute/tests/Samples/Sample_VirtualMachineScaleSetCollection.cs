@@ -5434,11 +5434,11 @@ EnableIPForwarding = true,
 }},
                         },
                     },
-                    LifecycleHooks = {new LifecycleHook
+                LifecycleHooks = {new VirtualMachineScaleSetLifecycleHook
 {
-VmScaleSetLifecycleHookEventType = VmScaleSetLifecycleHookEventType.UpgradeAutoOSRollingBatchStarting,
+VirtualMachineScaleSetLifecycleHookEventType = VirtualMachineScaleSetLifecycleHookEventType.UpgradeAutoOSRollingBatchStarting,
 WaitDuration = XmlConvert.ToTimeSpan("PT20M"),
-DefaultAction = LifecycleHookAction.Approve,
+DefaultAction = VirtualMachineScaleSetLifecycleHookAction.Approve,
 }},
                 },
             };

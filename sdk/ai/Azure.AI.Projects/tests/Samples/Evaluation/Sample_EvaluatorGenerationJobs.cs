@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.Agents;
+using Azure.AI.Projects.Evaluation;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
@@ -50,13 +51,13 @@ public class Sample_EvaluatorGenerationJob : SamplesBase
         Console.WriteLine($"Created job ID: {runningJob.Id}");
         #endregion
         #region Snippet:Sample_GetJob_EvaluatorGenerationJob_Async
-        while (runningJob.Status != JobStatus.Failed && runningJob.Status != JobStatus.Succeeded)
+        while (runningJob.Status != ProjectsJobStatus.Failed && runningJob.Status != ProjectsJobStatus.Succeeded)
         {
             await Task.Delay(500);
             Console.WriteLine($"Waiting for job ID: {runningJob.Id}...");
             runningJob = await projectClient.EvaluatorGenerationJobs.GetAsync(jobId: runningJob.Id);
         }
-        if (runningJob.Status == JobStatus.Failed)
+        if (runningJob.Status == ProjectsJobStatus.Failed)
         {
             throw new InvalidOperationException($"The job {runningJob.Id} has failed.");
         }
@@ -73,13 +74,13 @@ public class Sample_EvaluatorGenerationJob : SamplesBase
         };
         EvaluatorGenerationJob jobToCancel = await projectClient.EvaluatorGenerationJobs.CreateAsync(job);
         jobToCancel = await projectClient.EvaluatorGenerationJobs.CancelAsync(jobToCancel.Id);
-        while (jobToCancel.Status != JobStatus.Failed && jobToCancel.Status != JobStatus.Succeeded && jobToCancel.Status != JobStatus.Cancelled)
+        while (jobToCancel.Status != ProjectsJobStatus.Failed && jobToCancel.Status != ProjectsJobStatus.Succeeded && jobToCancel.Status != ProjectsJobStatus.Cancelled)
         {
             await Task.Delay(500);
             Console.WriteLine($"Waiting for job {jobToCancel.Id} to cancel...");
             jobToCancel = await projectClient.EvaluatorGenerationJobs.GetAsync(jobId: jobToCancel.Id);
         }
-        if (jobToCancel.Status != JobStatus.Cancelled)
+        if (jobToCancel.Status != ProjectsJobStatus.Cancelled)
         {
             throw new InvalidOperationException($"The job {jobToCancel.Id} has failed.");
         }
@@ -135,13 +136,13 @@ public class Sample_EvaluatorGenerationJob : SamplesBase
         Console.WriteLine($"Created job ID: {runningJob.Id}");
         #endregion
         #region Snippet:Sample_GetJob_EvaluatorGenerationJob_Sync
-        while (runningJob.Status != JobStatus.Failed && runningJob.Status != JobStatus.Succeeded)
+        while (runningJob.Status != ProjectsJobStatus.Failed && runningJob.Status != ProjectsJobStatus.Succeeded)
         {
             Thread.Sleep(500);
             Console.WriteLine($"Waiting for job ID: {runningJob.Id}...");
             runningJob = projectClient.EvaluatorGenerationJobs.Get(jobId: runningJob.Id);
         }
-        if (runningJob.Status == JobStatus.Failed)
+        if (runningJob.Status == ProjectsJobStatus.Failed)
         {
             throw new InvalidOperationException($"The job {runningJob.Id} has failed.");
         }
@@ -158,13 +159,13 @@ public class Sample_EvaluatorGenerationJob : SamplesBase
         };
         EvaluatorGenerationJob jobToCancel = projectClient.EvaluatorGenerationJobs.Create(job);
         jobToCancel = projectClient.EvaluatorGenerationJobs.Cancel(jobToCancel.Id);
-        while (jobToCancel.Status != JobStatus.Failed && jobToCancel.Status != JobStatus.Succeeded && jobToCancel.Status != JobStatus.Cancelled)
+        while (jobToCancel.Status != ProjectsJobStatus.Failed && jobToCancel.Status != ProjectsJobStatus.Succeeded && jobToCancel.Status != ProjectsJobStatus.Cancelled)
         {
             Thread.Sleep(500);
             Console.WriteLine($"Waiting for job {jobToCancel.Id} to cancel...");
             jobToCancel = projectClient.EvaluatorGenerationJobs.Get(jobId: jobToCancel.Id);
         }
-        if (jobToCancel.Status != JobStatus.Cancelled)
+        if (jobToCancel.Status != ProjectsJobStatus.Cancelled)
         {
             throw new InvalidOperationException($"The job {jobToCancel.Id} has failed.");
         }

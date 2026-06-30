@@ -82,7 +82,7 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
         {
             AgentEndpoint = config,
         };
-        ProjectsAgentRecord patchedRecord = await projectClient.AgentAdministrationClient.PatchAgentObjectAsync(
+        ProjectsAgentRecord patchedRecord = await projectClient.AgentAdministrationClient.PatchAgentAsync(
             agentName: agentVersion.Name,
             patchAgentOptions: patchOptions);
         Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
@@ -147,7 +147,7 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
         {
             AgentEndpoint = config,
         };
-        ProjectsAgentRecord patchedRecord = projectClient.AgentAdministrationClient.PatchAgentObject(
+        ProjectsAgentRecord patchedRecord = projectClient.AgentAdministrationClient.PatchAgent(
             agentName: agentVersion.Name,
             patchAgentOptions: patchOptions);
         Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");

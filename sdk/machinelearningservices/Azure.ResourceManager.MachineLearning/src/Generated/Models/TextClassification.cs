@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -19,63 +20,65 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="TextClassification"/>. </summary>
         /// <param name="trainingData"> [Required] Training data input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> is null. </exception>
-        public TextClassification(MachineLearningTableJobInput trainingData) : base(trainingData)
+        public TextClassification(MachineLearningTableJobInput trainingData) : base(TaskType.TextClassification, trainingData)
         {
             Argument.AssertNotNull(trainingData, nameof(trainingData));
 
-            TaskType = TaskType.TextClassification;
         }
 
         /// <summary> Initializes a new instance of <see cref="TextClassification"/>. </summary>
-        /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
-        /// <param name="logVerbosity"> Log verbosity for the job. </param>
-        /// <param name="trainingData"> [Required] Training data input. </param>
+        /// <param name="logVerbosity"> Enum for setting log verbosity. </param>
         /// <param name="targetColumnName">
         /// Target column name: This is prediction values column.
         /// Also known as label column name in context of classification tasks.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="primaryMetric"> Primary metric for Text-Classification task. </param>
-        /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>
+        /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
+        /// <param name="trainingData"> [Required] Training data input. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="featurizationSettings"> Featurization inputs needed for AutoML job. </param>
+        /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>
         /// <param name="validationData"> Validation data inputs. </param>
-        internal TextClassification(TaskType taskType, MachineLearningLogVerbosity? logVerbosity, MachineLearningTableJobInput trainingData, string targetColumnName, IDictionary<string, BinaryData> serializedAdditionalRawData, ClassificationPrimaryMetric? primaryMetric, NlpVerticalLimitSettings limitSettings, NlpVerticalFeaturizationSettings featurizationSettings, MachineLearningTableJobInput validationData) : base(taskType, logVerbosity, trainingData, targetColumnName, serializedAdditionalRawData)
+        /// <param name="primaryMetric"> Primary metrics for classification tasks. </param>
+        internal TextClassification(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, IDictionary<string, BinaryData> additionalBinaryDataProperties, NlpVerticalFeaturizationSettings featurizationSettings, NlpVerticalLimitSettings limitSettings, MachineLearningTableJobInput validationData, ClassificationPrimaryMetric? primaryMetric) : base(logVerbosity, targetColumnName, taskType, trainingData, additionalBinaryDataProperties)
         {
-            PrimaryMetric = primaryMetric;
-            LimitSettings = limitSettings;
             FeaturizationSettings = featurizationSettings;
+            LimitSettings = limitSettings;
             ValidationData = validationData;
-            TaskType = taskType;
+            PrimaryMetric = primaryMetric;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextClassification"/> for deserialization. </summary>
-        internal TextClassification()
-        {
-        }
+        /// <summary> Featurization inputs needed for AutoML job. </summary>
+        [WirePath("featurizationSettings")]
+        internal NlpVerticalFeaturizationSettings FeaturizationSettings { get; set; }
 
-        /// <summary> Primary metric for Text-Classification task. </summary>
-        [WirePath("primaryMetric")]
-        public ClassificationPrimaryMetric? PrimaryMetric { get; set; }
         /// <summary> Execution constraints for AutoMLJob. </summary>
         [WirePath("limitSettings")]
         public NlpVerticalLimitSettings LimitSettings { get; set; }
-        /// <summary> Featurization inputs needed for AutoML job. </summary>
-        internal NlpVerticalFeaturizationSettings FeaturizationSettings { get; set; }
-        /// <summary> Dataset language, useful for the text data. </summary>
-        [WirePath("featurizationSettings.datasetLanguage")]
-        public string FeaturizationDatasetLanguage
-        {
-            get => FeaturizationSettings is null ? default : FeaturizationSettings.DatasetLanguage;
-            set
-            {
-                if (FeaturizationSettings is null)
-                    FeaturizationSettings = new NlpVerticalFeaturizationSettings();
-                FeaturizationSettings.DatasetLanguage = value;
-            }
-        }
 
         /// <summary> Validation data inputs. </summary>
         [WirePath("validationData")]
         public MachineLearningTableJobInput ValidationData { get; set; }
+
+        /// <summary> Primary metrics for classification tasks. </summary>
+        [WirePath("primaryMetric")]
+        public ClassificationPrimaryMetric? PrimaryMetric { get; set; }
+
+        /// <summary> Dataset language, useful for the text data. </summary>
+        [WirePath("featurizationSettings.datasetLanguage")]
+        public string FeaturizationDatasetLanguage
+        {
+            get
+            {
+                return FeaturizationSettings is null ? default : FeaturizationSettings.DatasetLanguage;
+            }
+            set
+            {
+                if (FeaturizationSettings is null)
+                {
+                    FeaturizationSettings = new NlpVerticalFeaturizationSettings();
+                }
+                FeaturizationSettings.DatasetLanguage = value;
+            }
+        }
     }
 }

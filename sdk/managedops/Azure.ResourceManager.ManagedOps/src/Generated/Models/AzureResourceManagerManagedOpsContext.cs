@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.ManagedOps
     [ModelReaderWriterBuildable(typeof(ManagedOpUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(PolicyAssignmentProperties))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(UpdateManagerInformation))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UpdateManagerInformation))]
     public partial class AzureResourceManagerManagedOpsContext : ModelReaderWriterContext
     {
     }

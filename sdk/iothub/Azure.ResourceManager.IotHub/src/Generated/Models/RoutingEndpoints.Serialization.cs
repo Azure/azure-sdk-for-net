@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class RoutingEndpoints : IUtf8JsonSerializable, IJsonModel<RoutingEndpoints>
+    /// <summary> The properties related to the custom endpoints to which your IoT hub routes messages based on the routing rules. A maximum of 10 custom endpoints are allowed across all endpoint types for paid hubs and only 1 custom endpoint is allowed across all endpoint types for free hubs. </summary>
+    public partial class RoutingEndpoints : IJsonModel<RoutingEndpoints>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoutingEndpoints>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RoutingEndpoints PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RoutingEndpoints>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRoutingEndpoints(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RoutingEndpoints)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RoutingEndpoints>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotHubContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RoutingEndpoints)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RoutingEndpoints>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RoutingEndpoints IPersistableModel<RoutingEndpoints>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RoutingEndpoints>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RoutingEndpoints>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,17 +69,16 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RoutingEndpoints>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RoutingEndpoints>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RoutingEndpoints)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(ServiceBusQueues))
             {
                 writer.WritePropertyName("serviceBusQueues"u8);
                 writer.WriteStartArray();
-                foreach (var item in ServiceBusQueues)
+                foreach (RoutingServiceBusQueueEndpointProperties item in ServiceBusQueues)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -48,7 +88,7 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 writer.WritePropertyName("serviceBusTopics"u8);
                 writer.WriteStartArray();
-                foreach (var item in ServiceBusTopics)
+                foreach (RoutingServiceBusTopicEndpointProperties item in ServiceBusTopics)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -58,7 +98,7 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 writer.WritePropertyName("eventHubs"u8);
                 writer.WriteStartArray();
-                foreach (var item in EventHubs)
+                foreach (RoutingEventHubProperties item in EventHubs)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -68,7 +108,7 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 writer.WritePropertyName("storageContainers"u8);
                 writer.WriteStartArray();
-                foreach (var item in StorageContainers)
+                foreach (RoutingStorageContainerProperties item in StorageContainers)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -78,21 +118,21 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 writer.WritePropertyName("cosmosDBSqlContainers"u8);
                 writer.WriteStartArray();
-                foreach (var item in CosmosDBSqlContainers)
+                foreach (RoutingCosmosDBSqlApiProperties item in CosmosDBSqlContainers)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -101,22 +141,27 @@ namespace Azure.ResourceManager.IotHub.Models
             }
         }
 
-        RoutingEndpoints IJsonModel<RoutingEndpoints>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RoutingEndpoints IJsonModel<RoutingEndpoints>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RoutingEndpoints JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RoutingEndpoints>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RoutingEndpoints>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RoutingEndpoints)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRoutingEndpoints(document.RootElement, options);
         }
 
-        internal static RoutingEndpoints DeserializeRoutingEndpoints(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RoutingEndpoints DeserializeRoutingEndpoints(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -126,74 +171,73 @@ namespace Azure.ResourceManager.IotHub.Models
             IList<RoutingEventHubProperties> eventHubs = default;
             IList<RoutingStorageContainerProperties> storageContainers = default;
             IList<RoutingCosmosDBSqlApiProperties> cosmosDBSqlContainers = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("serviceBusQueues"u8))
+                if (prop.NameEquals("serviceBusQueues"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<RoutingServiceBusQueueEndpointProperties> array = new List<RoutingServiceBusQueueEndpointProperties>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(RoutingServiceBusQueueEndpointProperties.DeserializeRoutingServiceBusQueueEndpointProperties(item, options));
                     }
                     serviceBusQueues = array;
                     continue;
                 }
-                if (property.NameEquals("serviceBusTopics"u8))
+                if (prop.NameEquals("serviceBusTopics"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<RoutingServiceBusTopicEndpointProperties> array = new List<RoutingServiceBusTopicEndpointProperties>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(RoutingServiceBusTopicEndpointProperties.DeserializeRoutingServiceBusTopicEndpointProperties(item, options));
                     }
                     serviceBusTopics = array;
                     continue;
                 }
-                if (property.NameEquals("eventHubs"u8))
+                if (prop.NameEquals("eventHubs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<RoutingEventHubProperties> array = new List<RoutingEventHubProperties>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(RoutingEventHubProperties.DeserializeRoutingEventHubProperties(item, options));
                     }
                     eventHubs = array;
                     continue;
                 }
-                if (property.NameEquals("storageContainers"u8))
+                if (prop.NameEquals("storageContainers"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<RoutingStorageContainerProperties> array = new List<RoutingStorageContainerProperties>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(RoutingStorageContainerProperties.DeserializeRoutingStorageContainerProperties(item, options));
                     }
                     storageContainers = array;
                     continue;
                 }
-                if (property.NameEquals("cosmosDBSqlContainers"u8))
+                if (prop.NameEquals("cosmosDBSqlContainers"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<RoutingCosmosDBSqlApiProperties> array = new List<RoutingCosmosDBSqlApiProperties>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(RoutingCosmosDBSqlApiProperties.DeserializeRoutingCosmosDBSqlApiProperties(item, options));
                     }
@@ -202,48 +246,16 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new RoutingEndpoints(
                 serviceBusQueues ?? new ChangeTrackingList<RoutingServiceBusQueueEndpointProperties>(),
                 serviceBusTopics ?? new ChangeTrackingList<RoutingServiceBusTopicEndpointProperties>(),
                 eventHubs ?? new ChangeTrackingList<RoutingEventHubProperties>(),
                 storageContainers ?? new ChangeTrackingList<RoutingStorageContainerProperties>(),
                 cosmosDBSqlContainers ?? new ChangeTrackingList<RoutingCosmosDBSqlApiProperties>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<RoutingEndpoints>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RoutingEndpoints>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotHubContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RoutingEndpoints)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        RoutingEndpoints IPersistableModel<RoutingEndpoints>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RoutingEndpoints>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRoutingEndpoints(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RoutingEndpoints)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<RoutingEndpoints>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

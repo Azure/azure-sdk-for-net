@@ -13,196 +13,323 @@ using Azure.ResourceManager.ResourceHealth.Models;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
-    /// <summary>
-    /// A class representing the ResourceHealthEvent data model.
-    /// Service health event
-    /// </summary>
+    /// <summary> Service health event. </summary>
     public partial class ResourceHealthEventData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceHealthEventData"/>. </summary>
         internal ResourceHealthEventData()
         {
-            Links = new ChangeTrackingList<ResourceHealthEventLink>();
-            Impact = new ChangeTrackingList<ResourceHealthEventImpact>();
-            Faqs = new ChangeTrackingList<ResourceHealthEventFaq>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceHealthEventData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="eventType"> Type of event. </param>
-        /// <param name="eventSubType"> Sub type of the event. Currently used to determine retirement communications for health advisory events. </param>
-        /// <param name="eventSource"> Source of event. </param>
-        /// <param name="status"> Current status of event. </param>
-        /// <param name="title"> Title text of event. </param>
-        /// <param name="summary"> Summary text of event. </param>
-        /// <param name="header"> Header text of event. </param>
-        /// <param name="level"> Level of insight. </param>
-        /// <param name="eventLevel"> Level of event. </param>
-        /// <param name="externalIncidentId"> The id of the Incident. </param>
-        /// <param name="reason"> The reason for the Incident. </param>
-        /// <param name="article"> Article of event. </param>
-        /// <param name="links"> Useful links of event. </param>
-        /// <param name="impactStartOn"> It provides the Timestamp for when the health impacting event started. </param>
-        /// <param name="impactMitigationOn"> It provides the Timestamp for when the health impacting event resolved. </param>
-        /// <param name="impact"> List services impacted by the service health event. </param>
-        /// <param name="recommendedActions"> Recommended actions of event. </param>
-        /// <param name="faqs"> Frequently asked questions for the service health event. </param>
-        /// <param name="isHirEvent"> It provides information if the event is High incident rate event or not. </param>
-        /// <param name="isMicrosoftSupportEnabled"> Tells if we want to enable or disable Microsoft Support for this event. </param>
-        /// <param name="description"> Contains the communication message for the event, that could include summary, root cause and other details. </param>
-        /// <param name="isPlatformInitiated"> Is true if the event is platform initiated. </param>
-        /// <param name="isChatWithUsEnabled"> Tells if we want to enable or disable Microsoft Support for this event. </param>
-        /// <param name="priority"> Priority level of the event. Has value from 0 to 23. 0 is the highest priority. Service issue events have higher priority followed by planned maintenance and health advisory. Critical events have higher priority followed by error, warning and informational. Furthermore, active events have higher priority than resolved. </param>
-        /// <param name="lastUpdateOn"> It provides the Timestamp for when the health impacting event was last updated. </param>
-        /// <param name="hirStage"> Stage for HIR Document. </param>
-        /// <param name="additionalInformation"> Additional information. </param>
-        /// <param name="duration"> duration in seconds. </param>
-        /// <param name="impactType"> The type of the impact. </param>
-        /// <param name="maintenanceId"> Unique identifier for planned maintenance event. </param>
-        /// <param name="maintenanceType"> The type of planned maintenance event. </param>
-        /// <param name="argQuery"> Azure Resource Graph query to fetch the affected resources from their existing Azure Resource Graph locations. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceHealthEventData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceHealthEventTypeValue? eventType, EventSubTypeValue? eventSubType, ResourceHealthEventSourceValue? eventSource, ResourceHealthEventStatusValue? status, string title, string summary, string header, ResourceHealthEventInsightLevelValue? level, ResourceHealthEventLevelValue? eventLevel, string externalIncidentId, string reason, ResourceHealthEventArticle article, IReadOnlyList<ResourceHealthEventLink> links, DateTimeOffset? impactStartOn, DateTimeOffset? impactMitigationOn, IReadOnlyList<ResourceHealthEventImpact> impact, ResourceHealthEventRecommendedActions recommendedActions, IReadOnlyList<ResourceHealthEventFaq> faqs, bool? isHirEvent, bool? isMicrosoftSupportEnabled, string description, bool? isPlatformInitiated, bool? isChatWithUsEnabled, int? priority, DateTimeOffset? lastUpdateOn, string hirStage, ResourceHealthEventAdditionalInformation additionalInformation, int? duration, string impactType, string maintenanceId, string maintenanceType, string argQuery, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of event. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceHealthEventData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EventProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            EventType = eventType;
-            EventSubType = eventSubType;
-            EventSource = eventSource;
-            Status = status;
-            Title = title;
-            Summary = summary;
-            Header = header;
-            Level = level;
-            EventLevel = eventLevel;
-            ExternalIncidentId = externalIncidentId;
-            Reason = reason;
-            Article = article;
-            Links = links;
-            ImpactStartOn = impactStartOn;
-            ImpactMitigationOn = impactMitigationOn;
-            Impact = impact;
-            RecommendedActions = recommendedActions;
-            Faqs = faqs;
-            IsHirEvent = isHirEvent;
-            IsMicrosoftSupportEnabled = isMicrosoftSupportEnabled;
-            Description = description;
-            IsPlatformInitiated = isPlatformInitiated;
-            IsChatWithUsEnabled = isChatWithUsEnabled;
-            Priority = priority;
-            LastUpdateOn = lastUpdateOn;
-            HirStage = hirStage;
-            AdditionalInformation = additionalInformation;
-            Duration = duration;
-            ImpactType = impactType;
-            MaintenanceId = maintenanceId;
-            MaintenanceType = maintenanceType;
-            ArgQuery = argQuery;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Properties of event. </summary>
+        internal EventProperties Properties { get; }
+
         /// <summary> Type of event. </summary>
-        public ResourceHealthEventTypeValue? EventType { get; }
-        /// <summary> Sub type of the event. Currently used to determine retirement communications for health advisory events. </summary>
-        public EventSubTypeValue? EventSubType { get; }
-        /// <summary> Source of event. </summary>
-        public ResourceHealthEventSourceValue? EventSource { get; }
-        /// <summary> Current status of event. </summary>
-        public ResourceHealthEventStatusValue? Status { get; }
-        /// <summary> Title text of event. </summary>
-        public string Title { get; }
-        /// <summary> Summary text of event. </summary>
-        public string Summary { get; }
-        /// <summary> Header text of event. </summary>
-        public string Header { get; }
-        /// <summary> Level of insight. </summary>
-        public ResourceHealthEventInsightLevelValue? Level { get; }
-        /// <summary> Level of event. </summary>
-        public ResourceHealthEventLevelValue? EventLevel { get; }
-        /// <summary> The id of the Incident. </summary>
-        public string ExternalIncidentId { get; }
-        /// <summary> The reason for the Incident. </summary>
-        public string Reason { get; }
-        /// <summary> Article of event. </summary>
-        public ResourceHealthEventArticle Article { get; }
-        /// <summary> Useful links of event. </summary>
-        public IReadOnlyList<ResourceHealthEventLink> Links { get; }
-        /// <summary> It provides the Timestamp for when the health impacting event started. </summary>
-        public DateTimeOffset? ImpactStartOn { get; }
-        /// <summary> It provides the Timestamp for when the health impacting event resolved. </summary>
-        public DateTimeOffset? ImpactMitigationOn { get; }
-        /// <summary> List services impacted by the service health event. </summary>
-        public IReadOnlyList<ResourceHealthEventImpact> Impact { get; }
-        /// <summary> Recommended actions of event. </summary>
-        public ResourceHealthEventRecommendedActions RecommendedActions { get; }
-        /// <summary> Frequently asked questions for the service health event. </summary>
-        public IReadOnlyList<ResourceHealthEventFaq> Faqs { get; }
-        /// <summary> It provides information if the event is High incident rate event or not. </summary>
-        public bool? IsHirEvent { get; }
-        /// <summary> Tells if we want to enable or disable Microsoft Support for this event. </summary>
-        public bool? IsMicrosoftSupportEnabled { get; }
-        /// <summary> Contains the communication message for the event, that could include summary, root cause and other details. </summary>
-        public string Description { get; }
-        /// <summary> Is true if the event is platform initiated. </summary>
-        public bool? IsPlatformInitiated { get; }
-        /// <summary> Tells if we want to enable or disable Microsoft Support for this event. </summary>
-        public bool? IsChatWithUsEnabled { get; }
-        /// <summary> Priority level of the event. Has value from 0 to 23. 0 is the highest priority. Service issue events have higher priority followed by planned maintenance and health advisory. Critical events have higher priority followed by error, warning and informational. Furthermore, active events have higher priority than resolved. </summary>
-        public int? Priority { get; }
-        /// <summary> It provides the Timestamp for when the health impacting event was last updated. </summary>
-        public DateTimeOffset? LastUpdateOn { get; }
-        /// <summary> Stage for HIR Document. </summary>
-        public string HirStage { get; }
-        /// <summary> Additional information. </summary>
-        internal ResourceHealthEventAdditionalInformation AdditionalInformation { get; }
-        /// <summary> Additional information Message. </summary>
-        public string AdditionalInformationMessage
+        public ResourceHealthEventTypeValue? EventType
         {
-            get => AdditionalInformation?.Message;
+            get
+            {
+                return Properties is null ? default : Properties.EventType;
+            }
+        }
+
+        /// <summary> Sub-type of event. </summary>
+        public EventSubTypeValue? EventSubType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EventSubType;
+            }
+        }
+
+        /// <summary> Source of event. </summary>
+        public ResourceHealthEventSourceValue? EventSource
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EventSource;
+            }
+        }
+
+        /// <summary> Current status of event. </summary>
+        public ResourceHealthEventStatusValue? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
+        /// <summary> Title text of event. </summary>
+        public string Title
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Title;
+            }
+        }
+
+        /// <summary> Summary text of event. Use fetchEventDetails endpoint to get summary of sensitive events. </summary>
+        public string Summary
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Summary;
+            }
+        }
+
+        /// <summary> Header text of event. </summary>
+        public string Header
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Header;
+            }
+        }
+
+        /// <summary> Level of insight. </summary>
+        public ResourceHealthEventInsightLevelValue? Level
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Level;
+            }
+        }
+
+        /// <summary> Level of event. </summary>
+        public ResourceHealthEventLevelValue? EventLevel
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EventLevel;
+            }
+        }
+
+        /// <summary> If true the event may contains sensitive data. Use the post events/{trackingId}/fetchEventDetails endpoint to fetch sensitive data see https://learn.microsoft.com/en-us/azure/service-health/security-advisories-elevated-access. </summary>
+        public bool? IsEventSensitive
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsEventSensitive;
+            }
+        }
+
+        /// <summary> The id of the Incident. </summary>
+        public string ExternalIncidentId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExternalIncidentId;
+            }
+        }
+
+        /// <summary> The reason for the Incident. </summary>
+        public string Reason
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Reason;
+            }
+        }
+
+        /// <summary> Article of event. </summary>
+        public ResourceHealthEventArticle Article
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Article;
+            }
+        }
+
+        /// <summary> It provides the Timestamp for when the health impacting event started. </summary>
+        public DateTimeOffset? ImpactStartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ImpactStartOn;
+            }
+        }
+
+        /// <summary> It provides the Timestamp for when the health impacting event resolved. </summary>
+        public DateTimeOffset? ImpactMitigationOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ImpactMitigationOn;
+            }
+        }
+
+        /// <summary> Recommended actions of event. </summary>
+        public ResourceHealthEventRecommendedActions RecommendedActions
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RecommendedActions;
+            }
+        }
+
+        /// <summary> It provides information if the event is High incident rate event or not. </summary>
+        public bool? IsHirEvent
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsHirEvent;
+            }
+        }
+
+        /// <summary> Tells if we want to enable or disable Microsoft Support for this event. </summary>
+        public bool? IsMicrosoftSupportEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsMicrosoftSupportEnabled;
+            }
+        }
+
+        /// <summary> Contains the communication message for the event, that could include summary, root cause and other details. Use fetchEventDetails endpoint to get description of sensitive events. </summary>
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+        }
+
+        /// <summary> Is true if the event is platform initiated. </summary>
+        public bool? IsPlatformInitiated
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsPlatformInitiated;
+            }
+        }
+
+        /// <summary> Tells if we want to enable or disable Microsoft Support for this event. </summary>
+        public bool? IsChatWithUsEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsChatWithUsEnabled;
+            }
+        }
+
+        /// <summary> Priority level of the event. Has value from 0 to 23. 0 is the highest priority. Service issue events have higher priority followed by planned maintenance and health advisory. Critical events have higher priority followed by error, warning and informational. Furthermore, active events have higher priority than resolved. </summary>
+        public int? Priority
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Priority;
+            }
+        }
+
+        /// <summary> It provides the Timestamp for when the health impacting event was last updated. </summary>
+        public DateTimeOffset? LastUpdateOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastUpdateOn;
+            }
+        }
+
+        /// <summary> Stage for HIR Document. </summary>
+        public string HirStage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HirStage;
+            }
         }
 
         /// <summary> duration in seconds. </summary>
-        public int? Duration { get; }
+        public int? Duration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Duration;
+            }
+        }
+
         /// <summary> The type of the impact. </summary>
-        public string ImpactType { get; }
-        /// <summary> Unique identifier for planned maintenance event. </summary>
-        public string MaintenanceId { get; }
-        /// <summary> The type of planned maintenance event. </summary>
-        public string MaintenanceType { get; }
-        /// <summary> Azure Resource Graph query to fetch the affected resources from their existing Azure Resource Graph locations. </summary>
-        public string ArgQuery { get; }
+        public string ImpactType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ImpactType;
+            }
+        }
+
+        /// <summary>
+        /// A list of metadata tags associated with the event. Possible values include:
+        /// -Action Recommended: Action may be required by you to avoid possible disruptions or mitigate risks for your services. It is recommended to evaluate these actions and the potential impact on your services.
+        /// <list type="bullet"><item><description>False Positive: After investigation, we've determined your service is healthy and service issues did not impact your services as originally communicated.</description></item><item><description>Preliminary PIR: For our largest, most impactful service issues a Preliminary Post Incident Review (PIR) is published generally within 72 hours of mitigation, to summarize what we have learned so far from the still-in-progress investigation.</description></item><item><description>Final PIR: For service issues, a Final Post Incident Review (PIR) may be published to provide additional details or learnings. Sometimes this requires us to complete an internal retrospective, generally within 14 days of mitigation.</description></item></list>
+        /// </summary>
+        public IList<string> EventTags
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EventTags;
+            }
+        }
+
+        /// <summary> Billing rate change information - new rate. </summary>
+        public double? NewRate
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NewRate;
+            }
+        }
+
+        /// <summary> Billing rate change information - old rate. </summary>
+        public double? OldRate
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OldRate;
+            }
+        }
+
+        /// <summary> Billing currency type information. Example: USD, CAD. </summary>
+        public string CurrencyType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CurrencyType;
+            }
+        }
+
+        /// <summary> Billing identifier information. </summary>
+        public string BillingId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BillingId;
+            }
+        }
+
+        /// <summary> Additional information Message. </summary>
+        public string AdditionalInformationMessage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdditionalInformationMessage;
+            }
+        }
     }
 }

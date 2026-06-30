@@ -78,8 +78,8 @@ internal sealed class WebSocketEndpointHandler
 
         var clientHeaders = ClientHeaderForwarder.ExtractClientHeaders(httpContext.Request);
         var queryParams = ClientHeaderForwarder.ExtractQueryParameters(httpContext.Request);
-        var isolation = IsolationContext.FromRequest(httpContext.Request);
-        var context = new InvocationContext(invocationId, sessionId, clientHeaders, queryParams, isolation);
+        var platformContext = PlatformContext.FromRequest(httpContext.Request);
+        var context = new InvocationContext(invocationId, sessionId, clientHeaders, queryParams, platformContext);
 
         // Surface the session ID on the upgrade response headers so clients can
         // correlate the connection without having to parse the close frame.

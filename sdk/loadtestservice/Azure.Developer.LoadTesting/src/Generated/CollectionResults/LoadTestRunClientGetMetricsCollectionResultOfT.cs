@@ -69,8 +69,8 @@ namespace Azure.Developer.LoadTesting
                     yield break;
                 }
                 Metrics result = (Metrics)response;
-                yield return Page<TimeSeriesElement>.FromValues((IReadOnlyList<TimeSeriesElement>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<TimeSeriesElement>.FromValues((IReadOnlyList<TimeSeriesElement>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

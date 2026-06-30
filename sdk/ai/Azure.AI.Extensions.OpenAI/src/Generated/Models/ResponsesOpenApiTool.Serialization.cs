@@ -76,6 +76,17 @@ namespace Azure.AI.Extensions.OpenAI
                 throw new FormatException($"The model {nameof(ResponsesOpenApiTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsCollectionDefined(ToolConfigs))
+            {
+                writer.WritePropertyName("tool_configs"u8);
+                writer.WriteStartObject();
+                foreach (var item in ToolConfigs)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
+                }
+                writer.WriteEndObject();
+            }
             writer.WritePropertyName("openapi"u8);
             writer.WriteObjectValue(OpenApi, options);
         }
@@ -107,12 +118,27 @@ namespace Azure.AI.Extensions.OpenAI
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, ToolConfig> toolConfigs = default;
             ResponsesOpenApiFunctionDefinition openApi = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new ToolType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("tool_configs"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
+                    }
+                    toolConfigs = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("openapi"u8))
@@ -125,7 +151,7 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResponsesOpenApiTool(@type, additionalBinaryDataProperties, openApi);
+            return new ResponsesOpenApiTool(@type, additionalBinaryDataProperties, toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(), openApi);
         }
     }
 }

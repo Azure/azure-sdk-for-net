@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Unknown version of BatchDeploymentConfiguration. </summary>
     internal partial class UnknownBatchDeploymentConfiguration : BatchDeploymentConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="UnknownBatchDeploymentConfiguration"/>. </summary>
         /// <param name="deploymentConfigurationType"> [Required] The type of the deployment. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownBatchDeploymentConfiguration(BatchDeploymentConfigurationType deploymentConfigurationType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(deploymentConfigurationType, serializedAdditionalRawData)
-        {
-            DeploymentConfigurationType = deploymentConfigurationType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownBatchDeploymentConfiguration"/> for deserialization. </summary>
-        internal UnknownBatchDeploymentConfiguration()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownBatchDeploymentConfiguration(BatchDeploymentConfigurationType deploymentConfigurationType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(deploymentConfigurationType != default ? deploymentConfigurationType : "unknown", additionalBinaryDataProperties)
         {
         }
     }

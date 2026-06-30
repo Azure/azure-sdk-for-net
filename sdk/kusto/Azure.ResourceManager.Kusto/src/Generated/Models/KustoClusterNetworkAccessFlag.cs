@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Kusto.Models
     public readonly partial struct KustoClusterNetworkAccessFlag : IEquatable<KustoClusterNetworkAccessFlag>
     {
         private readonly string _value;
+        /// <summary> Enabled. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="KustoClusterNetworkAccessFlag"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KustoClusterNetworkAccessFlag(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
+            _value = value;
+        }
 
         /// <summary> Enabled. </summary>
         public static KustoClusterNetworkAccessFlag Enabled { get; } = new KustoClusterNetworkAccessFlag(EnabledValue);
+
         /// <summary> Disabled. </summary>
         public static KustoClusterNetworkAccessFlag Disabled { get; } = new KustoClusterNetworkAccessFlag(DisabledValue);
+
         /// <summary> Determines if two <see cref="KustoClusterNetworkAccessFlag"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KustoClusterNetworkAccessFlag left, KustoClusterNetworkAccessFlag right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KustoClusterNetworkAccessFlag"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KustoClusterNetworkAccessFlag left, KustoClusterNetworkAccessFlag right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KustoClusterNetworkAccessFlag"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KustoClusterNetworkAccessFlag"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KustoClusterNetworkAccessFlag(string value) => new KustoClusterNetworkAccessFlag(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KustoClusterNetworkAccessFlag"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KustoClusterNetworkAccessFlag?(string value) => value == null ? null : new KustoClusterNetworkAccessFlag(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KustoClusterNetworkAccessFlag other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KustoClusterNetworkAccessFlag other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

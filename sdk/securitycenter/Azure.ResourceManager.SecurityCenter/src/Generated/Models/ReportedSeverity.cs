@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public readonly partial struct ReportedSeverity : IEquatable<ReportedSeverity>
     {
         private readonly string _value;
+        /// <summary> Informational. </summary>
+        private const string InformationalValue = "Informational";
+        /// <summary> Low. </summary>
+        private const string LowValue = "Low";
+        /// <summary> Medium. </summary>
+        private const string MediumValue = "Medium";
+        /// <summary> High. </summary>
+        private const string HighValue = "High";
 
         /// <summary> Initializes a new instance of <see cref="ReportedSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ReportedSeverity(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InformationalValue = "Informational";
-        private const string LowValue = "Low";
-        private const string MediumValue = "Medium";
-        private const string HighValue = "High";
+            _value = value;
+        }
 
         /// <summary> Informational. </summary>
         public static ReportedSeverity Informational { get; } = new ReportedSeverity(InformationalValue);
+
         /// <summary> Low. </summary>
         public static ReportedSeverity Low { get; } = new ReportedSeverity(LowValue);
+
         /// <summary> Medium. </summary>
         public static ReportedSeverity Medium { get; } = new ReportedSeverity(MediumValue);
+
         /// <summary> High. </summary>
         public static ReportedSeverity High { get; } = new ReportedSeverity(HighValue);
+
         /// <summary> Determines if two <see cref="ReportedSeverity"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ReportedSeverity left, ReportedSeverity right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ReportedSeverity"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ReportedSeverity left, ReportedSeverity right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ReportedSeverity"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ReportedSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ReportedSeverity(string value) => new ReportedSeverity(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ReportedSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ReportedSeverity?(string value) => value == null ? null : new ReportedSeverity(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ReportedSeverity other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ReportedSeverity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
