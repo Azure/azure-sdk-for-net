@@ -69,7 +69,6 @@
     <Compile Include="$(AzureStorageSharedSources)SharedAccessSignatureCredentials.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageArgument.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageClientConfiguration.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureStorageSharedSources)RangeHeaderPolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageClientOptions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageConnectionString.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageCollectionEnumerator.cs" LinkBase="Shared" />
