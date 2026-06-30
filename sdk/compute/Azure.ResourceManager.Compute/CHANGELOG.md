@@ -10,6 +10,12 @@
 - Added `ConfidentialVmVersion` on `DiskSecurityProfile`.
 - Added `ImmutabilityPolicy` on `SnapshotProperties`.
 
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.15.0 (2026-06-29)
 
 ### Features Added
