@@ -34,8 +34,6 @@ internal static class ChainIdDerivation
     /// </summary>
     private const int ChainIdHexLength = 32;
 
-    private const string DefaultAgentName = "server-default-agent";
-
     /// <summary>
     /// Derives the stable, agent/session-scoped conversation chain id.
     /// <para>
@@ -46,7 +44,7 @@ internal static class ChainIdDerivation
     /// </summary>
     /// <param name="conversationId">Explicit conversation scope (highest priority).</param>
     /// <param name="previousResponseId">Chain parent (used when no conversation ID).</param>
-    /// <param name="responseId">This response's unique ID (fallback / fork key).</param>
+    /// <param name="responseId">This response's unique ID (first-turn fallback partition source).</param>
     /// <param name="agentReference">Agent reference containing the name, for cross-agent scoping.</param>
     /// <param name="sessionId">The resolved session scope identifier.</param>
     /// <returns>A stable hex chain id.</returns>
@@ -59,7 +57,7 @@ internal static class ChainIdDerivation
     {
         var (discriminator, partition) = ChainPartition(conversationId, previousResponseId, responseId);
 
-        var agentName = string.IsNullOrEmpty(agentReference?.Name) ? DefaultAgentName : agentReference!.Name;
+        var agentName = string.IsNullOrEmpty(agentReference?.Name) ? DerivationDefaults.DefaultAgentName : agentReference!.Name;
         var composite = $"{agentName}:{sessionId ?? string.Empty}:{discriminator}:{partition}";
 
         var hashBytes = SHA256.HashData(Encoding.UTF8.GetBytes(composite));

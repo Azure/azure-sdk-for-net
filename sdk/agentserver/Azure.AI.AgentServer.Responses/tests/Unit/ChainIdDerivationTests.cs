@@ -206,6 +206,7 @@ public class ChainIdDerivationTests
         Assert.That(asConversation, Is.Not.EqualTo(asChain),
             "Identical partition values from different sources must not collide");
     }
+
     [Test]
     public void Derive_ConversationId_InCanonicalIdFormat_ExtractsEmbeddedPartitionKey()
     {

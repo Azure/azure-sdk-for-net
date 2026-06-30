@@ -42,6 +42,7 @@ internal sealed class ResponseContextImpl : ResponseContext
     /// <param name="clientHeaders">Forwarded <c>x-client-*</c> headers, or <c>null</c> for empty.</param>
     /// <param name="queryParameters">Query parameters from the request, or <c>null</c> for empty.</param>
     /// <param name="platformContext">The platform context, or <c>null</c> for <see cref="PlatformContext.Empty"/>.</param>
+    /// <param name="conversationId">The conversation ID already resolved by the caller, to avoid re-parsing the conversation JSON. When <c>null</c>, it is resolved from <paramref name="request"/>.</param>
     public ResponseContextImpl(
         string responseId,
         ResponsesProvider provider,
@@ -50,7 +51,8 @@ internal sealed class ResponseContextImpl : ResponseContext
         BinaryData? rawBody = null,
         IReadOnlyDictionary<string, string>? clientHeaders = null,
         IReadOnlyDictionary<string, StringValues>? queryParameters = null,
-        PlatformContext? platformContext = null)
+        PlatformContext? platformContext = null,
+        string? conversationId = null)
         : base(responseId)
     {
         _rawBody = rawBody;
@@ -59,7 +61,7 @@ internal sealed class ResponseContextImpl : ResponseContext
         _platformContext = platformContext ?? PlatformContext.Empty;
         _provider = provider;
         _request = request;
-        _conversationId = request.GetConversationId();
+        _conversationId = conversationId ?? request.GetConversationId();
         _historyLimit = options?.Value.DefaultFetchHistoryCount ?? ResponsesServerOptions.DefaultFetchHistoryCountValue;
         _inputItemsResolved = new Lazy<Task<IReadOnlyList<Item>>>(() => ResolveInputItemsAsync(resolveReferences: true));
         _inputItemsUnresolved = new Lazy<Task<IReadOnlyList<Item>>>(() => ResolveInputItemsAsync(resolveReferences: false));
