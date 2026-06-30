@@ -49,7 +49,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         // This method body is copied from the generated JsonModelWriteCore; the customization changes
-        // only the method modifier from "virtual" to "override" so it matches TrackedResourceData.
+        // the method modifier from "virtual" to "override" and calls the restored TrackedResourceData
+        // base writer so inherited resource fields keep their previous wire shape.
         // Remove this workaround after https://github.com/Azure/azure-sdk-for-net/issues/60297 is fixed.
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -60,6 +61,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 throw new FormatException($"The model {nameof(LatencyScorecard)} does not support writing '{format}' format.");
             }
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
