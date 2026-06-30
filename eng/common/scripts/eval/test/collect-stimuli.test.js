@@ -1,5 +1,8 @@
 // node:test unit tests for collect-stimuli.js (port of Split-EvalSuite.Tests.ps1).
 // Run from eng/common/scripts/eval:  npm test
+//
+// Sharding is always by `area` tag: one shard per area, each carrying every eval of that
+// area via repeated `-e` flags. Untagged evals fall back to their parent folder.
 
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -22,7 +25,7 @@ function withWarnings(fn) {
   return { result, warnings };
 }
 
-describe("collect-stimuli (shardBy file, default)", () => {
+describe("collect-stimuli (default discovery)", () => {
   let root;
 
   before(() => {
@@ -41,15 +44,18 @@ describe("collect-stimuli (shardBy file, default)", () => {
     );
     writeFile(
       path.join(root, "evals/workflow-scenarios/live/release-planner.eval.yaml"),
-      "x"
+      "tags:\n  area: release-plan"
     );
   });
 
   after(() => fs.rmSync(root, { recursive: true, force: true }));
 
   it("discovers the hermetic mock-vertical files by default", () => {
+    // github (1 file) + typespec (2 files) = 2 area shards from 3 files.
     const matrix = buildMatrix({ roots: [root] });
-    assert.equal(Object.keys(matrix).length, 3);
+    assert.equal(Object.keys(matrix).length, 2);
+    assert.ok("area_github" in matrix);
+    assert.ok("area_typespec" in matrix);
   });
 
   it("excludes the live tier from the default pattern", () => {
@@ -57,9 +63,10 @@ describe("collect-stimuli (shardBy file, default)", () => {
     for (const entry of Object.values(matrix)) {
       assert.doesNotMatch(entry.evalArgs, /live\//);
     }
+    assert.ok(!("area_release_plan" in matrix));
   });
 
-  it("emits one forward-slashed `-e` arg per file", () => {
+  it("emits forward-slashed `-e` args", () => {
     const matrix = buildMatrix({ roots: [root] });
     for (const entry of Object.values(matrix)) {
       assert.doesNotMatch(entry.evalArgs, /\\/);
@@ -67,33 +74,10 @@ describe("collect-stimuli (shardBy file, default)", () => {
     }
   });
 
-  it("produces filesystem-safe shard names from the full relative path", () => {
+  it("produces filesystem-safe shard names", () => {
     const matrix = buildMatrix({ roots: [root] });
-    const keys = Object.keys(matrix);
-    assert.ok(keys.includes("evals_tools_prompt_to_tool_github"));
-    assert.ok(keys.includes("evals_workflow_scenarios_mock_rename_client_property"));
-    for (const key of keys) {
+    for (const key of Object.keys(matrix)) {
       assert.match(key, /^[A-Za-z0-9_]+$/);
-    }
-  });
-
-  it("keeps shard names unique when the immediate parent folder repeats", () => {
-    // Two skills both at `<skill>/evals/trigger.eval.yaml` must not collide on a
-    // `evals_trigger` name — the full path disambiguates them.
-    const skillRoot = fs.mkdtempSync(path.join(os.tmpdir(), "vally-matrix-skills-"));
-    writeFile(path.join(skillRoot, "sensei/evals/trigger.eval.yaml"), "x");
-    writeFile(path.join(skillRoot, "skill-authoring/evals/trigger.eval.yaml"), "x");
-    try {
-      const matrix = buildMatrix({
-        roots: [skillRoot],
-        patterns: ["*/evals/*.eval.yaml"],
-      });
-      const keys = Object.keys(matrix);
-      assert.equal(keys.length, 2);
-      assert.ok(keys.includes("sensei_evals_trigger"));
-      assert.ok(keys.includes("skill_authoring_evals_trigger"));
-    } finally {
-      fs.rmSync(skillRoot, { recursive: true, force: true });
     }
   });
 
@@ -104,7 +88,7 @@ describe("collect-stimuli (shardBy file, default)", () => {
   });
 });
 
-describe("collect-stimuli (shardBy area)", () => {
+describe("collect-stimuli (area grouping)", () => {
   let root;
 
   before(() => {
@@ -121,16 +105,12 @@ describe("collect-stimuli (shardBy area)", () => {
       path.join(root, "evals/workflow-scenarios/mock/rename-client-property.eval.yaml"),
       "tags:\n  area: typespec"
     );
-    writeFile(
-      path.join(root, "evals/workflow-scenarios/live/release-planner.eval.yaml"),
-      "x"
-    );
   });
 
   after(() => fs.rmSync(root, { recursive: true, force: true }));
 
   it("collapses files into one shard per area tag", () => {
-    const matrix = buildMatrix({ roots: [root], shardBy: "area" });
+    const matrix = buildMatrix({ roots: [root] });
     // github (1 file) + typespec (2 files) = 2 shards from 3 files.
     assert.equal(Object.keys(matrix).length, 2);
     assert.ok("area_github" in matrix);
@@ -138,16 +118,9 @@ describe("collect-stimuli (shardBy area)", () => {
   });
 
   it("groups every file of an area into one shard via repeated -e flags", () => {
-    const matrix = buildMatrix({ roots: [root], shardBy: "area" });
+    const matrix = buildMatrix({ roots: [root] });
     const count = (matrix.area_typespec.evalArgs.match(/-e /g) || []).length;
     assert.equal(count, 2);
-  });
-
-  it("keeps the live tier out of area shards", () => {
-    const matrix = buildMatrix({ roots: [root], shardBy: "area" });
-    for (const entry of Object.values(matrix)) {
-      assert.doesNotMatch(entry.evalArgs, /live\//);
-    }
   });
 
   it("throws when two area tags collide after sanitization", () => {
@@ -162,7 +135,7 @@ describe("collect-stimuli (shardBy area)", () => {
         "tags:\n  area: release_plan"
       );
       assert.throws(
-        () => buildMatrix({ roots: [collideRoot], shardBy: "area" }),
+        () => buildMatrix({ roots: [collideRoot] }),
         /Duplicate shard name 'area_release_plan'/
       );
     } finally {
@@ -171,7 +144,7 @@ describe("collect-stimuli (shardBy area)", () => {
   });
 });
 
-describe("collect-stimuli (shardBy area with an untagged eval)", () => {
+describe("collect-stimuli (area with an untagged eval)", () => {
   let root;
 
   before(() => {
@@ -186,7 +159,6 @@ describe("collect-stimuli (shardBy area with an untagged eval)", () => {
     const { result: matrix } = withWarnings((warn) =>
       buildMatrix({
         roots: [root],
-        shardBy: "area",
         patterns: ["evals/tools/*.eval.yaml"],
         warn,
       })
@@ -200,7 +172,6 @@ describe("collect-stimuli (shardBy area with an untagged eval)", () => {
     const { result: matrix } = withWarnings((warn) =>
       buildMatrix({
         roots: [root],
-        shardBy: "area",
         patterns: ["evals/tools/*.eval.yaml"],
         warn,
       })
@@ -212,7 +183,6 @@ describe("collect-stimuli (shardBy area with an untagged eval)", () => {
     const { warnings } = withWarnings((warn) =>
       buildMatrix({
         roots: [root],
-        shardBy: "area",
         patterns: ["evals/tools/*.eval.yaml"],
         warn,
       })
@@ -238,19 +208,9 @@ describe("collect-stimuli (overlapping patterns)", () => {
 
   after(() => fs.rmSync(root, { recursive: true, force: true }));
 
-  it("de-dups a file matched by multiple patterns (file mode does not collide)", () => {
+  it("does not emit a duplicate -e flag for a file matched by multiple patterns", () => {
     const matrix = buildMatrix({
       roots: [root],
-      patterns: ["evals/tools/*.eval.yaml", "evals/tools/add-arm-resource.eval.yaml"],
-    });
-    const matches = Object.keys(matrix).filter((k) => k === "evals_tools_add_arm_resource");
-    assert.equal(matches.length, 1);
-  });
-
-  it("does not emit a duplicate -e flag in area mode", () => {
-    const matrix = buildMatrix({
-      roots: [root],
-      shardBy: "area",
       patterns: ["evals/tools/*.eval.yaml", "evals/tools/add-arm-resource.eval.yaml"],
     });
     const count = (matrix.area_typespec.evalArgs.match(/add-arm-resource/g) || []).length;
@@ -287,8 +247,8 @@ describe("collect-stimuli (multiple eval roots: repo + common)", () => {
     });
     const keys = Object.keys(matrix);
     assert.equal(keys.length, 2);
-    assert.ok(keys.includes("evals_tools_repo_specific"));
-    assert.ok(keys.includes("evals_tools_shared_scenario"));
+    assert.ok(keys.includes("area_repo"));
+    assert.ok(keys.includes("area_shared"));
   });
 
   it("computes each file's relative path against its own root", () => {
@@ -297,7 +257,7 @@ describe("collect-stimuli (multiple eval roots: repo + common)", () => {
       patterns: ["evals/tools/*.eval.yaml"],
     });
     assert.equal(
-      matrix.evals_tools_shared_scenario.evalArgs,
+      matrix.area_shared.evalArgs,
       "-e evals/tools/shared-scenario.eval.yaml"
     );
   });
@@ -314,8 +274,14 @@ describe("collect-stimuli (pathBase anchors scattered roots to one run root)", (
     parent = fs.mkdtempSync(path.join(os.tmpdir(), "vally-matrix-base-"));
     runRoot = path.join(parent, "project");
     scatteredRoot = path.join(parent, "extra");
-    writeFile(path.join(runRoot, "evals/tools/in-project.eval.yaml"), "x");
-    writeFile(path.join(scatteredRoot, "evals/out-of-tree.eval.yaml"), "x");
+    writeFile(
+      path.join(runRoot, "evals/tools/in-project.eval.yaml"),
+      "tags:\n  area: inproject"
+    );
+    writeFile(
+      path.join(scatteredRoot, "evals/out-of-tree.eval.yaml"),
+      "tags:\n  area: scattered"
+    );
   });
 
   after(() => fs.rmSync(parent, { recursive: true, force: true }));
@@ -328,11 +294,11 @@ describe("collect-stimuli (pathBase anchors scattered roots to one run root)", (
     });
     // The in-project file stays a simple relative path; the scattered one walks up.
     assert.equal(
-      matrix.evals_tools_in_project.evalArgs,
+      matrix.area_inproject.evalArgs,
       "-e evals/tools/in-project.eval.yaml"
     );
     assert.equal(
-      matrix.___extra_evals_out_of_tree.evalArgs,
+      matrix.area_scattered.evalArgs,
       "-e ../extra/evals/out-of-tree.eval.yaml"
     );
   });
@@ -344,9 +310,8 @@ describe("collect-stimuli (pathBase anchors scattered roots to one run root)", (
     });
     // Without a base, the path is relative to the root it was found under (no `../`).
     assert.equal(
-      matrix.evals_out_of_tree.evalArgs,
+      matrix.area_scattered.evalArgs,
       "-e evals/out-of-tree.eval.yaml"
     );
   });
 });
-

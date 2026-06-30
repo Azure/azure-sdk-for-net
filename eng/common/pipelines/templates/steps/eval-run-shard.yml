@@ -4,32 +4,20 @@
 # eval VERDICT (invoke-eval-shard.js reads results.jsonl), not the `vally` exit code —
 # Vally can exit 1 on a teardown timeout after a passing run, and that flake must not
 # turn a green shard red.
+#
+# Only the two values an entrypoint actually varies are parameters (vallyRoot,
+# evalInvokeTemplate). Everything else the shard needs is a fixed repo constant inlined
+# below — the script dir (eng/common/scripts/eval), the MCP artifact name (mcp-servers)
+# and its stage path (artifacts/mcp), and Node 22.x — so they're not plumbed as params no
+# caller ever overrides.
 
 parameters:
   - name: vallyRoot
     # The single dir the shard runs `vally eval` from (where .vally.yaml lives) and the
-    # anchor the matrix's `-e` paths are relative to.
+    # anchor the matrix's `-e` paths are relative to. The one path an entrypoint varies
+    # (skill evals run from .github/skills), so it stays a threaded parameter.
     type: string
     default: tools/azsdk-cli/Azure.Sdk.Tools.Vally
-  - name: scriptDir
-    # The eval glue scripts AND the pinned Vally CLI (npm ci runs here) live together.
-    type: string
-    default: eng/common/scripts/eval
-  - name: mcpArtifact
-    type: string
-    default: mcp-servers
-  - name: mcpStageRoot
-    # Relative to $(Build.SourcesDirectory); must match the path .vally.yaml expects.
-    # The published artifact is re-staged here so the DLL subfolders (cli/, mock/) land
-    # at the paths the eval environments resolve against.
-    type: string
-    default: artifacts/mcp
-  - name: threshold
-    type: string
-    default: '0.8'
-  - name: nodeVersion
-    type: string
-    default: 22.x
   - name: evalInvokeTemplate
     # Path to the step template that actually runs `vally eval` for this shard. Defaults to
     # the hermetic plain-node runner; a pipeline overrides it to wrap the run at execution
@@ -38,20 +26,15 @@ parameters:
     # no service connection (the override does).
     type: string
     default: /eng/common/pipelines/templates/steps/eval-invoke.yml
-  - name: githubTokenVariable
-    # Name of the secret variable (from the DevOps-linked group) the copilot-sdk
-    # executor authenticates with. Passed by name so no group is hardcoded (D5).
-    type: string
-    default: azuresdk-copilot-github-pat
 
 steps:
   - checkout: self
     fetchDepth: 1
 
   - task: UseNode@1
-    displayName: 'Use Node.js ${{ parameters.nodeVersion }}'
+    displayName: 'Use Node.js 22.x'
     inputs:
-      version: ${{ parameters.nodeVersion }}
+      version: 22.x
 
   # Point npm at the azure-sdk Azure Artifacts npm mirror. The 1ES Official managed
   # image blocks direct egress to registry.npmjs.org (npm ci fails EPERM/"rejected by
@@ -66,15 +49,15 @@ steps:
   # (the executor) into eng/common/scripts/eval/node_modules — no global install needed (D9).
   - script: npm ci --userconfig $(Build.SourcesDirectory)/.npmrc
     displayName: 'Install Vally CLI + copilot-sdk (pinned via lockfile)'
-    workingDirectory: ${{ parameters.scriptDir }}
+    workingDirectory: eng/common/scripts/eval
 
   - download: current
-    artifact: ${{ parameters.mcpArtifact }}
+    artifact: mcp-servers
     displayName: 'Download Azure SDK Tools MCP server(s)'
 
   - script: |
-      mkdir -p "$(Build.SourcesDirectory)/${{ parameters.mcpStageRoot }}"
-      cp -r "$(Pipeline.Workspace)/${{ parameters.mcpArtifact }}/." "$(Build.SourcesDirectory)/${{ parameters.mcpStageRoot }}/"
+      mkdir -p "$(Build.SourcesDirectory)/artifacts/mcp"
+      cp -r "$(Pipeline.Workspace)/mcp-servers/." "$(Build.SourcesDirectory)/artifacts/mcp/"
     displayName: 'Stage MCP server(s) at expected path'
 
   # Clone the git fixtures THIS shard's evals reference. init-eval-git-fixtures.js scans
@@ -92,7 +75,7 @@ steps:
         patterns+=(--pattern "$tok")
       done
       set +f
-      node "$(Build.SourcesDirectory)/${{ parameters.scriptDir }}/init-eval-git-fixtures.js" \
+      node "$(Build.SourcesDirectory)/eng/common/scripts/eval/init-eval-git-fixtures.js" \
         --eval-root "$(Build.SourcesDirectory)/${{ parameters.vallyRoot }}" \
         "${patterns[@]}"
     displayName: 'Prime eval git fixtures (scan + clone)'
@@ -105,10 +88,7 @@ steps:
   # without the shared orchestrator owning a service connection. Default = hermetic node.
   - template: ${{ parameters.evalInvokeTemplate }}
     parameters:
-      scriptDir: ${{ parameters.scriptDir }}
       vallyRoot: ${{ parameters.vallyRoot }}
-      threshold: ${{ parameters.threshold }}
-      githubTokenVariable: ${{ parameters.githubTokenVariable }}
 
   # Always stage just the JUnit (a few KB) — all the Summary stage consumes — so green
   # runs stay tiny. The host job publishes this dir as 'eval-result-$(shardName)' via 1ES

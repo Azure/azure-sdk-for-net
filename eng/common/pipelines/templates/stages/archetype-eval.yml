@@ -19,16 +19,16 @@ parameters:
     type: string
     default: tools/azsdk-cli/Azure.Sdk.Tools.Vally
   - name: evalGlobs
-    # File globs that select the *.eval.yaml files under vallyRoot (forward-slashed,
-    # supports * ? **). Empty = collect-stimuli.js uses its built-in default.
+    # File globs (forward-slashed, * ? **) selecting the *.eval.yaml files under vallyRoot.
+    # The default below IS the hermetic "mock vertical" suite (unit tools + mock workflow
+    # scenarios) that the per-PR gate runs — spelled out here so the default is visible
+    # instead of hidden behind an empty-array sentinel. Entrypoints that run a different
+    # suite (skill, live) override it with their own globs. (collect-stimuli.js keeps the
+    # same list as a local-CLI fallback for when it's run by hand with no --pattern.)
     type: object
-    default: []
-  - name: shardBy
-    type: string
-    default: file
-    values:
-      - file
-      - area
+    default:
+      - 'evals/tools/*.eval.yaml'
+      - 'evals/workflow-scenarios/mock/*.eval.yaml'
   - name: mcpSetupTemplate
     # Path to the step template that builds/installs the MCP server(s) this pipeline's evals
     # drive, then publishes each under artifacts/mcp/<name> (the contract every shard
@@ -50,11 +50,11 @@ parameters:
     default: false
 
 extends:
+  # 1es-redirect picks the Official 1ES template on the internal project (full SDL) and
+  # Unofficial elsewhere. Its Use1ESOfficial param already defaults to true, so eval
+  # pipelines don't pass it — they never need the override.
   template: /eng/pipelines/templates/stages/1es-redirect.yml
   parameters:
-    # Official template on the internal project (full SDL), Unofficial elsewhere; the
-    # 1es-redirect template picks the right one. Eval pipelines never need the override.
-    Use1ESOfficial: true
     stages:
       - stage: Prepare
         displayName: 'Build MCP'
@@ -85,7 +85,6 @@ extends:
             parameters:
               vallyRoot: ${{ parameters.vallyRoot }}
               evalGlobs: ${{ parameters.evalGlobs }}
-              shardBy: ${{ parameters.shardBy }}
 
       - stage: Eval
         displayName: 'Run eval shards'

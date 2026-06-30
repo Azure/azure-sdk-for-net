@@ -6,7 +6,7 @@
 # Supersedes the single-job eng/pipelines/skill-eval.yml; once this gate is proven the
 # old pipeline can be retired. Both currently trigger on .github/skills/**.
 #
-# Thin entrypoint (D2): trigger + params + variable group, then `extends` the archetype.
+# Thin entrypoint (D2): trigger + variable group, then `extends` the archetype.
 
 trigger:
   branches:
@@ -21,7 +21,6 @@ trigger:
       - eng/common/pipelines/skill-eval.yml
       - eng/pipelines/eval/mcp-mock.yml
       - eng/common/pipelines/templates/steps/eval-collect-stimuli.yml
-      - eng/common/pipelines/templates/steps/eval-run-shard.yml
       - eng/common/pipelines/templates/steps/eval-invoke.yml
       - eng/common/pipelines/templates/steps/eval-summarize.yml
       - eng/common/pipelines/templates/stages/archetype-eval.yml
@@ -29,31 +28,19 @@ trigger:
 
 pr: none
 
-parameters:
-  # file = one job per skill eval file (default; the skill count is small).
-  # area = one job per `area` tag (only useful once skills are tagged).
-  - name: shardBy
-    displayName: 'Shard granularity'
-    type: string
-    default: file
-    values:
-      - file
-      - area
-
 variables:
   # Managed-pool image selection (LINUXPOOL/LINUXVMIMAGE). Repo-local.
   - template: /eng/pipelines/templates/variables/image.yml
-  # Per-shard job timeout (consumed by eval-shard.yml as $(shardTimeoutInMinutes)). The
-  # hermetic skill evals are quick; cap well under the default agent slot.
+  # Per-shard job timeout (consumed by the archetype's RunShard job as $(shardTimeoutInMinutes)).
+  # The hermetic skill evals are quick; cap well under the default agent slot.
   - name: shardTimeoutInMinutes
     value: 20
-  # azuresdk-copilot-github-pat is supplied by AzSDK_Eval_Variable_group, linked at the
-  # ADO pipeline definition (not named here so the group can vary per repo).
+  # GITHUB_TOKEN (the model-session PAT) is supplied by the eval variable group, linked at
+  # the ADO pipeline definition. It reaches the shard ambiently — no template wiring.
 
 extends:
   template: /eng/common/pipelines/templates/stages/archetype-eval.yml
   parameters:
-    shardBy: ${{ parameters.shardBy }}
     # Skill evals run against the hermetic mock MCP (azure-sdk-tools' repo-local build).
     mcpSetupTemplate: /eng/pipelines/eval/mcp-mock.yml
     # The skill evals + their .vally.yaml live under .github/skills; shards run from there.
