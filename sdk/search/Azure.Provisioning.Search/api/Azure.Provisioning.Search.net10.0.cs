@@ -59,7 +59,7 @@ namespace Azure.Provisioning.Search
         Enabled = 1,
         Unspecified = 2,
     }
-    [System.ObsoleteAttribute("This type is retained only for binary compatibility and is no longer used by Azure.Provisioning.Search.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future versions, please use search service resource properties instead.")]
     public partial class SearchManagementRequestOptions : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SearchManagementRequestOptions() { }
@@ -104,6 +104,7 @@ namespace Azure.Provisioning.Search
             public static readonly string V2025_05_01;
         }
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future versions, please use SearchPrivateEndpointConnection instead.")]
     public partial class SearchPrivateEndpointConnectionData : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SearchPrivateEndpointConnectionData() { }
@@ -151,16 +152,18 @@ namespace Azure.Provisioning.Search
         public Azure.Provisioning.Search.SearchServiceNetworkRuleSet NetworkRuleSet { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> PartitionCount { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Search.SearchPrivateEndpointConnection> PrivateEndpointConnectionResources { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsoleted and will be removed in a future version, please use PrivateEndpointConnectionResources instead.")]
         public Azure.Provisioning.BicepList<Azure.Provisioning.Search.SearchPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Search.SearchServiceProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Search.SearchServicePublicInternetAccess> PublicInternetAccess { get { throw null; } set { } }
-        [System.ObsoleteAttribute("Use PublicInternetAccess instead.")]
+        [System.ObsoleteAttribute("This property is obsoleted and will be removed in a future version, please use PublicInternetAccess instead.")]
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Search.SearchServicePublicNetworkAccess> PublicNetworkAccess { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> ReplicaCount { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Search.SearchServiceSkuName> SearchSkuName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Search.SearchSemanticSearch> SemanticSearch { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ServiceUpgradedOn { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Search.SharedSearchServicePrivateLink> SharedPrivateLinkResourceItems { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsoleted and will be removed in a future version, please use SharedPrivateLinkResourceItems instead.")]
         public Azure.Provisioning.BicepList<Azure.Provisioning.Search.SharedSearchServicePrivateLinkResourceData> SharedPrivateLinkResources { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Search.SearchServiceStatus> Status { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> StatusDetails { get { throw null; } }
@@ -366,7 +369,7 @@ namespace Azure.Provisioning.Search
         Disabled = 1,
         SecuredByPerimeter = 2,
     }
-    [System.ObsoleteAttribute("Use SearchServicePublicInternetAccess instead.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future versions, please use SearchServicePublicInternetAccess instead.")]
     public enum SearchServicePublicNetworkAccess
     {
         [System.Runtime.Serialization.DataMemberAttribute(Name="enabled")]
@@ -458,6 +461,7 @@ namespace Azure.Provisioning.Search
             public static readonly string V2025_05_01;
         }
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future versions, please use SharedSearchServicePrivateLink instead.")]
     public partial class SharedSearchServicePrivateLinkResourceData : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SharedSearchServicePrivateLinkResourceData() { }
@@ -480,6 +484,7 @@ namespace Azure.Provisioning.Search
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Search.SearchServiceSharedPrivateLinkResourceStatus> SharedPrivateLinkResourceStatus { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future versions, please use SearchServiceSharedPrivateLinkResourceProvisioningState instead.")]
     public enum SharedSearchServicePrivateLinkResourceProvisioningState
     {
         Updating = 0,
@@ -488,6 +493,7 @@ namespace Azure.Provisioning.Search
         Succeeded = 3,
         Incomplete = 4,
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future versions, please use SearchServiceSharedPrivateLinkResourceStatus instead.")]
     public enum SharedSearchServicePrivateLinkResourceStatus
     {
         Pending = 0,

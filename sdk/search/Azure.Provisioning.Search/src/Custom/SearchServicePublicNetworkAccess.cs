@@ -8,7 +8,7 @@ using System.Runtime.Serialization;
 namespace Azure.Provisioning.Search
 {
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("Use SearchServicePublicInternetAccess instead.")]
+    [Obsolete("This type is obsoleted and will be removed in a future versions, please use SearchServicePublicInternetAccess instead.")]
     public enum SearchServicePublicNetworkAccess
     {
         [DataMember(Name = "enabled")]

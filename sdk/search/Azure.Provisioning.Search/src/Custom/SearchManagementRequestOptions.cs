@@ -11,7 +11,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Search
 {
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This type is retained only for binary compatibility and is no longer used by Azure.Provisioning.Search.")]
+    [Obsolete("This type is obsoleted and will be removed in a future versions, please use search service resource properties instead.")]
     public partial class SearchManagementRequestOptions : ProvisionableConstruct
     {
         private BicepValue<Guid> _clientRequestId;

@@ -7,15 +7,16 @@ using System;
 using System.ComponentModel;
 
 #nullable disable
-#pragma warning disable CS0618 // Compatibility shims intentionally reference obsolete members.
 
 namespace Azure.Provisioning.Search
 {
     public partial class SearchService
     {
+#pragma warning disable CS0618 // Compatibility shims intentionally reference obsolete types.
         private BicepList<SearchPrivateEndpointConnectionData> _privateEndpointConnectionsCompat;
         private BicepValue<SearchServicePublicNetworkAccess> _publicNetworkAccess;
         private BicepList<SharedSearchServicePrivateLinkResourceData> _sharedPrivateLinkResourcesCompat;
+#pragma warning restore CS0618
 
         [CodeGenMember("PrivateEndpointConnections")]
         public BicepList<SearchPrivateEndpointConnection> PrivateEndpointConnectionResources
@@ -29,6 +30,9 @@ namespace Azure.Provisioning.Search
                 return Properties.PrivateEndpointConnections;
             }
         }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsoleted and will be removed in a future version, please use PrivateEndpointConnectionResources instead.")]
         public BicepList<SearchPrivateEndpointConnectionData> PrivateEndpointConnections
         {
             get { Initialize(); return _privateEndpointConnectionsCompat; }
@@ -54,10 +58,9 @@ namespace Azure.Provisioning.Search
                 NetworkRuleSet.IPRules = value;
             }
         }
-        #pragma warning restore CS0618
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("Use PublicInternetAccess instead.")]
+        [Obsolete("This property is obsoleted and will be removed in a future version, please use PublicInternetAccess instead.")]
         public BicepValue<SearchServicePublicNetworkAccess> PublicNetworkAccess
         {
             get { Initialize(); return _publicNetworkAccess; }
@@ -77,6 +80,8 @@ namespace Azure.Provisioning.Search
             }
         }
 
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsoleted and will be removed in a future version, please use SharedPrivateLinkResourceItems instead.")]
         public BicepList<SharedSearchServicePrivateLinkResourceData> SharedPrivateLinkResources
         {
             get { Initialize(); return _sharedPrivateLinkResourcesCompat; }
@@ -84,11 +89,11 @@ namespace Azure.Provisioning.Search
 
         partial void DefineAdditionalProperties()
         {
-            _privateEndpointConnectionsCompat = DefineListProperty<SearchPrivateEndpointConnectionData>(nameof(PrivateEndpointConnections), new string[] { "properties", "privateEndpointConnections" }, isOutput: true);
 #pragma warning disable CS0618
+            _privateEndpointConnectionsCompat = DefineListProperty<SearchPrivateEndpointConnectionData>("PrivateEndpointConnections", new string[] { "properties", "privateEndpointConnections" }, isOutput: true);
             _publicNetworkAccess = DefineProperty<SearchServicePublicNetworkAccess>("PublicNetworkAccess", new string[] { "properties", "publicNetworkAccess" });
+            _sharedPrivateLinkResourcesCompat = DefineListProperty<SharedSearchServicePrivateLinkResourceData>("SharedPrivateLinkResources", new string[] { "properties", "sharedPrivateLinkResources" }, isOutput: true);
 #pragma warning restore CS0618
-            _sharedPrivateLinkResourcesCompat = DefineListProperty<SharedSearchServicePrivateLinkResourceData>(nameof(SharedPrivateLinkResources), new string[] { "properties", "sharedPrivateLinkResources" }, isOutput: true);
         }
     }
 }

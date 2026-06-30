@@ -5,11 +5,15 @@ using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
+using System;
+using System.ComponentModel;
 
 #nullable disable
 
 namespace Azure.Provisioning.Search
 {
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This type is obsoleted and will be removed in a future versions, please use SearchPrivateEndpointConnection instead.")]
     public partial class SearchPrivateEndpointConnectionData : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _id;
