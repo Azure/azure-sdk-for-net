@@ -14,22 +14,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public partial class DefenderForServersAwsOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of <see cref="DefenderForServersAwsOffering"/>. </summary>
-        public DefenderForServersAwsOffering()
+        public DefenderForServersAwsOffering() : base(OfferingType.DefenderForServersAws)
         {
-            OfferingType = OfferingType.DefenderForServersAws;
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderForServersAwsOffering"/>. </summary>
         /// <param name="offeringType"> The type of the security offering. </param>
         /// <param name="description"> The offering description. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="defenderForServers"> The Defender for servers connection configuration. </param>
         /// <param name="arcAutoProvisioning"> The ARC autoprovisioning configuration. </param>
         /// <param name="vaAutoProvisioning"> The Vulnerability Assessment autoprovisioning configuration. </param>
         /// <param name="mdeAutoProvisioning"> The Microsoft Defender for Endpoint autoprovisioning configuration. </param>
         /// <param name="subPlan"> configuration for the servers offering subPlan. </param>
         /// <param name="vmScanners"> The Microsoft Defender for Server VM scanning configuration. </param>
-        internal DefenderForServersAwsOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, AwsDefenderForServersInfo defenderForServers, DefenderForServersAwsOfferingArcAutoProvisioning arcAutoProvisioning, DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning vaAutoProvisioning, DefenderForServersAwsOfferingMdeAutoProvisioning mdeAutoProvisioning, DefenderForServersAwsOfferingSubPlan subPlan, DefenderForServersAwsOfferingVmScanners vmScanners) : base(offeringType, description, serializedAdditionalRawData)
+        internal DefenderForServersAwsOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties, DefenderForServersAwsOfferingDefenderForServers defenderForServers, DefenderForServersAwsOfferingArcAutoProvisioning arcAutoProvisioning, DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning vaAutoProvisioning, DefenderForServersAwsOfferingMdeAutoProvisioning mdeAutoProvisioning, DefenderForServersAwsOfferingSubPlan subPlan, DefenderForServersAwsOfferingVmScanners vmScanners) : base(offeringType, description, additionalBinaryDataProperties)
         {
             DefenderForServers = defenderForServers;
             ArcAutoProvisioning = arcAutoProvisioning;
@@ -37,44 +36,58 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             MdeAutoProvisioning = mdeAutoProvisioning;
             SubPlan = subPlan;
             VmScanners = vmScanners;
-            OfferingType = offeringType;
         }
 
         /// <summary> The Defender for servers connection configuration. </summary>
-        internal AwsDefenderForServersInfo DefenderForServers { get; set; }
+        internal DefenderForServersAwsOfferingDefenderForServers DefenderForServers { get; set; }
+
+        /// <summary> The ARC autoprovisioning configuration. </summary>
+        public DefenderForServersAwsOfferingArcAutoProvisioning ArcAutoProvisioning { get; set; }
+
+        /// <summary> The Vulnerability Assessment autoprovisioning configuration. </summary>
+        public DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning VaAutoProvisioning { get; set; }
+
+        /// <summary> The Microsoft Defender for Endpoint autoprovisioning configuration. </summary>
+        public DefenderForServersAwsOfferingMdeAutoProvisioning MdeAutoProvisioning { get; set; }
+
+        /// <summary> configuration for the servers offering subPlan. </summary>
+        internal DefenderForServersAwsOfferingSubPlan SubPlan { get; set; }
+
+        /// <summary> The Microsoft Defender for Server VM scanning configuration. </summary>
+        public DefenderForServersAwsOfferingVmScanners VmScanners { get; set; }
+
         /// <summary> The cloud role ARN in AWS for this feature. </summary>
         public string DefenderForServersCloudRoleArn
         {
-            get => DefenderForServers is null ? default : DefenderForServers.CloudRoleArn;
+            get
+            {
+                return DefenderForServers is null ? default : DefenderForServers.CloudRoleArn;
+            }
             set
             {
                 if (DefenderForServers is null)
-                    DefenderForServers = new AwsDefenderForServersInfo();
+                {
+                    DefenderForServers = new DefenderForServersAwsOfferingDefenderForServers();
+                }
                 DefenderForServers.CloudRoleArn = value;
             }
         }
 
-        /// <summary> The ARC autoprovisioning configuration. </summary>
-        public DefenderForServersAwsOfferingArcAutoProvisioning ArcAutoProvisioning { get; set; }
-        /// <summary> The Vulnerability Assessment autoprovisioning configuration. </summary>
-        public DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning VaAutoProvisioning { get; set; }
-        /// <summary> The Microsoft Defender for Endpoint autoprovisioning configuration. </summary>
-        public DefenderForServersAwsOfferingMdeAutoProvisioning MdeAutoProvisioning { get; set; }
-        /// <summary> configuration for the servers offering subPlan. </summary>
-        internal DefenderForServersAwsOfferingSubPlan SubPlan { get; set; }
         /// <summary> The available sub plans. </summary>
-        public AvailableSubPlanType? AvailableSubPlanType
+        public AvailableSubPlanType? SubPlanType
         {
-            get => SubPlan is null ? default : SubPlan.AvailableSubPlanType;
+            get
+            {
+                return SubPlan is null ? default : SubPlan.Type;
+            }
             set
             {
                 if (SubPlan is null)
+                {
                     SubPlan = new DefenderForServersAwsOfferingSubPlan();
-                SubPlan.AvailableSubPlanType = value;
+                }
+                SubPlan.Type = value;
             }
         }
-
-        /// <summary> The Microsoft Defender for Server VM scanning configuration. </summary>
-        public DefenderForServersAwsOfferingVmScanners VmScanners { get; set; }
     }
 }

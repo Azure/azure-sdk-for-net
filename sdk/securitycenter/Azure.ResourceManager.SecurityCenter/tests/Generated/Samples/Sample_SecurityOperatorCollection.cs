@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.SecurityCenter.Samples
@@ -27,15 +28,15 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SecurityCenterPricingResource created on azure
-            // for more information of creating SecurityCenterPricingResource, please refer to the document of SecurityCenterPricingResource
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
             string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
             string pricingName = "CloudPosture";
-            ResourceIdentifier securityCenterPricingResourceId = SecurityCenterPricingResource.CreateResourceIdentifier(subscriptionId, pricingName);
-            SecurityCenterPricingResource securityCenterPricing = client.GetSecurityCenterPricingResource(securityCenterPricingResourceId);
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SecurityOperatorResource
-            SecurityOperatorCollection collection = securityCenterPricing.GetSecurityOperators();
+            SecurityOperatorCollection collection = subscriptionResource.GetSecurityOperators(pricingName);
 
             // invoke the operation
             string securityOperatorName = "DefenderCSPMSecurityOperator";
@@ -61,15 +62,15 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SecurityCenterPricingResource created on azure
-            // for more information of creating SecurityCenterPricingResource, please refer to the document of SecurityCenterPricingResource
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
             string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
             string pricingName = "CloudPosture";
-            ResourceIdentifier securityCenterPricingResourceId = SecurityCenterPricingResource.CreateResourceIdentifier(subscriptionId, pricingName);
-            SecurityCenterPricingResource securityCenterPricing = client.GetSecurityCenterPricingResource(securityCenterPricingResourceId);
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SecurityOperatorResource
-            SecurityOperatorCollection collection = securityCenterPricing.GetSecurityOperators();
+            SecurityOperatorCollection collection = subscriptionResource.GetSecurityOperators(pricingName);
 
             // invoke the operation
             string securityOperatorName = "DefenderCSPMSecurityOperator";
@@ -94,15 +95,15 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SecurityCenterPricingResource created on azure
-            // for more information of creating SecurityCenterPricingResource, please refer to the document of SecurityCenterPricingResource
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
             string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
             string pricingName = "CloudPosture";
-            ResourceIdentifier securityCenterPricingResourceId = SecurityCenterPricingResource.CreateResourceIdentifier(subscriptionId, pricingName);
-            SecurityCenterPricingResource securityCenterPricing = client.GetSecurityCenterPricingResource(securityCenterPricingResourceId);
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SecurityOperatorResource
-            SecurityOperatorCollection collection = securityCenterPricing.GetSecurityOperators();
+            SecurityOperatorCollection collection = subscriptionResource.GetSecurityOperators(pricingName);
 
             // invoke the operation and iterate over the result
             await foreach (SecurityOperatorResource item in collection.GetAllAsync())
@@ -129,15 +130,15 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SecurityCenterPricingResource created on azure
-            // for more information of creating SecurityCenterPricingResource, please refer to the document of SecurityCenterPricingResource
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
             string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
             string pricingName = "CloudPosture";
-            ResourceIdentifier securityCenterPricingResourceId = SecurityCenterPricingResource.CreateResourceIdentifier(subscriptionId, pricingName);
-            SecurityCenterPricingResource securityCenterPricing = client.GetSecurityCenterPricingResource(securityCenterPricingResourceId);
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SecurityOperatorResource
-            SecurityOperatorCollection collection = securityCenterPricing.GetSecurityOperators();
+            SecurityOperatorCollection collection = subscriptionResource.GetSecurityOperators(pricingName);
 
             // invoke the operation
             string securityOperatorName = "DefenderCSPMSecurityOperator";
@@ -158,15 +159,15 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SecurityCenterPricingResource created on azure
-            // for more information of creating SecurityCenterPricingResource, please refer to the document of SecurityCenterPricingResource
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
             string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
             string pricingName = "CloudPosture";
-            ResourceIdentifier securityCenterPricingResourceId = SecurityCenterPricingResource.CreateResourceIdentifier(subscriptionId, pricingName);
-            SecurityCenterPricingResource securityCenterPricing = client.GetSecurityCenterPricingResource(securityCenterPricingResourceId);
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SecurityOperatorResource
-            SecurityOperatorCollection collection = securityCenterPricing.GetSecurityOperators();
+            SecurityOperatorCollection collection = subscriptionResource.GetSecurityOperators(pricingName);
 
             // invoke the operation
             string securityOperatorName = "DefenderCSPMSecurityOperator";

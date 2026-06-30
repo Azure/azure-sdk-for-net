@@ -90,7 +90,7 @@ namespace Azure.AI.Extensions.OpenAI
             if (Optional.IsDefined(MemoryLimit))
             {
                 writer.WritePropertyName("memory_limit"u8);
-                writer.WriteStringValue(MemoryLimit.Value.ToSerialString());
+                writer.WriteStringValue(MemoryLimit.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Skills))
             {
@@ -175,7 +175,7 @@ namespace Azure.AI.Extensions.OpenAI
                         memoryLimit = null;
                         continue;
                     }
-                    memoryLimit = prop.Value.GetString().ToResponsesContainerMemoryLimit();
+                    memoryLimit = new ResponsesContainerMemoryLimit(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("skills"u8))

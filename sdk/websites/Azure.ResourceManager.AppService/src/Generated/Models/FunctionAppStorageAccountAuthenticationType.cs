@@ -7,60 +7,67 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Property to select authentication type to access the selected storage account. Available options: SystemAssignedIdentity, UserAssignedIdentity, StorageAccountConnectionString.
-    /// Serialized Name: AuthenticationType
-    /// </summary>
+    /// <summary> Property to select authentication type to access the selected storage account. Available options: SystemAssignedIdentity, UserAssignedIdentity, StorageAccountConnectionString. </summary>
     public readonly partial struct FunctionAppStorageAccountAuthenticationType : IEquatable<FunctionAppStorageAccountAuthenticationType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="FunctionAppStorageAccountAuthenticationType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public FunctionAppStorageAccountAuthenticationType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string SystemAssignedIdentityValue = "SystemAssignedIdentity";
         private const string UserAssignedIdentityValue = "UserAssignedIdentity";
         private const string StorageAccountConnectionStringValue = "StorageAccountConnectionString";
 
-        /// <summary>
-        /// SystemAssignedIdentity
-        /// Serialized Name: AuthenticationType.SystemAssignedIdentity
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionAppStorageAccountAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public FunctionAppStorageAccountAuthenticationType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the SystemAssignedIdentity. </summary>
         public static FunctionAppStorageAccountAuthenticationType SystemAssignedIdentity { get; } = new FunctionAppStorageAccountAuthenticationType(SystemAssignedIdentityValue);
-        /// <summary>
-        /// UserAssignedIdentity
-        /// Serialized Name: AuthenticationType.UserAssignedIdentity
-        /// </summary>
+
+        /// <summary> Gets the UserAssignedIdentity. </summary>
         public static FunctionAppStorageAccountAuthenticationType UserAssignedIdentity { get; } = new FunctionAppStorageAccountAuthenticationType(UserAssignedIdentityValue);
-        /// <summary>
-        /// StorageAccountConnectionString
-        /// Serialized Name: AuthenticationType.StorageAccountConnectionString
-        /// </summary>
+
+        /// <summary> Gets the StorageAccountConnectionString. </summary>
         public static FunctionAppStorageAccountAuthenticationType StorageAccountConnectionString { get; } = new FunctionAppStorageAccountAuthenticationType(StorageAccountConnectionStringValue);
+
         /// <summary> Determines if two <see cref="FunctionAppStorageAccountAuthenticationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FunctionAppStorageAccountAuthenticationType left, FunctionAppStorageAccountAuthenticationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FunctionAppStorageAccountAuthenticationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FunctionAppStorageAccountAuthenticationType left, FunctionAppStorageAccountAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FunctionAppStorageAccountAuthenticationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FunctionAppStorageAccountAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FunctionAppStorageAccountAuthenticationType(string value) => new FunctionAppStorageAccountAuthenticationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FunctionAppStorageAccountAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FunctionAppStorageAccountAuthenticationType?(string value) => value == null ? null : new FunctionAppStorageAccountAuthenticationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FunctionAppStorageAccountAuthenticationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FunctionAppStorageAccountAuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

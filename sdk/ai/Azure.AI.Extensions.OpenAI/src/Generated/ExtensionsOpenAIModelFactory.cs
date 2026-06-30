@@ -14,6 +14,41 @@ namespace Azure.AI.Extensions.OpenAI
     public static partial class ExtensionsOpenAIModelFactory
     {
 
+        /// <summary> Input text. </summary>
+        /// <param name="text"> The text input to the model. </param>
+        /// <returns> A new <see cref="Internal.InputTextContentParam"/> instance for mocking. </returns>
+        public static InputTextContentParam InputTextContentParam(string text = default)
+        {
+            return new InputTextContentParam("input_text", text, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Input image. </summary>
+        /// <param name="imageUrl"></param>
+        /// <param name="fileId"></param>
+        /// <param name="detail"></param>
+        /// <returns> A new <see cref="Internal.InputImageContentParamAutoParam"/> instance for mocking. </returns>
+        public static InputImageContentParamAutoParam InputImageContentParamAutoParam(Uri imageUrl = default, string fileId = default, ImageDetailLevel? detail = default)
+        {
+            return new InputImageContentParamAutoParam("input_image", imageUrl, fileId, detail, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Input file. </summary>
+        /// <param name="fileId"></param>
+        /// <param name="filename"></param>
+        /// <param name="fileData"></param>
+        /// <param name="fileUrl"></param>
+        /// <returns> A new <see cref="Internal.InputFileContentParam"/> instance for mocking. </returns>
+        public static InputFileContentParam InputFileContentParam(string fileId = default, string filename = default, string fileData = default, Uri fileUrl = default)
+        {
+            return new InputFileContentParam(
+                "input_file",
+                fileId,
+                filename,
+                fileData,
+                fileUrl,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The ResponsesEmptyModelParam. </summary>
         /// <returns> A new <see cref="OpenAI.ResponsesEmptyModelParam"/> instance for mocking. </returns>
         public static ResponsesEmptyModelParam ResponsesEmptyModelParam()
@@ -40,7 +75,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary>
         /// The input format for the custom tool. Default is unconstrained text.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.ResponsesCustomTextFormatParam"/> and <see cref="Internal.CustomGrammarFormatParam"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.ResponsesCustomTextFormatParam"/> and <see cref="OpenAI.CustomGrammarFormatParam"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="OpenAI.ResponsesCustomToolParamFormat"/> instance for mocking. </returns>
@@ -59,7 +94,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Grammar format. </summary>
         /// <param name="syntax"> The syntax of the grammar definition. One of `lark` or `regex`. </param>
         /// <param name="definition"> The grammar definition. </param>
-        /// <returns> A new <see cref="Internal.CustomGrammarFormatParam"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="OpenAI.CustomGrammarFormatParam"/> instance for mocking. </returns>
         public static CustomGrammarFormatParam CustomGrammarFormatParam(ResponsesGrammarSyntax syntax = default, string definition = default)
         {
             return new CustomGrammarFormatParam(CustomToolParamFormatType.Grammar, additionalBinaryDataProperties: null, syntax, definition);
@@ -220,7 +255,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="filter"> filter string for search resource. [Learn more here](https://learn.microsoft.com/azure/search/search-filters). </param>
         /// <param name="indexAssetId"> Index asset id for search resource. </param>
         /// <returns> A new <see cref="OpenAI.ResponsesAISearchIndexResource"/> instance for mocking. </returns>
-        public static ResponsesAISearchIndexResource ResponsesAISearchIndexResource(string projectConnectionId = default, string indexName = default, ResponsesAzureAISearchQueryType? queryType = default, int? topK = default, string filter = default, string indexAssetId = default)
+        public static ResponsesAISearchIndexResource ResponsesAISearchIndexResource(string projectConnectionId = default, string indexName = default, ResponsesAzureAISearchQueryKind? queryType = default, int? topK = default, string filter = default, string indexAssetId = default)
         {
             return new ResponsesAISearchIndexResource(
                 projectConnectionId,
@@ -448,9 +483,9 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
-        /// <param name="outputs"> The structured outputs to capture from the model. </param>
+        /// <param name="outputDefinition"> The structured outputs to capture from the model. </param>
         /// <returns> A new <see cref="OpenAI.ResponsesCaptureStructuredOutputsTool"/> instance for mocking. </returns>
-        public static ResponsesCaptureStructuredOutputsTool ResponsesCaptureStructuredOutputsTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, ResponsesStructuredOutputDefinition outputs = default)
+        public static ResponsesCaptureStructuredOutputsTool ResponsesCaptureStructuredOutputsTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, ResponsesStructuredOutputDefinition outputDefinition = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
 
@@ -459,7 +494,7 @@ namespace Azure.AI.Extensions.OpenAI
                 name,
                 description,
                 toolConfigs,
-                outputs,
+                outputDefinition,
                 additionalBinaryDataProperties: null);
         }
 
@@ -477,7 +512,7 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> An agent implementing the A2A protocol. </summary>
-        /// <param name="baseUrl"> Base URL of the agent. </param>
+        /// <param name="baseUri"> Base URL of the agent. </param>
         /// <param name="agentCardPath">
         /// The path to the agent card relative to the `base_url`.
         /// If not provided, defaults to  `/.well-known/agent-card.json`
@@ -492,11 +527,11 @@ namespace Azure.AI.Extensions.OpenAI
         /// specified by the caller (anonymous fetch).
         /// </param>
         /// <returns> A new <see cref="OpenAI.ResponsesA2APreviewTool"/> instance for mocking. </returns>
-        public static ResponsesA2APreviewTool ResponsesA2APreviewTool(Uri baseUrl = default, string agentCardPath = default, string projectConnectionId = default, bool? sendCredentialsForAgentCard = default)
+        public static ResponsesA2APreviewTool ResponsesA2APreviewTool(Uri baseUri = default, string agentCardPath = default, string projectConnectionId = default, bool? sendCredentialsForAgentCard = default)
         {
             return new ResponsesA2APreviewTool(
                 "a2a_preview",
-                baseUrl,
+                baseUri,
                 agentCardPath,
                 projectConnectionId,
                 sendCredentialsForAgentCard,
@@ -514,16 +549,16 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> A FabricIQ server-side tool. </summary>
         /// <param name="projectConnectionId"> The ID of the FabricIQ project connection. </param>
         /// <param name="serverLabel"> (Optional) The label of the FabricIQ MCP server to connect to. </param>
-        /// <param name="serverUrl"> (Optional) The URL of the FabricIQ MCP server. If not provided, the URL from the project connection will be used. </param>
+        /// <param name="serverUri"> (Optional) The URL of the FabricIQ MCP server. If not provided, the URL from the project connection will be used. </param>
         /// <param name="requireApproval"> (Optional) Whether the agent requires approval before executing actions. Default is always. </param>
         /// <returns> A new <see cref="OpenAI.ResponsesFabricIQPreviewTool"/> instance for mocking. </returns>
-        public static ResponsesFabricIQPreviewTool ResponsesFabricIQPreviewTool(string projectConnectionId = default, string serverLabel = default, Uri serverUrl = default, BinaryData requireApproval = default)
+        public static ResponsesFabricIQPreviewTool ResponsesFabricIQPreviewTool(string projectConnectionId = default, string serverLabel = default, Uri serverUri = default, BinaryData requireApproval = default)
         {
             return new ResponsesFabricIQPreviewTool(
                 "fabric_iq_preview",
                 projectConnectionId,
                 serverLabel,
-                serverUrl,
+                serverUri,
                 requireApproval,
                 additionalBinaryDataProperties: null);
         }
@@ -648,6 +683,30 @@ namespace Azure.AI.Extensions.OpenAI
             return new ResponsesContainerNetworkPolicyDomainSecretParam(domain, name, value, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Comparison Filter. </summary>
+        /// <param name="type">
+        /// Specifies the comparison operator: `eq`, `ne`, `gt`, `gte`, `lt`, `lte`, `in`, `nin`.
+        /// <list type="bullet"><item><description>`eq`: equals</description></item><item><description>`ne`: not equal</description></item><item><description>`gt`: greater than</description></item><item><description>`gte`: greater than or equal</description></item><item><description>`lt`: less than</description></item><item><description>`lte`: less than or equal</description></item><item><description>`in`: in</description></item><item><description>`nin`: not in</description></item></list>
+        /// </param>
+        /// <param name="key"> The key to compare against the value. </param>
+        /// <param name="value"> The value to compare against the attribute key; supports string, number, or boolean types. </param>
+        /// <returns> A new <see cref="Internal.ComparisonFilter"/> instance for mocking. </returns>
+        public static ComparisonFilter ComparisonFilter(FileSearchToolFiltersType @type = default, string key = default, BinaryData value = default)
+        {
+            return new ComparisonFilter(@type, key, value, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Compound Filter. </summary>
+        /// <param name="type"> Type of operation: `and` or `or`. </param>
+        /// <param name="filters"> Array of filters to combine. Items can be `ComparisonFilter` or `CompoundFilter`. </param>
+        /// <returns> A new <see cref="Internal.CompoundFilter"/> instance for mocking. </returns>
+        public static CompoundFilter CompoundFilter(FileSearchToolFiltersType1 @type = default, IEnumerable<BinaryData> filters = default)
+        {
+            filters ??= new ChangeTrackingList<BinaryData>();
+
+            return new CompoundFilter(@type, filters.ToList(), additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Web search approximate location. </summary>
         /// <param name="country"></param>
         /// <param name="region"></param>
@@ -730,7 +789,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="name"> The name of the skill. </param>
         /// <param name="description"> The description of the skill. </param>
         /// <param name="path"> The path to the directory containing the skill. </param>
-        /// <returns> A new <see cref="Internal.LocalSkillParam"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="OpenAI.LocalSkillParam"/> instance for mocking. </returns>
         public static LocalSkillParam LocalSkillParam(string name = default, string description = default, string path = default)
         {
             return new LocalSkillParam(name, description, path, additionalBinaryDataProperties: null);
@@ -769,7 +828,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.ResponsesSkillReferenceParam"/> and <see cref="OpenAI.ResponsesInlineSkillParam"/>.
         /// </summary>
         /// <param name="type"></param>
-        /// <returns> A new <see cref="Internal.ContainerSkill"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="OpenAI.ContainerSkill"/> instance for mocking. </returns>
         public static ContainerSkill ContainerSkill(string @type = default)
         {
             return new UnknownContainerSkill(new ContainerSkillType(@type), additionalBinaryDataProperties: null);
@@ -838,9 +897,25 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="description"></param>
         /// <param name="parameters"></param>
         /// <returns> A new <see cref="OpenAI.ResponsesToolSearchToolParam"/> instance for mocking. </returns>
-        public static ResponsesToolSearchToolParam ResponsesToolSearchToolParam(ToolSearchExecutionType? execution = default, string description = default, ResponsesEmptyModelParam parameters = default)
+        public static ResponsesToolSearchToolParam ResponsesToolSearchToolParam(ResponsesToolSearchExecutionType? execution = default, string description = default, ResponsesEmptyModelParam parameters = default)
         {
             return new ResponsesToolSearchToolParam("tool_search", execution, description, parameters, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Code interpreter output logs. </summary>
+        /// <param name="logs"> The logs output from the code interpreter. </param>
+        /// <returns> A new <see cref="Internal.CodeInterpreterOutputLogs"/> instance for mocking. </returns>
+        public static CodeInterpreterOutputLogs CodeInterpreterOutputLogs(string logs = default)
+        {
+            return new CodeInterpreterOutputLogs("logs", logs, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Code interpreter output image. </summary>
+        /// <param name="url"> The URL of the image output from the code interpreter. </param>
+        /// <returns> A new <see cref="Internal.CodeInterpreterOutputImage"/> instance for mocking. </returns>
+        public static CodeInterpreterOutputImage CodeInterpreterOutputImage(Uri url = default)
+        {
+            return new CodeInterpreterOutputImage("image", url, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The AgentReference. </summary>
@@ -1473,6 +1548,23 @@ namespace Azure.AI.Extensions.OpenAI
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
             return new ProjectConversation(id, "conversation", metadata, createdAt, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Input file. </summary>
+        /// <param name="fileId"></param>
+        /// <param name="filename"> The name of the file to be sent to the model. </param>
+        /// <param name="fileData"> The content of the file to be sent to the model. </param>
+        /// <param name="fileUrl"> The URL of the file to be sent to the model. </param>
+        /// <returns> A new <see cref="Internal.InputFileContent"/> instance for mocking. </returns>
+        public static InputFileContent InputFileContent(string fileId = default, string filename = default, string fileData = default, Uri fileUrl = default)
+        {
+            return new InputFileContent(
+                "input_file",
+                fileId,
+                filename,
+                fileData,
+                fileUrl,
+                additionalBinaryDataProperties: null);
         }
     }
 }

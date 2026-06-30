@@ -228,11 +228,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The GatewayManager Etag. </summary>
         [WirePath("properties.gatewayManagerEtag")]
-        public string GatewayManagerEtag
+        public string GatewayManagerETag
         {
             get
             {
-                return Properties is null ? default : Properties.GatewayManagerEtag;
+                return Properties is null ? default : Properties.GatewayManagerETag;
             }
             set
             {
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new ExpressRouteCrossConnectionPeeringProperties();
                 }
-                Properties.GatewayManagerEtag = value;
+                Properties.GatewayManagerETag = value;
             }
         }
 
@@ -256,11 +256,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The IPv6 peering configuration. </summary>
         [WirePath("properties.ipv6PeeringConfig")]
-        public IPv6ExpressRouteCircuitPeeringConfig Ipv6PeeringConfig
+        public IPv6ExpressRouteCircuitPeeringConfig IPv6PeeringConfig
         {
             get
             {
-                return Properties is null ? default : Properties.Ipv6PeeringConfig;
+                return Properties is null ? default : Properties.IPv6PeeringConfig;
             }
             set
             {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new ExpressRouteCrossConnectionPeeringProperties();
                 }
-                Properties.Ipv6PeeringConfig = value;
+                Properties.IPv6PeeringConfig = value;
             }
         }
     }

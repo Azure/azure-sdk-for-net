@@ -143,6 +143,10 @@ namespace Azure.Provisioning.ContainerInstance
             _networkProfile = DefineModelProperty<ContainerGroupNetworkProfile>(nameof(NetworkProfile), new string[] { "networkProfile" });
             _storageProfile = DefineModelProperty<StorageProfile>(nameof(StorageProfile), new string[] { "storageProfile" });
             _containerGroupProperties = DefineModelProperty<NGroupContainerGroupProperties>(nameof(ContainerGroupProperties), new string[] { "containerGroupProperties" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerGroupProfileStub that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

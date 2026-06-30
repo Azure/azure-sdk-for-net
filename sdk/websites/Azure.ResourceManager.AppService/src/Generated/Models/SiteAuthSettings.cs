@@ -8,603 +8,815 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Configuration settings for the Azure App Service Authentication / Authorization feature.
-    /// Serialized Name: SiteAuthSettings
-    /// </summary>
+    /// <summary> Configuration settings for the Azure App Service Authentication / Authorization feature. </summary>
     public partial class SiteAuthSettings : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SiteAuthSettings"/>. </summary>
         public SiteAuthSettings()
         {
-            AllowedExternalRedirectUrls = new ChangeTrackingList<string>();
-            AllowedAudiences = new ChangeTrackingList<string>();
-            AdditionalLoginParams = new ChangeTrackingList<string>();
-            GoogleOAuthScopes = new ChangeTrackingList<string>();
-            FacebookOAuthScopes = new ChangeTrackingList<string>();
-            GitHubOAuthScopes = new ChangeTrackingList<string>();
-            MicrosoftAccountOAuthScopes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SiteAuthSettings"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="isEnabled">
-        /// &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: SiteAuthSettings.properties.enabled
-        /// </param>
-        /// <param name="runtimeVersion">
-        /// The RuntimeVersion of the Authentication / Authorization feature in use for the current app.
-        /// The setting in this value can control the behavior of certain features in the Authentication / Authorization module.
-        /// Serialized Name: SiteAuthSettings.properties.runtimeVersion
-        /// </param>
-        /// <param name="unauthenticatedClientAction">
-        /// The action to take when an unauthenticated client attempts to access the app.
-        /// Serialized Name: SiteAuthSettings.properties.unauthenticatedClientAction
-        /// </param>
-        /// <param name="isTokenStoreEnabled">
-        /// &lt;code&gt;true&lt;/code&gt; to durably store platform-specific security tokens that are obtained during login flows; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// The default is &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: SiteAuthSettings.properties.tokenStoreEnabled
-        /// </param>
-        /// <param name="allowedExternalRedirectUrls">
-        /// External URLs that can be redirected to as part of logging in or logging out of the app. Note that the query string part of the URL is ignored.
-        /// This is an advanced setting typically only needed by Windows Store application backends.
-        /// Note that URLs within the current domain are always implicitly allowed.
-        /// Serialized Name: SiteAuthSettings.properties.allowedExternalRedirectUrls
-        /// </param>
-        /// <param name="defaultProvider">
-        /// The default authentication provider to use when multiple providers are configured.
-        /// This setting is only needed if multiple providers are configured and the unauthenticated client
-        /// action is set to "RedirectToLoginPage".
-        /// Serialized Name: SiteAuthSettings.properties.defaultProvider
-        /// </param>
-        /// <param name="tokenRefreshExtensionHours">
-        /// The number of hours after session token expiration that a session token can be used to
-        /// call the token refresh API. The default is 72 hours.
-        /// Serialized Name: SiteAuthSettings.properties.tokenRefreshExtensionHours
-        /// </param>
-        /// <param name="clientId">
-        /// The Client ID of this relying party application, known as the client_id.
-        /// This setting is required for enabling OpenID Connection authentication with Azure Active Directory or
-        /// other 3rd party OpenID Connect providers.
-        /// More information on OpenID Connect: http://openid.net/specs/openid-connect-core-1_0.html
-        /// Serialized Name: SiteAuthSettings.properties.clientId
-        /// </param>
-        /// <param name="clientSecret">
-        /// The Client Secret of this relying party application (in Azure Active Directory, this is also referred to as the Key).
-        /// This setting is optional. If no client secret is configured, the OpenID Connect implicit auth flow is used to authenticate end users.
-        /// Otherwise, the OpenID Connect Authorization Code Flow is used to authenticate end users.
-        /// More information on OpenID Connect: http://openid.net/specs/openid-connect-core-1_0.html
-        /// Serialized Name: SiteAuthSettings.properties.clientSecret
-        /// </param>
-        /// <param name="clientSecretSettingName">
-        /// The app setting name that contains the client secret of the relying party application.
-        /// Serialized Name: SiteAuthSettings.properties.clientSecretSettingName
-        /// </param>
-        /// <param name="clientSecretCertificateThumbprintString">
-        /// An alternative to the client secret, that is the thumbprint of a certificate used for signing purposes. This property acts as
-        /// a replacement for the Client Secret. It is also optional.
-        /// Serialized Name: SiteAuthSettings.properties.clientSecretCertificateThumbprint
-        /// </param>
-        /// <param name="issuer">
-        /// The OpenID Connect Issuer URI that represents the entity which issues access tokens for this application.
-        /// When using Azure Active Directory, this value is the URI of the directory tenant, e.g. `https://sts.windows.net/{tenant-guid}/`.
-        /// This URI is a case-sensitive identifier for the token issuer.
-        /// More information on OpenID Connect Discovery: http://openid.net/specs/openid-connect-discovery-1_0.html
-        /// Serialized Name: SiteAuthSettings.properties.issuer
-        /// </param>
-        /// <param name="validateIssuer">
-        /// Gets a value indicating whether the issuer should be a valid HTTPS url and be validated as such.
-        /// Serialized Name: SiteAuthSettings.properties.validateIssuer
-        /// </param>
-        /// <param name="allowedAudiences">
-        /// Allowed audience values to consider when validating JSON Web Tokens issued by
-        /// Azure Active Directory. Note that the &lt;code&gt;ClientID&lt;/code&gt; value is always considered an
-        /// allowed audience, regardless of this setting.
-        /// Serialized Name: SiteAuthSettings.properties.allowedAudiences
-        /// </param>
-        /// <param name="additionalLoginParams">
-        /// Login parameters to send to the OpenID Connect authorization endpoint when
-        /// a user logs in. Each parameter must be in the form "key=value".
-        /// Serialized Name: SiteAuthSettings.properties.additionalLoginParams
-        /// </param>
-        /// <param name="aadClaimsAuthorization">
-        /// Gets a JSON string containing the Azure AD Acl settings.
-        /// Serialized Name: SiteAuthSettings.properties.aadClaimsAuthorization
-        /// </param>
-        /// <param name="googleClientId">
-        /// The OpenID Connect Client ID for the Google web application.
-        /// This setting is required for enabling Google Sign-In.
-        /// Google Sign-In documentation: https://developers.google.com/identity/sign-in/web/
-        /// Serialized Name: SiteAuthSettings.properties.googleClientId
-        /// </param>
-        /// <param name="googleClientSecret">
-        /// The client secret associated with the Google web application.
-        /// This setting is required for enabling Google Sign-In.
-        /// Google Sign-In documentation: https://developers.google.com/identity/sign-in/web/
-        /// Serialized Name: SiteAuthSettings.properties.googleClientSecret
-        /// </param>
-        /// <param name="googleClientSecretSettingName">
-        /// The app setting name that contains the client secret associated with
-        /// the Google web application.
-        /// Serialized Name: SiteAuthSettings.properties.googleClientSecretSettingName
-        /// </param>
-        /// <param name="googleOAuthScopes">
-        /// The OAuth 2.0 scopes that will be requested as part of Google Sign-In authentication.
-        /// This setting is optional. If not specified, "openid", "profile", and "email" are used as default scopes.
-        /// Google Sign-In documentation: https://developers.google.com/identity/sign-in/web/
-        /// Serialized Name: SiteAuthSettings.properties.googleOAuthScopes
-        /// </param>
-        /// <param name="facebookAppId">
-        /// The App ID of the Facebook app used for login.
-        /// This setting is required for enabling Facebook Login.
-        /// Facebook Login documentation: https://developers.facebook.com/docs/facebook-login
-        /// Serialized Name: SiteAuthSettings.properties.facebookAppId
-        /// </param>
-        /// <param name="facebookAppSecret">
-        /// The App Secret of the Facebook app used for Facebook Login.
-        /// This setting is required for enabling Facebook Login.
-        /// Facebook Login documentation: https://developers.facebook.com/docs/facebook-login
-        /// Serialized Name: SiteAuthSettings.properties.facebookAppSecret
-        /// </param>
-        /// <param name="facebookAppSecretSettingName">
-        /// The app setting name that contains the app secret used for Facebook Login.
-        /// Serialized Name: SiteAuthSettings.properties.facebookAppSecretSettingName
-        /// </param>
-        /// <param name="facebookOAuthScopes">
-        /// The OAuth 2.0 scopes that will be requested as part of Facebook Login authentication.
-        /// This setting is optional.
-        /// Facebook Login documentation: https://developers.facebook.com/docs/facebook-login
-        /// Serialized Name: SiteAuthSettings.properties.facebookOAuthScopes
-        /// </param>
-        /// <param name="gitHubClientId">
-        /// The Client Id of the GitHub app used for login.
-        /// This setting is required for enabling Github login
-        /// Serialized Name: SiteAuthSettings.properties.gitHubClientId
-        /// </param>
-        /// <param name="gitHubClientSecret">
-        /// The Client Secret of the GitHub app used for Github Login.
-        /// This setting is required for enabling Github login.
-        /// Serialized Name: SiteAuthSettings.properties.gitHubClientSecret
-        /// </param>
-        /// <param name="gitHubClientSecretSettingName">
-        /// The app setting name that contains the client secret of the Github
-        /// app used for GitHub Login.
-        /// Serialized Name: SiteAuthSettings.properties.gitHubClientSecretSettingName
-        /// </param>
-        /// <param name="gitHubOAuthScopes">
-        /// The OAuth 2.0 scopes that will be requested as part of GitHub Login authentication.
-        /// This setting is optional
-        /// Serialized Name: SiteAuthSettings.properties.gitHubOAuthScopes
-        /// </param>
-        /// <param name="twitterConsumerKey">
-        /// The OAuth 1.0a consumer key of the Twitter application used for sign-in.
-        /// This setting is required for enabling Twitter Sign-In.
-        /// Twitter Sign-In documentation: https://dev.twitter.com/web/sign-in
-        /// Serialized Name: SiteAuthSettings.properties.twitterConsumerKey
-        /// </param>
-        /// <param name="twitterConsumerSecret">
-        /// The OAuth 1.0a consumer secret of the Twitter application used for sign-in.
-        /// This setting is required for enabling Twitter Sign-In.
-        /// Twitter Sign-In documentation: https://dev.twitter.com/web/sign-in
-        /// Serialized Name: SiteAuthSettings.properties.twitterConsumerSecret
-        /// </param>
-        /// <param name="twitterConsumerSecretSettingName">
-        /// The app setting name that contains the OAuth 1.0a consumer secret of the Twitter
-        /// application used for sign-in.
-        /// Serialized Name: SiteAuthSettings.properties.twitterConsumerSecretSettingName
-        /// </param>
-        /// <param name="microsoftAccountClientId">
-        /// The OAuth 2.0 client ID that was created for the app used for authentication.
-        /// This setting is required for enabling Microsoft Account authentication.
-        /// Microsoft Account OAuth documentation: https://dev.onedrive.com/auth/msa_oauth.htm
-        /// Serialized Name: SiteAuthSettings.properties.microsoftAccountClientId
-        /// </param>
-        /// <param name="microsoftAccountClientSecret">
-        /// The OAuth 2.0 client secret that was created for the app used for authentication.
-        /// This setting is required for enabling Microsoft Account authentication.
-        /// Microsoft Account OAuth documentation: https://dev.onedrive.com/auth/msa_oauth.htm
-        /// Serialized Name: SiteAuthSettings.properties.microsoftAccountClientSecret
-        /// </param>
-        /// <param name="microsoftAccountClientSecretSettingName">
-        /// The app setting name containing the OAuth 2.0 client secret that was created for the
-        /// app used for authentication.
-        /// Serialized Name: SiteAuthSettings.properties.microsoftAccountClientSecretSettingName
-        /// </param>
-        /// <param name="microsoftAccountOAuthScopes">
-        /// The OAuth 2.0 scopes that will be requested as part of Microsoft Account authentication.
-        /// This setting is optional. If not specified, "wl.basic" is used as the default scope.
-        /// Microsoft Account Scopes and permissions documentation: https://msdn.microsoft.com/en-us/library/dn631845.aspx
-        /// Serialized Name: SiteAuthSettings.properties.microsoftAccountOAuthScopes
-        /// </param>
-        /// <param name="isAuthFromFile">
-        /// "true" if the auth config settings should be read from a file,
-        /// "false" otherwise
-        /// Serialized Name: SiteAuthSettings.properties.isAuthFromFile
-        /// </param>
-        /// <param name="authFilePath">
-        /// The path of the config file containing auth settings.
-        /// If the path is relative, base will the site's root directory.
-        /// Serialized Name: SiteAuthSettings.properties.authFilePath
-        /// </param>
-        /// <param name="configVersion">
-        /// The ConfigVersion of the Authentication / Authorization feature in use for the current app.
-        /// The setting in this value can control the behavior of the control plane for Authentication / Authorization.
-        /// Serialized Name: SiteAuthSettings.properties.configVersion
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteAuthSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isEnabled, string runtimeVersion, UnauthenticatedClientAction? unauthenticatedClientAction, bool? isTokenStoreEnabled, IList<string> allowedExternalRedirectUrls, BuiltInAuthenticationProvider? defaultProvider, double? tokenRefreshExtensionHours, string clientId, string clientSecret, string clientSecretSettingName, string clientSecretCertificateThumbprintString, string issuer, bool? validateIssuer, IList<string> allowedAudiences, IList<string> additionalLoginParams, string aadClaimsAuthorization, string googleClientId, string googleClientSecret, string googleClientSecretSettingName, IList<string> googleOAuthScopes, string facebookAppId, string facebookAppSecret, string facebookAppSecretSettingName, IList<string> facebookOAuthScopes, string gitHubClientId, string gitHubClientSecret, string gitHubClientSecretSettingName, IList<string> gitHubOAuthScopes, string twitterConsumerKey, string twitterConsumerSecret, string twitterConsumerSecretSettingName, string microsoftAccountClientId, string microsoftAccountClientSecret, string microsoftAccountClientSecretSettingName, IList<string> microsoftAccountOAuthScopes, string isAuthFromFile, string authFilePath, string configVersion, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> SiteAuthSettings resource specific properties. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SiteAuthSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteAuthSettingsProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            IsEnabled = isEnabled;
-            RuntimeVersion = runtimeVersion;
-            UnauthenticatedClientAction = unauthenticatedClientAction;
-            IsTokenStoreEnabled = isTokenStoreEnabled;
-            AllowedExternalRedirectUrls = allowedExternalRedirectUrls;
-            DefaultProvider = defaultProvider;
-            TokenRefreshExtensionHours = tokenRefreshExtensionHours;
-            ClientId = clientId;
-            ClientSecret = clientSecret;
-            ClientSecretSettingName = clientSecretSettingName;
-            ClientSecretCertificateThumbprintString = clientSecretCertificateThumbprintString;
-            Issuer = issuer;
-            ValidateIssuer = validateIssuer;
-            AllowedAudiences = allowedAudiences;
-            AdditionalLoginParams = additionalLoginParams;
-            AadClaimsAuthorization = aadClaimsAuthorization;
-            GoogleClientId = googleClientId;
-            GoogleClientSecret = googleClientSecret;
-            GoogleClientSecretSettingName = googleClientSecretSettingName;
-            GoogleOAuthScopes = googleOAuthScopes;
-            FacebookAppId = facebookAppId;
-            FacebookAppSecret = facebookAppSecret;
-            FacebookAppSecretSettingName = facebookAppSecretSettingName;
-            FacebookOAuthScopes = facebookOAuthScopes;
-            GitHubClientId = gitHubClientId;
-            GitHubClientSecret = gitHubClientSecret;
-            GitHubClientSecretSettingName = gitHubClientSecretSettingName;
-            GitHubOAuthScopes = gitHubOAuthScopes;
-            TwitterConsumerKey = twitterConsumerKey;
-            TwitterConsumerSecret = twitterConsumerSecret;
-            TwitterConsumerSecretSettingName = twitterConsumerSecretSettingName;
-            MicrosoftAccountClientId = microsoftAccountClientId;
-            MicrosoftAccountClientSecret = microsoftAccountClientSecret;
-            MicrosoftAccountClientSecretSettingName = microsoftAccountClientSecretSettingName;
-            MicrosoftAccountOAuthScopes = microsoftAccountOAuthScopes;
-            IsAuthFromFile = isAuthFromFile;
-            AuthFilePath = authFilePath;
-            ConfigVersion = configVersion;
+            Properties = properties;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> SiteAuthSettings resource specific properties. </summary>
+        [WirePath("properties")]
+        internal SiteAuthSettingsProperties Properties { get; set; }
+
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.enabled")]
+        public bool? IsEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                Properties.IsEnabled = value;
+            }
         }
 
         /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: SiteAuthSettings.properties.enabled
-        /// </summary>
-        [WirePath("properties.enabled")]
-        public bool? IsEnabled { get; set; }
-        /// <summary>
         /// The RuntimeVersion of the Authentication / Authorization feature in use for the current app.
         /// The setting in this value can control the behavior of certain features in the Authentication / Authorization module.
-        /// Serialized Name: SiteAuthSettings.properties.runtimeVersion
         /// </summary>
         [WirePath("properties.runtimeVersion")]
-        public string RuntimeVersion { get; set; }
-        /// <summary>
-        /// The action to take when an unauthenticated client attempts to access the app.
-        /// Serialized Name: SiteAuthSettings.properties.unauthenticatedClientAction
-        /// </summary>
+        public string RuntimeVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RuntimeVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                Properties.RuntimeVersion = value;
+            }
+        }
+
+        /// <summary> The action to take when an unauthenticated client attempts to access the app. </summary>
         [WirePath("properties.unauthenticatedClientAction")]
-        public UnauthenticatedClientAction? UnauthenticatedClientAction { get; set; }
+        public UnauthenticatedClientAction? UnauthenticatedClientAction
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UnauthenticatedClientAction;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                Properties.UnauthenticatedClientAction = value;
+            }
+        }
+
         /// <summary>
         /// &lt;code&gt;true&lt;/code&gt; to durably store platform-specific security tokens that are obtained during login flows; otherwise, &lt;code&gt;false&lt;/code&gt;.
         /// The default is &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: SiteAuthSettings.properties.tokenStoreEnabled
         /// </summary>
         [WirePath("properties.tokenStoreEnabled")]
-        public bool? IsTokenStoreEnabled { get; set; }
+        public bool? IsTokenStoreEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsTokenStoreEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                Properties.IsTokenStoreEnabled = value;
+            }
+        }
+
         /// <summary>
         /// External URLs that can be redirected to as part of logging in or logging out of the app. Note that the query string part of the URL is ignored.
         /// This is an advanced setting typically only needed by Windows Store application backends.
         /// Note that URLs within the current domain are always implicitly allowed.
-        /// Serialized Name: SiteAuthSettings.properties.allowedExternalRedirectUrls
         /// </summary>
         [WirePath("properties.allowedExternalRedirectUrls")]
-        public IList<string> AllowedExternalRedirectUrls { get; }
+        public IList<string> AllowedExternalRedirectUrls
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                return Properties.AllowedExternalRedirectUrls;
+            }
+        }
+
         /// <summary>
         /// The default authentication provider to use when multiple providers are configured.
         /// This setting is only needed if multiple providers are configured and the unauthenticated client
         /// action is set to "RedirectToLoginPage".
-        /// Serialized Name: SiteAuthSettings.properties.defaultProvider
         /// </summary>
         [WirePath("properties.defaultProvider")]
-        public BuiltInAuthenticationProvider? DefaultProvider { get; set; }
+        public BuiltInAuthenticationProvider? DefaultProvider
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultProvider;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                Properties.DefaultProvider = value;
+            }
+        }
+
         /// <summary>
         /// The number of hours after session token expiration that a session token can be used to
         /// call the token refresh API. The default is 72 hours.
-        /// Serialized Name: SiteAuthSettings.properties.tokenRefreshExtensionHours
         /// </summary>
         [WirePath("properties.tokenRefreshExtensionHours")]
-        public double? TokenRefreshExtensionHours { get; set; }
+        public double? TokenRefreshExtensionHours
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TokenRefreshExtensionHours;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                Properties.TokenRefreshExtensionHours = value;
+            }
+        }
+
         /// <summary>
         /// The Client ID of this relying party application, known as the client_id.
         /// This setting is required for enabling OpenID Connection authentication with Azure Active Directory or
         /// other 3rd party OpenID Connect providers.
         /// More information on OpenID Connect: http://openid.net/specs/openid-connect-core-1_0.html
-        /// Serialized Name: SiteAuthSettings.properties.clientId
         /// </summary>
         [WirePath("properties.clientId")]
-        public string ClientId { get; set; }
+        public string ClientId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClientId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                Properties.ClientId = value;
+            }
+        }
+
         /// <summary>
         /// The Client Secret of this relying party application (in Azure Active Directory, this is also referred to as the Key).
         /// This setting is optional. If no client secret is configured, the OpenID Connect implicit auth flow is used to authenticate end users.
         /// Otherwise, the OpenID Connect Authorization Code Flow is used to authenticate end users.
         /// More information on OpenID Connect: http://openid.net/specs/openid-connect-core-1_0.html
-        /// Serialized Name: SiteAuthSettings.properties.clientSecret
         /// </summary>
         [WirePath("properties.clientSecret")]
-        public string ClientSecret { get; set; }
-        /// <summary>
-        /// The app setting name that contains the client secret of the relying party application.
-        /// Serialized Name: SiteAuthSettings.properties.clientSecretSettingName
-        /// </summary>
+        public string ClientSecret
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClientSecret;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                Properties.ClientSecret = value;
+            }
+        }
+
+        /// <summary> The app setting name that contains the client secret of the relying party application. </summary>
         [WirePath("properties.clientSecretSettingName")]
-        public string ClientSecretSettingName { get; set; }
+        public string ClientSecretSettingName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClientSecretSettingName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                Properties.ClientSecretSettingName = value;
+            }
+        }
+
         /// <summary>
         /// An alternative to the client secret, that is the thumbprint of a certificate used for signing purposes. This property acts as
         /// a replacement for the Client Secret. It is also optional.
-        /// Serialized Name: SiteAuthSettings.properties.clientSecretCertificateThumbprint
         /// </summary>
         [WirePath("properties.clientSecretCertificateThumbprint")]
-        public string ClientSecretCertificateThumbprintString { get; set; }
+        public string ClientSecretCertificateThumbprintString
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClientSecretCertificateThumbprintString;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                Properties.ClientSecretCertificateThumbprintString = value;
+            }
+        }
+
         /// <summary>
         /// The OpenID Connect Issuer URI that represents the entity which issues access tokens for this application.
         /// When using Azure Active Directory, this value is the URI of the directory tenant, e.g. `https://sts.windows.net/{tenant-guid}/`.
         /// This URI is a case-sensitive identifier for the token issuer.
         /// More information on OpenID Connect Discovery: http://openid.net/specs/openid-connect-discovery-1_0.html
-        /// Serialized Name: SiteAuthSettings.properties.issuer
         /// </summary>
         [WirePath("properties.issuer")]
-        public string Issuer { get; set; }
-        /// <summary>
-        /// Gets a value indicating whether the issuer should be a valid HTTPS url and be validated as such.
-        /// Serialized Name: SiteAuthSettings.properties.validateIssuer
-        /// </summary>
+        public string Issuer
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Issuer;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                Properties.Issuer = value;
+            }
+        }
+
+        /// <summary> Gets a value indicating whether the issuer should be a valid HTTPS url and be validated as such. </summary>
         [WirePath("properties.validateIssuer")]
-        public bool? ValidateIssuer { get; set; }
+        public bool? ValidateIssuer
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ValidateIssuer;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                Properties.ValidateIssuer = value;
+            }
+        }
+
         /// <summary>
         /// Allowed audience values to consider when validating JSON Web Tokens issued by
         /// Azure Active Directory. Note that the &lt;code&gt;ClientID&lt;/code&gt; value is always considered an
         /// allowed audience, regardless of this setting.
-        /// Serialized Name: SiteAuthSettings.properties.allowedAudiences
         /// </summary>
         [WirePath("properties.allowedAudiences")]
-        public IList<string> AllowedAudiences { get; }
+        public IList<string> AllowedAudiences
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                return Properties.AllowedAudiences;
+            }
+        }
+
         /// <summary>
         /// Login parameters to send to the OpenID Connect authorization endpoint when
         /// a user logs in. Each parameter must be in the form "key=value".
-        /// Serialized Name: SiteAuthSettings.properties.additionalLoginParams
         /// </summary>
         [WirePath("properties.additionalLoginParams")]
-        public IList<string> AdditionalLoginParams { get; }
-        /// <summary>
-        /// Gets a JSON string containing the Azure AD Acl settings.
-        /// Serialized Name: SiteAuthSettings.properties.aadClaimsAuthorization
-        /// </summary>
+        public IList<string> AdditionalLoginParams
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                return Properties.AdditionalLoginParams;
+            }
+        }
+
+        /// <summary> Gets a JSON string containing the Azure AD Acl settings. </summary>
         [WirePath("properties.aadClaimsAuthorization")]
-        public string AadClaimsAuthorization { get; set; }
+        public string AadClaimsAuthorization
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AadClaimsAuthorization;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                Properties.AadClaimsAuthorization = value;
+            }
+        }
+
         /// <summary>
         /// The OpenID Connect Client ID for the Google web application.
         /// This setting is required for enabling Google Sign-In.
         /// Google Sign-In documentation: https://developers.google.com/identity/sign-in/web/
-        /// Serialized Name: SiteAuthSettings.properties.googleClientId
         /// </summary>
         [WirePath("properties.googleClientId")]
-        public string GoogleClientId { get; set; }
+        public string GoogleClientId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GoogleClientId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                Properties.GoogleClientId = value;
+            }
+        }
+
         /// <summary>
         /// The client secret associated with the Google web application.
         /// This setting is required for enabling Google Sign-In.
         /// Google Sign-In documentation: https://developers.google.com/identity/sign-in/web/
-        /// Serialized Name: SiteAuthSettings.properties.googleClientSecret
         /// </summary>
         [WirePath("properties.googleClientSecret")]
-        public string GoogleClientSecret { get; set; }
+        public string GoogleClientSecret
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GoogleClientSecret;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                Properties.GoogleClientSecret = value;
+            }
+        }
+
         /// <summary>
         /// The app setting name that contains the client secret associated with
         /// the Google web application.
-        /// Serialized Name: SiteAuthSettings.properties.googleClientSecretSettingName
         /// </summary>
         [WirePath("properties.googleClientSecretSettingName")]
-        public string GoogleClientSecretSettingName { get; set; }
+        public string GoogleClientSecretSettingName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GoogleClientSecretSettingName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                Properties.GoogleClientSecretSettingName = value;
+            }
+        }
+
         /// <summary>
         /// The OAuth 2.0 scopes that will be requested as part of Google Sign-In authentication.
         /// This setting is optional. If not specified, "openid", "profile", and "email" are used as default scopes.
         /// Google Sign-In documentation: https://developers.google.com/identity/sign-in/web/
-        /// Serialized Name: SiteAuthSettings.properties.googleOAuthScopes
         /// </summary>
         [WirePath("properties.googleOAuthScopes")]
-        public IList<string> GoogleOAuthScopes { get; }
+        public IList<string> GoogleOAuthScopes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                return Properties.GoogleOAuthScopes;
+            }
+        }
+
         /// <summary>
         /// The App ID of the Facebook app used for login.
         /// This setting is required for enabling Facebook Login.
         /// Facebook Login documentation: https://developers.facebook.com/docs/facebook-login
-        /// Serialized Name: SiteAuthSettings.properties.facebookAppId
         /// </summary>
         [WirePath("properties.facebookAppId")]
-        public string FacebookAppId { get; set; }
+        public string FacebookAppId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FacebookAppId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                Properties.FacebookAppId = value;
+            }
+        }
+
         /// <summary>
         /// The App Secret of the Facebook app used for Facebook Login.
         /// This setting is required for enabling Facebook Login.
         /// Facebook Login documentation: https://developers.facebook.com/docs/facebook-login
-        /// Serialized Name: SiteAuthSettings.properties.facebookAppSecret
         /// </summary>
         [WirePath("properties.facebookAppSecret")]
-        public string FacebookAppSecret { get; set; }
-        /// <summary>
-        /// The app setting name that contains the app secret used for Facebook Login.
-        /// Serialized Name: SiteAuthSettings.properties.facebookAppSecretSettingName
-        /// </summary>
+        public string FacebookAppSecret
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FacebookAppSecret;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                Properties.FacebookAppSecret = value;
+            }
+        }
+
+        /// <summary> The app setting name that contains the app secret used for Facebook Login. </summary>
         [WirePath("properties.facebookAppSecretSettingName")]
-        public string FacebookAppSecretSettingName { get; set; }
+        public string FacebookAppSecretSettingName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FacebookAppSecretSettingName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                Properties.FacebookAppSecretSettingName = value;
+            }
+        }
+
         /// <summary>
         /// The OAuth 2.0 scopes that will be requested as part of Facebook Login authentication.
         /// This setting is optional.
         /// Facebook Login documentation: https://developers.facebook.com/docs/facebook-login
-        /// Serialized Name: SiteAuthSettings.properties.facebookOAuthScopes
         /// </summary>
         [WirePath("properties.facebookOAuthScopes")]
-        public IList<string> FacebookOAuthScopes { get; }
+        public IList<string> FacebookOAuthScopes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                return Properties.FacebookOAuthScopes;
+            }
+        }
+
         /// <summary>
         /// The Client Id of the GitHub app used for login.
         /// This setting is required for enabling Github login
-        /// Serialized Name: SiteAuthSettings.properties.gitHubClientId
         /// </summary>
         [WirePath("properties.gitHubClientId")]
-        public string GitHubClientId { get; set; }
+        public string GitHubClientId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GitHubClientId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                Properties.GitHubClientId = value;
+            }
+        }
+
         /// <summary>
         /// The Client Secret of the GitHub app used for Github Login.
         /// This setting is required for enabling Github login.
-        /// Serialized Name: SiteAuthSettings.properties.gitHubClientSecret
         /// </summary>
         [WirePath("properties.gitHubClientSecret")]
-        public string GitHubClientSecret { get; set; }
+        public string GitHubClientSecret
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GitHubClientSecret;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                Properties.GitHubClientSecret = value;
+            }
+        }
+
         /// <summary>
         /// The app setting name that contains the client secret of the Github
         /// app used for GitHub Login.
-        /// Serialized Name: SiteAuthSettings.properties.gitHubClientSecretSettingName
         /// </summary>
         [WirePath("properties.gitHubClientSecretSettingName")]
-        public string GitHubClientSecretSettingName { get; set; }
+        public string GitHubClientSecretSettingName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GitHubClientSecretSettingName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                Properties.GitHubClientSecretSettingName = value;
+            }
+        }
+
         /// <summary>
         /// The OAuth 2.0 scopes that will be requested as part of GitHub Login authentication.
         /// This setting is optional
-        /// Serialized Name: SiteAuthSettings.properties.gitHubOAuthScopes
         /// </summary>
         [WirePath("properties.gitHubOAuthScopes")]
-        public IList<string> GitHubOAuthScopes { get; }
+        public IList<string> GitHubOAuthScopes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                return Properties.GitHubOAuthScopes;
+            }
+        }
+
         /// <summary>
         /// The OAuth 1.0a consumer key of the Twitter application used for sign-in.
         /// This setting is required for enabling Twitter Sign-In.
         /// Twitter Sign-In documentation: https://dev.twitter.com/web/sign-in
-        /// Serialized Name: SiteAuthSettings.properties.twitterConsumerKey
         /// </summary>
         [WirePath("properties.twitterConsumerKey")]
-        public string TwitterConsumerKey { get; set; }
+        public string TwitterConsumerKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TwitterConsumerKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                Properties.TwitterConsumerKey = value;
+            }
+        }
+
         /// <summary>
         /// The OAuth 1.0a consumer secret of the Twitter application used for sign-in.
         /// This setting is required for enabling Twitter Sign-In.
         /// Twitter Sign-In documentation: https://dev.twitter.com/web/sign-in
-        /// Serialized Name: SiteAuthSettings.properties.twitterConsumerSecret
         /// </summary>
         [WirePath("properties.twitterConsumerSecret")]
-        public string TwitterConsumerSecret { get; set; }
+        public string TwitterConsumerSecret
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TwitterConsumerSecret;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                Properties.TwitterConsumerSecret = value;
+            }
+        }
+
         /// <summary>
         /// The app setting name that contains the OAuth 1.0a consumer secret of the Twitter
         /// application used for sign-in.
-        /// Serialized Name: SiteAuthSettings.properties.twitterConsumerSecretSettingName
         /// </summary>
         [WirePath("properties.twitterConsumerSecretSettingName")]
-        public string TwitterConsumerSecretSettingName { get; set; }
+        public string TwitterConsumerSecretSettingName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TwitterConsumerSecretSettingName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                Properties.TwitterConsumerSecretSettingName = value;
+            }
+        }
+
         /// <summary>
         /// The OAuth 2.0 client ID that was created for the app used for authentication.
         /// This setting is required for enabling Microsoft Account authentication.
         /// Microsoft Account OAuth documentation: https://dev.onedrive.com/auth/msa_oauth.htm
-        /// Serialized Name: SiteAuthSettings.properties.microsoftAccountClientId
         /// </summary>
         [WirePath("properties.microsoftAccountClientId")]
-        public string MicrosoftAccountClientId { get; set; }
+        public string MicrosoftAccountClientId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MicrosoftAccountClientId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                Properties.MicrosoftAccountClientId = value;
+            }
+        }
+
         /// <summary>
         /// The OAuth 2.0 client secret that was created for the app used for authentication.
         /// This setting is required for enabling Microsoft Account authentication.
         /// Microsoft Account OAuth documentation: https://dev.onedrive.com/auth/msa_oauth.htm
-        /// Serialized Name: SiteAuthSettings.properties.microsoftAccountClientSecret
         /// </summary>
         [WirePath("properties.microsoftAccountClientSecret")]
-        public string MicrosoftAccountClientSecret { get; set; }
+        public string MicrosoftAccountClientSecret
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MicrosoftAccountClientSecret;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                Properties.MicrosoftAccountClientSecret = value;
+            }
+        }
+
         /// <summary>
         /// The app setting name containing the OAuth 2.0 client secret that was created for the
         /// app used for authentication.
-        /// Serialized Name: SiteAuthSettings.properties.microsoftAccountClientSecretSettingName
         /// </summary>
         [WirePath("properties.microsoftAccountClientSecretSettingName")]
-        public string MicrosoftAccountClientSecretSettingName { get; set; }
+        public string MicrosoftAccountClientSecretSettingName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MicrosoftAccountClientSecretSettingName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                Properties.MicrosoftAccountClientSecretSettingName = value;
+            }
+        }
+
         /// <summary>
         /// The OAuth 2.0 scopes that will be requested as part of Microsoft Account authentication.
         /// This setting is optional. If not specified, "wl.basic" is used as the default scope.
         /// Microsoft Account Scopes and permissions documentation: https://msdn.microsoft.com/en-us/library/dn631845.aspx
-        /// Serialized Name: SiteAuthSettings.properties.microsoftAccountOAuthScopes
         /// </summary>
         [WirePath("properties.microsoftAccountOAuthScopes")]
-        public IList<string> MicrosoftAccountOAuthScopes { get; }
+        public IList<string> MicrosoftAccountOAuthScopes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                return Properties.MicrosoftAccountOAuthScopes;
+            }
+        }
+
         /// <summary>
         /// "true" if the auth config settings should be read from a file,
         /// "false" otherwise
-        /// Serialized Name: SiteAuthSettings.properties.isAuthFromFile
         /// </summary>
         [WirePath("properties.isAuthFromFile")]
-        public string IsAuthFromFile { get; set; }
+        public string IsAuthFromFile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsAuthFromFile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                Properties.IsAuthFromFile = value;
+            }
+        }
+
         /// <summary>
         /// The path of the config file containing auth settings.
         /// If the path is relative, base will the site's root directory.
-        /// Serialized Name: SiteAuthSettings.properties.authFilePath
         /// </summary>
         [WirePath("properties.authFilePath")]
-        public string AuthFilePath { get; set; }
+        public string AuthFilePath
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuthFilePath;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                Properties.AuthFilePath = value;
+            }
+        }
+
         /// <summary>
         /// The ConfigVersion of the Authentication / Authorization feature in use for the current app.
         /// The setting in this value can control the behavior of the control plane for Authentication / Authorization.
-        /// Serialized Name: SiteAuthSettings.properties.configVersion
         /// </summary>
         [WirePath("properties.configVersion")]
-        public string ConfigVersion { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
+        public string ConfigVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConfigVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteAuthSettingsProperties();
+                }
+                Properties.ConfigVersion = value;
+            }
+        }
     }
 }

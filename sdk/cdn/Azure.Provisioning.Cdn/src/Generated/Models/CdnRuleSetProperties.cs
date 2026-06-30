@@ -59,6 +59,10 @@ namespace Azure.Provisioning.Cdn
             _profileName = DefineProperty<string>(nameof(ProfileName), new string[] { "profileName" }, isOutput: true);
             _provisioningState = DefineProperty<FrontDoorProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _deploymentStatus = DefineProperty<FrontDoorDeploymentStatus>(nameof(DeploymentStatus), new string[] { "deploymentStatus" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for CdnRuleSetProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

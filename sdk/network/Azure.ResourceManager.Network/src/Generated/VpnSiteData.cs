@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The ip-address for the vpn-site. </summary>
         [WirePath("properties.ipAddress")]
-        public string IpAddress
+        public string IPAddress
         {
             get
             {
-                return Properties is null ? default : Properties.IpAddress;
+                return Properties is null ? default : Properties.IPAddress;
             }
             set
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new VpnSiteProperties();
                 }
-                Properties.IpAddress = value;
+                Properties.IPAddress = value;
             }
         }
 

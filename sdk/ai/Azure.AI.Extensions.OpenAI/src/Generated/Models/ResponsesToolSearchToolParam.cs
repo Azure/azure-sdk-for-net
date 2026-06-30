@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Extensions.OpenAI.Internal;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
@@ -26,7 +25,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="description"></param>
         /// <param name="parameters"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesToolSearchToolParam(ResponseToolKind @type, ToolSearchExecutionType? execution, string description, ResponsesEmptyModelParam parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        internal ResponsesToolSearchToolParam(ResponseToolKind @type, ResponsesToolSearchExecutionType? execution, string description, ResponsesEmptyModelParam parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Execution = execution;
             Description = description;
@@ -35,7 +34,7 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Whether tool search is executed by the server or by the client. </summary>
-        public ToolSearchExecutionType? Execution { get; }
+        public ResponsesToolSearchExecutionType? Execution { get; }
 
         /// <summary> Gets the Description. </summary>
         public string Description { get; }

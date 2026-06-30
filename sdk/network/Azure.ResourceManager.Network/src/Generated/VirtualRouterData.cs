@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> VirtualRouter IPs. </summary>
         [WirePath("properties.virtualRouterIps")]
-        public IList<string> VirtualRouterIps
+        public IList<string> VirtualRouterIPs
         {
             get
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new VirtualRouterPropertiesFormat();
                 }
-                return Properties.VirtualRouterIps;
+                return Properties.VirtualRouterIPs;
             }
         }
 

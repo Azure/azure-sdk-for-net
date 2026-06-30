@@ -6,7 +6,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Extensions.OpenAI.Internal;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
@@ -76,7 +75,7 @@ namespace Azure.AI.Extensions.OpenAI
             if (Optional.IsDefined(Execution))
             {
                 writer.WritePropertyName("execution"u8);
-                writer.WriteStringValue(Execution.Value.ToSerialString());
+                writer.WriteStringValue(Execution.Value.ToString());
             }
             if (Optional.IsDefined(Description))
             {
@@ -131,7 +130,7 @@ namespace Azure.AI.Extensions.OpenAI
                 return null;
             }
             ResponseToolKind @type = "tool_search";
-            ToolSearchExecutionType? execution = default;
+            ResponsesToolSearchExecutionType? execution = default;
             string description = default;
             ResponsesEmptyModelParam parameters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -148,7 +147,7 @@ namespace Azure.AI.Extensions.OpenAI
                     {
                         continue;
                     }
-                    execution = prop.Value.GetString().ToToolSearchExecutionType();
+                    execution = new ResponsesToolSearchExecutionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("description"u8))

@@ -4,9 +4,8 @@
 
 using System;
 using System.ComponentModel;
-using Azure.AI.Extensions.OpenAI;
 
-namespace Azure.AI.Extensions.OpenAI.Internal
+namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
     internal readonly partial struct ContainerSkillType : IEquatable<ContainerSkillType>

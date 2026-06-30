@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The configuration settings of the registration for the Apple provider
-    /// Serialized Name: AppleRegistration
-    /// </summary>
+    /// <summary> The configuration settings of the registration for the Apple provider. </summary>
     public partial class AppServiceAppleRegistration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppServiceAppleRegistration"/>. </summary>
         public AppServiceAppleRegistration()
@@ -54,32 +23,21 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceAppleRegistration"/>. </summary>
-        /// <param name="clientId">
-        /// The Client ID of the app used for login.
-        /// Serialized Name: AppleRegistration.clientId
-        /// </param>
-        /// <param name="clientSecretSettingName">
-        /// The app setting name that contains the client secret.
-        /// Serialized Name: AppleRegistration.clientSecretSettingName
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceAppleRegistration(string clientId, string clientSecretSettingName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="clientId"> The Client ID of the app used for login. </param>
+        /// <param name="clientSecretSettingName"> The app setting name that contains the client secret. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceAppleRegistration(string clientId, string clientSecretSettingName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClientId = clientId;
             ClientSecretSettingName = clientSecretSettingName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// The Client ID of the app used for login.
-        /// Serialized Name: AppleRegistration.clientId
-        /// </summary>
+        /// <summary> The Client ID of the app used for login. </summary>
         [WirePath("clientId")]
         public string ClientId { get; set; }
-        /// <summary>
-        /// The app setting name that contains the client secret.
-        /// Serialized Name: AppleRegistration.clientSecretSettingName
-        /// </summary>
+
+        /// <summary> The app setting name that contains the client secret. </summary>
         [WirePath("clientSecretSettingName")]
         public string ClientSecretSettingName { get; set; }
     }

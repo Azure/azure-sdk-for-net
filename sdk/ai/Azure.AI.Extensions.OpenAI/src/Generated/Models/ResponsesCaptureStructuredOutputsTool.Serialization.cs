@@ -94,7 +94,7 @@ namespace Azure.AI.Extensions.OpenAI
                 writer.WriteEndObject();
             }
             writer.WritePropertyName("outputs"u8);
-            writer.WriteObjectValue(Outputs, options);
+            writer.WriteObjectValue(OutputDefinition, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -141,7 +141,7 @@ namespace Azure.AI.Extensions.OpenAI
             string name = default;
             string description = default;
             IDictionary<string, ToolConfig> toolConfigs = default;
-            ResponsesStructuredOutputDefinition outputs = default;
+            ResponsesStructuredOutputDefinition outputDefinition = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -176,7 +176,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("outputs"u8))
                 {
-                    outputs = ResponsesStructuredOutputDefinition.DeserializeResponsesStructuredOutputDefinition(prop.Value, options);
+                    outputDefinition = ResponsesStructuredOutputDefinition.DeserializeResponsesStructuredOutputDefinition(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -189,7 +189,7 @@ namespace Azure.AI.Extensions.OpenAI
                 name,
                 description,
                 toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
-                outputs,
+                outputDefinition,
                 additionalBinaryDataProperties);
         }
     }

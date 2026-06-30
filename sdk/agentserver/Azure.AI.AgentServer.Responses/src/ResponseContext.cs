@@ -91,12 +91,13 @@ public class ResponseContext
     }
 
     /// <summary>
-    /// Gets the platform-injected isolation keys for this request.
-    /// Handlers use these opaque partition keys to scope user-private and
-    /// conversation-shared state. Returns <see cref="IsolationContext.Empty"/>
-    /// when the platform headers are absent (e.g., local development).
+    /// Gets the platform-injected identity context for this request.
+    /// Handlers use the user ID key to scope per-user state, and the SDK forwards
+    /// the per-request call ID to Foundry platform services. Returns
+    /// <see cref="PlatformContext.Empty"/> when the platform headers are absent
+    /// (e.g., local development).
     /// </summary>
-    public virtual IsolationContext Isolation { get; } = IsolationContext.Empty;
+    public virtual PlatformContext PlatformContext { get; } = PlatformContext.Empty;
 
     /// <summary>
     /// Gets the forwarded client headers (those prefixed with <c>x-client-</c>)

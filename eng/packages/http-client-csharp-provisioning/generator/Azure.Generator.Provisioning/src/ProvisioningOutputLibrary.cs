@@ -169,6 +169,17 @@ namespace Azure.Generator.Provisioning
                 var enumProvider = ProvisioningGenerator.Instance.TypeFactory.CreateEnum(inputEnum);
                 if (enumProvider != null)
                 {
+                    // Provisioning manually builds the provider list instead of calling the base
+                    // OutputLibrary.BuildTypeProviders(), so we must preserve the base pipeline's
+                    // custom enum replacement behavior here. When a custom enum is decorated with
+                    // [CodeGenType("GeneratedEnumName")], the generated enum provider still exists
+                    // (often internalized), but C# cannot merge two enum declarations with the
+                    // same name. Skipping the generated provider lets the custom enum fully replace
+                    // it, matching the base/mgmt generator behavior.
+                    if (enumProvider.CustomCodeView != null)
+                    {
+                        continue;
+                    }
                     providers.Add(enumProvider);
                 }
             }

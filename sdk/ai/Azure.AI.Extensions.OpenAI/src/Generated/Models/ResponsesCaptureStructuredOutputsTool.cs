@@ -15,11 +15,11 @@ namespace Azure.AI.Extensions.OpenAI
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResponsesCaptureStructuredOutputsTool"/>. </summary>
-        /// <param name="outputs"> The structured outputs to capture from the model. </param>
-        internal ResponsesCaptureStructuredOutputsTool(ResponsesStructuredOutputDefinition outputs) : base("capture_structured_outputs")
+        /// <param name="outputDefinition"> The structured outputs to capture from the model. </param>
+        internal ResponsesCaptureStructuredOutputsTool(ResponsesStructuredOutputDefinition outputDefinition) : base("capture_structured_outputs")
         {
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
-            Outputs = outputs;
+            OutputDefinition = outputDefinition;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponsesCaptureStructuredOutputsTool"/>. </summary>
@@ -27,14 +27,14 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
-        /// <param name="outputs"> The structured outputs to capture from the model. </param>
+        /// <param name="outputDefinition"> The structured outputs to capture from the model. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesCaptureStructuredOutputsTool(ResponseToolKind @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, ResponsesStructuredOutputDefinition outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        internal ResponsesCaptureStructuredOutputsTool(ResponseToolKind @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, ResponsesStructuredOutputDefinition outputDefinition, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Name = name;
             Description = description;
             ToolConfigs = toolConfigs;
-            Outputs = outputs;
+            OutputDefinition = outputDefinition;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -48,6 +48,6 @@ namespace Azure.AI.Extensions.OpenAI
         public IDictionary<string, ToolConfig> ToolConfigs { get; }
 
         /// <summary> The structured outputs to capture from the model. </summary>
-        public ResponsesStructuredOutputDefinition Outputs { get; }
+        public ResponsesStructuredOutputDefinition OutputDefinition { get; }
     }
 }

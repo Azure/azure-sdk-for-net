@@ -1,0 +1,18 @@
+{
+  "apiVersions": {
+    "DataCollectionApi": "2024-03-11",
+    "PrivateLinkScopesApi": "2023-06-01-preview",
+    "AutoScaleApi": "2022-10-01",
+    "ActivityLogsApi": "2015-04-01",
+    "MetricsApi": "2024-02-01",
+    "ServiceDiagnosticsSettingsApi": "2016-09-01",
+    "AlertRulesIncidentsApi": "2016-03-01",
+    "LogProfilesApi": "2016-03-01",
+    "ActivityLogAlertsApi": "2023-01-01-preview",
+    "MetricAlertApi": "2024-03-01-preview",
+    "ScheduledQueryRuleApi": "2025-01-01-preview",
+    "MetricBaselinesApi": "2019-03-01",
+    "ActionGroupsApi": "2024-10-01-preview",
+    "NetworkSecurityPerimeterApi": "2021-10-01"
+  }
+}

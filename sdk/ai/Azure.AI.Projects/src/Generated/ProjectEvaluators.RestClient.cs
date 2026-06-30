@@ -220,7 +220,7 @@ namespace Azure.AI.Projects.Evaluation
             return message;
         }
 
-        internal PipelineMessage CreateGetCredentialsRequest(string name, string version, BinaryContent content, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateGetCredentialRequest(string name, string version, BinaryContent content, string foundryFeatures, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);

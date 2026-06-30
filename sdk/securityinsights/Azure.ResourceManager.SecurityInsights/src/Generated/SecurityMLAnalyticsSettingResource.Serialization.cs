@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
+    /// <summary></summary>
     public partial class SecurityMLAnalyticsSettingResource : IJsonModel<SecurityMLAnalyticsSettingData>
     {
-        private static SecurityMLAnalyticsSettingData s_dataDeserializationInstance;
-        private static SecurityMLAnalyticsSettingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SecurityMLAnalyticsSettingData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SecurityMLAnalyticsSettingData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SecurityMLAnalyticsSettingData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SecurityMLAnalyticsSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityMLAnalyticsSettingData>)Data).Write(writer, options);
 
-        SecurityMLAnalyticsSettingData IJsonModel<SecurityMLAnalyticsSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityMLAnalyticsSettingData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecurityMLAnalyticsSettingData IJsonModel<SecurityMLAnalyticsSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SecurityMLAnalyticsSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityMLAnalyticsSettingData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SecurityMLAnalyticsSettingData IPersistableModel<SecurityMLAnalyticsSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityMLAnalyticsSettingData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        string IPersistableModel<SecurityMLAnalyticsSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityMLAnalyticsSettingData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SecurityMLAnalyticsSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

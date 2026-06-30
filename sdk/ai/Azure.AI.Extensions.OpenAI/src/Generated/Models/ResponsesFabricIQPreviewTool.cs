@@ -26,14 +26,14 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="type"></param>
         /// <param name="projectConnectionId"> The ID of the FabricIQ project connection. </param>
         /// <param name="serverLabel"> (Optional) The label of the FabricIQ MCP server to connect to. </param>
-        /// <param name="serverUrl"> (Optional) The URL of the FabricIQ MCP server. If not provided, the URL from the project connection will be used. </param>
+        /// <param name="serverUri"> (Optional) The URL of the FabricIQ MCP server. If not provided, the URL from the project connection will be used. </param>
         /// <param name="requireApproval"> (Optional) Whether the agent requires approval before executing actions. Default is always. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesFabricIQPreviewTool(ResponseToolKind @type, string projectConnectionId, string serverLabel, Uri serverUrl, BinaryData requireApproval, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        internal ResponsesFabricIQPreviewTool(ResponseToolKind @type, string projectConnectionId, string serverLabel, Uri serverUri, BinaryData requireApproval, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             ProjectConnectionId = projectConnectionId;
             ServerLabel = serverLabel;
-            ServerUrl = serverUrl;
+            ServerUri = serverUri;
             RequireApproval = requireApproval;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -45,7 +45,7 @@ namespace Azure.AI.Extensions.OpenAI
         public string ServerLabel { get; }
 
         /// <summary> (Optional) The URL of the FabricIQ MCP server. If not provided, the URL from the project connection will be used. </summary>
-        public Uri ServerUrl { get; }
+        public Uri ServerUri { get; }
 
         /// <summary>
         /// (Optional) Whether the agent requires approval before executing actions. Default is always.

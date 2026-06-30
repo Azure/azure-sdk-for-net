@@ -72,10 +72,10 @@ namespace Azure.AI.Extensions.OpenAI
                 throw new FormatException($"The model {nameof(ResponsesA2APreviewTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(BaseUrl))
+            if (Optional.IsDefined(BaseUri))
             {
                 writer.WritePropertyName("base_url"u8);
-                writer.WriteStringValue(BaseUrl.AbsoluteUri);
+                writer.WriteStringValue(BaseUri.AbsoluteUri);
             }
             if (Optional.IsDefined(AgentCardPath))
             {
@@ -135,7 +135,7 @@ namespace Azure.AI.Extensions.OpenAI
                 return null;
             }
             ResponseToolKind @type = "a2a_preview";
-            Uri baseUrl = default;
+            Uri baseUri = default;
             string agentCardPath = default;
             string projectConnectionId = default;
             bool? sendCredentialsForAgentCard = default;
@@ -153,7 +153,7 @@ namespace Azure.AI.Extensions.OpenAI
                     {
                         continue;
                     }
-                    baseUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    baseUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("agent_card_path"u8))
@@ -182,7 +182,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             return new ResponsesA2APreviewTool(
                 @type,
-                baseUrl,
+                baseUri,
                 agentCardPath,
                 projectConnectionId,
                 sendCredentialsForAgentCard,

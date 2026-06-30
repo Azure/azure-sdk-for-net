@@ -74,6 +74,10 @@ namespace Azure.Provisioning.ContainerService
             _timesInWeek = DefineListProperty<ContainerServiceTimeInWeek>(nameof(TimesInWeek), new string[] { "timeInWeek" });
             _notAllowedTimes = DefineListProperty<ContainerServiceTimeSpan>(nameof(NotAllowedTimes), new string[] { "notAllowedTime" });
             _maintenanceWindow = DefineModelProperty<ContainerServiceMaintenanceWindow>(nameof(MaintenanceWindow), new string[] { "maintenanceWindow" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for MaintenanceConfigurationProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

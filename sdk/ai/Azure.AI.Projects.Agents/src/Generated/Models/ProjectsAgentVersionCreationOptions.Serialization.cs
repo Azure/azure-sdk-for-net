@@ -103,6 +103,11 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("blueprint_reference"u8);
                 writer.WriteObjectValue(BlueprintReference, options);
             }
+            if (Optional.IsDefined(Draft))
+            {
+                writer.WritePropertyName("draft"u8);
+                writer.WriteBooleanValue(Draft.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -149,6 +154,7 @@ namespace Azure.AI.Projects.Agents
             string description = default;
             ProjectsAgentDefinition definition = default;
             AgentBlueprintReference blueprintReference = default;
+            bool? draft = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -192,12 +198,27 @@ namespace Azure.AI.Projects.Agents
                     blueprintReference = AgentBlueprintReference.DeserializeAgentBlueprintReference(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("draft"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    draft = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProjectsAgentVersionCreationOptions(metadata ?? new ChangeTrackingDictionary<string, string>(), description, definition, blueprintReference, additionalBinaryDataProperties);
+            return new ProjectsAgentVersionCreationOptions(
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                description,
+                definition,
+                blueprintReference,
+                draft,
+                additionalBinaryDataProperties);
         }
     }
 }

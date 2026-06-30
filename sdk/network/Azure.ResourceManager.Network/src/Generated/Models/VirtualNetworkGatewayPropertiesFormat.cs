@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayPropertiesFormat"/>. </summary>
         public VirtualNetworkGatewayPropertiesFormat()
         {
-            IpConfigurations = new ChangeTrackingList<VirtualNetworkGatewayIPConfiguration>();
+            IPConfigurations = new ChangeTrackingList<VirtualNetworkGatewayIPConfiguration>();
             VirtualNetworkGatewayPolicyGroups = new ChangeTrackingList<VirtualNetworkGatewayPolicyGroup>();
             NatRules = new ChangeTrackingList<VirtualNetworkGatewayNatRuleData>();
         }
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="vpnType"> The type of this virtual network gateway. </param>
         /// <param name="vpnGatewayGeneration"> The generation for this VirtualNetworkGateway. Must be None if gatewayType is not VPN. </param>
         /// <param name="enableBgp"> Whether BGP is enabled for this virtual network gateway or not. </param>
-        /// <param name="enablePrivateIpAddress"> Whether private IP needs to be enabled on this gateway for connections or not. </param>
+        /// <param name="enablePrivateIPAddress"> Whether private IP needs to be enabled on this gateway for connections or not. </param>
         /// <param name="virtualNetworkGatewayMigrationStatus"> The reference to the VirtualNetworkGatewayMigrationStatus which represents the status of migration. </param>
         /// <param name="activeActive"> ActiveActive flag. </param>
         /// <param name="enableHighBandwidthVpnGateway"> To enable Advanced Connectivity feature for VPN gateway. </param>
@@ -56,15 +56,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="adminState"> Property to indicate if the Express Route Gateway serves traffic when there are multiple Express Route Gateways in the vnet. </param>
         /// <param name="resiliencyModel"> Property to indicate if the Express Route Gateway has resiliency model of MultiHomed or SingleHomed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkGatewayPropertiesFormat(VirtualNetworkGatewayAutoScaleConfiguration autoScaleConfiguration, IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations, VirtualNetworkGatewayType? gatewayType, VpnType? vpnType, VpnGatewayGeneration? vpnGatewayGeneration, bool? enableBgp, bool? enablePrivateIpAddress, VirtualNetworkGatewayMigrationStatus virtualNetworkGatewayMigrationStatus, bool? activeActive, bool? enableHighBandwidthVpnGateway, bool? disableIPSecReplayProtection, NetworkSubResource gatewayDefaultSite, VirtualNetworkGatewaySku sku, VpnClientConfiguration vpnClientConfiguration, IList<VirtualNetworkGatewayPolicyGroup> virtualNetworkGatewayPolicyGroups, BgpSettings bgpSettings, VirtualNetworkAddressSpace customRoutes, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDnsForwarding, string inboundDnsForwardingEndpoint, ResourceIdentifier vNetExtendedLocationResourceId, IList<VirtualNetworkGatewayNatRuleData> natRules, bool? enableBgpRouteTranslationForNat, bool? allowVirtualWanTraffic, bool? allowRemoteVnetTraffic, ExpressRouteGatewayAdminState? adminState, ExpressRouteGatewayResiliencyModel? resiliencyModel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualNetworkGatewayPropertiesFormat(VirtualNetworkGatewayAutoScaleConfiguration autoScaleConfiguration, IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations, VirtualNetworkGatewayType? gatewayType, VpnType? vpnType, VpnGatewayGeneration? vpnGatewayGeneration, bool? enableBgp, bool? enablePrivateIPAddress, VirtualNetworkGatewayMigrationStatus virtualNetworkGatewayMigrationStatus, bool? activeActive, bool? enableHighBandwidthVpnGateway, bool? disableIPSecReplayProtection, NetworkSubResource gatewayDefaultSite, VirtualNetworkGatewaySku sku, VpnClientConfiguration vpnClientConfiguration, IList<VirtualNetworkGatewayPolicyGroup> virtualNetworkGatewayPolicyGroups, BgpSettings bgpSettings, VirtualNetworkAddressSpace customRoutes, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDnsForwarding, string inboundDnsForwardingEndpoint, ResourceIdentifier vNetExtendedLocationResourceId, IList<VirtualNetworkGatewayNatRuleData> natRules, bool? enableBgpRouteTranslationForNat, bool? allowVirtualWanTraffic, bool? allowRemoteVnetTraffic, ExpressRouteGatewayAdminState? adminState, ExpressRouteGatewayResiliencyModel? resiliencyModel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AutoScaleConfiguration = autoScaleConfiguration;
-            IpConfigurations = ipConfigurations;
+            IPConfigurations = ipConfigurations;
             GatewayType = gatewayType;
             VpnType = vpnType;
             VpnGatewayGeneration = vpnGatewayGeneration;
             EnableBgp = enableBgp;
-            EnablePrivateIpAddress = enablePrivateIpAddress;
+            EnablePrivateIPAddress = enablePrivateIPAddress;
             VirtualNetworkGatewayMigrationStatus = virtualNetworkGatewayMigrationStatus;
             ActiveActive = activeActive;
             EnableHighBandwidthVpnGateway = enableHighBandwidthVpnGateway;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> IP configurations for virtual network gateway. </summary>
         [WirePath("ipConfigurations")]
-        public IList<VirtualNetworkGatewayIPConfiguration> IpConfigurations { get; } = new ChangeTrackingList<VirtualNetworkGatewayIPConfiguration>();
+        public IList<VirtualNetworkGatewayIPConfiguration> IPConfigurations { get; } = new ChangeTrackingList<VirtualNetworkGatewayIPConfiguration>();
 
         /// <summary> The type of this virtual network gateway. </summary>
         [WirePath("gatewayType")]
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Whether private IP needs to be enabled on this gateway for connections or not. </summary>
         [WirePath("enablePrivateIpAddress")]
-        public bool? EnablePrivateIpAddress { get; set; }
+        public bool? EnablePrivateIPAddress { get; set; }
 
         /// <summary> The reference to the VirtualNetworkGatewayMigrationStatus which represents the status of migration. </summary>
         [WirePath("virtualNetworkGatewayMigrationStatus")]

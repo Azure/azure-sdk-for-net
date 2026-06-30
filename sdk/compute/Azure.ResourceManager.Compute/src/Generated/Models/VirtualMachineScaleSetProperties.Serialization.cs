@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Compute.Models
             ComputeSkuProfile skuProfile = default;
             HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement = default;
             LifecycleHooksProfile lifecycleHooksProfile = default;
-            ExternalHealthPolicy externalHealthPolicy = default;
+            ComputeExternalHealthPolicy externalHealthPolicy = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    externalHealthPolicy = ExternalHealthPolicy.DeserializeExternalHealthPolicy(prop.Value, options);
+                    externalHealthPolicy = ComputeExternalHealthPolicy.DeserializeComputeExternalHealthPolicy(prop.Value, options);
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));

@@ -19,13 +19,13 @@ public sealed class InvocationContext
     /// <param name="sessionId">The resolved session ID.</param>
     /// <param name="clientHeaders">Forwarded <c>x-client-*</c> headers.</param>
     /// <param name="queryParameters">All forwarded query parameters.</param>
-    /// <param name="isolation">Platform isolation context. Use <see cref="IsolationContext.Empty"/> when not applicable.</param>
+    /// <param name="platformContext">Platform context. Use <see cref="PlatformContext.Empty"/> when not applicable.</param>
     public InvocationContext(
         string invocationId,
         string sessionId,
         IReadOnlyDictionary<string, string> clientHeaders,
         IReadOnlyDictionary<string, StringValues> queryParameters,
-        IsolationContext isolation)
+        PlatformContext platformContext)
     {
         ArgumentException.ThrowIfNullOrEmpty(invocationId);
         ArgumentException.ThrowIfNullOrEmpty(sessionId);
@@ -36,8 +36,8 @@ public sealed class InvocationContext
         SessionId = sessionId;
         ClientHeaders = clientHeaders;
         QueryParameters = queryParameters;
-        ArgumentNullException.ThrowIfNull(isolation);
-        Isolation = isolation;
+        ArgumentNullException.ThrowIfNull(platformContext);
+        PlatformContext = platformContext;
     }
 
     /// <summary>
@@ -67,10 +67,10 @@ public sealed class InvocationContext
     public IReadOnlyDictionary<string, StringValues> QueryParameters { get; }
 
     /// <summary>
-    /// Gets the platform-injected isolation keys for this request.
-    /// Handlers use these opaque partition keys to scope user-private and
-    /// conversation-shared state. Returns <see cref="IsolationContext.Empty"/>
+    /// Gets the platform-injected identity context for this request.
+    /// Handlers use the user ID key to scope per-user state, and the SDK forwards
+    /// the per-request call ID. Returns <see cref="PlatformContext.Empty"/>
     /// when the platform headers are absent (e.g., local development).
     /// </summary>
-    public IsolationContext Isolation { get; }
+    public PlatformContext PlatformContext { get; }
 }

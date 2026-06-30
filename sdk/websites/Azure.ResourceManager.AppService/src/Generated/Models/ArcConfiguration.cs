@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The ArcConfiguration.
-    /// Serialized Name: ArcConfiguration
-    /// </summary>
+    /// <summary> The ArcConfiguration. </summary>
     public partial class ArcConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ArcConfiguration"/>. </summary>
         public ArcConfiguration()
@@ -54,15 +23,15 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ArcConfiguration"/>. </summary>
-        /// <param name="artifactsStorageType"> Serialized Name: ArcConfiguration.artifactsStorageType. </param>
-        /// <param name="artifactStorageClassName"> Serialized Name: ArcConfiguration.artifactStorageClassName. </param>
-        /// <param name="artifactStorageMountPath"> Serialized Name: ArcConfiguration.artifactStorageMountPath. </param>
-        /// <param name="artifactStorageNodeName"> Serialized Name: ArcConfiguration.artifactStorageNodeName. </param>
-        /// <param name="artifactStorageAccessMode"> Serialized Name: ArcConfiguration.artifactStorageAccessMode. </param>
-        /// <param name="frontEndServiceConfiguration"> Serialized Name: ArcConfiguration.frontEndServiceConfiguration. </param>
-        /// <param name="kubeConfig"> Serialized Name: ArcConfiguration.kubeConfig. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArcConfiguration(ArtifactStorageType? artifactsStorageType, string artifactStorageClassName, string artifactStorageMountPath, string artifactStorageNodeName, string artifactStorageAccessMode, FrontEndConfiguration frontEndServiceConfiguration, string kubeConfig, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="artifactsStorageType"></param>
+        /// <param name="artifactStorageClassName"></param>
+        /// <param name="artifactStorageMountPath"></param>
+        /// <param name="artifactStorageNodeName"></param>
+        /// <param name="artifactStorageAccessMode"></param>
+        /// <param name="frontEndServiceConfiguration"></param>
+        /// <param name="kubeConfig"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ArcConfiguration(ArtifactStorageType? artifactsStorageType, string artifactStorageClassName, string artifactStorageMountPath, string artifactStorageNodeName, string artifactStorageAccessMode, FrontEndConfiguration frontEndServiceConfiguration, string kubeConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ArtifactsStorageType = artifactsStorageType;
             ArtifactStorageClassName = artifactStorageClassName;
@@ -71,41 +40,53 @@ namespace Azure.ResourceManager.AppService.Models
             ArtifactStorageAccessMode = artifactStorageAccessMode;
             FrontEndServiceConfiguration = frontEndServiceConfiguration;
             KubeConfig = kubeConfig;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Serialized Name: ArcConfiguration.artifactsStorageType. </summary>
+        /// <summary> Gets or sets the ArtifactsStorageType. </summary>
         [WirePath("artifactsStorageType")]
         public ArtifactStorageType? ArtifactsStorageType { get; set; }
-        /// <summary> Serialized Name: ArcConfiguration.artifactStorageClassName. </summary>
+
+        /// <summary> Gets or sets the ArtifactStorageClassName. </summary>
         [WirePath("artifactStorageClassName")]
         public string ArtifactStorageClassName { get; set; }
-        /// <summary> Serialized Name: ArcConfiguration.artifactStorageMountPath. </summary>
+
+        /// <summary> Gets or sets the ArtifactStorageMountPath. </summary>
         [WirePath("artifactStorageMountPath")]
         public string ArtifactStorageMountPath { get; set; }
-        /// <summary> Serialized Name: ArcConfiguration.artifactStorageNodeName. </summary>
+
+        /// <summary> Gets or sets the ArtifactStorageNodeName. </summary>
         [WirePath("artifactStorageNodeName")]
         public string ArtifactStorageNodeName { get; set; }
-        /// <summary> Serialized Name: ArcConfiguration.artifactStorageAccessMode. </summary>
+
+        /// <summary> Gets or sets the ArtifactStorageAccessMode. </summary>
         [WirePath("artifactStorageAccessMode")]
         public string ArtifactStorageAccessMode { get; set; }
-        /// <summary> Serialized Name: ArcConfiguration.frontEndServiceConfiguration. </summary>
+
+        /// <summary> Gets or sets the FrontEndServiceConfiguration. </summary>
+        [WirePath("frontEndServiceConfiguration")]
         internal FrontEndConfiguration FrontEndServiceConfiguration { get; set; }
-        /// <summary> Serialized Name: FrontEndConfiguration.kind. </summary>
+
+        /// <summary> Gets or sets the KubeConfig. </summary>
+        [WirePath("kubeConfig")]
+        public string KubeConfig { get; set; }
+
+        /// <summary> Gets or sets the Kind. </summary>
         [WirePath("frontEndServiceConfiguration.kind")]
         public FrontEndServiceType? FrontEndServiceKind
         {
-            get => FrontEndServiceConfiguration is null ? default : FrontEndServiceConfiguration.Kind;
+            get
+            {
+                return FrontEndServiceConfiguration is null ? default : FrontEndServiceConfiguration.Kind;
+            }
             set
             {
                 if (FrontEndServiceConfiguration is null)
+                {
                     FrontEndServiceConfiguration = new FrontEndConfiguration();
+                }
                 FrontEndServiceConfiguration.Kind = value;
             }
         }
-
-        /// <summary> Serialized Name: ArcConfiguration.kubeConfig. </summary>
-        [WirePath("kubeConfig")]
-        public string KubeConfig { get; set; }
     }
 }

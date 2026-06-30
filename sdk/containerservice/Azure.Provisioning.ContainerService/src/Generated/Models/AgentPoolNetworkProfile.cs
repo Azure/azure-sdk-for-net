@@ -75,6 +75,10 @@ namespace Azure.Provisioning.ContainerService
             _nodePublicIPTags = DefineListProperty<ContainerServiceIPTag>(nameof(NodePublicIPTags), new string[] { "nodePublicIPTags" });
             _allowedHostPorts = DefineListProperty<AgentPoolNetworkPortRange>(nameof(AllowedHostPorts), new string[] { "allowedHostPorts" });
             _applicationSecurityGroups = DefineListProperty<ResourceIdentifier>(nameof(ApplicationSecurityGroups), new string[] { "applicationSecurityGroups" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for AgentPoolNetworkProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

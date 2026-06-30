@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class AppServiceStorageAccountStateExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this AppServiceStorageAccountState value) => value switch
         {
             AppServiceStorageAccountState.Ok => "Ok",
@@ -20,12 +21,25 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AppServiceStorageAccountState value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static AppServiceStorageAccountState ToAppServiceStorageAccountState(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Ok")) return AppServiceStorageAccountState.Ok;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InvalidCredentials")) return AppServiceStorageAccountState.InvalidCredentials;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InvalidShare")) return AppServiceStorageAccountState.InvalidShare;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotValidated")) return AppServiceStorageAccountState.NotValidated;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Ok"))
+            {
+                return AppServiceStorageAccountState.Ok;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InvalidCredentials"))
+            {
+                return AppServiceStorageAccountState.InvalidCredentials;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InvalidShare"))
+            {
+                return AppServiceStorageAccountState.InvalidShare;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotValidated"))
+            {
+                return AppServiceStorageAccountState.NotValidated;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AppServiceStorageAccountState value.");
         }
     }

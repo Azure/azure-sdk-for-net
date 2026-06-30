@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -21,7 +20,7 @@ public class Sample_CodeAgent : SamplesBase
     }
 
     #region Snippet:Sample_CodeAgentMetadata_CodeAgent
-    private static CreateAgentVersionFromCodeMetadata GetAgentMetadata()
+    private static AgentVersionFromCodeMetadata GetAgentMetadata()
     {
         HostedAgentDefinition agentDefinition = new(
             cpu: "0.5",
@@ -35,7 +34,7 @@ public class Sample_CodeAgent : SamplesBase
                 dependencyResolution: CodeDependencyResolution.RemoteBuild
             ),
         };
-        CreateAgentVersionFromCodeMetadata metadata = new(agentDefinition);
+        AgentVersionFromCodeMetadata metadata = new(agentDefinition);
         metadata.Metadata["enableVnextExperience"] = "true";
         return metadata;
     }

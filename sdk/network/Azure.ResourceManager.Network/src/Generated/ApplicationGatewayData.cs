@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Entra JWT validation configurations for the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
         [WirePath("properties.entraJWTValidationConfigs")]
-        public IList<ApplicationGatewayEntraJwtValidationConfig> EntraJWTValidationConfigs
+        public IList<ApplicationGatewayEntraJwtValidationConfig> EntraJwtValidationConfigs
         {
             get
             {
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new ApplicationGatewayPropertiesFormat();
                 }
-                return Properties.EntraJWTValidationConfigs;
+                return Properties.EntraJwtValidationConfigs;
             }
         }
 

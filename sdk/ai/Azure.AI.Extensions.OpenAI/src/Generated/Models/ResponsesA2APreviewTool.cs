@@ -21,7 +21,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ResponsesA2APreviewTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="baseUrl"> Base URL of the agent. </param>
+        /// <param name="baseUri"> Base URL of the agent. </param>
         /// <param name="agentCardPath">
         /// The path to the agent card relative to the `base_url`.
         /// If not provided, defaults to  `/.well-known/agent-card.json`
@@ -36,9 +36,9 @@ namespace Azure.AI.Extensions.OpenAI
         /// specified by the caller (anonymous fetch).
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesA2APreviewTool(ResponseToolKind @type, Uri baseUrl, string agentCardPath, string projectConnectionId, bool? sendCredentialsForAgentCard, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        internal ResponsesA2APreviewTool(ResponseToolKind @type, Uri baseUri, string agentCardPath, string projectConnectionId, bool? sendCredentialsForAgentCard, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
-            BaseUrl = baseUrl;
+            BaseUri = baseUri;
             AgentCardPath = agentCardPath;
             ProjectConnectionId = projectConnectionId;
             SendCredentialsForAgentCard = sendCredentialsForAgentCard;
@@ -46,7 +46,7 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Base URL of the agent. </summary>
-        public Uri BaseUrl { get; }
+        public Uri BaseUri { get; }
 
         /// <summary>
         /// The path to the agent card relative to the `base_url`.

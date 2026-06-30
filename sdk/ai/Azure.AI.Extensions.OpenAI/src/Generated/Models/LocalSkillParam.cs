@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Extensions.OpenAI.Internal
+namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The LocalSkillParam. </summary>
     public partial class LocalSkillParam

@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Cdn
             DefineProperty<string>("typeName", new string[] { "typeName" }, defaultValue: "DeliveryRuleCacheKeyQueryStringBehaviorActionParameters");
             _queryStringBehavior = DefineProperty<QueryStringBehavior>(nameof(QueryStringBehavior), new string[] { "queryStringBehavior" }, isRequired: true);
             _queryParameters = DefineProperty<string>(nameof(QueryParameters), new string[] { "queryParameters" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for CacheKeyQueryStringActionProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

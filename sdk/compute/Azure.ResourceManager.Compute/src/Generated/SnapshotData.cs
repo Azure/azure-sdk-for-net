@@ -410,5 +410,14 @@ namespace Azure.ResourceManager.Compute
                 return Properties is null ? default : Properties.SnapshotAccessState;
             }
         }
+
+        /// <summary> The immutability policy currently applied to this snapshot. Present only when an immutability policy has been configured. </summary>
+        public ImmutabilityPolicy ImmutabilityPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ImmutabilityPolicy;
+            }
+        }
     }
 }

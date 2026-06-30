@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Cdn
             base.DefineProvisionableProperties();
             _ruleGroupName = DefineProperty<string>(nameof(RuleGroupName), new string[] { "ruleGroupName" }, isRequired: true);
             _rules = DefineListProperty<ManagedRuleOverrideSetting>(nameof(Rules), new string[] { "rules" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedRuleGroupOverrideSetting that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

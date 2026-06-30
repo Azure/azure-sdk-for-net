@@ -26,7 +26,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="filter"> filter string for search resource. [Learn more here](https://learn.microsoft.com/azure/search/search-filters). </param>
         /// <param name="indexAssetId"> Index asset id for search resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesAISearchIndexResource(string projectConnectionId, string indexName, ResponsesAzureAISearchQueryType? queryType, int? topK, string filter, string indexAssetId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponsesAISearchIndexResource(string projectConnectionId, string indexName, ResponsesAzureAISearchQueryKind? queryType, int? topK, string filter, string indexAssetId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProjectConnectionId = projectConnectionId;
             IndexName = indexName;
@@ -44,7 +44,7 @@ namespace Azure.AI.Extensions.OpenAI
         public string IndexName { get; }
 
         /// <summary> Type of query in an AIIndexResource attached to this agent. </summary>
-        public ResponsesAzureAISearchQueryType? QueryType { get; }
+        public ResponsesAzureAISearchQueryKind? QueryType { get; }
 
         /// <summary> Number of documents to retrieve from search and present to the model. </summary>
         public int? TopK { get; }

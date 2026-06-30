@@ -7,24 +7,14 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The workflow trigger provisioning state.
-    /// Serialized Name: WorkflowTriggerProvisioningState
-    /// </summary>
+    /// <summary> The workflow trigger provisioning state. </summary>
     public readonly partial struct WorkflowTriggerProvisioningState : IEquatable<WorkflowTriggerProvisioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="WorkflowTriggerProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public WorkflowTriggerProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NotSpecifiedValue = "NotSpecified";
         private const string AcceptedValue = "Accepted";
         private const string RunningValue = "Running";
@@ -44,113 +34,100 @@ namespace Azure.ResourceManager.AppService.Models
         private const string UnregisteredValue = "Unregistered";
         private const string CompletedValue = "Completed";
 
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: WorkflowTriggerProvisioningState.NotSpecified
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkflowTriggerProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public WorkflowTriggerProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NotSpecified. </summary>
         public static WorkflowTriggerProvisioningState NotSpecified { get; } = new WorkflowTriggerProvisioningState(NotSpecifiedValue);
-        /// <summary>
-        /// Accepted
-        /// Serialized Name: WorkflowTriggerProvisioningState.Accepted
-        /// </summary>
+
+        /// <summary> Gets the Accepted. </summary>
         public static WorkflowTriggerProvisioningState Accepted { get; } = new WorkflowTriggerProvisioningState(AcceptedValue);
-        /// <summary>
-        /// Running
-        /// Serialized Name: WorkflowTriggerProvisioningState.Running
-        /// </summary>
+
+        /// <summary> Gets the Running. </summary>
         public static WorkflowTriggerProvisioningState Running { get; } = new WorkflowTriggerProvisioningState(RunningValue);
-        /// <summary>
-        /// Ready
-        /// Serialized Name: WorkflowTriggerProvisioningState.Ready
-        /// </summary>
+
+        /// <summary> Gets the Ready. </summary>
         public static WorkflowTriggerProvisioningState Ready { get; } = new WorkflowTriggerProvisioningState(ReadyValue);
-        /// <summary>
-        /// Creating
-        /// Serialized Name: WorkflowTriggerProvisioningState.Creating
-        /// </summary>
+
+        /// <summary> Gets the Creating. </summary>
         public static WorkflowTriggerProvisioningState Creating { get; } = new WorkflowTriggerProvisioningState(CreatingValue);
-        /// <summary>
-        /// Created
-        /// Serialized Name: WorkflowTriggerProvisioningState.Created
-        /// </summary>
+
+        /// <summary> Gets the Created. </summary>
         public static WorkflowTriggerProvisioningState Created { get; } = new WorkflowTriggerProvisioningState(CreatedValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: WorkflowTriggerProvisioningState.Deleting
-        /// </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static WorkflowTriggerProvisioningState Deleting { get; } = new WorkflowTriggerProvisioningState(DeletingValue);
-        /// <summary>
-        /// Deleted
-        /// Serialized Name: WorkflowTriggerProvisioningState.Deleted
-        /// </summary>
+
+        /// <summary> Gets the Deleted. </summary>
         public static WorkflowTriggerProvisioningState Deleted { get; } = new WorkflowTriggerProvisioningState(DeletedValue);
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: WorkflowTriggerProvisioningState.Canceled
-        /// </summary>
+
+        /// <summary> Gets the Canceled. </summary>
         public static WorkflowTriggerProvisioningState Canceled { get; } = new WorkflowTriggerProvisioningState(CanceledValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: WorkflowTriggerProvisioningState.Failed
-        /// </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static WorkflowTriggerProvisioningState Failed { get; } = new WorkflowTriggerProvisioningState(FailedValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: WorkflowTriggerProvisioningState.Succeeded
-        /// </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static WorkflowTriggerProvisioningState Succeeded { get; } = new WorkflowTriggerProvisioningState(SucceededValue);
-        /// <summary>
-        /// Moving
-        /// Serialized Name: WorkflowTriggerProvisioningState.Moving
-        /// </summary>
+
+        /// <summary> Gets the Moving. </summary>
         public static WorkflowTriggerProvisioningState Moving { get; } = new WorkflowTriggerProvisioningState(MovingValue);
-        /// <summary>
-        /// Updating
-        /// Serialized Name: WorkflowTriggerProvisioningState.Updating
-        /// </summary>
+
+        /// <summary> Gets the Updating. </summary>
         public static WorkflowTriggerProvisioningState Updating { get; } = new WorkflowTriggerProvisioningState(UpdatingValue);
-        /// <summary>
-        /// Registering
-        /// Serialized Name: WorkflowTriggerProvisioningState.Registering
-        /// </summary>
+
+        /// <summary> Gets the Registering. </summary>
         public static WorkflowTriggerProvisioningState Registering { get; } = new WorkflowTriggerProvisioningState(RegisteringValue);
-        /// <summary>
-        /// Registered
-        /// Serialized Name: WorkflowTriggerProvisioningState.Registered
-        /// </summary>
+
+        /// <summary> Gets the Registered. </summary>
         public static WorkflowTriggerProvisioningState Registered { get; } = new WorkflowTriggerProvisioningState(RegisteredValue);
-        /// <summary>
-        /// Unregistering
-        /// Serialized Name: WorkflowTriggerProvisioningState.Unregistering
-        /// </summary>
+
+        /// <summary> Gets the Unregistering. </summary>
         public static WorkflowTriggerProvisioningState Unregistering { get; } = new WorkflowTriggerProvisioningState(UnregisteringValue);
-        /// <summary>
-        /// Unregistered
-        /// Serialized Name: WorkflowTriggerProvisioningState.Unregistered
-        /// </summary>
+
+        /// <summary> Gets the Unregistered. </summary>
         public static WorkflowTriggerProvisioningState Unregistered { get; } = new WorkflowTriggerProvisioningState(UnregisteredValue);
-        /// <summary>
-        /// Completed
-        /// Serialized Name: WorkflowTriggerProvisioningState.Completed
-        /// </summary>
+
+        /// <summary> Gets the Completed. </summary>
         public static WorkflowTriggerProvisioningState Completed { get; } = new WorkflowTriggerProvisioningState(CompletedValue);
+
         /// <summary> Determines if two <see cref="WorkflowTriggerProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WorkflowTriggerProvisioningState left, WorkflowTriggerProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WorkflowTriggerProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WorkflowTriggerProvisioningState left, WorkflowTriggerProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkflowTriggerProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WorkflowTriggerProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WorkflowTriggerProvisioningState(string value) => new WorkflowTriggerProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WorkflowTriggerProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WorkflowTriggerProvisioningState?(string value) => value == null ? null : new WorkflowTriggerProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WorkflowTriggerProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WorkflowTriggerProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
