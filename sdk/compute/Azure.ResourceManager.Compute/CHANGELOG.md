@@ -1,6 +1,6 @@
 # Release History
 
-## 1.16.0-beta.1 (Unreleased)
+## 1.16.0 (2026-07-01)
 
 ### Features Added
 
@@ -9,12 +9,6 @@
 - Added shared gallery invite accept/reject extension methods.
 - Added `ConfidentialVmVersion` on `DiskSecurityProfile`.
 - Added `ImmutabilityPolicy` on `SnapshotProperties`.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.15.0 (2026-06-29)
 
