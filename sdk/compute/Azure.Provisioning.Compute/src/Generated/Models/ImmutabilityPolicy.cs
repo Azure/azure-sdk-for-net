@@ -84,6 +84,10 @@ namespace Azure.Provisioning.Compute
             _policyStartOn = DefineProperty<DateTimeOffset>(nameof(PolicyStartOn), new string[] { "policyStartTime" }, isOutput: true);
             _policyExpirationOn = DefineProperty<DateTimeOffset>(nameof(PolicyExpirationOn), new string[] { "policyExpirationTime" }, isOutput: true);
             _isPolicyExpired = DefineProperty<bool>(nameof(IsPolicyExpired), new string[] { "isPolicyExpired" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ImmutabilityPolicy that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

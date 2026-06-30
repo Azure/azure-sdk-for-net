@@ -76,6 +76,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _secretUri = DefineProperty<Uri>(nameof(SecretUri), new string[] { "secretUrl" }, isRequired: true);
             _sourceVault = DefineModelProperty<ComputeWriteableSubResourceData>(nameof(SourceVault), new string[] { "sourceVault" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for KeyVaultSecretReference that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

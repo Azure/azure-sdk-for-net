@@ -40,6 +40,10 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _isRestartRecoveryPolicyEnabled = DefineProperty<bool>(nameof(IsRestartRecoveryPolicyEnabled), new string[] { "enabled" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for RestartRecoveryPolicy that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

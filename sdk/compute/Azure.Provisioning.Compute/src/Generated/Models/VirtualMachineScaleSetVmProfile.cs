@@ -462,6 +462,10 @@ namespace Azure.Provisioning.Compute
             _serviceArtifactReference = DefineModelProperty<ServiceArtifactReference>(nameof(ServiceArtifactReference), new string[] { "serviceArtifactReference" });
             _securityPostureReference = DefineModelProperty<ComputeSecurityPostureReference>(nameof(SecurityPostureReference), new string[] { "securityPostureReference" });
             _timeCreated = DefineProperty<DateTimeOffset>(nameof(TimeCreated), new string[] { "timeCreated" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineScaleSetVmProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

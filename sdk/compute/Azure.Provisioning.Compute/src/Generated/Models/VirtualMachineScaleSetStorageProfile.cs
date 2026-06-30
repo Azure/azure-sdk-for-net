@@ -91,6 +91,10 @@ namespace Azure.Provisioning.Compute
             _osDisk = DefineModelProperty<VirtualMachineScaleSetOSDisk>(nameof(OSDisk), new string[] { "osDisk" });
             _dataDisks = DefineListProperty<VirtualMachineScaleSetDataDisk>(nameof(DataDisks), new string[] { "dataDisks" });
             _diskControllerKind = DefineProperty<DiskControllerType>(nameof(DiskControllerKind), new string[] { "diskControllerType" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineScaleSetStorageProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

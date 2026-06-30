@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _groupType = DefineProperty<SharingProfileGroupType>(nameof(GroupType), new string[] { "type" });
             _ids = DefineListProperty<string>(nameof(Ids), new string[] { "ids" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SharingProfileGroup that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

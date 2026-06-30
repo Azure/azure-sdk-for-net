@@ -40,6 +40,10 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _publicKeys = DefineListProperty<SshPublicKeyConfiguration>(nameof(PublicKeys), new string[] { "publicKeys" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SshConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

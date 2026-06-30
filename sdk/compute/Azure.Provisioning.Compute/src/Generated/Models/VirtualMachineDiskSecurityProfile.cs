@@ -75,6 +75,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _securityEncryptionType = DefineProperty<SecurityEncryptionType>(nameof(SecurityEncryptionType), new string[] { "securityEncryptionType" });
             _diskEncryptionSet = DefineModelProperty<DiskEncryptionSetParameters>(nameof(DiskEncryptionSet), new string[] { "diskEncryptionSet" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineDiskSecurityProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -34,6 +34,10 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _status = DefineModelProperty<InstanceViewStatus>(nameof(Status), new string[] { "status" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineHealthStatus that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

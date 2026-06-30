@@ -327,6 +327,10 @@ namespace Azure.Provisioning.Compute
             _patchStatus = DefineModelProperty<VirtualMachinePatchStatus>(nameof(PatchStatus), new string[] { "patchStatus" });
             _isVmInStandbyPool = DefineProperty<bool>(nameof(IsVmInStandbyPool), new string[] { "isVMInStandbyPool" }, isOutput: true);
             _interconnectInstanceView = DefineModelProperty<InterconnectInstanceView>(nameof(InterconnectInstanceView), new string[] { "interconnectInstanceView" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineInstanceView that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

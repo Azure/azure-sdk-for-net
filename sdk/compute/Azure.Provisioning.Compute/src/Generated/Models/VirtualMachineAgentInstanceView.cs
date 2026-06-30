@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Compute
             _vmAgentVersion = DefineProperty<string>(nameof(VmAgentVersion), new string[] { "vmAgentVersion" });
             _extensionHandlers = DefineListProperty<VirtualMachineExtensionHandlerInstanceView>(nameof(ExtensionHandlers), new string[] { "extensionHandlers" });
             _statuses = DefineListProperty<InstanceViewStatus>(nameof(Statuses), new string[] { "statuses" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineAgentInstanceView that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

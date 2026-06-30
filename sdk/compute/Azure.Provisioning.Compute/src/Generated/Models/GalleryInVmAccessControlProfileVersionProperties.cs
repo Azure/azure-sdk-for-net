@@ -145,6 +145,10 @@ namespace Azure.Provisioning.Compute
             _publishedOn = DefineProperty<DateTimeOffset>(nameof(PublishedOn), new string[] { "publishedDate" }, isOutput: true);
             _provisioningState = DefineProperty<GalleryProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _replicationStatus = DefineModelProperty<ReplicationStatus>(nameof(ReplicationStatus), new string[] { "replicationStatus" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for GalleryInVmAccessControlProfileVersionProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

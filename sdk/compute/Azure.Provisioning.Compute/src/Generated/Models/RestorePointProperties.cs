@@ -168,6 +168,10 @@ namespace Azure.Provisioning.Compute
             _sourceRestorePoint = DefineModelProperty<ComputeApiEntityReference>(nameof(SourceRestorePoint), new string[] { "sourceRestorePoint" });
             _instanceView = DefineModelProperty<RestorePointInstanceView>(nameof(InstanceView), new string[] { "instanceView" }, isOutput: true);
             _instantAccessDurationMinutes = DefineProperty<int>(nameof(InstantAccessDurationMinutes), new string[] { "instantAccessDurationMinutes" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for RestorePointProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

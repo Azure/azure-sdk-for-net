@@ -40,6 +40,10 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _ultraSsdEnabled = DefineProperty<bool>(nameof(UltraSsdEnabled), new string[] { "ultraSSDEnabled" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DedicatedHostGroupPropertiesAdditionalCapabilities that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

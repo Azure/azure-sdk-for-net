@@ -40,6 +40,10 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _userAssignedIdentityResourceId = DefineProperty<string>(nameof(UserAssignedIdentityResourceId), new string[] { "userAssignedIdentityResourceId" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for EncryptionIdentity that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -91,6 +91,10 @@ namespace Azure.Provisioning.Compute
             _encryptionSettings = DefineListProperty<DiskEncryptionSettings>(nameof(EncryptionSettings), new string[] { "encryptionSettings" });
             _statuses = DefineListProperty<InstanceViewStatus>(nameof(Statuses), new string[] { "statuses" });
             _storageAlignmentStatus = DefineProperty<ComputeStorageAlignmentStatus>(nameof(StorageAlignmentStatus), new string[] { "storageAlignmentStatus" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DiskInstanceView that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

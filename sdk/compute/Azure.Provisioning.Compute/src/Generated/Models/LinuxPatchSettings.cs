@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Compute
             _patchMode = DefineProperty<LinuxVmGuestPatchMode>(nameof(PatchMode), new string[] { "patchMode" });
             _assessmentMode = DefineProperty<LinuxPatchAssessmentMode>(nameof(AssessmentMode), new string[] { "assessmentMode" });
             _automaticByPlatformSettings = DefineModelProperty<LinuxVmGuestPatchAutomaticByPlatformSettings>(nameof(AutomaticByPlatformSettings), new string[] { "automaticByPlatformSettings" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for LinuxPatchSettings that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _networkInterfaceConfigurations = DefineListProperty<VirtualMachineScaleSetNetworkConfiguration>(nameof(NetworkInterfaceConfigurations), new string[] { "networkInterfaceConfigurations" });
             _interconnectGroupProfile = DefineModelProperty<InterconnectGroupProfile>(nameof(InterconnectGroupProfile), new string[] { "interconnectGroupProfile" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineScaleSetVmNetworkProfileConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

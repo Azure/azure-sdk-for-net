@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _exceptiontype = DefineProperty<string>(nameof(Exceptiontype), new string[] { "exceptiontype" });
             _errordetail = DefineProperty<string>(nameof(Errordetail), new string[] { "errordetail" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for InnerError that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

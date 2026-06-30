@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _min = DefineProperty<int>(nameof(Min), new string[] { "min" });
             _max = DefineProperty<int>(nameof(Max), new string[] { "max" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ResourceRange that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

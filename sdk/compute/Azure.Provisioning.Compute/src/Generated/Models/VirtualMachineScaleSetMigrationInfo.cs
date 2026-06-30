@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _defaultVirtualMachineScaleSetInfo = DefineModelProperty<DefaultVirtualMachineScaleSetInfo>(nameof(DefaultVirtualMachineScaleSetInfo), new string[] { "defaultVirtualMachineScaleSetInfo" }, isOutput: true);
             _migrateToVirtualMachineScaleSet = DefineModelProperty<ComputeWriteableSubResourceData>(nameof(MigrateToVirtualMachineScaleSet), new string[] { "migrateToVirtualMachineScaleSet" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineScaleSetMigrationInfo that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

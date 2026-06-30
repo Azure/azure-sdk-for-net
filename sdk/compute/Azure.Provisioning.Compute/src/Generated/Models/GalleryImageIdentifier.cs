@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Compute
             _publisher = DefineProperty<string>(nameof(Publisher), new string[] { "publisher" }, isRequired: true);
             _offer = DefineProperty<string>(nameof(Offer), new string[] { "offer" }, isRequired: true);
             _sku = DefineProperty<string>(nameof(Sku), new string[] { "sku" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for GalleryImageIdentifier that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

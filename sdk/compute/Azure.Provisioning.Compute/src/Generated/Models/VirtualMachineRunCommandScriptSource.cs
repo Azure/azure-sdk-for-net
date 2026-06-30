@@ -126,6 +126,10 @@ namespace Azure.Provisioning.Compute
             _scriptUriManagedIdentity = DefineModelProperty<RunCommandManagedIdentity>(nameof(ScriptUriManagedIdentity), new string[] { "scriptUriManagedIdentity" });
             _scriptShell = DefineProperty<ScriptShellType>(nameof(ScriptShell), new string[] { "scriptShell" });
             _galleryScriptReferenceId = DefineProperty<string>(nameof(GalleryScriptReferenceId), new string[] { "galleryScriptReferenceId" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineRunCommandScriptSource that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

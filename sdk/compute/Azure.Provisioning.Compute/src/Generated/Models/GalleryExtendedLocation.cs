@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _extendedLocationType = DefineProperty<GalleryExtendedLocationType>(nameof(ExtendedLocationType), new string[] { "type" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for GalleryExtendedLocation that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

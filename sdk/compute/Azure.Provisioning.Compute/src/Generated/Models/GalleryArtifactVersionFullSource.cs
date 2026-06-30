@@ -75,6 +75,10 @@ namespace Azure.Provisioning.Compute
             _communityGalleryImageId = DefineProperty<string>(nameof(CommunityGalleryImageId), new string[] { "communityGalleryImageId" });
             _virtualMachineId = DefineProperty<ResourceIdentifier>(nameof(VirtualMachineId), new string[] { "virtualMachineId" });
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for GalleryArtifactVersionFullSource that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

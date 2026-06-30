@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _storageAccountType = DefineProperty<ImageStorageAccountType>(nameof(StorageAccountType), new string[] { "storageAccountType" });
             _regionalReplicaCount = DefineProperty<int>(nameof(RegionalReplicaCount), new string[] { "regionalReplicaCount" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for AdditionalReplicaSet that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

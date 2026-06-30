@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _enabled = DefineProperty<bool>(nameof(Enabled), new string[] { "enabled" });
             _value = DefineProperty<int>(nameof(Value), new string[] { "value" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for MaxInstancePercentPerZonePolicy that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

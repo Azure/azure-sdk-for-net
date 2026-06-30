@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _constrainedMaximumCapacity = DefineProperty<bool>(nameof(ConstrainedMaximumCapacity), new string[] { "constrainedMaximumCapacity" }, isOutput: true);
             _defaultVirtualMachineScaleSet = DefineModelProperty<ComputeWriteableSubResourceData>(nameof(DefaultVirtualMachineScaleSet), new string[] { "defaultVirtualMachineScaleSet" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DefaultVirtualMachineScaleSetInfo that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

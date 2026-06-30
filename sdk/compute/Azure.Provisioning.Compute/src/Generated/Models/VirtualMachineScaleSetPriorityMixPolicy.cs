@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _baseRegularPriorityCount = DefineProperty<int>(nameof(BaseRegularPriorityCount), new string[] { "baseRegularPriorityCount" });
             _regularPriorityPercentageAboveBase = DefineProperty<int>(nameof(RegularPriorityPercentageAboveBase), new string[] { "regularPriorityPercentageAboveBase" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineScaleSetPriorityMixPolicy that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

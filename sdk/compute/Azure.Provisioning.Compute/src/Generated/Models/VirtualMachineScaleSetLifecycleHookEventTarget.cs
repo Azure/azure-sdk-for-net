@@ -75,6 +75,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _resource = DefineModelProperty<ComputeApiEntityReference>(nameof(Resource), new string[] { "resource" });
             _actionState = DefineProperty<VirtualMachineScaleSetLifecycleHookActionState>(nameof(ActionState), new string[] { "actionState" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineScaleSetLifecycleHookEventTarget that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

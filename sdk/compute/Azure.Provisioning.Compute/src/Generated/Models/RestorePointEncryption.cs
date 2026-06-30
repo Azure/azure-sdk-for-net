@@ -75,6 +75,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _diskEncryptionSet = DefineModelProperty<DiskEncryptionSetParameters>(nameof(DiskEncryptionSet), new string[] { "diskEncryptionSet" });
             _encryptionType = DefineProperty<RestorePointEncryptionType>(nameof(EncryptionType), new string[] { "type" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for RestorePointEncryption that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

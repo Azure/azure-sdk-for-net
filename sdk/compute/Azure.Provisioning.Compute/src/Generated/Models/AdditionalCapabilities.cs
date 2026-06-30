@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Compute
             _ultraSsdEnabled = DefineProperty<bool>(nameof(UltraSsdEnabled), new string[] { "ultraSSDEnabled" });
             _hibernationEnabled = DefineProperty<bool>(nameof(HibernationEnabled), new string[] { "hibernationEnabled" });
             _enableFips1403Encryption = DefineProperty<bool>(nameof(EnableFips1403Encryption), new string[] { "enableFips1403Encryption" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for AdditionalCapabilities that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

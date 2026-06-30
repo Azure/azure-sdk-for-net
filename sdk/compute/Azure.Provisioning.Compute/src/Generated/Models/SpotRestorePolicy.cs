@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _enabled = DefineProperty<bool>(nameof(Enabled), new string[] { "enabled" });
             _restoreTimeout = DefineProperty<string>(nameof(RestoreTimeout), new string[] { "restoreTimeout" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SpotRestorePolicy that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

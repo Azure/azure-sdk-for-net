@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _start = DefineProperty<string>(nameof(Start), new string[] { "start" });
             _end = DefineProperty<string>(nameof(End), new string[] { "end" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ScheduleProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

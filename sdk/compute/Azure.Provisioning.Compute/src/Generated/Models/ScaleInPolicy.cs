@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Compute
             _rules = DefineListProperty<VirtualMachineScaleSetScaleInRule>(nameof(Rules), new string[] { "rules" });
             _forceDeletion = DefineProperty<bool>(nameof(ForceDeletion), new string[] { "forceDeletion" });
             _prioritizeUnhealthyVms = DefineProperty<bool>(nameof(PrioritizeUnhealthyVms), new string[] { "prioritizeUnhealthyVMs" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ScaleInPolicy that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

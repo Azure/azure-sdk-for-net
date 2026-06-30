@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _status = DefineModelProperty<InstanceViewStatus>(nameof(Status), new string[] { "status" });
             _completionPercent = DefineProperty<int>(nameof(CompletionPercent), new string[] { "completionPercent" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DiskRestorePointReplicationStatus that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -58,6 +58,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _protocol = DefineProperty<WinRMListenerProtocolType>(nameof(Protocol), new string[] { "protocol" });
             _certificateUri = DefineProperty<Uri>(nameof(CertificateUri), new string[] { "certificateUrl" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for WinRMListener that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -35,6 +35,10 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _uniqueName = DefineProperty<string>(nameof(UniqueName), new string[] { "uniqueName" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for GalleryIdentifier that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

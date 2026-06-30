@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Compute
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _value = DefineProperty<string>(nameof(Value), new string[] { "value" });
             _startsAtVersion = DefineProperty<string>(nameof(StartsAtVersion), new string[] { "startsAtVersion" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for GalleryImageFeature that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

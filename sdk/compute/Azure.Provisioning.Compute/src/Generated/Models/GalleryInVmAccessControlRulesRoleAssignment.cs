@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _role = DefineProperty<string>(nameof(Role), new string[] { "role" }, isRequired: true);
             _identities = DefineListProperty<string>(nameof(Identities), new string[] { "identities" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for GalleryInVmAccessControlRulesRoleAssignment that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _signatureTemplateNames = DefineListProperty<UefiSignatureTemplateName>(nameof(SignatureTemplateNames), new string[] { "signatureTemplateNames" });
             _additionalSignatures = DefineModelProperty<UefiKeySignatures>(nameof(AdditionalSignatures), new string[] { "additionalSignatures" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for GalleryImageVersionUefiSettings that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

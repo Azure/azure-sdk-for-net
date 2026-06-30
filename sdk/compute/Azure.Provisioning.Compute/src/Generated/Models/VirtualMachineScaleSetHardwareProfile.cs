@@ -39,6 +39,10 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _vmSizeProperties = DefineModelProperty<VirtualMachineSizeProperties>(nameof(VmSizeProperties), new string[] { "vmSizeProperties" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineScaleSetHardwareProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

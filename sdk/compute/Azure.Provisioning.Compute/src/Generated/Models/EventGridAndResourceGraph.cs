@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "enable" });
             _scheduledEventsApiVersion = DefineProperty<string>(nameof(ScheduledEventsApiVersion), new string[] { "scheduledEventsApiVersion" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for EventGridAndResourceGraph that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

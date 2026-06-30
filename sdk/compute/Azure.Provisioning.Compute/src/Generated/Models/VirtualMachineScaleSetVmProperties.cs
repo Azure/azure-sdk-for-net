@@ -398,6 +398,10 @@ namespace Azure.Provisioning.Compute
             _timeCreated = DefineProperty<DateTimeOffset>(nameof(TimeCreated), new string[] { "timeCreated" }, isOutput: true);
             _virtualMachineResourceId = DefineProperty<ResourceIdentifier>(nameof(VirtualMachineResourceId), new string[] { "virtualMachineResourceId" }, isOutput: true);
             _interconnectBlockProfile = DefineModelProperty<InterconnectBlockProfile>(nameof(InterconnectBlockProfile), new string[] { "interconnectBlockProfile" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineScaleSetVmProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

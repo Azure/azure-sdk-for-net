@@ -92,6 +92,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _properties = DefineModelProperty<NetworkInterfaceReferenceProperties>(nameof(Properties), new string[] { "properties" });
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineNetworkInterfaceReference that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

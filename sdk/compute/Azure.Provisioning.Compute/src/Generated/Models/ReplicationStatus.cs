@@ -47,6 +47,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _aggregatedState = DefineProperty<AggregatedReplicationState>(nameof(AggregatedState), new string[] { "aggregatedState" }, isOutput: true);
             _summary = DefineListProperty<RegionalReplicationStatus>(nameof(Summary), new string[] { "summary" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ReplicationStatus that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

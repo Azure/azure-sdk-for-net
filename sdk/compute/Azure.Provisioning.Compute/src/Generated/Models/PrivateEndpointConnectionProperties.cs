@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Compute
             _privateEndpoint = DefineModelProperty<PrivateEndpoint>(nameof(PrivateEndpoint), new string[] { "privateEndpoint" }, isOutput: true);
             _connectionState = DefineModelProperty<ComputePrivateLinkServiceConnectionState>(nameof(ConnectionState), new string[] { "privateLinkServiceConnectionState" }, isRequired: true);
             _provisioningState = DefineProperty<ComputePrivateEndpointConnectionProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for PrivateEndpointConnectionProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

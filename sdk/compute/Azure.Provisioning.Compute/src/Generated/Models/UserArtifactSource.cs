@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _mediaLink = DefineProperty<string>(nameof(MediaLink), new string[] { "mediaLink" }, isRequired: true);
             _defaultConfigurationLink = DefineProperty<string>(nameof(DefaultConfigurationLink), new string[] { "defaultConfigurationLink" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for UserArtifactSource that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

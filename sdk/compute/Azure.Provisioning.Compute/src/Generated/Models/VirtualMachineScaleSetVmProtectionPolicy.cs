@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _protectFromScaleIn = DefineProperty<bool>(nameof(ProtectFromScaleIn), new string[] { "protectFromScaleIn" });
             _protectFromScaleSetActions = DefineProperty<bool>(nameof(ProtectFromScaleSetActions), new string[] { "protectFromScaleSetActions" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineScaleSetVmProtectionPolicy that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

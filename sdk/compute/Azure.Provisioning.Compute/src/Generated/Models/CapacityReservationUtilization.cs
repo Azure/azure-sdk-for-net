@@ -47,6 +47,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _currentCapacity = DefineProperty<int>(nameof(CurrentCapacity), new string[] { "currentCapacity" }, isOutput: true);
             _virtualMachinesAllocated = DefineListProperty<ComputeSubResourceData>(nameof(VirtualMachinesAllocated), new string[] { "virtualMachinesAllocated" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for CapacityReservationUtilization that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

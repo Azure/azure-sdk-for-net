@@ -316,6 +316,10 @@ namespace Azure.Provisioning.Compute
             _osVersion = DefineProperty<string>(nameof(OSVersion), new string[] { "osVersion" });
             _hyperVGeneration = DefineProperty<HyperVGeneration>(nameof(HyperVGeneration), new string[] { "hyperVGeneration" });
             _interconnectInstanceView = DefineModelProperty<InterconnectInstanceView>(nameof(InterconnectInstanceView), new string[] { "interconnectInstanceView" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineScaleSetVmInstanceView that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

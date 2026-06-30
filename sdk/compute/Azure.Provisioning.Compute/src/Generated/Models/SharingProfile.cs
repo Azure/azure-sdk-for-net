@@ -69,6 +69,10 @@ namespace Azure.Provisioning.Compute
             _permission = DefineProperty<GallerySharingPermissionType>(nameof(Permission), new string[] { "permissions" });
             _groups = DefineListProperty<SharingProfileGroup>(nameof(Groups), new string[] { "groups" }, isOutput: true);
             _communityGalleryInfo = DefineModelProperty<CommunityGalleryInfo>(nameof(CommunityGalleryInfo), new string[] { "communityGalleryInfo" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SharingProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

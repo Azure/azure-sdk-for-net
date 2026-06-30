@@ -156,6 +156,10 @@ namespace Azure.Provisioning.Compute
             _targetResources = DefineListProperty<VirtualMachineScaleSetLifecycleHookEventTarget>(nameof(TargetResources), new string[] { "targetResources" });
             _additionalContext = DefineModelProperty<VmScaleSetLifecycleHookEventAdditionalContext>(nameof(AdditionalContext), new string[] { "additionalContext" });
             _state = DefineProperty<VirtualMachineScaleSetLifecycleHookEventState>(nameof(State), new string[] { "state" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineScaleSetLifecycleHookEventProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

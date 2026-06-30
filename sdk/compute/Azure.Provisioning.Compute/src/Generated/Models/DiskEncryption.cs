@@ -58,6 +58,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _diskEncryptionSetId = DefineProperty<ResourceIdentifier>(nameof(DiskEncryptionSetId), new string[] { "diskEncryptionSetId" });
             _encryptionType = DefineProperty<ComputeEncryptionType>(nameof(EncryptionType), new string[] { "type" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DiskEncryption that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

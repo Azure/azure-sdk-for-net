@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _confidentialVmEncryptionType = DefineProperty<ConfidentialVmEncryptionType>(nameof(ConfidentialVmEncryptionType), new string[] { "confidentialVMEncryptionType" });
             _secureVmDiskEncryptionSetId = DefineProperty<string>(nameof(SecureVmDiskEncryptionSetId), new string[] { "secureVMDiskEncryptionSetId" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for OSDiskImageSecurityProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

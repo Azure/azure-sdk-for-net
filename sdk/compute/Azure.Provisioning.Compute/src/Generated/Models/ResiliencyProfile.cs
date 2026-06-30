@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _zoneMovement = DefineModelProperty<ZoneMovement>(nameof(ZoneMovement), new string[] { "zoneMovement" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ResiliencyProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

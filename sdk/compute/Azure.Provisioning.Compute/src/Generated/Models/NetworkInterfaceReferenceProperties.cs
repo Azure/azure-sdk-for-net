@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _primary = DefineProperty<bool>(nameof(Primary), new string[] { "primary" });
             _deleteOption = DefineProperty<ComputeDeleteOption>(nameof(DeleteOption), new string[] { "deleteOption" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for NetworkInterfaceReferenceProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -52,6 +52,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _name = DefineProperty<SnapshotStorageAccountType>(nameof(Name), new string[] { "name" });
             _tier = DefineProperty<string>(nameof(Tier), new string[] { "tier" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SnapshotSku that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

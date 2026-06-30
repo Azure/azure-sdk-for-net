@@ -159,6 +159,10 @@ namespace Azure.Provisioning.Compute
             _required = DefineProperty<bool>(nameof(Required), new string[] { "required" });
             _defaultValue = DefineProperty<string>(nameof(DefaultValue), new string[] { "defaultValue" });
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for GalleryScriptParameter that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

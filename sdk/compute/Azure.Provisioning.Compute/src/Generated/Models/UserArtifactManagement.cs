@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Compute
             _install = DefineProperty<string>(nameof(Install), new string[] { "install" }, isRequired: true);
             _remove = DefineProperty<string>(nameof(Remove), new string[] { "remove" }, isRequired: true);
             _update = DefineProperty<string>(nameof(Update), new string[] { "update" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for UserArtifactManagement that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

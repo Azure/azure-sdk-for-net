@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Compute
             _mode = DefineProperty<VirtualMachineScaleSetUpgradeMode>(nameof(Mode), new string[] { "mode" });
             _rollingUpgradePolicy = DefineModelProperty<RollingUpgradePolicy>(nameof(RollingUpgradePolicy), new string[] { "rollingUpgradePolicy" });
             _automaticOSUpgradePolicy = DefineModelProperty<AutomaticOSUpgradePolicy>(nameof(AutomaticOSUpgradePolicy), new string[] { "automaticOSUpgradePolicy" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineScaleSetUpgradePolicy that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

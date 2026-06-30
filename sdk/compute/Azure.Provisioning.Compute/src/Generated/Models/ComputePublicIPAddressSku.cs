@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _name = DefineProperty<ComputePublicIPAddressSkuName>(nameof(Name), new string[] { "name" });
             _tier = DefineProperty<ComputePublicIPAddressSkuTier>(nameof(Tier), new string[] { "tier" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ComputePublicIPAddressSku that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

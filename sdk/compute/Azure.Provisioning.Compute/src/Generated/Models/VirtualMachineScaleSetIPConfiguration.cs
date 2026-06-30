@@ -194,6 +194,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _properties = DefineModelProperty<VirtualMachineScaleSetIPConfigurationProperties>(nameof(Properties), new string[] { "properties" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineScaleSetIPConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

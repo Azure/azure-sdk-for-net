@@ -503,6 +503,10 @@ namespace Azure.Provisioning.Compute
             _highSpeedInterconnectPlacement = DefineProperty<HighSpeedInterconnectPlacement>(nameof(HighSpeedInterconnectPlacement), new string[] { "highSpeedInterconnectPlacement" });
             _lifecycleHooksProfile = DefineModelProperty<LifecycleHooksProfile>(nameof(LifecycleHooksProfile), new string[] { "lifecycleHooksProfile" });
             _externalHealthPolicy = DefineModelProperty<ComputeExternalHealthPolicy>(nameof(ExternalHealthPolicy), new string[] { "externalHealthPolicy" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineScaleSetProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

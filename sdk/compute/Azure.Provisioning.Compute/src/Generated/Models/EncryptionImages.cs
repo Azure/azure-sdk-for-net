@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _osDiskImage = DefineModelProperty<OSDiskImageEncryption>(nameof(OSDiskImage), new string[] { "osDiskImage" });
             _dataDiskImages = DefineListProperty<DataDiskImageEncryption>(nameof(DataDiskImages), new string[] { "dataDiskImages" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for EncryptionImages that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

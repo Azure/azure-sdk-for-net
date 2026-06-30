@@ -124,6 +124,10 @@ namespace Azure.Provisioning.Compute
             _instanceView = DefineModelProperty<DedicatedHostGroupInstanceView>(nameof(InstanceView), new string[] { "instanceView" }, isOutput: true);
             _supportAutomaticPlacement = DefineProperty<bool>(nameof(SupportAutomaticPlacement), new string[] { "supportAutomaticPlacement" });
             _additionalCapabilities = DefineModelProperty<DedicatedHostGroupPropertiesAdditionalCapabilities>(nameof(AdditionalCapabilities), new string[] { "additionalCapabilities" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DedicatedHostGroupProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

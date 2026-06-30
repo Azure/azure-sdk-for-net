@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Compute
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _publisher = DefineProperty<string>(nameof(Publisher), new string[] { "publisher" });
             _product = DefineProperty<string>(nameof(Product), new string[] { "product" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ImagePurchasePlan that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

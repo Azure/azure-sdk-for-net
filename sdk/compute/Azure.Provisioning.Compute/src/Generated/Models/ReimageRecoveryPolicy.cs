@@ -40,6 +40,10 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _isReimageRecoveryPolicyEnabled = DefineProperty<bool>(nameof(IsReimageRecoveryPolicyEnabled), new string[] { "enabled" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ReimageRecoveryPolicy that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

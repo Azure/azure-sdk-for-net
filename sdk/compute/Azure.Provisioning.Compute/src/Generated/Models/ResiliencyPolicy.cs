@@ -142,6 +142,10 @@ namespace Azure.Provisioning.Compute
             _automaticZoneRebalancingPolicy = DefineModelProperty<AutomaticZoneRebalancingPolicy>(nameof(AutomaticZoneRebalancingPolicy), new string[] { "automaticZoneRebalancingPolicy" });
             _zoneAllocationPolicy = DefineModelProperty<ZoneAllocationPolicy>(nameof(ZoneAllocationPolicy), new string[] { "zoneAllocationPolicy" });
             _operationRecoverySettings = DefineModelProperty<OperationRecoverySettings>(nameof(OperationRecoverySettings), new string[] { "operationRecoverySettings" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ResiliencyPolicy that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

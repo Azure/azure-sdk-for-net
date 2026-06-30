@@ -110,6 +110,10 @@ namespace Azure.Provisioning.Compute
             _instanceView = DefineModelProperty<CapacityReservationGroupInstanceView>(nameof(InstanceView), new string[] { "instanceView" }, isOutput: true);
             _sharingProfile = DefineModelProperty<ResourceSharingProfile>(nameof(SharingProfile), new string[] { "sharingProfile" });
             _reservationType = DefineProperty<CapacityReservationType>(nameof(ReservationType), new string[] { "reservationType" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for CapacityReservationGroupProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

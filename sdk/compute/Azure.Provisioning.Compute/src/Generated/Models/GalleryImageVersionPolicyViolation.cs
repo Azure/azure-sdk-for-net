@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _category = DefineProperty<GalleryImageVersionPolicyViolationCategory>(nameof(Category), new string[] { "category" });
             _details = DefineProperty<string>(nameof(Details), new string[] { "details" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for GalleryImageVersionPolicyViolation that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

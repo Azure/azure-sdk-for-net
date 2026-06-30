@@ -72,6 +72,10 @@ namespace Azure.Provisioning.Compute
             _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" }, isOutput: true);
             _lastAction = DefineProperty<RollingUpgradeActionType>(nameof(LastAction), new string[] { "lastAction" }, isOutput: true);
             _lastActionOn = DefineProperty<DateTimeOffset>(nameof(LastActionOn), new string[] { "lastActionTime" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for RollingUpgradeRunningStatus that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

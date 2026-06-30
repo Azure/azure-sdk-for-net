@@ -58,6 +58,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _certificateUri = DefineProperty<Uri>(nameof(CertificateUri), new string[] { "certificateUrl" });
             _certificateStore = DefineProperty<string>(nameof(CertificateStore), new string[] { "certificateStore" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VaultCertificate that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

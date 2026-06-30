@@ -39,6 +39,10 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _bootDiagnostics = DefineModelProperty<BootDiagnostics>(nameof(BootDiagnostics), new string[] { "bootDiagnostics" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DiagnosticsProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

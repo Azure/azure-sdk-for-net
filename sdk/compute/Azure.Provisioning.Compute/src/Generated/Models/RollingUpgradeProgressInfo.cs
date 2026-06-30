@@ -71,6 +71,10 @@ namespace Azure.Provisioning.Compute
             _failedInstanceCount = DefineProperty<int>(nameof(FailedInstanceCount), new string[] { "failedInstanceCount" }, isOutput: true);
             _inProgressInstanceCount = DefineProperty<int>(nameof(InProgressInstanceCount), new string[] { "inProgressInstanceCount" }, isOutput: true);
             _pendingInstanceCount = DefineProperty<int>(nameof(PendingInstanceCount), new string[] { "pendingInstanceCount" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for RollingUpgradeProgressInfo that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

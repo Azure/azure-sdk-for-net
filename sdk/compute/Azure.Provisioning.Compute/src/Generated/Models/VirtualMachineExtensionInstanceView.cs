@@ -108,6 +108,10 @@ namespace Azure.Provisioning.Compute
             _typeHandlerVersion = DefineProperty<string>(nameof(TypeHandlerVersion), new string[] { "typeHandlerVersion" });
             _substatuses = DefineListProperty<InstanceViewStatus>(nameof(Substatuses), new string[] { "substatuses" });
             _statuses = DefineListProperty<InstanceViewStatus>(nameof(Statuses), new string[] { "statuses" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineExtensionInstanceView that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

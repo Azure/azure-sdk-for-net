@@ -40,6 +40,10 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _galleryApplications = DefineListProperty<VirtualMachineGalleryApplication>(nameof(GalleryApplications), new string[] { "galleryApplications" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ApplicationProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

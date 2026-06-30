@@ -91,6 +91,10 @@ namespace Azure.Provisioning.Compute
             _enableHotpatching = DefineProperty<bool>(nameof(EnableHotpatching), new string[] { "enableHotpatching" });
             _assessmentMode = DefineProperty<WindowsPatchAssessmentMode>(nameof(AssessmentMode), new string[] { "assessmentMode" });
             _automaticByPlatformSettings = DefineModelProperty<WindowsVmGuestPatchAutomaticByPlatformSettings>(nameof(AutomaticByPlatformSettings), new string[] { "automaticByPlatformSettings" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for PatchSettings that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

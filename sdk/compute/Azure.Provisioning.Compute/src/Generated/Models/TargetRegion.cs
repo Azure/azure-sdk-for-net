@@ -125,6 +125,10 @@ namespace Azure.Provisioning.Compute
             _encryption = DefineModelProperty<EncryptionImages>(nameof(Encryption), new string[] { "encryption" });
             _isExcludedFromLatest = DefineProperty<bool>(nameof(IsExcludedFromLatest), new string[] { "excludeFromLatest" });
             _additionalReplicaSets = DefineListProperty<AdditionalReplicaSet>(nameof(AdditionalReplicaSets), new string[] { "additionalReplicaSets" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for TargetRegion that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

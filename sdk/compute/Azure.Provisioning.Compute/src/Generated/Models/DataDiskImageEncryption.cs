@@ -58,6 +58,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _lun = DefineProperty<int>(nameof(Lun), new string[] { "lun" }, isRequired: true);
             _diskEncryptionSetId = DefineProperty<ResourceIdentifier>(nameof(DiskEncryptionSetId), new string[] { "diskEncryptionSetId" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DataDiskImageEncryption that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

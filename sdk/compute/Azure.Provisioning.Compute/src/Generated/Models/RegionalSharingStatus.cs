@@ -69,6 +69,10 @@ namespace Azure.Provisioning.Compute
             _region = DefineProperty<string>(nameof(Region), new string[] { "region" });
             _state = DefineProperty<SharingState>(nameof(State), new string[] { "state" }, isOutput: true);
             _details = DefineProperty<string>(nameof(Details), new string[] { "details" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for RegionalSharingStatus that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

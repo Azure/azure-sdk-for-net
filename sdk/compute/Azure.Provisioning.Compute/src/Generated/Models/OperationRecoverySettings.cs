@@ -125,6 +125,10 @@ namespace Azure.Provisioning.Compute
             _restartRecoveryPolicy = DefineModelProperty<RestartRecoveryPolicy>(nameof(RestartRecoveryPolicy), new string[] { "restartRecoveryPolicy" });
             _startRecoveryPolicy = DefineModelProperty<StartRecoveryPolicy>(nameof(StartRecoveryPolicy), new string[] { "startRecoveryPolicy" });
             _reimageRecoveryPolicy = DefineModelProperty<ReimageRecoveryPolicy>(nameof(ReimageRecoveryPolicy), new string[] { "reimageRecoveryPolicy" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for OperationRecoverySettings that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

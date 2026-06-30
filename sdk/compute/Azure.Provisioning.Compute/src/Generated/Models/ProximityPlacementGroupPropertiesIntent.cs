@@ -40,6 +40,10 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _vmSizes = DefineListProperty<string>(nameof(VmSizes), new string[] { "vmSizes" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ProximityPlacementGroupPropertiesIntent that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

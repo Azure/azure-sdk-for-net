@@ -129,6 +129,10 @@ namespace Azure.Provisioning.Compute
             _managedDisk = DefineModelProperty<VirtualMachineManagedDisk>(nameof(ManagedDisk), new string[] { "managedDisk" });
             _diskRestorePoint = DefineModelProperty<DiskRestorePointAttributes>(nameof(DiskRestorePoint), new string[] { "diskRestorePoint" });
             _writeAcceleratorEnabled = DefineProperty<bool>(nameof(WriteAcceleratorEnabled), new string[] { "writeAcceleratorEnabled" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for RestorePointSourceVmOSDisk that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

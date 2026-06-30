@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Compute
             _enabled = DefineProperty<bool>(nameof(Enabled), new string[] { "enabled" });
             _rebalanceStrategy = DefineProperty<VmssRebalanceStrategy>(nameof(RebalanceStrategy), new string[] { "rebalanceStrategy" });
             _rebalanceBehavior = DefineProperty<VmssRebalanceBehavior>(nameof(RebalanceBehavior), new string[] { "rebalanceBehavior" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for AutomaticZoneRebalancingPolicy that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

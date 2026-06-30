@@ -69,6 +69,10 @@ namespace Azure.Provisioning.Compute
             _sizeInGB = DefineProperty<int>(nameof(SizeInGB), new string[] { "sizeInGB" }, isOutput: true);
             _hostCaching = DefineProperty<HostCaching>(nameof(HostCaching), new string[] { "hostCaching" });
             _gallerySource = DefineModelProperty<GalleryDiskImageSource>(nameof(GallerySource), new string[] { "source" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for GalleryOSDiskImage that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

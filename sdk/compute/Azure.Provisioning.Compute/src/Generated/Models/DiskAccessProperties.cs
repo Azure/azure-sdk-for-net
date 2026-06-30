@@ -60,6 +60,10 @@ namespace Azure.Provisioning.Compute
             _privateEndpointConnections = DefineListProperty<ComputePrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
             _provisioningState = DefineProperty<string>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _timeCreated = DefineProperty<DateTimeOffset>(nameof(TimeCreated), new string[] { "timeCreated" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DiskAccessProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

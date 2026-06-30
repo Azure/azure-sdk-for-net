@@ -40,6 +40,10 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _sharingSubscriptionResources = DefineListProperty<ComputeWriteableSubResourceData>(nameof(SharingSubscriptionResources), new string[] { "subscriptionIds" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ResourceSharingProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -127,6 +127,10 @@ namespace Azure.Provisioning.Compute
             _availabilitySets = DefineListProperty<ComputeSubResourceDataWithColocationStatus>(nameof(AvailabilitySets), new string[] { "availabilitySets" }, isOutput: true);
             _colocationStatus = DefineModelProperty<InstanceViewStatus>(nameof(ColocationStatus), new string[] { "colocationStatus" });
             _intent = DefineModelProperty<ProximityPlacementGroupPropertiesIntent>(nameof(Intent), new string[] { "intent" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ProximityPlacementGroupProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

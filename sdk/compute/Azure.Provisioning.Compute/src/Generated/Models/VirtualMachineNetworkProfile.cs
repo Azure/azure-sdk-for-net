@@ -91,6 +91,10 @@ namespace Azure.Provisioning.Compute
             _networkApiVersion = DefineProperty<NetworkApiVersion>(nameof(NetworkApiVersion), new string[] { "networkApiVersion" });
             _networkInterfaceConfigurations = DefineListProperty<VirtualMachineNetworkInterfaceConfiguration>(nameof(NetworkInterfaceConfigurations), new string[] { "networkInterfaceConfigurations" });
             _interconnectGroupProfile = DefineModelProperty<InterconnectGroupProfile>(nameof(InterconnectGroupProfile), new string[] { "interconnectGroupProfile" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineNetworkProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

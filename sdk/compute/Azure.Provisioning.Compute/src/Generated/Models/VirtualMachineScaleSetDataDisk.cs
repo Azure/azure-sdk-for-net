@@ -210,6 +210,10 @@ namespace Azure.Provisioning.Compute
             _diskIopsReadWrite = DefineProperty<long>(nameof(DiskIopsReadWrite), new string[] { "diskIOPSReadWrite" });
             _diskMBpsReadWrite = DefineProperty<long>(nameof(DiskMBpsReadWrite), new string[] { "diskMBpsReadWrite" });
             _deleteOption = DefineProperty<DiskDeleteOptionType>(nameof(DeleteOption), new string[] { "deleteOption" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineScaleSetDataDisk that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

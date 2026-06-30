@@ -275,6 +275,10 @@ namespace Azure.Provisioning.Compute
             _elasticSanResourceId = DefineProperty<ResourceIdentifier>(nameof(ElasticSanResourceId), new string[] { "elasticSanResourceId" });
             _provisionedBandwidthCopySpeed = DefineProperty<ProvisionedBandwidthCopyOption>(nameof(ProvisionedBandwidthCopySpeed), new string[] { "provisionedBandwidthCopySpeed" });
             _instantAccessDurationMinutes = DefineProperty<long>(nameof(InstantAccessDurationMinutes), new string[] { "instantAccessDurationMinutes" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DiskCreationData that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

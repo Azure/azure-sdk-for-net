@@ -91,6 +91,10 @@ namespace Azure.Provisioning.Compute
             _kek = DefineListProperty<UefiKey>(nameof(Kek), new string[] { "kek" });
             _db = DefineListProperty<UefiKey>(nameof(Db), new string[] { "db" });
             _dbx = DefineListProperty<UefiKey>(nameof(Dbx), new string[] { "dbx" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for UefiKeySignatures that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

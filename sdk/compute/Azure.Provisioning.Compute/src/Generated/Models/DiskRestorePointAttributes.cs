@@ -87,6 +87,10 @@ namespace Azure.Provisioning.Compute
             _encryption = DefineModelProperty<RestorePointEncryption>(nameof(Encryption), new string[] { "encryption" });
             _sourceDiskRestorePoint = DefineModelProperty<ComputeApiEntityReference>(nameof(SourceDiskRestorePoint), new string[] { "sourceDiskRestorePoint" });
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DiskRestorePointAttributes that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

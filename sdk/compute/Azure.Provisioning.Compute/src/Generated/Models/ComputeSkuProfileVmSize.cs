@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _rank = DefineProperty<int>(nameof(Rank), new string[] { "rank" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ComputeSkuProfileVmSize that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

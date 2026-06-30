@@ -207,6 +207,13 @@ try {
         $tspOptions = "--emit $ProvisioningPackageRoot"
         foreach ($key in $provisioningEmitterOptions.Keys) {
             $value = $provisioningEmitterOptions[$key]
+            if ($value -is [System.Collections.IDictionary]) {
+                foreach ($nestedKey in $value.Keys) {
+                    $nestedValue = $value[$nestedKey]
+                    $tspOptions += " --option `"@azure-typespec/http-client-csharp-provisioning.$key.$nestedKey=$nestedValue`""
+                }
+                continue
+            }
             # Normalize boolean values to lowercase for TypeSpec compiler
             if ($value -is [bool]) {
                 $value = if ($value) { "true" } else { "false" }

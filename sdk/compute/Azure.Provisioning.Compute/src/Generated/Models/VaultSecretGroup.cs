@@ -75,6 +75,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _sourceVault = DefineModelProperty<ComputeWriteableSubResourceData>(nameof(SourceVault), new string[] { "sourceVault" });
             _vaultCertificates = DefineListProperty<VaultCertificate>(nameof(VaultCertificates), new string[] { "vaultCertificates" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VaultSecretGroup that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

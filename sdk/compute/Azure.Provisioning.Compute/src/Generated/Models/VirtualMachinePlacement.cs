@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Compute
             _zonePlacementPolicyType = DefineProperty<ZonePlacementPolicyType>(nameof(ZonePlacementPolicyType), new string[] { "zonePlacementPolicy" });
             _includeZones = DefineListProperty<string>(nameof(IncludeZones), new string[] { "includeZones" });
             _excludeZones = DefineListProperty<string>(nameof(ExcludeZones), new string[] { "excludeZones" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachinePlacement that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

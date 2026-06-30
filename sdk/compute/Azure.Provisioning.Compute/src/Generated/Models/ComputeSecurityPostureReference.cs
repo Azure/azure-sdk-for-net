@@ -75,6 +75,10 @@ namespace Azure.Provisioning.Compute
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isRequired: true);
             _excludeExtensions = DefineListProperty<string>(nameof(ExcludeExtensions), new string[] { "excludeExtensions" });
             _isOverridable = DefineProperty<bool>(nameof(IsOverridable), new string[] { "isOverridable" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ComputeSecurityPostureReference that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

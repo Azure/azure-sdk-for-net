@@ -138,6 +138,10 @@ namespace Azure.Provisioning.Compute
             _endOfLifeOn = DefineProperty<DateTimeOffset>(nameof(EndOfLifeOn), new string[] { "endOfLifeDate" });
             _supportedOSType = DefineProperty<SupportedOperatingSystemType>(nameof(SupportedOSType), new string[] { "supportedOSType" }, isRequired: true);
             _provisioningState = DefineProperty<GalleryProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for GalleryScriptProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

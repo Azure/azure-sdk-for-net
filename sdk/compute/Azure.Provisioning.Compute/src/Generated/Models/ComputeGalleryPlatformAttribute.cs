@@ -47,6 +47,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isOutput: true);
             _value = DefineProperty<string>(nameof(Value), new string[] { "value" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ComputeGalleryPlatformAttribute that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

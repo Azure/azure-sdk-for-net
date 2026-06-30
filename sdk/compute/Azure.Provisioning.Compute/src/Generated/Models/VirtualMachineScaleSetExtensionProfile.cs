@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _extensions = DefineListProperty<VirtualMachineScaleSetExtension>(nameof(Extensions), new string[] { "extensions" });
             _extensionsTimeBudget = DefineProperty<string>(nameof(ExtensionsTimeBudget), new string[] { "extensionsTimeBudget" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineScaleSetExtensionProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

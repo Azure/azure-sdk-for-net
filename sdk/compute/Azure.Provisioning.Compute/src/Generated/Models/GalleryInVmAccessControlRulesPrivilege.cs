@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Compute
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _path = DefineProperty<string>(nameof(Path), new string[] { "path" }, isRequired: true);
             _queryParameters = DefineDictionaryProperty<string>(nameof(QueryParameters), new string[] { "queryParameters" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for GalleryInVmAccessControlRulesPrivilege that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

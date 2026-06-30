@@ -158,6 +158,10 @@ namespace Azure.Provisioning.Compute
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isOutput: true);
             _userData = DefineProperty<string>(nameof(UserData), new string[] { "userData" }, isOutput: true);
             _hyperVGeneration = DefineProperty<HyperVGeneration>(nameof(HyperVGeneration), new string[] { "hyperVGeneration" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for RestorePointSourceMetadata that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

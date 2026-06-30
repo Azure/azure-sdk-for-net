@@ -75,6 +75,10 @@ namespace Azure.Provisioning.Compute
             _enabled = DefineProperty<bool>(nameof(Enabled), new string[] { "enabled" });
             _expiryDuration = DefineProperty<TimeSpan>(nameof(ExpiryDuration), new string[] { "expiryDuration" });
             _gracePeriod = DefineProperty<TimeSpan>(nameof(GracePeriod), new string[] { "gracePeriod" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ComputeExternalHealthPolicy that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

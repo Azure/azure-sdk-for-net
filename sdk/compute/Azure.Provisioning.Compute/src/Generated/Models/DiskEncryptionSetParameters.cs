@@ -41,6 +41,10 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DiskEncryptionSetParameters that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

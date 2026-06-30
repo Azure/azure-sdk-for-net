@@ -109,6 +109,10 @@ namespace Azure.Provisioning.Compute
             _displayStatus = DefineProperty<string>(nameof(DisplayStatus), new string[] { "displayStatus" });
             _message = DefineProperty<string>(nameof(Message), new string[] { "message" });
             _time = DefineProperty<DateTimeOffset>(nameof(Time), new string[] { "time" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for InstanceViewStatus that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

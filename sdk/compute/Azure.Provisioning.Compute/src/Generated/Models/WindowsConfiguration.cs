@@ -154,6 +154,10 @@ namespace Azure.Provisioning.Compute
             _patchSettings = DefineModelProperty<PatchSettings>(nameof(PatchSettings), new string[] { "patchSettings" });
             _winRM = DefineModelProperty<WinRMConfiguration>(nameof(WinRM), new string[] { "winRM" });
             _isVmAgentPlatformUpdatesEnabled = DefineProperty<bool>(nameof(IsVmAgentPlatformUpdatesEnabled), new string[] { "enableVMAgentPlatformUpdates" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for WindowsConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

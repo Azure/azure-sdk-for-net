@@ -36,6 +36,10 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ComputeSubResourceData that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

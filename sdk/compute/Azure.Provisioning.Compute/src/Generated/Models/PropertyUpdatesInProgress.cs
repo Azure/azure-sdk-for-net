@@ -40,6 +40,10 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _targetTier = DefineProperty<string>(nameof(TargetTier), new string[] { "targetTier" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for PropertyUpdatesInProgress that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

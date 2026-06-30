@@ -108,6 +108,10 @@ namespace Azure.Provisioning.Compute
             _parameterType = DefineProperty<GalleryApplicationCustomActionParameterType>(nameof(ParameterType), new string[] { "type" });
             _defaultValue = DefineProperty<string>(nameof(DefaultValue), new string[] { "defaultValue" });
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for GalleryApplicationCustomActionParameter that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

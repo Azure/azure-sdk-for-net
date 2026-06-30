@@ -143,6 +143,10 @@ namespace Azure.Provisioning.Compute
             _maintenanceWindowEndOn = DefineProperty<DateTimeOffset>(nameof(MaintenanceWindowEndOn), new string[] { "maintenanceWindowEndTime" });
             _lastOperationResultCode = DefineProperty<MaintenanceOperationResultCodeType>(nameof(LastOperationResultCode), new string[] { "lastOperationResultCode" });
             _lastOperationMessage = DefineProperty<string>(nameof(LastOperationMessage), new string[] { "lastOperationMessage" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for MaintenanceRedeployStatus that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

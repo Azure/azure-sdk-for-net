@@ -125,6 +125,10 @@ namespace Azure.Provisioning.Compute
             _userInitiatedReboot = DefineModelProperty<UserInitiatedReboot>(nameof(UserInitiatedReboot), new string[] { "userInitiatedReboot" });
             _scheduledEventsAdditionalPublishingTargets = DefineModelProperty<ScheduledEventsAdditionalPublishingTargets>(nameof(ScheduledEventsAdditionalPublishingTargets), new string[] { "scheduledEventsAdditionalPublishingTargets" });
             _allInstancesDown = DefineModelProperty<AllInstancesDown>(nameof(AllInstancesDown), new string[] { "allInstancesDown" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ScheduledEventsPolicy that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

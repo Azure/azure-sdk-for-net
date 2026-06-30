@@ -91,6 +91,10 @@ namespace Azure.Provisioning.Compute
             _roles = DefineListProperty<GalleryInVmAccessControlRulesRole>(nameof(Roles), new string[] { "roles" });
             _identities = DefineListProperty<GalleryInVmAccessControlRulesIdentity>(nameof(Identities), new string[] { "identities" });
             _roleAssignments = DefineListProperty<GalleryInVmAccessControlRulesRoleAssignment>(nameof(RoleAssignments), new string[] { "roleAssignments" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for GalleryInVmAccessControlRules that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

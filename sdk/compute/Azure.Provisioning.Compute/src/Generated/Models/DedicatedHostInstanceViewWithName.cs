@@ -98,6 +98,10 @@ namespace Azure.Provisioning.Compute
             _assetId = DefineProperty<string>(nameof(AssetId), new string[] { "assetId" }, isOutput: true);
             _availableCapacity = DefineModelProperty<DedicatedHostAvailableCapacity>(nameof(AvailableCapacity), new string[] { "availableCapacity" });
             _statuses = DefineListProperty<InstanceViewStatus>(nameof(Statuses), new string[] { "statuses" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DedicatedHostInstanceViewWithName that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

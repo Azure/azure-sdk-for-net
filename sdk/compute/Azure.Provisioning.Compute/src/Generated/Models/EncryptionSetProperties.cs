@@ -140,6 +140,10 @@ namespace Azure.Provisioning.Compute
             _lastKeyRotationTimestamp = DefineProperty<DateTimeOffset>(nameof(LastKeyRotationTimestamp), new string[] { "lastKeyRotationTimestamp" }, isOutput: true);
             _autoKeyRotationError = DefineModelProperty<ComputeApiError>(nameof(AutoKeyRotationError), new string[] { "autoKeyRotationError" }, isOutput: true);
             _federatedClientId = DefineProperty<string>(nameof(FederatedClientId), new string[] { "federatedClientId" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for EncryptionSetProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

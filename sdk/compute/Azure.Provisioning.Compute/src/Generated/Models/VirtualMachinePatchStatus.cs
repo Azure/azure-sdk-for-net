@@ -69,6 +69,10 @@ namespace Azure.Provisioning.Compute
             _availablePatchSummary = DefineModelProperty<AvailablePatchSummary>(nameof(AvailablePatchSummary), new string[] { "availablePatchSummary" });
             _lastPatchInstallationSummary = DefineModelProperty<LastPatchInstallationSummary>(nameof(LastPatchInstallationSummary), new string[] { "lastPatchInstallationSummary" });
             _configurationStatuses = DefineListProperty<InstanceViewStatus>(nameof(ConfigurationStatuses), new string[] { "configurationStatuses" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachinePatchStatus that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

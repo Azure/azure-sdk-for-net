@@ -108,6 +108,10 @@ namespace Azure.Provisioning.Compute
             _handlerSchema = DefineProperty<string>(nameof(HandlerSchema), new string[] { "handlerSchema" }, isRequired: true);
             _virtualMachineScaleSetEnabled = DefineProperty<bool>(nameof(VirtualMachineScaleSetEnabled), new string[] { "vmScaleSetEnabled" });
             _supportsMultipleExtensions = DefineProperty<bool>(nameof(SupportsMultipleExtensions), new string[] { "supportsMultipleExtensions" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineExtensionImageProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

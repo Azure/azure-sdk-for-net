@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _keyType = DefineProperty<UefiKeyType>(nameof(KeyType), new string[] { "type" });
             _value = DefineListProperty<string>(nameof(Value), new string[] { "value" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for UefiKey that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

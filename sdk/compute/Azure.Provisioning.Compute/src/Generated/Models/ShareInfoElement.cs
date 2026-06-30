@@ -36,6 +36,10 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _vmUri = DefineProperty<Uri>(nameof(VmUri), new string[] { "vmUri" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ShareInfoElement that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

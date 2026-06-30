@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Compute
             _option = DefineProperty<DiffDiskOption>(nameof(Option), new string[] { "option" });
             _placement = DefineProperty<DiffDiskPlacement>(nameof(Placement), new string[] { "placement" });
             _enableFullCaching = DefineProperty<bool>(nameof(EnableFullCaching), new string[] { "enableFullCaching" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DiffDiskSettings that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

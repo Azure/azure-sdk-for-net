@@ -60,6 +60,10 @@ namespace Azure.Provisioning.Compute
             _consoleScreenshotBlobUri = DefineProperty<Uri>(nameof(ConsoleScreenshotBlobUri), new string[] { "consoleScreenshotBlobUri" }, isOutput: true);
             _serialConsoleLogBlobUri = DefineProperty<Uri>(nameof(SerialConsoleLogBlobUri), new string[] { "serialConsoleLogBlobUri" }, isOutput: true);
             _status = DefineModelProperty<InstanceViewStatus>(nameof(Status), new string[] { "status" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BootDiagnosticsInstanceView that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

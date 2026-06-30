@@ -14,7 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Compute
 {
     /// <summary> Snapshot resource. </summary>
-    public partial class ComputeSnapshot : ProvisionableResource
+    public partial class Snapshot : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
@@ -26,10 +26,10 @@ namespace Azure.Provisioning.Compute
         private SnapshotSku _sku;
         private ExtendedAzureLocation _extendedLocation;
 
-        /// <summary> Creates a new ComputeSnapshot. </summary>
+        /// <summary> Creates a new Snapshot. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ComputeSnapshot(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Compute/snapshots", resourceVersion ?? "2026-03-02")
+        public Snapshot(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Compute/snapshots", resourceVersion ?? "2026-03-02")
         {
         }
 
@@ -542,7 +542,7 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Define all the provisionable properties for ComputeSnapshot. </summary>
+        /// <summary> Define all the provisionable properties for Snapshot. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -558,17 +558,17 @@ namespace Azure.Provisioning.Compute
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing ComputeSnapshot. </summary>
+        /// <summary> Creates a reference to an existing Snapshot. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static ComputeSnapshot FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static Snapshot FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            ComputeSnapshot result = new ComputeSnapshot(bicepIdentifier, resourceVersion);
+            Snapshot result = new Snapshot(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for ComputeSnapshot that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for Snapshot that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary></summary>

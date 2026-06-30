@@ -40,6 +40,10 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _diskTypes = DefineListProperty<string>(nameof(DiskTypes), new string[] { "diskTypes" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for Disallowed that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

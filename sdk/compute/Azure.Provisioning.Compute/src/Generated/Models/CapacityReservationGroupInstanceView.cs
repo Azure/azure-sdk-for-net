@@ -47,6 +47,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _capacityReservations = DefineListProperty<CapacityReservationInstanceViewWithName>(nameof(CapacityReservations), new string[] { "capacityReservations" }, isOutput: true);
             _sharedSubscriptionIds = DefineListProperty<ComputeSubResourceData>(nameof(SharedSubscriptionIds), new string[] { "sharedSubscriptionIds" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for CapacityReservationGroupInstanceView that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

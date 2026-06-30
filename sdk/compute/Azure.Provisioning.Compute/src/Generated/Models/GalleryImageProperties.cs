@@ -308,6 +308,10 @@ namespace Azure.Provisioning.Compute
             _features = DefineListProperty<GalleryImageFeature>(nameof(Features), new string[] { "features" });
             _architecture = DefineProperty<ArchitectureType>(nameof(Architecture), new string[] { "architecture" });
             _allowUpdateImage = DefineProperty<bool>(nameof(AllowUpdateImage), new string[] { "allowUpdateImage" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for GalleryImageProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

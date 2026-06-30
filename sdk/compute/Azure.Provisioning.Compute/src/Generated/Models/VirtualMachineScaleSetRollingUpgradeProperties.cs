@@ -70,6 +70,10 @@ namespace Azure.Provisioning.Compute
             _runningStatus = DefineModelProperty<RollingUpgradeRunningStatus>(nameof(RunningStatus), new string[] { "runningStatus" }, isOutput: true);
             _progress = DefineModelProperty<RollingUpgradeProgressInfo>(nameof(Progress), new string[] { "progress" }, isOutput: true);
             _error = DefineModelProperty<ComputeApiError>(nameof(Error), new string[] { "error" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineScaleSetRollingUpgradeProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

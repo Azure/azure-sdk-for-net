@@ -75,6 +75,10 @@ namespace Azure.Provisioning.Compute
             _virtualMachineScaleSetLifecycleHookEventType = DefineProperty<VirtualMachineScaleSetLifecycleHookEventType>(nameof(VirtualMachineScaleSetLifecycleHookEventType), new string[] { "type" });
             _waitDuration = DefineProperty<TimeSpan>(nameof(WaitDuration), new string[] { "waitDuration" });
             _defaultAction = DefineProperty<VirtualMachineScaleSetLifecycleHookAction>(nameof(DefaultAction), new string[] { "defaultAction" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineScaleSetLifecycleHook that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

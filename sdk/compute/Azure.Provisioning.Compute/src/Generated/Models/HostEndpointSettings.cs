@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _mode = DefineProperty<HostEndpointSettingsMode>(nameof(Mode), new string[] { "mode" });
             _inVmAccessControlProfileReferenceId = DefineProperty<string>(nameof(InVmAccessControlProfileReferenceId), new string[] { "inVMAccessControlProfileReferenceId" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for HostEndpointSettings that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -93,6 +93,10 @@ namespace Azure.Provisioning.Compute
             _restorePointGroupId = DefineProperty<string>(nameof(RestorePointGroupId), new string[] { "restorePointCollectionId" }, isOutput: true);
             _restorePoints = DefineListProperty<RestorePoint>(nameof(RestorePoints), new string[] { "restorePoints" }, isOutput: true);
             _instantAccess = DefineProperty<bool>(nameof(InstantAccess), new string[] { "instantAccess" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for RestorePointCollectionProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

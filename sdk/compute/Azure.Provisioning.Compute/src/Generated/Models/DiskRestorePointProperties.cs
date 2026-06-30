@@ -298,6 +298,10 @@ namespace Azure.Provisioning.Compute
             _securityProfile = DefineModelProperty<DiskSecurityProfile>(nameof(SecurityProfile), new string[] { "securityProfile" });
             _logicalSectorSize = DefineProperty<int>(nameof(LogicalSectorSize), new string[] { "logicalSectorSize" }, isOutput: true);
             _snapshotAccessState = DefineProperty<SnapshotAccessState>(nameof(SnapshotAccessState), new string[] { "snapshotAccessState" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DiskRestorePointProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

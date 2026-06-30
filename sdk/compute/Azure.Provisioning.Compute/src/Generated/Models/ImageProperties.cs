@@ -104,6 +104,10 @@ namespace Azure.Provisioning.Compute
             _storageProfile = DefineModelProperty<ImageStorageProfile>(nameof(StorageProfile), new string[] { "storageProfile" });
             _provisioningState = DefineProperty<string>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _hyperVGeneration = DefineProperty<HyperVGeneration>(nameof(HyperVGeneration), new string[] { "hyperVGeneration" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ImageProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -685,6 +685,10 @@ namespace Azure.Provisioning.Compute
             _applicationProfile = DefineModelProperty<ApplicationProfile>(nameof(ApplicationProfile), new string[] { "applicationProfile" });
             _timeCreated = DefineProperty<DateTimeOffset>(nameof(TimeCreated), new string[] { "timeCreated" }, isOutput: true);
             _resiliencyProfile = DefineModelProperty<ResiliencyProfile>(nameof(ResiliencyProfile), new string[] { "resiliencyProfile" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

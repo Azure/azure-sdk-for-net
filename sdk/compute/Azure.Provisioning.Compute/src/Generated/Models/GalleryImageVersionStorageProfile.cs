@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Compute
             _gallerySource = DefineModelProperty<GalleryArtifactVersionFullSource>(nameof(GallerySource), new string[] { "source" });
             _osDiskImage = DefineModelProperty<GalleryOSDiskImage>(nameof(OSDiskImage), new string[] { "osDiskImage" });
             _dataDiskImages = DefineListProperty<GalleryDataDiskImage>(nameof(DataDiskImages), new string[] { "dataDiskImages" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for GalleryImageVersionStorageProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -279,6 +279,10 @@ namespace Azure.Provisioning.Compute
             _dscpConfiguration = DefineModelProperty<ComputeWriteableSubResourceData>(nameof(DscpConfiguration), new string[] { "dscpConfiguration" });
             _auxiliaryMode = DefineProperty<ComputeNetworkInterfaceAuxiliaryMode>(nameof(AuxiliaryMode), new string[] { "auxiliaryMode" });
             _auxiliarySku = DefineProperty<ComputeNetworkInterfaceAuxiliarySku>(nameof(AuxiliarySku), new string[] { "auxiliarySku" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineNetworkInterfaceConfigurationProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

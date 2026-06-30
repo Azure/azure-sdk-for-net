@@ -410,6 +410,10 @@ namespace Azure.Provisioning.Compute
             _dataAccessAuthMode = DefineProperty<DataAccessAuthMode>(nameof(DataAccessAuthMode), new string[] { "dataAccessAuthMode" });
             _snapshotAccessState = DefineProperty<SnapshotAccessState>(nameof(SnapshotAccessState), new string[] { "snapshotAccessState" }, isOutput: true);
             _immutabilityPolicy = DefineModelProperty<ImmutabilityPolicy>(nameof(ImmutabilityPolicy), new string[] { "immutabilityPolicy" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SnapshotProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

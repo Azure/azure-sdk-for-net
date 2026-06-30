@@ -159,6 +159,10 @@ namespace Azure.Provisioning.Compute
             _prioritizeUnhealthyInstances = DefineProperty<bool>(nameof(PrioritizeUnhealthyInstances), new string[] { "prioritizeUnhealthyInstances" });
             _rollbackFailedInstancesOnPolicyBreach = DefineProperty<bool>(nameof(RollbackFailedInstancesOnPolicyBreach), new string[] { "rollbackFailedInstancesOnPolicyBreach" });
             _isMaxSurgeEnabled = DefineProperty<bool>(nameof(IsMaxSurgeEnabled), new string[] { "maxSurge" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for RollingUpgradePolicy that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

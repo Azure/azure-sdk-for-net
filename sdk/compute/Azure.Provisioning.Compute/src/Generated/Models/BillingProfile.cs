@@ -40,6 +40,10 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _maxPrice = DefineProperty<double>(nameof(MaxPrice), new string[] { "maxPrice" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BillingProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

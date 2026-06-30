@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _notBeforeTimeout = DefineProperty<string>(nameof(NotBeforeTimeout), new string[] { "notBeforeTimeout" });
             _enable = DefineProperty<bool>(nameof(Enable), new string[] { "enable" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for OSImageNotificationProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

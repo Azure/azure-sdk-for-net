@@ -40,6 +40,10 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _isSoftDeleteEnabled = DefineProperty<bool>(nameof(IsSoftDeleteEnabled), new string[] { "isSoftDeleteEnabled" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SoftDeletePolicy that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

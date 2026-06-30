@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Compute
             _osDisk = DefineModelProperty<ImageOSDisk>(nameof(OSDisk), new string[] { "osDisk" });
             _dataDisks = DefineListProperty<ImageDataDisk>(nameof(DataDisks), new string[] { "dataDisks" });
             _zoneResilient = DefineProperty<bool>(nameof(ZoneResilient), new string[] { "zoneResilient" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ImageStorageProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

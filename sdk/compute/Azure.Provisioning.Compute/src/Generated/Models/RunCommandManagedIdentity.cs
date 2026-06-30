@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _clientId = DefineProperty<string>(nameof(ClientId), new string[] { "clientId" });
             _objectId = DefineProperty<string>(nameof(ObjectId), new string[] { "objectId" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for RunCommandManagedIdentity that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -56,6 +56,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _vCpus = DefineModelProperty<ResourceRange>(nameof(VCpus), new string[] { "vCPUs" });
             _memory = DefineModelProperty<ResourceRange>(nameof(Memory), new string[] { "memory" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for RecommendedMachineConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

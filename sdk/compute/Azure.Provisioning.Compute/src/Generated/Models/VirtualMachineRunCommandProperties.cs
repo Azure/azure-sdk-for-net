@@ -252,6 +252,10 @@ namespace Azure.Provisioning.Compute
             _provisioningState = DefineProperty<string>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _instanceView = DefineModelProperty<VirtualMachineRunCommandInstanceView>(nameof(InstanceView), new string[] { "instanceView" }, isOutput: true);
             _treatFailureAsDeploymentFailure = DefineProperty<bool>(nameof(TreatFailureAsDeploymentFailure), new string[] { "treatFailureAsDeploymentFailure" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineRunCommandProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

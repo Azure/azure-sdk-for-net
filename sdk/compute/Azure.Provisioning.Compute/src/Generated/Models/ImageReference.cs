@@ -155,6 +155,10 @@ namespace Azure.Provisioning.Compute
             _sharedGalleryImageUniqueId = DefineProperty<string>(nameof(SharedGalleryImageUniqueId), new string[] { "sharedGalleryImageId" });
             _communityGalleryImageId = DefineProperty<string>(nameof(CommunityGalleryImageId), new string[] { "communityGalleryImageId" });
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ImageReference that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

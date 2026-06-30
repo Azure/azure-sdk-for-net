@@ -56,6 +56,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _terminateNotificationProfile = DefineModelProperty<TerminateNotificationProfile>(nameof(TerminateNotificationProfile), new string[] { "terminateNotificationProfile" });
             _osImageNotificationProfile = DefineModelProperty<OSImageNotificationProfile>(nameof(OSImageNotificationProfile), new string[] { "osImageNotificationProfile" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ComputeScheduledEventsProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

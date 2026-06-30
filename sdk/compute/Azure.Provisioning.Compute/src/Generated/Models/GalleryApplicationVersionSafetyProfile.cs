@@ -40,6 +40,10 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _allowDeletionOfReplicatedLocations = DefineProperty<bool>(nameof(AllowDeletionOfReplicatedLocations), new string[] { "allowDeletionOfReplicatedLocations" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for GalleryApplicationVersionSafetyProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

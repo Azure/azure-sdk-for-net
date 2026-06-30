@@ -108,6 +108,10 @@ namespace Azure.Provisioning.Compute
             _groupName = DefineProperty<string>(nameof(GroupName), new string[] { "groupName" });
             _exePath = DefineProperty<string>(nameof(ExePath), new string[] { "exePath" });
             _processName = DefineProperty<string>(nameof(ProcessName), new string[] { "processName" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for GalleryInVmAccessControlRulesIdentity that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

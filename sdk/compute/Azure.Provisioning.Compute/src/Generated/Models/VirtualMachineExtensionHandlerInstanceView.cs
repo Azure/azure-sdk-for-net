@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Compute
             _virtualMachineExtensionHandlerInstanceViewType = DefineProperty<string>(nameof(VirtualMachineExtensionHandlerInstanceViewType), new string[] { "type" });
             _typeHandlerVersion = DefineProperty<string>(nameof(TypeHandlerVersion), new string[] { "typeHandlerVersion" });
             _status = DefineModelProperty<InstanceViewStatus>(nameof(Status), new string[] { "status" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineExtensionHandlerInstanceView that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

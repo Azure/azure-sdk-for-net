@@ -70,6 +70,10 @@ namespace Azure.Provisioning.Compute
             _securityType = DefineProperty<DiskSecurityType>(nameof(SecurityType), new string[] { "securityType" });
             _secureVmDiskEncryptionSetId = DefineProperty<ResourceIdentifier>(nameof(SecureVmDiskEncryptionSetId), new string[] { "secureVMDiskEncryptionSetId" });
             _confidentialVmVersion = DefineProperty<ConfidentialVmVersion>(nameof(ConfidentialVmVersion), new string[] { "confidentialVMVersion" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DiskSecurityProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

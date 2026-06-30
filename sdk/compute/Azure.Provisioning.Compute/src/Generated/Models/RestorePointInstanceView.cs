@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _diskRestorePoints = DefineListProperty<DiskRestorePointInstanceView>(nameof(DiskRestorePoints), new string[] { "diskRestorePoints" });
             _statuses = DefineListProperty<InstanceViewStatus>(nameof(Statuses), new string[] { "statuses" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for RestorePointInstanceView that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

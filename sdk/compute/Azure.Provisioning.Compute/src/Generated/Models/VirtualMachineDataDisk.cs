@@ -348,6 +348,10 @@ namespace Azure.Provisioning.Compute
             _diskMBpsReadWrite = DefineProperty<long>(nameof(DiskMBpsReadWrite), new string[] { "diskMBpsReadWrite" });
             _detachOption = DefineProperty<DiskDetachOptionType>(nameof(DetachOption), new string[] { "detachOption" });
             _deleteOption = DefineProperty<DiskDeleteOptionType>(nameof(DeleteOption), new string[] { "deleteOption" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineDataDisk that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

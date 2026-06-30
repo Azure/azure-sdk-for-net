@@ -40,6 +40,10 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _automaticallyApprove = DefineProperty<bool>(nameof(AutomaticallyApprove), new string[] { "automaticallyApprove" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for UserInitiatedRedeploy that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

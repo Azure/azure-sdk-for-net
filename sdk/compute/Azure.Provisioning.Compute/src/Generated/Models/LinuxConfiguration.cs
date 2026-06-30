@@ -125,6 +125,10 @@ namespace Azure.Provisioning.Compute
             _provisionVmAgent = DefineProperty<bool>(nameof(ProvisionVmAgent), new string[] { "provisionVMAgent" });
             _patchSettings = DefineModelProperty<LinuxPatchSettings>(nameof(PatchSettings), new string[] { "patchSettings" });
             _isVmAgentPlatformUpdatesEnabled = DefineProperty<bool>(nameof(IsVmAgentPlatformUpdatesEnabled), new string[] { "enableVMAgentPlatformUpdates" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for LinuxConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

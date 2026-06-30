@@ -56,6 +56,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _diskEncryptionKey = DefineModelProperty<KeyVaultAndSecretReference>(nameof(DiskEncryptionKey), new string[] { "diskEncryptionKey" });
             _keyEncryptionKey = DefineModelProperty<KeyVaultAndKeyReference>(nameof(KeyEncryptionKey), new string[] { "keyEncryptionKey" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for EncryptionSettingsElement that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

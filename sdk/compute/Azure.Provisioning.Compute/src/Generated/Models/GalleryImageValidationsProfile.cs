@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Compute
             _validationETag = DefineProperty<string>(nameof(ValidationETag), new string[] { "validationEtag" });
             _executedValidations = DefineListProperty<GalleryImageExecutedValidation>(nameof(ExecutedValidations), new string[] { "executedValidations" });
             _platformAttributes = DefineListProperty<ComputeGalleryPlatformAttribute>(nameof(PlatformAttributes), new string[] { "platformAttributes" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for GalleryImageValidationsProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

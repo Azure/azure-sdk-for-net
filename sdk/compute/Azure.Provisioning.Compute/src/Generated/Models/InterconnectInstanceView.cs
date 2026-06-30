@@ -35,6 +35,10 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _interconnectSubgroupId = DefineProperty<string>(nameof(InterconnectSubgroupId), new string[] { "interconnectSubgroupId" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for InterconnectInstanceView that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

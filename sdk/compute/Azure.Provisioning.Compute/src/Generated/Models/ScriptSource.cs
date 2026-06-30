@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _scriptLink = DefineProperty<string>(nameof(ScriptLink), new string[] { "scriptLink" }, isRequired: true);
             _parameters = DefineListProperty<GalleryScriptParameter>(nameof(Parameters), new string[] { "parameters" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ScriptSource that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

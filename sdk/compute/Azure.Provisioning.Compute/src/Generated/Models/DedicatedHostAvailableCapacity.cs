@@ -40,6 +40,10 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _allocatableVMs = DefineListProperty<DedicatedHostAllocatableVm>(nameof(AllocatableVMs), new string[] { "allocatableVMs" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DedicatedHostAvailableCapacity that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

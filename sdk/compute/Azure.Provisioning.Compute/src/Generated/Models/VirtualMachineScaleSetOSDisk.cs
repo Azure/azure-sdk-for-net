@@ -245,6 +245,10 @@ namespace Azure.Provisioning.Compute
             _vhdContainers = DefineListProperty<string>(nameof(VhdContainers), new string[] { "vhdContainers" });
             _managedDisk = DefineModelProperty<VirtualMachineScaleSetManagedDisk>(nameof(ManagedDisk), new string[] { "managedDisk" });
             _deleteOption = DefineProperty<DiskDeleteOptionType>(nameof(DeleteOption), new string[] { "deleteOption" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineScaleSetOSDisk that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

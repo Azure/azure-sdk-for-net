@@ -40,6 +40,10 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _hosts = DefineListProperty<DedicatedHostInstanceViewWithName>(nameof(Hosts), new string[] { "hosts" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DedicatedHostGroupInstanceView that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

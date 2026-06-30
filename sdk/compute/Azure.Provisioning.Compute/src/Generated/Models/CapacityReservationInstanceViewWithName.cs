@@ -69,6 +69,10 @@ namespace Azure.Provisioning.Compute
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isOutput: true);
             _utilizationInfo = DefineModelProperty<CapacityReservationUtilization>(nameof(UtilizationInfo), new string[] { "utilizationInfo" });
             _statuses = DefineListProperty<InstanceViewStatus>(nameof(Statuses), new string[] { "statuses" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for CapacityReservationInstanceViewWithName that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -108,6 +108,10 @@ namespace Azure.Provisioning.Compute
             _extendedLocationReplicaCount = DefineProperty<int>(nameof(ExtendedLocationReplicaCount), new string[] { "extendedLocationReplicaCount" });
             _galleryStorageAccountType = DefineProperty<EdgeZoneStorageAccountType>(nameof(GalleryStorageAccountType), new string[] { "storageAccountType" });
             _encryption = DefineModelProperty<EncryptionImages>(nameof(Encryption), new string[] { "encryption" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for GalleryTargetExtendedLocation that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

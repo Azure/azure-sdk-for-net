@@ -109,6 +109,10 @@ namespace Azure.Provisioning.Compute
             _diskEncryptionSet = DefineModelProperty<DiskEncryptionSetParameters>(nameof(DiskEncryptionSet), new string[] { "diskEncryptionSet" });
             _securityProfile = DefineModelProperty<VirtualMachineDiskSecurityProfile>(nameof(SecurityProfile), new string[] { "securityProfile" });
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineManagedDisk that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

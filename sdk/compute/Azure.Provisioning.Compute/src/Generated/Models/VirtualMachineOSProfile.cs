@@ -176,6 +176,10 @@ namespace Azure.Provisioning.Compute
             _secrets = DefineListProperty<VaultSecretGroup>(nameof(Secrets), new string[] { "secrets" });
             _allowExtensionOperations = DefineProperty<bool>(nameof(AllowExtensionOperations), new string[] { "allowExtensionOperations" });
             _requireGuestProvisionSignal = DefineProperty<bool>(nameof(RequireGuestProvisionSignal), new string[] { "requireGuestProvisionSignal" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineOSProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

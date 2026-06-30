@@ -194,6 +194,10 @@ namespace Azure.Provisioning.Compute
             _properties = DefineModelProperty<VirtualMachineScaleSetPublicIPAddressConfigurationProperties>(nameof(Properties), new string[] { "properties" });
             _sku = DefineModelProperty<ComputePublicIPAddressSku>(nameof(Sku), new string[] { "sku" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineScaleSetPublicIPAddressConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

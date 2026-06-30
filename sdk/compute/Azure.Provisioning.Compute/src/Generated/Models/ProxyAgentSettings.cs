@@ -125,6 +125,10 @@ namespace Azure.Provisioning.Compute
             _wireServer = DefineModelProperty<HostEndpointSettings>(nameof(WireServer), new string[] { "wireServer" });
             _imds = DefineModelProperty<HostEndpointSettings>(nameof(Imds), new string[] { "imds" });
             _addProxyAgentExtension = DefineProperty<bool>(nameof(AddProxyAgentExtension), new string[] { "addProxyAgentExtension" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ProxyAgentSettings that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

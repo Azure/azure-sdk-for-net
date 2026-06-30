@@ -58,6 +58,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _enabled = DefineProperty<bool>(nameof(Enabled), new string[] { "enabled" });
             _storageUri = DefineProperty<Uri>(nameof(StorageUri), new string[] { "storageUri" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BootDiagnostics that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

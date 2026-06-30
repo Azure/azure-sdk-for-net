@@ -92,6 +92,10 @@ namespace Azure.Provisioning.Compute
             _status = DefineProperty<ComputeGalleryValidationStatus>(nameof(Status), new string[] { "status" });
             _version = DefineProperty<string>(nameof(Version), new string[] { "version" });
             _executionOn = DefineProperty<DateTimeOffset>(nameof(ExecutionOn), new string[] { "executionTime" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for GalleryImageExecutedValidation that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

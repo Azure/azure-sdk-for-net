@@ -91,6 +91,10 @@ namespace Azure.Provisioning.Compute
             _script = DefineProperty<string>(nameof(Script), new string[] { "script" }, isRequired: true);
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
             _parameters = DefineListProperty<GalleryApplicationCustomActionParameter>(nameof(Parameters), new string[] { "parameters" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for GalleryApplicationCustomAction that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

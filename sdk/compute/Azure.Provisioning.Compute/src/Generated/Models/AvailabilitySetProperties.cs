@@ -150,6 +150,10 @@ namespace Azure.Provisioning.Compute
             _statuses = DefineListProperty<InstanceViewStatus>(nameof(Statuses), new string[] { "statuses" }, isOutput: true);
             _scheduledEventsPolicy = DefineModelProperty<ScheduledEventsPolicy>(nameof(ScheduledEventsPolicy), new string[] { "scheduledEventsPolicy" });
             _virtualMachineScaleSetMigrationInfo = DefineModelProperty<VirtualMachineScaleSetMigrationInfo>(nameof(VirtualMachineScaleSetMigrationInfo), new string[] { "virtualMachineScaleSetMigrationInfo" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for AvailabilitySetProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

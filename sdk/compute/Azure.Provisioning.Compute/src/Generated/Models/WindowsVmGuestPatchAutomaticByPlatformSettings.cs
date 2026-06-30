@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _rebootSetting = DefineProperty<WindowsVmGuestPatchAutomaticByPlatformRebootSetting>(nameof(RebootSetting), new string[] { "rebootSetting" });
             _bypassPlatformSafetyChecksOnUserSchedule = DefineProperty<bool>(nameof(BypassPlatformSafetyChecksOnUserSchedule), new string[] { "bypassPlatformSafetyChecksOnUserSchedule" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for WindowsVmGuestPatchAutomaticByPlatformSettings that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

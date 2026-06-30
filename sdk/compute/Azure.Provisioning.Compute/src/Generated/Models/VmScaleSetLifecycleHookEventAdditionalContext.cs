@@ -45,6 +45,10 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _priority = DefineProperty<string>(nameof(Priority), new string[] { "priority" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VmScaleSetLifecycleHookEventAdditionalContext that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

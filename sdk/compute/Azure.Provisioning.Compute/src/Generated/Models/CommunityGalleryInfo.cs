@@ -115,6 +115,10 @@ namespace Azure.Provisioning.Compute
             _publicNamePrefix = DefineProperty<string>(nameof(PublicNamePrefix), new string[] { "publicNamePrefix" });
             _communityGalleryEnabled = DefineProperty<bool>(nameof(CommunityGalleryEnabled), new string[] { "communityGalleryEnabled" }, isOutput: true);
             _publicNames = DefineListProperty<string>(nameof(PublicNames), new string[] { "publicNames" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for CommunityGalleryInfo that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

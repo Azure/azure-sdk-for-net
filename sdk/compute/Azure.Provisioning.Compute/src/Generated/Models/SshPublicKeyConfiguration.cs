@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _path = DefineProperty<string>(nameof(Path), new string[] { "path" });
             _keyData = DefineProperty<string>(nameof(KeyData), new string[] { "keyData" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SshPublicKeyConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

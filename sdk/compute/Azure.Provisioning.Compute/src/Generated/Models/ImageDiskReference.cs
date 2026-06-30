@@ -92,6 +92,10 @@ namespace Azure.Provisioning.Compute
             _sharedGalleryImageId = DefineProperty<string>(nameof(SharedGalleryImageId), new string[] { "sharedGalleryImageId" });
             _communityGalleryImageId = DefineProperty<string>(nameof(CommunityGalleryImageId), new string[] { "communityGalleryImageId" });
             _lun = DefineProperty<int>(nameof(Lun), new string[] { "lun" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ImageDiskReference that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

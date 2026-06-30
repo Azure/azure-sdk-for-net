@@ -108,6 +108,10 @@ namespace Azure.Provisioning.Compute
             _dataDisks = DefineListProperty<VirtualMachineDataDisk>(nameof(DataDisks), new string[] { "dataDisks" });
             _diskControllerType = DefineProperty<DiskControllerType>(nameof(DiskControllerType), new string[] { "diskControllerType" });
             _alignRegionalDisksToVmZone = DefineProperty<bool>(nameof(AlignRegionalDisksToVmZone), new string[] { "alignRegionalDisksToVMZone" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineStorageProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

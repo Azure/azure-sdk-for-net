@@ -58,6 +58,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _securityProfile = DefineModelProperty<OSDiskImageSecurityProfile>(nameof(SecurityProfile), new string[] { "securityProfile" });
             _diskEncryptionSetId = DefineProperty<ResourceIdentifier>(nameof(DiskEncryptionSetId), new string[] { "diskEncryptionSetId" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for OSDiskImageEncryption that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -91,6 +91,10 @@ namespace Azure.Provisioning.Compute
             _componentName = DefineProperty<ComponentName>(nameof(ComponentName), new string[] { "componentName" });
             _settingName = DefineProperty<SettingName>(nameof(SettingName), new string[] { "settingName" });
             _content = DefineProperty<string>(nameof(Content), new string[] { "content" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for AdditionalUnattendContent that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _maxZoneCount = DefineProperty<int>(nameof(MaxZoneCount), new string[] { "maxZoneCount" });
             _maxInstancePercentPerZonePolicy = DefineModelProperty<MaxInstancePercentPerZonePolicy>(nameof(MaxInstancePercentPerZonePolicy), new string[] { "maxInstancePercentPerZonePolicy" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ZoneAllocationPolicy that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

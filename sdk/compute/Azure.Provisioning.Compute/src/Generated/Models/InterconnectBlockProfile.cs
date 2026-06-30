@@ -58,6 +58,10 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _interconnectBlock = DefineModelProperty<ComputeApiEntityReference>(nameof(InterconnectBlock), new string[] { "interconnectBlock" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for InterconnectBlockProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

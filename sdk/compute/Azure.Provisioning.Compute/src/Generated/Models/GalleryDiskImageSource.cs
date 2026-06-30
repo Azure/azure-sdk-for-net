@@ -75,6 +75,10 @@ namespace Azure.Provisioning.Compute
             _sourceUri = DefineProperty<string>(nameof(SourceUri), new string[] { "uri" });
             _storageAccountId = DefineProperty<ResourceIdentifier>(nameof(StorageAccountId), new string[] { "storageAccountId" });
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for GalleryDiskImageSource that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

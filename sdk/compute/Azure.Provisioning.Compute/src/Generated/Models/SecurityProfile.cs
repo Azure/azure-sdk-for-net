@@ -125,6 +125,10 @@ namespace Azure.Provisioning.Compute
             _securityType = DefineProperty<SecurityType>(nameof(SecurityType), new string[] { "securityType" });
             _encryptionIdentity = DefineModelProperty<EncryptionIdentity>(nameof(EncryptionIdentity), new string[] { "encryptionIdentity" });
             _proxyAgentSettings = DefineModelProperty<ProxyAgentSettings>(nameof(ProxyAgentSettings), new string[] { "proxyAgentSettings" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SecurityProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -75,6 +75,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _interconnectGroup = DefineModelProperty<ComputeWriteableSubResourceData>(nameof(InterconnectGroup), new string[] { "interconnectGroup" });
             _subgroups = DefineListProperty<ComputeWriteableSubResourceData>(nameof(Subgroups), new string[] { "subgroups" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for InterconnectGroupProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

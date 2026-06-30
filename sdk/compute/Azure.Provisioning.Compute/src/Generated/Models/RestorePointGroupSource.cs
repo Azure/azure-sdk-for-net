@@ -53,6 +53,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isOutput: true);
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for RestorePointGroupSource that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

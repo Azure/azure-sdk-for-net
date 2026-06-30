@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Compute
             _id = DefineProperty<string>(nameof(Id), new string[] { "id" });
             _snapshotAccessState = DefineProperty<SnapshotAccessState>(nameof(SnapshotAccessState), new string[] { "snapshotAccessState" });
             _replicationStatus = DefineModelProperty<DiskRestorePointReplicationStatus>(nameof(ReplicationStatus), new string[] { "replicationStatus" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DiskRestorePointInstanceView that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

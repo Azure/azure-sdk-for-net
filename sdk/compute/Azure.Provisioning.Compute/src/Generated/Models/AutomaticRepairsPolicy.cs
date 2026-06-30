@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Compute
             _enabled = DefineProperty<bool>(nameof(Enabled), new string[] { "enabled" });
             _gracePeriod = DefineProperty<string>(nameof(GracePeriod), new string[] { "gracePeriod" });
             _repairAction = DefineProperty<RepairAction>(nameof(RepairAction), new string[] { "repairAction" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for AutomaticRepairsPolicy that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

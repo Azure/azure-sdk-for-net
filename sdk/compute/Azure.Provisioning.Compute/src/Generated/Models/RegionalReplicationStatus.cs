@@ -71,6 +71,10 @@ namespace Azure.Provisioning.Compute
             _state = DefineProperty<RegionalReplicationState>(nameof(State), new string[] { "state" }, isOutput: true);
             _details = DefineProperty<string>(nameof(Details), new string[] { "details" }, isOutput: true);
             _progress = DefineProperty<int>(nameof(Progress), new string[] { "progress" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for RegionalReplicationStatus that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

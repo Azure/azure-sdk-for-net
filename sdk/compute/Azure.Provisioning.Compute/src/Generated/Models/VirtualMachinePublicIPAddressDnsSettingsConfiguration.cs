@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _domainNameLabel = DefineProperty<string>(nameof(DomainNameLabel), new string[] { "domainNameLabel" }, isRequired: true);
             _domainNameLabelScope = DefineProperty<DomainNameLabelScopeType>(nameof(DomainNameLabelScope), new string[] { "domainNameLabelScope" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachinePublicIPAddressDnsSettingsConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

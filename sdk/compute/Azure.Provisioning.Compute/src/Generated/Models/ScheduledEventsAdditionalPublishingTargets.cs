@@ -39,6 +39,10 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _eventGridAndResourceGraph = DefineModelProperty<EventGridAndResourceGraph>(nameof(EventGridAndResourceGraph), new string[] { "eventGridAndResourceGraph" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ScheduledEventsAdditionalPublishingTargets that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -86,6 +86,10 @@ namespace Azure.Provisioning.Compute
             _osType = DefineProperty<SupportedOperatingSystemType>(nameof(OSType), new string[] { "osType" }, isRequired: true);
             _applicableHostEndpoint = DefineProperty<ComputeGalleryEndpointType>(nameof(ApplicableHostEndpoint), new string[] { "applicableHostEndpoint" }, isRequired: true);
             _provisioningState = DefineProperty<GalleryProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for GalleryInVmAccessControlProfileProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

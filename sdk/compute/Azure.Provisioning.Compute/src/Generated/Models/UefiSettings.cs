@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _isSecureBootEnabled = DefineProperty<bool>(nameof(IsSecureBootEnabled), new string[] { "secureBootEnabled" });
             _isVirtualTpmEnabled = DefineProperty<bool>(nameof(IsVirtualTpmEnabled), new string[] { "vTpmEnabled" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for UefiSettings that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

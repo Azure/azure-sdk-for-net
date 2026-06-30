@@ -125,6 +125,10 @@ namespace Azure.Provisioning.Compute
             _configurationReference = DefineProperty<string>(nameof(ConfigurationReference), new string[] { "configurationReference" });
             _treatFailureAsDeploymentFailure = DefineProperty<bool>(nameof(TreatFailureAsDeploymentFailure), new string[] { "treatFailureAsDeploymentFailure" });
             _enableAutomaticUpgrade = DefineProperty<bool>(nameof(EnableAutomaticUpgrade), new string[] { "enableAutomaticUpgrade" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineGalleryApplication that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

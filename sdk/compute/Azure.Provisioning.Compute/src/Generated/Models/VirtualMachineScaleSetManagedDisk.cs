@@ -92,6 +92,10 @@ namespace Azure.Provisioning.Compute
             _storageAccountType = DefineProperty<StorageAccountType>(nameof(StorageAccountType), new string[] { "storageAccountType" });
             _diskEncryptionSet = DefineModelProperty<DiskEncryptionSetParameters>(nameof(DiskEncryptionSet), new string[] { "diskEncryptionSet" });
             _securityProfile = DefineModelProperty<VirtualMachineDiskSecurityProfile>(nameof(SecurityProfile), new string[] { "securityProfile" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineScaleSetManagedDisk that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

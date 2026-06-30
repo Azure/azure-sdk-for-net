@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _errorCode = DefineProperty<CopyCompletionErrorReason>(nameof(ErrorCode), new string[] { "errorCode" }, isRequired: true);
             _errorMessage = DefineProperty<string>(nameof(ErrorMessage), new string[] { "errorMessage" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for CopyCompletionError that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

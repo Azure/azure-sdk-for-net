@@ -91,6 +91,10 @@ namespace Azure.Provisioning.Compute
             _publisher = DefineProperty<string>(nameof(Publisher), new string[] { "publisher" });
             _product = DefineProperty<string>(nameof(Product), new string[] { "product" });
             _promotionCode = DefineProperty<string>(nameof(PromotionCode), new string[] { "promotionCode" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ComputePlan that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

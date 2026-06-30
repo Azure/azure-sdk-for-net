@@ -279,6 +279,10 @@ namespace Azure.Provisioning.Compute
             _storageFaultDomainAlignment = DefineProperty<ComputeStorageFaultDomainAlignmentType>(nameof(StorageFaultDomainAlignment), new string[] { "storageFaultDomainAlignment" });
             _managedDisk = DefineModelProperty<VirtualMachineManagedDisk>(nameof(ManagedDisk), new string[] { "managedDisk" });
             _deleteOption = DefineProperty<DiskDeleteOptionType>(nameof(DeleteOption), new string[] { "deleteOption" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineOSDisk that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

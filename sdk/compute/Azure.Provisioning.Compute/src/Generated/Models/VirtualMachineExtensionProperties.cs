@@ -240,6 +240,10 @@ namespace Azure.Provisioning.Compute
             _suppressFailures = DefineProperty<bool>(nameof(SuppressFailures), new string[] { "suppressFailures" });
             _keyVaultProtectedSettings = DefineModelProperty<KeyVaultSecretReference>(nameof(KeyVaultProtectedSettings), new string[] { "protectedSettingsFromKeyVault" });
             _provisionAfterExtensions = DefineListProperty<string>(nameof(ProvisionAfterExtensions), new string[] { "provisionAfterExtensions" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineExtensionProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

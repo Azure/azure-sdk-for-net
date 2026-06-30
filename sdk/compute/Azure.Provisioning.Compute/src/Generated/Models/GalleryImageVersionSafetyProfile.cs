@@ -81,6 +81,10 @@ namespace Azure.Provisioning.Compute
             _policyViolations = DefineListProperty<GalleryImageVersionPolicyViolation>(nameof(PolicyViolations), new string[] { "policyViolations" }, isOutput: true);
             _isBlockedDeletionBeforeEndOfLife = DefineProperty<bool>(nameof(IsBlockedDeletionBeforeEndOfLife), new string[] { "blockDeletionBeforeEndOfLife" });
             _allowDeletionOfReplicatedLocations = DefineProperty<bool>(nameof(AllowDeletionOfReplicatedLocations), new string[] { "allowDeletionOfReplicatedLocations" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for GalleryImageVersionSafetyProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

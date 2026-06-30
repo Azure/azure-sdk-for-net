@@ -125,6 +125,10 @@ namespace Azure.Provisioning.Compute
             _instanceView = DefineModelProperty<CapacityReservationInstanceView>(nameof(InstanceView), new string[] { "instanceView" }, isOutput: true);
             _timeCreated = DefineProperty<DateTimeOffset>(nameof(TimeCreated), new string[] { "timeCreated" }, isOutput: true);
             _scheduleProfile = DefineModelProperty<ScheduleProfile>(nameof(ScheduleProfile), new string[] { "scheduleProfile" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for CapacityReservationProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

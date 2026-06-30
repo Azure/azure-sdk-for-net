@@ -108,6 +108,10 @@ namespace Azure.Provisioning.Compute
             _code = DefineProperty<string>(nameof(Code), new string[] { "code" });
             _target = DefineProperty<string>(nameof(Target), new string[] { "target" });
             _message = DefineProperty<string>(nameof(Message), new string[] { "message" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ComputeApiError that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -39,6 +39,10 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _uefiSettings = DefineModelProperty<GalleryImageVersionUefiSettings>(nameof(UefiSettings), new string[] { "uefiSettings" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ImageVersionSecurityProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

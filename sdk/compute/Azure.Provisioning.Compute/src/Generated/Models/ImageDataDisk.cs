@@ -212,6 +212,10 @@ namespace Azure.Provisioning.Compute
             _diskSizeGB = DefineProperty<int>(nameof(DiskSizeGB), new string[] { "diskSizeGB" });
             _storageAccountType = DefineProperty<StorageAccountType>(nameof(StorageAccountType), new string[] { "storageAccountType" });
             _diskEncryptionSet = DefineModelProperty<DiskEncryptionSetParameters>(nameof(DiskEncryptionSet), new string[] { "diskEncryptionSet" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ImageDataDisk that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

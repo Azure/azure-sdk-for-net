@@ -145,6 +145,10 @@ namespace Azure.Provisioning.Compute
             _sharingProfile = DefineModelProperty<SharingProfile>(nameof(SharingProfile), new string[] { "sharingProfile" });
             _softDeletePolicy = DefineModelProperty<SoftDeletePolicy>(nameof(SoftDeletePolicy), new string[] { "softDeletePolicy" });
             _sharingStatus = DefineModelProperty<SharingStatus>(nameof(SharingStatus), new string[] { "sharingStatus" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for GalleryProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

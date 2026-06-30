@@ -245,6 +245,10 @@ namespace Azure.Provisioning.Compute
             _deleteOption = DefineProperty<ComputeDeleteOption>(nameof(DeleteOption), new string[] { "deleteOption" });
             _auxiliaryMode = DefineProperty<ComputeNetworkInterfaceAuxiliaryMode>(nameof(AuxiliaryMode), new string[] { "auxiliaryMode" });
             _auxiliarySku = DefineProperty<ComputeNetworkInterfaceAuxiliarySku>(nameof(AuxiliarySku), new string[] { "auxiliarySku" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineScaleSetNetworkConfigurationProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -98,6 +98,10 @@ namespace Azure.Provisioning.Compute
             _safetyProfile = DefineModelProperty<GalleryScriptVersionSafetyProfile>(nameof(SafetyProfile), new string[] { "safetyProfile" });
             _provisioningState = DefineProperty<GalleryProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _replicationStatus = DefineModelProperty<ReplicationStatus>(nameof(ReplicationStatus), new string[] { "replicationStatus" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for GalleryScriptVersionProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

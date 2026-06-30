@@ -91,6 +91,10 @@ namespace Azure.Provisioning.Compute
             _acceleratedNetwork = DefineProperty<bool>(nameof(AcceleratedNetwork), new string[] { "acceleratedNetwork" });
             _architecture = DefineProperty<ArchitectureType>(nameof(Architecture), new string[] { "architecture" });
             _supportedSecurityOption = DefineProperty<SupportedSecurityOption>(nameof(SupportedSecurityOption), new string[] { "supportedSecurityOption" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SupportedCapabilities that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -160,6 +160,10 @@ namespace Azure.Provisioning.Compute
             _publicIPPrefix = DefineModelProperty<ComputeWriteableSubResourceData>(nameof(PublicIPPrefix), new string[] { "publicIPPrefix" });
             _publicIPAddressVersion = DefineProperty<IPVersion>(nameof(PublicIPAddressVersion), new string[] { "publicIPAddressVersion" });
             _publicIPAllocationMethod = DefineProperty<PublicIPAllocationMethod>(nameof(PublicIPAllocationMethod), new string[] { "publicIPAllocationMethod" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachinePublicIPAddressConfigurationProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

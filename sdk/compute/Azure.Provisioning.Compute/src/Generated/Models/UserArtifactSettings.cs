@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Compute
             _packageFileName = DefineProperty<string>(nameof(PackageFileName), new string[] { "packageFileName" });
             _configFileName = DefineProperty<string>(nameof(ConfigFileName), new string[] { "configFileName" });
             _scriptBehaviorAfterReboot = DefineProperty<GalleryApplicationScriptRebootBehavior>(nameof(ScriptBehaviorAfterReboot), new string[] { "scriptBehaviorAfterReboot" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for UserArtifactSettings that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -40,6 +40,10 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _lifecycleHooks = DefineListProperty<VirtualMachineScaleSetLifecycleHook>(nameof(LifecycleHooks), new string[] { "lifecycleHooks" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for LifecycleHooksProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

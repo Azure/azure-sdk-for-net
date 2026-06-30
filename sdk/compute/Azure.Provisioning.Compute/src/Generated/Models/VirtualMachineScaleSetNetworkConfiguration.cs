@@ -262,6 +262,10 @@ namespace Azure.Provisioning.Compute
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _properties = DefineModelProperty<VirtualMachineScaleSetNetworkConfigurationProperties>(nameof(Properties), new string[] { "properties" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineScaleSetNetworkConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Compute
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _tier = DefineProperty<string>(nameof(Tier), new string[] { "tier" });
             _capacity = DefineProperty<long>(nameof(Capacity), new string[] { "capacity" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ComputeSku that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

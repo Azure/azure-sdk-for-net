@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _vCpusAvailable = DefineProperty<int>(nameof(VCpusAvailable), new string[] { "vCPUsAvailable" });
             _vCpusPerCore = DefineProperty<int>(nameof(VCpusPerCore), new string[] { "vCPUsPerCore" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineSizeProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

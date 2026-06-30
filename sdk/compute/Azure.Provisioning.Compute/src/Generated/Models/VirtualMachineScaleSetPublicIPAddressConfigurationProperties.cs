@@ -143,6 +143,10 @@ namespace Azure.Provisioning.Compute
             _publicIPPrefix = DefineModelProperty<ComputeWriteableSubResourceData>(nameof(PublicIPPrefix), new string[] { "publicIPPrefix" });
             _publicIPAddressVersion = DefineProperty<IPVersion>(nameof(PublicIPAddressVersion), new string[] { "publicIPAddressVersion" });
             _deleteOption = DefineProperty<ComputeDeleteOption>(nameof(DeleteOption), new string[] { "deleteOption" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineScaleSetPublicIPAddressConfigurationProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

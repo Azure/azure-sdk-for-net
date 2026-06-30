@@ -91,6 +91,10 @@ namespace Azure.Provisioning.Compute
             _vmSizes = DefineListProperty<ComputeSkuProfileVmSize>(nameof(VmSizes), new string[] { "vmSizes" });
             _allocationStrategy = DefineProperty<ComputeAllocationStrategy>(nameof(AllocationStrategy), new string[] { "allocationStrategy" });
             _automaticSkuMigrationPolicy = DefineModelProperty<AutomaticSkuMigrationPolicy>(nameof(AutomaticSkuMigrationPolicy), new string[] { "automaticSkuMigrationPolicy" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ComputeSkuProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -274,6 +274,10 @@ namespace Azure.Provisioning.Compute
             _replicationMode = DefineProperty<GalleryReplicationMode>(nameof(ReplicationMode), new string[] { "replicationMode" });
             _targetExtendedLocations = DefineListProperty<GalleryTargetExtendedLocation>(nameof(TargetExtendedLocations), new string[] { "targetExtendedLocations" });
             _storageAccountStrategy = DefineProperty<StorageAccountStrategy>(nameof(StorageAccountStrategy), new string[] { "storageAccountStrategy" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for GalleryApplicationVersionPublishingProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

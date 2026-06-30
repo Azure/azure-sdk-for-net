@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _vmSize = DefineProperty<string>(nameof(VmSize), new string[] { "vmSize" });
             _count = DefineProperty<double>(nameof(Count), new string[] { "count" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DedicatedHostAllocatableVm that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

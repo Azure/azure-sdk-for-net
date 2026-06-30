@@ -69,6 +69,10 @@ namespace Azure.Provisioning.Compute
             _osDisk = DefineModelProperty<RestorePointSourceVmOSDisk>(nameof(OSDisk), new string[] { "osDisk" });
             _dataDisks = DefineListProperty<RestorePointSourceVmDataDisk>(nameof(DataDisks), new string[] { "dataDisks" });
             _diskControllerType = DefineProperty<DiskControllerType>(nameof(DiskControllerType), new string[] { "diskControllerType" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for RestorePointSourceVmStorageProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

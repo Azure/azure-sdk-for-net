@@ -567,6 +567,10 @@ namespace Azure.Provisioning.Compute
             _isOptimizedForFrequentAttach = DefineProperty<bool>(nameof(IsOptimizedForFrequentAttach), new string[] { "optimizedForFrequentAttach" });
             _lastOwnershipUpdateOn = DefineProperty<DateTimeOffset>(nameof(LastOwnershipUpdateOn), new string[] { "LastOwnershipUpdateTime" }, isOutput: true);
             _availabilityPolicy = DefineModelProperty<AvailabilityPolicy>(nameof(AvailabilityPolicy), new string[] { "availabilityPolicy" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DiskProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

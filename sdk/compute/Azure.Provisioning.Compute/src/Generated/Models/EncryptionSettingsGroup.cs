@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Compute
             _enabled = DefineProperty<bool>(nameof(Enabled), new string[] { "enabled" }, isRequired: true);
             _encryptionSettings = DefineListProperty<EncryptionSettingsElement>(nameof(EncryptionSettings), new string[] { "encryptionSettings" });
             _encryptionSettingsVersion = DefineProperty<string>(nameof(EncryptionSettingsVersion), new string[] { "encryptionSettingsVersion" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for EncryptionSettingsGroup that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

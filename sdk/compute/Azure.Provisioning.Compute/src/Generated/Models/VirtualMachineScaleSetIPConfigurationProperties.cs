@@ -177,6 +177,10 @@ namespace Azure.Provisioning.Compute
             _applicationSecurityGroupResources = DefineListProperty<ComputeWriteableSubResourceData>(nameof(ApplicationSecurityGroupResources), new string[] { "applicationSecurityGroups" });
             _loadBalancerBackendAddressPoolResources = DefineListProperty<ComputeWriteableSubResourceData>(nameof(LoadBalancerBackendAddressPoolResources), new string[] { "loadBalancerBackendAddressPools" });
             _loadBalancerInboundNatPoolResources = DefineListProperty<ComputeWriteableSubResourceData>(nameof(LoadBalancerInboundNatPoolResources), new string[] { "loadBalancerInboundNatPools" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachineScaleSetIPConfigurationProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

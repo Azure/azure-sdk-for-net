@@ -40,6 +40,10 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _isAutomaticSkuMigrationPolicyEnabled = DefineProperty<bool>(nameof(IsAutomaticSkuMigrationPolicyEnabled), new string[] { "enabled" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for AutomaticSkuMigrationPolicy that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

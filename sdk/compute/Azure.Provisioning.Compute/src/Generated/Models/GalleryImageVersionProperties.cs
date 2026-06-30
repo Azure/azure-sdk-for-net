@@ -161,6 +161,10 @@ namespace Azure.Provisioning.Compute
             _securityProfile = DefineModelProperty<ImageVersionSecurityProfile>(nameof(SecurityProfile), new string[] { "securityProfile" });
             _isRestoreEnabled = DefineProperty<bool>(nameof(IsRestoreEnabled), new string[] { "restore" });
             _validationsProfile = DefineModelProperty<GalleryImageValidationsProfile>(nameof(ValidationsProfile), new string[] { "validationsProfile" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for GalleryImageVersionProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }
