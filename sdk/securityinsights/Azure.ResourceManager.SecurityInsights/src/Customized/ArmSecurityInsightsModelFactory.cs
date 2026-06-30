@@ -57,37 +57,31 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         [Obsolete("This overload is obsolete because Source has been replaced by SourceString. Use the overload that accepts sourceString instead.", false)]
         public static SecurityInsightsWatchlistData SecurityInsightsWatchlistData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Guid? watchlistId = default, string displayName = default, string provider = default, Source? source = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, SecurityInsightsUserInfo createdBy = default, SecurityInsightsUserInfo updatedBy = default, string description = default, string watchlistType = default, string watchlistAlias = default, bool? isDeleted = default, IEnumerable<string> labels = default, TimeSpan? defaultDuration = default, Guid? tenantId = default, int? numberOfLinesToSkip = default, string rawContent = default, string itemsSearchKey = default, string contentType = default, string uploadStatus = default, ETag? etag = default)
         {
-            return new SecurityInsightsWatchlistData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                watchlistId is null && displayName is null && provider is null && createdOn is null && updatedOn is null && createdBy is null && updatedBy is null && description is null && watchlistType is null && watchlistAlias is null && isDeleted is null && labels is null && defaultDuration is null && tenantId is null && numberOfLinesToSkip is null && rawContent is null && itemsSearchKey is null && contentType is null && uploadStatus is null ? default : new WatchlistProperties(
-                    watchlistId,
-                    displayName,
-                    provider,
-                    default,
-                    default,
-                    createdOn,
-                    updatedOn,
-                    createdBy,
-                    updatedBy,
-                    description,
-                    watchlistType,
-                    watchlistAlias,
-                    isDeleted,
-                    (labels ?? new ChangeTrackingList<string>()).ToList(),
-                    defaultDuration,
-                    tenantId,
-                    numberOfLinesToSkip,
-                    rawContent,
-                    itemsSearchKey,
-                    contentType,
-                    uploadStatus,
-                    default,
-                    default),
-                etag,
-                default);
+            return ArmSecurityInsightsModelFactory.SecurityInsightsWatchlistData(
+                id, name, resourceType, systemData,
+                watchlistId: watchlistId,
+                displayName: displayName,
+                provider: provider,
+                sourceString: source?.ToString(),   // Source → string translation
+                sourceType: null,
+                createdOn: createdOn,
+                updatedOn: updatedOn,
+                createdBy: createdBy,
+                updatedBy: updatedBy,
+                description: description,
+                watchlistType: watchlistType,
+                watchlistAlias: watchlistAlias,
+                isDeleted: isDeleted,
+                labels: labels,
+                defaultDuration: defaultDuration,
+                tenantId: tenantId,
+                numberOfLinesToSkip: numberOfLinesToSkip,
+                rawContent: rawContent,
+                itemsSearchKey: itemsSearchKey,
+                contentType: contentType,
+                uploadStatus: uploadStatus,
+                provisioningState: null,
+                eTag: etag);
         }
     }
 }
