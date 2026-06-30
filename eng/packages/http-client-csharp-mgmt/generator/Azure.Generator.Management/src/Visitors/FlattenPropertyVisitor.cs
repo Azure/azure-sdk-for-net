@@ -5,6 +5,7 @@ using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -14,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Reflection;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Visitors
@@ -21,6 +23,7 @@ namespace Azure.Generator.Management.Visitors
     internal class FlattenPropertyVisitor : ScmLibraryVisitor
     {
         private static CSharpType WirePathAttributeType => ManagementClientGenerator.Instance.OutputLibrary.WirePathAttributeDefinition.Type;
+        private static readonly FieldInfo? ModelProviderInputModelField = typeof(ModelProvider).GetField("_inputModel", BindingFlags.Instance | BindingFlags.NonPublic);
 
         // Drop any WirePath attribute that may be attached to the inner property (e.g., copied verbatim from a
         // customization partial class). When a property is flattened, its wire path changes (e.g., "left" becomes
@@ -550,7 +553,7 @@ namespace Azure.Generator.Management.Visitors
                 // Use name-based matching instead of reference equality because custom code
                 // may override the property, creating a different PropertyProvider instance
                 // than the one cached in OutputFlattenPropertyMap.
-                if (ManagementClientGenerator.Instance.OutputLibrary.OutputFlattenPropertyMap.TryGetValue(model, out var propertiesToFlatten) && propertiesToFlatten.Any(p => p.Name == internalProperty.Name))
+                if (TryGetPropertiesToFlatten(model, internalProperty, out var propertiesToFlatten))
                 {
                     isFlattenProperty = true;
                     PropertyFlatten(model, modelProvider, innerProperties, propertyMap, internalProperty);
@@ -608,6 +611,57 @@ namespace Azure.Generator.Management.Visitors
                 UpdatePublicConstructor(model, basePropertyNameMap);
             }
         }
+
+        private static bool TryGetPropertiesToFlatten(ModelProvider model, PropertyProvider internalProperty, [NotNullWhen(true)] out HashSet<PropertyProvider>? propertiesToFlatten)
+        {
+            var flattenPropertyMap = ManagementClientGenerator.Instance.OutputLibrary.OutputFlattenPropertyMap;
+            if (flattenPropertyMap.TryGetValue(model, out propertiesToFlatten) && propertiesToFlatten.Any(p => p.Name == internalProperty.Name))
+            {
+                return true;
+            }
+
+            // Provisioning can synthesize multiple ModelProvider instances from the same InputModelType
+            // (for example, one ARM model projected into several concrete Bicep resource types). The
+            // flatten map is built from TypeFactory.CreateModel(inputModel), so only the representative
+            // provider is keyed exactly. Fall back to matching providers by source input model.
+            var inputModel = GetInputModel(model);
+            if (inputModel is null)
+            {
+                propertiesToFlatten = null;
+                return false;
+            }
+
+            foreach (var (mappedModel, mappedProperties) in flattenPropertyMap)
+            {
+                if (ReferenceEquals(model, mappedModel))
+                {
+                    continue;
+                }
+
+                var mappedInputModel = GetInputModel(mappedModel);
+                if (HasSameInputModel(inputModel, mappedInputModel) && mappedProperties.Any(p => p.Name == internalProperty.Name))
+                {
+                    propertiesToFlatten = mappedProperties;
+                    return true;
+                }
+            }
+
+            propertiesToFlatten = null;
+            return false;
+        }
+
+        private static InputModelType? GetInputModel(ModelProvider model)
+            => ModelProviderInputModelField?.GetValue(model) as InputModelType;
+
+        private static bool HasSameInputModel(InputModelType left, InputModelType? right)
+            => right is not null
+                && (ReferenceEquals(left, right)
+                    || string.Equals(GetModelIdentityKey(left), GetModelIdentityKey(right), StringComparison.Ordinal));
+
+        private static string GetModelIdentityKey(InputModelType model)
+            => string.IsNullOrEmpty(model.CrossLanguageDefinitionId)
+                ? model.Name
+                : model.CrossLanguageDefinitionId;
 
         private void PropertyFlatten(ModelProvider model, ModelProvider propertyModel, IReadOnlyList<PropertyProvider> innerProperties, Dictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap, PropertyProvider internalProperty)
         {
