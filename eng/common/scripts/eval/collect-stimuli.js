@@ -32,9 +32,14 @@ export function getEvalFiles(roots, patterns, pathBase = null) {
           continue;
         }
         seen.add(key);
+        const relative = path.relative(base ?? resolvedRoot, full).split(path.sep).join("/");
+        // Eval paths are passed as space-delimited `-e <file>` args, so whitespace would mis-split. Fail fast.
+        if (/\s/.test(relative)) {
+          throw new Error(`Eval path '${relative}' contains whitespace, which is not supported.`);
+        }
         files.push({
           fullName: full,
-          relative: path.relative(base ?? resolvedRoot, full).split(path.sep).join("/"),
+          relative,
           leaf: path.basename(full).replace(/\.eval\.yaml$/, ""),
           parent: path.basename(path.dirname(full)),
         });
