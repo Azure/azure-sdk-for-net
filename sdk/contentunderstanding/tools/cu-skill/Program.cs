@@ -9,7 +9,7 @@
 //   create-and-test-router — stage 2 (classify-and-route): validate + wire N inner + 1 outer
 //
 // Run:
-//   dotnet run --project .github/skills/_shared -- extract-layout --input <file> --output <dir>
+//   dotnet run --project sdk/contentunderstanding/tools/cu-skill -- extract-layout --input <file> --output <dir>
 
 using AzureSdkContentUnderstanding.Skills;
 

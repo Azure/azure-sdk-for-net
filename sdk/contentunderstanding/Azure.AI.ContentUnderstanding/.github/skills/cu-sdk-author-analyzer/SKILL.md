@@ -79,18 +79,18 @@ sdk/contentunderstanding/Azure.AI.ContentUnderstanding
 ## Scripts and templates
 
 ```
-.github/skills/
-├── _shared/
-│   ├── cu-skill.csproj            # Single tool project — three subcommands
-│   ├── Program.cs                 # Dispatcher (extract-layout | create-and-test | create-and-test-router)
-│   ├── SchemaValidator.cs         # Pure-C# schema validator (no service calls)
-│   ├── ExtractLayoutCommand.cs    # Stage 1
-│   ├── CreateAndTestCommand.cs    # Stage 2 (single-type)
-│   └── CreateAndTestRouterCommand.cs   # Stage 2 (classify-and-route)
-└── cu-sdk-author-analyzer/
-    ├── SKILL.md (this file)
-    └── templates/
-        └── schema_template.json   # Starter schema for Step 2
+sdk/contentunderstanding/Azure.AI.ContentUnderstanding/.github/skills/cu-sdk-author-analyzer/
+├── SKILL.md (this file)
+└── templates/
+    └── schema_template.json   # Starter schema for Step 2
+
+sdk/contentunderstanding/tools/cu-skill/
+├── cu-skill.csproj             # Single tool project — three subcommands
+├── Program.cs                  # Dispatcher (extract-layout | create-and-test | create-and-test-router)
+├── SchemaValidator.cs          # Pure-C# schema validator (no service calls)
+├── ExtractLayoutCommand.cs     # Stage 1
+├── CreateAndTestCommand.cs     # Stage 2 (single-type)
+└── CreateAndTestRouterCommand.cs   # Stage 2 (classify-and-route)
 ```
 
 The skill tool builds against the local `Azure.AI.ContentUnderstanding.dll`,
@@ -116,7 +116,7 @@ anchor your field descriptions to.
 Run:
 
 ```bash
-dotnet run --project sdk/contentunderstanding/Azure.AI.ContentUnderstanding/.github/skills/_shared -- \
+dotnet run --project sdk/contentunderstanding/tools/cu-skill -- \
     extract-layout \
     --input <path-to-folder-or-file> \
     --output .local_only/layout/
@@ -255,7 +255,7 @@ local validator (Step 3) rejects any value not on that list.
 ### Step 3 — Validate the schema locally
 
 ```bash
-dotnet run --project sdk/contentunderstanding/Azure.AI.ContentUnderstanding/.github/skills/_shared -- \
+dotnet run --project sdk/contentunderstanding/tools/cu-skill -- \
     create-and-test \
     --schema .local_only/schemas/invoice_v1.json \
     --input samples/sample_files/sample_invoice.pdf \
@@ -377,7 +377,7 @@ By default the analyzer is kept in your resource so you can re-use it. Pass
 `--ephemeral` to delete it at the end of a run:
 
 ```bash
-dotnet run --project sdk/contentunderstanding/Azure.AI.ContentUnderstanding/.github/skills/_shared -- \
+dotnet run --project sdk/contentunderstanding/tools/cu-skill -- \
     create-and-test \
     --schema .local_only/schemas/invoice_v1.json \
     --input samples/sample_files/sample_invoice.pdf \

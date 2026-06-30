@@ -11,7 +11,7 @@ using NUnit.Framework;
 namespace Azure.AI.ContentUnderstanding.Tests
 {
     /// <summary>
-    /// Unit tests for <c>.github/skills/_shared/SchemaValidator.cs</c> (mirrors
+    /// Unit tests for <c>tools/cu-skill/SchemaValidator.cs</c> (mirrors
     /// Python's <c>tests/test_skills_shared_schema_validator.py</c>).
     /// </summary>
     /// <remarks>
@@ -27,7 +27,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
     ///   <item><c>enableSegment = true</c> is required on classify-route</item>
     ///   <item>file loading: missing file, invalid JSON</item>
     ///   <item>purity guard: SchemaValidator.cs source contains no Azure.* or
-    ///         HTTP using directives (see <c>_shared/README.md</c>)</item>
+    ///         HTTP using directives (see <c>tools/cu-skill/about.md</c>)</item>
     /// </list>
     /// </remarks>
     [TestFixture]
@@ -412,7 +412,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             })
             {
                 Assert.That(source, Does.Not.Contain(forbidden),
-                    $"SchemaValidator.cs must not contain `{forbidden}` — see _shared/README.md");
+                    $"SchemaValidator.cs must not contain `{forbidden}` — see tools/cu-skill/about.md");
             }
         }
 
@@ -426,18 +426,17 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var dir = TestContext.CurrentContext.TestDirectory;
             for (int i = 0; i < 20 && dir is not null; i++)
             {
-                var candidate = Path.Combine(dir, ".github", "skills", "_shared", "SchemaValidator.cs");
+                var candidate = Path.Combine(dir, "tools", "cu-skill", "SchemaValidator.cs");
                 if (File.Exists(candidate))
                 {
                     return candidate;
                 }
                 // Also try the well-known relative path from the artifacts
                 // layout (`artifacts/bin/<assembly>/Debug/<tfm>` -> repo root
-                // -> `sdk/contentunderstanding/Azure.AI.ContentUnderstanding`).
+                // -> `sdk/contentunderstanding/tools/cu-skill`).
                 var artifacts = Path.Combine(
                     dir,
-                    "sdk", "contentunderstanding", "Azure.AI.ContentUnderstanding",
-                    ".github", "skills", "_shared", "SchemaValidator.cs");
+                    "sdk", "contentunderstanding", "tools", "cu-skill", "SchemaValidator.cs");
                 if (File.Exists(artifacts))
                 {
                     return artifacts;
@@ -448,7 +447,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             // expected location near the test assembly.
             return Path.Combine(
                 TestContext.CurrentContext.TestDirectory,
-                "..", "..", "..", "..", ".github", "skills", "_shared", "SchemaValidator.cs");
+                "..", "..", "..", "..", "..", "tools", "cu-skill", "SchemaValidator.cs");
         }
     }
 }

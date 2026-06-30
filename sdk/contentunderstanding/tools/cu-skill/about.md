@@ -1,4 +1,4 @@
-# `_shared/` — library, not a skill
+# `cu-skill/` — library, not a skill
 
 Pure-C# helpers used by the authoring skill scripts under
 `.github/skills/cu-sdk-author-analyzer*/scripts/`.

@@ -28,7 +28,7 @@
       TFM-conditional so each leg picks the matching DLL.
     -->
     <Reference Include="Azure.AI.ContentUnderstanding">
-      <HintPath>$(MSBuildThisFileDirectory)../../../../../../artifacts/bin/Azure.AI.ContentUnderstanding/Debug/$(TargetFramework)/Azure.AI.ContentUnderstanding.dll</HintPath>
+      <HintPath>$(MSBuildThisFileDirectory)../../../../artifacts/bin/Azure.AI.ContentUnderstanding/Debug/$(TargetFramework)/Azure.AI.ContentUnderstanding.dll</HintPath>
       <Private>true</Private>
     </Reference>
     <PackageReference Include="Azure.Core" Version="1.*" />

@@ -21,8 +21,8 @@
       intentionally pure System.Text.Json with no Azure.* imports — see the
       SkillSchemaValidatorTests purity guard.
     -->
-    <Compile Include="..\.github\skills\_shared\SchemaValidator.cs"
-             Link="Skills\_shared\SchemaValidator.cs" />
+    <Compile Include="..\..\tools\cu-skill\SchemaValidator.cs"
+             Link="Skills\cu-skill\SchemaValidator.cs" />
   </ItemGroup>
 
   <ItemGroup>

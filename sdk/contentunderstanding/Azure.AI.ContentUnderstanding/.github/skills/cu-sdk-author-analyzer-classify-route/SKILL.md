@@ -108,12 +108,12 @@ sdk/contentunderstanding/Azure.AI.ContentUnderstanding
 ## Scripts and templates
 
 ```
-.github/skills/
-├── _shared/                       # The skill tool (single csproj, three subcommands)
-└── cu-sdk-author-analyzer-classify-route/
-    ├── SKILL.md (this file)
-    └── templates/
-        └── classifier_template.json   # Starter outer-classifier schema for Step 3
+sdk/contentunderstanding/Azure.AI.ContentUnderstanding/.github/skills/cu-sdk-author-analyzer-classify-route/
+├── SKILL.md (this file)
+└── templates/
+    └── classifier_template.json   # Starter outer-classifier schema for Step 3
+
+sdk/contentunderstanding/tools/cu-skill/   # The skill tool (single csproj, three subcommands)
 ```
 
 The skill tool builds against the local `Azure.AI.ContentUnderstanding.dll`,
@@ -131,7 +131,7 @@ Run layout extraction (same as the single-type skill) on a representative
 packet to see the section headings:
 
 ```bash
-dotnet run --project sdk/contentunderstanding/Azure.AI.ContentUnderstanding/.github/skills/_shared -- \
+dotnet run --project sdk/contentunderstanding/tools/cu-skill -- \
     extract-layout \
     --input <packet.pdf> \
     --output .local_only/layout/
@@ -274,7 +274,7 @@ pass. Two exceptions skip alias resolution:
 ### Step 4 — Validate, create, and batch-test
 
 ```bash
-dotnet run --project sdk/contentunderstanding/Azure.AI.ContentUnderstanding/.github/skills/_shared -- \
+dotnet run --project sdk/contentunderstanding/tools/cu-skill -- \
     create-and-test-router \
     --outer-schema .local_only/schemas/classifier.json \
     --inner-schema invoice=.local_only/schemas/invoice.json \
