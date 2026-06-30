@@ -2,20 +2,17 @@
 
 Use this process when introducing a brand-new `Azure.Provisioning.{Service}` package. If the package already exists and you are adding resources, enum values, or API versions, use the regeneration workflow in `SKILL.md` instead.
 
-## 1. Classify the onboarding path
+## 1. Confirm the management library is TypeSpec-based
 
-Start from the corresponding management library:
+New provisioning libraries are onboarded through the TypeSpec provisioning emitter. Start from the corresponding TypeSpec-based management library:
 
 ```powershell
 Test-Path sdk\{service}\Azure.ResourceManager.{Service}\tsp-location.yaml
 ```
 
-| Result | Path | Generator |
-| --- | --- | --- |
-| `False` | Path A | Reflection generator over the management library package |
-| `True` | Path B | TypeSpec provisioning emitter |
+The result must be `True`. The management library's `tsp-location.yaml` identifies the TypeSpec project and API version that the new provisioning library should follow.
 
-Common rules for both paths:
+Common rules:
 
 - Start the new package at `1.0.0-beta.1`.
 - Do not add `ApiCompatVersion` for a new package.
@@ -23,88 +20,9 @@ Common rules for both paths:
 - Add a basic unit test, a matching live test, README snippets, changelog entry, and CI artifact entry before opening the SDK PR.
 - Open PRs in draft mode.
 
-## 2. Path A: reflection-generated provisioning library
+## 2. Enable the provisioning emitter in the spec repo
 
-Use Path A when the management library is Swagger/AutoRest based and does not have `tsp-location.yaml`.
-
-### 2.1 Scaffold the package
-
-Model the package after a recent reflection-generated provisioning library, such as `sdk\resourcegraph\Azure.Provisioning.ResourceGraph` or `sdk\redisenterprise\Azure.Provisioning.RedisEnterprise`.
-
-Create:
-
-```text
-sdk\{service}\Azure.Provisioning.{Service}\
-  Azure.Provisioning.{Service}.slnx
-  Directory.Build.props
-  CHANGELOG.md
-  README.md
-  src\Azure.Provisioning.{Service}.csproj
-  tests\Azure.Provisioning.{Service}.Tests.csproj
-```
-
-Do not add `tsp-location.yaml` or `metadata.json`; those are Path B artifacts.
-
-### 2.2 Register the service with the reflection generator
-
-Add a specification class:
-
-```csharp
-// sdk/provisioning/Generator/src/Specifications/{Service}Specification.cs
-using Azure.Provisioning.Generator.Model;
-using Azure.ResourceManager.{Service};
-
-namespace Azure.Provisioning.Generator.Specifications;
-
-public class {Service}Specification() :
-    Specification("{Service}", typeof({Service}Extensions), serviceDirectory: "{service}")
-{
-    protected override void Customize() { }
-}
-```
-
-Then:
-
-1. Register the specification alphabetically in `sdk\provisioning\Generator\src\Program.cs`.
-2. Add an alphabetical management library `PackageReference` in `sdk\provisioning\Generator\src\Generator.csproj`.
-
-### 2.3 Run the reflection generator
-
-```powershell
-Push-Location sdk\provisioning\Generator\src
-dotnet run --framework net10.0 -- --filter {Service}
-Pop-Location
-```
-
-After generation, verify that only the target provisioning library changed. Revert unrelated generated changes.
-
-```powershell
-git status --short -- sdk\provisioning sdk\{service}\Azure.Provisioning.{Service}
-```
-
-### 2.4 Check for missing WirePath data
-
-Inspect generated `DefineProperty` calls:
-
-```powershell
-Select-String sdk\{service}\Azure.Provisioning.{Service}\src\Generated\*.cs -Pattern 'DefineProperty'
-```
-
-If generated paths omit `"properties"` segments, confirm whether the management library lacks `WirePath` attributes:
-
-```powershell
-(Select-String -Path sdk\{service}\Azure.ResourceManager.{Service}\src\Generated\Models\*.cs -Pattern 'WirePath' | Measure-Object).Count
-```
-
-When the count is `0`, use the temporary workaround from `SKILL.md`: enable bicep serialization in the management library, regenerate it locally, temporarily switch the generator to a `ProjectReference`, rerun the provisioning generator, then revert all management-library changes and restore the `PackageReference`.
-
-## 3. Path B: TypeSpec provisioning emitter library
-
-Use Path B when the management library is TypeSpec based and has `tsp-location.yaml`. This path requires both a spec PR and an SDK PR.
-
-### 3.1 Enable the provisioning emitter in the spec repo
-
-In the service `tspconfig.yaml` in `azure-rest-api-specs`, add the provisioning emitter under `options`, not `emit`:
+This onboarding flow requires both a spec PR and an SDK PR. In the service `tspconfig.yaml` in `azure-rest-api-specs`, add the provisioning emitter under `options`, not `emit`:
 
 ```yaml
 options:
@@ -122,7 +40,7 @@ git rev-parse HEAD
 
 Do not use a short SHA; `tsp-client` requires the full commit.
 
-### 3.2 Scaffold the SDK package
+## 3. Scaffold the SDK package
 
 Model the package after `sdk\batch\Azure.Provisioning.Batch` or `sdk\servicenetworking\Azure.Provisioning.ServiceNetworking`.
 
@@ -149,9 +67,7 @@ repo: <fork>/azure-rest-api-specs
 additionalDirectories:
 ```
 
-Do not register Path B packages in `sdk\provisioning\Generator\src\Program.cs`.
-
-### 3.3 Generate from TypeSpec
+## 4. Generate from TypeSpec
 
 Remove stale generated output before regenerating:
 
@@ -162,13 +78,13 @@ dotnet build /t:GenerateCode
 Pop-Location
 ```
 
-### 3.4 Check NUnit baseline requirements
+## 5. Check NUnit baseline requirements
 
 If `eng\centralpackagemanagement\Directory.NUnit3Baseline.Packages.props` still contains `Azure.Provisioning.*.Tests` entries, add the new test project alphabetically. Skip this only if the provisioning tests have completed their NUnit 4 migration.
 
 After the spec PR merges, update `tsp-location.yaml` to point back to `Azure/azure-rest-api-specs` and the merged commit SHA, then regenerate and commit the resulting SDK changes.
 
-## 4. Add package tests and documentation
+## 6. Add package tests and documentation
 
 Add both test files:
 
@@ -193,7 +109,7 @@ Update `README.md` with a `Key concepts` section and an `Examples` section that 
 
 Use `dotnet add package Azure.Provisioning.{Service} --prerelease` in installation guidance.
 
-## 5. Add CI and package metadata
+## 7. Add CI and package metadata
 
 Add the package to `sdk\{service}\ci.mgmt.yml` under `Artifacts`:
 
@@ -202,13 +118,13 @@ Add the package to `sdk\{service}\ci.mgmt.yml` under `Artifacts`:
       safeName: AzureProvisioning{Service}
 ```
 
-For both paths, confirm the package files contain the expected first-release metadata:
+Confirm the package files contain the expected first-release metadata:
 
 - `CHANGELOG.md` has `1.0.0-beta.1 (Unreleased)`.
 - `src\Azure.Provisioning.{Service}.csproj` has version `1.0.0-beta.1`.
 - The solution includes both `src` and `tests` projects.
 
-## 6. Validate generated resources against Bicep reference
+## 8. Validate generated resources against Bicep reference
 
 Use `schema.log` when available:
 
@@ -232,13 +148,13 @@ For each generated ARM resource type:
 
 If discrepancies are found, document the exact resource, property, generated behavior, and Bicep reference URL before deciding whether a generator customization or spec fix is needed.
 
-## 7. Run final checks
+## 9. Run final checks
 
 Before committing, run the pre-commit validation flow for the `provisioning` service directory. This covers formatting, API export, snippet updates, and regeneration checks.
 
 If spell check fails, add service-specific words to `sdk\provisioning\cspell.yaml`, not `.vscode\cspell.json`.
 
-## 8. Commit and open PRs
+## 10. Commit and open PRs
 
 Commit the SDK changes with a concise present-tense message, for example:
 
@@ -246,4 +162,4 @@ Commit the SDK changes with a concise present-tense message, for example:
 Onboard Azure.Provisioning.{Service}
 ```
 
-Open the SDK PR in draft mode. For Path B, keep the SDK PR tied to the spec PR until the spec PR merges, then update `tsp-location.yaml` to the upstream repo and merge commit.
+Open the SDK PR in draft mode. Keep the SDK PR tied to the spec PR until the spec PR merges, then update `tsp-location.yaml` to the upstream repo and merge commit.
