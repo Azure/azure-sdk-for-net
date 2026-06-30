@@ -190,7 +190,7 @@ namespace Azure.Generator.Provisioning.Providers
 
             var method = new MethodProvider(
                 new MethodSignature(
-                        "DefineProvisionableProperties",
+                    "DefineProvisionableProperties",
                     $"Define all the provisionable properties for {Name}.",
                     MethodSignatureModifiers.Protected | MethodSignatureModifiers.Override,
                     null,
