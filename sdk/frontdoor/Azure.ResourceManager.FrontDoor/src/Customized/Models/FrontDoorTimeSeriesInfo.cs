@@ -83,20 +83,20 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         // This method body is copied from the generated JsonModelCreateCore; the customization changes
-            // only the return type from FrontDoorTimeSeriesInfo to ResourceData so it matches TrackedResourceData.
-            // Remove this workaround after https://github.com/Azure/azure-sdk-for-net/issues/60297 is fixed.
-            /// <param name="reader"> The JSON reader. </param>
-            /// <param name="options"> The client options for reading and writing models. </param>
-            protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        // only the return type from FrontDoorTimeSeriesInfo to ResourceData so it matches TrackedResourceData.
+        // Remove this workaround after https://github.com/Azure/azure-sdk-for-net/issues/60297 is fixed.
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorTimeSeriesInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                string format = options.Format == "W" ? ((IPersistableModel<FrontDoorTimeSeriesInfo>)this).GetFormatFromOptions(options) : options.Format;
-                if (format != "J")
-                {
-                    throw new FormatException($"The model {nameof(FrontDoorTimeSeriesInfo)} does not support reading '{format}' format.");
-                }
-                using JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return DeserializeFrontDoorTimeSeriesInfo(document.RootElement, options);
+                throw new FormatException($"The model {nameof(FrontDoorTimeSeriesInfo)} does not support reading '{format}' format.");
             }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFrontDoorTimeSeriesInfo(document.RootElement, options);
+        }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

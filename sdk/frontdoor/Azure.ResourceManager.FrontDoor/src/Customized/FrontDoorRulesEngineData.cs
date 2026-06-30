@@ -71,20 +71,20 @@ namespace Azure.ResourceManager.FrontDoor
         }
 
         // This method body is copied from the generated JsonModelCreateCore; the customization changes
-            // only the return type from FrontDoorRulesEngineData to ResourceData so it matches ResourceData.
-            // Remove this workaround after https://github.com/Azure/azure-sdk-for-net/issues/60297 is fixed.
-            /// <param name="reader"> The JSON reader. </param>
-            /// <param name="options"> The client options for reading and writing models. </param>
-            protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        // only the return type from FrontDoorRulesEngineData to ResourceData so it matches ResourceData.
+        // Remove this workaround after https://github.com/Azure/azure-sdk-for-net/issues/60297 is fixed.
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorRulesEngineData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                string format = options.Format == "W" ? ((IPersistableModel<FrontDoorRulesEngineData>)this).GetFormatFromOptions(options) : options.Format;
-                if (format != "J")
-                {
-                    throw new FormatException($"The model {nameof(FrontDoorRulesEngineData)} does not support reading '{format}' format.");
-                }
-                using JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return DeserializeFrontDoorRulesEngineData(document.RootElement, options);
+                throw new FormatException($"The model {nameof(FrontDoorRulesEngineData)} does not support reading '{format}' format.");
             }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFrontDoorRulesEngineData(document.RootElement, options);
+        }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
