@@ -50,6 +50,8 @@ function getAttr(attrs, name) {
 
 // Minimal dependency-free JUnit parse: testsuite (optional threshold property) > testcase
 // with optional <failure>/<error>/<skipped> children. `\b` avoids matching `testsuites`.
+// NOTE: coupled to Vally's JUnit output shape; if that XML changes, update these regexes
+// (or swap in a real XML parser).
 function parseSuites(content) {
   const suites = [];
   const suiteRe = /<testsuite\b([^>]*?)(\/>|>([\s\S]*?)<\/testsuite>)/g;
