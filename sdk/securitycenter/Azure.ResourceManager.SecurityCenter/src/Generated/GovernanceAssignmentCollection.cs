@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -40,6 +41,17 @@ namespace Azure.ResourceManager.SecurityCenter
             TryGetApiVersion(GovernanceAssignmentResource.ResourceType, out string governanceAssignmentApiVersion);
             _governanceAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", GovernanceAssignmentResource.ResourceType.Namespace, Diagnostics);
             _governanceAssignmentsRestClient = new GovernanceAssignments(_governanceAssignmentsClientDiagnostics, Pipeline, Endpoint, governanceAssignmentApiVersion ?? "2022-01-01-preview");
+            ValidateResourceId(id);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != SecurityAssessmentResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SecurityAssessmentResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
