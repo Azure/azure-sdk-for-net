@@ -370,14 +370,14 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateCheckDnlResourceNameAvailabilityRequest(Guid subscriptionId, string location, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCheckDnlResourceNameAvailabilityRequest(Guid subscriptionId, AzureLocation location, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Web/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/checknameavailability", false);
             if (_apiVersion != null)
             {

@@ -129,12 +129,12 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetFunctionAppStacksForLocationProvidersRequest(string location, string stackOsType, RequestContext context)
+        internal HttpMessage CreateGetFunctionAppStacksForLocationProvidersRequest(AzureLocation location, string stackOsType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Web/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/functionAppStacks", false);
             if (_apiVersion != null)
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateNextGetFunctionAppStacksForLocationProvidersRequest(Uri nextPage, string location, string stackOsType, RequestContext context)
+        internal HttpMessage CreateNextGetFunctionAppStacksForLocationProvidersRequest(Uri nextPage, AzureLocation location, string stackOsType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -175,12 +175,12 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetWebAppStacksByLocationRequest(string location, string stackOsType, RequestContext context)
+        internal HttpMessage CreateGetWebAppStacksByLocationRequest(AzureLocation location, string stackOsType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Web/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/webAppStacks", false);
             if (_apiVersion != null)
             {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateNextGetWebAppStacksByLocationRequest(Uri nextPage, string location, string stackOsType, RequestContext context)
+        internal HttpMessage CreateNextGetWebAppStacksByLocationRequest(Uri nextPage, AzureLocation location, string stackOsType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

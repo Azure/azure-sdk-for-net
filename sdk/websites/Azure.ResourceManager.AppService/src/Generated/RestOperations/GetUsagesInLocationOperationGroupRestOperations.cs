@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.AppService
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetGetUsagesInLocationsRequest(Guid subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateGetGetUsagesInLocationsRequest(Guid subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Web/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/usages", false);
             if (_apiVersion != null)
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateNextGetGetUsagesInLocationsRequest(Uri nextPage, Guid subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateNextGetGetUsagesInLocationsRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="location"> The location. </param>
         /// <param name="deletedSiteId"> The deletedSiteId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string deletedSiteId)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string deletedSiteId)
         {
             string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/deletedSites/{deletedSiteId}";
             return new ResourceIdentifier(resourceId);

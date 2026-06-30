@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <summary> Gets a collection of DeletedSiteAtLocations in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
         /// <returns> An object representing collection of DeletedSiteAtLocations and their operations over a DeletedSiteAtLocationResource. </returns>
-        public virtual DeletedSiteAtLocationCollection GetDeletedSiteAtLocations(string location)
+        public virtual DeletedSiteAtLocationCollection GetDeletedSiteAtLocations(AzureLocation location)
         {
             return GetCachedClient(client => new DeletedSiteAtLocationCollection(client, Id, location));
         }
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DeletedSiteAtLocationResource>> GetDeletedSiteAtLocationAsync(string location, string deletedSiteId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeletedSiteAtLocationResource>> GetDeletedSiteAtLocationAsync(AzureLocation location, string deletedSiteId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
 
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DeletedSiteAtLocationResource> GetDeletedSiteAtLocation(string location, string deletedSiteId, CancellationToken cancellationToken = default)
+        public virtual Response<DeletedSiteAtLocationResource> GetDeletedSiteAtLocation(AzureLocation location, string deletedSiteId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
 
@@ -1114,108 +1114,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         }
 
         /// <summary>
-        /// Check if a resource name is available for DNL sites.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/checknameavailability. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Web_RegionalCheckNameAvailability. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DnlResourceNameAvailabilityResult>> CheckDnlResourceNameAvailabilityAsync(string location, DnlResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = WebClientClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.CheckDnlResourceNameAvailability");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = WebClientRestClient.CreateCheckDnlResourceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, DnlResourceNameAvailabilityContent.ToRequestContent(content), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DnlResourceNameAvailabilityResult> response = Response.FromValue(DnlResourceNameAvailabilityResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Check if a resource name is available for DNL sites.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/checknameavailability. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Web_RegionalCheckNameAvailability. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DnlResourceNameAvailabilityResult> CheckDnlResourceNameAvailability(string location, DnlResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = WebClientClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.CheckDnlResourceNameAvailability");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = WebClientRestClient.CreateCheckDnlResourceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, DnlResourceNameAvailabilityContent.ToRequestContent(content), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<DnlResourceNameAvailabilityResult> response = Response.FromValue(DnlResourceNameAvailabilityResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Description for List all premier add-on offers.
         /// <list type="bullet">
         /// <item>
@@ -2097,174 +1995,6 @@ namespace Azure.ResourceManager.AppService.Mocking
                 CancellationToken = cancellationToken
             };
             return new ResourceHealthMetadataNonResourceOperationGroupGetAllResourceHealthMetadataCollectionResultOfT(ResourceHealthMetadataNonResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetAllResourceHealthMetadata");
-        }
-
-        /// <summary>
-        /// List usages in cores for all skus used by a subscription in a given location, for a specific quota type.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/usages. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> GetUsagesInLocationOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="CsmUsageQuota"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CsmUsageQuota> GetGetUsagesInLocationsAsync(string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new GetUsagesInLocationOperationGroupGetGetUsagesInLocationsAsyncCollectionResultOfT(GetUsagesInLocationOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableAppServiceSubscriptionResource.GetGetUsagesInLocations");
-        }
-
-        /// <summary>
-        /// List usages in cores for all skus used by a subscription in a given location, for a specific quota type.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/usages. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> GetUsagesInLocationOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="CsmUsageQuota"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CsmUsageQuota> GetGetUsagesInLocations(string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new GetUsagesInLocationOperationGroupGetGetUsagesInLocationsCollectionResultOfT(GetUsagesInLocationOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableAppServiceSubscriptionResource.GetGetUsagesInLocations");
-        }
-
-        /// <summary>
-        /// Description for Generates a preview workflow file for the static site
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/previewStaticSiteWorkflowFile. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StaticSitesOperationGroup_PreviewWorkflow. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<StaticSitesWorkflowPreview>> PreviewStaticSiteWorkflowAsync(string location, StaticSitesWorkflowPreviewContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = StaticSitesOperationGroupClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.PreviewStaticSiteWorkflow");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = StaticSitesOperationGroupRestClient.CreatePreviewStaticSiteWorkflowRequest(Guid.Parse(Id.SubscriptionId), location, StaticSitesWorkflowPreviewContent.ToRequestContent(content), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<StaticSitesWorkflowPreview> response = Response.FromValue(StaticSitesWorkflowPreview.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Description for Generates a preview workflow file for the static site
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/previewStaticSiteWorkflowFile. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StaticSitesOperationGroup_PreviewWorkflow. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<StaticSitesWorkflowPreview> PreviewStaticSiteWorkflow(string location, StaticSitesWorkflowPreviewContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = StaticSitesOperationGroupClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.PreviewStaticSiteWorkflow");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = StaticSitesOperationGroupRestClient.CreatePreviewStaticSiteWorkflowRequest(Guid.Parse(Id.SubscriptionId), location, StaticSitesWorkflowPreviewContent.ToRequestContent(content), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<StaticSitesWorkflowPreview> response = Response.FromValue(StaticSitesWorkflowPreview.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

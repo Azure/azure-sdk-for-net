@@ -2845,14 +2845,14 @@ namespace Azure.ResourceManager.AppService
         /// Gets a collection of DeletedSiteAtLocations in the <see cref="SubscriptionResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetDeletedSiteAtLocations(string)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetDeletedSiteAtLocations(AzureLocation)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The location for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An object representing collection of DeletedSiteAtLocations and their operations over a DeletedSiteAtLocationResource. </returns>
-        public static DeletedSiteAtLocationCollection GetDeletedSiteAtLocations(this SubscriptionResource subscriptionResource, string location)
+        public static DeletedSiteAtLocationCollection GetDeletedSiteAtLocations(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -2863,7 +2863,7 @@ namespace Azure.ResourceManager.AppService
         /// Description for Get deleted app for a subscription at location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetDeletedSiteAtLocationAsync(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetDeletedSiteAtLocationAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -2872,7 +2872,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DeletedSiteAtLocationResource>> GetDeletedSiteAtLocationAsync(this SubscriptionResource subscriptionResource, string location, string deletedSiteId, CancellationToken cancellationToken = default)
+        public static async Task<Response<DeletedSiteAtLocationResource>> GetDeletedSiteAtLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string deletedSiteId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -2883,7 +2883,7 @@ namespace Azure.ResourceManager.AppService
         /// Description for Get deleted app for a subscription at location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetDeletedSiteAtLocation(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetDeletedSiteAtLocation(AzureLocation, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -2892,7 +2892,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DeletedSiteAtLocationResource> GetDeletedSiteAtLocation(this SubscriptionResource subscriptionResource, string location, string deletedSiteId, CancellationToken cancellationToken = default)
+        public static Response<DeletedSiteAtLocationResource> GetDeletedSiteAtLocation(this SubscriptionResource subscriptionResource, AzureLocation location, string deletedSiteId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -3447,44 +3447,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Check if a resource name is available for DNL sites.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.CheckDnlResourceNameAvailabilityAsync(string, DnlResourceNameAvailabilityContent, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<DnlResourceNameAvailabilityResult>> CheckDnlResourceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, string location, DnlResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).CheckDnlResourceNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Check if a resource name is available for DNL sites.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.CheckDnlResourceNameAvailability(string, DnlResourceNameAvailabilityContent, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<DnlResourceNameAvailabilityResult> CheckDnlResourceNameAvailability(this SubscriptionResource subscriptionResource, string location, DnlResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).CheckDnlResourceNameAvailability(location, content, cancellationToken);
-        }
-
-        /// <summary>
         /// Description for List all premier add-on offers.
         /// <item>
         /// <term> Mocking. </term>
@@ -3891,82 +3853,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// List usages in cores for all skus used by a subscription in a given location, for a specific quota type.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetGetUsagesInLocationsAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="CsmUsageQuota"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CsmUsageQuota> GetGetUsagesInLocationsAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetGetUsagesInLocationsAsync(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// List usages in cores for all skus used by a subscription in a given location, for a specific quota type.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetGetUsagesInLocations(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="CsmUsageQuota"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CsmUsageQuota> GetGetUsagesInLocations(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetGetUsagesInLocations(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for Generates a preview workflow file for the static site
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.PreviewStaticSiteWorkflowAsync(string, StaticSitesWorkflowPreviewContent, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<StaticSitesWorkflowPreview>> PreviewStaticSiteWorkflowAsync(this SubscriptionResource subscriptionResource, string location, StaticSitesWorkflowPreviewContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).PreviewStaticSiteWorkflowAsync(location, content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Description for Generates a preview workflow file for the static site
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.PreviewStaticSiteWorkflow(string, StaticSitesWorkflowPreviewContent, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<StaticSitesWorkflowPreview> PreviewStaticSiteWorkflow(this SubscriptionResource subscriptionResource, string location, StaticSitesWorkflowPreviewContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).PreviewStaticSiteWorkflow(location, content, cancellationToken);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="PublishingUserResource"/> along with the instance operations that can be performed on it in the <see cref="TenantResource"/>.
         /// <item>
         /// <term> Mocking. </term>
@@ -4192,86 +4078,6 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableAppServiceTenantResource(tenantResource).GetFunctionAppStacksProviders(stackOsType, cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for Get available Function app frameworks and their versions for location
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetFunctionAppStacksForLocationProvidersAsync(string, ProviderStackOSType?, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="stackOsType"> Stack OS Type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="FunctionAppStack"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<FunctionAppStack> GetFunctionAppStacksForLocationProvidersAsync(this TenantResource tenantResource, string location, ProviderStackOSType? stackOsType = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableAppServiceTenantResource(tenantResource).GetFunctionAppStacksForLocationProvidersAsync(location, stackOsType, cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for Get available Function app frameworks and their versions for location
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetFunctionAppStacksForLocationProviders(string, ProviderStackOSType?, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="stackOsType"> Stack OS Type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="FunctionAppStack"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<FunctionAppStack> GetFunctionAppStacksForLocationProviders(this TenantResource tenantResource, string location, ProviderStackOSType? stackOsType = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableAppServiceTenantResource(tenantResource).GetFunctionAppStacksForLocationProviders(location, stackOsType, cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for Get available Web app frameworks and their versions for location
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetWebAppStacksByLocationAsync(string, ProviderStackOSType?, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="stackOsType"> Stack OS Type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="WebAppStack"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<WebAppStack> GetWebAppStacksByLocationAsync(this TenantResource tenantResource, string location, ProviderStackOSType? stackOsType = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableAppServiceTenantResource(tenantResource).GetWebAppStacksByLocationAsync(location, stackOsType, cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for Get available Web app frameworks and their versions for location
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetWebAppStacksByLocation(string, ProviderStackOSType?, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="stackOsType"> Stack OS Type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="WebAppStack"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<WebAppStack> GetWebAppStacksByLocation(this TenantResource tenantResource, string location, ProviderStackOSType? stackOsType = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableAppServiceTenantResource(tenantResource).GetWebAppStacksByLocation(location, stackOsType, cancellationToken);
         }
 
         /// <summary>

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService
         private readonly ClientDiagnostics _deletedSitesClientDiagnostics;
         private readonly DeletedSites _deletedSitesRestClient;
         /// <summary> The location. </summary>
-        private readonly string _location;
+        private readonly AzureLocation _location;
 
         /// <summary> Initializes a new instance of DeletedSiteAtLocationCollection for mocking. </summary>
         protected DeletedSiteAtLocationCollection()
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         /// <param name="location"> The location for the resource. </param>
-        internal DeletedSiteAtLocationCollection(ArmClient client, ResourceIdentifier id, string location) : base(client, id)
+        internal DeletedSiteAtLocationCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
         {
             TryGetApiVersion(DeletedSiteAtLocationResource.ResourceType, out string deletedSiteAtLocationApiVersion);
             _location = location;
