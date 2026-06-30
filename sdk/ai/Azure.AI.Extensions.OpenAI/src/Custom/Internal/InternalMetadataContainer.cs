@@ -17,7 +17,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal InternalMetadataContainer(IDictionary<string, string> additionalProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            _additionalStringProperties = new ChangeTrackingDictionary<string, string>(additionalProperties);
+            _additionalStringProperties = additionalProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
