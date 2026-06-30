@@ -15,14 +15,19 @@
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs"
              Link="Shared\Core\AzureResourceProviderNamespaceAttribute.cs" />
     <!--
-      Link the analyzer-authoring skill's pure-C# validator so we can unit-test
-      it without depending on cu-skill.csproj (which opts out of central package
-      management and references the built SDK DLL via HintPath). The source is
-      intentionally pure System.Text.Json with no Azure.* imports — see the
-      SkillSchemaValidatorTests purity guard.
+      Link the analyzer-authoring skill's pure-C# validator + pure helpers
+      so we can unit-test them without depending on cu-skill.csproj (which
+      opts out of central package management and references the built SDK
+      DLL via HintPath). Each `.Helpers.cs` source is intentionally pure
+      System.Text.Json with no Azure.* imports — see the SkillSchemaValidator
+      and SkillCreateAndTest* tests.
     -->
     <Compile Include="..\..\tools\cu-skill\SchemaValidator.cs"
              Link="Skills\cu-skill\SchemaValidator.cs" />
+    <Compile Include="..\..\tools\cu-skill\CreateAndTestCommand.Helpers.cs"
+             Link="Skills\cu-skill\CreateAndTestCommand.Helpers.cs" />
+    <Compile Include="..\..\tools\cu-skill\CreateAndTestRouterCommand.Helpers.cs"
+             Link="Skills\cu-skill\CreateAndTestRouterCommand.Helpers.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -16,7 +16,7 @@
     per-category agent review.
 
   Both skills delegate to a small `cu-skill` .NET tool under
-  `.github/skills/_shared/` that exposes three subcommands —
+  `sdk/contentunderstanding/tools/cu-skill/` that exposes three subcommands —
   `extract-layout`, `create-and-test`, and `create-and-test-router` —
   and a pure-C# `SchemaValidator` that catches structural mistakes
   (unknown `baseAnalyzerId`, missing `fieldSchema`, malformed
