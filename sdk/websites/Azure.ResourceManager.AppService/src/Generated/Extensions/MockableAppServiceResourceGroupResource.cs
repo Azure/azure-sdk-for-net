@@ -8,115 +8,46 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableAppServiceResourceGroupResource : ArmResource
     {
-        private ClientDiagnostics _defaultClientDiagnostics;
-        private AppServiceManagementRestOperations _defaultRestClient;
-        private ClientDiagnostics _resourceHealthMetadataClientDiagnostics;
-        private ResourceHealthMetadataRestOperations _resourceHealthMetadataRestClient;
+        private ClientDiagnostics _webClientClientDiagnostics;
+        private WebClient _webClientRestClient;
+        private ClientDiagnostics _resourceHealthMetadataNonResourceOperationGroupClientDiagnostics;
+        private ResourceHealthMetadataNonResourceOperationGroup _resourceHealthMetadataNonResourceOperationGroupRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableAppServiceResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableAppServiceResourceGroupResource for mocking. </summary>
         protected MockableAppServiceResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableAppServiceResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableAppServiceResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableAppServiceResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private AppServiceManagementRestOperations DefaultRestClient => _defaultRestClient ??= new AppServiceManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ResourceHealthMetadataClientDiagnostics => _resourceHealthMetadataClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ResourceHealthMetadataRestOperations ResourceHealthMetadataRestClient => _resourceHealthMetadataRestClient ??= new ResourceHealthMetadataRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics WebClientClientDiagnostics => _webClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private WebClient WebClientRestClient => _webClientRestClient ??= new WebClient(WebClientClientDiagnostics, Pipeline, Endpoint, "2026-03-15");
 
-        /// <summary> Gets a collection of AppCertificateResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of AppCertificateResources and their operations over a AppCertificateResource. </returns>
-        public virtual AppCertificateCollection GetAppCertificates()
-        {
-            return GetCachedClient(client => new AppCertificateCollection(client, Id));
-        }
+        private ClientDiagnostics ResourceHealthMetadataNonResourceOperationGroupClientDiagnostics => _resourceHealthMetadataNonResourceOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary>
-        /// Description for Get a certificate.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Certificates_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppCertificateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> Name of the certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AppCertificateResource>> GetAppCertificateAsync(string name, CancellationToken cancellationToken = default)
-        {
-            return await GetAppCertificates().GetAsync(name, cancellationToken).ConfigureAwait(false);
-        }
+        private ResourceHealthMetadataNonResourceOperationGroup ResourceHealthMetadataNonResourceOperationGroupRestClient => _resourceHealthMetadataNonResourceOperationGroupRestClient ??= new ResourceHealthMetadataNonResourceOperationGroup(ResourceHealthMetadataNonResourceOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-03-15");
 
-        /// <summary>
-        /// Description for Get a certificate.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Certificates_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppCertificateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> Name of the certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AppCertificateResource> GetAppCertificate(string name, CancellationToken cancellationToken = default)
-        {
-            return GetAppCertificates().Get(name, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of AppServiceEnvironmentResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of AppServiceEnvironmentResources and their operations over a AppServiceEnvironmentResource. </returns>
+        /// <summary> Gets a collection of AppServiceEnvironments in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of AppServiceEnvironments and their operations over a AppServiceEnvironmentResource. </returns>
         public virtual AppServiceEnvironmentCollection GetAppServiceEnvironments()
         {
             return GetCachedClient(client => new AppServiceEnvironmentCollection(client, Id));
@@ -126,20 +57,16 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// Description for Get the properties of an App Service Environment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AppServiceEnvironments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AppServiceEnvironmentResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppServiceEnvironmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -150,6 +77,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<AppServiceEnvironmentResource>> GetAppServiceEnvironmentAsync(string name, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
             return await GetAppServiceEnvironments().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
@@ -157,20 +86,16 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// Description for Get the properties of an App Service Environment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AppServiceEnvironments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AppServiceEnvironmentResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppServiceEnvironmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -181,149 +106,13 @@ namespace Azure.ResourceManager.AppService.Mocking
         [ForwardsClientCalls]
         public virtual Response<AppServiceEnvironmentResource> GetAppServiceEnvironment(string name, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
             return GetAppServiceEnvironments().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of KubeEnvironmentResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of KubeEnvironmentResources and their operations over a KubeEnvironmentResource. </returns>
-        public virtual KubeEnvironmentCollection GetKubeEnvironments()
-        {
-            return GetCachedClient(client => new KubeEnvironmentCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Description for Get the properties of a Kubernetes Environment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>KubeEnvironments_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KubeEnvironmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> Name of the Kubernetes Environment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<KubeEnvironmentResource>> GetKubeEnvironmentAsync(string name, CancellationToken cancellationToken = default)
-        {
-            return await GetKubeEnvironments().GetAsync(name, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Description for Get the properties of a Kubernetes Environment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>KubeEnvironments_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KubeEnvironmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> Name of the Kubernetes Environment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<KubeEnvironmentResource> GetKubeEnvironment(string name, CancellationToken cancellationToken = default)
-        {
-            return GetKubeEnvironments().Get(name, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of StaticSiteResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of StaticSiteResources and their operations over a StaticSiteResource. </returns>
-        public virtual StaticSiteCollection GetStaticSites()
-        {
-            return GetCachedClient(client => new StaticSiteCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Description for Gets the details of a static site.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetStaticSite</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> Name of the static site. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<StaticSiteResource>> GetStaticSiteAsync(string name, CancellationToken cancellationToken = default)
-        {
-            return await GetStaticSites().GetAsync(name, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Description for Gets the details of a static site.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetStaticSite</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> Name of the static site. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<StaticSiteResource> GetStaticSite(string name, CancellationToken cancellationToken = default)
-        {
-            return GetStaticSites().Get(name, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of AppServicePlanResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of AppServicePlanResources and their operations over a AppServicePlanResource. </returns>
+        /// <summary> Gets a collection of AppServicePlans in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of AppServicePlans and their operations over a AppServicePlanResource. </returns>
         public virtual AppServicePlanCollection GetAppServicePlans()
         {
             return GetCachedClient(client => new AppServicePlanCollection(client, Id));
@@ -333,20 +122,16 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// Description for Get an App Service plan.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AppServicePlans_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AppServicePlans_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppServicePlanResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -357,6 +142,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<AppServicePlanResource>> GetAppServicePlanAsync(string name, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
             return await GetAppServicePlans().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
@@ -364,20 +151,16 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// Description for Get an App Service plan.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AppServicePlans_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AppServicePlans_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppServicePlanResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -388,11 +171,143 @@ namespace Azure.ResourceManager.AppService.Mocking
         [ForwardsClientCalls]
         public virtual Response<AppServicePlanResource> GetAppServicePlan(string name, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
             return GetAppServicePlans().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of WebSiteResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of WebSiteResources and their operations over a WebSiteResource. </returns>
+        /// <summary> Gets a collection of AppCertificates in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of AppCertificates and their operations over a AppCertificateResource. </returns>
+        public virtual AppCertificateCollection GetAppCertificates()
+        {
+            return GetCachedClient(client => new AppCertificateCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Description for Get a certificate.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Certificates_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Name of the certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AppCertificateResource>> GetAppCertificateAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetAppCertificates().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get a certificate.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Certificates_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Name of the certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AppCertificateResource> GetAppCertificate(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetAppCertificates().Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of KubeEnvironments in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of KubeEnvironments and their operations over a KubeEnvironmentResource. </returns>
+        public virtual KubeEnvironmentCollection GetKubeEnvironments()
+        {
+            return GetCachedClient(client => new KubeEnvironmentCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Description for Get the properties of a Kubernetes Environment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> KubeEnvironments_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Name of the Kubernetes Environment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<KubeEnvironmentResource>> GetKubeEnvironmentAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetKubeEnvironments().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get the properties of a Kubernetes Environment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> KubeEnvironments_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Name of the Kubernetes Environment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<KubeEnvironmentResource> GetKubeEnvironment(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetKubeEnvironments().Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of WebSites in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of WebSites and their operations over a WebSiteResource. </returns>
         public virtual WebSiteCollection GetWebSites()
         {
             return GetCachedClient(client => new WebSiteCollection(client, Id));
@@ -402,20 +317,16 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// Description for Gets the details of a web, mobile, or API app.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Sites_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -426,6 +337,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<WebSiteResource>> GetWebSiteAsync(string name, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
             return await GetWebSites().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
@@ -433,20 +346,16 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// Description for Gets the details of a web, mobile, or API app.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Sites_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -457,23 +366,155 @@ namespace Azure.ResourceManager.AppService.Mocking
         [ForwardsClientCalls]
         public virtual Response<WebSiteResource> GetWebSite(string name, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
             return GetWebSites().Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of StaticSites in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of StaticSites and their operations over a StaticSiteResource. </returns>
+        public virtual StaticSiteCollection GetStaticSites()
+        {
+            return GetCachedClient(client => new StaticSiteCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Description for Gets the details of a static site.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteARMResources_GetStaticSite. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Name of the static site. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<StaticSiteResource>> GetStaticSiteAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetStaticSites().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Gets the details of a static site.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteARMResources_GetStaticSite. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Name of the static site. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<StaticSiteResource> GetStaticSite(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetStaticSites().Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AiGateways in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of AiGateways and their operations over a AiGatewayResource. </returns>
+        public virtual AiGatewayCollection GetAiGateways()
+        {
+            return GetCachedClient(client => new AiGatewayCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a AiGateway
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/aigateways/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AiGateways_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the AI gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AiGatewayResource>> GetAiGatewayAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetAiGateways().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a AiGateway
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/aigateways/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AiGateways_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the AI gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AiGatewayResource> GetAiGateway(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetAiGateways().Get(name, cancellationToken);
         }
 
         /// <summary>
         /// Description for Validate if a resource can be created.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/validate</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/validate. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Validate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Web_Validate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -484,11 +525,21 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = DefaultClientDiagnostics.CreateScope("MockableAppServiceResourceGroupResource.Validate");
+            using DiagnosticScope scope = WebClientClientDiagnostics.CreateScope("MockableAppServiceResourceGroupResource.Validate");
             scope.Start();
             try
             {
-                var response = await DefaultRestClient.ValidateAsync(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = WebClientRestClient.CreateValidateRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), AppServiceValidateContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AppServiceValidateResult> response = Response.FromValue(AppServiceValidateResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -502,16 +553,16 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// Description for Validate if a resource can be created.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/validate</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/validate. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Validate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Web_Validate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -522,11 +573,21 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = DefaultClientDiagnostics.CreateScope("MockableAppServiceResourceGroupResource.Validate");
+            using DiagnosticScope scope = WebClientClientDiagnostics.CreateScope("MockableAppServiceResourceGroupResource.Validate");
             scope.Start();
             try
             {
-                var response = DefaultRestClient.Validate(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = WebClientRestClient.CreateValidateRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), AppServiceValidateContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AppServiceValidateResult> response = Response.FromValue(AppServiceValidateResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)

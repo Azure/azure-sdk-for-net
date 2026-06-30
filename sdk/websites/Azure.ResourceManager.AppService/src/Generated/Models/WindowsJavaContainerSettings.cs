@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Windows Java Container settings.
-    /// Serialized Name: WindowsJavaContainerSettings
-    /// </summary>
+    /// <summary> Windows Java Container settings. </summary>
     public partial class WindowsJavaContainerSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WindowsJavaContainerSettings"/>. </summary>
         internal WindowsJavaContainerSettings()
@@ -54,40 +23,16 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WindowsJavaContainerSettings"/>. </summary>
-        /// <param name="javaContainer">
-        /// Java container (runtime only).
-        /// Serialized Name: WindowsJavaContainerSettings.javaContainer
-        /// </param>
-        /// <param name="javaContainerVersion">
-        /// Java container version (runtime only).
-        /// Serialized Name: WindowsJavaContainerSettings.javaContainerVersion
-        /// </param>
-        /// <param name="isPreview">
-        /// &lt;code&gt;true&lt;/code&gt; if the stack is in preview; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: WindowsJavaContainerSettings.isPreview
-        /// </param>
-        /// <param name="isDeprecated">
-        /// &lt;code&gt;true&lt;/code&gt; if the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: WindowsJavaContainerSettings.isDeprecated
-        /// </param>
-        /// <param name="isHidden">
-        /// &lt;code&gt;true&lt;/code&gt; if the stack should be hidden; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: WindowsJavaContainerSettings.isHidden
-        /// </param>
-        /// <param name="endOfLifeOn">
-        /// End-of-life date for the minor version.
-        /// Serialized Name: WindowsJavaContainerSettings.endOfLifeDate
-        /// </param>
-        /// <param name="isAutoUpdate">
-        /// &lt;code&gt;true&lt;/code&gt; if the stack version is auto-updated; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: WindowsJavaContainerSettings.isAutoUpdate
-        /// </param>
-        /// <param name="isEarlyAccess">
-        /// &lt;code&gt;true&lt;/code&gt; if the minor version is early-access; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: WindowsJavaContainerSettings.isEarlyAccess
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WindowsJavaContainerSettings(string javaContainer, string javaContainerVersion, bool? isPreview, bool? isDeprecated, bool? isHidden, DateTimeOffset? endOfLifeOn, bool? isAutoUpdate, bool? isEarlyAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="javaContainer"> Java container (runtime only). </param>
+        /// <param name="javaContainerVersion"> Java container version (runtime only). </param>
+        /// <param name="isPreview"> &lt;code&gt;true&lt;/code&gt; if the stack is in preview; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isDeprecated"> &lt;code&gt;true&lt;/code&gt; if the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isHidden"> &lt;code&gt;true&lt;/code&gt; if the stack should be hidden; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="endOfLifeOn"> End-of-life date for the minor version. </param>
+        /// <param name="isAutoUpdate"> &lt;code&gt;true&lt;/code&gt; if the stack version is auto-updated; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isEarlyAccess"> &lt;code&gt;true&lt;/code&gt; if the minor version is early-access; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WindowsJavaContainerSettings(string javaContainer, string javaContainerVersion, bool? isPreview, bool? isDeprecated, bool? isHidden, DateTimeOffset? endOfLifeOn, bool? isAutoUpdate, bool? isEarlyAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             JavaContainer = javaContainer;
             JavaContainerVersion = javaContainerVersion;
@@ -97,55 +42,38 @@ namespace Azure.ResourceManager.AppService.Models
             EndOfLifeOn = endOfLifeOn;
             IsAutoUpdate = isAutoUpdate;
             IsEarlyAccess = isEarlyAccess;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Java container (runtime only).
-        /// Serialized Name: WindowsJavaContainerSettings.javaContainer
-        /// </summary>
+        /// <summary> Java container (runtime only). </summary>
         [WirePath("javaContainer")]
         public string JavaContainer { get; }
-        /// <summary>
-        /// Java container version (runtime only).
-        /// Serialized Name: WindowsJavaContainerSettings.javaContainerVersion
-        /// </summary>
+
+        /// <summary> Java container version (runtime only). </summary>
         [WirePath("javaContainerVersion")]
         public string JavaContainerVersion { get; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if the stack is in preview; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: WindowsJavaContainerSettings.isPreview
-        /// </summary>
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if the stack is in preview; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("isPreview")]
         public bool? IsPreview { get; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: WindowsJavaContainerSettings.isDeprecated
-        /// </summary>
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("isDeprecated")]
         public bool? IsDeprecated { get; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if the stack should be hidden; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: WindowsJavaContainerSettings.isHidden
-        /// </summary>
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if the stack should be hidden; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("isHidden")]
         public bool? IsHidden { get; }
-        /// <summary>
-        /// End-of-life date for the minor version.
-        /// Serialized Name: WindowsJavaContainerSettings.endOfLifeDate
-        /// </summary>
+
+        /// <summary> End-of-life date for the minor version. </summary>
         [WirePath("endOfLifeDate")]
         public DateTimeOffset? EndOfLifeOn { get; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if the stack version is auto-updated; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: WindowsJavaContainerSettings.isAutoUpdate
-        /// </summary>
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if the stack version is auto-updated; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("isAutoUpdate")]
         public bool? IsAutoUpdate { get; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if the minor version is early-access; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: WindowsJavaContainerSettings.isEarlyAccess
-        /// </summary>
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if the minor version is early-access; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("isEarlyAccess")]
         public bool? IsEarlyAccess { get; }
     }

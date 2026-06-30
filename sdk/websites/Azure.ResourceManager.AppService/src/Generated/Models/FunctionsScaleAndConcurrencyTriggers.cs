@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Scale and concurrency settings for the function app triggers.
-    /// Serialized Name: FunctionsScaleAndConcurrencyTriggers
-    /// </summary>
+    /// <summary> Scale and concurrency settings for the function app triggers. </summary>
     internal partial class FunctionsScaleAndConcurrencyTriggers
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FunctionsScaleAndConcurrencyTriggers"/>. </summary>
         public FunctionsScaleAndConcurrencyTriggers()
@@ -54,34 +23,32 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FunctionsScaleAndConcurrencyTriggers"/>. </summary>
-        /// <param name="http">
-        /// Scale and concurrency settings for the HTTP trigger.
-        /// Serialized Name: FunctionsScaleAndConcurrencyTriggers.http
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FunctionsScaleAndConcurrencyTriggers(FunctionsScaleAndConcurrencyTriggersHttp http, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="http"> Scale and concurrency settings for the HTTP trigger. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FunctionsScaleAndConcurrencyTriggers(FunctionsScaleAndConcurrencyTriggersHttp http, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Http = http;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Scale and concurrency settings for the HTTP trigger.
-        /// Serialized Name: FunctionsScaleAndConcurrencyTriggers.http
-        /// </summary>
+        /// <summary> Scale and concurrency settings for the HTTP trigger. </summary>
+        [WirePath("http")]
         internal FunctionsScaleAndConcurrencyTriggersHttp Http { get; set; }
-        /// <summary>
-        /// The maximum number of concurrent HTTP trigger invocations per instance.
-        /// Serialized Name: FunctionsScaleAndConcurrencyTriggersHttp.perInstanceConcurrency
-        /// </summary>
+
+        /// <summary> The maximum number of concurrent HTTP trigger invocations per instance. </summary>
         [WirePath("http.perInstanceConcurrency")]
         public int? ConcurrentHttpPerInstanceConcurrency
         {
-            get => Http is null ? default : Http.ConcurrentHttpPerInstanceConcurrency;
+            get
+            {
+                return Http is null ? default : Http.ConcurrentHttpPerInstanceConcurrency;
+            }
             set
             {
                 if (Http is null)
+                {
                     Http = new FunctionsScaleAndConcurrencyTriggersHttp();
+                }
                 Http.ConcurrentHttpPerInstanceConcurrency = value;
             }
         }

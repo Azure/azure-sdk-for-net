@@ -6,11 +6,13 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -21,51 +23,49 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class WebSiteHybridConnectionCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _webSiteHybridConnectionWebAppsClientDiagnostics;
-        private readonly WebAppsRestOperations _webSiteHybridConnectionWebAppsRestClient;
+        private readonly ClientDiagnostics _relayServiceConnectionEntitiesClientDiagnostics;
+        private readonly RelayServiceConnectionEntities _relayServiceConnectionEntitiesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="WebSiteHybridConnectionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of WebSiteHybridConnectionCollection for mocking. </summary>
         protected WebSiteHybridConnectionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WebSiteHybridConnectionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebSiteHybridConnectionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal WebSiteHybridConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _webSiteHybridConnectionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WebSiteHybridConnectionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(WebSiteHybridConnectionResource.ResourceType, out string webSiteHybridConnectionWebAppsApiVersion);
-            _webSiteHybridConnectionWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteHybridConnectionWebAppsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(WebSiteHybridConnectionResource.ResourceType, out string webSiteHybridConnectionApiVersion);
+            _relayServiceConnectionEntitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WebSiteHybridConnectionResource.ResourceType.Namespace, Diagnostics);
+            _relayServiceConnectionEntitiesRestClient = new RelayServiceConnectionEntities(_relayServiceConnectionEntitiesClientDiagnostics, Pipeline, Endpoint, webSiteHybridConnectionApiVersion ?? "2026-03-15");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != WebSiteResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSiteResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WebSiteResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Description for Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH).
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_CreateOrUpdateRelayServiceConnection</description>
+        /// <term> Operation Id. </term>
+        /// <description> RelayServiceConnectionEntities_CreateOrUpdateRelayServiceConnection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSiteHybridConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -73,23 +73,31 @@ namespace Azure.ResourceManager.AppService
         /// <param name="entityName"> Name of the hybrid connection. </param>
         /// <param name="data"> Details of the hybrid connection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<WebSiteHybridConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string entityName, RelayServiceConnectionEntityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _webSiteHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteHybridConnectionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _relayServiceConnectionEntitiesClientDiagnostics.CreateScope("WebSiteHybridConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _webSiteHybridConnectionWebAppsRestClient.CreateOrUpdateRelayServiceConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _webSiteHybridConnectionWebAppsRestClient.CreateCreateOrUpdateRelayServiceConnectionRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppServiceArmOperation<WebSiteHybridConnectionResource>(Response.FromValue(new WebSiteHybridConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _relayServiceConnectionEntitiesRestClient.CreateCreateOrUpdateRelayServiceConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, entityName, RelayServiceConnectionEntityData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RelayServiceConnectionEntityData> response = Response.FromValue(RelayServiceConnectionEntityData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AppServiceArmOperation<WebSiteHybridConnectionResource> operation = new AppServiceArmOperation<WebSiteHybridConnectionResource>(Response.FromValue(new WebSiteHybridConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -103,20 +111,16 @@ namespace Azure.ResourceManager.AppService
         /// Description for Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH).
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_CreateOrUpdateRelayServiceConnection</description>
+        /// <term> Operation Id. </term>
+        /// <description> RelayServiceConnectionEntities_CreateOrUpdateRelayServiceConnection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSiteHybridConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -124,23 +128,31 @@ namespace Azure.ResourceManager.AppService
         /// <param name="entityName"> Name of the hybrid connection. </param>
         /// <param name="data"> Details of the hybrid connection configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<WebSiteHybridConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string entityName, RelayServiceConnectionEntityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _webSiteHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteHybridConnectionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _relayServiceConnectionEntitiesClientDiagnostics.CreateScope("WebSiteHybridConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _webSiteHybridConnectionWebAppsRestClient.CreateOrUpdateRelayServiceConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, data, cancellationToken);
-                var uri = _webSiteHybridConnectionWebAppsRestClient.CreateCreateOrUpdateRelayServiceConnectionRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppServiceArmOperation<WebSiteHybridConnectionResource>(Response.FromValue(new WebSiteHybridConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _relayServiceConnectionEntitiesRestClient.CreateCreateOrUpdateRelayServiceConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, entityName, RelayServiceConnectionEntityData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RelayServiceConnectionEntityData> response = Response.FromValue(RelayServiceConnectionEntityData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AppServiceArmOperation<WebSiteHybridConnectionResource> operation = new AppServiceArmOperation<WebSiteHybridConnectionResource>(Response.FromValue(new WebSiteHybridConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +166,42 @@ namespace Azure.ResourceManager.AppService
         /// Description for Gets a hybrid connection configuration by its name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetRelayServiceConnection</description>
+        /// <term> Operation Id. </term>
+        /// <description> RelayServiceConnectionEntities_GetRelayServiceConnection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSiteHybridConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="entityName"> Name of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<WebSiteHybridConnectionResource>> GetAsync(string entityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
-            using var scope = _webSiteHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteHybridConnectionCollection.Get");
+            using DiagnosticScope scope = _relayServiceConnectionEntitiesClientDiagnostics.CreateScope("WebSiteHybridConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _webSiteHybridConnectionWebAppsRestClient.GetRelayServiceConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _relayServiceConnectionEntitiesRestClient.CreateGetRelayServiceConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, entityName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RelayServiceConnectionEntityData> response = Response.FromValue(RelayServiceConnectionEntityData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new WebSiteHybridConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +215,42 @@ namespace Azure.ResourceManager.AppService
         /// Description for Gets a hybrid connection configuration by its name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetRelayServiceConnection</description>
+        /// <term> Operation Id. </term>
+        /// <description> RelayServiceConnectionEntities_GetRelayServiceConnection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSiteHybridConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="entityName"> Name of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<WebSiteHybridConnectionResource> Get(string entityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
-            using var scope = _webSiteHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteHybridConnectionCollection.Get");
+            using DiagnosticScope scope = _relayServiceConnectionEntitiesClientDiagnostics.CreateScope("WebSiteHybridConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = _webSiteHybridConnectionWebAppsRestClient.GetRelayServiceConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _relayServiceConnectionEntitiesRestClient.CreateGetRelayServiceConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, entityName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RelayServiceConnectionEntityData> response = Response.FromValue(RelayServiceConnectionEntityData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new WebSiteHybridConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,36 +264,50 @@ namespace Azure.ResourceManager.AppService
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetRelayServiceConnection</description>
+        /// <term> Operation Id. </term>
+        /// <description> RelayServiceConnectionEntities_GetRelayServiceConnection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSiteHybridConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="entityName"> Name of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string entityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
-            using var scope = _webSiteHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteHybridConnectionCollection.Exists");
+            using DiagnosticScope scope = _relayServiceConnectionEntitiesClientDiagnostics.CreateScope("WebSiteHybridConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _webSiteHybridConnectionWebAppsRestClient.GetRelayServiceConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _relayServiceConnectionEntitiesRestClient.CreateGetRelayServiceConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, entityName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<RelayServiceConnectionEntityData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RelayServiceConnectionEntityData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RelayServiceConnectionEntityData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -287,36 +321,50 @@ namespace Azure.ResourceManager.AppService
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetRelayServiceConnection</description>
+        /// <term> Operation Id. </term>
+        /// <description> RelayServiceConnectionEntities_GetRelayServiceConnection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSiteHybridConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="entityName"> Name of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string entityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
-            using var scope = _webSiteHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteHybridConnectionCollection.Exists");
+            using DiagnosticScope scope = _relayServiceConnectionEntitiesClientDiagnostics.CreateScope("WebSiteHybridConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _webSiteHybridConnectionWebAppsRestClient.GetRelayServiceConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _relayServiceConnectionEntitiesRestClient.CreateGetRelayServiceConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, entityName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<RelayServiceConnectionEntityData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RelayServiceConnectionEntityData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RelayServiceConnectionEntityData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -330,38 +378,54 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetRelayServiceConnection</description>
+        /// <term> Operation Id. </term>
+        /// <description> RelayServiceConnectionEntities_GetRelayServiceConnection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSiteHybridConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="entityName"> Name of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<WebSiteHybridConnectionResource>> GetIfExistsAsync(string entityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
-            using var scope = _webSiteHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteHybridConnectionCollection.GetIfExists");
+            using DiagnosticScope scope = _relayServiceConnectionEntitiesClientDiagnostics.CreateScope("WebSiteHybridConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _webSiteHybridConnectionWebAppsRestClient.GetRelayServiceConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _relayServiceConnectionEntitiesRestClient.CreateGetRelayServiceConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, entityName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<RelayServiceConnectionEntityData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RelayServiceConnectionEntityData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RelayServiceConnectionEntityData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<WebSiteHybridConnectionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new WebSiteHybridConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -375,38 +439,54 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetRelayServiceConnection</description>
+        /// <term> Operation Id. </term>
+        /// <description> RelayServiceConnectionEntities_GetRelayServiceConnection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSiteHybridConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="entityName"> Name of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<WebSiteHybridConnectionResource> GetIfExists(string entityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
-            using var scope = _webSiteHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteHybridConnectionCollection.GetIfExists");
+            using DiagnosticScope scope = _relayServiceConnectionEntitiesClientDiagnostics.CreateScope("WebSiteHybridConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _webSiteHybridConnectionWebAppsRestClient.GetRelayServiceConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _relayServiceConnectionEntitiesRestClient.CreateGetRelayServiceConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, entityName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<RelayServiceConnectionEntityData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RelayServiceConnectionEntityData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RelayServiceConnectionEntityData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<WebSiteHybridConnectionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new WebSiteHybridConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

@@ -8,299 +8,267 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// ARM resource for a certificate.
-    /// Serialized Name: CertificatePatchResource
-    /// </summary>
+    /// <summary> ARM resource for a certificate. </summary>
     public partial class AppCertificatePatch : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppCertificatePatch"/>. </summary>
         public AppCertificatePatch()
         {
-            HostNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AppCertificatePatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="password">
-        /// Certificate password.
-        /// Serialized Name: CertificatePatchResource.properties.password
-        /// </param>
-        /// <param name="friendlyName">
-        /// Friendly name of the certificate.
-        /// Serialized Name: CertificatePatchResource.properties.friendlyName
-        /// </param>
-        /// <param name="subjectName">
-        /// Subject name of the certificate.
-        /// Serialized Name: CertificatePatchResource.properties.subjectName
-        /// </param>
-        /// <param name="hostNames">
-        /// Host names the certificate applies to.
-        /// Serialized Name: CertificatePatchResource.properties.hostNames
-        /// </param>
-        /// <param name="pfxBlob">
-        /// Pfx blob.
-        /// Serialized Name: CertificatePatchResource.properties.pfxBlob
-        /// </param>
-        /// <param name="siteName">
-        /// App name.
-        /// Serialized Name: CertificatePatchResource.properties.siteName
-        /// </param>
-        /// <param name="selfLink">
-        /// Self link.
-        /// Serialized Name: CertificatePatchResource.properties.selfLink
-        /// </param>
-        /// <param name="issuer">
-        /// Certificate issuer.
-        /// Serialized Name: CertificatePatchResource.properties.issuer
-        /// </param>
-        /// <param name="issueOn">
-        /// Certificate issue Date.
-        /// Serialized Name: CertificatePatchResource.properties.issueDate
-        /// </param>
-        /// <param name="expireOn">
-        /// Certificate expiration date.
-        /// Serialized Name: CertificatePatchResource.properties.expirationDate
-        /// </param>
-        /// <param name="thumbprintString">
-        /// Certificate thumbprint.
-        /// Serialized Name: CertificatePatchResource.properties.thumbprint
-        /// </param>
-        /// <param name="isValid">
-        /// Is the certificate valid?.
-        /// Serialized Name: CertificatePatchResource.properties.valid
-        /// </param>
-        /// <param name="cerBlob">
-        /// Raw bytes of .cer file
-        /// Serialized Name: CertificatePatchResource.properties.cerBlob
-        /// </param>
-        /// <param name="publicKeyHash">
-        /// Public key hash.
-        /// Serialized Name: CertificatePatchResource.properties.publicKeyHash
-        /// </param>
-        /// <param name="hostingEnvironmentProfile">
-        /// Specification for the App Service Environment to use for the certificate.
-        /// Serialized Name: CertificatePatchResource.properties.hostingEnvironmentProfile
-        /// </param>
-        /// <param name="keyVaultId">
-        /// Key Vault Csm resource Id.
-        /// Serialized Name: CertificatePatchResource.properties.keyVaultId
-        /// </param>
-        /// <param name="keyVaultSecretName">
-        /// Key Vault secret name.
-        /// Serialized Name: CertificatePatchResource.properties.keyVaultSecretName
-        /// </param>
-        /// <param name="keyVaultSecretStatus">
-        /// Status of the Key Vault secret.
-        /// Serialized Name: CertificatePatchResource.properties.keyVaultSecretStatus
-        /// </param>
-        /// <param name="serverFarmId">
-        /// Resource ID of the associated App Service plan, formatted as: "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}".
-        /// Serialized Name: CertificatePatchResource.properties.serverFarmId
-        /// </param>
-        /// <param name="canonicalName">
-        /// CNAME of the certificate to be issued via free certificate
-        /// Serialized Name: CertificatePatchResource.properties.canonicalName
-        /// </param>
-        /// <param name="domainValidationMethod">
-        /// Method of domain validation for free cert
-        /// Serialized Name: CertificatePatchResource.properties.domainValidationMethod
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppCertificatePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string password, string friendlyName, string subjectName, IList<string> hostNames, byte[] pfxBlob, string siteName, string selfLink, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expireOn, string thumbprintString, bool? isValid, byte[] cerBlob, string publicKeyHash, HostingEnvironmentProfile hostingEnvironmentProfile, ResourceIdentifier keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? keyVaultSecretStatus, ResourceIdentifier serverFarmId, string canonicalName, string domainValidationMethod, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> CertificatePatchResource resource specific properties. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AppCertificatePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CertificatePatchResourceProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Password = password;
-            FriendlyName = friendlyName;
-            SubjectName = subjectName;
-            HostNames = hostNames;
-            PfxBlob = pfxBlob;
-            SiteName = siteName;
-            SelfLink = selfLink;
-            Issuer = issuer;
-            IssueOn = issueOn;
-            ExpireOn = expireOn;
-            ThumbprintString = thumbprintString;
-            IsValid = isValid;
-            CerBlob = cerBlob;
-            PublicKeyHash = publicKeyHash;
-            HostingEnvironmentProfile = hostingEnvironmentProfile;
-            KeyVaultId = keyVaultId;
-            KeyVaultSecretName = keyVaultSecretName;
-            KeyVaultSecretStatus = keyVaultSecretStatus;
-            ServerFarmId = serverFarmId;
-            CanonicalName = canonicalName;
-            DomainValidationMethod = domainValidationMethod;
+            Properties = properties;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-        /// <summary>
-        /// Friendly name of the certificate.
-        /// Serialized Name: CertificatePatchResource.properties.friendlyName
-        /// </summary>
-        [WirePath("properties.friendlyName")]
-        public string FriendlyName { get; }
-        /// <summary>
-        /// Subject name of the certificate.
-        /// Serialized Name: CertificatePatchResource.properties.subjectName
-        /// </summary>
-        [WirePath("properties.subjectName")]
-        public string SubjectName { get; }
-        /// <summary>
-        /// Host names the certificate applies to.
-        /// Serialized Name: CertificatePatchResource.properties.hostNames
-        /// </summary>
-        [WirePath("properties.hostNames")]
-        public IList<string> HostNames { get; }
-        /// <summary>
-        /// Pfx blob.
-        /// Serialized Name: CertificatePatchResource.properties.pfxBlob
-        /// </summary>
-        [WirePath("properties.pfxBlob")]
-        public byte[] PfxBlob { get; set; }
-        /// <summary>
-        /// App name.
-        /// Serialized Name: CertificatePatchResource.properties.siteName
-        /// </summary>
-        [WirePath("properties.siteName")]
-        public string SiteName { get; }
-        /// <summary>
-        /// Self link.
-        /// Serialized Name: CertificatePatchResource.properties.selfLink
-        /// </summary>
-        [WirePath("properties.selfLink")]
-        public string SelfLink { get; }
-        /// <summary>
-        /// Certificate issuer.
-        /// Serialized Name: CertificatePatchResource.properties.issuer
-        /// </summary>
-        [WirePath("properties.issuer")]
-        public string Issuer { get; }
-        /// <summary>
-        /// Certificate issue Date.
-        /// Serialized Name: CertificatePatchResource.properties.issueDate
-        /// </summary>
-        [WirePath("properties.issueDate")]
-        public DateTimeOffset? IssueOn { get; }
-        /// <summary>
-        /// Certificate expiration date.
-        /// Serialized Name: CertificatePatchResource.properties.expirationDate
-        /// </summary>
-        [WirePath("properties.expirationDate")]
-        public DateTimeOffset? ExpireOn { get; }
-        /// <summary>
-        /// Certificate thumbprint.
-        /// Serialized Name: CertificatePatchResource.properties.thumbprint
-        /// </summary>
-        [WirePath("properties.thumbprint")]
-        public string ThumbprintString { get; }
-        /// <summary>
-        /// Is the certificate valid?.
-        /// Serialized Name: CertificatePatchResource.properties.valid
-        /// </summary>
-        [WirePath("properties.valid")]
-        public bool? IsValid { get; }
-        /// <summary>
-        /// Raw bytes of .cer file
-        /// Serialized Name: CertificatePatchResource.properties.cerBlob
-        /// </summary>
-        [WirePath("properties.cerBlob")]
-        public byte[] CerBlob { get; }
-        /// <summary>
-        /// Public key hash.
-        /// Serialized Name: CertificatePatchResource.properties.publicKeyHash
-        /// </summary>
-        [WirePath("properties.publicKeyHash")]
-        public string PublicKeyHash { get; }
-        /// <summary>
-        /// Specification for the App Service Environment to use for the certificate.
-        /// Serialized Name: CertificatePatchResource.properties.hostingEnvironmentProfile
-        /// </summary>
-        [WirePath("properties.hostingEnvironmentProfile")]
-        public HostingEnvironmentProfile HostingEnvironmentProfile { get; }
-        /// <summary>
-        /// Key Vault Csm resource Id.
-        /// Serialized Name: CertificatePatchResource.properties.keyVaultId
-        /// </summary>
-        [WirePath("properties.keyVaultId")]
-        public ResourceIdentifier KeyVaultId { get; set; }
-        /// <summary>
-        /// Key Vault secret name.
-        /// Serialized Name: CertificatePatchResource.properties.keyVaultSecretName
-        /// </summary>
-        [WirePath("properties.keyVaultSecretName")]
-        public string KeyVaultSecretName { get; set; }
-        /// <summary>
-        /// Status of the Key Vault secret.
-        /// Serialized Name: CertificatePatchResource.properties.keyVaultSecretStatus
-        /// </summary>
-        [WirePath("properties.keyVaultSecretStatus")]
-        public KeyVaultSecretStatus? KeyVaultSecretStatus { get; }
-        /// <summary>
-        /// Resource ID of the associated App Service plan, formatted as: "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}".
-        /// Serialized Name: CertificatePatchResource.properties.serverFarmId
-        /// </summary>
-        [WirePath("properties.serverFarmId")]
-        public ResourceIdentifier ServerFarmId { get; set; }
-        /// <summary>
-        /// CNAME of the certificate to be issued via free certificate
-        /// Serialized Name: CertificatePatchResource.properties.canonicalName
-        /// </summary>
-        [WirePath("properties.canonicalName")]
-        public string CanonicalName { get; set; }
-        /// <summary>
-        /// Method of domain validation for free cert
-        /// Serialized Name: CertificatePatchResource.properties.domainValidationMethod
-        /// </summary>
-        [WirePath("properties.domainValidationMethod")]
-        public string DomainValidationMethod { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+
+        /// <summary> CertificatePatchResource resource specific properties. </summary>
+        [WirePath("properties")]
+        internal CertificatePatchResourceProperties Properties { get; set; }
+
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+
+        /// <summary> Friendly name of the certificate. </summary>
+        [WirePath("properties.friendlyName")]
+        public string FriendlyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FriendlyName;
+            }
+        }
+
+        /// <summary> Subject name of the certificate. </summary>
+        [WirePath("properties.subjectName")]
+        public string SubjectName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubjectName;
+            }
+        }
+
+        /// <summary> Host names the certificate applies to. </summary>
+        [WirePath("properties.hostNames")]
+        public IList<string> HostNames
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificatePatchResourceProperties();
+                }
+                return Properties.HostNames;
+            }
+        }
+
+        /// <summary> App name. </summary>
+        [WirePath("properties.siteName")]
+        public string SiteName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SiteName;
+            }
+        }
+
+        /// <summary> Self link. </summary>
+        [WirePath("properties.selfLink")]
+        public string SelfLink
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SelfLink;
+            }
+        }
+
+        /// <summary> Certificate issuer. </summary>
+        [WirePath("properties.issuer")]
+        public string Issuer
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Issuer;
+            }
+        }
+
+        /// <summary> Certificate issue Date. </summary>
+        [WirePath("properties.issueDate")]
+        public DateTimeOffset? IssueOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IssueOn;
+            }
+        }
+
+        /// <summary> Certificate expiration date. </summary>
+        [WirePath("properties.expirationDate")]
+        public DateTimeOffset? ExpireOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpireOn;
+            }
+        }
+
+        /// <summary> Certificate thumbprint. </summary>
+        [WirePath("properties.thumbprint")]
+        public string ThumbprintString
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ThumbprintString;
+            }
+        }
+
+        /// <summary> Is the certificate valid?. </summary>
+        [WirePath("properties.valid")]
+        public bool? IsValid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsValid;
+            }
+        }
+
+        /// <summary> Public key hash. </summary>
+        [WirePath("properties.publicKeyHash")]
+        public string PublicKeyHash
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicKeyHash;
+            }
+        }
+
+        /// <summary> Specification for the App Service Environment to use for the certificate. </summary>
+        [WirePath("properties.hostingEnvironmentProfile")]
+        public HostingEnvironmentProfile HostingEnvironmentProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HostingEnvironmentProfile;
+            }
+        }
+
+        /// <summary> Key Vault Csm resource Id. </summary>
+        [WirePath("properties.keyVaultId")]
+        public ResourceIdentifier KeyVaultId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KeyVaultId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificatePatchResourceProperties();
+                }
+                Properties.KeyVaultId = value;
+            }
+        }
+
+        /// <summary> Key Vault secret name. </summary>
+        [WirePath("properties.keyVaultSecretName")]
+        public string KeyVaultSecretName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KeyVaultSecretName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificatePatchResourceProperties();
+                }
+                Properties.KeyVaultSecretName = value;
+            }
+        }
+
+        /// <summary> Status of the Key Vault secret. </summary>
+        [WirePath("properties.keyVaultSecretStatus")]
+        public KeyVaultSecretStatus? KeyVaultSecretStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KeyVaultSecretStatus;
+            }
+        }
+
+        /// <summary> Resource ID of the associated App Service plan, formatted as: "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}". </summary>
+        [WirePath("properties.serverFarmId")]
+        public ResourceIdentifier ServerFarmId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServerFarmId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificatePatchResourceProperties();
+                }
+                Properties.ServerFarmId = value;
+            }
+        }
+
+        /// <summary> CNAME of the certificate to be issued via free certificate. </summary>
+        [WirePath("properties.canonicalName")]
+        public string CanonicalName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CanonicalName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificatePatchResourceProperties();
+                }
+                Properties.CanonicalName = value;
+            }
+        }
+
+        /// <summary> Method of domain validation for free cert. </summary>
+        [WirePath("properties.domainValidationMethod")]
+        public string DomainValidationMethod
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DomainValidationMethod;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificatePatchResourceProperties();
+                }
+                Properties.DomainValidationMethod = value;
+            }
+        }
     }
 }

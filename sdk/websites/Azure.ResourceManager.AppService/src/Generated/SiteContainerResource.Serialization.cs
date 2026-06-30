@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
+    /// <summary></summary>
     public partial class SiteContainerResource : IJsonModel<SiteContainerData>
     {
-        private static SiteContainerData s_dataDeserializationInstance;
-        private static SiteContainerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SiteContainerData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SiteContainerData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SiteContainerData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SiteContainerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SiteContainerData>)Data).Write(writer, options);
 
-        SiteContainerData IJsonModel<SiteContainerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SiteContainerData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SiteContainerData IJsonModel<SiteContainerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SiteContainerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SiteContainerData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SiteContainerData IPersistableModel<SiteContainerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SiteContainerData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<SiteContainerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SiteContainerData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SiteContainerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }
