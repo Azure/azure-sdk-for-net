@@ -31,6 +31,24 @@ public class ResponseContext
     public string ResponseId { get; }
 
     /// <summary>
+    /// Gets the stable identifier for the multi-turn conversation chain this response belongs to.
+    /// <para>
+    /// Every response in the same logical conversation shares this value, so handlers can use it
+    /// as a key into their own application-side conversation state (e.g., upstream SDK session IDs,
+    /// per-conversation rate limits, conversation indexes). It is the SHA-256 hash digest of
+    /// <c>{agentName}:{sessionId}:{discriminator}:{partition}</c>, where the partition is extracted
+    /// from the request's conversation ID, the <c>previous_response_id</c> chain, or this response's
+    /// own ID, and the discriminator namespaces the partition by source type. Including the agent
+    /// name and session ID scopes the value so it does not collide across agents or sessions.
+    /// </para>
+    /// <para>
+    /// The base implementation returns <see cref="ResponseId"/>; enhanced contexts override this to
+    /// derive the value from the request's conversation context.
+    /// </para>
+    /// </summary>
+    public virtual string ConversationChainId => ResponseId;
+
+    /// <summary>
     /// Gets or sets whether the server is shutting down.
     /// Handlers can use this to distinguish shutdown from explicit cancel or client disconnect.
     /// </summary>

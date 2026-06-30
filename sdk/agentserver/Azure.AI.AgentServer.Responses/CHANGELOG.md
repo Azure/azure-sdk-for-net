@@ -3,6 +3,7 @@
 ## 1.0.0-beta.7 (Unreleased)
 
 ### Features Added
+- Added `ResponseContext.ConversationChainId`, a deterministic correlation key for the logical conversation a response belongs to. It is the SHA-256 hash digest of `{agentName}:{sessionId}:{discriminator}:{partition}`, where the partition is extracted from the conversation ID, previous response ID, or response ID, and the discriminator namespaces the partition by source type.
 
 ### Breaking Changes
 
