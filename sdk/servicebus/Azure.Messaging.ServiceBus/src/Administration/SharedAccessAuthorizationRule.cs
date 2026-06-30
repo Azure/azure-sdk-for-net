@@ -305,10 +305,18 @@ namespace Azure.Messaging.ServiceBus.Administration
                         rule.KeyName = element.Value;
                         break;
                     case "PrimaryKey":
-                        rule.PrimaryKey = element.Value;
+                        // Assign the backing field directly rather than via the validating
+                        // PrimaryKey setter. The service masks SAS key values (returning an
+                        // empty string) when the caller lacks the listkeys/action permission,
+                        // and the deserialization path must accept whatever the service returns
+                        // rather than applying user-input validation. This matches the parse
+                        // behavior of the Java, JavaScript, Go, and Python Service Bus SDKs.
+                        rule.internalPrimaryKey = element.Value;
                         break;
                     case "SecondaryKey":
-                        rule.SecondaryKey = element.Value;
+                        // See the PrimaryKey case above: assign the backing field directly so a
+                        // masked/empty key in the service response does not throw.
+                        rule.internalSecondaryKey = element.Value;
                         break;
                     case "Rights":
                         var rights = new List<AccessRights>();
