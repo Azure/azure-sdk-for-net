@@ -22,20 +22,20 @@ namespace Azure.ResourceManager.DevHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DeveloperHubPullRequestContent"/>. </summary>
-        /// <param name="prURL"> The URL to the Pull Request submitted against the users repository. </param>
+        /// <param name="prUri"> The URL to the Pull Request submitted against the users repository. </param>
         /// <param name="pullNumber"> The number associated with the submitted pull request. </param>
         /// <param name="prStatus"> The status of the Pull Request submitted against the users repository. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeveloperHubPullRequestContent(string prURL, int? pullNumber, PullRequestStatus? prStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeveloperHubPullRequestContent(string prUri, int? pullNumber, PullRequestStatus? prStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            PrURL = prURL;
+            PrUri = prUri;
             PullNumber = pullNumber;
             PrStatus = prStatus;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The URL to the Pull Request submitted against the users repository. </summary>
-        public string PrURL { get; }
+        public string PrUri { get; }
 
         /// <summary> The number associated with the submitted pull request. </summary>
         public int? PullNumber { get; }

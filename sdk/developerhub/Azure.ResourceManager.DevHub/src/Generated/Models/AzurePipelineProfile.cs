@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <param name="lastWorkflowRun"></param>
         /// <param name="authStatus"> Determines the authorization status of requests. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzurePipelineProfile(ADORepository repository, string armServiceConnection, Build build, Deployment deployment, string @namespace, ResourceIdentifier acr, ResourceIdentifier clusterId, DeveloperHubPullRequestContent pullRequest, WorkflowRun lastWorkflowRun, AuthorizationStatus? authStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzurePipelineProfile(AdoRepository repository, string armServiceConnection, Build build, Deployment deployment, string @namespace, ResourceIdentifier acr, ResourceIdentifier clusterId, DeveloperHubPullRequestContent pullRequest, WorkflowRun lastWorkflowRun, AuthorizationStatus? authStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Repository = repository;
             ArmServiceConnection = armServiceConnection;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevHub.Models
         }
 
         /// <summary> Details of the ADO repository associated with the workflow. </summary>
-        public ADORepository Repository { get; set; }
+        public AdoRepository Repository { get; set; }
 
         /// <summary> The name of the ARM Service Connection the pipeline is associated with. </summary>
         public string ArmServiceConnection { get; set; }

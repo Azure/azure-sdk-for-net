@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.DevHub;
 
 namespace Azure.ResourceManager.DevHub.Models
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <param name="templateDetails"></param>
         /// <param name="quickStartTemplateType"> Determines the authorization status of requests. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IacTemplateProperties(string templateName, string sourceResourceId, string instanceStage, string instanceName, IList<IacTemplateDetails> templateDetails, QuickStartTemplateType? quickStartTemplateType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IacTemplateProperties(string templateName, ResourceIdentifier sourceResourceId, string instanceStage, string instanceName, IList<IacTemplateDetails> templateDetails, QuickStartTemplateType? quickStartTemplateType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TemplateName = templateName;
             SourceResourceId = sourceResourceId;
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.DevHub.Models
         public string TemplateName { get; set; }
 
         /// <summary> the source store of the template. </summary>
-        public string SourceResourceId { get; set; }
+        public ResourceIdentifier SourceResourceId { get; set; }
 
         /// <summary> the source stage of the template. </summary>
         public string InstanceStage { get; set; }

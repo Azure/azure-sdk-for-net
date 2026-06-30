@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.DevHub.Models
                 writer.WritePropertyName("parameterKind"u8);
                 writer.WriteStringValue(ParameterKind.Value.ToString());
             }
-            if (Optional.IsDefined(Required))
+            if (Optional.IsDefined(IsRequired))
             {
                 writer.WritePropertyName("required"u8);
-                writer.WriteBooleanValue(Required.Value);
+                writer.WriteBooleanValue(IsRequired.Value);
             }
             if (Optional.IsDefined(Default))
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DevHub.Models
             string description = default;
             ParameterType? parameterType = default;
             ParameterKind? parameterKind = default;
-            bool? @required = default;
+            bool? isRequired = default;
             ParameterDefault @default = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DevHub.Models
                     {
                         continue;
                     }
-                    @required = prop.Value.GetBoolean();
+                    isRequired = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("default"u8))
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DevHub.Models
                 description,
                 parameterType,
                 parameterKind,
-                @required,
+                isRequired,
                 @default,
                 additionalBinaryDataProperties);
         }

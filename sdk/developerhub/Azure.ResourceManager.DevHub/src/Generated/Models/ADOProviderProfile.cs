@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DevHub.Models
 {
     /// <summary> Details of the GitHub repository associated with the workflow. </summary>
-    public partial class ADOProviderProfile
+    public partial class AdoProviderProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ADOProviderProfile"/>. </summary>
-        public ADOProviderProfile()
+        /// <summary> Initializes a new instance of <see cref="AdoProviderProfile"/>. </summary>
+        public AdoProviderProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ADOProviderProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdoProviderProfile"/>. </summary>
         /// <param name="repository"> Details of the ADO repository associated with the workflow. </param>
         /// <param name="armServiceConnection"> The name of the ARM Service Connection the pipeline is associated with. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ADOProviderProfile(ADORepository repository, string armServiceConnection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AdoProviderProfile(AdoRepository repository, string armServiceConnection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Repository = repository;
             ArmServiceConnection = armServiceConnection;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DevHub.Models
         }
 
         /// <summary> Details of the ADO repository associated with the workflow. </summary>
-        public ADORepository Repository { get; set; }
+        public AdoRepository Repository { get; set; }
 
         /// <summary> The name of the ARM Service Connection the pipeline is associated with. </summary>
         public string ArmServiceConnection { get; set; }

@@ -20,28 +20,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.DevHub
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WorkflowResource"/> and their operations.
-    /// Each <see cref="WorkflowResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="WorkflowCollection"/> instance call the GetWorkflows method from an instance of <see cref="ResourceGroupResource"/>.
+    /// A class representing a collection of <see cref="DevHubWorkflowResource"/> and their operations.
+    /// Each <see cref="DevHubWorkflowResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DevHubWorkflowCollection"/> instance call the GetDevHubWorkflows method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class WorkflowCollection : ArmCollection, IEnumerable<WorkflowResource>, IAsyncEnumerable<WorkflowResource>
+    public partial class DevHubWorkflowCollection : ArmCollection, IEnumerable<DevHubWorkflowResource>, IAsyncEnumerable<DevHubWorkflowResource>
     {
         private readonly ClientDiagnostics _workflowClientDiagnostics;
         private readonly Workflow _workflowRestClient;
 
-        /// <summary> Initializes a new instance of WorkflowCollection for mocking. </summary>
-        protected WorkflowCollection()
+        /// <summary> Initializes a new instance of DevHubWorkflowCollection for mocking. </summary>
+        protected DevHubWorkflowCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkflowCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevHubWorkflowCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal WorkflowCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DevHubWorkflowCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(WorkflowResource.ResourceType, out string workflowApiVersion);
-            _workflowClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevHub", WorkflowResource.ResourceType.Namespace, Diagnostics);
-            _workflowRestClient = new Workflow(_workflowClientDiagnostics, Pipeline, Endpoint, workflowApiVersion ?? "2025-03-01-preview");
+            TryGetApiVersion(DevHubWorkflowResource.ResourceType, out string devHubWorkflowApiVersion);
+            _workflowClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevHub", DevHubWorkflowResource.ResourceType.Namespace, Diagnostics);
+            _workflowRestClient = new Workflow(_workflowClientDiagnostics, Pipeline, Endpoint, devHubWorkflowApiVersion ?? "2025-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.DevHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<WorkflowResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string workflowName, WorkflowData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DevHubWorkflowResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string workflowName, DevHubWorkflowData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _workflowClientDiagnostics.CreateScope("WorkflowCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workflowClientDiagnostics.CreateScope("DevHubWorkflowCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workflowRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workflowName, WorkflowData.ToRequestContent(data), context);
+                HttpMessage message = _workflowRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workflowName, DevHubWorkflowData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<WorkflowData> response = Response.FromValue(WorkflowData.FromResponse(result), result);
+                Response<DevHubWorkflowData> response = Response.FromValue(DevHubWorkflowData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                DevHubArmOperation<WorkflowResource> operation = new DevHubArmOperation<WorkflowResource>(Response.FromValue(new WorkflowResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                DevHubArmOperation<DevHubWorkflowResource> operation = new DevHubArmOperation<DevHubWorkflowResource>(Response.FromValue(new DevHubWorkflowResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -133,12 +133,12 @@ namespace Azure.ResourceManager.DevHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<WorkflowResource> CreateOrUpdate(WaitUntil waitUntil, string workflowName, WorkflowData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DevHubWorkflowResource> CreateOrUpdate(WaitUntil waitUntil, string workflowName, DevHubWorkflowData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _workflowClientDiagnostics.CreateScope("WorkflowCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workflowClientDiagnostics.CreateScope("DevHubWorkflowCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -146,12 +146,12 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workflowRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workflowName, WorkflowData.ToRequestContent(data), context);
+                HttpMessage message = _workflowRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workflowName, DevHubWorkflowData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<WorkflowData> response = Response.FromValue(WorkflowData.FromResponse(result), result);
+                Response<DevHubWorkflowData> response = Response.FromValue(DevHubWorkflowData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                DevHubArmOperation<WorkflowResource> operation = new DevHubArmOperation<WorkflowResource>(Response.FromValue(new WorkflowResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                DevHubArmOperation<DevHubWorkflowResource> operation = new DevHubArmOperation<DevHubWorkflowResource>(Response.FromValue(new DevHubWorkflowResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -186,11 +186,11 @@ namespace Azure.ResourceManager.DevHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<WorkflowResource>> GetAsync(string workflowName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevHubWorkflowResource>> GetAsync(string workflowName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
 
-            using DiagnosticScope scope = _workflowClientDiagnostics.CreateScope("WorkflowCollection.Get");
+            using DiagnosticScope scope = _workflowClientDiagnostics.CreateScope("DevHubWorkflowCollection.Get");
             scope.Start();
             try
             {
@@ -200,12 +200,12 @@ namespace Azure.ResourceManager.DevHub
                 };
                 HttpMessage message = _workflowRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workflowName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<WorkflowData> response = Response.FromValue(WorkflowData.FromResponse(result), result);
+                Response<DevHubWorkflowData> response = Response.FromValue(DevHubWorkflowData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new WorkflowResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevHubWorkflowResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -235,11 +235,11 @@ namespace Azure.ResourceManager.DevHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<WorkflowResource> Get(string workflowName, CancellationToken cancellationToken = default)
+        public virtual Response<DevHubWorkflowResource> Get(string workflowName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
 
-            using DiagnosticScope scope = _workflowClientDiagnostics.CreateScope("WorkflowCollection.Get");
+            using DiagnosticScope scope = _workflowClientDiagnostics.CreateScope("DevHubWorkflowCollection.Get");
             scope.Start();
             try
             {
@@ -249,12 +249,12 @@ namespace Azure.ResourceManager.DevHub
                 };
                 HttpMessage message = _workflowRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workflowName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<WorkflowData> response = Response.FromValue(WorkflowData.FromResponse(result), result);
+                Response<DevHubWorkflowData> response = Response.FromValue(DevHubWorkflowData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new WorkflowResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevHubWorkflowResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -282,20 +282,20 @@ namespace Azure.ResourceManager.DevHub
         /// </summary>
         /// <param name="managedClusterResource"> The ManagedCluster resource associated with the workflows. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkflowResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WorkflowResource> GetAllAsync(string managedClusterResource = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevHubWorkflowResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DevHubWorkflowResource> GetAllAsync(string managedClusterResource = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkflowData, WorkflowResource>(new WorkflowGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevHubWorkflowData, DevHubWorkflowResource>(new WorkflowGetByResourceGroupAsyncCollectionResultOfT(
                 _workflowRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 managedClusterResource,
                 context,
-                "WorkflowCollection.GetAll"), data => new WorkflowResource(Client, data));
+                "DevHubWorkflowCollection.GetAll"), data => new DevHubWorkflowResource(Client, data));
         }
 
         /// <summary>
@@ -317,20 +317,20 @@ namespace Azure.ResourceManager.DevHub
         /// </summary>
         /// <param name="managedClusterResource"> The ManagedCluster resource associated with the workflows. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkflowResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WorkflowResource> GetAll(string managedClusterResource = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevHubWorkflowResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DevHubWorkflowResource> GetAll(string managedClusterResource = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkflowData, WorkflowResource>(new WorkflowGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<DevHubWorkflowData, DevHubWorkflowResource>(new WorkflowGetByResourceGroupCollectionResultOfT(
                 _workflowRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 managedClusterResource,
                 context,
-                "WorkflowCollection.GetAll"), data => new WorkflowResource(Client, data));
+                "DevHubWorkflowCollection.GetAll"), data => new DevHubWorkflowResource(Client, data));
         }
 
         /// <summary>
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.DevHub
         {
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
 
-            using DiagnosticScope scope = _workflowClientDiagnostics.CreateScope("WorkflowCollection.Exists");
+            using DiagnosticScope scope = _workflowClientDiagnostics.CreateScope("DevHubWorkflowCollection.Exists");
             scope.Start();
             try
             {
@@ -369,14 +369,14 @@ namespace Azure.ResourceManager.DevHub
                 HttpMessage message = _workflowRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workflowName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<WorkflowData> response = default;
+                Response<DevHubWorkflowData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(WorkflowData.FromResponse(result), result);
+                        response = Response.FromValue(DevHubWorkflowData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((WorkflowData)null, result);
+                        response = Response.FromValue((DevHubWorkflowData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.DevHub
         {
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
 
-            using DiagnosticScope scope = _workflowClientDiagnostics.CreateScope("WorkflowCollection.Exists");
+            using DiagnosticScope scope = _workflowClientDiagnostics.CreateScope("DevHubWorkflowCollection.Exists");
             scope.Start();
             try
             {
@@ -426,14 +426,14 @@ namespace Azure.ResourceManager.DevHub
                 HttpMessage message = _workflowRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workflowName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<WorkflowData> response = default;
+                Response<DevHubWorkflowData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(WorkflowData.FromResponse(result), result);
+                        response = Response.FromValue(DevHubWorkflowData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((WorkflowData)null, result);
+                        response = Response.FromValue((DevHubWorkflowData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -468,11 +468,11 @@ namespace Azure.ResourceManager.DevHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<WorkflowResource>> GetIfExistsAsync(string workflowName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<DevHubWorkflowResource>> GetIfExistsAsync(string workflowName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
 
-            using DiagnosticScope scope = _workflowClientDiagnostics.CreateScope("WorkflowCollection.GetIfExists");
+            using DiagnosticScope scope = _workflowClientDiagnostics.CreateScope("DevHubWorkflowCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -483,23 +483,23 @@ namespace Azure.ResourceManager.DevHub
                 HttpMessage message = _workflowRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workflowName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<WorkflowData> response = default;
+                Response<DevHubWorkflowData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(WorkflowData.FromResponse(result), result);
+                        response = Response.FromValue(DevHubWorkflowData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((WorkflowData)null, result);
+                        response = Response.FromValue((DevHubWorkflowData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<WorkflowResource>(response.GetRawResponse());
+                    return new NoValueResponse<DevHubWorkflowResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new WorkflowResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevHubWorkflowResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -529,11 +529,11 @@ namespace Azure.ResourceManager.DevHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<WorkflowResource> GetIfExists(string workflowName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<DevHubWorkflowResource> GetIfExists(string workflowName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
 
-            using DiagnosticScope scope = _workflowClientDiagnostics.CreateScope("WorkflowCollection.GetIfExists");
+            using DiagnosticScope scope = _workflowClientDiagnostics.CreateScope("DevHubWorkflowCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -544,23 +544,23 @@ namespace Azure.ResourceManager.DevHub
                 HttpMessage message = _workflowRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workflowName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<WorkflowData> response = default;
+                Response<DevHubWorkflowData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(WorkflowData.FromResponse(result), result);
+                        response = Response.FromValue(DevHubWorkflowData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((WorkflowData)null, result);
+                        response = Response.FromValue((DevHubWorkflowData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<WorkflowResource>(response.GetRawResponse());
+                    return new NoValueResponse<DevHubWorkflowResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new WorkflowResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevHubWorkflowResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.DevHub
             }
         }
 
-        IEnumerator<WorkflowResource> IEnumerable<WorkflowResource>.GetEnumerator()
+        IEnumerator<DevHubWorkflowResource> IEnumerable<DevHubWorkflowResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.DevHub
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<WorkflowResource> IAsyncEnumerable<WorkflowResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<DevHubWorkflowResource> IAsyncEnumerable<DevHubWorkflowResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

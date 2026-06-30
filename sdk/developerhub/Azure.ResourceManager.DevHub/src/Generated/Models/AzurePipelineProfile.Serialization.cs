@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DevHub.Models
             {
                 return null;
             }
-            ADORepository repository = default;
+            AdoRepository repository = default;
             string armServiceConnection = default;
             Build build = default;
             Deployment deployment = default;
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DevHub.Models
                     {
                         continue;
                     }
-                    repository = ADORepository.DeserializeADORepository(prop.Value, options);
+                    repository = AdoRepository.DeserializeAdoRepository(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("armServiceConnection"u8))

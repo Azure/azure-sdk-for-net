@@ -18,10 +18,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DevHub
 {
     /// <summary> Workflow. </summary>
-    public partial class WorkflowData : TrackedResourceData, IJsonModel<WorkflowData>
+    public partial class DevHubWorkflowData : TrackedResourceData, IJsonModel<DevHubWorkflowData>
     {
-        /// <summary> Initializes a new instance of <see cref="WorkflowData"/> for deserialization. </summary>
-        internal WorkflowData()
+        /// <summary> Initializes a new instance of <see cref="DevHubWorkflowData"/> for deserialization. </summary>
+        internal DevHubWorkflowData()
         {
         }
 
@@ -29,62 +29,62 @@ namespace Azure.ResourceManager.DevHub
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkflowData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DevHubWorkflowData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeWorkflowData(document.RootElement, options);
+                        return DeserializeDevHubWorkflowData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkflowData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevHubWorkflowData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkflowData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DevHubWorkflowData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDevHubContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(WorkflowData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevHubWorkflowData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WorkflowData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DevHubWorkflowData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WorkflowData IPersistableModel<WorkflowData>.Create(BinaryData data, ModelReaderWriterOptions options) => (WorkflowData)PersistableModelCreateCore(data, options);
+        DevHubWorkflowData IPersistableModel<DevHubWorkflowData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DevHubWorkflowData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WorkflowData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DevHubWorkflowData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="workflowData"> The <see cref="WorkflowData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(WorkflowData workflowData)
+        /// <param name="devHubWorkflowData"> The <see cref="DevHubWorkflowData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DevHubWorkflowData devHubWorkflowData)
         {
-            if (workflowData == null)
+            if (devHubWorkflowData == null)
             {
                 return null;
             }
-            return RequestContent.Create(workflowData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(devHubWorkflowData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="WorkflowData"/> from. </param>
-        internal static WorkflowData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DevHubWorkflowData"/> from. </param>
+        internal static DevHubWorkflowData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeWorkflowData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeDevHubWorkflowData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<WorkflowData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DevHubWorkflowData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.DevHub
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkflowData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DevHubWorkflowData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkflowData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DevHubWorkflowData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -125,24 +125,24 @@ namespace Azure.ResourceManager.DevHub
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WorkflowData IJsonModel<WorkflowData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (WorkflowData)JsonModelCreateCore(ref reader, options);
+        DevHubWorkflowData IJsonModel<DevHubWorkflowData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DevHubWorkflowData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkflowData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DevHubWorkflowData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkflowData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DevHubWorkflowData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeWorkflowData(document.RootElement, options);
+            return DeserializeDevHubWorkflowData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static WorkflowData DeserializeWorkflowData(JsonElement element, ModelReaderWriterOptions options)
+        internal static DevHubWorkflowData DeserializeDevHubWorkflowData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DevHub
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WorkflowData(
+            return new DevHubWorkflowData(
                 id,
                 name,
                 resourceType,

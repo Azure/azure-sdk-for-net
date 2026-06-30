@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.DevHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DeveloperHubGitHubOAuthInfoResponseResult"/>. </summary>
-        /// <param name="authURL"> URL for authorizing the Developer Hub GitHub App. </param>
+        /// <param name="authUri"> URL for authorizing the Developer Hub GitHub App. </param>
         /// <param name="token"> OAuth token used to make calls to GitHub. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeveloperHubGitHubOAuthInfoResponseResult(string authURL, string token, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeveloperHubGitHubOAuthInfoResponseResult(string authUri, string token, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AuthURL = authURL;
+            AuthUri = authUri;
             Token = token;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> URL for authorizing the Developer Hub GitHub App. </summary>
-        public string AuthURL { get; }
+        public string AuthUri { get; }
 
         /// <summary> OAuth token used to make calls to GitHub. </summary>
         public string Token { get; }

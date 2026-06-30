@@ -82,21 +82,21 @@ namespace Azure.ResourceManager.DevHub
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WorkflowResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="DevHubWorkflowResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevHubArmClient.GetWorkflowResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevHubArmClient.GetDevHubWorkflowResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WorkflowResource"/> object. </returns>
-        public static WorkflowResource GetWorkflowResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevHubWorkflowResource"/> object. </returns>
+        public static DevHubWorkflowResource GetDevHubWorkflowResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDevHubArmClient(client).GetWorkflowResource(id);
+            return GetMockableDevHubArmClient(client).GetDevHubWorkflowResource(id);
         }
 
         /// <summary>
@@ -118,21 +118,21 @@ namespace Azure.ResourceManager.DevHub
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="TemplateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="DevHubTemplateResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevHubArmClient.GetTemplateResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevHubArmClient.GetDevHubTemplateResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="TemplateResource"/> object. </returns>
-        public static TemplateResource GetTemplateResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevHubTemplateResource"/> object. </returns>
+        public static DevHubTemplateResource GetDevHubTemplateResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDevHubArmClient(client).GetTemplateResource(id);
+            return GetMockableDevHubArmClient(client).GetDevHubTemplateResource(id);
         }
 
         /// <summary>
@@ -209,27 +209,27 @@ namespace Azure.ResourceManager.DevHub
         }
 
         /// <summary>
-        /// Gets a collection of Workflows in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of DevHubWorkflows in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevHubResourceGroupResource.GetWorkflows()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevHubResourceGroupResource.GetDevHubWorkflows()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of Workflows and their operations over a WorkflowResource. </returns>
-        public static WorkflowCollection GetWorkflows(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of DevHubWorkflows and their operations over a DevHubWorkflowResource. </returns>
+        public static DevHubWorkflowCollection GetDevHubWorkflows(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableDevHubResourceGroupResource(resourceGroupResource).GetWorkflows();
+            return GetMockableDevHubResourceGroupResource(resourceGroupResource).GetDevHubWorkflows();
         }
 
         /// <summary>
         /// Gets a workflow.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevHubResourceGroupResource.GetWorkflowAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevHubResourceGroupResource.GetDevHubWorkflowAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -237,18 +237,18 @@ namespace Azure.ResourceManager.DevHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<WorkflowResource>> GetWorkflowAsync(this ResourceGroupResource resourceGroupResource, string workflowName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DevHubWorkflowResource>> GetDevHubWorkflowAsync(this ResourceGroupResource resourceGroupResource, string workflowName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableDevHubResourceGroupResource(resourceGroupResource).GetWorkflowAsync(workflowName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDevHubResourceGroupResource(resourceGroupResource).GetDevHubWorkflowAsync(workflowName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets a workflow.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevHubResourceGroupResource.GetWorkflow(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevHubResourceGroupResource.GetDevHubWorkflow(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -256,11 +256,11 @@ namespace Azure.ResourceManager.DevHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<WorkflowResource> GetWorkflow(this ResourceGroupResource resourceGroupResource, string workflowName, CancellationToken cancellationToken = default)
+        public static Response<DevHubWorkflowResource> GetDevHubWorkflow(this ResourceGroupResource resourceGroupResource, string workflowName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableDevHubResourceGroupResource(resourceGroupResource).GetWorkflow(workflowName, cancellationToken);
+            return GetMockableDevHubResourceGroupResource(resourceGroupResource).GetDevHubWorkflow(workflowName, cancellationToken);
         }
 
         /// <summary>
@@ -298,27 +298,27 @@ namespace Azure.ResourceManager.DevHub
         }
 
         /// <summary>
-        /// Gets a collection of Templates in the <see cref="SubscriptionResource"/>
+        /// Gets a collection of DevHubTemplates in the <see cref="SubscriptionResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevHubSubscriptionResource.GetTemplates()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevHubSubscriptionResource.GetDevHubTemplates()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of Templates and their operations over a TemplateResource. </returns>
-        public static TemplateCollection GetTemplates(this SubscriptionResource subscriptionResource)
+        /// <returns> An object representing collection of DevHubTemplates and their operations over a DevHubTemplateResource. </returns>
+        public static DevHubTemplateCollection GetDevHubTemplates(this SubscriptionResource subscriptionResource)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDevHubSubscriptionResource(subscriptionResource).GetTemplates();
+            return GetMockableDevHubSubscriptionResource(subscriptionResource).GetDevHubTemplates();
         }
 
         /// <summary>
         /// Gets a list of supported templates.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevHubSubscriptionResource.GetTemplateAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevHubSubscriptionResource.GetDevHubTemplateAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -326,18 +326,18 @@ namespace Azure.ResourceManager.DevHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<TemplateResource>> GetTemplateAsync(this SubscriptionResource subscriptionResource, string templateName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DevHubTemplateResource>> GetDevHubTemplateAsync(this SubscriptionResource subscriptionResource, string templateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableDevHubSubscriptionResource(subscriptionResource).GetTemplateAsync(templateName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDevHubSubscriptionResource(subscriptionResource).GetDevHubTemplateAsync(templateName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets a list of supported templates.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevHubSubscriptionResource.GetTemplate(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevHubSubscriptionResource.GetDevHubTemplate(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -345,11 +345,11 @@ namespace Azure.ResourceManager.DevHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<TemplateResource> GetTemplate(this SubscriptionResource subscriptionResource, string templateName, CancellationToken cancellationToken = default)
+        public static Response<DevHubTemplateResource> GetDevHubTemplate(this SubscriptionResource subscriptionResource, string templateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDevHubSubscriptionResource(subscriptionResource).GetTemplate(templateName, cancellationToken);
+            return GetMockableDevHubSubscriptionResource(subscriptionResource).GetDevHubTemplate(templateName, cancellationToken);
         }
 
         /// <summary>
@@ -392,36 +392,36 @@ namespace Azure.ResourceManager.DevHub
         /// Gets a list of workflows associated with the specified subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevHubSubscriptionResource.GetWorkflowsAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevHubSubscriptionResource.GetDevHubWorkflowsAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="WorkflowResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<WorkflowResource> GetWorkflowsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevHubWorkflowResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DevHubWorkflowResource> GetDevHubWorkflowsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDevHubSubscriptionResource(subscriptionResource).GetWorkflowsAsync(cancellationToken);
+            return GetMockableDevHubSubscriptionResource(subscriptionResource).GetDevHubWorkflowsAsync(cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of workflows associated with the specified subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevHubSubscriptionResource.GetWorkflows(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevHubSubscriptionResource.GetDevHubWorkflows(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="WorkflowResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<WorkflowResource> GetWorkflows(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevHubWorkflowResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DevHubWorkflowResource> GetDevHubWorkflows(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDevHubSubscriptionResource(subscriptionResource).GetWorkflows(cancellationToken);
+            return GetMockableDevHubSubscriptionResource(subscriptionResource).GetDevHubWorkflows(cancellationToken);
         }
 
         /// <summary>

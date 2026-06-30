@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.DevHub.Models
             {
                 throw new FormatException($"The model {nameof(DeveloperHubADOOAuthInfoResponseResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AuthURL))
+            if (Optional.IsDefined(AuthUri))
             {
                 writer.WritePropertyName("authURL"u8);
-                writer.WriteStringValue(AuthURL);
+                writer.WriteStringValue(AuthUri);
             }
             if (Optional.IsDefined(Token))
             {
@@ -134,14 +134,14 @@ namespace Azure.ResourceManager.DevHub.Models
             {
                 return null;
             }
-            string authURL = default;
+            string authUri = default;
             string token = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("authURL"u8))
                 {
-                    authURL = prop.Value.GetString();
+                    authUri = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("token"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DevHub.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeveloperHubADOOAuthInfoResponseResult(authURL, token, additionalBinaryDataProperties);
+            return new DeveloperHubADOOAuthInfoResponseResult(authUri, token, additionalBinaryDataProperties);
         }
     }
 }

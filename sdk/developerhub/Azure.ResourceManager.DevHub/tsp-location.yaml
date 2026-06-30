@@ -1,4 +1,4 @@
 directory: specification/developerhub/resource-manager/Microsoft.DevHub/DeveloperHub
-commit: 5a57820f0269bcf9de9f82da2d375334c5521628
+commit: ef7e05dc1cf7cad74f124b418ed49baf98826d3f
 repo: cxznmhdcxz/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

@@ -14,7 +14,7 @@ using Azure.ResourceManager.DevHub.Models;
 
 namespace Azure.ResourceManager.DevHub
 {
-    internal partial class TemplateGetAllCollectionResultOfT : Pageable<TemplateData>
+    internal partial class TemplateGetAllCollectionResultOfT : Pageable<DevHubTemplateData>
     {
         private readonly Template _client;
         private readonly Guid _subscriptionId;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DevHub
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of TemplateGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<TemplateData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<DevHubTemplateData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DevHub
                     yield break;
                 }
                 TemplateListResult result = TemplateListResult.FromResponse(response);
-                yield return Page<TemplateData>.FromValues((IReadOnlyList<TemplateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<DevHubTemplateData>.FromValues((IReadOnlyList<DevHubTemplateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

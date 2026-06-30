@@ -20,28 +20,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.DevHub
 {
     /// <summary>
-    /// A class representing a collection of <see cref="TemplateResource"/> and their operations.
-    /// Each <see cref="TemplateResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get a <see cref="TemplateCollection"/> instance call the GetTemplates method from an instance of <see cref="SubscriptionResource"/>.
+    /// A class representing a collection of <see cref="DevHubTemplateResource"/> and their operations.
+    /// Each <see cref="DevHubTemplateResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="DevHubTemplateCollection"/> instance call the GetDevHubTemplates method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
-    public partial class TemplateCollection : ArmCollection, IEnumerable<TemplateResource>, IAsyncEnumerable<TemplateResource>
+    public partial class DevHubTemplateCollection : ArmCollection, IEnumerable<DevHubTemplateResource>, IAsyncEnumerable<DevHubTemplateResource>
     {
         private readonly ClientDiagnostics _templateClientDiagnostics;
         private readonly Template _templateRestClient;
 
-        /// <summary> Initializes a new instance of TemplateCollection for mocking. </summary>
-        protected TemplateCollection()
+        /// <summary> Initializes a new instance of DevHubTemplateCollection for mocking. </summary>
+        protected DevHubTemplateCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TemplateCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevHubTemplateCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal TemplateCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DevHubTemplateCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(TemplateResource.ResourceType, out string templateApiVersion);
-            _templateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevHub", TemplateResource.ResourceType.Namespace, Diagnostics);
-            _templateRestClient = new Template(_templateClientDiagnostics, Pipeline, Endpoint, templateApiVersion ?? "2025-03-01-preview");
+            TryGetApiVersion(DevHubTemplateResource.ResourceType, out string devHubTemplateApiVersion);
+            _templateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevHub", DevHubTemplateResource.ResourceType.Namespace, Diagnostics);
+            _templateRestClient = new Template(_templateClientDiagnostics, Pipeline, Endpoint, devHubTemplateApiVersion ?? "2025-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -76,11 +76,11 @@ namespace Azure.ResourceManager.DevHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="templateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="templateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<TemplateResource>> GetAsync(string templateName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevHubTemplateResource>> GetAsync(string templateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(templateName, nameof(templateName));
 
-            using DiagnosticScope scope = _templateClientDiagnostics.CreateScope("TemplateCollection.Get");
+            using DiagnosticScope scope = _templateClientDiagnostics.CreateScope("DevHubTemplateCollection.Get");
             scope.Start();
             try
             {
@@ -90,12 +90,12 @@ namespace Azure.ResourceManager.DevHub
                 };
                 HttpMessage message = _templateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), templateName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<TemplateData> response = Response.FromValue(TemplateData.FromResponse(result), result);
+                Response<DevHubTemplateData> response = Response.FromValue(DevHubTemplateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new TemplateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevHubTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.DevHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="templateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="templateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<TemplateResource> Get(string templateName, CancellationToken cancellationToken = default)
+        public virtual Response<DevHubTemplateResource> Get(string templateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(templateName, nameof(templateName));
 
-            using DiagnosticScope scope = _templateClientDiagnostics.CreateScope("TemplateCollection.Get");
+            using DiagnosticScope scope = _templateClientDiagnostics.CreateScope("DevHubTemplateCollection.Get");
             scope.Start();
             try
             {
@@ -139,12 +139,12 @@ namespace Azure.ResourceManager.DevHub
                 };
                 HttpMessage message = _templateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), templateName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<TemplateData> response = Response.FromValue(TemplateData.FromResponse(result), result);
+                Response<DevHubTemplateData> response = Response.FromValue(DevHubTemplateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new TemplateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevHubTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -171,14 +171,14 @@ namespace Azure.ResourceManager.DevHub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TemplateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TemplateResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevHubTemplateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DevHubTemplateResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TemplateData, TemplateResource>(new TemplateGetAllAsyncCollectionResultOfT(_templateRestClient, Guid.Parse(Id.SubscriptionId), context, "TemplateCollection.GetAll"), data => new TemplateResource(Client, data));
+            return new AsyncPageableWrapper<DevHubTemplateData, DevHubTemplateResource>(new TemplateGetAllAsyncCollectionResultOfT(_templateRestClient, Guid.Parse(Id.SubscriptionId), context, "DevHubTemplateCollection.GetAll"), data => new DevHubTemplateResource(Client, data));
         }
 
         /// <summary>
@@ -199,14 +199,14 @@ namespace Azure.ResourceManager.DevHub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TemplateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TemplateResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevHubTemplateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DevHubTemplateResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TemplateData, TemplateResource>(new TemplateGetAllCollectionResultOfT(_templateRestClient, Guid.Parse(Id.SubscriptionId), context, "TemplateCollection.GetAll"), data => new TemplateResource(Client, data));
+            return new PageableWrapper<DevHubTemplateData, DevHubTemplateResource>(new TemplateGetAllCollectionResultOfT(_templateRestClient, Guid.Parse(Id.SubscriptionId), context, "DevHubTemplateCollection.GetAll"), data => new DevHubTemplateResource(Client, data));
         }
 
         /// <summary>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.DevHub
         {
             Argument.AssertNotNullOrEmpty(templateName, nameof(templateName));
 
-            using DiagnosticScope scope = _templateClientDiagnostics.CreateScope("TemplateCollection.Exists");
+            using DiagnosticScope scope = _templateClientDiagnostics.CreateScope("DevHubTemplateCollection.Exists");
             scope.Start();
             try
             {
@@ -245,14 +245,14 @@ namespace Azure.ResourceManager.DevHub
                 HttpMessage message = _templateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), templateName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<TemplateData> response = default;
+                Response<DevHubTemplateData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(TemplateData.FromResponse(result), result);
+                        response = Response.FromValue(DevHubTemplateData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((TemplateData)null, result);
+                        response = Response.FromValue((DevHubTemplateData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.DevHub
         {
             Argument.AssertNotNullOrEmpty(templateName, nameof(templateName));
 
-            using DiagnosticScope scope = _templateClientDiagnostics.CreateScope("TemplateCollection.Exists");
+            using DiagnosticScope scope = _templateClientDiagnostics.CreateScope("DevHubTemplateCollection.Exists");
             scope.Start();
             try
             {
@@ -302,14 +302,14 @@ namespace Azure.ResourceManager.DevHub
                 HttpMessage message = _templateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), templateName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<TemplateData> response = default;
+                Response<DevHubTemplateData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(TemplateData.FromResponse(result), result);
+                        response = Response.FromValue(DevHubTemplateData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((TemplateData)null, result);
+                        response = Response.FromValue((DevHubTemplateData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -344,11 +344,11 @@ namespace Azure.ResourceManager.DevHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="templateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="templateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<TemplateResource>> GetIfExistsAsync(string templateName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<DevHubTemplateResource>> GetIfExistsAsync(string templateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(templateName, nameof(templateName));
 
-            using DiagnosticScope scope = _templateClientDiagnostics.CreateScope("TemplateCollection.GetIfExists");
+            using DiagnosticScope scope = _templateClientDiagnostics.CreateScope("DevHubTemplateCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -359,23 +359,23 @@ namespace Azure.ResourceManager.DevHub
                 HttpMessage message = _templateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), templateName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<TemplateData> response = default;
+                Response<DevHubTemplateData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(TemplateData.FromResponse(result), result);
+                        response = Response.FromValue(DevHubTemplateData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((TemplateData)null, result);
+                        response = Response.FromValue((DevHubTemplateData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<TemplateResource>(response.GetRawResponse());
+                    return new NoValueResponse<DevHubTemplateResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new TemplateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevHubTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -405,11 +405,11 @@ namespace Azure.ResourceManager.DevHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="templateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="templateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<TemplateResource> GetIfExists(string templateName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<DevHubTemplateResource> GetIfExists(string templateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(templateName, nameof(templateName));
 
-            using DiagnosticScope scope = _templateClientDiagnostics.CreateScope("TemplateCollection.GetIfExists");
+            using DiagnosticScope scope = _templateClientDiagnostics.CreateScope("DevHubTemplateCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -420,23 +420,23 @@ namespace Azure.ResourceManager.DevHub
                 HttpMessage message = _templateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), templateName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<TemplateData> response = default;
+                Response<DevHubTemplateData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(TemplateData.FromResponse(result), result);
+                        response = Response.FromValue(DevHubTemplateData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((TemplateData)null, result);
+                        response = Response.FromValue((DevHubTemplateData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<TemplateResource>(response.GetRawResponse());
+                    return new NoValueResponse<DevHubTemplateResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new TemplateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevHubTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.DevHub
             }
         }
 
-        IEnumerator<TemplateResource> IEnumerable<TemplateResource>.GetEnumerator()
+        IEnumerator<DevHubTemplateResource> IEnumerable<DevHubTemplateResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.DevHub
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<TemplateResource> IAsyncEnumerable<TemplateResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<DevHubTemplateResource> IAsyncEnumerable<DevHubTemplateResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

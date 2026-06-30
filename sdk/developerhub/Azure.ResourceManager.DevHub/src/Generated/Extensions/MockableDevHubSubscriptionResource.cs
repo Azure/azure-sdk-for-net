@@ -108,11 +108,11 @@ namespace Azure.ResourceManager.DevHub.Mocking
             return new AdoOAuthResponseResource(Client, Id.AppendProviderResource("Microsoft.DevHub", "locations", "default"));
         }
 
-        /// <summary> Gets a collection of Templates in the <see cref="SubscriptionResource"/>. </summary>
-        /// <returns> An object representing collection of Templates and their operations over a TemplateResource. </returns>
-        public virtual TemplateCollection GetTemplates()
+        /// <summary> Gets a collection of DevHubTemplates in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of DevHubTemplates and their operations over a DevHubTemplateResource. </returns>
+        public virtual DevHubTemplateCollection GetDevHubTemplates()
         {
-            return GetCachedClient(client => new TemplateCollection(client, Id));
+            return GetCachedClient(client => new DevHubTemplateCollection(client, Id));
         }
 
         /// <summary>
@@ -137,11 +137,11 @@ namespace Azure.ResourceManager.DevHub.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="templateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="templateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<TemplateResource>> GetTemplateAsync(string templateName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevHubTemplateResource>> GetDevHubTemplateAsync(string templateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(templateName, nameof(templateName));
 
-            return await GetTemplates().GetAsync(templateName, cancellationToken).ConfigureAwait(false);
+            return await GetDevHubTemplates().GetAsync(templateName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -166,11 +166,11 @@ namespace Azure.ResourceManager.DevHub.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="templateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="templateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<TemplateResource> GetTemplate(string templateName, CancellationToken cancellationToken = default)
+        public virtual Response<DevHubTemplateResource> GetDevHubTemplate(string templateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(templateName, nameof(templateName));
 
-            return GetTemplates().Get(templateName, cancellationToken);
+            return GetDevHubTemplates().Get(templateName, cancellationToken);
         }
 
         /// <summary>
@@ -247,14 +247,14 @@ namespace Azure.ResourceManager.DevHub.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkflowResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WorkflowResource> GetWorkflowsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevHubWorkflowResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DevHubWorkflowResource> GetDevHubWorkflowsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkflowData, WorkflowResource>(new WorkflowGetAllAsyncCollectionResultOfT(WorkflowRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDevHubSubscriptionResource.GetWorkflows"), data => new WorkflowResource(Client, data));
+            return new AsyncPageableWrapper<DevHubWorkflowData, DevHubWorkflowResource>(new WorkflowGetAllAsyncCollectionResultOfT(WorkflowRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDevHubSubscriptionResource.GetDevHubWorkflows"), data => new DevHubWorkflowResource(Client, data));
         }
 
         /// <summary>
@@ -275,14 +275,14 @@ namespace Azure.ResourceManager.DevHub.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkflowResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WorkflowResource> GetWorkflows(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevHubWorkflowResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DevHubWorkflowResource> GetDevHubWorkflows(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkflowData, WorkflowResource>(new WorkflowGetAllCollectionResultOfT(WorkflowRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDevHubSubscriptionResource.GetWorkflows"), data => new WorkflowResource(Client, data));
+            return new PageableWrapper<DevHubWorkflowData, DevHubWorkflowResource>(new WorkflowGetAllCollectionResultOfT(WorkflowRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDevHubSubscriptionResource.GetDevHubWorkflows"), data => new DevHubWorkflowResource(Client, data));
         }
 
         /// <summary>

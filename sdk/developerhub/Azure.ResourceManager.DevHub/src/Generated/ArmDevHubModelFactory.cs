@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.DevHub.Models
             return new DeveloperHubGitHubOAuthCallRequestContent(redirectUri, default);
         }
 
-        /// <param name="authURL"> URL for authorizing the Developer Hub GitHub App. </param>
+        /// <param name="authUri"> URL for authorizing the Developer Hub GitHub App. </param>
         /// <param name="token"> OAuth token used to make calls to GitHub. </param>
         /// <returns> A new <see cref="Models.DeveloperHubGitHubOAuthInfoResponseResult"/> instance for mocking. </returns>
-        public static DeveloperHubGitHubOAuthInfoResponseResult DeveloperHubGitHubOAuthInfoResponseResult(string authURL = default, string token = default)
+        public static DeveloperHubGitHubOAuthInfoResponseResult DeveloperHubGitHubOAuthInfoResponseResult(string authUri = default, string token = default)
         {
-            return new DeveloperHubGitHubOAuthInfoResponseResult(authURL, token, default);
+            return new DeveloperHubGitHubOAuthInfoResponseResult(authUri, token, default);
         }
 
         /// <param name="redirectUri"> The URL the client will redirect to on successful authentication. If empty, no redirect will occur. </param>
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.DevHub.Models
             return new DeveloperHubADOOAuthCallRequestContent(redirectUri, default);
         }
 
-        /// <param name="authURL"> URL used to authorize ADO app using Entra ID. </param>
+        /// <param name="authUri"> URL used to authorize ADO app using Entra ID. </param>
         /// <param name="token"> OAuth token used to make calls to ADO APIs. </param>
         /// <returns> A new <see cref="Models.DeveloperHubADOOAuthInfoResponseResult"/> instance for mocking. </returns>
-        public static DeveloperHubADOOAuthInfoResponseResult DeveloperHubADOOAuthInfoResponseResult(string authURL = default, string token = default)
+        public static DeveloperHubADOOAuthInfoResponseResult DeveloperHubADOOAuthInfoResponseResult(string authUri = default, string token = default)
         {
-            return new DeveloperHubADOOAuthInfoResponseResult(authURL, token, default);
+            return new DeveloperHubADOOAuthInfoResponseResult(authUri, token, default);
         }
 
         /// <param name="value"> The Operation items on this page. </param>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <param name="storageContainerName"> Terraform Container Name. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="DevHub.IacProfileData"/> instance for mocking. </returns>
-        public static IacProfileData IacProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<StageProperties> stages = default, IEnumerable<IacTemplateProperties> templates = default, string repositoryName = default, string repositoryMainBranch = default, string repositoryOwner = default, AuthorizationStatus? authStatus = default, int? pullNumber = default, PullRequestStatus? prStatus = default, string branchName = default, string storageAccountSubscription = default, string storageAccountResourceGroup = default, string storageAccountName = default, string storageContainerName = default, string eTag = default)
+        public static IacProfileData IacProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<StageProperties> stages = default, IEnumerable<IacTemplateProperties> templates = default, string repositoryName = default, string repositoryMainBranch = default, string repositoryOwner = default, AuthorizationStatus? authStatus = default, int? pullNumber = default, PullRequestStatus? prStatus = default, string branchName = default, string storageAccountSubscription = default, string storageAccountResourceGroup = default, string storageAccountName = default, string storageContainerName = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <param name="templateDetails"></param>
         /// <param name="quickStartTemplateType"> Determines the authorization status of requests. </param>
         /// <returns> A new <see cref="Models.IacTemplateProperties"/> instance for mocking. </returns>
-        public static IacTemplateProperties IacTemplateProperties(string templateName = default, string sourceResourceId = default, string instanceStage = default, string instanceName = default, IEnumerable<IacTemplateDetails> templateDetails = default, QuickStartTemplateType? quickStartTemplateType = default)
+        public static IacTemplateProperties IacTemplateProperties(string templateName = default, ResourceIdentifier sourceResourceId = default, string instanceStage = default, string instanceName = default, IEnumerable<IacTemplateDetails> templateDetails = default, QuickStartTemplateType? quickStartTemplateType = default)
         {
             templateDetails ??= new ChangeTrackingList<IacTemplateDetails>();
 
@@ -291,12 +291,12 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of a workflow. </param>
-        /// <returns> A new <see cref="DevHub.WorkflowData"/> instance for mocking. </returns>
-        public static WorkflowData WorkflowData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WorkflowProperties properties = default)
+        /// <returns> A new <see cref="DevHub.DevHubWorkflowData"/> instance for mocking. </returns>
+        public static DevHubWorkflowData DevHubWorkflowData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WorkflowProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new WorkflowData(
+            return new DevHubWorkflowData(
                 id,
                 name,
                 resourceType,
@@ -327,13 +327,13 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <param name="acr"> Information on the azure container registry. </param>
         /// <param name="oidcCredentials"> The fields needed for OIDC with GitHub. </param>
         /// <param name="aksResourceId"> The Azure Kubernetes Cluster Resource the application will be deployed to. </param>
-        /// <param name="prURL"> The URL to the Pull Request submitted against the users repository. </param>
+        /// <param name="prUri"> The URL to the Pull Request submitted against the users repository. </param>
         /// <param name="pullNumber"> The number associated with the submitted pull request. </param>
         /// <param name="prStatus"> The status of the Pull Request submitted against the users repository. </param>
         /// <param name="lastWorkflowRun"></param>
         /// <param name="authStatus"> Determines the authorization status of requests. </param>
         /// <returns> A new <see cref="Models.GitHubWorkflowProfile"/> instance for mocking. </returns>
-        public static GitHubWorkflowProfile GitHubWorkflowProfile(string repositoryOwner = default, string repositoryName = default, string branchName = default, string dockerfile = default, string dockerBuildContext = default, Deployment deploymentProperties = default, string @namespace = default, Acr acr = default, GitHubWorkflowProfileOidcCredentials oidcCredentials = default, string aksResourceId = default, string prURL = default, int? pullNumber = default, PullRequestStatus? prStatus = default, WorkflowRun lastWorkflowRun = default, AuthorizationStatus? authStatus = default)
+        public static GitHubWorkflowProfile GitHubWorkflowProfile(string repositoryOwner = default, string repositoryName = default, string branchName = default, string dockerfile = default, string dockerBuildContext = default, Deployment deploymentProperties = default, string @namespace = default, Acr acr = default, GitHubWorkflowProfileOidcCredentials oidcCredentials = default, ResourceIdentifier aksResourceId = default, string prUri = default, int? pullNumber = default, PullRequestStatus? prStatus = default, WorkflowRun lastWorkflowRun = default, AuthorizationStatus? authStatus = default)
         {
             return new GitHubWorkflowProfile(
                 repositoryOwner,
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.DevHub.Models
                 acr,
                 oidcCredentials,
                 aksResourceId,
-                prURL,
+                prUri,
                 pullNumber,
                 prStatus,
                 lastWorkflowRun,
@@ -392,14 +392,14 @@ namespace Azure.ResourceManager.DevHub.Models
             return new GitHubWorkflowProfileOidcCredentials(azureClientId, azureTenantId, default);
         }
 
-        /// <param name="succeeded"> Describes if the workflow run succeeded. </param>
-        /// <param name="workflowRunURL"> URL to the run of the workflow. </param>
+        /// <param name="isSucceeded"> Describes if the workflow run succeeded. </param>
+        /// <param name="workflowRunUri"> URL to the run of the workflow. </param>
         /// <param name="lastRunOn"> The timestamp of the last workflow run. </param>
         /// <param name="workflowRunStatus"> Describes the status of the workflow run. </param>
         /// <returns> A new <see cref="Models.WorkflowRun"/> instance for mocking. </returns>
-        public static WorkflowRun WorkflowRun(bool? succeeded = default, string workflowRunURL = default, DateTimeOffset? lastRunOn = default, WorkflowRunStatus? workflowRunStatus = default)
+        public static WorkflowRun WorkflowRun(bool? isSucceeded = default, string workflowRunUri = default, DateTimeOffset? lastRunOn = default, WorkflowRunStatus? workflowRunStatus = default)
         {
-            return new WorkflowRun(succeeded, workflowRunURL, lastRunOn, workflowRunStatus, default);
+            return new WorkflowRun(isSucceeded, workflowRunUri, lastRunOn, workflowRunStatus, default);
         }
 
         /// <param name="repository"> Details of the ADO repository associated with the workflow. </param>
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <param name="lastWorkflowRun"></param>
         /// <param name="authStatus"> Determines the authorization status of requests. </param>
         /// <returns> A new <see cref="Models.AzurePipelineProfile"/> instance for mocking. </returns>
-        public static AzurePipelineProfile AzurePipelineProfile(ADORepository repository = default, string armServiceConnection = default, Build build = default, Deployment deployment = default, string @namespace = default, ResourceIdentifier acr = default, ResourceIdentifier clusterId = default, DeveloperHubPullRequestContent pullRequest = default, WorkflowRun lastWorkflowRun = default, AuthorizationStatus? authStatus = default)
+        public static AzurePipelineProfile AzurePipelineProfile(AdoRepository repository = default, string armServiceConnection = default, Build build = default, Deployment deployment = default, string @namespace = default, ResourceIdentifier acr = default, ResourceIdentifier clusterId = default, DeveloperHubPullRequestContent pullRequest = default, WorkflowRun lastWorkflowRun = default, AuthorizationStatus? authStatus = default)
         {
             return new AzurePipelineProfile(
                 repository,
@@ -434,10 +434,10 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <param name="branchName"> The name of the branch the workflow is associated with. </param>
         /// <param name="adoOrganization"> The name of the Azure DevOps organization the pipeline is associated with. </param>
         /// <param name="projectName"> The name of the project the pipeline is associated with. </param>
-        /// <returns> A new <see cref="Models.ADORepository"/> instance for mocking. </returns>
-        public static ADORepository ADORepository(string repositoryOwner = default, string repositoryName = default, string branchName = default, string adoOrganization = default, string projectName = default)
+        /// <returns> A new <see cref="Models.AdoRepository"/> instance for mocking. </returns>
+        public static AdoRepository AdoRepository(string repositoryOwner = default, string repositoryName = default, string branchName = default, string adoOrganization = default, string projectName = default)
         {
-            return new ADORepository(
+            return new AdoRepository(
                 repositoryOwner,
                 repositoryName,
                 branchName,
@@ -454,13 +454,13 @@ namespace Azure.ResourceManager.DevHub.Models
             return new Build(dockerfile, dockerBuildContext, default);
         }
 
-        /// <param name="prURL"> The URL to the Pull Request submitted against the users repository. </param>
+        /// <param name="prUri"> The URL to the Pull Request submitted against the users repository. </param>
         /// <param name="pullNumber"> The number associated with the submitted pull request. </param>
         /// <param name="prStatus"> The status of the Pull Request submitted against the users repository. </param>
         /// <returns> A new <see cref="Models.DeveloperHubPullRequestContent"/> instance for mocking. </returns>
-        public static DeveloperHubPullRequestContent DeveloperHubPullRequestContent(string prURL = default, int? pullNumber = default, PullRequestStatus? prStatus = default)
+        public static DeveloperHubPullRequestContent DeveloperHubPullRequestContent(string prUri = default, int? pullNumber = default, PullRequestStatus? prStatus = default)
         {
-            return new DeveloperHubPullRequestContent(prURL, pullNumber, prStatus, default);
+            return new DeveloperHubPullRequestContent(prUri, pullNumber, prStatus, default);
         }
 
         /// <param name="repositoryProvider"> The status of the Pull Request submitted against the users repository. </param>
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <param name="lastWorkflowRun"></param>
         /// <param name="authStatus"> Determines the authorization status of requests. </param>
         /// <returns> A new <see cref="Models.TemplateWorkflowProfile"/> instance for mocking. </returns>
-        public static TemplateWorkflowProfile TemplateWorkflowProfile(RepositoryProviderType? repositoryProvider = default, TemplateReference workflowTemplate = default, TemplateReference deploymentTemplate = default, TemplateReference dockerfileTemplate = default, IEnumerable<TemplateReference> manifestTemplates = default, GitHubProviderProfile gitHubProviderProfile = default, ADOProviderProfile adoProviderProfile = default, DeveloperHubPullRequestContent pullRequest = default, WorkflowRun lastWorkflowRun = default, AuthorizationStatus? authStatus = default)
+        public static TemplateWorkflowProfile TemplateWorkflowProfile(RepositoryProviderType? repositoryProvider = default, TemplateReference workflowTemplate = default, TemplateReference deploymentTemplate = default, TemplateReference dockerfileTemplate = default, IEnumerable<TemplateReference> manifestTemplates = default, GitHubProviderProfile gitHubProviderProfile = default, AdoProviderProfile adoProviderProfile = default, DeveloperHubPullRequestContent pullRequest = default, WorkflowRun lastWorkflowRun = default, AuthorizationStatus? authStatus = default)
         {
             manifestTemplates ??= new ChangeTrackingList<TemplateReference>();
 
@@ -530,10 +530,10 @@ namespace Azure.ResourceManager.DevHub.Models
 
         /// <param name="repository"> Details of the ADO repository associated with the workflow. </param>
         /// <param name="armServiceConnection"> The name of the ARM Service Connection the pipeline is associated with. </param>
-        /// <returns> A new <see cref="Models.ADOProviderProfile"/> instance for mocking. </returns>
-        public static ADOProviderProfile ADOProviderProfile(ADORepository repository = default, string armServiceConnection = default)
+        /// <returns> A new <see cref="Models.AdoProviderProfile"/> instance for mocking. </returns>
+        public static AdoProviderProfile AdoProviderProfile(AdoRepository repository = default, string armServiceConnection = default)
         {
-            return new ADOProviderProfile(repository, armServiceConnection, default);
+            return new AdoProviderProfile(repository, armServiceConnection, default);
         }
 
         /// <param name="status"> delete status message. </param>
@@ -565,10 +565,10 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Properties of a Template. </param>
-        /// <returns> A new <see cref="DevHub.TemplateData"/> instance for mocking. </returns>
-        public static TemplateData TemplateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, TemplateProperties properties = default)
+        /// <returns> A new <see cref="DevHub.DevHubTemplateData"/> instance for mocking. </returns>
+        public static DevHubTemplateData DevHubTemplateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, TemplateProperties properties = default)
         {
-            return new TemplateData(
+            return new DevHubTemplateData(
                 id,
                 name,
                 resourceType,
@@ -628,17 +628,17 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <param name="description"> Description of what the paramater is used for. </param>
         /// <param name="parameterType"> The type of the template parameter. </param>
         /// <param name="parameterKind"> The type of the template parameter. </param>
-        /// <param name="required"> Whether the parameter is required. </param>
+        /// <param name="isRequired"> Whether the parameter is required. </param>
         /// <param name="default"> A reference to a default parameter value or a reference parameter to take the value from. </param>
         /// <returns> A new <see cref="Models.DeveloperHubParameterContent"/> instance for mocking. </returns>
-        public static DeveloperHubParameterContent DeveloperHubParameterContent(string name = default, string description = default, ParameterType? parameterType = default, ParameterKind? parameterKind = default, bool? @required = default, ParameterDefault @default = default)
+        public static DeveloperHubParameterContent DeveloperHubParameterContent(string name = default, string description = default, ParameterType? parameterType = default, ParameterKind? parameterKind = default, bool? isRequired = default, ParameterDefault @default = default)
         {
             return new DeveloperHubParameterContent(
                 name,
                 description,
                 parameterType,
                 parameterKind,
-                @required,
+                isRequired,
                 @default,
                 default);
         }

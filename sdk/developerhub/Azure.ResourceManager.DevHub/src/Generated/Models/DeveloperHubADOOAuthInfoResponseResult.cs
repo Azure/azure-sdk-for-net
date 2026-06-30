@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.DevHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DeveloperHubADOOAuthInfoResponseResult"/>. </summary>
-        /// <param name="authURL"> URL used to authorize ADO app using Entra ID. </param>
+        /// <param name="authUri"> URL used to authorize ADO app using Entra ID. </param>
         /// <param name="token"> OAuth token used to make calls to ADO APIs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeveloperHubADOOAuthInfoResponseResult(string authURL, string token, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeveloperHubADOOAuthInfoResponseResult(string authUri, string token, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AuthURL = authURL;
+            AuthUri = authUri;
             Token = token;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> URL used to authorize ADO app using Entra ID. </summary>
-        public string AuthURL { get; }
+        public string AuthUri { get; }
 
         /// <summary> OAuth token used to make calls to ADO APIs. </summary>
         public string Token { get; }

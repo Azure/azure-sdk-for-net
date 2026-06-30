@@ -22,25 +22,25 @@ namespace Azure.ResourceManager.DevHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRun"/>. </summary>
-        /// <param name="succeeded"> Describes if the workflow run succeeded. </param>
-        /// <param name="workflowRunURL"> URL to the run of the workflow. </param>
+        /// <param name="isSucceeded"> Describes if the workflow run succeeded. </param>
+        /// <param name="workflowRunUri"> URL to the run of the workflow. </param>
         /// <param name="lastRunOn"> The timestamp of the last workflow run. </param>
         /// <param name="workflowRunStatus"> Describes the status of the workflow run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowRun(bool? succeeded, string workflowRunURL, DateTimeOffset? lastRunOn, WorkflowRunStatus? workflowRunStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkflowRun(bool? isSucceeded, string workflowRunUri, DateTimeOffset? lastRunOn, WorkflowRunStatus? workflowRunStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Succeeded = succeeded;
-            WorkflowRunURL = workflowRunURL;
+            IsSucceeded = isSucceeded;
+            WorkflowRunUri = workflowRunUri;
             LastRunOn = lastRunOn;
             WorkflowRunStatus = workflowRunStatus;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Describes if the workflow run succeeded. </summary>
-        public bool? Succeeded { get; }
+        public bool? IsSucceeded { get; }
 
         /// <summary> URL to the run of the workflow. </summary>
-        public string WorkflowRunURL { get; }
+        public string WorkflowRunUri { get; }
 
         /// <summary> The timestamp of the last workflow run. </summary>
         public DateTimeOffset? LastRunOn { get; }

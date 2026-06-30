@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.DevHub.Models
             {
                 throw new FormatException($"The model {nameof(WorkflowRun)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Succeeded))
+            if (options.Format != "W" && Optional.IsDefined(IsSucceeded))
             {
                 writer.WritePropertyName("succeeded"u8);
-                writer.WriteBooleanValue(Succeeded.Value);
+                writer.WriteBooleanValue(IsSucceeded.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(WorkflowRunURL))
+            if (options.Format != "W" && Optional.IsDefined(WorkflowRunUri))
             {
                 writer.WritePropertyName("workflowRunURL"u8);
-                writer.WriteStringValue(WorkflowRunURL);
+                writer.WriteStringValue(WorkflowRunUri);
             }
             if (options.Format != "W" && Optional.IsDefined(LastRunOn))
             {
@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.DevHub.Models
             {
                 return null;
             }
-            bool? succeeded = default;
-            string workflowRunURL = default;
+            bool? isSucceeded = default;
+            string workflowRunUri = default;
             DateTimeOffset? lastRunOn = default;
             WorkflowRunStatus? workflowRunStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -149,12 +149,12 @@ namespace Azure.ResourceManager.DevHub.Models
                     {
                         continue;
                     }
-                    succeeded = prop.Value.GetBoolean();
+                    isSucceeded = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("workflowRunURL"u8))
                 {
-                    workflowRunURL = prop.Value.GetString();
+                    workflowRunUri = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("lastRunAt"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DevHub.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WorkflowRun(succeeded, workflowRunURL, lastRunOn, workflowRunStatus, additionalBinaryDataProperties);
+            return new WorkflowRun(isSucceeded, workflowRunUri, lastRunOn, workflowRunStatus, additionalBinaryDataProperties);
         }
     }
 }

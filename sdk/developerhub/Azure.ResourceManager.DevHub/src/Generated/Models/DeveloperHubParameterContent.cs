@@ -26,16 +26,16 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <param name="description"> Description of what the paramater is used for. </param>
         /// <param name="parameterType"> The type of the template parameter. </param>
         /// <param name="parameterKind"> The type of the template parameter. </param>
-        /// <param name="required"> Whether the parameter is required. </param>
+        /// <param name="isRequired"> Whether the parameter is required. </param>
         /// <param name="default"> A reference to a default parameter value or a reference parameter to take the value from. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeveloperHubParameterContent(string name, string description, ParameterType? parameterType, ParameterKind? parameterKind, bool? @required, ParameterDefault @default, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeveloperHubParameterContent(string name, string description, ParameterType? parameterType, ParameterKind? parameterKind, bool? isRequired, ParameterDefault @default, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
             ParameterType = parameterType;
             ParameterKind = parameterKind;
-            Required = @required;
+            IsRequired = isRequired;
             Default = @default;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DevHub.Models
         public ParameterKind? ParameterKind { get; }
 
         /// <summary> Whether the parameter is required. </summary>
-        public bool? Required { get; }
+        public bool? IsRequired { get; }
 
         /// <summary> A reference to a default parameter value or a reference parameter to take the value from. </summary>
         public ParameterDefault Default { get; }

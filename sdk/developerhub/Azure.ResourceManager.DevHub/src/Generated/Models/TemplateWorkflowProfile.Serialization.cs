@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DevHub.Models
             TemplateReference dockerfileTemplate = default;
             IList<TemplateReference> manifestTemplates = default;
             GitHubProviderProfile gitHubProviderProfile = default;
-            ADOProviderProfile adoProviderProfile = default;
+            AdoProviderProfile adoProviderProfile = default;
             DeveloperHubPullRequestContent pullRequest = default;
             WorkflowRun lastWorkflowRun = default;
             AuthorizationStatus? authStatus = default;
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DevHub.Models
                     {
                         continue;
                     }
-                    adoProviderProfile = ADOProviderProfile.DeserializeADOProviderProfile(prop.Value, options);
+                    adoProviderProfile = AdoProviderProfile.DeserializeAdoProviderProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("pullRequest"u8))

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DevHub
 {
     /// <summary>
     /// A class representing a collection of <see cref="VersionedTemplateResource"/> and their operations.
-    /// Each <see cref="VersionedTemplateResource"/> in the collection will belong to the same instance of <see cref="TemplateResource"/>.
-    /// To get a <see cref="VersionedTemplateCollection"/> instance call the GetVersionedTemplates method from an instance of <see cref="TemplateResource"/>.
+    /// Each <see cref="VersionedTemplateResource"/> in the collection will belong to the same instance of <see cref="DevHubTemplateResource"/>.
+    /// To get a <see cref="VersionedTemplateCollection"/> instance call the GetVersionedTemplates method from an instance of <see cref="DevHubTemplateResource"/>.
     /// </summary>
     public partial class VersionedTemplateCollection : ArmCollection, IEnumerable<VersionedTemplateResource>, IAsyncEnumerable<VersionedTemplateResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.DevHub
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != TemplateResource.ResourceType)
+            if (id.ResourceType != DevHubTemplateResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TemplateResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DevHubTemplateResource.ResourceType), nameof(id));
             }
         }
 

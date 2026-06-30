@@ -44,13 +44,13 @@ namespace Azure.ResourceManager.DevHub.Mocking
             return new IacProfileResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WorkflowResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="DevHubWorkflowResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkflowResource"/> object. </returns>
-        public virtual WorkflowResource GetWorkflowResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevHubWorkflowResource"/> object. </returns>
+        public virtual DevHubWorkflowResource GetDevHubWorkflowResource(ResourceIdentifier id)
         {
-            WorkflowResource.ValidateResourceId(id);
-            return new WorkflowResource(Client, id);
+            DevHubWorkflowResource.ValidateResourceId(id);
+            return new DevHubWorkflowResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="AdoOAuthResponseResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -62,13 +62,13 @@ namespace Azure.ResourceManager.DevHub.Mocking
             return new AdoOAuthResponseResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="TemplateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="DevHubTemplateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TemplateResource"/> object. </returns>
-        public virtual TemplateResource GetTemplateResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevHubTemplateResource"/> object. </returns>
+        public virtual DevHubTemplateResource GetDevHubTemplateResource(ResourceIdentifier id)
         {
-            TemplateResource.ValidateResourceId(id);
-            return new TemplateResource(Client, id);
+            DevHubTemplateResource.ValidateResourceId(id);
+            return new DevHubTemplateResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="VersionedTemplateResource"/> along with the instance operations that can be performed on it but with no data. </summary>

@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.DevHub.Models
             {
                 throw new FormatException($"The model {nameof(DeveloperHubPullRequestContent)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(PrURL))
+            if (options.Format != "W" && Optional.IsDefined(PrUri))
             {
                 writer.WritePropertyName("prURL"u8);
-                writer.WriteStringValue(PrURL);
+                writer.WriteStringValue(PrUri);
             }
             if (options.Format != "W" && Optional.IsDefined(PullNumber))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DevHub.Models
             {
                 return null;
             }
-            string prURL = default;
+            string prUri = default;
             int? pullNumber = default;
             PullRequestStatus? prStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DevHub.Models
             {
                 if (prop.NameEquals("prURL"u8))
                 {
-                    prURL = prop.Value.GetString();
+                    prUri = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("pullNumber"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DevHub.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeveloperHubPullRequestContent(prURL, pullNumber, prStatus, additionalBinaryDataProperties);
+            return new DeveloperHubPullRequestContent(prUri, pullNumber, prStatus, additionalBinaryDataProperties);
         }
     }
 }

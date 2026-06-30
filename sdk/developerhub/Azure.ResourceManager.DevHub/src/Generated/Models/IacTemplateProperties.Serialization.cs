@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.DevHub;
 
 namespace Azure.ResourceManager.DevHub.Models
@@ -152,7 +153,7 @@ namespace Azure.ResourceManager.DevHub.Models
                 return null;
             }
             string templateName = default;
-            string sourceResourceId = default;
+            ResourceIdentifier sourceResourceId = default;
             string instanceStage = default;
             string instanceName = default;
             IList<IacTemplateDetails> templateDetails = default;
@@ -167,7 +168,11 @@ namespace Azure.ResourceManager.DevHub.Models
                 }
                 if (prop.NameEquals("sourceResourceId"u8))
                 {
-                    sourceResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("instanceStage"u8))

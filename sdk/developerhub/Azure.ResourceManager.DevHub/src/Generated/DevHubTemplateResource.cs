@@ -18,40 +18,40 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.DevHub
 {
     /// <summary>
-    /// A class representing a Template along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TemplateResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetTemplates method.
+    /// A class representing a DevHubTemplate along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevHubTemplateResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetDevHubTemplates method.
     /// </summary>
-    public partial class TemplateResource : ArmResource
+    public partial class DevHubTemplateResource : ArmResource
     {
         private readonly ClientDiagnostics _templateClientDiagnostics;
         private readonly Template _templateRestClient;
-        private readonly TemplateData _data;
+        private readonly DevHubTemplateData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DevHub/templates";
 
-        /// <summary> Initializes a new instance of TemplateResource for mocking. </summary>
-        protected TemplateResource()
+        /// <summary> Initializes a new instance of DevHubTemplateResource for mocking. </summary>
+        protected DevHubTemplateResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TemplateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevHubTemplateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal TemplateResource(ArmClient client, TemplateData data) : this(client, data.Id)
+        internal DevHubTemplateResource(ArmClient client, DevHubTemplateData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TemplateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevHubTemplateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal TemplateResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DevHubTemplateResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string templateApiVersion);
+            TryGetApiVersion(ResourceType, out string devHubTemplateApiVersion);
             _templateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevHub", ResourceType.Namespace, Diagnostics);
-            _templateRestClient = new Template(_templateClientDiagnostics, Pipeline, Endpoint, templateApiVersion ?? "2025-03-01-preview");
+            _templateRestClient = new Template(_templateClientDiagnostics, Pipeline, Endpoint, devHubTemplateApiVersion ?? "2025-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DevHub
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual TemplateData Data
+        public virtual DevHubTemplateData Data
         {
             get
             {
@@ -107,14 +107,14 @@ namespace Azure.ResourceManager.DevHub
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="TemplateResource"/>. </description>
+        /// <description> <see cref="DevHubTemplateResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TemplateResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevHubTemplateResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _templateClientDiagnostics.CreateScope("TemplateResource.Get");
+            using DiagnosticScope scope = _templateClientDiagnostics.CreateScope("DevHubTemplateResource.Get");
             scope.Start();
             try
             {
@@ -124,12 +124,12 @@ namespace Azure.ResourceManager.DevHub
                 };
                 HttpMessage message = _templateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<TemplateData> response = Response.FromValue(TemplateData.FromResponse(result), result);
+                Response<DevHubTemplateData> response = Response.FromValue(DevHubTemplateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new TemplateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevHubTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,14 +155,14 @@ namespace Azure.ResourceManager.DevHub
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="TemplateResource"/>. </description>
+        /// <description> <see cref="DevHubTemplateResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TemplateResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<DevHubTemplateResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _templateClientDiagnostics.CreateScope("TemplateResource.Get");
+            using DiagnosticScope scope = _templateClientDiagnostics.CreateScope("DevHubTemplateResource.Get");
             scope.Start();
             try
             {
@@ -172,12 +172,12 @@ namespace Azure.ResourceManager.DevHub
                 };
                 HttpMessage message = _templateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<TemplateData> response = Response.FromValue(TemplateData.FromResponse(result), result);
+                Response<DevHubTemplateData> response = Response.FromValue(DevHubTemplateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new TemplateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevHubTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DevHub
             }
         }
 
-        /// <summary> Gets a collection of VersionedTemplates in the <see cref="TemplateResource"/>. </summary>
+        /// <summary> Gets a collection of VersionedTemplates in the <see cref="DevHubTemplateResource"/>. </summary>
         /// <returns> An object representing collection of VersionedTemplates and their operations over a VersionedTemplateResource. </returns>
         public virtual VersionedTemplateCollection GetVersionedTemplates()
         {

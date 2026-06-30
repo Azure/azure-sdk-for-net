@@ -11,24 +11,24 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DevHub.Models
 {
     /// <summary> Details of the ADO repository associated with the workflow. </summary>
-    public partial class ADORepository
+    public partial class AdoRepository
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ADORepository"/>. </summary>
-        public ADORepository()
+        /// <summary> Initializes a new instance of <see cref="AdoRepository"/>. </summary>
+        public AdoRepository()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ADORepository"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdoRepository"/>. </summary>
         /// <param name="repositoryOwner"> The owner of the repository the workflow is associated with. </param>
         /// <param name="repositoryName"> The name of the repository the workflow is associated with. </param>
         /// <param name="branchName"> The name of the branch the workflow is associated with. </param>
         /// <param name="adoOrganization"> The name of the Azure DevOps organization the pipeline is associated with. </param>
         /// <param name="projectName"> The name of the project the pipeline is associated with. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ADORepository(string repositoryOwner, string repositoryName, string branchName, string adoOrganization, string projectName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AdoRepository(string repositoryOwner, string repositoryName, string branchName, string adoOrganization, string projectName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RepositoryOwner = repositoryOwner;
             RepositoryName = repositoryName;

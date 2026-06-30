@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DevHub.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (WorkflowData item in Value)
+            foreach (DevHubWorkflowData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.DevHub.Models
             {
                 return null;
             }
-            IList<WorkflowData> value = default;
+            IList<DevHubWorkflowData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<WorkflowData> array = new List<WorkflowData>();
+                    List<DevHubWorkflowData> array = new List<DevHubWorkflowData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(WorkflowData.DeserializeWorkflowData(item, options));
+                        array.Add(DevHubWorkflowData.DeserializeDevHubWorkflowData(item, options));
                     }
                     value = array;
                     continue;

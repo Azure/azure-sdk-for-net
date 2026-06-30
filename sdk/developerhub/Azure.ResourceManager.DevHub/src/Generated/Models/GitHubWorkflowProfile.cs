@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DevHub.Models
 {
@@ -32,13 +33,13 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <param name="acr"> Information on the azure container registry. </param>
         /// <param name="oidcCredentials"> The fields needed for OIDC with GitHub. </param>
         /// <param name="aksResourceId"> The Azure Kubernetes Cluster Resource the application will be deployed to. </param>
-        /// <param name="prURL"> The URL to the Pull Request submitted against the users repository. </param>
+        /// <param name="prUri"> The URL to the Pull Request submitted against the users repository. </param>
         /// <param name="pullNumber"> The number associated with the submitted pull request. </param>
         /// <param name="prStatus"> The status of the Pull Request submitted against the users repository. </param>
         /// <param name="lastWorkflowRun"></param>
         /// <param name="authStatus"> Determines the authorization status of requests. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GitHubWorkflowProfile(string repositoryOwner, string repositoryName, string branchName, string dockerfile, string dockerBuildContext, Deployment deploymentProperties, string @namespace, Acr acr, GitHubWorkflowProfileOidcCredentials oidcCredentials, string aksResourceId, string prURL, int? pullNumber, PullRequestStatus? prStatus, WorkflowRun lastWorkflowRun, AuthorizationStatus? authStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GitHubWorkflowProfile(string repositoryOwner, string repositoryName, string branchName, string dockerfile, string dockerBuildContext, Deployment deploymentProperties, string @namespace, Acr acr, GitHubWorkflowProfileOidcCredentials oidcCredentials, ResourceIdentifier aksResourceId, string prUri, int? pullNumber, PullRequestStatus? prStatus, WorkflowRun lastWorkflowRun, AuthorizationStatus? authStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RepositoryOwner = repositoryOwner;
             RepositoryName = repositoryName;
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.DevHub.Models
             Acr = acr;
             OidcCredentials = oidcCredentials;
             AksResourceId = aksResourceId;
-            PrURL = prURL;
+            PrUri = prUri;
             PullNumber = pullNumber;
             PrStatus = prStatus;
             LastWorkflowRun = lastWorkflowRun;
@@ -86,10 +87,10 @@ namespace Azure.ResourceManager.DevHub.Models
         public GitHubWorkflowProfileOidcCredentials OidcCredentials { get; set; }
 
         /// <summary> The Azure Kubernetes Cluster Resource the application will be deployed to. </summary>
-        public string AksResourceId { get; set; }
+        public ResourceIdentifier AksResourceId { get; set; }
 
         /// <summary> The URL to the Pull Request submitted against the users repository. </summary>
-        public string PrURL { get; }
+        public string PrUri { get; }
 
         /// <summary> The number associated with the submitted pull request. </summary>
         public int? PullNumber { get; }

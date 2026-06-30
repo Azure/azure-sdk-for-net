@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.DevHub;
 
 namespace Azure.ResourceManager.DevHub.Models
@@ -124,10 +125,10 @@ namespace Azure.ResourceManager.DevHub.Models
                 writer.WritePropertyName("aksResourceId"u8);
                 writer.WriteStringValue(AksResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrURL))
+            if (options.Format != "W" && Optional.IsDefined(PrUri))
             {
                 writer.WritePropertyName("prURL"u8);
-                writer.WriteStringValue(PrURL);
+                writer.WriteStringValue(PrUri);
             }
             if (options.Format != "W" && Optional.IsDefined(PullNumber))
             {
@@ -200,8 +201,8 @@ namespace Azure.ResourceManager.DevHub.Models
             string @namespace = default;
             Acr acr = default;
             GitHubWorkflowProfileOidcCredentials oidcCredentials = default;
-            string aksResourceId = default;
-            string prURL = default;
+            ResourceIdentifier aksResourceId = default;
+            string prUri = default;
             int? pullNumber = default;
             PullRequestStatus? prStatus = default;
             WorkflowRun lastWorkflowRun = default;
@@ -268,12 +269,16 @@ namespace Azure.ResourceManager.DevHub.Models
                 }
                 if (prop.NameEquals("aksResourceId"u8))
                 {
-                    aksResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    aksResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("prURL"u8))
                 {
-                    prURL = prop.Value.GetString();
+                    prUri = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("pullNumber"u8))
@@ -328,7 +333,7 @@ namespace Azure.ResourceManager.DevHub.Models
                 acr,
                 oidcCredentials,
                 aksResourceId,
-                prURL,
+                prUri,
                 pullNumber,
                 prStatus,
                 lastWorkflowRun,

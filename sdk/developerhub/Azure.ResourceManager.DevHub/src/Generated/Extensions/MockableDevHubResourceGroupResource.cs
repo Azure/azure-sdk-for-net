@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.DevHub.Mocking
             return GetIacProfiles().Get(iacProfileName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Workflows in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of Workflows and their operations over a WorkflowResource. </returns>
-        public virtual WorkflowCollection GetWorkflows()
+        /// <summary> Gets a collection of DevHubWorkflows in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DevHubWorkflows and their operations over a DevHubWorkflowResource. </returns>
+        public virtual DevHubWorkflowCollection GetDevHubWorkflows()
         {
-            return GetCachedClient(client => new WorkflowCollection(client, Id));
+            return GetCachedClient(client => new DevHubWorkflowCollection(client, Id));
         }
 
         /// <summary>
@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.DevHub.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<WorkflowResource>> GetWorkflowAsync(string workflowName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevHubWorkflowResource>> GetDevHubWorkflowAsync(string workflowName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
 
-            return await GetWorkflows().GetAsync(workflowName, cancellationToken).ConfigureAwait(false);
+            return await GetDevHubWorkflows().GetAsync(workflowName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -154,11 +154,11 @@ namespace Azure.ResourceManager.DevHub.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WorkflowResource> GetWorkflow(string workflowName, CancellationToken cancellationToken = default)
+        public virtual Response<DevHubWorkflowResource> GetDevHubWorkflow(string workflowName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
 
-            return GetWorkflows().Get(workflowName, cancellationToken);
+            return GetDevHubWorkflows().Get(workflowName, cancellationToken);
         }
     }
 }

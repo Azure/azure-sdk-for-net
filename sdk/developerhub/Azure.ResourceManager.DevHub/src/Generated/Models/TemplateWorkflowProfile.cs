@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <param name="lastWorkflowRun"></param>
         /// <param name="authStatus"> Determines the authorization status of requests. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TemplateWorkflowProfile(RepositoryProviderType? repositoryProvider, TemplateReference workflowTemplate, TemplateReference deploymentTemplate, TemplateReference dockerfileTemplate, IList<TemplateReference> manifestTemplates, GitHubProviderProfile gitHubProviderProfile, ADOProviderProfile adoProviderProfile, DeveloperHubPullRequestContent pullRequest, WorkflowRun lastWorkflowRun, AuthorizationStatus? authStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TemplateWorkflowProfile(RepositoryProviderType? repositoryProvider, TemplateReference workflowTemplate, TemplateReference deploymentTemplate, TemplateReference dockerfileTemplate, IList<TemplateReference> manifestTemplates, GitHubProviderProfile gitHubProviderProfile, AdoProviderProfile adoProviderProfile, DeveloperHubPullRequestContent pullRequest, WorkflowRun lastWorkflowRun, AuthorizationStatus? authStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RepositoryProvider = repositoryProvider;
             WorkflowTemplate = workflowTemplate;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DevHub.Models
         public GitHubProviderProfile GitHubProviderProfile { get; set; }
 
         /// <summary> Details of the GitHub repository associated with the workflow. </summary>
-        public ADOProviderProfile AdoProviderProfile { get; set; }
+        public AdoProviderProfile AdoProviderProfile { get; set; }
 
         /// <summary> Details of the pull request containing the workflow. </summary>
         public DeveloperHubPullRequestContent PullRequest { get; set; }

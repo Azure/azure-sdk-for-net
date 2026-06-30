@@ -13,34 +13,31 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevHub
 {
-    /// <summary> Workflow. </summary>
-    public partial class WorkflowData : TrackedResourceData
+    /// <summary> Template. </summary>
+    public partial class DevHubTemplateData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="WorkflowData"/>. </summary>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        public WorkflowData(AzureLocation location) : base(location)
+        /// <summary> Initializes a new instance of <see cref="DevHubTemplateData"/>. </summary>
+        internal DevHubTemplateData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkflowData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevHubTemplateData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Properties of a workflow. </param>
+        /// <param name="properties"> Properties of a Template. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkflowProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal DevHubTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TemplateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Properties of a workflow. </summary>
-        public WorkflowProperties Properties { get; set; }
+        /// <summary> Properties of a Template. </summary>
+        public TemplateProperties Properties { get; }
     }
 }
