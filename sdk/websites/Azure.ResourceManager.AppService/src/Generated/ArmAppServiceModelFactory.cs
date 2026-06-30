@@ -2143,20 +2143,20 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="serviceIpAddress"> Main public virtual IP. </param>
-        /// <param name="internalIpAddress"> Virtual Network internal IP address of the App Service Environment if it is in internal load-balancing mode. </param>
+        /// <param name="serviceIPAddress"> Main public virtual IP. </param>
+        /// <param name="internalIPAddress"> Virtual Network internal IP address of the App Service Environment if it is in internal load-balancing mode. </param>
         /// <param name="outboundIPAddresses"> IP addresses appearing on outbound connections. </param>
         /// <param name="virtualIPMappings"> Additional virtual IPs. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.AppServiceEnvironmentAddressData"/> instance for mocking. </returns>
-        public static AppServiceEnvironmentAddressData AppServiceEnvironmentAddressData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IPAddress serviceIpAddress = default, IPAddress internalIpAddress = default, IEnumerable<IPAddress> outboundIPAddresses = default, IEnumerable<VirtualIPMapping> virtualIPMappings = default, string kind = default)
+        public static AppServiceEnvironmentAddressData AppServiceEnvironmentAddressData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IPAddress serviceIPAddress = default, IPAddress internalIPAddress = default, IEnumerable<IPAddress> outboundIPAddresses = default, IEnumerable<VirtualIPMapping> virtualIPMappings = default, string kind = default)
         {
             return new AppServiceEnvironmentAddressData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                serviceIpAddress is null && internalIpAddress is null && outboundIPAddresses is null && virtualIPMappings is null ? default : new AddressResponseProperties(serviceIpAddress, internalIpAddress, (outboundIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(), (virtualIPMappings ?? new ChangeTrackingList<VirtualIPMapping>()).ToList(), default),
+                serviceIPAddress is null && internalIPAddress is null && outboundIPAddresses is null && virtualIPMappings is null ? default : new AddressResponseProperties(serviceIPAddress, internalIPAddress, (outboundIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(), (virtualIPMappings ?? new ChangeTrackingList<VirtualIPMapping>()).ToList(), default),
                 kind,
                 default);
         }

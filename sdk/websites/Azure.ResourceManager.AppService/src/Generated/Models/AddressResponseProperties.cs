@@ -26,15 +26,15 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AddressResponseProperties"/>. </summary>
-        /// <param name="serviceIpAddress"> Main public virtual IP. </param>
-        /// <param name="internalIpAddress"> Virtual Network internal IP address of the App Service Environment if it is in internal load-balancing mode. </param>
+        /// <param name="serviceIPAddress"> Main public virtual IP. </param>
+        /// <param name="internalIPAddress"> Virtual Network internal IP address of the App Service Environment if it is in internal load-balancing mode. </param>
         /// <param name="outboundIPAddresses"> IP addresses appearing on outbound connections. </param>
         /// <param name="virtualIPMappings"> Additional virtual IPs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AddressResponseProperties(IPAddress serviceIpAddress, IPAddress internalIpAddress, IList<IPAddress> outboundIPAddresses, IList<VirtualIPMapping> virtualIPMappings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AddressResponseProperties(IPAddress serviceIPAddress, IPAddress internalIPAddress, IList<IPAddress> outboundIPAddresses, IList<VirtualIPMapping> virtualIPMappings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ServiceIpAddress = serviceIpAddress;
-            InternalIpAddress = internalIpAddress;
+            ServiceIPAddress = serviceIPAddress;
+            InternalIPAddress = internalIPAddress;
             OutboundIPAddresses = outboundIPAddresses;
             VirtualIPMappings = virtualIPMappings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Main public virtual IP. </summary>
         [WirePath("serviceIpAddress")]
-        public IPAddress ServiceIpAddress { get; }
+        public IPAddress ServiceIPAddress { get; }
 
         /// <summary> Virtual Network internal IP address of the App Service Environment if it is in internal load-balancing mode. </summary>
         [WirePath("internalIpAddress")]
-        public IPAddress InternalIpAddress { get; }
+        public IPAddress InternalIPAddress { get; }
 
         /// <summary> IP addresses appearing on outbound connections. </summary>
         [WirePath("outboundIpAddresses")]

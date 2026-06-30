@@ -50,21 +50,21 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Main public virtual IP. </summary>
         [WirePath("properties.serviceIpAddress")]
-        public IPAddress ServiceIpAddress
+        public IPAddress ServiceIPAddress
         {
             get
             {
-                return Properties is null ? default : Properties.ServiceIpAddress;
+                return Properties is null ? default : Properties.ServiceIPAddress;
             }
         }
 
         /// <summary> Virtual Network internal IP address of the App Service Environment if it is in internal load-balancing mode. </summary>
         [WirePath("properties.internalIpAddress")]
-        public IPAddress InternalIpAddress
+        public IPAddress InternalIPAddress
         {
             get
             {
-                return Properties is null ? default : Properties.InternalIpAddress;
+                return Properties is null ? default : Properties.InternalIPAddress;
             }
         }
 

@@ -75,15 +75,15 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 throw new FormatException($"The model {nameof(AddressResponseProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ServiceIpAddress))
+            if (Optional.IsDefined(ServiceIPAddress))
             {
                 writer.WritePropertyName("serviceIpAddress"u8);
-                writer.WriteStringValue(ServiceIpAddress.ToString());
+                writer.WriteStringValue(ServiceIPAddress.ToString());
             }
-            if (Optional.IsDefined(InternalIpAddress))
+            if (Optional.IsDefined(InternalIPAddress))
             {
                 writer.WritePropertyName("internalIpAddress"u8);
-                writer.WriteStringValue(InternalIpAddress.ToString());
+                writer.WriteStringValue(InternalIPAddress.ToString());
             }
             if (Optional.IsCollectionDefined(OutboundIPAddresses))
             {
@@ -152,8 +152,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            IPAddress serviceIpAddress = default;
-            IPAddress internalIpAddress = default;
+            IPAddress serviceIPAddress = default;
+            IPAddress internalIPAddress = default;
             IList<IPAddress> outboundIPAddresses = default;
             IList<VirtualIPMapping> virtualIPMappings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    serviceIpAddress = IPAddress.Parse(prop.Value.GetString());
+                    serviceIPAddress = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("internalIpAddress"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    internalIpAddress = IPAddress.Parse(prop.Value.GetString());
+                    internalIPAddress = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("outboundIpAddresses"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AddressResponseProperties(serviceIpAddress, internalIpAddress, outboundIPAddresses ?? new ChangeTrackingList<IPAddress>(), virtualIPMappings ?? new ChangeTrackingList<VirtualIPMapping>(), additionalBinaryDataProperties);
+            return new AddressResponseProperties(serviceIPAddress, internalIPAddress, outboundIPAddresses ?? new ChangeTrackingList<IPAddress>(), virtualIPMappings ?? new ChangeTrackingList<VirtualIPMapping>(), additionalBinaryDataProperties);
         }
     }
 }
