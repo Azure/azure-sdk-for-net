@@ -4,7 +4,6 @@
 # nullable enable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.IO;
 using System.Text.RegularExpressions;
