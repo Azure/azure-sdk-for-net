@@ -55,17 +55,17 @@ public class Sample_DataGenerationJob: SamplesBase
         };
         #endregion
         #region Snippet:Sample_CreateJob_DataGenerationJob_Async
-        DataGenerationJob runningJob = await projectClient.DataGenerationJobs.CreateGenerationJobAsync(job);
+        DataGenerationJob runningJob = await projectClient.DataGenerationJobs.CreateAsync(job);
         Console.WriteLine($"Created job ID: {runningJob.Id}");
         #endregion
         #region Snippet:Sample_GetJob_DataGenerationJob_Async
-        while (runningJob.Status != JobStatus.Failed && runningJob.Status != JobStatus.Succeeded)
+        while (runningJob.Status != ProjectsJobStatus.Failed && runningJob.Status != ProjectsJobStatus.Succeeded)
         {
             await Task.Delay(500);
             Console.WriteLine($"Waiting for job ID: {runningJob.Id}...");
-            runningJob = await projectClient.DataGenerationJobs.GetGenerationJobAsync(jobId: runningJob.Id);
+            runningJob = await projectClient.DataGenerationJobs.GetAsync(jobId: runningJob.Id);
         }
-        if (runningJob.Status == JobStatus.Failed)
+        if (runningJob.Status == ProjectsJobStatus.Failed)
         {
             throw new InvalidOperationException($"The job {runningJob.Id} has failed.");
         }
@@ -100,29 +100,29 @@ public class Sample_DataGenerationJob: SamplesBase
                 OutputOptions = outputOptions
             },
         };
-        DataGenerationJob jobToCancel = await projectClient.DataGenerationJobs.CreateGenerationJobAsync(job);
-        jobToCancel = await projectClient.DataGenerationJobs.CancelGenerationJobAsync(jobToCancel.Id);
-        while (jobToCancel.Status != JobStatus.Failed && jobToCancel.Status != JobStatus.Succeeded && jobToCancel.Status != JobStatus.Cancelled)
+        DataGenerationJob jobToCancel = await projectClient.DataGenerationJobs.CreateAsync(job);
+        jobToCancel = await projectClient.DataGenerationJobs.CancelAsync(jobToCancel.Id);
+        while (jobToCancel.Status != ProjectsJobStatus.Failed && jobToCancel.Status != ProjectsJobStatus.Succeeded && jobToCancel.Status != ProjectsJobStatus.Cancelled)
         {
             await Task.Delay(500);
             Console.WriteLine($"Waiting for job {jobToCancel.Id} to cancel...");
-            jobToCancel = await projectClient.DataGenerationJobs.GetGenerationJobAsync(jobId: jobToCancel.Id);
+            jobToCancel = await projectClient.DataGenerationJobs.GetAsync(jobId: jobToCancel.Id);
         }
-        if (jobToCancel.Status != JobStatus.Cancelled)
+        if (jobToCancel.Status != ProjectsJobStatus.Cancelled)
         {
             throw new InvalidOperationException($"The job {jobToCancel.Id} has failed.");
         }
         Console.WriteLine($"The job {jobToCancel.Id} was canceled.");
         #endregion
         #region Snippet:Sample_ListJob_DataGenerationJob_Async
-        await foreach (DataGenerationJob oneJob in projectClient.DataGenerationJobs.GetGenerationJobsAsync())
+        await foreach (DataGenerationJob oneJob in projectClient.DataGenerationJobs.GetAllAsync())
         {
             Console.WriteLine($"Job ID: {oneJob.Id}, Status: {oneJob.Status}.");
         }
         #endregion
         #region Snippet:Sample_DeleteJob_DataGenerationJob_Async
-        await projectClient.DataGenerationJobs.DeleteGenerationJobAsync(jobId: runningJob.Id);
-        await projectClient.DataGenerationJobs.DeleteGenerationJobAsync(jobId: jobToCancel.Id);
+        await projectClient.DataGenerationJobs.DeleteAsync(jobId: runningJob.Id);
+        await projectClient.DataGenerationJobs.DeleteAsync(jobId: jobToCancel.Id);
         #endregion
     }
 
@@ -167,17 +167,17 @@ public class Sample_DataGenerationJob: SamplesBase
             },
         };
         #region Snippet:Sample_CreateJob_DataGenerationJob_Sync
-        DataGenerationJob runningJob = projectClient.DataGenerationJobs.CreateGenerationJob(job);
+        DataGenerationJob runningJob = projectClient.DataGenerationJobs.Create(job);
         Console.WriteLine($"Created job ID: {runningJob.Id}");
         #endregion
         #region Snippet:Sample_GetJob_DataGenerationJob_Sync
-        while (runningJob.Status != JobStatus.Failed && runningJob.Status != JobStatus.Succeeded)
+        while (runningJob.Status != ProjectsJobStatus.Failed && runningJob.Status != ProjectsJobStatus.Succeeded)
         {
             Thread.Sleep(500);
             Console.WriteLine($"Waiting for job ID: {runningJob.Id}...");
-            runningJob = projectClient.DataGenerationJobs.GetGenerationJob(jobId: runningJob.Id);
+            runningJob = projectClient.DataGenerationJobs.Get(jobId: runningJob.Id);
         }
-        if (runningJob.Status == JobStatus.Failed)
+        if (runningJob.Status == ProjectsJobStatus.Failed)
         {
             throw new InvalidOperationException($"The job {runningJob.Id} has failed.");
         }
@@ -212,29 +212,29 @@ public class Sample_DataGenerationJob: SamplesBase
                 OutputOptions = outputOptions
             },
         };
-        DataGenerationJob jobToCancel = projectClient.DataGenerationJobs.CreateGenerationJob(job);
-        jobToCancel = projectClient.DataGenerationJobs.CancelGenerationJob(jobToCancel.Id);
-        while (jobToCancel.Status != JobStatus.Failed && jobToCancel.Status != JobStatus.Succeeded && jobToCancel.Status != JobStatus.Cancelled)
+        DataGenerationJob jobToCancel = projectClient.DataGenerationJobs.Create(job);
+        jobToCancel = projectClient.DataGenerationJobs.Cancel(jobToCancel.Id);
+        while (jobToCancel.Status != ProjectsJobStatus.Failed && jobToCancel.Status != ProjectsJobStatus.Succeeded && jobToCancel.Status != ProjectsJobStatus.Cancelled)
         {
             Thread.Sleep(500);
             Console.WriteLine($"Waiting for job {jobToCancel.Id} to cancel...");
-            jobToCancel = projectClient.DataGenerationJobs.GetGenerationJob(jobId: jobToCancel.Id);
+            jobToCancel = projectClient.DataGenerationJobs.Get(jobId: jobToCancel.Id);
         }
-        if (jobToCancel.Status != JobStatus.Cancelled)
+        if (jobToCancel.Status != ProjectsJobStatus.Cancelled)
         {
             throw new InvalidOperationException($"The job {jobToCancel.Id} has failed.");
         }
         Console.WriteLine($"The job {jobToCancel.Id} was canceled.");
         #endregion
         #region Snippet:Sample_ListJob_DataGenerationJob_Sync
-        foreach (DataGenerationJob oneJob in projectClient.DataGenerationJobs.GetGenerationJobs())
+        foreach (DataGenerationJob oneJob in projectClient.DataGenerationJobs.GetAll())
         {
             Console.WriteLine($"Job ID: {oneJob.Id}, Status: {oneJob.Status}.");
         }
         #endregion
         #region Snippet:Sample_DeleteJob_DataGenerationJob_Sync
-        projectClient.DataGenerationJobs.DeleteGenerationJob(jobId: runningJob.Id);
-        projectClient.DataGenerationJobs.DeleteGenerationJob(jobId: jobToCancel.Id);
+        projectClient.DataGenerationJobs.Delete(jobId: runningJob.Id);
+        projectClient.DataGenerationJobs.Delete(jobId: jobToCancel.Id);
         #endregion
     }
     public Sample_DataGenerationJob(bool isAsync) : base(isAsync)

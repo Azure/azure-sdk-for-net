@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class GcpParentOrganizationalInfo : IUtf8JsonSerializable, IJsonModel<GcpParentOrganizationalInfo>
+    /// <summary> The gcpOrganization data for the parent account. </summary>
+    public partial class GcpParentOrganizationalInfo : GcpOrganizationalInfo, IJsonModel<GcpParentOrganizationalInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GcpParentOrganizationalInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override GcpOrganizationalInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GcpParentOrganizationalInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeGcpParentOrganizationalInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GcpParentOrganizationalInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GcpParentOrganizationalInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(GcpParentOrganizationalInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GcpParentOrganizationalInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GcpParentOrganizationalInfo IPersistableModel<GcpParentOrganizationalInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => (GcpParentOrganizationalInfo)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GcpParentOrganizationalInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GcpParentOrganizationalInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,19 +69,23 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GcpParentOrganizationalInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GcpParentOrganizationalInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GcpParentOrganizationalInfo)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(ExcludedProjectNumbers))
             {
                 writer.WritePropertyName("excludedProjectNumbers"u8);
                 writer.WriteStartArray();
-                foreach (var item in ExcludedProjectNumbers)
+                foreach (string item in ExcludedProjectNumbers)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -62,113 +107,92 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
         }
 
-        GcpParentOrganizationalInfo IJsonModel<GcpParentOrganizationalInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GcpParentOrganizationalInfo IJsonModel<GcpParentOrganizationalInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GcpParentOrganizationalInfo)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override GcpOrganizationalInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GcpParentOrganizationalInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GcpParentOrganizationalInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GcpParentOrganizationalInfo)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeGcpParentOrganizationalInfo(document.RootElement, options);
         }
 
-        internal static GcpParentOrganizationalInfo DeserializeGcpParentOrganizationalInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static GcpParentOrganizationalInfo DeserializeGcpParentOrganizationalInfo(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            OrganizationMembershipType organizationMembershipType = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<string> excludedProjectNumbers = default;
             string serviceAccountEmailAddress = default;
             string workloadIdentityProviderId = default;
             string organizationName = default;
-            OrganizationMembershipType organizationMembershipType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("excludedProjectNumbers"u8))
+                if (prop.NameEquals("organizationMembershipType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    organizationMembershipType = new OrganizationMembershipType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("excludedProjectNumbers"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     excludedProjectNumbers = array;
                     continue;
                 }
-                if (property.NameEquals("serviceAccountEmailAddress"u8))
+                if (prop.NameEquals("serviceAccountEmailAddress"u8))
                 {
-                    serviceAccountEmailAddress = property.Value.GetString();
+                    serviceAccountEmailAddress = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("workloadIdentityProviderId"u8))
+                if (prop.NameEquals("workloadIdentityProviderId"u8))
                 {
-                    workloadIdentityProviderId = property.Value.GetString();
+                    workloadIdentityProviderId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("organizationName"u8))
+                if (prop.NameEquals("organizationName"u8))
                 {
-                    organizationName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("organizationMembershipType"u8))
-                {
-                    organizationMembershipType = new OrganizationMembershipType(property.Value.GetString());
+                    organizationName = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new GcpParentOrganizationalInfo(
                 organizationMembershipType,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 excludedProjectNumbers ?? new ChangeTrackingList<string>(),
                 serviceAccountEmailAddress,
                 workloadIdentityProviderId,
                 organizationName);
         }
-
-        BinaryData IPersistableModel<GcpParentOrganizationalInfo>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GcpParentOrganizationalInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(GcpParentOrganizationalInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        GcpParentOrganizationalInfo IPersistableModel<GcpParentOrganizationalInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GcpParentOrganizationalInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeGcpParentOrganizationalInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(GcpParentOrganizationalInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<GcpParentOrganizationalInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

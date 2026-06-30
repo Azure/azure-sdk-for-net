@@ -12,7 +12,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a virtual machine scale set VM network profile. </summary>
-    public partial class VirtualMachineScaleSetVmNetworkProfileConfiguration
+    internal partial class VirtualMachineScaleSetVmNetworkProfileConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -25,19 +25,14 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmNetworkProfileConfiguration"/>. </summary>
         /// <param name="networkInterfaceConfigurations"> The list of network configurations. </param>
-        /// <param name="interconnectGroupProfile"> Specifies the interconnect group profile to associate with the scale set vm instance. Minimum api-version: 2026-03-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetVmNetworkProfileConfiguration(IList<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations, InterconnectGroupProfile interconnectGroupProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetVmNetworkProfileConfiguration(IList<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NetworkInterfaceConfigurations = networkInterfaceConfigurations;
-            InterconnectGroupProfile = interconnectGroupProfile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The list of network configurations. </summary>
         public IList<VirtualMachineScaleSetNetworkConfiguration> NetworkInterfaceConfigurations { get; }
-
-        /// <summary> Specifies the interconnect group profile to associate with the scale set vm instance. Minimum api-version: 2026-03-01. </summary>
-        public InterconnectGroupProfile InterconnectGroupProfile { get; set; }
     }
 }

@@ -11,7 +11,7 @@ namespace Azure.AI.Projects
     public partial class TimerRoutineTrigger : RoutineTrigger
     {
         /// <summary> Initializes a new instance of <see cref="TimerRoutineTrigger"/>. </summary>
-        public TimerRoutineTrigger() : base(RoutineTriggerType.Timer)
+        public TimerRoutineTrigger() : base(RoutineTriggerKind.Timer)
         {
         }
 
@@ -19,7 +19,7 @@ namespace Azure.AI.Projects
         /// <param name="type"> The trigger type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="at"> The UTC date and time at which the timer fires. </param>
-        internal TimerRoutineTrigger(RoutineTriggerType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? at) : base(@type, additionalBinaryDataProperties)
+        internal TimerRoutineTrigger(RoutineTriggerKind @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? at) : base(@type, additionalBinaryDataProperties)
         {
             At = at;
         }

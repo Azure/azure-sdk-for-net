@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +22,7 @@ public partial class DataGenerationJobs
     /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual ClientResult<DataGenerationJob> GetGenerationJob(string jobId, CancellationToken cancellationToken = default)
+    public virtual ClientResult<DataGenerationJob> Get(string jobId, CancellationToken cancellationToken = default)
     {
         return GetGenerationJob(
             jobId: jobId,
@@ -37,7 +36,7 @@ public partial class DataGenerationJobs
     /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task<ClientResult<DataGenerationJob>> GetGenerationJobAsync(string jobId, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<DataGenerationJob>> GetAsync(string jobId, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -68,7 +67,7 @@ public partial class DataGenerationJobs
     /// </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual CollectionResult<DataGenerationJob> GetGenerationJobs(int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<DataGenerationJob> GetAll(int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         return new InternalOpenAICollectionResultOfT<DataGenerationJob>(
             Pipeline,
@@ -106,7 +105,7 @@ public partial class DataGenerationJobs
     /// </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual AsyncCollectionResult<DataGenerationJob> GetGenerationJobsAsync(int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<DataGenerationJob> GetAllAsync(int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         return new InternalOpenAIAsyncCollectionResultOfT<DataGenerationJob>(
             Pipeline,
@@ -129,7 +128,7 @@ public partial class DataGenerationJobs
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="job"/> is null. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual ClientResult<DataGenerationJob> CreateGenerationJob(DataGenerationJob job, string operationId = default, CancellationToken cancellationToken = default)
+    public virtual ClientResult<DataGenerationJob> Create(DataGenerationJob job, string operationId = default, CancellationToken cancellationToken = default)
     {
         return CreateGenerationJob(
             job: job,
@@ -145,7 +144,7 @@ public partial class DataGenerationJobs
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="job"/> is null. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task<ClientResult<DataGenerationJob>> CreateGenerationJobAsync(DataGenerationJob job, string operationId = default, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<DataGenerationJob>> CreateAsync(DataGenerationJob job, string operationId = default, CancellationToken cancellationToken = default)
     {
         return await CreateGenerationJobAsync(
             job: job,
@@ -161,7 +160,7 @@ public partial class DataGenerationJobs
     /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual ClientResult<DataGenerationJob> CancelGenerationJob(string jobId, CancellationToken cancellationToken = default)
+    public virtual ClientResult<DataGenerationJob> Cancel(string jobId, CancellationToken cancellationToken = default)
     {
         return CancelGenerationJob(
             jobId: jobId,
@@ -176,7 +175,7 @@ public partial class DataGenerationJobs
     /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public async virtual Task<ClientResult<DataGenerationJob>> CancelGenerationJobAsync(string jobId, CancellationToken cancellationToken = default)
+    public async virtual Task<ClientResult<DataGenerationJob>> CancelAsync(string jobId, CancellationToken cancellationToken = default)
     {
         return await CancelGenerationJobAsync(
             jobId: jobId,
@@ -191,7 +190,7 @@ public partial class DataGenerationJobs
     /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual ClientResult DeleteGenerationJob(string jobId, CancellationToken cancellationToken = default)
+    public virtual ClientResult Delete(string jobId, CancellationToken cancellationToken = default)
     {
         return DeleteGenerationJob(
             jobId: jobId,
@@ -205,7 +204,7 @@ public partial class DataGenerationJobs
     /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public async virtual Task<ClientResult> DeleteGenerationJobAsync(string jobId, CancellationToken cancellationToken = default)
+    public async virtual Task<ClientResult> DeleteAsync(string jobId, CancellationToken cancellationToken = default)
     {
         return await DeleteGenerationJobAsync(
             jobId: jobId,

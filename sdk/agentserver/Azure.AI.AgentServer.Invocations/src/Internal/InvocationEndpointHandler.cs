@@ -48,10 +48,10 @@ internal sealed class InvocationEndpointHandler
         // Extract headers and query params
         var clientHeaders = ClientHeaderForwarder.ExtractClientHeaders(request);
         var queryParams = ClientHeaderForwarder.ExtractQueryParameters(request);
-        var isolation = IsolationContext.FromRequest(request);
+        var platformContext = PlatformContext.FromRequest(request);
 
         // Construct context
-        var context = new InvocationContext(invocationId, sessionId, clientHeaders, queryParams, isolation);
+        var context = new InvocationContext(invocationId, sessionId, clientHeaders, queryParams, platformContext);
 
         // Propagate baggage for downstream correlation (no invoke_agent span —
         // W3C context propagation is handled by ASP.NET Core automatically)
@@ -65,8 +65,8 @@ internal sealed class InvocationEndpointHandler
         });
 
         _logger.LogInformation(
-            "Handling invocation {InvocationId}: HasUserIsolationKey={HasUserIsolationKey} HasChatIsolationKey={HasChatIsolationKey}",
-            invocationId, isolation.UserIsolationKey is not null, isolation.ChatIsolationKey is not null);
+            "Handling invocation {InvocationId}: HasUserId={HasUserId} HasCallId={HasCallId}",
+            invocationId, platformContext.UserIdKey is not null, platformContext.CallId is not null);
 
         try
         {
@@ -97,8 +97,8 @@ internal sealed class InvocationEndpointHandler
     {
         var context = BuildContext(httpContext, invocationId);
         _logger.LogInformation(
-            "Getting invocation {InvocationId}: HasUserIsolationKey={HasUserIsolationKey} HasChatIsolationKey={HasChatIsolationKey}",
-            invocationId, context.Isolation.UserIsolationKey is not null, context.Isolation.ChatIsolationKey is not null);
+            "Getting invocation {InvocationId}: HasUserId={HasUserId} HasCallId={HasCallId}",
+            invocationId, context.PlatformContext.UserIdKey is not null, context.PlatformContext.CallId is not null);
         InjectSessionIdHeader(httpContext.Response, context.SessionId);
         await RunWithSseKeepAliveAsync(
             httpContext,
@@ -113,8 +113,8 @@ internal sealed class InvocationEndpointHandler
     {
         var context = BuildContext(httpContext, invocationId);
         _logger.LogInformation(
-            "Cancelling invocation {InvocationId}: HasUserIsolationKey={HasUserIsolationKey} HasChatIsolationKey={HasChatIsolationKey}",
-            invocationId, context.Isolation.UserIsolationKey is not null, context.Isolation.ChatIsolationKey is not null);
+            "Cancelling invocation {InvocationId}: HasUserId={HasUserId} HasCallId={HasCallId}",
+            invocationId, context.PlatformContext.UserIdKey is not null, context.PlatformContext.CallId is not null);
         InjectSessionIdHeader(httpContext.Response, context.SessionId);
         await RunWithSseKeepAliveAsync(
             httpContext,
@@ -159,8 +159,8 @@ internal sealed class InvocationEndpointHandler
 
         var clientHeaders = ClientHeaderForwarder.ExtractClientHeaders(request);
         var queryParams = ClientHeaderForwarder.ExtractQueryParameters(request);
-        var isolation = IsolationContext.FromRequest(request);
-        return new InvocationContext(invocationId, sessionId, clientHeaders, queryParams, isolation);
+        var platformContext = PlatformContext.FromRequest(request);
+        return new InvocationContext(invocationId, sessionId, clientHeaders, queryParams, platformContext);
     }
 
     /// <summary>

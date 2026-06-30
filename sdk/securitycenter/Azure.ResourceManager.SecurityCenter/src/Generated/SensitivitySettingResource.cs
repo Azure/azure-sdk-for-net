@@ -6,44 +6,37 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A Class representing a SensitivitySetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SensitivitySettingResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetSensitivitySettingResource method.
+    /// A class representing a SensitivitySetting along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SensitivitySettingResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
     /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetSensitivitySetting method.
     /// </summary>
     public partial class SensitivitySettingResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SensitivitySettingResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier()
-        {
-            var resourceId = $"/providers/Microsoft.Security/sensitivitySettings/current";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _sensitivitySettingClientDiagnostics;
-        private readonly SecurityCenterRestOperations _sensitivitySettingRestClient;
+        private readonly ClientDiagnostics _sensitivitySettingsClientDiagnostics;
+        private readonly SensitivitySettings _sensitivitySettingsRestClient;
         private readonly SensitivitySettingData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Security/sensitivitySettings";
 
-        /// <summary> Initializes a new instance of the <see cref="SensitivitySettingResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SensitivitySettingResource for mocking. </summary>
         protected SensitivitySettingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SensitivitySettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SensitivitySettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SensitivitySettingResource(ArmClient client, SensitivitySettingData data) : this(client, data.Id)
@@ -52,138 +45,68 @@ namespace Azure.ResourceManager.SecurityCenter
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SensitivitySettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SensitivitySettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SensitivitySettingResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _sensitivitySettingClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string sensitivitySettingApiVersion);
-            _sensitivitySettingRestClient = new SecurityCenterRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sensitivitySettingApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _sensitivitySettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
+            _sensitivitySettingsRestClient = new SensitivitySettings(_sensitivitySettingsClientDiagnostics, Pipeline, Endpoint, sensitivitySettingApiVersion ?? "2023-02-15-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual SensitivitySettingData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier()
+        {
+            string resourceId = $"/providers/Microsoft.Security/sensitivitySettings/current";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary>
-        /// Gets data sensitivity settings for sensitive data discovery
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Security/sensitivitySettings/current</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GetSensitivitySettings</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-02-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SensitivitySettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SensitivitySettingResource>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _sensitivitySettingClientDiagnostics.CreateScope("SensitivitySettingResource.Get");
-            scope.Start();
-            try
             {
-                var response = await _sensitivitySettingRestClient.GetSensitivitySettingsAsync(cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SensitivitySettingResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
         /// <summary>
-        /// Gets data sensitivity settings for sensitive data discovery
+        /// Create or update data sensitivity settings for sensitive data discovery
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Security/sensitivitySettings/current</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Security/sensitivitySettings/current. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GetSensitivitySettings</description>
+        /// <term> Operation Id. </term>
+        /// <description> GetSensitivitySettingsResponses_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-02-15-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-02-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SensitivitySettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SensitivitySettingResource> Get(CancellationToken cancellationToken = default)
-        {
-            using var scope = _sensitivitySettingClientDiagnostics.CreateScope("SensitivitySettingResource.Get");
-            scope.Start();
-            try
-            {
-                var response = _sensitivitySettingRestClient.GetSensitivitySettings(cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SensitivitySettingResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates data sensitivity settings for sensitive data discovery
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Security/sensitivitySettings/current</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UpdateSensitivitySettings</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-02-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SensitivitySettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SensitivitySettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,16 +118,24 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _sensitivitySettingClientDiagnostics.CreateScope("SensitivitySettingResource.CreateOrUpdate");
+            using DiagnosticScope scope = _sensitivitySettingsClientDiagnostics.CreateScope("SensitivitySettingResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _sensitivitySettingRestClient.UpdateSensitivitySettingsAsync(content, cancellationToken).ConfigureAwait(false);
-                var uri = _sensitivitySettingRestClient.CreateUpdateSensitivitySettingsRequestUri(content);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityCenterArmOperation<SensitivitySettingResource>(Response.FromValue(new SensitivitySettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sensitivitySettingsRestClient.CreateCreateOrUpdateRequest(SensitivitySettingCreateOrUpdateContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SensitivitySettingData> response = Response.FromValue(SensitivitySettingData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation<SensitivitySettingResource> operation = new SecurityCenterArmOperation<SensitivitySettingResource>(Response.FromValue(new SensitivitySettingResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -215,23 +146,23 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Updates data sensitivity settings for sensitive data discovery
+        /// Create or update data sensitivity settings for sensitive data discovery
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Security/sensitivitySettings/current</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Security/sensitivitySettings/current. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UpdateSensitivitySettings</description>
+        /// <term> Operation Id. </term>
+        /// <description> GetSensitivitySettingsResponses_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-02-15-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-02-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SensitivitySettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SensitivitySettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -243,17 +174,121 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _sensitivitySettingClientDiagnostics.CreateScope("SensitivitySettingResource.CreateOrUpdate");
+            using DiagnosticScope scope = _sensitivitySettingsClientDiagnostics.CreateScope("SensitivitySettingResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _sensitivitySettingRestClient.UpdateSensitivitySettings(content, cancellationToken);
-                var uri = _sensitivitySettingRestClient.CreateUpdateSensitivitySettingsRequestUri(content);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityCenterArmOperation<SensitivitySettingResource>(Response.FromValue(new SensitivitySettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sensitivitySettingsRestClient.CreateCreateOrUpdateRequest(SensitivitySettingCreateOrUpdateContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SensitivitySettingData> response = Response.FromValue(SensitivitySettingData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation<SensitivitySettingResource> operation = new SecurityCenterArmOperation<SensitivitySettingResource>(Response.FromValue(new SensitivitySettingResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets data sensitivity settings for sensitive data discovery
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Security/sensitivitySettings/current. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GetSensitivitySettingsResponses_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-02-15-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SensitivitySettingResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SensitivitySettingResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _sensitivitySettingsClientDiagnostics.CreateScope("SensitivitySettingResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sensitivitySettingsRestClient.CreateGetRequest(context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SensitivitySettingData> response = Response.FromValue(SensitivitySettingData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new SensitivitySettingResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets data sensitivity settings for sensitive data discovery
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Security/sensitivitySettings/current. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GetSensitivitySettingsResponses_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-02-15-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SensitivitySettingResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SensitivitySettingResource> Get(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _sensitivitySettingsClientDiagnostics.CreateScope("SensitivitySettingResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sensitivitySettingsRestClient.CreateGetRequest(context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SensitivitySettingData> response = Response.FromValue(SensitivitySettingData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new SensitivitySettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

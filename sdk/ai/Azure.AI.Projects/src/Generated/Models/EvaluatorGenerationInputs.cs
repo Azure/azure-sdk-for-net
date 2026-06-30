@@ -5,8 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Caller-supplied inputs for an evaluator generation job. </summary>
     public partial class EvaluatorGenerationInputs
@@ -35,15 +36,15 @@ namespace Azure.AI.Projects
         /// <param name="model"> The LLM model to use for rubric generation (e.g., 'gpt-4o'). Required — users must provide their own model rather than relying on service-owned capacity. </param>
         /// <param name="evaluatorName"> The evaluator name (immutable identifier). 1-256 characters; allowed characters are ASCII letters, digits, underscore (`_`), period (`.`), tilde (`~`), and hyphen (`-`). The prefix `builtin.` is reserved for system-managed evaluators and is rejected by the service. If an evaluator with this name already exists in the project (and is rubric-subtype), the service creates a new version under the same name and uses the prior version's `dimensions` as context for incremental improvement (foundation of the post-//build adaptive loop). Old versions remain queryable via `get_version(name, version)`. If the existing evaluator is not a rubric-subtype evaluator (built-in, prompt-based, code-based), the request is rejected with `400 Bad Request`. </param>
         /// <param name="evaluatorDisplayName"> Optional human-friendly display name for the resulting evaluator. Surfaced as `EvaluatorVersion.display_name` on the persisted evaluator. When omitted, the service uses `evaluator_name` as the display name. The `evaluator_` prefix disambiguates this from the immutable `evaluator_name` identifier. </param>
-        /// <param name="evaluatorDescription"> Optional human-friendly description for the resulting evaluator. Surfaced as `EvaluatorVersion.description` on the persisted evaluator. Typically collected from the UI alongside `evaluator_display_name`. The `evaluator_` prefix disambiguates this from any other description fields on related models. </param>
+        /// <param name="description"> Optional human-friendly description for the resulting evaluator. Surfaced as `EvaluatorVersion.description` on the persisted evaluator. Typically collected from the UI alongside `evaluator_display_name`. The `evaluator_` prefix disambiguates this from any other description fields on related models. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluatorGenerationInputs(IList<EvaluatorGenerationJobSource> sources, string model, string evaluatorName, string evaluatorDisplayName, string evaluatorDescription, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EvaluatorGenerationInputs(IList<EvaluatorGenerationJobSource> sources, string model, string evaluatorName, string evaluatorDisplayName, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sources = sources;
             Model = model;
             EvaluatorName = evaluatorName;
             EvaluatorDisplayName = evaluatorDisplayName;
-            EvaluatorDescription = evaluatorDescription;
+            Description = description;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -60,6 +61,6 @@ namespace Azure.AI.Projects
         public string EvaluatorDisplayName { get; set; }
 
         /// <summary> Optional human-friendly description for the resulting evaluator. Surfaced as `EvaluatorVersion.description` on the persisted evaluator. Typically collected from the UI alongside `evaluator_display_name`. The `evaluator_` prefix disambiguates this from any other description fields on related models. </summary>
-        public string EvaluatorDescription { get; set; }
+        public string Description { get; set; }
     }
 }

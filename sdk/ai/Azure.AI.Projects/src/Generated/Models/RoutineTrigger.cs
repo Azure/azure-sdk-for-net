@@ -18,7 +18,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of <see cref="RoutineTrigger"/>. </summary>
         /// <param name="type"> The trigger type. </param>
-        private protected RoutineTrigger(RoutineTriggerType @type)
+        private protected RoutineTrigger(RoutineTriggerKind @type)
         {
             Type = @type;
         }
@@ -26,13 +26,13 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="RoutineTrigger"/>. </summary>
         /// <param name="type"> The trigger type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoutineTrigger(RoutineTriggerType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoutineTrigger(RoutineTriggerKind @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The trigger type. </summary>
-        internal RoutineTriggerType Type { get; set; }
+        internal RoutineTriggerKind Type { get; set; }
     }
 }
