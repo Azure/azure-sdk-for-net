@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             AlertRuleKind kind = default;
             ETag? eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            MLBehaviorAnalyticsAlertRuleProperties properties = default;
+            MlBehaviorAnalyticsAlertRuleProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    properties = MLBehaviorAnalyticsAlertRuleProperties.DeserializeMLBehaviorAnalyticsAlertRuleProperties(prop.Value, options);
+                    properties = MlBehaviorAnalyticsAlertRuleProperties.DeserializeMlBehaviorAnalyticsAlertRuleProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

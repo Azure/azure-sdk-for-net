@@ -14,10 +14,10 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Office Microsoft PowerBI data connector properties. </summary>
-    internal partial class OfficePowerBIDataConnectorProperties : DataConnectorTenantId, IJsonModel<OfficePowerBIDataConnectorProperties>
+    internal partial class OfficePowerBiDataConnectorProperties : DataConnectorTenantId, IJsonModel<OfficePowerBiDataConnectorProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="OfficePowerBIDataConnectorProperties"/> for deserialization. </summary>
-        internal OfficePowerBIDataConnectorProperties()
+        /// <summary> Initializes a new instance of <see cref="OfficePowerBiDataConnectorProperties"/> for deserialization. </summary>
+        internal OfficePowerBiDataConnectorProperties()
         {
         }
 
@@ -25,45 +25,45 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataConnectorTenantId PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OfficePowerBIDataConnectorProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OfficePowerBiDataConnectorProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOfficePowerBIDataConnectorProperties(document.RootElement, options);
+                        return DeserializeOfficePowerBiDataConnectorProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OfficePowerBIDataConnectorProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OfficePowerBiDataConnectorProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OfficePowerBIDataConnectorProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OfficePowerBiDataConnectorProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OfficePowerBIDataConnectorProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OfficePowerBiDataConnectorProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OfficePowerBIDataConnectorProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<OfficePowerBiDataConnectorProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OfficePowerBIDataConnectorProperties IPersistableModel<OfficePowerBIDataConnectorProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (OfficePowerBIDataConnectorProperties)PersistableModelCreateCore(data, options);
+        OfficePowerBiDataConnectorProperties IPersistableModel<OfficePowerBiDataConnectorProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (OfficePowerBiDataConnectorProperties)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OfficePowerBIDataConnectorProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<OfficePowerBiDataConnectorProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OfficePowerBIDataConnectorProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<OfficePowerBiDataConnectorProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OfficePowerBIDataConnectorProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OfficePowerBiDataConnectorProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OfficePowerBIDataConnectorProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(OfficePowerBiDataConnectorProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("dataTypes"u8);
@@ -86,24 +86,24 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OfficePowerBIDataConnectorProperties IJsonModel<OfficePowerBIDataConnectorProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (OfficePowerBIDataConnectorProperties)JsonModelCreateCore(ref reader, options);
+        OfficePowerBiDataConnectorProperties IJsonModel<OfficePowerBiDataConnectorProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (OfficePowerBiDataConnectorProperties)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataConnectorTenantId JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OfficePowerBIDataConnectorProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OfficePowerBiDataConnectorProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OfficePowerBIDataConnectorProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(OfficePowerBiDataConnectorProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOfficePowerBIDataConnectorProperties(document.RootElement, options);
+            return DeserializeOfficePowerBiDataConnectorProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static OfficePowerBIDataConnectorProperties DeserializeOfficePowerBIDataConnectorProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static OfficePowerBiDataConnectorProperties DeserializeOfficePowerBiDataConnectorProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             Guid tenantId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            OfficePowerBIConnectorDataTypes dataTypes = default;
+            OfficePowerBiConnectorDataTypes dataTypes = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("tenantId"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (prop.NameEquals("dataTypes"u8))
                 {
-                    dataTypes = OfficePowerBIConnectorDataTypes.DeserializeOfficePowerBIConnectorDataTypes(prop.Value, options);
+                    dataTypes = OfficePowerBiConnectorDataTypes.DeserializeOfficePowerBiConnectorDataTypes(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OfficePowerBIDataConnectorProperties(tenantId, additionalBinaryDataProperties, dataTypes);
+            return new OfficePowerBiDataConnectorProperties(tenantId, additionalBinaryDataProperties, dataTypes);
         }
     }
 }

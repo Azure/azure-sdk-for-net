@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary> Initializes a new instance of <see cref="SecurityMLAnalyticsSettingData"/>. </summary>
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
-        public SecurityMLAnalyticsSettingData(SecurityMLAnalyticsSettingsKind kind)
+        public SecurityMLAnalyticsSettingData(SecurityMlAnalyticsSettingsKind kind)
         {
             Kind = kind;
         }
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
         /// <param name="eTag"> Etag of the azure resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityMLAnalyticsSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityMLAnalyticsSettingsKind kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal SecurityMLAnalyticsSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityMlAnalyticsSettingsKind kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             ETag = eTag;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </summary>
         [WirePath("kind")]
-        internal SecurityMLAnalyticsSettingsKind Kind { get; set; }
+        internal SecurityMlAnalyticsSettingsKind Kind { get; set; }
 
         /// <summary> Etag of the azure resource. </summary>
         [WirePath("etag")]

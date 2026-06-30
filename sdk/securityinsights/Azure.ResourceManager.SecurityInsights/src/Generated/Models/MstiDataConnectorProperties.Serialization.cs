@@ -14,10 +14,10 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Microsoft Threat Intelligence data connector properties. </summary>
-    internal partial class MSTIDataConnectorProperties : DataConnectorTenantId, IJsonModel<MSTIDataConnectorProperties>
+    internal partial class MstiDataConnectorProperties : DataConnectorTenantId, IJsonModel<MstiDataConnectorProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="MSTIDataConnectorProperties"/> for deserialization. </summary>
-        internal MSTIDataConnectorProperties()
+        /// <summary> Initializes a new instance of <see cref="MstiDataConnectorProperties"/> for deserialization. </summary>
+        internal MstiDataConnectorProperties()
         {
         }
 
@@ -25,45 +25,45 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataConnectorTenantId PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MSTIDataConnectorProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MstiDataConnectorProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMSTIDataConnectorProperties(document.RootElement, options);
+                        return DeserializeMstiDataConnectorProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MSTIDataConnectorProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MstiDataConnectorProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MSTIDataConnectorProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MstiDataConnectorProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MSTIDataConnectorProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MstiDataConnectorProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MSTIDataConnectorProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MstiDataConnectorProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MSTIDataConnectorProperties IPersistableModel<MSTIDataConnectorProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (MSTIDataConnectorProperties)PersistableModelCreateCore(data, options);
+        MstiDataConnectorProperties IPersistableModel<MstiDataConnectorProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (MstiDataConnectorProperties)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MSTIDataConnectorProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MstiDataConnectorProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MSTIDataConnectorProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MstiDataConnectorProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MSTIDataConnectorProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MstiDataConnectorProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MSTIDataConnectorProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MstiDataConnectorProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("dataTypes"u8);
@@ -86,24 +86,24 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MSTIDataConnectorProperties IJsonModel<MSTIDataConnectorProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MSTIDataConnectorProperties)JsonModelCreateCore(ref reader, options);
+        MstiDataConnectorProperties IJsonModel<MstiDataConnectorProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MstiDataConnectorProperties)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataConnectorTenantId JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MSTIDataConnectorProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MstiDataConnectorProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MSTIDataConnectorProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MstiDataConnectorProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMSTIDataConnectorProperties(document.RootElement, options);
+            return DeserializeMstiDataConnectorProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MSTIDataConnectorProperties DeserializeMSTIDataConnectorProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static MstiDataConnectorProperties DeserializeMstiDataConnectorProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             Guid tenantId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            MSTIDataConnectorDataTypes dataTypes = default;
+            MstiDataConnectorDataTypes dataTypes = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("tenantId"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (prop.NameEquals("dataTypes"u8))
                 {
-                    dataTypes = MSTIDataConnectorDataTypes.DeserializeMSTIDataConnectorDataTypes(prop.Value, options);
+                    dataTypes = MstiDataConnectorDataTypes.DeserializeMstiDataConnectorDataTypes(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MSTIDataConnectorProperties(tenantId, additionalBinaryDataProperties, dataTypes);
+            return new MstiDataConnectorProperties(tenantId, additionalBinaryDataProperties, dataTypes);
         }
     }
 }

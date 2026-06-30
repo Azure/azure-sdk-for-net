@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     case "AzureActiveDirectory":
                         return SecurityInsightsAadDataConnector.DeserializeSecurityInsightsAadDataConnector(element, options);
                     case "MicrosoftThreatIntelligence":
-                        return MSTIDataConnector.DeserializeMSTIDataConnector(element, options);
+                        return MstiDataConnector.DeserializeMstiDataConnector(element, options);
                     case "PremiumMicrosoftDefenderForThreatIntelligence":
                         return PremiumMicrosoftDefenderForThreatIntelligence.DeserializePremiumMicrosoftDefenderForThreatIntelligence(element, options);
                     case "MicrosoftThreatProtection":

@@ -14,10 +14,10 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Office PowerBI requirements check properties. </summary>
-    internal partial class OfficePowerBICheckRequirementsProperties : DataConnectorTenantId, IJsonModel<OfficePowerBICheckRequirementsProperties>
+    internal partial class OfficePowerBiCheckRequirementsProperties : DataConnectorTenantId, IJsonModel<OfficePowerBiCheckRequirementsProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="OfficePowerBICheckRequirementsProperties"/> for deserialization. </summary>
-        internal OfficePowerBICheckRequirementsProperties()
+        /// <summary> Initializes a new instance of <see cref="OfficePowerBiCheckRequirementsProperties"/> for deserialization. </summary>
+        internal OfficePowerBiCheckRequirementsProperties()
         {
         }
 
@@ -25,45 +25,45 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataConnectorTenantId PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OfficePowerBICheckRequirementsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OfficePowerBiCheckRequirementsProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOfficePowerBICheckRequirementsProperties(document.RootElement, options);
+                        return DeserializeOfficePowerBiCheckRequirementsProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OfficePowerBICheckRequirementsProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OfficePowerBiCheckRequirementsProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OfficePowerBICheckRequirementsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OfficePowerBiCheckRequirementsProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OfficePowerBICheckRequirementsProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OfficePowerBiCheckRequirementsProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OfficePowerBICheckRequirementsProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<OfficePowerBiCheckRequirementsProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OfficePowerBICheckRequirementsProperties IPersistableModel<OfficePowerBICheckRequirementsProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (OfficePowerBICheckRequirementsProperties)PersistableModelCreateCore(data, options);
+        OfficePowerBiCheckRequirementsProperties IPersistableModel<OfficePowerBiCheckRequirementsProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (OfficePowerBiCheckRequirementsProperties)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OfficePowerBICheckRequirementsProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<OfficePowerBiCheckRequirementsProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OfficePowerBICheckRequirementsProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<OfficePowerBiCheckRequirementsProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,34 +74,34 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OfficePowerBICheckRequirementsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OfficePowerBiCheckRequirementsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OfficePowerBICheckRequirementsProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(OfficePowerBiCheckRequirementsProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OfficePowerBICheckRequirementsProperties IJsonModel<OfficePowerBICheckRequirementsProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (OfficePowerBICheckRequirementsProperties)JsonModelCreateCore(ref reader, options);
+        OfficePowerBiCheckRequirementsProperties IJsonModel<OfficePowerBiCheckRequirementsProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (OfficePowerBiCheckRequirementsProperties)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataConnectorTenantId JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OfficePowerBICheckRequirementsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OfficePowerBiCheckRequirementsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OfficePowerBICheckRequirementsProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(OfficePowerBiCheckRequirementsProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOfficePowerBICheckRequirementsProperties(document.RootElement, options);
+            return DeserializeOfficePowerBiCheckRequirementsProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static OfficePowerBICheckRequirementsProperties DeserializeOfficePowerBICheckRequirementsProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static OfficePowerBiCheckRequirementsProperties DeserializeOfficePowerBiCheckRequirementsProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OfficePowerBICheckRequirementsProperties(tenantId, additionalBinaryDataProperties);
+            return new OfficePowerBiCheckRequirementsProperties(tenantId, additionalBinaryDataProperties);
         }
     }
 }

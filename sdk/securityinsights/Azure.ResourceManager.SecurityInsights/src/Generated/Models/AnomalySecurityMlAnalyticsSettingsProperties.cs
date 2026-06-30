@@ -13,12 +13,12 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> AnomalySecurityMLAnalytics settings base property bag. </summary>
-    internal partial class AnomalySecurityMLAnalyticsSettingsProperties
+    internal partial class AnomalySecurityMlAnalyticsSettingsProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnomalySecurityMLAnalyticsSettingsProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalySecurityMlAnalyticsSettingsProperties"/>. </summary>
         /// <param name="displayName"> The display name for settings created by this SecurityMLAnalyticsSettings. </param>
         /// <param name="isEnabled"> Determines whether this settings is enabled or disabled. </param>
         /// <param name="anomalyVersion"> The anomaly version of the AnomalySecurityMLAnalyticsSettings. </param>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="settingsStatus"> The anomaly SecurityMLAnalyticsSettings status. </param>
         /// <param name="isDefaultSettings"> Determines whether this anomaly security ml analytics settings is a default settings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> or <paramref name="anomalyVersion"/> is null. </exception>
-        public AnomalySecurityMLAnalyticsSettingsProperties(string displayName, bool isEnabled, string anomalyVersion, TimeSpan frequency, AnomalySecurityMLAnalyticsSettingsStatus settingsStatus, bool isDefaultSettings)
+        public AnomalySecurityMlAnalyticsSettingsProperties(string displayName, bool isEnabled, string anomalyVersion, TimeSpan frequency, AnomalySecurityMLAnalyticsSettingsStatus settingsStatus, bool isDefaultSettings)
         {
             Argument.AssertNotNull(displayName, nameof(displayName));
             Argument.AssertNotNull(anomalyVersion, nameof(anomalyVersion));
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             IsDefaultSettings = isDefaultSettings;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnomalySecurityMLAnalyticsSettingsProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalySecurityMlAnalyticsSettingsProperties"/>. </summary>
         /// <param name="description"> The description of the SecurityMLAnalyticsSettings. </param>
         /// <param name="displayName"> The display name for settings created by this SecurityMLAnalyticsSettings. </param>
         /// <param name="isEnabled"> Determines whether this settings is enabled or disabled. </param>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="anomalySettingsVersion"> The anomaly settings version of the Anomaly security ml analytics settings that dictates whether job version gets updated or not. </param>
         /// <param name="settingsDefinitionId"> The anomaly settings definition Id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnomalySecurityMLAnalyticsSettingsProperties(string description, string displayName, bool isEnabled, DateTimeOffset? lastModifiedOn, IList<SecurityMLAnalyticsSettingsDataSource> requiredDataConnectors, IList<SecurityInsightsAttackTactic> tactics, IList<string> techniques, string anomalyVersion, BinaryData customizableObservations, TimeSpan frequency, AnomalySecurityMLAnalyticsSettingsStatus settingsStatus, bool isDefaultSettings, int? anomalySettingsVersion, Guid? settingsDefinitionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnomalySecurityMlAnalyticsSettingsProperties(string description, string displayName, bool isEnabled, DateTimeOffset? lastModifiedOn, IList<SecurityMLAnalyticsSettingsDataSource> requiredDataConnectors, IList<SecurityInsightsAttackTactic> tactics, IList<string> techniques, string anomalyVersion, BinaryData customizableObservations, TimeSpan frequency, AnomalySecurityMLAnalyticsSettingsStatus settingsStatus, bool isDefaultSettings, int? anomalySettingsVersion, Guid? settingsDefinitionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             DisplayName = displayName;

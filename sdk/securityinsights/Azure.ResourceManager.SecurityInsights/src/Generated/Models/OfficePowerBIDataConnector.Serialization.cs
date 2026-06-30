@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             DataConnectorKind kind = default;
             ETag? eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            OfficePowerBIDataConnectorProperties properties = default;
+            OfficePowerBiDataConnectorProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    properties = OfficePowerBIDataConnectorProperties.DeserializeOfficePowerBIDataConnectorProperties(prop.Value, options);
+                    properties = OfficePowerBiDataConnectorProperties.DeserializeOfficePowerBiDataConnectorProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

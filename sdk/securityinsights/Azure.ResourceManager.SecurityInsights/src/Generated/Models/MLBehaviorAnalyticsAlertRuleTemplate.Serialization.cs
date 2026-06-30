@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             SystemData systemData = default;
             AlertRuleKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            MLBehaviorAnalyticsAlertRuleTemplateProperties properties = default;
+            MlBehaviorAnalyticsAlertRuleTemplateProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    properties = MLBehaviorAnalyticsAlertRuleTemplateProperties.DeserializeMLBehaviorAnalyticsAlertRuleTemplateProperties(prop.Value, options);
+                    properties = MlBehaviorAnalyticsAlertRuleTemplateProperties.DeserializeMlBehaviorAnalyticsAlertRuleTemplateProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -12,25 +12,25 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> The available data types for Microsoft Threat Intelligence Platforms data connector. </summary>
-    internal partial class MSTIDataConnectorDataTypes
+    internal partial class MstiDataConnectorDataTypes
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MSTIDataConnectorDataTypes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MstiDataConnectorDataTypes"/>. </summary>
         /// <param name="microsoftEmergingThreatFeed"> Data type for Microsoft Threat Intelligence Platforms data connector. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="microsoftEmergingThreatFeed"/> is null. </exception>
-        public MSTIDataConnectorDataTypes(MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed microsoftEmergingThreatFeed)
+        public MstiDataConnectorDataTypes(MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed microsoftEmergingThreatFeed)
         {
             Argument.AssertNotNull(microsoftEmergingThreatFeed, nameof(microsoftEmergingThreatFeed));
 
             MicrosoftEmergingThreatFeed = microsoftEmergingThreatFeed;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MSTIDataConnectorDataTypes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MstiDataConnectorDataTypes"/>. </summary>
         /// <param name="microsoftEmergingThreatFeed"> Data type for Microsoft Threat Intelligence Platforms data connector. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MSTIDataConnectorDataTypes(MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed microsoftEmergingThreatFeed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MstiDataConnectorDataTypes(MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed microsoftEmergingThreatFeed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MicrosoftEmergingThreatFeed = microsoftEmergingThreatFeed;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

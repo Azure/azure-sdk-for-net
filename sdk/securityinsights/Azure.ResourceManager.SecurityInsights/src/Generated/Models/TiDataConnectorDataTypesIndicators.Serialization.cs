@@ -14,10 +14,10 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Data type for indicators connection. </summary>
-    public partial class TIDataConnectorDataTypesIndicators : DataConnectorDataTypeCommon, IJsonModel<TIDataConnectorDataTypesIndicators>
+    public partial class TiDataConnectorDataTypesIndicators : DataConnectorDataTypeCommon, IJsonModel<TiDataConnectorDataTypesIndicators>
     {
-        /// <summary> Initializes a new instance of <see cref="TIDataConnectorDataTypesIndicators"/> for deserialization. </summary>
-        internal TIDataConnectorDataTypesIndicators()
+        /// <summary> Initializes a new instance of <see cref="TiDataConnectorDataTypesIndicators"/> for deserialization. </summary>
+        internal TiDataConnectorDataTypesIndicators()
         {
         }
 
@@ -25,45 +25,45 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataConnectorDataTypeCommon PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TIDataConnectorDataTypesIndicators>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TiDataConnectorDataTypesIndicators>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTIDataConnectorDataTypesIndicators(document.RootElement, options);
+                        return DeserializeTiDataConnectorDataTypesIndicators(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TIDataConnectorDataTypesIndicators)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TiDataConnectorDataTypesIndicators)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TIDataConnectorDataTypesIndicators>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TiDataConnectorDataTypesIndicators>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TIDataConnectorDataTypesIndicators)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TiDataConnectorDataTypesIndicators)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TIDataConnectorDataTypesIndicators>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<TiDataConnectorDataTypesIndicators>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TIDataConnectorDataTypesIndicators IPersistableModel<TIDataConnectorDataTypesIndicators>.Create(BinaryData data, ModelReaderWriterOptions options) => (TIDataConnectorDataTypesIndicators)PersistableModelCreateCore(data, options);
+        TiDataConnectorDataTypesIndicators IPersistableModel<TiDataConnectorDataTypesIndicators>.Create(BinaryData data, ModelReaderWriterOptions options) => (TiDataConnectorDataTypesIndicators)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TIDataConnectorDataTypesIndicators>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TiDataConnectorDataTypesIndicators>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TIDataConnectorDataTypesIndicators>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TiDataConnectorDataTypesIndicators>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,34 +74,34 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TIDataConnectorDataTypesIndicators>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TiDataConnectorDataTypesIndicators>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TIDataConnectorDataTypesIndicators)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TiDataConnectorDataTypesIndicators)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TIDataConnectorDataTypesIndicators IJsonModel<TIDataConnectorDataTypesIndicators>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TIDataConnectorDataTypesIndicators)JsonModelCreateCore(ref reader, options);
+        TiDataConnectorDataTypesIndicators IJsonModel<TiDataConnectorDataTypesIndicators>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TiDataConnectorDataTypesIndicators)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataConnectorDataTypeCommon JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TIDataConnectorDataTypesIndicators>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TiDataConnectorDataTypesIndicators>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TIDataConnectorDataTypesIndicators)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TiDataConnectorDataTypesIndicators)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTIDataConnectorDataTypesIndicators(document.RootElement, options);
+            return DeserializeTiDataConnectorDataTypesIndicators(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TIDataConnectorDataTypesIndicators DeserializeTIDataConnectorDataTypesIndicators(JsonElement element, ModelReaderWriterOptions options)
+        internal static TiDataConnectorDataTypesIndicators DeserializeTiDataConnectorDataTypesIndicators(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TIDataConnectorDataTypesIndicators(state, additionalBinaryDataProperties);
+            return new TiDataConnectorDataTypesIndicators(state, additionalBinaryDataProperties);
         }
     }
 }

@@ -11,18 +11,18 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Microsoft Threat Intelligence requirements check properties. </summary>
-    internal partial class MSTICheckRequirementsProperties : DataConnectorTenantId
+    internal partial class MstiCheckRequirementsProperties : DataConnectorTenantId
     {
-        /// <summary> Initializes a new instance of <see cref="MSTICheckRequirementsProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MstiCheckRequirementsProperties"/>. </summary>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        public MSTICheckRequirementsProperties(Guid tenantId) : base(tenantId)
+        public MstiCheckRequirementsProperties(Guid tenantId) : base(tenantId)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MSTICheckRequirementsProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MstiCheckRequirementsProperties"/>. </summary>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MSTICheckRequirementsProperties(Guid tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(tenantId, additionalBinaryDataProperties)
+        internal MstiCheckRequirementsProperties(Guid tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(tenantId, additionalBinaryDataProperties)
         {
         }
     }

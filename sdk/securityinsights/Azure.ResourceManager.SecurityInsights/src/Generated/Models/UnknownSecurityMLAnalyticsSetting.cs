@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
         /// <param name="eTag"> Etag of the azure resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownSecurityMLAnalyticsSetting(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityMLAnalyticsSettingsKind kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, kind != default ? kind : "unknown", eTag, additionalBinaryDataProperties)
+        internal UnknownSecurityMLAnalyticsSetting(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityMlAnalyticsSettingsKind kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, kind != default ? kind : "unknown", eTag, additionalBinaryDataProperties)
         {
         }
     }

@@ -11,18 +11,18 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Office PowerBI requirements check properties. </summary>
-    internal partial class OfficePowerBICheckRequirementsProperties : DataConnectorTenantId
+    internal partial class OfficePowerBiCheckRequirementsProperties : DataConnectorTenantId
     {
-        /// <summary> Initializes a new instance of <see cref="OfficePowerBICheckRequirementsProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OfficePowerBiCheckRequirementsProperties"/>. </summary>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        public OfficePowerBICheckRequirementsProperties(Guid tenantId) : base(tenantId)
+        public OfficePowerBiCheckRequirementsProperties(Guid tenantId) : base(tenantId)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OfficePowerBICheckRequirementsProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OfficePowerBiCheckRequirementsProperties"/>. </summary>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OfficePowerBICheckRequirementsProperties(Guid tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(tenantId, additionalBinaryDataProperties)
+        internal OfficePowerBiCheckRequirementsProperties(Guid tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(tenantId, additionalBinaryDataProperties)
         {
         }
     }

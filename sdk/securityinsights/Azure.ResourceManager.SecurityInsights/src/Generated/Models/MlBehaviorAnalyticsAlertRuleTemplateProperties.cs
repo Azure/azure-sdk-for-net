@@ -12,16 +12,16 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> MLBehaviorAnalytics alert rule template properties. </summary>
-    internal partial class MLBehaviorAnalyticsAlertRuleTemplateProperties : AlertRuleTemplateWithMitreProperties
+    internal partial class MlBehaviorAnalyticsAlertRuleTemplateProperties : AlertRuleTemplateWithMitreProperties
     {
-        /// <summary> Initializes a new instance of <see cref="MLBehaviorAnalyticsAlertRuleTemplateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MlBehaviorAnalyticsAlertRuleTemplateProperties"/>. </summary>
         /// <param name="severity"> The severity for alerts created by this alert rule. </param>
-        public MLBehaviorAnalyticsAlertRuleTemplateProperties(SecurityInsightsAlertSeverity severity)
+        public MlBehaviorAnalyticsAlertRuleTemplateProperties(SecurityInsightsAlertSeverity severity)
         {
             Severity = severity;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MLBehaviorAnalyticsAlertRuleTemplateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MlBehaviorAnalyticsAlertRuleTemplateProperties"/>. </summary>
         /// <param name="alertRulesCreatedByTemplateCount"> The number of alert rules that were created by this template. </param>
         /// <param name="lastUpdatedOn"> The last time that this alert rule template has been updated. </param>
         /// <param name="createdOn"> The time that this alert rule template has been added. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="tactics"> The tactics of the alert rule. </param>
         /// <param name="techniques"> The techniques of the alert rule. </param>
         /// <param name="severity"> The severity for alerts created by this alert rule. </param>
-        internal MLBehaviorAnalyticsAlertRuleTemplateProperties(int? alertRulesCreatedByTemplateCount, DateTimeOffset? lastUpdatedOn, DateTimeOffset? createdOn, string description, string displayName, IList<AlertRuleTemplateDataSource> requiredDataConnectors, SecurityInsightsAlertRuleTemplateStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<SecurityInsightsAttackTactic> tactics, IList<string> techniques, SecurityInsightsAlertSeverity severity) : base(alertRulesCreatedByTemplateCount, lastUpdatedOn, createdOn, description, displayName, requiredDataConnectors, status, additionalBinaryDataProperties, tactics, techniques)
+        internal MlBehaviorAnalyticsAlertRuleTemplateProperties(int? alertRulesCreatedByTemplateCount, DateTimeOffset? lastUpdatedOn, DateTimeOffset? createdOn, string description, string displayName, IList<AlertRuleTemplateDataSource> requiredDataConnectors, SecurityInsightsAlertRuleTemplateStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<SecurityInsightsAttackTactic> tactics, IList<string> techniques, SecurityInsightsAlertSeverity severity) : base(alertRulesCreatedByTemplateCount, lastUpdatedOn, createdOn, description, displayName, requiredDataConnectors, status, additionalBinaryDataProperties, tactics, techniques)
         {
             Severity = severity;
         }

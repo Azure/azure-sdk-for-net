@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="kind"> Describes the kind of connector to be checked. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Threat Intelligence Platforms data connector check required properties. </param>
-        internal ThreatIntelligenceCheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, TICheckRequirementsProperties properties) : base(kind, additionalBinaryDataProperties)
+        internal ThreatIntelligenceCheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, TiCheckRequirementsProperties properties) : base(kind, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
         /// <summary> Threat Intelligence Platforms data connector check required properties. </summary>
         [WirePath("properties")]
-        internal TICheckRequirementsProperties Properties { get; set; }
+        internal TiCheckRequirementsProperties Properties { get; set; }
 
         /// <summary> The tenant id to connect to, and get the data from. </summary>
         [WirePath("properties.tenantId")]
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (Properties is null)
                     {
-                        Properties = new TICheckRequirementsProperties();
+                        Properties = new TiCheckRequirementsProperties();
                     }
                     Properties.TenantId = value.Value;
                 }

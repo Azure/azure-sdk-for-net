@@ -12,23 +12,23 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> TI (Threat Intelligence) data connector properties. </summary>
-    internal partial class TIDataConnectorProperties : DataConnectorTenantId
+    internal partial class TiDataConnectorProperties : DataConnectorTenantId
     {
-        /// <summary> Initializes a new instance of <see cref="TIDataConnectorProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TiDataConnectorProperties"/>. </summary>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <param name="dataTypesIndicatorsState"> Describe whether this data type connection is enabled or not. </param>
-        public TIDataConnectorProperties(Guid tenantId, SecurityInsightsDataTypeConnectionState dataTypesIndicatorsState) : base(tenantId)
+        public TiDataConnectorProperties(Guid tenantId, SecurityInsightsDataTypeConnectionState dataTypesIndicatorsState) : base(tenantId)
         {
 
-            DataTypes = new TIDataConnectorDataTypes(dataTypesIndicatorsState);
+            DataTypes = new TiDataConnectorDataTypes(dataTypesIndicatorsState);
         }
 
-        /// <summary> Initializes a new instance of <see cref="TIDataConnectorProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TiDataConnectorProperties"/>. </summary>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tipLookbackOn"> The lookback period for the feed to be imported. </param>
         /// <param name="dataTypes"> The available data types for the connector. </param>
-        internal TIDataConnectorProperties(Guid tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? tipLookbackOn, TIDataConnectorDataTypes dataTypes) : base(tenantId, additionalBinaryDataProperties)
+        internal TiDataConnectorProperties(Guid tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? tipLookbackOn, TiDataConnectorDataTypes dataTypes) : base(tenantId, additionalBinaryDataProperties)
         {
             TipLookbackOn = tipLookbackOn;
             DataTypes = dataTypes;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The available data types for the connector. </summary>
         [WirePath("dataTypes")]
-        internal TIDataConnectorDataTypes DataTypes { get; set; }
+        internal TiDataConnectorDataTypes DataTypes { get; set; }
 
         /// <summary> Describe whether this data type connection is enabled or not. </summary>
         [WirePath("dataTypes.indicators.state")]
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (DataTypes is null)
                 {
-                    DataTypes = new TIDataConnectorDataTypes();
+                    DataTypes = new TiDataConnectorDataTypes();
                 }
                 DataTypes.IndicatorsState = value;
             }

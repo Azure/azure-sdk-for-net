@@ -12,23 +12,23 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> The available data types for Office Microsoft PowerBI data connector. </summary>
-    internal partial class OfficePowerBIConnectorDataTypes
+    internal partial class OfficePowerBiConnectorDataTypes
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OfficePowerBIConnectorDataTypes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OfficePowerBiConnectorDataTypes"/>. </summary>
         /// <param name="logsState"> Describe whether this data type connection is enabled or not. </param>
-        public OfficePowerBIConnectorDataTypes(SecurityInsightsDataTypeConnectionState logsState)
+        public OfficePowerBiConnectorDataTypes(SecurityInsightsDataTypeConnectionState logsState)
         {
 
-            Logs = new OfficePowerBIConnectorDataTypesLogs(logsState);
+            Logs = new OfficePowerBiConnectorDataTypesLogs(logsState);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OfficePowerBIConnectorDataTypes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OfficePowerBiConnectorDataTypes"/>. </summary>
         /// <param name="logs"> Logs data type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OfficePowerBIConnectorDataTypes(OfficePowerBIConnectorDataTypesLogs logs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OfficePowerBiConnectorDataTypes(OfficePowerBiConnectorDataTypesLogs logs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Logs = logs;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Logs data type. </summary>
         [WirePath("logs")]
-        internal OfficePowerBIConnectorDataTypesLogs Logs { get; set; }
+        internal OfficePowerBiConnectorDataTypesLogs Logs { get; set; }
 
         /// <summary> Describe whether this data type connection is enabled or not. </summary>
         [WirePath("logs.state")]
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             set
             {
-                Logs = new OfficePowerBIConnectorDataTypesLogs(value);
+                Logs = new OfficePowerBiConnectorDataTypesLogs(value);
             }
         }
     }

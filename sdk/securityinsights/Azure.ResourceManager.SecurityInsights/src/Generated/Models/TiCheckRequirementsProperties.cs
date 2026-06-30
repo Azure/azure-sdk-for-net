@@ -11,18 +11,18 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Threat Intelligence Platforms data connector required properties. </summary>
-    internal partial class TICheckRequirementsProperties : DataConnectorTenantId
+    internal partial class TiCheckRequirementsProperties : DataConnectorTenantId
     {
-        /// <summary> Initializes a new instance of <see cref="TICheckRequirementsProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TiCheckRequirementsProperties"/>. </summary>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        public TICheckRequirementsProperties(Guid tenantId) : base(tenantId)
+        public TiCheckRequirementsProperties(Guid tenantId) : base(tenantId)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TICheckRequirementsProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TiCheckRequirementsProperties"/>. </summary>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TICheckRequirementsProperties(Guid tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(tenantId, additionalBinaryDataProperties)
+        internal TiCheckRequirementsProperties(Guid tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(tenantId, additionalBinaryDataProperties)
         {
         }
     }

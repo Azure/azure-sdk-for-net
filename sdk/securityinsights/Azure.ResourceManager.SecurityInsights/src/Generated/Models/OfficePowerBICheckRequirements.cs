@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="kind"> Describes the kind of connector to be checked. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Office Power BI requirements check properties. </param>
-        internal OfficePowerBICheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, OfficePowerBICheckRequirementsProperties properties) : base(kind, additionalBinaryDataProperties)
+        internal OfficePowerBICheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, OfficePowerBiCheckRequirementsProperties properties) : base(kind, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
         /// <summary> Office Power BI requirements check properties. </summary>
         [WirePath("properties")]
-        internal OfficePowerBICheckRequirementsProperties Properties { get; set; }
+        internal OfficePowerBiCheckRequirementsProperties Properties { get; set; }
 
         /// <summary> The tenant id to connect to, and get the data from. </summary>
         [WirePath("properties.tenantId")]
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (Properties is null)
                     {
-                        Properties = new OfficePowerBICheckRequirementsProperties();
+                        Properties = new OfficePowerBiCheckRequirementsProperties();
                     }
                     Properties.TenantId = value.Value;
                 }

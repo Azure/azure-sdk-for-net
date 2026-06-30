@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (Properties is null)
                     {
-                        Properties = new TIDataConnectorProperties();
+                        Properties = new TiDataConnectorProperties();
                     }
 
                     Properties.DataTypesIndicatorsState = value.Value;

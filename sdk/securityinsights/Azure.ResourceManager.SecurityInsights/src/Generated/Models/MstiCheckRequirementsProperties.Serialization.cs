@@ -14,10 +14,10 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Microsoft Threat Intelligence requirements check properties. </summary>
-    internal partial class MSTICheckRequirementsProperties : DataConnectorTenantId, IJsonModel<MSTICheckRequirementsProperties>
+    internal partial class MstiCheckRequirementsProperties : DataConnectorTenantId, IJsonModel<MstiCheckRequirementsProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="MSTICheckRequirementsProperties"/> for deserialization. </summary>
-        internal MSTICheckRequirementsProperties()
+        /// <summary> Initializes a new instance of <see cref="MstiCheckRequirementsProperties"/> for deserialization. </summary>
+        internal MstiCheckRequirementsProperties()
         {
         }
 
@@ -25,45 +25,45 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataConnectorTenantId PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MSTICheckRequirementsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MstiCheckRequirementsProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMSTICheckRequirementsProperties(document.RootElement, options);
+                        return DeserializeMstiCheckRequirementsProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MSTICheckRequirementsProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MstiCheckRequirementsProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MSTICheckRequirementsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MstiCheckRequirementsProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MSTICheckRequirementsProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MstiCheckRequirementsProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MSTICheckRequirementsProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MstiCheckRequirementsProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MSTICheckRequirementsProperties IPersistableModel<MSTICheckRequirementsProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (MSTICheckRequirementsProperties)PersistableModelCreateCore(data, options);
+        MstiCheckRequirementsProperties IPersistableModel<MstiCheckRequirementsProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (MstiCheckRequirementsProperties)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MSTICheckRequirementsProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MstiCheckRequirementsProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MSTICheckRequirementsProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MstiCheckRequirementsProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,34 +74,34 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MSTICheckRequirementsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MstiCheckRequirementsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MSTICheckRequirementsProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MstiCheckRequirementsProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MSTICheckRequirementsProperties IJsonModel<MSTICheckRequirementsProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MSTICheckRequirementsProperties)JsonModelCreateCore(ref reader, options);
+        MstiCheckRequirementsProperties IJsonModel<MstiCheckRequirementsProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MstiCheckRequirementsProperties)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataConnectorTenantId JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MSTICheckRequirementsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MstiCheckRequirementsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MSTICheckRequirementsProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MstiCheckRequirementsProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMSTICheckRequirementsProperties(document.RootElement, options);
+            return DeserializeMstiCheckRequirementsProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MSTICheckRequirementsProperties DeserializeMSTICheckRequirementsProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static MstiCheckRequirementsProperties DeserializeMstiCheckRequirementsProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MSTICheckRequirementsProperties(tenantId, additionalBinaryDataProperties);
+            return new MstiCheckRequirementsProperties(tenantId, additionalBinaryDataProperties);
         }
     }
 }

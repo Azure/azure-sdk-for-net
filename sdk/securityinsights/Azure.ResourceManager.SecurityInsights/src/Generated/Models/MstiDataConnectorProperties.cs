@@ -12,31 +12,31 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Microsoft Threat Intelligence data connector properties. </summary>
-    internal partial class MSTIDataConnectorProperties : DataConnectorTenantId
+    internal partial class MstiDataConnectorProperties : DataConnectorTenantId
     {
-        /// <summary> Initializes a new instance of <see cref="MSTIDataConnectorProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MstiDataConnectorProperties"/>. </summary>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <param name="dataTypesMicrosoftEmergingThreatFeed"> Data type for Microsoft Threat Intelligence Platforms data connector. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataTypesMicrosoftEmergingThreatFeed"/> is null. </exception>
-        public MSTIDataConnectorProperties(Guid tenantId, MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed dataTypesMicrosoftEmergingThreatFeed) : base(tenantId)
+        public MstiDataConnectorProperties(Guid tenantId, MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed dataTypesMicrosoftEmergingThreatFeed) : base(tenantId)
         {
             Argument.AssertNotNull(dataTypesMicrosoftEmergingThreatFeed, nameof(dataTypesMicrosoftEmergingThreatFeed));
 
-            DataTypes = new MSTIDataConnectorDataTypes(dataTypesMicrosoftEmergingThreatFeed);
+            DataTypes = new MstiDataConnectorDataTypes(dataTypesMicrosoftEmergingThreatFeed);
         }
 
-        /// <summary> Initializes a new instance of <see cref="MSTIDataConnectorProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MstiDataConnectorProperties"/>. </summary>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="dataTypes"> The available data types for the connector. </param>
-        internal MSTIDataConnectorProperties(Guid tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties, MSTIDataConnectorDataTypes dataTypes) : base(tenantId, additionalBinaryDataProperties)
+        internal MstiDataConnectorProperties(Guid tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties, MstiDataConnectorDataTypes dataTypes) : base(tenantId, additionalBinaryDataProperties)
         {
             DataTypes = dataTypes;
         }
 
         /// <summary> The available data types for the connector. </summary>
         [WirePath("dataTypes")]
-        internal MSTIDataConnectorDataTypes DataTypes { get; set; }
+        internal MstiDataConnectorDataTypes DataTypes { get; set; }
 
         /// <summary> Data type for Microsoft Threat Intelligence Platforms data connector. </summary>
         [WirePath("dataTypes.microsoftEmergingThreatFeed")]
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             set
             {
-                DataTypes = new MSTIDataConnectorDataTypes(value);
+                DataTypes = new MstiDataConnectorDataTypes(value);
             }
         }
     }

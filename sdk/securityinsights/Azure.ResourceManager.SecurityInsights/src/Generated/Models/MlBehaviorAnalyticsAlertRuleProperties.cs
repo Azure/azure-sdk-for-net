@@ -12,16 +12,16 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> MLBehaviorAnalytics alert rule base property bag. </summary>
-    internal partial class MLBehaviorAnalyticsAlertRuleProperties
+    internal partial class MlBehaviorAnalyticsAlertRuleProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MLBehaviorAnalyticsAlertRuleProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MlBehaviorAnalyticsAlertRuleProperties"/>. </summary>
         /// <param name="alertRuleTemplateName"> The Name of the alert rule template used to create this rule. </param>
         /// <param name="isEnabled"> Determines whether this alert rule is enabled or disabled. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertRuleTemplateName"/> is null. </exception>
-        public MLBehaviorAnalyticsAlertRuleProperties(string alertRuleTemplateName, bool isEnabled)
+        public MlBehaviorAnalyticsAlertRuleProperties(string alertRuleTemplateName, bool isEnabled)
         {
             Argument.AssertNotNull(alertRuleTemplateName, nameof(alertRuleTemplateName));
 
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             SubTechniques = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MLBehaviorAnalyticsAlertRuleProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MlBehaviorAnalyticsAlertRuleProperties"/>. </summary>
         /// <param name="alertRuleTemplateName"> The Name of the alert rule template used to create this rule. </param>
         /// <param name="description"> The description of the alert rule. </param>
         /// <param name="displayName"> The display name for alerts created by this alert rule. </param>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="techniques"> The techniques of the alert rule. </param>
         /// <param name="subTechniques"> The sub-techniques of the alert rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MLBehaviorAnalyticsAlertRuleProperties(string alertRuleTemplateName, string description, string displayName, bool isEnabled, DateTimeOffset? lastModifiedOn, SecurityInsightsAlertSeverity? severity, IReadOnlyList<SecurityInsightsAttackTactic> tactics, IReadOnlyList<string> techniques, IReadOnlyList<string> subTechniques, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MlBehaviorAnalyticsAlertRuleProperties(string alertRuleTemplateName, string description, string displayName, bool isEnabled, DateTimeOffset? lastModifiedOn, SecurityInsightsAlertSeverity? severity, IReadOnlyList<SecurityInsightsAttackTactic> tactics, IReadOnlyList<string> techniques, IReadOnlyList<string> subTechniques, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AlertRuleTemplateName = alertRuleTemplateName;
             Description = description;

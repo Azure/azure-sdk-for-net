@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="eTag"> Etag of the azure resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Office Microsoft PowerBI data connector properties. </param>
-        internal OfficePowerBIDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, OfficePowerBIDataConnectorProperties properties) : base(id, name, resourceType, systemData, kind, eTag, additionalBinaryDataProperties)
+        internal OfficePowerBIDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, OfficePowerBiDataConnectorProperties properties) : base(id, name, resourceType, systemData, kind, eTag, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
         /// <summary> Office Microsoft PowerBI data connector properties. </summary>
         [WirePath("properties")]
-        internal OfficePowerBIDataConnectorProperties Properties { get; set; }
+        internal OfficePowerBiDataConnectorProperties Properties { get; set; }
 
         /// <summary> The tenant id to connect to, and get the data from. </summary>
         [WirePath("properties.tenantId")]
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (Properties is null)
                     {
-                        Properties = new OfficePowerBIDataConnectorProperties();
+                        Properties = new OfficePowerBiDataConnectorProperties();
                     }
                     Properties.TenantId = value.Value;
                 }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (Properties is null)
                     {
-                        Properties = new OfficePowerBIDataConnectorProperties();
+                        Properties = new OfficePowerBiDataConnectorProperties();
                     }
                     Properties.DataTypesLogsState = value.Value;
                 }

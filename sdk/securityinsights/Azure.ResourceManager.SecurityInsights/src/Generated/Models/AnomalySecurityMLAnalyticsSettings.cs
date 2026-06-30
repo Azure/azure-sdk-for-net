@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class AnomalySecurityMLAnalyticsSettings : SecurityMLAnalyticsSettingData
     {
         /// <summary> Initializes a new instance of <see cref="AnomalySecurityMLAnalyticsSettings"/>. </summary>
-        public AnomalySecurityMLAnalyticsSettings() : base(SecurityMLAnalyticsSettingsKind.Anomaly)
+        public AnomalySecurityMLAnalyticsSettings() : base(SecurityMlAnalyticsSettingsKind.Anomaly)
         {
         }
 
@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="eTag"> Etag of the azure resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Anomaly Security ML Analytics Settings properties. </param>
-        internal AnomalySecurityMLAnalyticsSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityMLAnalyticsSettingsKind kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, AnomalySecurityMLAnalyticsSettingsProperties properties) : base(id, name, resourceType, systemData, kind, eTag, additionalBinaryDataProperties)
+        internal AnomalySecurityMLAnalyticsSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityMlAnalyticsSettingsKind kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, AnomalySecurityMlAnalyticsSettingsProperties properties) : base(id, name, resourceType, systemData, kind, eTag, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
         /// <summary> Anomaly Security ML Analytics Settings properties. </summary>
         [WirePath("properties")]
-        internal AnomalySecurityMLAnalyticsSettingsProperties Properties { get; set; }
+        internal AnomalySecurityMlAnalyticsSettingsProperties Properties { get; set; }
 
         /// <summary> The description of the SecurityMLAnalyticsSettings. </summary>
         [WirePath("properties.description")]
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new AnomalySecurityMLAnalyticsSettingsProperties();
+                    Properties = new AnomalySecurityMlAnalyticsSettingsProperties();
                 }
                 Properties.Description = value;
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new AnomalySecurityMLAnalyticsSettingsProperties();
+                    Properties = new AnomalySecurityMlAnalyticsSettingsProperties();
                 }
                 Properties.DisplayName = value;
             }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (Properties is null)
                     {
-                        Properties = new AnomalySecurityMLAnalyticsSettingsProperties();
+                        Properties = new AnomalySecurityMlAnalyticsSettingsProperties();
                     }
                     Properties.IsEnabled = value.Value;
                 }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new AnomalySecurityMLAnalyticsSettingsProperties();
+                    Properties = new AnomalySecurityMlAnalyticsSettingsProperties();
                 }
                 return Properties.RequiredDataConnectors;
             }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new AnomalySecurityMLAnalyticsSettingsProperties();
+                    Properties = new AnomalySecurityMlAnalyticsSettingsProperties();
                 }
                 return Properties.Tactics;
             }
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new AnomalySecurityMLAnalyticsSettingsProperties();
+                    Properties = new AnomalySecurityMlAnalyticsSettingsProperties();
                 }
                 return Properties.Techniques;
             }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new AnomalySecurityMLAnalyticsSettingsProperties();
+                    Properties = new AnomalySecurityMlAnalyticsSettingsProperties();
                 }
                 Properties.AnomalyVersion = value;
             }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new AnomalySecurityMLAnalyticsSettingsProperties();
+                    Properties = new AnomalySecurityMlAnalyticsSettingsProperties();
                 }
                 Properties.CustomizableObservations = value;
             }
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (Properties is null)
                     {
-                        Properties = new AnomalySecurityMLAnalyticsSettingsProperties();
+                        Properties = new AnomalySecurityMlAnalyticsSettingsProperties();
                     }
                     Properties.Frequency = value.Value;
                 }
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (Properties is null)
                     {
-                        Properties = new AnomalySecurityMLAnalyticsSettingsProperties();
+                        Properties = new AnomalySecurityMlAnalyticsSettingsProperties();
                     }
                     Properties.SettingsStatus = value.Value;
                 }
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (Properties is null)
                     {
-                        Properties = new AnomalySecurityMLAnalyticsSettingsProperties();
+                        Properties = new AnomalySecurityMlAnalyticsSettingsProperties();
                     }
                     Properties.IsDefaultSettings = value.Value;
                 }
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new AnomalySecurityMLAnalyticsSettingsProperties();
+                    Properties = new AnomalySecurityMlAnalyticsSettingsProperties();
                 }
                 Properties.AnomalySettingsVersion = value;
             }
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new AnomalySecurityMLAnalyticsSettingsProperties();
+                    Properties = new AnomalySecurityMlAnalyticsSettingsProperties();
                 }
                 Properties.SettingsDefinitionId = value;
             }

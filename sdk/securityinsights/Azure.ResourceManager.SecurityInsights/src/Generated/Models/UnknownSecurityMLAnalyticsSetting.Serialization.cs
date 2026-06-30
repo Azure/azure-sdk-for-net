@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            SecurityMLAnalyticsSettingsKind kind = default;
+            SecurityMlAnalyticsSettingsKind kind = default;
             ETag? eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (prop.NameEquals("kind"u8))
                 {
-                    kind = new SecurityMLAnalyticsSettingsKind(prop.Value.GetString());
+                    kind = new SecurityMlAnalyticsSettingsKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("etag"u8))

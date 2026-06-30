@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 default,
                 eTag,
                 default,
-                alertRuleTemplateName is null && description is null && displayName is null && isEnabled is null && lastModifiedOn is null && severity is null && tactics is null && techniques is null && subTechniques is null ? default : new MLBehaviorAnalyticsAlertRuleProperties(
+                alertRuleTemplateName is null && description is null && displayName is null && isEnabled is null && lastModifiedOn is null && severity is null && tactics is null && techniques is null && subTechniques is null ? default : new MlBehaviorAnalyticsAlertRuleProperties(
                     alertRuleTemplateName,
                     description,
                     displayName,
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 systemData,
                 default,
                 default,
-                alertRulesCreatedByTemplateCount is null && lastUpdatedOn is null && createdOn is null && description is null && displayName is null && requiredDataConnectors is null && status is null && tactics is null && techniques is null && severity is null ? default : new MLBehaviorAnalyticsAlertRuleTemplateProperties(
+                alertRulesCreatedByTemplateCount is null && lastUpdatedOn is null && createdOn is null && description is null && displayName is null && requiredDataConnectors is null && status is null && tactics is null && techniques is null && severity is null ? default : new MlBehaviorAnalyticsAlertRuleTemplateProperties(
                     alertRulesCreatedByTemplateCount,
                     lastUpdatedOn,
                     createdOn,
@@ -2551,10 +2551,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="eTag"> Etag of the azure resource. </param>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <param name="dataTypesMicrosoftEmergingThreatFeed"> Data type for Microsoft Threat Intelligence Platforms data connector. </param>
-        /// <returns> A new <see cref="Models.MSTIDataConnector"/> instance for mocking. </returns>
-        public static MSTIDataConnector MSTIDataConnector(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? eTag = default, Guid? tenantId = default, MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed dataTypesMicrosoftEmergingThreatFeed = default)
+        /// <returns> A new <see cref="Models.MstiDataConnector"/> instance for mocking. </returns>
+        public static MstiDataConnector MstiDataConnector(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? eTag = default, Guid? tenantId = default, MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed dataTypesMicrosoftEmergingThreatFeed = default)
         {
-            return new MSTIDataConnector(
+            return new MstiDataConnector(
                 id,
                 name,
                 resourceType,
@@ -2562,7 +2562,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 default,
                 eTag,
                 default,
-                tenantId is null && dataTypesMicrosoftEmergingThreatFeed is null ? default : new MSTIDataConnectorProperties(tenantId.GetValueOrDefault(), default, new MSTIDataConnectorDataTypes(dataTypesMicrosoftEmergingThreatFeed, default)));
+                tenantId is null && dataTypesMicrosoftEmergingThreatFeed is null ? default : new MstiDataConnectorProperties(tenantId.GetValueOrDefault(), default, new MstiDataConnectorDataTypes(dataTypesMicrosoftEmergingThreatFeed, default)));
         }
 
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
@@ -3259,14 +3259,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 default,
                 eTag,
                 default,
-                tenantId is null && dataTypesLogsState is null ? default : new OfficePowerBIDataConnectorProperties(tenantId.GetValueOrDefault(), default, new OfficePowerBIConnectorDataTypes(new OfficePowerBIConnectorDataTypesLogs(dataTypesLogsState.GetValueOrDefault(), default), default)));
+                tenantId is null && dataTypesLogsState is null ? default : new OfficePowerBiDataConnectorProperties(tenantId.GetValueOrDefault(), default, new OfficePowerBiConnectorDataTypes(new OfficePowerBiConnectorDataTypesLogs(dataTypesLogsState.GetValueOrDefault(), default), default)));
         }
 
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
-        /// <returns> A new <see cref="Models.OfficePowerBIConnectorDataTypesLogs"/> instance for mocking. </returns>
-        public static OfficePowerBIConnectorDataTypesLogs OfficePowerBIConnectorDataTypesLogs(SecurityInsightsDataTypeConnectionState state = default)
+        /// <returns> A new <see cref="Models.OfficePowerBiConnectorDataTypesLogs"/> instance for mocking. </returns>
+        public static OfficePowerBiConnectorDataTypesLogs OfficePowerBiConnectorDataTypesLogs(SecurityInsightsDataTypeConnectionState state = default)
         {
-            return new OfficePowerBIConnectorDataTypesLogs(state, default);
+            return new OfficePowerBiConnectorDataTypesLogs(state, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3397,14 +3397,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 default,
                 etag,
                 default,
-                tenantId is null && tipLookbackOn is null && indicatorsState is null ? default : new TIDataConnectorProperties(tenantId.GetValueOrDefault(), default, tipLookbackOn, new TIDataConnectorDataTypes(new TIDataConnectorDataTypesIndicators(indicatorsState.GetValueOrDefault(), default), default)));
+                tenantId is null && tipLookbackOn is null && indicatorsState is null ? default : new TiDataConnectorProperties(tenantId.GetValueOrDefault(), default, tipLookbackOn, new TiDataConnectorDataTypes(new TiDataConnectorDataTypesIndicators(indicatorsState.GetValueOrDefault(), default), default)));
         }
 
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
-        /// <returns> A new <see cref="Models.TIDataConnectorDataTypesIndicators"/> instance for mocking. </returns>
-        public static TIDataConnectorDataTypesIndicators TIDataConnectorDataTypesIndicators(SecurityInsightsDataTypeConnectionState state = default)
+        /// <returns> A new <see cref="Models.TiDataConnectorDataTypesIndicators"/> instance for mocking. </returns>
+        public static TiDataConnectorDataTypesIndicators TiDataConnectorDataTypesIndicators(SecurityInsightsDataTypeConnectionState state = default)
         {
-            return new TIDataConnectorDataTypesIndicators(state, default);
+            return new TiDataConnectorDataTypesIndicators(state, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -4035,7 +4035,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 default,
                 etag,
                 default,
-                description is null && displayName is null && isEnabled is null && lastModifiedOn is null && requiredDataConnectors is null && tactics is null && techniques is null && anomalyVersion is null && customizableObservations is null && frequency is null && settingsStatus is null && isDefaultSettings is null && anomalySettingsVersion is null && settingsDefinitionId is null ? default : new AnomalySecurityMLAnalyticsSettingsProperties(
+                description is null && displayName is null && isEnabled is null && lastModifiedOn is null && requiredDataConnectors is null && tactics is null && techniques is null && anomalyVersion is null && customizableObservations is null && frequency is null && settingsStatus is null && isDefaultSettings is null && anomalySettingsVersion is null && settingsDefinitionId is null ? default : new AnomalySecurityMlAnalyticsSettingsProperties(
                     description,
                     displayName,
                     isEnabled.GetValueOrDefault(),
@@ -6141,10 +6141,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        /// <returns> A new <see cref="Models.MSTICheckRequirements"/> instance for mocking. </returns>
-        public static MSTICheckRequirements MSTICheckRequirements(Guid? tenantId = default)
+        /// <returns> A new <see cref="Models.MstiCheckRequirements"/> instance for mocking. </returns>
+        public static MstiCheckRequirements MstiCheckRequirements(Guid? tenantId = default)
         {
-            return new MSTICheckRequirements(default, default, tenantId is null ? default : new MSTICheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
+            return new MstiCheckRequirements(default, default, tenantId is null ? default : new MstiCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
         }
 
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
@@ -6186,7 +6186,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.OfficePowerBICheckRequirements"/> instance for mocking. </returns>
         public static OfficePowerBICheckRequirements OfficePowerBICheckRequirements(Guid? tenantId = default)
         {
-            return new OfficePowerBICheckRequirements(default, default, tenantId is null ? default : new OfficePowerBICheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
+            return new OfficePowerBICheckRequirements(default, default, tenantId is null ? default : new OfficePowerBiCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
         }
 
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
@@ -6200,7 +6200,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.ThreatIntelligenceCheckRequirements"/> instance for mocking. </returns>
         public static ThreatIntelligenceCheckRequirements ThreatIntelligenceCheckRequirements(Guid? tenantId = default)
         {
-            return new ThreatIntelligenceCheckRequirements(default, default, tenantId is null ? default : new TICheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
+            return new ThreatIntelligenceCheckRequirements(default, default, tenantId is null ? default : new TiCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
         }
 
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>

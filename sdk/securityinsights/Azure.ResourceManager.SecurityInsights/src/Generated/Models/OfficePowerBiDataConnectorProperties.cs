@@ -12,29 +12,29 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Office Microsoft PowerBI data connector properties. </summary>
-    internal partial class OfficePowerBIDataConnectorProperties : DataConnectorTenantId
+    internal partial class OfficePowerBiDataConnectorProperties : DataConnectorTenantId
     {
-        /// <summary> Initializes a new instance of <see cref="OfficePowerBIDataConnectorProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OfficePowerBiDataConnectorProperties"/>. </summary>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <param name="dataTypesLogsState"> Describe whether this data type connection is enabled or not. </param>
-        public OfficePowerBIDataConnectorProperties(Guid tenantId, SecurityInsightsDataTypeConnectionState dataTypesLogsState) : base(tenantId)
+        public OfficePowerBiDataConnectorProperties(Guid tenantId, SecurityInsightsDataTypeConnectionState dataTypesLogsState) : base(tenantId)
         {
 
-            DataTypes = new OfficePowerBIConnectorDataTypes(dataTypesLogsState);
+            DataTypes = new OfficePowerBiConnectorDataTypes(dataTypesLogsState);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OfficePowerBIDataConnectorProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OfficePowerBiDataConnectorProperties"/>. </summary>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="dataTypes"> The available data types for the connector. </param>
-        internal OfficePowerBIDataConnectorProperties(Guid tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties, OfficePowerBIConnectorDataTypes dataTypes) : base(tenantId, additionalBinaryDataProperties)
+        internal OfficePowerBiDataConnectorProperties(Guid tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties, OfficePowerBiConnectorDataTypes dataTypes) : base(tenantId, additionalBinaryDataProperties)
         {
             DataTypes = dataTypes;
         }
 
         /// <summary> The available data types for the connector. </summary>
         [WirePath("dataTypes")]
-        internal OfficePowerBIConnectorDataTypes DataTypes { get; set; }
+        internal OfficePowerBiConnectorDataTypes DataTypes { get; set; }
 
         /// <summary> Describe whether this data type connection is enabled or not. </summary>
         [WirePath("dataTypes.logs.state")]
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (DataTypes is null)
                 {
-                    DataTypes = new OfficePowerBIConnectorDataTypes();
+                    DataTypes = new OfficePowerBiConnectorDataTypes();
                 }
                 DataTypes.LogsState = value;
             }

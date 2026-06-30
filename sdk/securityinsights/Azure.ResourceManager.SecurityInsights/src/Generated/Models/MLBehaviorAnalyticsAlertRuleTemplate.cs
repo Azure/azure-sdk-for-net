@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> MLBehaviorAnalytics alert rule template properties. </param>
-        internal MLBehaviorAnalyticsAlertRuleTemplate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, MLBehaviorAnalyticsAlertRuleTemplateProperties properties) : base(id, name, resourceType, systemData, kind, additionalBinaryDataProperties)
+        internal MLBehaviorAnalyticsAlertRuleTemplate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, MlBehaviorAnalyticsAlertRuleTemplateProperties properties) : base(id, name, resourceType, systemData, kind, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
         /// <summary> MLBehaviorAnalytics alert rule template properties. </summary>
         [WirePath("properties")]
-        internal MLBehaviorAnalyticsAlertRuleTemplateProperties Properties { get; set; }
+        internal MlBehaviorAnalyticsAlertRuleTemplateProperties Properties { get; set; }
 
         /// <summary> The number of alert rules that were created by this template. </summary>
         [WirePath("properties.alertRulesCreatedByTemplateCount")]
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new MLBehaviorAnalyticsAlertRuleTemplateProperties();
+                    Properties = new MlBehaviorAnalyticsAlertRuleTemplateProperties();
                 }
                 Properties.AlertRulesCreatedByTemplateCount = value;
             }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new MLBehaviorAnalyticsAlertRuleTemplateProperties();
+                    Properties = new MlBehaviorAnalyticsAlertRuleTemplateProperties();
                 }
                 Properties.Description = value;
             }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new MLBehaviorAnalyticsAlertRuleTemplateProperties();
+                    Properties = new MlBehaviorAnalyticsAlertRuleTemplateProperties();
                 }
                 Properties.DisplayName = value;
             }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new MLBehaviorAnalyticsAlertRuleTemplateProperties();
+                    Properties = new MlBehaviorAnalyticsAlertRuleTemplateProperties();
                 }
                 return Properties.RequiredDataConnectors;
             }
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new MLBehaviorAnalyticsAlertRuleTemplateProperties();
+                    Properties = new MlBehaviorAnalyticsAlertRuleTemplateProperties();
                 }
                 Properties.Status = value;
             }
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new MLBehaviorAnalyticsAlertRuleTemplateProperties();
+                    Properties = new MlBehaviorAnalyticsAlertRuleTemplateProperties();
                 }
                 return Properties.Tactics;
             }
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new MLBehaviorAnalyticsAlertRuleTemplateProperties();
+                    Properties = new MlBehaviorAnalyticsAlertRuleTemplateProperties();
                 }
                 return Properties.Techniques;
             }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (Properties is null)
                     {
-                        Properties = new MLBehaviorAnalyticsAlertRuleTemplateProperties();
+                        Properties = new MlBehaviorAnalyticsAlertRuleTemplateProperties();
                     }
                     Properties.Severity = value.Value;
                 }

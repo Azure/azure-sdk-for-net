@@ -12,25 +12,25 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents Microsoft Threat Intelligence requirements check request. </summary>
-    public partial class MSTICheckRequirements : DataConnectorsCheckRequirements
+    public partial class MstiCheckRequirements : DataConnectorsCheckRequirements
     {
-        /// <summary> Initializes a new instance of <see cref="MSTICheckRequirements"/>. </summary>
-        public MSTICheckRequirements() : base(DataConnectorKind.MicrosoftThreatIntelligence)
+        /// <summary> Initializes a new instance of <see cref="MstiCheckRequirements"/>. </summary>
+        public MstiCheckRequirements() : base(DataConnectorKind.MicrosoftThreatIntelligence)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MSTICheckRequirements"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MstiCheckRequirements"/>. </summary>
         /// <param name="kind"> Describes the kind of connector to be checked. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Microsoft Threat Intelligence requirements check properties. </param>
-        internal MSTICheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, MSTICheckRequirementsProperties properties) : base(kind, additionalBinaryDataProperties)
+        internal MstiCheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, MstiCheckRequirementsProperties properties) : base(kind, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
         /// <summary> Microsoft Threat Intelligence requirements check properties. </summary>
         [WirePath("properties")]
-        internal MSTICheckRequirementsProperties Properties { get; set; }
+        internal MstiCheckRequirementsProperties Properties { get; set; }
 
         /// <summary> The tenant id to connect to, and get the data from. </summary>
         [WirePath("properties.tenantId")]
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (Properties is null)
                     {
-                        Properties = new MSTICheckRequirementsProperties();
+                        Properties = new MstiCheckRequirementsProperties();
                     }
                     Properties.TenantId = value.Value;
                 }

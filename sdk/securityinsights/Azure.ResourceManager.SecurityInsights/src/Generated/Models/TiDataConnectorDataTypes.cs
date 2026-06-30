@@ -12,23 +12,23 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> The available data types for TI (Threat Intelligence) data connector. </summary>
-    internal partial class TIDataConnectorDataTypes
+    internal partial class TiDataConnectorDataTypes
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TIDataConnectorDataTypes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TiDataConnectorDataTypes"/>. </summary>
         /// <param name="indicatorsState"> Describe whether this data type connection is enabled or not. </param>
-        public TIDataConnectorDataTypes(SecurityInsightsDataTypeConnectionState indicatorsState)
+        public TiDataConnectorDataTypes(SecurityInsightsDataTypeConnectionState indicatorsState)
         {
 
-            Indicators = new TIDataConnectorDataTypesIndicators(indicatorsState);
+            Indicators = new TiDataConnectorDataTypesIndicators(indicatorsState);
         }
 
-        /// <summary> Initializes a new instance of <see cref="TIDataConnectorDataTypes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TiDataConnectorDataTypes"/>. </summary>
         /// <param name="indicators"> Data type for indicators connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TIDataConnectorDataTypes(TIDataConnectorDataTypesIndicators indicators, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TiDataConnectorDataTypes(TiDataConnectorDataTypesIndicators indicators, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Indicators = indicators;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Data type for indicators connection. </summary>
         [WirePath("indicators")]
-        internal TIDataConnectorDataTypesIndicators Indicators { get; set; }
+        internal TiDataConnectorDataTypesIndicators Indicators { get; set; }
 
         /// <summary> Describe whether this data type connection is enabled or not. </summary>
         [WirePath("indicators.state")]
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             set
             {
-                Indicators = new TIDataConnectorDataTypesIndicators(value);
+                Indicators = new TiDataConnectorDataTypesIndicators(value);
             }
         }
     }
