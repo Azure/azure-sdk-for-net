@@ -90,11 +90,82 @@ foreach ($file in $reportFiles) {
     [void]$sb.AppendLine()
 }
 
+# ── Group the headline comparison at the top of the results table ──
+# BenchmarkDotNet owns the row order of the joined summary, so it does not keep together the three
+# rows that matter most: the realistic deserialize path with no proxy, a conditional proxy that
+# declines (miss), and one that handles (hit). Re-float those three rows to the top of the table and
+# add a short pointer note so the headline comparison stays grouped every time this is regenerated.
+# If a benchmark is renamed and a row can't be matched, BenchmarkDotNet's order is left untouched.
+$lines = @($sb.ToString().TrimEnd() -split "`r?`n")
+
+# The three headline rows, in the order they should appear (no-proxy -> miss -> hit).
+$headlinePatterns = @(
+    '^\|\s*ProxyResolutionRealisticBenchmark\s*\|\s*Read_NoProxy\s*\|',
+    '^\|\s*ProxyResolutionRealisticBenchmark\s*\|\s*Read_ConditionalProxy_Miss\s*\|',
+    '^\|\s*ProxyResolutionRealisticBenchmark\s*\|\s*Read_ConditionalProxy_Hit\s*\|'
+)
+
+$headlineRows = @(foreach ($pattern in $headlinePatterns) {
+    $lines | Where-Object { $_ -match $pattern } | Select-Object -First 1
+})
+
+$headerIdx = -1
+for ($i = 0; $i -lt $lines.Count; $i++) {
+    if ($lines[$i] -match '^\|\s*Type\s*\|\s*Method\s*\|') { $headerIdx = $i; break }
+}
+
+if ($headerIdx -ge 0 -and $headlineRows.Count -eq $headlinePatterns.Count) {
+    $note = @(
+        '**Headline comparison (top three rows).** The same realistic deserialize path with no proxy, a',
+        'proxy that declines (miss, so the base model handles it), and a proxy that handles it (hit). The',
+        'payload is identical across all three, so the no-proxy &rarr; miss &rarr; hit deltas are directly',
+        'comparable. The remaining rows (micro variants, the unconditional proxy, and collection cases)',
+        'are kept below for reference.'
+    )
+
+    $result = [System.Collections.Generic.List[string]]::new()
+    for ($i = 0; $i -lt $lines.Count; $i++) {
+        $line = $lines[$i]
+
+        # Drop the headline rows from their original positions (re-added after the separator below).
+        $isHeadline = $false
+        foreach ($pattern in $headlinePatterns) {
+            if ($line -match $pattern) { $isHeadline = $true; break }
+        }
+        if ($isHeadline) { continue }
+
+        # Inject the note immediately before the table header.
+        if ($i -eq $headerIdx) {
+            $result.Add('')
+            foreach ($n in $note) { $result.Add($n) }
+            $result.Add('')
+        }
+
+        $result.Add($line)
+
+        # Splice the headline rows in right after the header separator row.
+        if ($i -eq ($headerIdx + 1)) {
+            foreach ($row in $headlineRows) { $result.Add($row) }
+        }
+    }
+
+    $finalContent = ($result -join [Environment]::NewLine).TrimEnd()
+}
+else {
+    if ($headerIdx -lt 0) {
+        Write-Warning 'Could not locate the results table header; leaving BenchmarkDotNet row order unchanged.'
+    }
+    else {
+        Write-Warning 'Did not find all three headline rows; leaving BenchmarkDotNet row order unchanged.'
+    }
+    $finalContent = $sb.ToString().TrimEnd()
+}
+
 $outDir = Split-Path $OutputFile -Parent
 if (-not (Test-Path $outDir)) {
     New-Item -ItemType Directory -Path $outDir -Force | Out-Null
 }
-Set-Content -Path $OutputFile -Value $sb.ToString().TrimEnd() -Encoding utf8
+Set-Content -Path $OutputFile -Value $finalContent -Encoding utf8
 
 Write-Host "Wrote consolidated results to $OutputFile" -ForegroundColor Green
 Write-Host "Aggregated $($reportFiles.Count) report(s)." -ForegroundColor Green
