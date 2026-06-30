@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
@@ -153,7 +154,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             EntityTimelineKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string azureResourceId = default;
+            ResourceIdentifier azureResourceId = default;
             string productName = default;
             string description = default;
             string displayName = default;
@@ -173,7 +174,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (prop.NameEquals("azureResourceId"u8))
                 {
-                    azureResourceId = prop.Value.GetString();
+                    azureResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("productName"u8))

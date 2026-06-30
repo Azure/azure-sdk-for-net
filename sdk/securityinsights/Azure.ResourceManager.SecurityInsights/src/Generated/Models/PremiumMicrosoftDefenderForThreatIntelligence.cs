@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The lookback period for the feed to be imported. The date-time to begin importing the feed from, for example: 2024-01-01T00:00:00.000Z. </summary>
         [WirePath("properties.lookbackPeriod")]
-        public DateTimeOffset? LookbackPeriod
+        public DateTimeOffset? LookbackPeriodOn
         {
             get
             {
-                return Properties is null ? default : Properties.LookbackPeriod;
+                return Properties is null ? default : Properties.LookbackPeriodOn;
             }
             set
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         Properties = new PremiumMdtiDataConnectorProperties();
                     }
-                    Properties.LookbackPeriod = value.Value;
+                    Properties.LookbackPeriodOn = value.Value;
                 }
             }
         }

@@ -16,23 +16,23 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         /// <summary> Initializes a new instance of <see cref="MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed"/>. </summary>
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
-        /// <param name="lookbackPeriod"> The lookback period for the feed to be imported. </param>
-        public MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed(SecurityInsightsDataTypeConnectionState state, DateTimeOffset lookbackPeriod) : base(state)
+        /// <param name="lookbackPeriodOn"> The lookback period for the feed to be imported. </param>
+        public MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed(SecurityInsightsDataTypeConnectionState state, DateTimeOffset lookbackPeriodOn) : base(state)
         {
-            LookbackPeriod = lookbackPeriod;
+            LookbackPeriodOn = lookbackPeriodOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed"/>. </summary>
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="lookbackPeriod"> The lookback period for the feed to be imported. </param>
-        internal MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed(SecurityInsightsDataTypeConnectionState state, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset lookbackPeriod) : base(state, additionalBinaryDataProperties)
+        /// <param name="lookbackPeriodOn"> The lookback period for the feed to be imported. </param>
+        internal MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed(SecurityInsightsDataTypeConnectionState state, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset lookbackPeriodOn) : base(state, additionalBinaryDataProperties)
         {
-            LookbackPeriod = lookbackPeriod;
+            LookbackPeriodOn = lookbackPeriodOn;
         }
 
         /// <summary> The lookback period for the feed to be imported. </summary>
         [WirePath("lookbackPeriod")]
-        public DateTimeOffset LookbackPeriod { get; set; }
+        public DateTimeOffset LookbackPeriodOn { get; set; }
     }
 }

@@ -7,6 +7,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Mocking
 {
+    // Compatibility mitigation: the TypeSpec migration does not emit this resource-group mockable extension type,
+    // but the GA SDK exposed it for tests and mocking scenarios. Keep until the compatibility shim is no longer needed.
     /// <summary> A class to add extension methods to <see cref="Azure.ResourceManager.Resources.ResourceGroupResource"/>. </summary>
     public partial class MockableSecurityInsightsResourceGroupResource : ArmResource
     {

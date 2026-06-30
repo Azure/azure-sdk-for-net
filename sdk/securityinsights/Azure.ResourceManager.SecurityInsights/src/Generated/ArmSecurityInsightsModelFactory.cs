@@ -2566,11 +2566,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
-        /// <param name="lookbackPeriod"> The lookback period for the feed to be imported. </param>
+        /// <param name="lookbackPeriodOn"> The lookback period for the feed to be imported. </param>
         /// <returns> A new <see cref="Models.MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed"/> instance for mocking. </returns>
-        public static MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed(SecurityInsightsDataTypeConnectionState state = default, DateTimeOffset lookbackPeriod = default)
+        public static MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed(SecurityInsightsDataTypeConnectionState state = default, DateTimeOffset lookbackPeriodOn = default)
         {
-            return new MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed(state, default, lookbackPeriod);
+            return new MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed(state, default, lookbackPeriodOn);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2579,11 +2579,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="eTag"> Etag of the azure resource. </param>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        /// <param name="lookbackPeriod"> The lookback period for the feed to be imported. The date-time to begin importing the feed from, for example: 2024-01-01T00:00:00.000Z. </param>
+        /// <param name="lookbackPeriodOn"> The lookback period for the feed to be imported. The date-time to begin importing the feed from, for example: 2024-01-01T00:00:00.000Z. </param>
         /// <param name="isRequiredSKUsPresent"> The flag to indicate whether the tenant has the premium SKU required to access this connector. </param>
         /// <param name="dataTypesConnectorState"> Describe whether this data type connection is enabled or not. </param>
         /// <returns> A new <see cref="Models.PremiumMicrosoftDefenderForThreatIntelligence"/> instance for mocking. </returns>
-        public static PremiumMicrosoftDefenderForThreatIntelligence PremiumMicrosoftDefenderForThreatIntelligence(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? eTag = default, Guid? tenantId = default, DateTimeOffset? lookbackPeriod = default, bool? isRequiredSKUsPresent = default, SecurityInsightsDataTypeConnectionState? dataTypesConnectorState = default)
+        public static PremiumMicrosoftDefenderForThreatIntelligence PremiumMicrosoftDefenderForThreatIntelligence(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? eTag = default, Guid? tenantId = default, DateTimeOffset? lookbackPeriodOn = default, bool? isRequiredSKUsPresent = default, SecurityInsightsDataTypeConnectionState? dataTypesConnectorState = default)
         {
             return new PremiumMicrosoftDefenderForThreatIntelligence(
                 id,
@@ -2593,7 +2593,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 default,
                 eTag,
                 default,
-                tenantId is null && lookbackPeriod is null && isRequiredSKUsPresent is null && dataTypesConnectorState is null ? default : new PremiumMdtiDataConnectorProperties(tenantId.GetValueOrDefault(), default, lookbackPeriod.GetValueOrDefault(), isRequiredSKUsPresent, new PremiumMdtiDataConnectorDataTypes(new PremiumMdtiDataConnectorDataTypesConnector(dataTypesConnectorState.GetValueOrDefault(), default), default)));
+                tenantId is null && lookbackPeriodOn is null && isRequiredSKUsPresent is null && dataTypesConnectorState is null ? default : new PremiumMdtiDataConnectorProperties(tenantId.GetValueOrDefault(), default, lookbackPeriodOn.GetValueOrDefault(), isRequiredSKUsPresent, new PremiumMdtiDataConnectorDataTypes(new PremiumMdtiDataConnectorDataTypesConnector(dataTypesConnectorState.GetValueOrDefault(), default), default)));
         }
 
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
@@ -6702,7 +6702,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="intent"> The intent of the alert. </param>
         /// <param name="techniques"> The techniques of the alert. </param>
         /// <returns> A new <see cref="Models.SecurityAlertTimelineItem"/> instance for mocking. </returns>
-        public static SecurityAlertTimelineItem SecurityAlertTimelineItem(string azureResourceId = default, string productName = default, string description = default, string displayName = default, SecurityInsightsAlertSeverity severity = default, DateTimeOffset endOn = default, DateTimeOffset startOn = default, DateTimeOffset generatedOn = default, string alertType = default, SecurityInsightsKillChainIntent? intent = default, IEnumerable<string> techniques = default)
+        public static SecurityAlertTimelineItem SecurityAlertTimelineItem(ResourceIdentifier azureResourceId = default, string productName = default, string description = default, string displayName = default, SecurityInsightsAlertSeverity severity = default, DateTimeOffset endOn = default, DateTimeOffset startOn = default, DateTimeOffset generatedOn = default, string alertType = default, SecurityInsightsKillChainIntent? intent = default, IEnumerable<string> techniques = default)
         {
             techniques ??= new ChangeTrackingList<string>();
 

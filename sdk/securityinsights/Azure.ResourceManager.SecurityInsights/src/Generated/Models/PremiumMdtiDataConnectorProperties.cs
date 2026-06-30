@@ -16,31 +16,31 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         /// <summary> Initializes a new instance of <see cref="PremiumMdtiDataConnectorProperties"/>. </summary>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        /// <param name="lookbackPeriod"> The lookback period for the feed to be imported. The date-time to begin importing the feed from, for example: 2024-01-01T00:00:00.000Z. </param>
+        /// <param name="lookbackPeriodOn"> The lookback period for the feed to be imported. The date-time to begin importing the feed from, for example: 2024-01-01T00:00:00.000Z. </param>
         /// <param name="dataTypesConnectorState"> Describe whether this data type connection is enabled or not. </param>
-        public PremiumMdtiDataConnectorProperties(Guid tenantId, DateTimeOffset lookbackPeriod, SecurityInsightsDataTypeConnectionState dataTypesConnectorState) : base(tenantId)
+        public PremiumMdtiDataConnectorProperties(Guid tenantId, DateTimeOffset lookbackPeriodOn, SecurityInsightsDataTypeConnectionState dataTypesConnectorState) : base(tenantId)
         {
 
-            LookbackPeriod = lookbackPeriod;
+            LookbackPeriodOn = lookbackPeriodOn;
             DataTypes = new PremiumMdtiDataConnectorDataTypes(dataTypesConnectorState);
         }
 
         /// <summary> Initializes a new instance of <see cref="PremiumMdtiDataConnectorProperties"/>. </summary>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="lookbackPeriod"> The lookback period for the feed to be imported. The date-time to begin importing the feed from, for example: 2024-01-01T00:00:00.000Z. </param>
+        /// <param name="lookbackPeriodOn"> The lookback period for the feed to be imported. The date-time to begin importing the feed from, for example: 2024-01-01T00:00:00.000Z. </param>
         /// <param name="isRequiredSKUsPresent"> The flag to indicate whether the tenant has the premium SKU required to access this connector. </param>
         /// <param name="dataTypes"> The available data types for the connector. </param>
-        internal PremiumMdtiDataConnectorProperties(Guid tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset lookbackPeriod, bool? isRequiredSKUsPresent, PremiumMdtiDataConnectorDataTypes dataTypes) : base(tenantId, additionalBinaryDataProperties)
+        internal PremiumMdtiDataConnectorProperties(Guid tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset lookbackPeriodOn, bool? isRequiredSKUsPresent, PremiumMdtiDataConnectorDataTypes dataTypes) : base(tenantId, additionalBinaryDataProperties)
         {
-            LookbackPeriod = lookbackPeriod;
+            LookbackPeriodOn = lookbackPeriodOn;
             IsRequiredSKUsPresent = isRequiredSKUsPresent;
             DataTypes = dataTypes;
         }
 
         /// <summary> The lookback period for the feed to be imported. The date-time to begin importing the feed from, for example: 2024-01-01T00:00:00.000Z. </summary>
         [WirePath("lookbackPeriod")]
-        public DateTimeOffset LookbackPeriod { get; set; }
+        public DateTimeOffset LookbackPeriodOn { get; set; }
 
         /// <summary> The flag to indicate whether the tenant has the premium SKU required to access this connector. </summary>
         [WirePath("requiredSKUsPresent")]

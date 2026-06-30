@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="startOn"> The alert start time. </param>
         /// <param name="generatedOn"> The alert generated time. </param>
         /// <param name="alertType"> The name of the alert type. </param>
-        internal SecurityAlertTimelineItem(string azureResourceId, string displayName, SecurityInsightsAlertSeverity severity, DateTimeOffset endOn, DateTimeOffset startOn, DateTimeOffset generatedOn, string alertType) : base(EntityTimelineKind.SecurityAlert)
+        internal SecurityAlertTimelineItem(ResourceIdentifier azureResourceId, string displayName, SecurityInsightsAlertSeverity severity, DateTimeOffset endOn, DateTimeOffset startOn, DateTimeOffset generatedOn, string alertType) : base(EntityTimelineKind.SecurityAlert)
         {
             AzureResourceId = azureResourceId;
             DisplayName = displayName;
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="alertType"> The name of the alert type. </param>
         /// <param name="intent"> The intent of the alert. </param>
         /// <param name="techniques"> The techniques of the alert. </param>
-        internal SecurityAlertTimelineItem(EntityTimelineKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string azureResourceId, string productName, string description, string displayName, SecurityInsightsAlertSeverity severity, DateTimeOffset endOn, DateTimeOffset startOn, DateTimeOffset generatedOn, string alertType, SecurityInsightsKillChainIntent? intent, IList<string> techniques) : base(kind, additionalBinaryDataProperties)
+        internal SecurityAlertTimelineItem(EntityTimelineKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier azureResourceId, string productName, string description, string displayName, SecurityInsightsAlertSeverity severity, DateTimeOffset endOn, DateTimeOffset startOn, DateTimeOffset generatedOn, string alertType, SecurityInsightsKillChainIntent? intent, IList<string> techniques) : base(kind, additionalBinaryDataProperties)
         {
             AzureResourceId = azureResourceId;
             ProductName = productName;
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The alert azure resource id. </summary>
         [WirePath("azureResourceId")]
-        public string AzureResourceId { get; }
+        public ResourceIdentifier AzureResourceId { get; }
 
         /// <summary> The alert product name. </summary>
         [WirePath("productName")]

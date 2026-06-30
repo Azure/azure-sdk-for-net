@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("lookbackPeriod"u8);
-            writer.WriteStringValue(LookbackPeriod, "O");
+            writer.WriteStringValue(LookbackPeriodOn, "O");
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             SecurityInsightsDataTypeConnectionState state = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            DateTimeOffset lookbackPeriod = default;
+            DateTimeOffset lookbackPeriodOn = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("state"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (prop.NameEquals("lookbackPeriod"u8))
                 {
-                    lookbackPeriod = prop.Value.GetDateTimeOffset("O");
+                    lookbackPeriodOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed(state, additionalBinaryDataProperties, lookbackPeriod);
+            return new MstiDataConnectorDataTypesMicrosoftEmergingThreatFeed(state, additionalBinaryDataProperties, lookbackPeriodOn);
         }
     }
 }

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("lookbackPeriod"u8);
-            writer.WriteStringValue(LookbackPeriod, "O");
+            writer.WriteStringValue(LookbackPeriodOn, "O");
             if (Optional.IsDefined(IsRequiredSKUsPresent))
             {
                 writer.WritePropertyName("requiredSKUsPresent"u8);
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             Guid tenantId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            DateTimeOffset lookbackPeriod = default;
+            DateTimeOffset lookbackPeriodOn = default;
             bool? isRequiredSKUsPresent = default;
             PremiumMdtiDataConnectorDataTypes dataTypes = default;
             foreach (var prop in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (prop.NameEquals("lookbackPeriod"u8))
                 {
-                    lookbackPeriod = prop.Value.GetDateTimeOffset("O");
+                    lookbackPeriodOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("requiredSKUsPresent"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PremiumMdtiDataConnectorProperties(tenantId, additionalBinaryDataProperties, lookbackPeriod, isRequiredSKUsPresent, dataTypes);
+            return new PremiumMdtiDataConnectorProperties(tenantId, additionalBinaryDataProperties, lookbackPeriodOn, isRequiredSKUsPresent, dataTypes);
         }
     }
 }
