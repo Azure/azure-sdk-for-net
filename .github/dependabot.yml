@@ -25,6 +25,9 @@ updates:
       eslint:
         patterns:
           - "*eslint*"
+      vitest:
+        patterns:
+          - "*vitest*"
     versioning-strategy: increase-if-necessary
   - package-ecosystem: "npm"
     directories:
@@ -51,6 +54,9 @@ updates:
       eslint:
         patterns:
           - "*eslint*"
+      vitest:
+        patterns:
+          - "*vitest*"
     versioning-strategy: increase-if-necessary
   - package-ecosystem: "npm"
     directories:
@@ -77,6 +83,9 @@ updates:
       eslint:
         patterns:
           - "*eslint*"
+      vitest:
+        patterns:
+          - "*vitest*"
     versioning-strategy: increase-if-necessary
   - package-ecosystem: "npm"
     directories:
@@ -103,4 +112,7 @@ updates:
       eslint:
         patterns:
           - "*eslint*"
+      vitest:
+        patterns:
+          - "*vitest*"
     versioning-strategy: increase-if-necessary
