@@ -91,7 +91,7 @@ Add both test files:
 - `tests\Basic{Service}Tests.cs`
 - `tests\BasicLive{Service}Tests.cs`
 
-Use a simple resource that can be represented as a minimal Bicep template. The unit test should include a `#region Snippet:{Name}` block and validate output with `Trycep.Compare()`. The live test should be `[LiveOnly]` and call the same factory method through:
+Use a simple resource that can be represented as a minimal Bicep template. The unit test should include a `#region Snippet:{Name}` block and validate output by calling `test.Compare(...)` on the `Trycep` instance. The live test should be `[LiveOnly]` and call the same factory method through:
 
 ```csharp
 await using Trycep test = await CreateTestAsync();
