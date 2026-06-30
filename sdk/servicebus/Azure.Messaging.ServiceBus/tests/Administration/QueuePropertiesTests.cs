@@ -317,5 +317,44 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             Assert.IsNotNull(queueDesc.AuthorizationRules);
             Assert.AreEqual(0, queueDesc.AuthorizationRules.Count);
         }
+
+        [Test]
+        public async Task CreateQueueOptionsFromPropertiesWithMaskedKeysDoesNotThrow()
+        {
+            // A queue fetched with masked SAS keys must survive the common
+            // get-modify-update round-trip: new CreateQueueOptions(properties) clones
+            // the authorization rules, which must not re-validate the masked keys.
+            // See https://github.com/Azure/azure-sdk-for-net/issues/60469.
+            string queueDescriptionXml = $@"<entry xmlns=""{AdministrationClientConstants.AtomNamespace}"">" +
+                $@"<title xmlns=""{AdministrationClientConstants.AtomNamespace}"">maskedqueue</title>" +
+                $@"<content xmlns=""{AdministrationClientConstants.AtomNamespace}"">" +
+                $@"<QueueDescription xmlns=""{AdministrationClientConstants.ServiceBusNamespace}"" xmlns:i=""{AdministrationClientConstants.XmlSchemaInstanceNamespace}"">" +
+                $"<MaxSizeInMegabytes>1024</MaxSizeInMegabytes>" +
+                $"<AuthorizationRules>" +
+                $@"<AuthorizationRule i:type=""SharedAccessAuthorizationRule"">" +
+                $"<ClaimType>SharedAccessKey</ClaimType>" +
+                $"<ClaimValue>None</ClaimValue>" +
+                $"<Rights><AccessRights>Listen</AccessRights></Rights>" +
+                $"<KeyName>Decisions</KeyName>" +
+                $"<PrimaryKey></PrimaryKey>" +
+                $"<SecondaryKey></SecondaryKey>" +
+                $"</AuthorizationRule>" +
+                $"</AuthorizationRules>" +
+                $"<Status>Active</Status>" +
+                $"</QueueDescription>" +
+                $"</content>" +
+                $"</entry>";
+            MockResponse response = new MockResponse(200);
+            response.SetContent(queueDescriptionXml);
+            QueueProperties queueDesc = await QueuePropertiesExtensions.ParseResponseAsync(response, new ClientDiagnostics(new ServiceBusAdministrationClientOptions()));
+
+            CreateQueueOptions options = null;
+            Assert.DoesNotThrow(() => options = new CreateQueueOptions(queueDesc));
+            Assert.AreEqual(1, options.AuthorizationRules.Count);
+            var rule = (SharedAccessAuthorizationRule)options.AuthorizationRules[0];
+            Assert.AreEqual("Decisions", rule.KeyName);
+            Assert.AreEqual(string.Empty, rule.PrimaryKey);
+            Assert.AreEqual(string.Empty, rule.SecondaryKey);
+        }
     }
 }

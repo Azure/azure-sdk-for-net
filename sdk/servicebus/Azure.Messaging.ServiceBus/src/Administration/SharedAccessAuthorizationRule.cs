@@ -62,7 +62,19 @@ namespace Azure.Messaging.ServiceBus.Administration
         }
 
         internal override AuthorizationRule Clone() =>
-            new SharedAccessAuthorizationRule(KeyName, PrimaryKey, SecondaryKey, Rights);
+            new SharedAccessAuthorizationRule
+            {
+                // Copy the backing fields directly rather than routing through the
+                // validating public constructor. A rule deserialized from a service
+                // response can have masked/empty keys (see ParseFromXElement), and a
+                // clone must reproduce it faithfully rather than re-validate it, so a
+                // round-trip such as new CreateTopicOptions(GetTopic().Value) does not
+                // throw. See https://github.com/Azure/azure-sdk-for-net/issues/60469.
+                internalKeyName = KeyName,
+                internalPrimaryKey = PrimaryKey,
+                internalSecondaryKey = SecondaryKey,
+                internalRights = Rights == null ? null : new List<AccessRights>(Rights),
+            };
 
         /// <inheritdoc/>
         public override string ClaimType => FixedClaimType;
