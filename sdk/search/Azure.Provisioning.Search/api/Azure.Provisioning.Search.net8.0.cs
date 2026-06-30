@@ -154,6 +154,8 @@ namespace Azure.Provisioning.Search
         public Azure.Provisioning.BicepList<Azure.Provisioning.Search.SearchPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Search.SearchServiceProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Search.SearchServicePublicInternetAccess> PublicInternetAccess { get { throw null; } set { } }
+        [System.ObsoleteAttribute("Use PublicInternetAccess instead.")]
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Search.SearchServicePublicNetworkAccess> PublicNetworkAccess { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> ReplicaCount { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Search.SearchServiceSkuName> SearchSkuName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Search.SearchSemanticSearch> SemanticSearch { get { throw null; } set { } }
@@ -363,6 +365,14 @@ namespace Azure.Provisioning.Search
         Enabled = 0,
         Disabled = 1,
         SecuredByPerimeter = 2,
+    }
+    [System.ObsoleteAttribute("Use SearchServicePublicInternetAccess instead.")]
+    public enum SearchServicePublicNetworkAccess
+    {
+        [System.Runtime.Serialization.DataMemberAttribute(Name="enabled")]
+        Enabled = 0,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="disabled")]
+        Disabled = 1,
     }
     public enum SearchServiceSharedPrivateLinkResourceProvisioningState
     {
