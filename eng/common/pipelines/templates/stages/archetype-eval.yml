@@ -8,9 +8,8 @@
 
 parameters:
   - name: vallyRoot
-    # Dir each shard runs `vally eval` from; anchor for the matrix's -e paths.
+    # Dir each shard runs `vally eval` from; anchor for the matrix's -e paths. Required (no default).
     type: string
-    default: tools/azsdk-cli/Azure.Sdk.Tools.Vally
   - name: evalGlobs
     # Globs selecting *.eval.yaml under vallyRoot. Default = hermetic mock suite; skill/live override.
     # collect-stimuli.js mirrors this list as its no-args fallback — keep them in sync.
@@ -23,9 +22,13 @@ parameters:
     type: string
     default: /eng/common/pipelines/templates/steps/eval-mcp-setup.yml
   - name: evalInvokeTemplate
-    # SWAP POINT: runs `vally eval` per shard. Default = hermetic node; live wraps it in AzureCLI@2.
+    # SWAP POINT: runs `vally eval` per shard. Default = the conditional common invoke template.
     type: string
     default: /eng/common/pipelines/templates/steps/eval-invoke.yml
+  - name: UseAzSdkAuthentication
+    # When true, the invoke step runs under AzureCLI@2 (live MCP inherits the service connection).
+    type: boolean
+    default: false
   - name: failOnFailedTests
     type: boolean
     default: false
@@ -58,6 +61,7 @@ extends:
             parameters:
               vallyRoot: ${{ parameters.vallyRoot }}
               evalInvokeTemplate: ${{ parameters.evalInvokeTemplate }}
+              UseAzSdkAuthentication: ${{ parameters.UseAzSdkAuthentication }}
               shardTimeoutInMinutes: ${{ parameters.shardTimeoutInMinutes }}
 
       - stage: Summary

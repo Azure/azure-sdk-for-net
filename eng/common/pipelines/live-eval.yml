@@ -27,8 +27,8 @@ extends:
     vallyRoot: tools/azsdk-cli/Azure.Sdk.Tools.Vally
     evalGlobs:
       - 'evals/workflow-scenarios/live/*.eval.yaml'
-    # AzureCLI@2 wrap so the real MCP's DevOps calls are authenticated.
-    evalInvokeTemplate: /eng/pipelines/eval/eval-invoke-live.yml
+    # Run each shard under AzureCLI@2 so the real MCP's DevOps calls are authenticated.
+    UseAzSdkAuthentication: true
     failOnFailedTests: true
     # Live scenarios are end-to-end, so give each shard more headroom than the report-only tiers.
     shardTimeoutInMinutes: 45

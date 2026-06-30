@@ -1,12 +1,29 @@
 # Example MCP setup (default mcpSetupTemplate): builds/installs the MCP server(s) and publishes
 # each under artifacts/mcp/<name>. Each repo points mcpSetupTemplate at its own copy.
 
-steps:
-  - checkout: self
-    fetchDepth: 1
+# Example MCP setup (default mcpSetupTemplate): builds/installs the MCP server(s) and publishes
+# each under artifacts/mcp/<name>. Each repo points mcpSetupTemplate at its own copy. The BuildMcp
+# job performs the checkout, so this template only builds. The McpServer param shows the mock-vs-live
+# if/else pattern; real repos usually point at a dedicated template (see eng/pipelines/eval/mcp-*.yml).
 
+parameters:
+  - name: McpServer
+    type: string
+    default: mock
+    values:
+      - mock
+      - live
+
+steps:
   # EXAMPLE — replace with your server's build/install, output under artifacts/mcp/<name>.
-  - script: |
-      set -e
-      dotnet build tools/azsdk-cli/Azure.Sdk.Tools.Cli -c Release -o "$(Build.SourcesDirectory)/artifacts/mcp/cli" --nologo
-    displayName: 'Build MCP: live server (example — replace me)'
+  - ${{ if eq(parameters.McpServer, 'live') }}:
+    - script: |
+        set -e
+        dotnet build tools/azsdk-cli/Azure.Sdk.Tools.Cli -c Release -o "$(Build.SourcesDirectory)/artifacts/mcp/cli" --nologo
+      displayName: 'Build MCP: live server (example — replace me)'
+
+  - ${{ else }}:
+    - script: |
+        set -e
+        dotnet build tools/azsdk-cli/Azure.Sdk.Tools.Mock -c Release -o "$(Build.SourcesDirectory)/artifacts/mcp/mock" --nologo
+      displayName: 'Build MCP: mock server (example — replace me)'
