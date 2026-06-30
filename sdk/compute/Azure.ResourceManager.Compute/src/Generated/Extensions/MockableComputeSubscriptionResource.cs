@@ -3743,12 +3743,12 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedGallerySubscriptionId"/> or <paramref name="sharedGalleryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sharedGallerySubscriptionId"/> or <paramref name="sharedGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation> GallerySharingAcceptAsync(WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> AcceptGallerySharingAsync(WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sharedGallerySubscriptionId, nameof(sharedGallerySubscriptionId));
             Argument.AssertNotNullOrEmpty(sharedGalleryName, nameof(sharedGalleryName));
 
-            using DiagnosticScope scope = SharedGalleryInvitesClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GallerySharingAccept");
+            using DiagnosticScope scope = SharedGalleryInvitesClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.AcceptGallerySharing");
             scope.Start();
             try
             {
@@ -3756,7 +3756,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SharedGalleryInvitesRestClient.CreateGallerySharingAcceptRequest(Id.SubscriptionId, location, sharedGallerySubscriptionId, sharedGalleryName, context);
+                HttpMessage message = SharedGalleryInvitesRestClient.CreateAcceptGallerySharingRequest(Id.SubscriptionId, location, sharedGallerySubscriptionId, sharedGalleryName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation operation = new ComputeArmOperation(SharedGalleryInvitesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -3796,12 +3796,12 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedGallerySubscriptionId"/> or <paramref name="sharedGalleryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sharedGallerySubscriptionId"/> or <paramref name="sharedGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation GallerySharingAccept(WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
+        public virtual ArmOperation AcceptGallerySharing(WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sharedGallerySubscriptionId, nameof(sharedGallerySubscriptionId));
             Argument.AssertNotNullOrEmpty(sharedGalleryName, nameof(sharedGalleryName));
 
-            using DiagnosticScope scope = SharedGalleryInvitesClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GallerySharingAccept");
+            using DiagnosticScope scope = SharedGalleryInvitesClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.AcceptGallerySharing");
             scope.Start();
             try
             {
@@ -3809,7 +3809,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SharedGalleryInvitesRestClient.CreateGallerySharingAcceptRequest(Id.SubscriptionId, location, sharedGallerySubscriptionId, sharedGalleryName, context);
+                HttpMessage message = SharedGalleryInvitesRestClient.CreateAcceptGallerySharingRequest(Id.SubscriptionId, location, sharedGallerySubscriptionId, sharedGalleryName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation operation = new ComputeArmOperation(SharedGalleryInvitesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -3849,12 +3849,12 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedGallerySubscriptionId"/> or <paramref name="sharedGalleryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sharedGallerySubscriptionId"/> or <paramref name="sharedGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation> GallerySharingRejectAsync(WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> RejectGallerySharingAsync(WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sharedGallerySubscriptionId, nameof(sharedGallerySubscriptionId));
             Argument.AssertNotNullOrEmpty(sharedGalleryName, nameof(sharedGalleryName));
 
-            using DiagnosticScope scope = SharedGalleryInvitesClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GallerySharingReject");
+            using DiagnosticScope scope = SharedGalleryInvitesClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.RejectGallerySharing");
             scope.Start();
             try
             {
@@ -3862,7 +3862,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SharedGalleryInvitesRestClient.CreateGallerySharingRejectRequest(Id.SubscriptionId, location, sharedGallerySubscriptionId, sharedGalleryName, context);
+                HttpMessage message = SharedGalleryInvitesRestClient.CreateRejectGallerySharingRequest(Id.SubscriptionId, location, sharedGallerySubscriptionId, sharedGalleryName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation operation = new ComputeArmOperation(SharedGalleryInvitesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -3902,12 +3902,12 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedGallerySubscriptionId"/> or <paramref name="sharedGalleryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sharedGallerySubscriptionId"/> or <paramref name="sharedGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation GallerySharingReject(WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
+        public virtual ArmOperation RejectGallerySharing(WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sharedGallerySubscriptionId, nameof(sharedGallerySubscriptionId));
             Argument.AssertNotNullOrEmpty(sharedGalleryName, nameof(sharedGalleryName));
 
-            using DiagnosticScope scope = SharedGalleryInvitesClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GallerySharingReject");
+            using DiagnosticScope scope = SharedGalleryInvitesClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.RejectGallerySharing");
             scope.Start();
             try
             {
@@ -3915,7 +3915,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SharedGalleryInvitesRestClient.CreateGallerySharingRejectRequest(Id.SubscriptionId, location, sharedGallerySubscriptionId, sharedGalleryName, context);
+                HttpMessage message = SharedGalleryInvitesRestClient.CreateRejectGallerySharingRequest(Id.SubscriptionId, location, sharedGallerySubscriptionId, sharedGalleryName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation operation = new ComputeArmOperation(SharedGalleryInvitesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

@@ -6600,6 +6600,568 @@ namespace Azure.ResourceManager.Compute.Models
             return new ComputeResourceSkuRestrictionInfo((locations ?? new ChangeTrackingList<AzureLocation>()).ToList(), (zones ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <param name="osProfile"> Specifies the operating system settings for the virtual machines in the scale set. </param>
+        /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
+        /// <param name="networkProfile"> Specifies properties of the network interfaces of the virtual machines in the scale set. </param>
+        /// <param name="securityProfile"> Specifies the Security related profile settings for the virtual machines in the scale set. </param>
+        /// <param name="bootDiagnostics"> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. NOTE: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </param>
+        /// <param name="extensionProfile"> Specifies a collection of settings for extensions installed on virtual machines in the scale set. </param>
+        /// <param name="licenseType"> Specifies that the image or disk that is being used was licensed on-premises. &lt;br&gt;&lt;br&gt; Possible values for Windows Server operating system are: &lt;br&gt;&lt;br&gt; Windows_Client &lt;br&gt;&lt;br&gt; Windows_Server &lt;br&gt;&lt;br&gt; Possible values for Linux Server operating system are: &lt;br&gt;&lt;br&gt; RHEL_BYOS (for RHEL) &lt;br&gt;&lt;br&gt; SLES_BYOS (for SUSE) &lt;br&gt;&lt;br&gt; For more information, see [Azure Hybrid Use Benefit for Windows Server](https://docs.microsoft.com/azure/virtual-machines/windows/hybrid-use-benefit-licensing) &lt;br&gt;&lt;br&gt; [Azure Hybrid Use Benefit for Linux Server](https://docs.microsoft.com/azure/virtual-machines/linux/azure-hybrid-benefit-linux) &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15. </param>
+        /// <param name="priority"> Specifies the priority for the virtual machines in the scale set. Minimum api-version: 2017-10-30-preview. </param>
+        /// <param name="evictionPolicy"> Specifies the eviction policy for the Azure Spot virtual machine and Azure Spot scale set. For Azure Spot virtual machines, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2019-03-01. For Azure Spot scale sets, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2017-10-30-preview. </param>
+        /// <param name="billingMaxPrice"> Specifies the maximum price you are willing to pay for a Azure Spot VM/VMSS. This price is in US Dollars. &lt;br&gt;&lt;br&gt; This price will be compared with the current Azure Spot price for the VM size. Also, the prices are compared at the time of create/update of Azure Spot VM/VMSS and the operation will only succeed if  the maxPrice is greater than the current Azure Spot price. &lt;br&gt;&lt;br&gt; The maxPrice will also be used for evicting a Azure Spot VM/VMSS if the current Azure Spot price goes beyond the maxPrice after creation of VM/VMSS. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; - Any decimal value greater than zero. Example: 0.01538 &lt;br&gt;&lt;br&gt; -1 – indicates default price to be up-to on-demand. &lt;br&gt;&lt;br&gt; You can set the maxPrice to -1 to indicate that the Azure Spot VM/VMSS should not be evicted for price reasons. Also, the default max price is -1 if it is not provided by you. &lt;br&gt;&lt;br&gt;Minimum api-version: 2019-03-01. </param>
+        /// <param name="scheduledEventsProfile"> Specifies Scheduled Event related configurations. </param>
+        /// <param name="userData"> UserData for the virtual machines in the scale set, which must be base-64 encoded. Customer should not pass any secrets in here. Minimum api-version: 2021-03-01. </param>
+        /// <param name="capacityReservationGroupId"> Resource Id. </param>
+        /// <param name="galleryApplications"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
+        /// <param name="hardwareVmSizeProperties"> Specifies the properties for customizing the size of the virtual machine. Minimum api-version: 2021-11-01. Please follow the instructions in [VM Customization](https://aka.ms/vmcustomization) for more details. </param>
+        /// <param name="serviceArtifactReferenceId"> The service artifact reference id in the form of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/serviceArtifacts/{serviceArtifactName}/vmArtifactsProfiles/{vmArtifactsProfilesName}. </param>
+        /// <param name="securityPostureReference"> Specifies the security posture to be used in the scale set. Minimum api-version: 2023-03-01. </param>
+        /// <param name="timeCreated"> Specifies the time in which this VM profile for the Virtual Machine Scale Set was created. This value will be added to VMSS Flex VM tags when creating/updating the VMSS VM Profile. Minimum API version for this property is 2023-09-01. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineScaleSetVmProfile"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualMachineScaleSetVmProfile VirtualMachineScaleSetVmProfile(VirtualMachineScaleSetOSProfile osProfile = default, VirtualMachineScaleSetStorageProfile storageProfile = default, VirtualMachineScaleSetNetworkProfile networkProfile = default, SecurityProfile securityProfile = default, BootDiagnostics bootDiagnostics = default, VirtualMachineScaleSetExtensionProfile extensionProfile = default, string licenseType = default, VirtualMachinePriorityType? priority = default, VirtualMachineEvictionPolicyType? evictionPolicy = default, double? billingMaxPrice = default, ComputeScheduledEventsProfile scheduledEventsProfile = default, string userData = default, ResourceIdentifier capacityReservationGroupId = default, IEnumerable<VirtualMachineGalleryApplication> galleryApplications = default, VirtualMachineSizeProperties hardwareVmSizeProperties = default, ResourceIdentifier serviceArtifactReferenceId = default, ComputeSecurityPostureReference securityPostureReference = default, DateTimeOffset? timeCreated = default)
+        {
+            return new VirtualMachineScaleSetVmProfile(
+                osProfile,
+                storageProfile,
+                networkProfile,
+                securityProfile,
+                bootDiagnostics is null ? default : new DiagnosticsProfile(bootDiagnostics, default),
+                extensionProfile,
+                licenseType,
+                priority,
+                evictionPolicy,
+                billingMaxPrice is null ? default : new BillingProfile(billingMaxPrice, default),
+                scheduledEventsProfile,
+                userData,
+                capacityReservationGroupId is null ? default : new CapacityReservationProfile(new ComputeWriteableSubResourceData(capacityReservationGroupId, default), default),
+                default,
+                galleryApplications is null ? default : new ApplicationProfile((galleryApplications ?? new ChangeTrackingList<VirtualMachineGalleryApplication>()).ToList(), default),
+                hardwareVmSizeProperties is null ? default : new VirtualMachineScaleSetHardwareProfile(hardwareVmSizeProperties, default),
+                serviceArtifactReferenceId is null ? default : new ServiceArtifactReference(serviceArtifactReferenceId, default),
+                securityPostureReference,
+                timeCreated,
+                default);
+        }
+
+        /// <param name="healthProbeId"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
+        /// <param name="networkInterfaceConfigurations"> The list of network configurations. </param>
+        /// <param name="networkApiVersion"> specifies the Microsoft.Network API version used when creating networking resources in the Network Interface Configurations for Virtual Machine Scale Set with orchestration mode 'Flexible'. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineScaleSetNetworkProfile"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualMachineScaleSetNetworkProfile VirtualMachineScaleSetNetworkProfile(ResourceIdentifier healthProbeId = default, IEnumerable<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations = default, NetworkApiVersion? networkApiVersion = default)
+        {
+            return new VirtualMachineScaleSetNetworkProfile(healthProbeId is null ? default : new ComputeApiEntityReference(healthProbeId, default), (networkInterfaceConfigurations ?? new ChangeTrackingList<VirtualMachineScaleSetNetworkConfiguration>()).ToList(), networkApiVersion, default, default);
+        }
+
+        /// <param name="vmSizes"> Specifies the VM sizes for the virtual machine scale set. </param>
+        /// <param name="allocationStrategy"> Specifies the allocation strategy for the virtual machine scale set based on which the VMs will be allocated. </param>
+        /// <returns> A new <see cref="Models.ComputeSkuProfile"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ComputeSkuProfile ComputeSkuProfile(IEnumerable<ComputeSkuProfileVmSize> vmSizes = default, ComputeAllocationStrategy? allocationStrategy = default)
+        {
+            return new ComputeSkuProfile((vmSizes ?? new ChangeTrackingList<ComputeSkuProfileVmSize>()).ToList(), allocationStrategy, default, default);
+        }
+
+        /// <param name="osProfile"> The virtual machine scale set OS profile. </param>
+        /// <param name="storageProfile"> The virtual machine scale set storage profile. </param>
+        /// <param name="networkProfile"> The virtual machine scale set network profile. </param>
+        /// <param name="securityPostureReference"> The virtual machine scale set security posture reference. </param>
+        /// <param name="securityProfile"> The virtual machine scale set Security profile. </param>
+        /// <param name="bootDiagnostics"> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. NOTE: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </param>
+        /// <param name="extensionProfile"> The virtual machine scale set extension profile. </param>
+        /// <param name="licenseType"> The license type, which is for bring your own license scenario. </param>
+        /// <param name="billingMaxPrice"> Specifies the maximum price you are willing to pay for a Azure Spot VM/VMSS. This price is in US Dollars. &lt;br&gt;&lt;br&gt; This price will be compared with the current Azure Spot price for the VM size. Also, the prices are compared at the time of create/update of Azure Spot VM/VMSS and the operation will only succeed if  the maxPrice is greater than the current Azure Spot price. &lt;br&gt;&lt;br&gt; The maxPrice will also be used for evicting a Azure Spot VM/VMSS if the current Azure Spot price goes beyond the maxPrice after creation of VM/VMSS. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; - Any decimal value greater than zero. Example: 0.01538 &lt;br&gt;&lt;br&gt; -1 – indicates default price to be up-to on-demand. &lt;br&gt;&lt;br&gt; You can set the maxPrice to -1 to indicate that the Azure Spot VM/VMSS should not be evicted for price reasons. Also, the default max price is -1 if it is not provided by you. &lt;br&gt;&lt;br&gt;Minimum api-version: 2019-03-01. </param>
+        /// <param name="scheduledEventsProfile"> Specifies Scheduled Event related configurations. </param>
+        /// <param name="userData"> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-03-01. </param>
+        /// <param name="hardwareVmSizeProperties"> Specifies the properties for customizing the size of the virtual machine. Minimum api-version: 2021-11-01. Please follow the instructions in [VM Customization](https://aka.ms/vmcustomization) for more details. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineScaleSetUpdateVmProfile"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualMachineScaleSetUpdateVmProfile VirtualMachineScaleSetUpdateVmProfile(VirtualMachineScaleSetUpdateOSProfile osProfile = default, VirtualMachineScaleSetUpdateStorageProfile storageProfile = default, VirtualMachineScaleSetUpdateNetworkProfile networkProfile = default, SecurityPostureReferenceUpdate securityPostureReference = default, SecurityProfile securityProfile = default, BootDiagnostics bootDiagnostics = default, VirtualMachineScaleSetExtensionProfile extensionProfile = default, string licenseType = default, double? billingMaxPrice = default, ComputeScheduledEventsProfile scheduledEventsProfile = default, string userData = default, VirtualMachineSizeProperties hardwareVmSizeProperties = default)
+        {
+            return new VirtualMachineScaleSetUpdateVmProfile(
+                osProfile,
+                storageProfile,
+                networkProfile,
+                securityPostureReference,
+                securityProfile,
+                bootDiagnostics is null ? default : new DiagnosticsProfile(bootDiagnostics, default),
+                extensionProfile,
+                licenseType,
+                billingMaxPrice is null ? default : new BillingProfile(billingMaxPrice, default),
+                scheduledEventsProfile,
+                userData,
+                hardwareVmSizeProperties is null ? default : new VirtualMachineScaleSetHardwareProfile(hardwareVmSizeProperties, default),
+                default,
+                default);
+        }
+
+        /// <param name="healthProbeId"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
+        /// <param name="networkInterfaceConfigurations"> The list of network configurations. </param>
+        /// <param name="networkApiVersion"> specifies the Microsoft.Network API version used when creating networking resources in the Network Interface Configurations for Virtual Machine Scale Set with orchestration mode 'Flexible'. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineScaleSetUpdateNetworkProfile"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualMachineScaleSetUpdateNetworkProfile VirtualMachineScaleSetUpdateNetworkProfile(ResourceIdentifier healthProbeId = default, IEnumerable<VirtualMachineScaleSetUpdateNetworkConfiguration> networkInterfaceConfigurations = default, NetworkApiVersion? networkApiVersion = default)
+        {
+            return new VirtualMachineScaleSetUpdateNetworkProfile(healthProbeId is null ? default : new ComputeApiEntityReference(healthProbeId, default), (networkInterfaceConfigurations ?? new ChangeTrackingList<VirtualMachineScaleSetUpdateNetworkConfiguration>()).ToList(), networkApiVersion, default, default);
+        }
+
+        /// <param name="latestModelApplied"> Specifies whether the latest model has been applied to the virtual machine. </param>
+        /// <param name="vmId"> Azure VM unique ID. </param>
+        /// <param name="instanceView"> The virtual machine instance view. </param>
+        /// <param name="hardwareProfile"> Specifies the hardware settings for the virtual machine. </param>
+        /// <param name="resilientVmDeletionStatus"> Specifies the resilient VM deletion status for the virtual machine. </param>
+        /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
+        /// <param name="additionalCapabilities"> Specifies additional capabilities enabled or disabled on the virtual machine in the scale set. For instance: whether the virtual machine has the capability to support attaching managed data disks with UltraSSD_LRS storage account type. </param>
+        /// <param name="osProfile"> Specifies the operating system settings for the virtual machine. </param>
+        /// <param name="securityProfile"> Specifies the Security related profile settings for the virtual machine. </param>
+        /// <param name="networkProfile"> Specifies the network interfaces of the virtual machine. </param>
+        /// <param name="networkInterfaceConfigurations"> The list of network configurations. </param>
+        /// <param name="bootDiagnostics"> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. NOTE: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </param>
+        /// <param name="availabilitySetId"> Resource Id. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="licenseType"> Specifies that the image or disk that is being used was licensed on-premises. &lt;br&gt;&lt;br&gt; Possible values for Windows Server operating system are: &lt;br&gt;&lt;br&gt; Windows_Client &lt;br&gt;&lt;br&gt; Windows_Server &lt;br&gt;&lt;br&gt; Possible values for Linux Server operating system are: &lt;br&gt;&lt;br&gt; RHEL_BYOS (for RHEL) &lt;br&gt;&lt;br&gt; SLES_BYOS (for SUSE) &lt;br&gt;&lt;br&gt; For more information, see [Azure Hybrid Use Benefit for Windows Server](https://docs.microsoft.com/azure/virtual-machines/windows/hybrid-use-benefit-licensing) &lt;br&gt;&lt;br&gt; [Azure Hybrid Use Benefit for Linux Server](https://docs.microsoft.com/azure/virtual-machines/linux/azure-hybrid-benefit-linux) &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15. </param>
+        /// <param name="modelDefinitionApplied"> Specifies whether the model applied to the virtual machine is the model of the virtual machine scale set or the customized model for the virtual machine. </param>
+        /// <param name="protectionPolicy"> Specifies the protection policy of the virtual machine. </param>
+        /// <param name="userData"> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. Minimum api-version: 2021-03-01. </param>
+        /// <param name="timeCreated"> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </param>
+        /// <param name="virtualMachineResourceId"> Specifies the ARM resource ID of the standalone virtual machine associated with this VMSS VM. This property is only applicable to Virtual Machine Scale Sets with Flexible orchestration mode. Minimum api-version: 2025-11-01. </param>
+        /// <param name="additionalProperties"></param>
+        /// <returns> A new <see cref="Models.VirtualMachineScaleSetVmProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualMachineScaleSetVmProperties VirtualMachineScaleSetVmProperties(bool? latestModelApplied = default, string vmId = default, VirtualMachineScaleSetVmInstanceView instanceView = default, VirtualMachineHardwareProfile hardwareProfile = default, ResilientVmDeletionStatus? resilientVmDeletionStatus = default, VirtualMachineStorageProfile storageProfile = default, AdditionalCapabilities additionalCapabilities = default, VirtualMachineOSProfile osProfile = default, SecurityProfile securityProfile = default, VirtualMachineNetworkProfile networkProfile = default, IEnumerable<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations = default, BootDiagnostics bootDiagnostics = default, ResourceIdentifier availabilitySetId = default, string provisioningState = default, string licenseType = default, string modelDefinitionApplied = default, VirtualMachineScaleSetVmProtectionPolicy protectionPolicy = default, string userData = default, DateTimeOffset? timeCreated = default, ResourceIdentifier virtualMachineResourceId = default, IDictionary<string, BinaryData> additionalProperties = default)
+        {
+            return new VirtualMachineScaleSetVmProperties(
+                latestModelApplied,
+                vmId,
+                instanceView,
+                hardwareProfile,
+                resilientVmDeletionStatus,
+                storageProfile,
+                additionalCapabilities,
+                osProfile,
+                securityProfile,
+                networkProfile,
+                networkInterfaceConfigurations is null ? default : new VirtualMachineScaleSetVmNetworkProfileConfiguration((networkInterfaceConfigurations ?? new ChangeTrackingList<VirtualMachineScaleSetNetworkConfiguration>()).ToList(), default, default),
+                bootDiagnostics is null ? default : new DiagnosticsProfile(bootDiagnostics, default),
+                availabilitySetId is null ? default : new ComputeWriteableSubResourceData(availabilitySetId, default),
+                provisioningState,
+                licenseType,
+                modelDefinitionApplied,
+                protectionPolicy,
+                userData,
+                timeCreated,
+                virtualMachineResourceId,
+                default,
+                additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
+        }
+
+        /// <param name="platformUpdateDomain"> The Update Domain count. </param>
+        /// <param name="platformFaultDomain"> The Fault Domain count. </param>
+        /// <param name="rdpThumbPrint"> The Remote desktop certificate thumbprint. </param>
+        /// <param name="vmAgent"> The VM Agent running on the virtual machine. </param>
+        /// <param name="maintenanceRedeployStatus"> The Maintenance Operation status on the virtual machine. </param>
+        /// <param name="disks"> The disks information. </param>
+        /// <param name="extensions"> The extensions information. </param>
+        /// <param name="vmHealthStatus"> The health status information for the VM. </param>
+        /// <param name="bootDiagnostics"> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </param>
+        /// <param name="statuses"> The resource status information. </param>
+        /// <param name="assignedHost"> Resource id of the dedicated host, on which the virtual machine is allocated through automatic placement, when the virtual machine is associated with a dedicated host group that has automatic placement enabled. Minimum api-version: 2020-06-01. </param>
+        /// <param name="placementGroupId"> The placement group in which the VM is running. If the VM is deallocated it will not have a placementGroupId. </param>
+        /// <param name="computerName"> Specifies the host OS name of the virtual machine. &lt;br&gt;&lt;br&gt; This name cannot be updated after the VM is created. &lt;br&gt;&lt;br&gt; Max-length (Windows): 15 characters &lt;br&gt;&lt;br&gt; Max-length (Linux): 64 characters. &lt;br&gt;&lt;br&gt; For naming conventions and restrictions see [Azure infrastructure services implementation guidelines](https://learn.microsoft.com/previous-versions/azure/virtual-machines/linux/infrastructure-example?toc=%2Fazure%2Fvirtual-machines%2Flinux%2Ftoc.json#1-naming-conventions). </param>
+        /// <param name="osName"> The Operating System running on the hybrid machine. </param>
+        /// <param name="osVersion"> The version of Operating System running on the hybrid machine. </param>
+        /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine [V1, V2]. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineScaleSetVmInstanceView"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualMachineScaleSetVmInstanceView VirtualMachineScaleSetVmInstanceView(int? platformUpdateDomain = default, int? platformFaultDomain = default, string rdpThumbPrint = default, VirtualMachineAgentInstanceView vmAgent = default, MaintenanceRedeployStatus maintenanceRedeployStatus = default, IEnumerable<DiskInstanceView> disks = default, IEnumerable<VirtualMachineExtensionInstanceView> extensions = default, InstanceViewStatus vmHealthStatus = default, BootDiagnosticsInstanceView bootDiagnostics = default, IEnumerable<InstanceViewStatus> statuses = default, ResourceIdentifier assignedHost = default, string placementGroupId = default, string computerName = default, string osName = default, string osVersion = default, HyperVGeneration? hyperVGeneration = default)
+        {
+            return new VirtualMachineScaleSetVmInstanceView(
+                platformUpdateDomain,
+                platformFaultDomain,
+                rdpThumbPrint,
+                vmAgent,
+                maintenanceRedeployStatus,
+                (disks ?? new ChangeTrackingList<DiskInstanceView>()).ToList(),
+                (extensions ?? new ChangeTrackingList<VirtualMachineExtensionInstanceView>()).ToList(),
+                vmHealthStatus is null ? default : new VirtualMachineHealthStatus(vmHealthStatus, default),
+                bootDiagnostics,
+                (statuses ?? new ChangeTrackingList<InstanceViewStatus>()).ToList(),
+                assignedHost,
+                placementGroupId,
+                computerName,
+                osName,
+                osVersion,
+                hyperVGeneration,
+                default,
+                default);
+        }
+
+        /// <param name="networkInterfaces"> Specifies the list of resource Ids for the network interfaces associated with the virtual machine. </param>
+        /// <param name="networkApiVersion"> specifies the Microsoft.Network API version used when creating networking resources in the Network Interface Configurations. </param>
+        /// <param name="networkInterfaceConfigurations"> Specifies the networking configurations that will be used to create the virtual machine networking resources. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineNetworkProfile"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualMachineNetworkProfile VirtualMachineNetworkProfile(IEnumerable<VirtualMachineNetworkInterfaceReference> networkInterfaces = default, NetworkApiVersion? networkApiVersion = default, IEnumerable<VirtualMachineNetworkInterfaceConfiguration> networkInterfaceConfigurations = default)
+        {
+            return new VirtualMachineNetworkProfile((networkInterfaces ?? new ChangeTrackingList<VirtualMachineNetworkInterfaceReference>()).ToList(), networkApiVersion, (networkInterfaceConfigurations ?? new ChangeTrackingList<VirtualMachineNetworkInterfaceConfiguration>()).ToList(), default, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="hardwareProfile"> Specifies the hardware settings for the virtual machine. </param>
+        /// <param name="scheduledEventsPolicy"> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the virtual machine. </param>
+        /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
+        /// <param name="additionalCapabilities"> Specifies additional capabilities enabled or disabled on the virtual machine. </param>
+        /// <param name="osProfile"> Specifies the operating system settings used while creating the virtual machine. Some of the settings cannot be changed once VM is provisioned. </param>
+        /// <param name="networkProfile"> Specifies the network interfaces of the virtual machine. </param>
+        /// <param name="securityProfile"> Specifies the Security related profile settings for the virtual machine. </param>
+        /// <param name="priority"> Specifies the priority for the virtual machine. Minimum api-version: 2019-03-01. </param>
+        /// <param name="evictionPolicy"> Specifies the eviction policy for the Azure Spot virtual machine and Azure Spot scale set. For Azure Spot virtual machines, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2019-03-01. For Azure Spot scale sets, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2017-10-30-preview. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="instanceView"> The virtual machine instance view. </param>
+        /// <param name="licenseType"> Specifies that the image or disk that is being used was licensed on-premises. &lt;br&gt;&lt;br&gt; Possible values for Windows Server operating system are: &lt;br&gt;&lt;br&gt; Windows_Client &lt;br&gt;&lt;br&gt; Windows_Server &lt;br&gt;&lt;br&gt; Possible values for Linux Server operating system are: &lt;br&gt;&lt;br&gt; RHEL_BYOS (for RHEL) &lt;br&gt;&lt;br&gt; SLES_BYOS (for SUSE) &lt;br&gt;&lt;br&gt; For more information, see [Azure Hybrid Use Benefit for Windows Server](https://docs.microsoft.com/azure/virtual-machines/windows/hybrid-use-benefit-licensing) &lt;br&gt;&lt;br&gt; [Azure Hybrid Use Benefit for Linux Server](https://docs.microsoft.com/azure/virtual-machines/linux/azure-hybrid-benefit-linux) &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15. </param>
+        /// <param name="vmId"> Specifies the VM unique ID which is a 128-bits identifier that is encoded and stored in all Azure IaaS VMs SMBIOS and can be read using platform BIOS commands. </param>
+        /// <param name="extensionsTimeBudget"> Specifies the time alloted for all extensions to start. The time duration should be between 15 minutes and 120 minutes (inclusive) and should be specified in ISO 8601 format. The default value is 90 minutes (PT1H30M). Minimum api-version: 2020-06-01. </param>
+        /// <param name="platformFaultDomain"> Specifies the scale set logical fault domain into which the Virtual Machine will be created. By default, the Virtual Machine will by automatically assigned to a fault domain that best maintains balance across available fault domains. This is applicable only if the 'virtualMachineScaleSet' property of this Virtual Machine is set. The Virtual Machine Scale Set that is referenced, must have 'platformFaultDomainCount' greater than 1. This property cannot be updated once the Virtual Machine is created. Fault domain assignment can be viewed in the Virtual Machine Instance View. Minimum api‐version: 2020‐12‐01. </param>
+        /// <param name="scheduledEventsProfile"> Specifies Scheduled Event related configurations. </param>
+        /// <param name="userData"> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. Minimum api-version: 2021-03-01. </param>
+        /// <param name="timeCreated"> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </param>
+        /// <param name="bootDiagnostics"> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. NOTE: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </param>
+        /// <param name="availabilitySetId"> Resource Id. </param>
+        /// <param name="virtualMachineScaleSetId"> Resource Id. </param>
+        /// <param name="proximityPlacementGroupId"> Resource Id. </param>
+        /// <param name="billingMaxPrice"> Specifies the maximum price you are willing to pay for a Azure Spot VM/VMSS. This price is in US Dollars. &lt;br&gt;&lt;br&gt; This price will be compared with the current Azure Spot price for the VM size. Also, the prices are compared at the time of create/update of Azure Spot VM/VMSS and the operation will only succeed if  the maxPrice is greater than the current Azure Spot price. &lt;br&gt;&lt;br&gt; The maxPrice will also be used for evicting a Azure Spot VM/VMSS if the current Azure Spot price goes beyond the maxPrice after creation of VM/VMSS. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; - Any decimal value greater than zero. Example: 0.01538 &lt;br&gt;&lt;br&gt; -1 – indicates default price to be up-to on-demand. &lt;br&gt;&lt;br&gt; You can set the maxPrice to -1 to indicate that the Azure Spot VM/VMSS should not be evicted for price reasons. Also, the default max price is -1 if it is not provided by you. &lt;br&gt;&lt;br&gt;Minimum api-version: 2019-03-01. </param>
+        /// <param name="hostId"> Resource Id. </param>
+        /// <param name="hostGroupId"> Resource Id. </param>
+        /// <param name="capacityReservationGroupId"> Resource Id. </param>
+        /// <param name="galleryApplications"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
+        /// <param name="isEnabled"> Indicates if zone movement is enabled. By default isEnabled is set to false i.e VM can't be moved from one zone to another. </param>
+        /// <param name="plan"> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use.  In the Azure portal, find the marketplace image that you want to use and then click Want to deploy programmatically, Get Started -&gt;. Enter any required information and then click Save. </param>
+        /// <param name="resources"> The virtual machine child extension resources. </param>
+        /// <param name="identity"> The identity of the virtual machine, if configured. </param>
+        /// <param name="zones"> The availability zones. </param>
+        /// <param name="extendedLocation"> The extended location of the Virtual Machine. </param>
+        /// <param name="managedBy"> ManagedBy is set to Virtual Machine Scale Set(VMSS) flex ARM resourceID, if the VM is part of the VMSS. This property is used by platform for internal resource group delete optimization. </param>
+        /// <param name="eTag"> Etag is property returned in Create/Update/Get response of the VM, so that customer can supply it in the header to ensure optimistic updates. </param>
+        /// <param name="placement"> Placement section specifies the user-defined constraints for virtual machine hardware placement. This property cannot be changed once VM is provisioned. Minimum api-version: 2024-11-01. </param>
+        /// <returns> A new <see cref="Compute.VirtualMachineData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualMachineData VirtualMachineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualMachineHardwareProfile hardwareProfile = default, ScheduledEventsPolicy scheduledEventsPolicy = default, VirtualMachineStorageProfile storageProfile = default, AdditionalCapabilities additionalCapabilities = default, VirtualMachineOSProfile osProfile = default, VirtualMachineNetworkProfile networkProfile = default, SecurityProfile securityProfile = default, VirtualMachinePriorityType? priority = default, VirtualMachineEvictionPolicyType? evictionPolicy = default, string provisioningState = default, VirtualMachineInstanceView instanceView = default, string licenseType = default, string vmId = default, string extensionsTimeBudget = default, int? platformFaultDomain = default, ComputeScheduledEventsProfile scheduledEventsProfile = default, string userData = default, DateTimeOffset? timeCreated = default, BootDiagnostics bootDiagnostics = default, ResourceIdentifier availabilitySetId = default, ResourceIdentifier virtualMachineScaleSetId = default, ResourceIdentifier proximityPlacementGroupId = default, double? billingMaxPrice = default, ResourceIdentifier hostId = default, ResourceIdentifier hostGroupId = default, ResourceIdentifier capacityReservationGroupId = default, IEnumerable<VirtualMachineGalleryApplication> galleryApplications = default, bool? isEnabled = default, ComputePlan plan = default, IEnumerable<VirtualMachineExtensionData> resources = default, ManagedServiceIdentity identity = default, IEnumerable<string> zones = default, ExtendedLocation extendedLocation = default, string managedBy = default, string eTag = default, VirtualMachinePlacement placement = default)
+        {
+            return new VirtualMachineData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                hardwareProfile is null && scheduledEventsPolicy is null && storageProfile is null && additionalCapabilities is null && osProfile is null && networkProfile is null && securityProfile is null && bootDiagnostics is null && availabilitySetId is null && virtualMachineScaleSetId is null && proximityPlacementGroupId is null && priority is null && evictionPolicy is null && billingMaxPrice is null && hostId is null && hostGroupId is null && provisioningState is null && instanceView is null && licenseType is null && vmId is null && extensionsTimeBudget is null && platformFaultDomain is null && scheduledEventsProfile is null && userData is null && capacityReservationGroupId is null && galleryApplications is null && timeCreated is null && isEnabled is null ? default : new VirtualMachineProperties(
+                    hardwareProfile,
+                    scheduledEventsPolicy,
+                    storageProfile,
+                    additionalCapabilities,
+                    osProfile,
+                    networkProfile,
+                    securityProfile,
+                    new DiagnosticsProfile(bootDiagnostics, default),
+                    new ComputeWriteableSubResourceData(availabilitySetId, default),
+                    new ComputeWriteableSubResourceData(virtualMachineScaleSetId, default),
+                    new ComputeWriteableSubResourceData(proximityPlacementGroupId, default),
+                    priority,
+                    evictionPolicy,
+                    new BillingProfile(billingMaxPrice, default),
+                    new ComputeWriteableSubResourceData(hostId, default),
+                    new ComputeWriteableSubResourceData(hostGroupId, default),
+                    provisioningState,
+                    instanceView,
+                    licenseType,
+                    vmId,
+                    extensionsTimeBudget,
+                    platformFaultDomain,
+                    scheduledEventsProfile,
+                    userData,
+                    new CapacityReservationProfile(new ComputeWriteableSubResourceData(capacityReservationGroupId, default), default),
+                    default,
+                    new ApplicationProfile((galleryApplications ?? new ChangeTrackingList<VirtualMachineGalleryApplication>()).ToList(), default),
+                    timeCreated,
+                    new ResiliencyProfile(new ZoneMovement(isEnabled, default), default),
+                    default),
+                plan,
+                (resources ?? new ChangeTrackingList<VirtualMachineExtensionData>()).ToList(),
+                identity,
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                extendedLocation,
+                managedBy,
+                eTag,
+                placement,
+                default);
+        }
+
+        /// <param name="platformUpdateDomain"> Specifies the update domain of the virtual machine. </param>
+        /// <param name="platformFaultDomain"> Specifies the fault domain of the virtual machine. </param>
+        /// <param name="computerName"> The computer name assigned to the virtual machine. </param>
+        /// <param name="osName"> The Operating System running on the virtual machine. </param>
+        /// <param name="osVersion"> The version of Operating System running on the virtual machine. </param>
+        /// <param name="hyperVGeneration"> Specifies the HyperVGeneration Type associated with a resource. </param>
+        /// <param name="rdpThumbPrint"> The Remote desktop certificate thumbprint. </param>
+        /// <param name="vmAgent"> The VM Agent running on the virtual machine. </param>
+        /// <param name="maintenanceRedeployStatus"> The Maintenance Operation status on the virtual machine. </param>
+        /// <param name="disks"> The virtual machine disk information. </param>
+        /// <param name="extensions"> The extensions information. </param>
+        /// <param name="vmHealthStatus"> The health status information for the VM. </param>
+        /// <param name="bootDiagnostics"> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </param>
+        /// <param name="assignedHost"> Resource id of the dedicated host, on which the virtual machine is allocated through automatic placement, when the virtual machine is associated with a dedicated host group that has automatic placement enabled. Minimum api-version: 2020-06-01. </param>
+        /// <param name="statuses"> The resource status information. </param>
+        /// <param name="patchStatus"> [Preview Feature] The status of virtual machine patch operations. </param>
+        /// <param name="isVmInStandbyPool"> [Preview Feature] Specifies whether the VM is currently in or out of the Standby Pool. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineInstanceView"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualMachineInstanceView VirtualMachineInstanceView(int? platformUpdateDomain = default, int? platformFaultDomain = default, string computerName = default, string osName = default, string osVersion = default, HyperVGeneration? hyperVGeneration = default, string rdpThumbPrint = default, VirtualMachineAgentInstanceView vmAgent = default, MaintenanceRedeployStatus maintenanceRedeployStatus = default, IEnumerable<DiskInstanceView> disks = default, IEnumerable<VirtualMachineExtensionInstanceView> extensions = default, InstanceViewStatus vmHealthStatus = default, BootDiagnosticsInstanceView bootDiagnostics = default, string assignedHost = default, IEnumerable<InstanceViewStatus> statuses = default, VirtualMachinePatchStatus patchStatus = default, bool? isVmInStandbyPool = default)
+        {
+            return new VirtualMachineInstanceView(
+                platformUpdateDomain,
+                platformFaultDomain,
+                computerName,
+                osName,
+                osVersion,
+                hyperVGeneration,
+                rdpThumbPrint,
+                vmAgent,
+                maintenanceRedeployStatus,
+                (disks ?? new ChangeTrackingList<DiskInstanceView>()).ToList(),
+                (extensions ?? new ChangeTrackingList<VirtualMachineExtensionInstanceView>()).ToList(),
+                vmHealthStatus is null ? default : new VirtualMachineHealthStatus(vmHealthStatus, default),
+                bootDiagnostics,
+                assignedHost,
+                (statuses ?? new ChangeTrackingList<InstanceViewStatus>()).ToList(),
+                patchStatus,
+                isVmInStandbyPool,
+                default,
+                default);
+        }
+
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="plan"> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use.  In the Azure portal, find the marketplace image that you want to use and then click Want to deploy programmatically, Get Started -&gt;. Enter any required information and then click Save. </param>
+        /// <param name="hardwareProfile"> Specifies the hardware settings for the virtual machine. </param>
+        /// <param name="scheduledEventsPolicy"> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the virtual machine. </param>
+        /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
+        /// <param name="additionalCapabilities"> Specifies additional capabilities enabled or disabled on the virtual machine. </param>
+        /// <param name="osProfile"> Specifies the operating system settings used while creating the virtual machine. Some of the settings cannot be changed once VM is provisioned. </param>
+        /// <param name="networkProfile"> Specifies the network interfaces of the virtual machine. </param>
+        /// <param name="securityProfile"> Specifies the Security related profile settings for the virtual machine. </param>
+        /// <param name="priority"> Specifies the priority for the virtual machine. Minimum api-version: 2019-03-01. </param>
+        /// <param name="evictionPolicy"> Specifies the eviction policy for the Azure Spot virtual machine and Azure Spot scale set. For Azure Spot virtual machines, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2019-03-01. For Azure Spot scale sets, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2017-10-30-preview. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="instanceView"> The virtual machine instance view. </param>
+        /// <param name="licenseType"> Specifies that the image or disk that is being used was licensed on-premises. &lt;br&gt;&lt;br&gt; Possible values for Windows Server operating system are: &lt;br&gt;&lt;br&gt; Windows_Client &lt;br&gt;&lt;br&gt; Windows_Server &lt;br&gt;&lt;br&gt; Possible values for Linux Server operating system are: &lt;br&gt;&lt;br&gt; RHEL_BYOS (for RHEL) &lt;br&gt;&lt;br&gt; SLES_BYOS (for SUSE) &lt;br&gt;&lt;br&gt; For more information, see [Azure Hybrid Use Benefit for Windows Server](https://docs.microsoft.com/azure/virtual-machines/windows/hybrid-use-benefit-licensing) &lt;br&gt;&lt;br&gt; [Azure Hybrid Use Benefit for Linux Server](https://docs.microsoft.com/azure/virtual-machines/linux/azure-hybrid-benefit-linux) &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15. </param>
+        /// <param name="vmId"> Specifies the VM unique ID which is a 128-bits identifier that is encoded and stored in all Azure IaaS VMs SMBIOS and can be read using platform BIOS commands. </param>
+        /// <param name="extensionsTimeBudget"> Specifies the time alloted for all extensions to start. The time duration should be between 15 minutes and 120 minutes (inclusive) and should be specified in ISO 8601 format. The default value is 90 minutes (PT1H30M). Minimum api-version: 2020-06-01. </param>
+        /// <param name="platformFaultDomain"> Specifies the scale set logical fault domain into which the Virtual Machine will be created. By default, the Virtual Machine will by automatically assigned to a fault domain that best maintains balance across available fault domains. This is applicable only if the 'virtualMachineScaleSet' property of this Virtual Machine is set. The Virtual Machine Scale Set that is referenced, must have 'platformFaultDomainCount' greater than 1. This property cannot be updated once the Virtual Machine is created. Fault domain assignment can be viewed in the Virtual Machine Instance View. Minimum api‐version: 2020‐12‐01. </param>
+        /// <param name="scheduledEventsProfile"> Specifies Scheduled Event related configurations. </param>
+        /// <param name="userData"> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. Minimum api-version: 2021-03-01. </param>
+        /// <param name="timeCreated"> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </param>
+        /// <param name="bootDiagnostics"> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. NOTE: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </param>
+        /// <param name="availabilitySetId"> Resource Id. </param>
+        /// <param name="virtualMachineScaleSetId"> Resource Id. </param>
+        /// <param name="proximityPlacementGroupId"> Resource Id. </param>
+        /// <param name="billingMaxPrice"> Specifies the maximum price you are willing to pay for a Azure Spot VM/VMSS. This price is in US Dollars. &lt;br&gt;&lt;br&gt; This price will be compared with the current Azure Spot price for the VM size. Also, the prices are compared at the time of create/update of Azure Spot VM/VMSS and the operation will only succeed if  the maxPrice is greater than the current Azure Spot price. &lt;br&gt;&lt;br&gt; The maxPrice will also be used for evicting a Azure Spot VM/VMSS if the current Azure Spot price goes beyond the maxPrice after creation of VM/VMSS. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; - Any decimal value greater than zero. Example: 0.01538 &lt;br&gt;&lt;br&gt; -1 – indicates default price to be up-to on-demand. &lt;br&gt;&lt;br&gt; You can set the maxPrice to -1 to indicate that the Azure Spot VM/VMSS should not be evicted for price reasons. Also, the default max price is -1 if it is not provided by you. &lt;br&gt;&lt;br&gt;Minimum api-version: 2019-03-01. </param>
+        /// <param name="hostId"> Resource Id. </param>
+        /// <param name="hostGroupId"> Resource Id. </param>
+        /// <param name="capacityReservationGroupId"> Resource Id. </param>
+        /// <param name="galleryApplications"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
+        /// <param name="isEnabled"> Indicates if zone movement is enabled. By default isEnabled is set to false i.e VM can't be moved from one zone to another. </param>
+        /// <param name="identity"> The identity of the virtual machine, if configured. </param>
+        /// <param name="zones"> The virtual machine zones. </param>
+        /// <returns> A new <see cref="Models.VirtualMachinePatch"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualMachinePatch VirtualMachinePatch(IDictionary<string, string> tags = default, ComputePlan plan = default, VirtualMachineHardwareProfile hardwareProfile = default, ScheduledEventsPolicy scheduledEventsPolicy = default, VirtualMachineStorageProfile storageProfile = default, AdditionalCapabilities additionalCapabilities = default, VirtualMachineOSProfile osProfile = default, VirtualMachineNetworkProfile networkProfile = default, SecurityProfile securityProfile = default, VirtualMachinePriorityType? priority = default, VirtualMachineEvictionPolicyType? evictionPolicy = default, string provisioningState = default, VirtualMachineInstanceView instanceView = default, string licenseType = default, string vmId = default, string extensionsTimeBudget = default, int? platformFaultDomain = default, ComputeScheduledEventsProfile scheduledEventsProfile = default, string userData = default, DateTimeOffset? timeCreated = default, BootDiagnostics bootDiagnostics = default, ResourceIdentifier availabilitySetId = default, ResourceIdentifier virtualMachineScaleSetId = default, ResourceIdentifier proximityPlacementGroupId = default, double? billingMaxPrice = default, ResourceIdentifier hostId = default, ResourceIdentifier hostGroupId = default, ResourceIdentifier capacityReservationGroupId = default, IEnumerable<VirtualMachineGalleryApplication> galleryApplications = default, bool? isEnabled = default, ManagedServiceIdentity identity = default, IEnumerable<string> zones = default)
+        {
+            return new VirtualMachinePatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                plan,
+                hardwareProfile is null && scheduledEventsPolicy is null && storageProfile is null && additionalCapabilities is null && osProfile is null && networkProfile is null && securityProfile is null && bootDiagnostics is null && availabilitySetId is null && virtualMachineScaleSetId is null && proximityPlacementGroupId is null && priority is null && evictionPolicy is null && billingMaxPrice is null && hostId is null && hostGroupId is null && provisioningState is null && instanceView is null && licenseType is null && vmId is null && extensionsTimeBudget is null && platformFaultDomain is null && scheduledEventsProfile is null && userData is null && capacityReservationGroupId is null && galleryApplications is null && timeCreated is null && isEnabled is null ? default : new VirtualMachineProperties(
+                    hardwareProfile,
+                    scheduledEventsPolicy,
+                    storageProfile,
+                    additionalCapabilities,
+                    osProfile,
+                    networkProfile,
+                    securityProfile,
+                    new DiagnosticsProfile(bootDiagnostics, default),
+                    new ComputeWriteableSubResourceData(availabilitySetId, default),
+                    new ComputeWriteableSubResourceData(virtualMachineScaleSetId, default),
+                    new ComputeWriteableSubResourceData(proximityPlacementGroupId, default),
+                    priority,
+                    evictionPolicy,
+                    new BillingProfile(billingMaxPrice, default),
+                    new ComputeWriteableSubResourceData(hostId, default),
+                    new ComputeWriteableSubResourceData(hostGroupId, default),
+                    provisioningState,
+                    instanceView,
+                    licenseType,
+                    vmId,
+                    extensionsTimeBudget,
+                    platformFaultDomain,
+                    scheduledEventsProfile,
+                    userData,
+                    new CapacityReservationProfile(new ComputeWriteableSubResourceData(capacityReservationGroupId, default), default),
+                    default,
+                    new ApplicationProfile((galleryApplications ?? new ChangeTrackingList<VirtualMachineGalleryApplication>()).ToList(), default),
+                    timeCreated,
+                    new ResiliencyProfile(new ZoneMovement(isEnabled, default), default),
+                    default),
+                identity,
+                (zones ?? new ChangeTrackingList<string>()).ToList());
+        }
+
+        /// <param name="securityType"> Specifies the SecurityType of the VM. Applicable for OS disks only. </param>
+        /// <param name="secureVmDiskEncryptionSetId"> ResourceId of the disk encryption set associated to Confidential VM supported disk encrypted with customer managed key. </param>
+        /// <returns> A new <see cref="Models.DiskSecurityProfile"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DiskSecurityProfile DiskSecurityProfile(DiskSecurityType? securityType = default, ResourceIdentifier secureVmDiskEncryptionSetId = default)
+        {
+            return new DiskSecurityProfile(securityType, secureVmDiskEncryptionSetId, default, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="timeCreated"> The timestamp of restorePoint creation. </param>
+        /// <param name="sourceResourceId"> arm id of source disk or source disk restore point. </param>
+        /// <param name="osType"> The Operating System type. </param>
+        /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </param>
+        /// <param name="purchasePlan"> Purchase plan information for the the image from which the OS disk was created. </param>
+        /// <param name="supportedCapabilities"> List of supported capabilities for the image from which the OS disk was created. </param>
+        /// <param name="familyId"> id of the backing snapshot's MIS family. </param>
+        /// <param name="sourceUniqueId"> unique incarnation id of the source disk. </param>
+        /// <param name="encryption"> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </param>
+        /// <param name="supportsHibernation"> Indicates the OS on a disk supports hibernation. </param>
+        /// <param name="networkAccessPolicy"> Policy for accessing the disk via network. </param>
+        /// <param name="publicNetworkAccess"> Policy for controlling export on the disk. </param>
+        /// <param name="diskAccessId"> ARM id of the DiskAccess resource for using private endpoints on disks. </param>
+        /// <param name="completionPercent"> Percentage complete for the background copy of disk restore point when source resource is from a different region. </param>
+        /// <param name="replicationState"> Replication state of disk restore point when source resource is from a different region. </param>
+        /// <param name="sourceResourceLocation"> Location of source disk or source disk restore point when source resource is from a different region. </param>
+        /// <param name="securityProfile"> Contains the security related information for the resource. </param>
+        /// <param name="logicalSectorSize"> Logical sector size in bytes for disk restore points of UltraSSD_LRS and PremiumV2_LRS disks. Supported values are 512 and 4096. 4096 is the default. </param>
+        /// <returns> A new <see cref="Compute.DiskRestorePointData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DiskRestorePointData DiskRestorePointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? timeCreated = default, ResourceIdentifier sourceResourceId = default, SupportedOperatingSystemType? osType = default, HyperVGeneration? hyperVGeneration = default, DiskPurchasePlan purchasePlan = default, SupportedCapabilities supportedCapabilities = default, string familyId = default, string sourceUniqueId = default, DiskEncryption encryption = default, bool? supportsHibernation = default, NetworkAccessPolicy? networkAccessPolicy = default, DiskPublicNetworkAccess? publicNetworkAccess = default, ResourceIdentifier diskAccessId = default, float? completionPercent = default, string replicationState = default, AzureLocation? sourceResourceLocation = default, DiskSecurityProfile securityProfile = default, int? logicalSectorSize = default)
+        {
+            return new DiskRestorePointData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                timeCreated is null && sourceResourceId is null && osType is null && hyperVGeneration is null && purchasePlan is null && supportedCapabilities is null && familyId is null && sourceUniqueId is null && encryption is null && supportsHibernation is null && networkAccessPolicy is null && publicNetworkAccess is null && diskAccessId is null && completionPercent is null && replicationState is null && sourceResourceLocation is null && securityProfile is null && logicalSectorSize is null ? default : new DiskRestorePointProperties(
+                    timeCreated,
+                    sourceResourceId,
+                    osType,
+                    hyperVGeneration,
+                    purchasePlan,
+                    supportedCapabilities,
+                    familyId,
+                    sourceUniqueId,
+                    encryption,
+                    supportsHibernation,
+                    networkAccessPolicy,
+                    publicNetworkAccess,
+                    diskAccessId,
+                    completionPercent,
+                    replicationState,
+                    sourceResourceLocation,
+                    securityProfile,
+                    logicalSectorSize,
+                    default,
+                    default),
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="timeCreated"> The time when the snapshot was created. </param>
+        /// <param name="osType"> The Operating System type. </param>
+        /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </param>
+        /// <param name="purchasePlan"> Purchase plan information for the image from which the source disk for the snapshot was originally created. </param>
+        /// <param name="supportedCapabilities"> List of supported capabilities for the image from which the source disk from the snapshot was originally created. </param>
+        /// <param name="creationData"> Disk source information. CreationData information cannot be changed after the disk has been created. </param>
+        /// <param name="diskSizeGB"> If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates or creation with other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk's size. </param>
+        /// <param name="diskSizeBytes"> The size of the disk in bytes. This field is read only. </param>
+        /// <param name="diskState"> The state of the snapshot. </param>
+        /// <param name="uniqueId"> Unique Guid identifying the resource. </param>
+        /// <param name="encryptionSettingsGroup"> Encryption settings collection used be Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </param>
+        /// <param name="provisioningState"> The disk provisioning state. </param>
+        /// <param name="incremental"> Whether a snapshot is incremental. Incremental snapshots on the same disk occupy less space than full snapshots and can be diffed. </param>
+        /// <param name="incrementalSnapshotFamilyId"> Incremental snapshots for a disk share an incremental snapshot family id. The Get Page Range Diff API can only be called on incremental snapshots with the same family id. </param>
+        /// <param name="encryption"> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </param>
+        /// <param name="networkAccessPolicy"> Policy for accessing the disk via network. </param>
+        /// <param name="diskAccessId"> ARM id of the DiskAccess resource for using private endpoints on disks. </param>
+        /// <param name="securityProfile"> Contains the security related information for the resource. </param>
+        /// <param name="supportsHibernation"> Indicates the OS on a snapshot supports hibernation. </param>
+        /// <param name="publicNetworkAccess"> Policy for controlling export on the disk. </param>
+        /// <param name="completionPercent"> Percentage complete for the background copy when a resource is created via the CopyStart operation. </param>
+        /// <param name="copyCompletionError"> Indicates the error details if the background copy of a resource created via the CopyStart operation fails. </param>
+        /// <param name="dataAccessAuthMode"> Additional authentication requirements when exporting or uploading to a disk or snapshot. </param>
+        /// <param name="snapshotAccessState"> The state of snapshot which determines the access availability of the snapshot. </param>
+        /// <param name="managedBy"> Unused. Always Null. </param>
+        /// <param name="sku"> The snapshots sku name. Can be Standard_LRS, Premium_LRS, or Standard_ZRS. This is an optional parameter for incremental snapshot and the default behavior is the SKU will be set to the same sku as the previous snapshot. </param>
+        /// <param name="extendedLocation"> The extended location where the snapshot will be created. Extended location cannot be changed. </param>
+        /// <returns> A new <see cref="Compute.SnapshotData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SnapshotData SnapshotData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DateTimeOffset? timeCreated = default, SupportedOperatingSystemType? osType = default, HyperVGeneration? hyperVGeneration = default, DiskPurchasePlan purchasePlan = default, SupportedCapabilities supportedCapabilities = default, DiskCreationData creationData = default, int? diskSizeGB = default, long? diskSizeBytes = default, DiskState? diskState = default, string uniqueId = default, EncryptionSettingsGroup encryptionSettingsGroup = default, string provisioningState = default, bool? incremental = default, string incrementalSnapshotFamilyId = default, DiskEncryption encryption = default, NetworkAccessPolicy? networkAccessPolicy = default, ResourceIdentifier diskAccessId = default, DiskSecurityProfile securityProfile = default, bool? supportsHibernation = default, DiskPublicNetworkAccess? publicNetworkAccess = default, float? completionPercent = default, CopyCompletionError copyCompletionError = default, DataAccessAuthMode? dataAccessAuthMode = default, SnapshotAccessState? snapshotAccessState = default, string managedBy = default, SnapshotSku sku = default, ExtendedLocation extendedLocation = default)
+        {
+            return new SnapshotData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                timeCreated is null && osType is null && hyperVGeneration is null && purchasePlan is null && supportedCapabilities is null && creationData is null && diskSizeGB is null && diskSizeBytes is null && diskState is null && uniqueId is null && encryptionSettingsGroup is null && provisioningState is null && incremental is null && incrementalSnapshotFamilyId is null && encryption is null && networkAccessPolicy is null && diskAccessId is null && securityProfile is null && supportsHibernation is null && publicNetworkAccess is null && completionPercent is null && copyCompletionError is null && dataAccessAuthMode is null && snapshotAccessState is null ? default : new SnapshotProperties(
+                    timeCreated,
+                    osType,
+                    hyperVGeneration,
+                    purchasePlan,
+                    supportedCapabilities,
+                    creationData,
+                    diskSizeGB,
+                    diskSizeBytes,
+                    diskState,
+                    uniqueId,
+                    encryptionSettingsGroup,
+                    provisioningState,
+                    incremental,
+                    incrementalSnapshotFamilyId,
+                    encryption,
+                    networkAccessPolicy,
+                    diskAccessId,
+                    securityProfile,
+                    supportsHibernation,
+                    publicNetworkAccess,
+                    completionPercent,
+                    copyCompletionError,
+                    dataAccessAuthMode,
+                    snapshotAccessState,
+                    default,
+                    default),
+                managedBy,
+                sku,
+                extendedLocation,
+                default);
+        }
+
         /// <param name="id"></param>
         /// <param name="name"></param>
         /// <param name="resourceType"></param>
@@ -7513,52 +8075,6 @@ namespace Azure.ResourceManager.Compute.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineScaleSetVmProfile"/>. </summary>
-        /// <param name="osProfile"> Specifies the operating system settings for the virtual machines in the scale set. </param>
-        /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
-        /// <param name="networkProfile"> Specifies properties of the network interfaces of the virtual machines in the scale set. </param>
-        /// <param name="securityProfile"> Specifies the Security related profile settings for the virtual machines in the scale set. </param>
-        /// <param name="bootDiagnostics"> Specifies the boot diagnostic settings state. Minimum api-version: 2015-06-15. </param>
-        /// <param name="extensionProfile"> Specifies a collection of settings for extensions installed on virtual machines in the scale set. </param>
-        /// <param name="licenseType"> Specifies that the image or disk that is being used was licensed on-premises. &lt;br&gt;&lt;br&gt; Possible values for Windows Server operating system are: &lt;br&gt;&lt;br&gt; Windows_Client &lt;br&gt;&lt;br&gt; Windows_Server &lt;br&gt;&lt;br&gt; Possible values for Linux Server operating system are: &lt;br&gt;&lt;br&gt; RHEL_BYOS (for RHEL) &lt;br&gt;&lt;br&gt; SLES_BYOS (for SUSE) &lt;br&gt;&lt;br&gt; For more information, see [Azure Hybrid Use Benefit for Windows Server](https://docs.microsoft.com/azure/virtual-machines/windows/hybrid-use-benefit-licensing) &lt;br&gt;&lt;br&gt; [Azure Hybrid Use Benefit for Linux Server](https://docs.microsoft.com/azure/virtual-machines/linux/azure-hybrid-benefit-linux) &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15. </param>
-        /// <param name="priority"> Specifies the priority for the virtual machines in the scale set. Minimum api-version: 2017-10-30-preview. </param>
-        /// <param name="evictionPolicy"> Specifies the eviction policy for the Azure Spot virtual machine and Azure Spot scale set. For Azure Spot virtual machines, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2019-03-01. For Azure Spot scale sets, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2017-10-30-preview. </param>
-        /// <param name="billingMaxPrice"> Specifies the billing related details of a Azure Spot VMSS. Minimum api-version: 2019-03-01. </param>
-        /// <param name="scheduledEventsProfile"> Specifies Scheduled Event related configurations. </param>
-        /// <param name="userData"> UserData for the virtual machines in the scale set, which must be base-64 encoded. Customer should not pass any secrets in here. Minimum api-version: 2021-03-01. </param>
-        /// <param name="capacityReservationGroupId"> Specifies the capacity reservation related details of a scale set. Minimum api-version: 2021-04-01. </param>
-        /// <param name="galleryApplications"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
-        /// <param name="hardwareVmSizeProperties"> Specifies the hardware profile related details of a scale set. Minimum api-version: 2021-11-01. </param>
-        /// <param name="serviceArtifactReferenceId"> Specifies the service artifact reference id used to set same image version for all virtual machines in the scale set when using 'latest' image version. Minimum api-version: 2022-11-01. </param>
-        /// <param name="securityPostureReference"> Specifies the security posture to be used in the scale set. Minimum api-version: 2023-03-01. </param>
-        /// <param name="timeCreated"> Specifies the time in which this VM profile for the Virtual Machine Scale Set was created. This value will be added to VMSS Flex VM tags when creating/updating the VMSS VM Profile. Minimum API version for this property is 2023-09-01. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineScaleSetVmProfile"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VirtualMachineScaleSetVmProfile VirtualMachineScaleSetVmProfile(VirtualMachineScaleSetOSProfile osProfile = default, VirtualMachineScaleSetStorageProfile storageProfile = default, VirtualMachineScaleSetNetworkProfile networkProfile = default, SecurityProfile securityProfile = default, BootDiagnostics bootDiagnostics = default, VirtualMachineScaleSetExtensionProfile extensionProfile = default, string licenseType = default, VirtualMachinePriorityType? priority = default, VirtualMachineEvictionPolicyType? evictionPolicy = default, double? billingMaxPrice = default, ComputeScheduledEventsProfile scheduledEventsProfile = default, string userData = default, ResourceIdentifier capacityReservationGroupId = default, IEnumerable<VirtualMachineGalleryApplication> galleryApplications = default, VirtualMachineSizeProperties hardwareVmSizeProperties = default, ResourceIdentifier serviceArtifactReferenceId = default, ComputeSecurityPostureReference securityPostureReference = default, DateTimeOffset? timeCreated = default)
-        {
-            return new VirtualMachineScaleSetVmProfile(
-                osProfile,
-                storageProfile,
-                networkProfile,
-                securityProfile,
-                bootDiagnostics is null ? default : new DiagnosticsProfile(bootDiagnostics, default),
-                extensionProfile,
-                licenseType,
-                priority,
-                evictionPolicy,
-                billingMaxPrice is null ? default : new BillingProfile(billingMaxPrice, default),
-                scheduledEventsProfile,
-                userData,
-                capacityReservationGroupId is null ? default : new CapacityReservationProfile(new ComputeWriteableSubResourceData(capacityReservationGroupId, default), default),
-                default,
-                galleryApplications is null ? default : new ApplicationProfile((galleryApplications ?? new ChangeTrackingList<VirtualMachineGalleryApplication>()).ToList(), default),
-                hardwareVmSizeProperties is null ? default : new VirtualMachineScaleSetHardwareProfile(hardwareVmSizeProperties, default),
-                serviceArtifactReferenceId is null ? default : new ServiceArtifactReference(serviceArtifactReferenceId, default),
-                securityPostureReference,
-                timeCreated,
-                default);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Compute.VirtualMachineData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -7651,50 +8167,6 @@ namespace Azure.ResourceManager.Compute.Models
                 managedBy,
                 etag,
                 placement,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineInstanceView"/>. </summary>
-        /// <param name="platformUpdateDomain"> Specifies the update domain of the virtual machine. </param>
-        /// <param name="platformFaultDomain"> Specifies the fault domain of the virtual machine. </param>
-        /// <param name="computerName"> The computer name assigned to the virtual machine. </param>
-        /// <param name="osName"> The Operating System running on the virtual machine. </param>
-        /// <param name="osVersion"> The version of Operating System running on the virtual machine. </param>
-        /// <param name="hyperVGeneration"> Specifies the HyperVGeneration Type associated with a resource. </param>
-        /// <param name="rdpThumbPrint"> The Remote desktop certificate thumbprint. </param>
-        /// <param name="vmAgent"> The VM Agent running on the virtual machine. </param>
-        /// <param name="maintenanceRedeployStatus"> The Maintenance Operation status on the virtual machine. </param>
-        /// <param name="disks"> The virtual machine disk information. </param>
-        /// <param name="extensions"> The extensions information. </param>
-        /// <param name="vmHealthStatus"> The health status for the VM. </param>
-        /// <param name="bootDiagnostics"> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </param>
-        /// <param name="assignedHost"> Resource id of the dedicated host, on which the virtual machine is allocated through automatic placement, when the virtual machine is associated with a dedicated host group that has automatic placement enabled. Minimum api-version: 2020-06-01. </param>
-        /// <param name="statuses"> The resource status information. </param>
-        /// <param name="patchStatus"> [Preview Feature] The status of virtual machine patch operations. </param>
-        /// <param name="isVmInStandbyPool"> [Preview Feature] Specifies whether the VM is currently in or out of the Standby Pool. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineInstanceView"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VirtualMachineInstanceView VirtualMachineInstanceView(int? platformUpdateDomain = default, int? platformFaultDomain = default, string computerName = default, string osName = default, string osVersion = default, HyperVGeneration? hyperVGeneration = default, string rdpThumbPrint = default, VirtualMachineAgentInstanceView vmAgent = default, MaintenanceRedeployStatus maintenanceRedeployStatus = default, IEnumerable<DiskInstanceView> disks = default, IEnumerable<VirtualMachineExtensionInstanceView> extensions = default, InstanceViewStatus vmHealthStatus = default, BootDiagnosticsInstanceView bootDiagnostics = default, string assignedHost = default, IEnumerable<InstanceViewStatus> statuses = default, VirtualMachinePatchStatus patchStatus = default, bool? isVmInStandbyPool = default)
-        {
-            return new VirtualMachineInstanceView(
-                platformUpdateDomain,
-                platformFaultDomain,
-                computerName,
-                osName,
-                osVersion,
-                hyperVGeneration,
-                rdpThumbPrint,
-                vmAgent,
-                maintenanceRedeployStatus,
-                (disks ?? new ChangeTrackingList<DiskInstanceView>()).ToList(),
-                (extensions ?? new ChangeTrackingList<VirtualMachineExtensionInstanceView>()).ToList(),
-                vmHealthStatus is null ? default : new VirtualMachineHealthStatus(vmHealthStatus, default),
-                bootDiagnostics,
-                assignedHost,
-                (statuses ?? new ChangeTrackingList<InstanceViewStatus>()).ToList(),
-                patchStatus,
-                isVmInStandbyPool,
-                default,
                 default);
         }
 
@@ -8050,48 +8522,6 @@ namespace Azure.ResourceManager.Compute.Models
                 default,
                 default,
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineScaleSetVmInstanceView"/>. </summary>
-        /// <param name="platformUpdateDomain"> The Update Domain count. </param>
-        /// <param name="platformFaultDomain"> The Fault Domain count. </param>
-        /// <param name="rdpThumbPrint"> The Remote desktop certificate thumbprint. </param>
-        /// <param name="vmAgent"> The VM Agent running on the virtual machine. </param>
-        /// <param name="maintenanceRedeployStatus"> The Maintenance Operation status on the virtual machine. </param>
-        /// <param name="disks"> The disks information. </param>
-        /// <param name="extensions"> The extensions information. </param>
-        /// <param name="vmHealthStatus"> The health status for the VM. </param>
-        /// <param name="bootDiagnostics"> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </param>
-        /// <param name="statuses"> The resource status information. </param>
-        /// <param name="assignedHost"> Resource id of the dedicated host, on which the virtual machine is allocated through automatic placement, when the virtual machine is associated with a dedicated host group that has automatic placement enabled. Minimum api-version: 2020-06-01. </param>
-        /// <param name="placementGroupId"> The placement group in which the VM is running. If the VM is deallocated it will not have a placementGroupId. </param>
-        /// <param name="computerName"> Specifies the host OS name of the virtual machine. &lt;br&gt;&lt;br&gt; This name cannot be updated after the VM is created. &lt;br&gt;&lt;br&gt; **Max-length (Windows):** 15 characters &lt;br&gt;&lt;br&gt; **Max-length (Linux):** 64 characters. &lt;br&gt;&lt;br&gt; For naming conventions and restrictions see [Azure infrastructure services implementation guidelines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-infrastructure-subscription-accounts-guidelines?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json#1-naming-conventions). </param>
-        /// <param name="osName"> The Operating System running on the hybrid machine. </param>
-        /// <param name="osVersion"> The version of Operating System running on the hybrid machine. </param>
-        /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine [V1, V2]. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineScaleSetVmInstanceView"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VirtualMachineScaleSetVmInstanceView VirtualMachineScaleSetVmInstanceView(int? platformUpdateDomain = default, int? platformFaultDomain = default, string rdpThumbPrint = default, VirtualMachineAgentInstanceView vmAgent = default, MaintenanceRedeployStatus maintenanceRedeployStatus = default, IEnumerable<DiskInstanceView> disks = default, IEnumerable<VirtualMachineExtensionInstanceView> extensions = default, InstanceViewStatus vmHealthStatus = default, BootDiagnosticsInstanceView bootDiagnostics = default, IEnumerable<InstanceViewStatus> statuses = default, ResourceIdentifier assignedHost = default, string placementGroupId = default, string computerName = default, string osName = default, string osVersion = default, HyperVGeneration? hyperVGeneration = default)
-        {
-            return new VirtualMachineScaleSetVmInstanceView(
-                platformUpdateDomain,
-                platformFaultDomain,
-                rdpThumbPrint,
-                vmAgent,
-                maintenanceRedeployStatus,
-                (disks ?? new ChangeTrackingList<DiskInstanceView>()).ToList(),
-                (extensions ?? new ChangeTrackingList<VirtualMachineExtensionInstanceView>()).ToList(),
-                vmHealthStatus is null ? default : new VirtualMachineHealthStatus(vmHealthStatus, default),
-                bootDiagnostics,
-                (statuses ?? new ChangeTrackingList<InstanceViewStatus>()).ToList(),
-                assignedHost,
-                placementGroupId,
-                computerName,
-                osName,
-                osVersion,
-                hyperVGeneration,
-                default,
-                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataDisksToAttach"/>. </summary>
@@ -8554,62 +8984,6 @@ namespace Azure.ResourceManager.Compute.Models
                 isOptimizedForFrequentAttach,
                 new AvailabilityPolicy(availabilityActionOnDiskDelay, default),
                 default), tags ?? new ChangeTrackingDictionary<string, string>(), sku, default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Compute.DiskRestorePointData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="timeCreated"> The timestamp of restorePoint creation. </param>
-        /// <param name="sourceResourceId"> arm id of source disk or source disk restore point. </param>
-        /// <param name="osType"> The Operating System type. </param>
-        /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </param>
-        /// <param name="purchasePlan"> Purchase plan information for the the image from which the OS disk was created. </param>
-        /// <param name="supportedCapabilities"> List of supported capabilities for the image from which the OS disk was created. </param>
-        /// <param name="familyId"> id of the backing snapshot's MIS family. </param>
-        /// <param name="sourceUniqueId"> unique incarnation id of the source disk. </param>
-        /// <param name="encryption"> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </param>
-        /// <param name="supportsHibernation"> Indicates the OS on a disk supports hibernation. </param>
-        /// <param name="networkAccessPolicy"> Policy for accessing the disk via network. </param>
-        /// <param name="publicNetworkAccess"> Policy for controlling export on the disk. </param>
-        /// <param name="diskAccessId"> ARM id of the DiskAccess resource for using private endpoints on disks. </param>
-        /// <param name="completionPercent"> Percentage complete for the background copy of disk restore point when source resource is from a different region. </param>
-        /// <param name="replicationState"> Replication state of disk restore point when source resource is from a different region. </param>
-        /// <param name="sourceResourceLocation"> Location of source disk or source disk restore point when source resource is from a different region. </param>
-        /// <param name="securityProfile"> Contains the security related information for the resource. </param>
-        /// <param name="logicalSectorSize"> Logical sector size in bytes for disk restore points of UltraSSD_LRS and PremiumV2_LRS disks. Supported values are 512 and 4096. 4096 is the default. </param>
-        /// <returns> A new <see cref="Compute.DiskRestorePointData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DiskRestorePointData DiskRestorePointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? timeCreated = default, ResourceIdentifier sourceResourceId = default, SupportedOperatingSystemType? osType = default, HyperVGeneration? hyperVGeneration = default, DiskPurchasePlan purchasePlan = default, SupportedCapabilities supportedCapabilities = default, string familyId = default, string sourceUniqueId = default, DiskEncryption encryption = default, bool? supportsHibernation = default, NetworkAccessPolicy? networkAccessPolicy = default, DiskPublicNetworkAccess? publicNetworkAccess = default, ResourceIdentifier diskAccessId = default, float? completionPercent = default, string replicationState = default, AzureLocation? sourceResourceLocation = default, DiskSecurityProfile securityProfile = default, int? logicalSectorSize = default)
-        {
-            return new DiskRestorePointData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                timeCreated is null && sourceResourceId is null && osType is null && hyperVGeneration is null && purchasePlan is null && supportedCapabilities is null && familyId is null && sourceUniqueId is null && encryption is null && supportsHibernation is null && networkAccessPolicy is null && publicNetworkAccess is null && diskAccessId is null && completionPercent is null && replicationState is null && sourceResourceLocation is null && securityProfile is null && logicalSectorSize is null ? default : new DiskRestorePointProperties(
-                    timeCreated,
-                    sourceResourceId,
-                    osType,
-                    hyperVGeneration,
-                    purchasePlan,
-                    supportedCapabilities,
-                    familyId,
-                    sourceUniqueId,
-                    encryption,
-                    supportsHibernation,
-                    networkAccessPolicy,
-                    publicNetworkAccess,
-                    diskAccessId,
-                    completionPercent,
-                    replicationState,
-                    sourceResourceLocation,
-                    securityProfile,
-                    logicalSectorSize,
-                    default,
-                    default),
-                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SnapshotPatch"/>. </summary>

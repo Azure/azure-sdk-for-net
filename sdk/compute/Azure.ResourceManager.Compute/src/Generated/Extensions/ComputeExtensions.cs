@@ -3356,7 +3356,7 @@ namespace Azure.ResourceManager.Compute
         /// Accept sharing of a subscription-level shared gallery.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GallerySharingAcceptAsync(WaitUntil, AzureLocation, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.AcceptGallerySharingAsync(WaitUntil, AzureLocation, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -3366,18 +3366,18 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sharedGalleryName"> The name of the SharedGallerySubscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<ArmOperation> GallerySharingAcceptAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation> AcceptGallerySharingAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableComputeSubscriptionResource(subscriptionResource).GallerySharingAcceptAsync(waitUntil, location, sharedGallerySubscriptionId, sharedGalleryName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeSubscriptionResource(subscriptionResource).AcceptGallerySharingAsync(waitUntil, location, sharedGallerySubscriptionId, sharedGalleryName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Accept sharing of a subscription-level shared gallery.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GallerySharingAccept(WaitUntil, AzureLocation, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.AcceptGallerySharing(WaitUntil, AzureLocation, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -3387,18 +3387,18 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sharedGalleryName"> The name of the SharedGallerySubscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static ArmOperation GallerySharingAccept(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
+        public static ArmOperation AcceptGallerySharing(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableComputeSubscriptionResource(subscriptionResource).GallerySharingAccept(waitUntil, location, sharedGallerySubscriptionId, sharedGalleryName, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).AcceptGallerySharing(waitUntil, location, sharedGallerySubscriptionId, sharedGalleryName, cancellationToken);
         }
 
         /// <summary>
         /// Reject sharing of a subscription-level shared gallery.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GallerySharingRejectAsync(WaitUntil, AzureLocation, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.RejectGallerySharingAsync(WaitUntil, AzureLocation, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -3408,18 +3408,18 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sharedGalleryName"> The name of the SharedGallerySubscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<ArmOperation> GallerySharingRejectAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation> RejectGallerySharingAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableComputeSubscriptionResource(subscriptionResource).GallerySharingRejectAsync(waitUntil, location, sharedGallerySubscriptionId, sharedGalleryName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeSubscriptionResource(subscriptionResource).RejectGallerySharingAsync(waitUntil, location, sharedGallerySubscriptionId, sharedGalleryName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Reject sharing of a subscription-level shared gallery.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GallerySharingReject(WaitUntil, AzureLocation, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.RejectGallerySharing(WaitUntil, AzureLocation, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -3429,11 +3429,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sharedGalleryName"> The name of the SharedGallerySubscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static ArmOperation GallerySharingReject(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
+        public static ArmOperation RejectGallerySharing(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableComputeSubscriptionResource(subscriptionResource).GallerySharingReject(waitUntil, location, sharedGallerySubscriptionId, sharedGalleryName, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).RejectGallerySharing(waitUntil, location, sharedGallerySubscriptionId, sharedGalleryName, cancellationToken);
         }
 
         /// <summary>
@@ -3480,7 +3480,7 @@ namespace Azure.ResourceManager.Compute
         /// Accept sharing of a tenant-level shared gallery.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeTenantResource.TenantLevelGallerySharingAcceptAsync(WaitUntil, AzureLocation, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeTenantResource.AcceptTenantLevelGallerySharingAsync(WaitUntil, AzureLocation, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -3490,18 +3490,18 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sharedGalleryName"> The name of the TenantLevelSharedGallerySubscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static async Task<ArmOperation> TenantLevelGallerySharingAcceptAsync(this TenantResource tenantResource, WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation> AcceptTenantLevelGallerySharingAsync(this TenantResource tenantResource, WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetMockableComputeTenantResource(tenantResource).TenantLevelGallerySharingAcceptAsync(waitUntil, location, sharedGallerySubscriptionId, sharedGalleryName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeTenantResource(tenantResource).AcceptTenantLevelGallerySharingAsync(waitUntil, location, sharedGallerySubscriptionId, sharedGalleryName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Accept sharing of a tenant-level shared gallery.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeTenantResource.TenantLevelGallerySharingAccept(WaitUntil, AzureLocation, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeTenantResource.AcceptTenantLevelGallerySharing(WaitUntil, AzureLocation, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -3511,18 +3511,18 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sharedGalleryName"> The name of the TenantLevelSharedGallerySubscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static ArmOperation TenantLevelGallerySharingAccept(this TenantResource tenantResource, WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
+        public static ArmOperation AcceptTenantLevelGallerySharing(this TenantResource tenantResource, WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableComputeTenantResource(tenantResource).TenantLevelGallerySharingAccept(waitUntil, location, sharedGallerySubscriptionId, sharedGalleryName, cancellationToken);
+            return GetMockableComputeTenantResource(tenantResource).AcceptTenantLevelGallerySharing(waitUntil, location, sharedGallerySubscriptionId, sharedGalleryName, cancellationToken);
         }
 
         /// <summary>
         /// Reject sharing of a tenant-level shared gallery.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeTenantResource.TenantLevelGallerySharingRejectAsync(WaitUntil, AzureLocation, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeTenantResource.RejectTenantLevelGallerySharingAsync(WaitUntil, AzureLocation, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -3532,18 +3532,18 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sharedGalleryName"> The name of the TenantLevelSharedGallerySubscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static async Task<ArmOperation> TenantLevelGallerySharingRejectAsync(this TenantResource tenantResource, WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation> RejectTenantLevelGallerySharingAsync(this TenantResource tenantResource, WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetMockableComputeTenantResource(tenantResource).TenantLevelGallerySharingRejectAsync(waitUntil, location, sharedGallerySubscriptionId, sharedGalleryName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeTenantResource(tenantResource).RejectTenantLevelGallerySharingAsync(waitUntil, location, sharedGallerySubscriptionId, sharedGalleryName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Reject sharing of a tenant-level shared gallery.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeTenantResource.TenantLevelGallerySharingReject(WaitUntil, AzureLocation, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeTenantResource.RejectTenantLevelGallerySharing(WaitUntil, AzureLocation, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -3553,11 +3553,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sharedGalleryName"> The name of the TenantLevelSharedGallerySubscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static ArmOperation TenantLevelGallerySharingReject(this TenantResource tenantResource, WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
+        public static ArmOperation RejectTenantLevelGallerySharing(this TenantResource tenantResource, WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableComputeTenantResource(tenantResource).TenantLevelGallerySharingReject(waitUntil, location, sharedGallerySubscriptionId, sharedGalleryName, cancellationToken);
+            return GetMockableComputeTenantResource(tenantResource).RejectTenantLevelGallerySharing(waitUntil, location, sharedGallerySubscriptionId, sharedGalleryName, cancellationToken);
         }
     }
 }
