@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed `ArgumentException` ("Value cannot be empty or contain only white-space characters. (Parameter resourceType)") thrown when deserializing a `MetricAlertData` whose `targetResourceType` property is returned as an empty or whitespace string by the service (for example, alerts created via Terraform's `azurerm_monitor_metric_alert` without `target_resource_type`). Empty/whitespace values are now treated the same as `null`. ([#52787](https://github.com/Azure/azure-sdk-for-net/issues/52787))
+
 ### Other Changes
 
 ## 1.4.0-beta.5 (2026-06-13)
