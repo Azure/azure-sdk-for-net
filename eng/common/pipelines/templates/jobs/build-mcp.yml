@@ -1,0 +1,23 @@
+# BuildMcp job: builds the MCP server(s) via the swap-point mcpSetupTemplate and ships the
+# artifacts/mcp tree as the `mcp-servers` artifact every shard re-stages.
+
+parameters:
+  - name: mcpSetupTemplate
+    type: string
+
+jobs:
+  - job: BuildMcp
+    displayName: 'Build + publish MCP server(s)'
+    pool:
+      name: $(LINUXPOOL)
+      image: $(LINUXVMIMAGE)
+      os: linux
+    # 1ES publishes via templateContext.outputs, not the `publish` shortcut.
+    templateContext:
+      outputs:
+        - output: pipelineArtifact
+          displayName: 'Publish MCP server artifact'
+          artifactName: mcp-servers
+          targetPath: $(Build.SourcesDirectory)/artifacts/mcp
+    steps:
+      - template: ${{ parameters.mcpSetupTemplate }}

@@ -1,7 +1,5 @@
 # Globs the eval files into a fan-out matrix (output var detect.matrix). Runs in Prepare
-# alongside BuildMcp; the Eval stage's RunShard job consumes it cross-stage and fans out
-# one leg per shard.
-# Eval-specific globber (collect-stimuli.js) rather than the package-oriented matrix scripts.
+# alongside BuildMcp; the Eval stage's RunShard job reads it cross-stage.
 
 parameters:
   - name: vallyRoot
@@ -12,9 +10,8 @@ parameters:
     default: []
 
 jobs:
-  # Job name is fixed: the Eval stage reads this matrix cross-stage at the hardcoded path
-  # stageDependencies.Prepare.generate_eval_matrix.outputs['detect.matrix'], so the name
-  # and the step's detect.matrix output are inlined constants rather than parameters.
+  # Job/step/output names are fixed: the Eval stage reads the matrix cross-stage at
+  # stageDependencies.Prepare.generate_eval_matrix.outputs['detect.matrix'].
   - job: generate_eval_matrix
     displayName: 'Glob eval files -> matrix'
     pool:
@@ -22,7 +19,29 @@ jobs:
       image: $(LINUXVMIMAGE)
       os: linux
     steps:
-      - template: /eng/common/pipelines/templates/steps/eval-collect-stimuli.yml
-        parameters:
-          pathBase: $(Build.SourcesDirectory)/${{ parameters.vallyRoot }}
-          evalGlobs: ${{ parameters.evalGlobs }}
+      - checkout: self
+        fetchDepth: 1
+      - task: UseNode@1
+        displayName: 'Use Node.js 22.x'
+        inputs:
+          version: 22.x
+      # set -f stops the shell expanding the glob `*` before patterns reach the script.
+      - script: |
+          patterns=()
+          if [ -n "$EVAL_PATTERNS" ]; then
+            set -f
+            for p in $EVAL_PATTERNS; do
+              patterns+=(--pattern "$p")
+            done
+            set +f
+          fi
+          base="$(Build.SourcesDirectory)/${{ parameters.vallyRoot }}"
+          node "$(Build.SourcesDirectory)/eng/common/scripts/eval/collect-stimuli.js" \
+            --eval-root "$base" \
+            --path-base "$base" \
+            "${patterns[@]}" \
+            --output-variable matrix
+        name: detect
+        displayName: 'Build fan-out matrix'
+        env:
+          EVAL_PATTERNS: ${{ join(' ', parameters.evalGlobs) }}
