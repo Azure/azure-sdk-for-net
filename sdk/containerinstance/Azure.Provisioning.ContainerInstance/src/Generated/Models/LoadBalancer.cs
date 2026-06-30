@@ -40,6 +40,10 @@ namespace Azure.Provisioning.ContainerInstance
         {
             base.DefineProvisionableProperties();
             _backendAddressPools = DefineListProperty<LoadBalancerBackendAddressPool>(nameof(BackendAddressPools), new string[] { "backendAddressPools" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for LoadBalancer that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

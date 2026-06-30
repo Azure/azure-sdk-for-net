@@ -143,6 +143,10 @@ namespace Azure.Provisioning.Batch
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" });
             _sharedGalleryImageId = DefineProperty<string>(nameof(SharedGalleryImageId), new string[] { "sharedGalleryImageId" });
             _communityGalleryImageId = DefineProperty<string>(nameof(CommunityGalleryImageId), new string[] { "communityGalleryImageId" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchImageReference that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

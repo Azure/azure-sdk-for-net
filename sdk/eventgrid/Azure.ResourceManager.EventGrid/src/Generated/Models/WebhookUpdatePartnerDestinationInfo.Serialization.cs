@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class WebhookUpdatePartnerDestinationInfo : IUtf8JsonSerializable, IJsonModel<WebhookUpdatePartnerDestinationInfo>
+    /// <summary> Information about the update of the WebHook of the partner destination. </summary>
+    public partial class WebhookUpdatePartnerDestinationInfo : PartnerUpdateDestinationInfo, IJsonModel<WebhookUpdatePartnerDestinationInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebhookUpdatePartnerDestinationInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override PartnerUpdateDestinationInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WebhookUpdatePartnerDestinationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeWebhookUpdatePartnerDestinationInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WebhookUpdatePartnerDestinationInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WebhookUpdatePartnerDestinationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEventGridContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(WebhookUpdatePartnerDestinationInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<WebhookUpdatePartnerDestinationInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WebhookUpdatePartnerDestinationInfo IPersistableModel<WebhookUpdatePartnerDestinationInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => (WebhookUpdatePartnerDestinationInfo)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WebhookUpdatePartnerDestinationInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WebhookUpdatePartnerDestinationInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,143 +69,69 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WebhookUpdatePartnerDestinationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WebhookUpdatePartnerDestinationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WebhookUpdatePartnerDestinationInfo)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(EndpointUri))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("endpointUrl"u8);
-                writer.WriteStringValue(EndpointUri.AbsoluteUri);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(EndpointBaseUri))
-            {
-                writer.WritePropertyName("endpointBaseUrl"u8);
-                writer.WriteStringValue(EndpointBaseUri.AbsoluteUri);
-            }
-            if (Optional.IsDefined(ClientAuthentication))
-            {
-                writer.WritePropertyName("clientAuthentication"u8);
-                writer.WriteObjectValue(ClientAuthentication, options);
-            }
-            writer.WriteEndObject();
         }
 
-        WebhookUpdatePartnerDestinationInfo IJsonModel<WebhookUpdatePartnerDestinationInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WebhookUpdatePartnerDestinationInfo IJsonModel<WebhookUpdatePartnerDestinationInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (WebhookUpdatePartnerDestinationInfo)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override PartnerUpdateDestinationInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WebhookUpdatePartnerDestinationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WebhookUpdatePartnerDestinationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WebhookUpdatePartnerDestinationInfo)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeWebhookUpdatePartnerDestinationInfo(document.RootElement, options);
         }
 
-        internal static WebhookUpdatePartnerDestinationInfo DeserializeWebhookUpdatePartnerDestinationInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static WebhookUpdatePartnerDestinationInfo DeserializeWebhookUpdatePartnerDestinationInfo(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             PartnerEndpointType endpointType = default;
-            Uri endpointUri = default;
-            Uri endpointBaseUri = default;
-            PartnerClientAuthentication clientAuthentication = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            WebhookPartnerDestinationProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("endpointType"u8))
+                if (prop.NameEquals("endpointType"u8))
                 {
-                    endpointType = new PartnerEndpointType(property.Value.GetString());
+                    endpointType = new PartnerEndpointType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("endpointUrl"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            endpointUri = new Uri(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("endpointBaseUrl"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            endpointBaseUri = new Uri(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("clientAuthentication"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            clientAuthentication = PartnerClientAuthentication.DeserializePartnerClientAuthentication(property0.Value, options);
-                            continue;
-                        }
-                    }
+                    properties = WebhookPartnerDestinationProperties.DeserializeWebhookPartnerDestinationProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new WebhookUpdatePartnerDestinationInfo(endpointType, serializedAdditionalRawData, endpointUri, endpointBaseUri, clientAuthentication);
+            return new WebhookUpdatePartnerDestinationInfo(endpointType, additionalBinaryDataProperties, properties);
         }
-
-        BinaryData IPersistableModel<WebhookUpdatePartnerDestinationInfo>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<WebhookUpdatePartnerDestinationInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEventGridContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(WebhookUpdatePartnerDestinationInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        WebhookUpdatePartnerDestinationInfo IPersistableModel<WebhookUpdatePartnerDestinationInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<WebhookUpdatePartnerDestinationInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeWebhookUpdatePartnerDestinationInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(WebhookUpdatePartnerDestinationInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<WebhookUpdatePartnerDestinationInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

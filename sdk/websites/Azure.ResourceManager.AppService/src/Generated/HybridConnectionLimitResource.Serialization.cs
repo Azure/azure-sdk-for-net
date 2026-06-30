@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
+    /// <summary></summary>
     public partial class HybridConnectionLimitResource : IJsonModel<HybridConnectionLimitData>
     {
-        private static HybridConnectionLimitData s_dataDeserializationInstance;
-        private static HybridConnectionLimitData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<HybridConnectionLimitData> s_dataDeserializationInstance;
 
+        private static IJsonModel<HybridConnectionLimitData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HybridConnectionLimitData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HybridConnectionLimitData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HybridConnectionLimitData>)Data).Write(writer, options);
 
-        HybridConnectionLimitData IJsonModel<HybridConnectionLimitData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridConnectionLimitData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HybridConnectionLimitData IJsonModel<HybridConnectionLimitData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<HybridConnectionLimitData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HybridConnectionLimitData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         HybridConnectionLimitData IPersistableModel<HybridConnectionLimitData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridConnectionLimitData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<HybridConnectionLimitData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridConnectionLimitData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HybridConnectionLimitData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

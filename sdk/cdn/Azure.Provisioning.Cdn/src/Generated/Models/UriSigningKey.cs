@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Cdn
             base.DefineProvisionableProperties();
             _keyId = DefineProperty<string>(nameof(KeyId), new string[] { "keyId" }, isRequired: true);
             _keySourceParameters = DefineModelProperty<KeyVaultSigningKey>(nameof(KeySourceParameters), new string[] { "keySourceParameters" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for UriSigningKey that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

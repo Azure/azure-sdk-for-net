@@ -40,6 +40,10 @@ namespace Azure.Provisioning.ContainerInstance
         {
             base.DefineProvisionableProperties();
             _ccePolicy = DefineProperty<string>(nameof(CcePolicy), new string[] { "ccePolicy" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ConfidentialComputeProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

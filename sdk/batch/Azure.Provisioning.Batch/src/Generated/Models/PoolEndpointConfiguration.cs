@@ -40,6 +40,10 @@ namespace Azure.Provisioning.Batch
         {
             base.DefineProvisionableProperties();
             _inboundNatPools = DefineListProperty<BatchInboundNatPool>(nameof(InboundNatPools), new string[] { "inboundNatPools" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for PoolEndpointConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -40,6 +40,10 @@ namespace Azure.Provisioning.ContainerInstance
         {
             base.DefineProvisionableProperties();
             _keyValuePairs = DefineDictionaryProperty<string>(nameof(KeyValuePairs), new string[] { "keyValuePairs" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ConfigMap that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

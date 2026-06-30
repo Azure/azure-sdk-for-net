@@ -13,44 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the MSDeployStatus data model.
-    /// MSDeploy ARM response
-    /// Serialized Name: MSDeployStatus
-    /// </summary>
+    /// <summary> MSDeploy ARM response. </summary>
     public partial class MSDeployStatusData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MSDeployStatusData"/>. </summary>
         public MSDeployStatusData()
@@ -58,81 +25,76 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of <see cref="MSDeployStatusData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: MSDeployStatus.kind
-        /// </param>
-        /// <param name="deployer">
-        /// Username of deployer
-        /// Serialized Name: MSDeployStatus.properties.deployer
-        /// </param>
-        /// <param name="provisioningState">
-        /// Provisioning state
-        /// Serialized Name: MSDeployStatus.properties.provisioningState
-        /// </param>
-        /// <param name="startOn">
-        /// Start time of deploy operation
-        /// Serialized Name: MSDeployStatus.properties.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// End time of deploy operation
-        /// Serialized Name: MSDeployStatus.properties.endTime
-        /// </param>
-        /// <param name="isComplete">
-        /// Whether the deployment operation has completed
-        /// Serialized Name: MSDeployStatus.properties.complete
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MSDeployStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string deployer, MSDeployProvisioningState? provisioningState, DateTimeOffset? startOn, DateTimeOffset? endOn, bool? isComplete, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> MSDeployStatus resource specific properties. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MSDeployStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MSDeployStatusProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
             Kind = kind;
-            Deployer = deployer;
-            ProvisioningState = provisioningState;
-            StartOn = startOn;
-            EndOn = endOn;
-            IsComplete = isComplete;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: MSDeployStatus.kind
-        /// </summary>
+        /// <summary> MSDeployStatus resource specific properties. </summary>
+        [WirePath("properties")]
+        internal MSDeployStatusProperties Properties { get; set; }
+
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
-        /// <summary>
-        /// Username of deployer
-        /// Serialized Name: MSDeployStatus.properties.deployer
-        /// </summary>
+
+        /// <summary> Username of deployer. </summary>
         [WirePath("properties.deployer")]
-        public string Deployer { get; }
-        /// <summary>
-        /// Provisioning state
-        /// Serialized Name: MSDeployStatus.properties.provisioningState
-        /// </summary>
+        public string Deployer
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Deployer;
+            }
+        }
+
+        /// <summary> Provisioning state. </summary>
         [WirePath("properties.provisioningState")]
-        public MSDeployProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// Start time of deploy operation
-        /// Serialized Name: MSDeployStatus.properties.startTime
-        /// </summary>
+        public MSDeployProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Start time of deploy operation. </summary>
         [WirePath("properties.startTime")]
-        public DateTimeOffset? StartOn { get; }
-        /// <summary>
-        /// End time of deploy operation
-        /// Serialized Name: MSDeployStatus.properties.endTime
-        /// </summary>
+        public DateTimeOffset? StartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartOn;
+            }
+        }
+
+        /// <summary> End time of deploy operation. </summary>
         [WirePath("properties.endTime")]
-        public DateTimeOffset? EndOn { get; }
-        /// <summary>
-        /// Whether the deployment operation has completed
-        /// Serialized Name: MSDeployStatus.properties.complete
-        /// </summary>
+        public DateTimeOffset? EndOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndOn;
+            }
+        }
+
+        /// <summary> Whether the deployment operation has completed. </summary>
         [WirePath("properties.complete")]
-        public bool? IsComplete { get; }
+        public bool? IsComplete
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsComplete;
+            }
+        }
     }
 }

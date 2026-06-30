@@ -40,6 +40,10 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _accelerationMode = DefineProperty<ManagedClusterAdvancedNetworkingAccelerationMode>(nameof(AccelerationMode), new string[] { "accelerationMode" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterAdvancedNetworkingPerformance that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

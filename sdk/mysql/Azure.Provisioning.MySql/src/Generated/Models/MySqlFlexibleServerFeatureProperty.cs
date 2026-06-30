@@ -47,6 +47,10 @@ namespace Azure.Provisioning.MySql
             base.DefineProvisionableProperties();
             _featureName = DefineProperty<string>(nameof(FeatureName), new string[] { "featureName" }, isOutput: true);
             _featureValue = DefineProperty<string>(nameof(FeatureValue), new string[] { "featureValue" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for MySqlFlexibleServerFeatureProperty that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

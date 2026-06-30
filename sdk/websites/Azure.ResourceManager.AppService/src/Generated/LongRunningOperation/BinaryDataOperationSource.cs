@@ -6,22 +6,40 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal class BinaryDataOperationSource : IOperationSource<BinaryData>
+    /// <summary></summary>
+    internal partial class BinaryDataOperationSource : IOperationSource<BinaryData>
     {
-        BinaryData IOperationSource<BinaryData>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal BinaryDataOperationSource()
         {
-            return BinaryData.FromStream(response.ContentStream);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        BinaryData IOperationSource<BinaryData>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            return ModelReaderWriter.Read<BinaryData>(new BinaryData(Encoding.UTF8.GetBytes(document.RootElement.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<BinaryData> IOperationSource<BinaryData>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            return await BinaryData.FromStreamAsync(response.ContentStream).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return ModelReaderWriter.Read<BinaryData>(new BinaryData(Encoding.UTF8.GetBytes(document.RootElement.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
         }
     }
 }

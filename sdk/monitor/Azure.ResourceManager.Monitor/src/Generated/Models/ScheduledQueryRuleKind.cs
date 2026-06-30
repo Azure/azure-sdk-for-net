@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -14,38 +15,62 @@ namespace Azure.ResourceManager.Monitor.Models
     public readonly partial struct ScheduledQueryRuleKind : IEquatable<ScheduledQueryRuleKind>
     {
         private readonly string _value;
+        /// <summary> LogAlert. </summary>
+        private const string LogAlertValue = "LogAlert";
+        /// <summary> SimpleLogAlert. </summary>
+        private const string SimpleLogAlertValue = "SimpleLogAlert";
+        /// <summary> LogToMetric. </summary>
+        private const string LogToMetricValue = "LogToMetric";
 
         /// <summary> Initializes a new instance of <see cref="ScheduledQueryRuleKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ScheduledQueryRuleKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LogAlertValue = "LogAlert";
-        private const string LogToMetricValue = "LogToMetric";
+            _value = value;
+        }
 
         /// <summary> LogAlert. </summary>
         public static ScheduledQueryRuleKind LogAlert { get; } = new ScheduledQueryRuleKind(LogAlertValue);
+
+        /// <summary> SimpleLogAlert. </summary>
+        public static ScheduledQueryRuleKind SimpleLogAlert { get; } = new ScheduledQueryRuleKind(SimpleLogAlertValue);
+
         /// <summary> LogToMetric. </summary>
         public static ScheduledQueryRuleKind LogToMetric { get; } = new ScheduledQueryRuleKind(LogToMetricValue);
+
         /// <summary> Determines if two <see cref="ScheduledQueryRuleKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScheduledQueryRuleKind left, ScheduledQueryRuleKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ScheduledQueryRuleKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScheduledQueryRuleKind left, ScheduledQueryRuleKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ScheduledQueryRuleKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ScheduledQueryRuleKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ScheduledQueryRuleKind(string value) => new ScheduledQueryRuleKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ScheduledQueryRuleKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ScheduledQueryRuleKind?(string value) => value == null ? null : new ScheduledQueryRuleKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ScheduledQueryRuleKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ScheduledQueryRuleKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

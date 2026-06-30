@@ -223,6 +223,10 @@ namespace Azure.Provisioning.Cdn
             _privateLinkLocation = DefineProperty<string>(nameof(PrivateLinkLocation), new string[] { "privateLinkLocation" });
             _privateLinkApprovalMessage = DefineProperty<string>(nameof(PrivateLinkApprovalMessage), new string[] { "privateLinkApprovalMessage" });
             _privateEndpointStatus = DefineProperty<PrivateEndpointStatus>(nameof(PrivateEndpointStatus), new string[] { "privateEndpointStatus" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DeepCreatedOriginProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

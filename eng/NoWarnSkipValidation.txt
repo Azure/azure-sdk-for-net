@@ -28,7 +28,6 @@ Azure.AI.VoiceLive.Snippets
 Azure.Analytics.Purview.DataMap
 Azure.Analytics.Synapse.Artifacts
 Azure.Core.Experimental
-Azure.Developer.DevCenter
 Azure.Health.Insights.CancerProfiling
 Azure.Health.Insights.ClinicalMatching
 Azure.Identity
@@ -72,7 +71,6 @@ Azure.Provisioning.EventGrid
 Azure.Provisioning.EventHubs
 Azure.Provisioning.FrontDoor
 Azure.Provisioning.KeyVault
-Azure.Provisioning.Kubernetes
 Azure.Provisioning.KubernetesConfiguration
 Azure.Provisioning.Kusto
 Azure.Provisioning.Logic
@@ -120,8 +118,5 @@ Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 Microsoft.Azure.WebJobs.Extensions.Storage.Common
 Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 Microsoft.Azure.WebJobs.Extensions.Tables
-Microsoft.Azure.WebJobs.Extensions.WebPubSub
 Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
-Microsoft.Azure.WebPubSub.AspNetCore
-Microsoft.Azure.WebPubSub.Common
 Microsoft.ClientModel.TestFramework

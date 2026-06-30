@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("sourceIps"u8);
             writer.WriteStartArray();
-            foreach (string item in SourceIps)
+            foreach (string item in SourceIPs)
             {
                 if (item == null)
                 {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndArray();
             writer.WritePropertyName("destinationIps"u8);
             writer.WriteStartArray();
-            foreach (string item in DestinationIps)
+            foreach (string item in DestinationIPs)
             {
                 if (item == null)
                 {
@@ -176,8 +176,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            IList<string> sourceIps = default;
-            IList<string> destinationIps = default;
+            IList<string> sourceIPs = default;
+            IList<string> destinationIPs = default;
             IList<string> sourcePorts = default;
             IList<string> destinationPorts = default;
             IList<NetworkProtocol> protocols = default;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Network.Models
                             array.Add(item.GetString());
                         }
                     }
-                    sourceIps = array;
+                    sourceIPs = array;
                     continue;
                 }
                 if (prop.NameEquals("destinationIps"u8))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Network.Models
                             array.Add(item.GetString());
                         }
                     }
-                    destinationIps = array;
+                    destinationIPs = array;
                     continue;
                 }
                 if (prop.NameEquals("sourcePorts"u8))
@@ -268,8 +268,8 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             return new NetworkVerifierIPTraffic(
-                sourceIps,
-                destinationIps,
+                sourceIPs,
+                destinationIPs,
                 sourcePorts,
                 destinationPorts,
                 protocols,

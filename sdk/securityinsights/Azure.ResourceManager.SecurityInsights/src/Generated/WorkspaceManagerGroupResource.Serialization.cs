@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
+    /// <summary></summary>
     public partial class WorkspaceManagerGroupResource : IJsonModel<WorkspaceManagerGroupData>
     {
-        private static WorkspaceManagerGroupData s_dataDeserializationInstance;
-        private static WorkspaceManagerGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<WorkspaceManagerGroupData> s_dataDeserializationInstance;
 
+        private static IJsonModel<WorkspaceManagerGroupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new WorkspaceManagerGroupData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WorkspaceManagerGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WorkspaceManagerGroupData>)Data).Write(writer, options);
 
-        WorkspaceManagerGroupData IJsonModel<WorkspaceManagerGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkspaceManagerGroupData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WorkspaceManagerGroupData IJsonModel<WorkspaceManagerGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<WorkspaceManagerGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkspaceManagerGroupData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         WorkspaceManagerGroupData IPersistableModel<WorkspaceManagerGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkspaceManagerGroupData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        string IPersistableModel<WorkspaceManagerGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkspaceManagerGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WorkspaceManagerGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

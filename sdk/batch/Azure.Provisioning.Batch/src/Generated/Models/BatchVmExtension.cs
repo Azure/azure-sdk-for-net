@@ -177,6 +177,10 @@ namespace Azure.Provisioning.Batch
             _settings = DefineProperty<BinaryData>(nameof(Settings), new string[] { "settings" });
             _protectedSettings = DefineProperty<BinaryData>(nameof(ProtectedSettings), new string[] { "protectedSettings" });
             _provisionAfterExtensions = DefineListProperty<string>(nameof(ProvisionAfterExtensions), new string[] { "provisionAfterExtensions" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchVmExtension that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

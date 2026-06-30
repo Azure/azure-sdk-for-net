@@ -57,6 +57,10 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             base.DefineProvisionableProperties();
             _value = DefineProperty<string>(nameof(Value), new string[] { "value" });
             _contentType = DefineProperty<string>(nameof(ContentType), new string[] { "contentType" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for KeyValueProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

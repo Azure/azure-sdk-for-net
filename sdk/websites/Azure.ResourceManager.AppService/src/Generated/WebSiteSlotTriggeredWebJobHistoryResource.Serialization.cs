@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
+    /// <summary></summary>
     public partial class WebSiteSlotTriggeredWebJobHistoryResource : IJsonModel<TriggeredJobHistoryData>
     {
-        private static TriggeredJobHistoryData s_dataDeserializationInstance;
-        private static TriggeredJobHistoryData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<TriggeredJobHistoryData> s_dataDeserializationInstance;
 
+        private static IJsonModel<TriggeredJobHistoryData> DataDeserializationInstance => s_dataDeserializationInstance ??= new TriggeredJobHistoryData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TriggeredJobHistoryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TriggeredJobHistoryData>)Data).Write(writer, options);
 
-        TriggeredJobHistoryData IJsonModel<TriggeredJobHistoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TriggeredJobHistoryData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TriggeredJobHistoryData IJsonModel<TriggeredJobHistoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<TriggeredJobHistoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TriggeredJobHistoryData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         TriggeredJobHistoryData IPersistableModel<TriggeredJobHistoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TriggeredJobHistoryData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<TriggeredJobHistoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TriggeredJobHistoryData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TriggeredJobHistoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

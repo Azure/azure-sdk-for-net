@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class HostNameBindingSslStateExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this HostNameBindingSslState value) => value switch
         {
             HostNameBindingSslState.Disabled => "Disabled",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HostNameBindingSslState value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static HostNameBindingSslState ToHostNameBindingSslState(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return HostNameBindingSslState.Disabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SniEnabled")) return HostNameBindingSslState.SniEnabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "IpBasedEnabled")) return HostNameBindingSslState.IPBasedEnabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled"))
+            {
+                return HostNameBindingSslState.Disabled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SniEnabled"))
+            {
+                return HostNameBindingSslState.SniEnabled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "IpBasedEnabled"))
+            {
+                return HostNameBindingSslState.IPBasedEnabled;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HostNameBindingSslState value.");
         }
     }

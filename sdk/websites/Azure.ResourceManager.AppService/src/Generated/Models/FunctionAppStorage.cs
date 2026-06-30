@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Storage for deployed package used by the function app.
-    /// Serialized Name: FunctionsDeploymentStorage
-    /// </summary>
+    /// <summary> Storage for deployed package used by the function app. </summary>
     public partial class FunctionAppStorage
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FunctionAppStorage"/>. </summary>
         public FunctionAppStorage()
@@ -54,43 +23,27 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FunctionAppStorage"/>. </summary>
-        /// <param name="storageType">
-        /// Property to select Azure Storage type. Available options: blobContainer.
-        /// Serialized Name: FunctionsDeploymentStorage.type
-        /// </param>
-        /// <param name="azureStorageUriStringValue">
-        /// Property to set the URL for the selected Azure Storage type. Example: For blobContainer, the value could be https://&lt;storageAccountName&gt;.blob.core.windows.net/&lt;containerName&gt;.
-        /// Serialized Name: FunctionsDeploymentStorage.value
-        /// </param>
-        /// <param name="authentication">
-        /// Authentication method to access the storage account for deployment.
-        /// Serialized Name: FunctionsDeploymentStorage.authentication
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FunctionAppStorage(FunctionAppStorageType? storageType, string azureStorageUriStringValue, FunctionAppStorageAuthentication authentication, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="storageType"> Property to select Azure Storage type. Available options: blobContainer. </param>
+        /// <param name="azureStorageUriStringValue"> Property to set the URL for the selected Azure Storage type. Example: For blobContainer, the value could be https://&lt;storageAccountName&gt;.blob.core.windows.net/&lt;containerName&gt;. </param>
+        /// <param name="authentication"> Authentication method to access the storage account for deployment. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FunctionAppStorage(FunctionAppStorageType? storageType, string azureStorageUriStringValue, FunctionAppStorageAuthentication authentication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageType = storageType;
             AzureStorageUriStringValue = azureStorageUriStringValue;
             Authentication = authentication;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Property to select Azure Storage type. Available options: blobContainer.
-        /// Serialized Name: FunctionsDeploymentStorage.type
-        /// </summary>
+        /// <summary> Property to select Azure Storage type. Available options: blobContainer. </summary>
         [WirePath("type")]
         public FunctionAppStorageType? StorageType { get; set; }
-        /// <summary>
-        /// Property to set the URL for the selected Azure Storage type. Example: For blobContainer, the value could be https://&lt;storageAccountName&gt;.blob.core.windows.net/&lt;containerName&gt;.
-        /// Serialized Name: FunctionsDeploymentStorage.value
-        /// </summary>
+
+        /// <summary> Property to set the URL for the selected Azure Storage type. Example: For blobContainer, the value could be https://&lt;storageAccountName&gt;.blob.core.windows.net/&lt;containerName&gt;. </summary>
         [WirePath("value")]
         public string AzureStorageUriStringValue { get; set; }
-        /// <summary>
-        /// Authentication method to access the storage account for deployment.
-        /// Serialized Name: FunctionsDeploymentStorage.authentication
-        /// </summary>
+
+        /// <summary> Authentication method to access the storage account for deployment. </summary>
         [WirePath("authentication")]
         public FunctionAppStorageAuthentication Authentication { get; set; }
     }

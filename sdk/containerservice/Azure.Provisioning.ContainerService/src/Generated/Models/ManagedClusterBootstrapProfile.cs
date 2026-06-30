@@ -58,6 +58,10 @@ namespace Azure.Provisioning.ContainerService
             base.DefineProvisionableProperties();
             _artifactSource = DefineProperty<ContainerServiceArtifactSource>(nameof(ArtifactSource), new string[] { "artifactSource" });
             _containerRegistryId = DefineProperty<ResourceIdentifier>(nameof(ContainerRegistryId), new string[] { "containerRegistryId" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterBootstrapProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

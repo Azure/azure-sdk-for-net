@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("ttl"u8);
                 writer.WriteNumberValue(Ttl.Value);
             }
-            if (Optional.IsCollectionDefined(IpAddresses))
+            if (Optional.IsCollectionDefined(IPAddresses))
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
-                foreach (string item in IpAddresses)
+                foreach (string item in IPAddresses)
                 {
                     if (item == null)
                     {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Network.Models
             string fqdn = default;
             NetworkProvisioningState? provisioningState = default;
             int? ttl = default;
-            IList<string> ipAddresses = default;
+            IReadOnlyList<string> ipAddresses = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

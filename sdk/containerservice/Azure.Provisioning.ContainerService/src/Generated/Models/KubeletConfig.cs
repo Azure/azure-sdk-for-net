@@ -210,6 +210,10 @@ namespace Azure.Provisioning.ContainerService
             _containerLogMaxSizeInMB = DefineProperty<int>(nameof(ContainerLogMaxSizeInMB), new string[] { "containerLogMaxSizeMB" });
             _containerLogMaxFiles = DefineProperty<int>(nameof(ContainerLogMaxFiles), new string[] { "containerLogMaxFiles" });
             _podMaxPids = DefineProperty<int>(nameof(PodMaxPids), new string[] { "podMaxPids" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for KubeletConfig that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

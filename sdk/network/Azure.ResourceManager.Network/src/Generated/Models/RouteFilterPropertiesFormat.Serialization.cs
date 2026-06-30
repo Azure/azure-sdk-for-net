@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Ipv6Peerings))
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPv6Peerings))
             {
                 writer.WritePropertyName("ipv6Peerings"u8);
                 writer.WriteStartArray();
-                foreach (ExpressRouteCircuitPeeringData item in Ipv6Peerings)
+                foreach (ExpressRouteCircuitPeeringData item in IPv6Peerings)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             IList<RouteFilterRuleData> rules = default;
             IReadOnlyList<ExpressRouteCircuitPeeringData> peerings = default;
-            IReadOnlyList<ExpressRouteCircuitPeeringData> ipv6Peerings = default;
+            IReadOnlyList<ExpressRouteCircuitPeeringData> iPv6Peerings = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(ExpressRouteCircuitPeeringData.DeserializeExpressRouteCircuitPeeringData(item, options));
                     }
-                    ipv6Peerings = array;
+                    iPv6Peerings = array;
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RouteFilterPropertiesFormat(rules ?? new ChangeTrackingList<RouteFilterRuleData>(), peerings ?? new ChangeTrackingList<ExpressRouteCircuitPeeringData>(), ipv6Peerings ?? new ChangeTrackingList<ExpressRouteCircuitPeeringData>(), provisioningState, additionalBinaryDataProperties);
+            return new RouteFilterPropertiesFormat(rules ?? new ChangeTrackingList<RouteFilterRuleData>(), peerings ?? new ChangeTrackingList<ExpressRouteCircuitPeeringData>(), iPv6Peerings ?? new ChangeTrackingList<ExpressRouteCircuitPeeringData>(), provisioningState, additionalBinaryDataProperties);
         }
     }
 }

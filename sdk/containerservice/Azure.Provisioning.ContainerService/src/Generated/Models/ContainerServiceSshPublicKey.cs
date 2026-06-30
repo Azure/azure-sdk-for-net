@@ -40,6 +40,10 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _keyData = DefineProperty<string>(nameof(KeyData), new string[] { "keyData" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerServiceSshPublicKey that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

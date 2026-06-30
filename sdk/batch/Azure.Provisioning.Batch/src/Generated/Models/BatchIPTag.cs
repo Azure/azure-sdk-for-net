@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Batch
             base.DefineProvisionableProperties();
             _ipTagType = DefineProperty<string>(nameof(IPTagType), new string[] { "ipTagType" });
             _tag = DefineProperty<string>(nameof(Tag), new string[] { "tag" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchIPTag that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

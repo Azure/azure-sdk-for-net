@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class FunctionAppScaleAndConcurrency : IUtf8JsonSerializable, IJsonModel<FunctionAppScaleAndConcurrency>
+    /// <summary> Scale and concurrency settings for the function app. </summary>
+    public partial class FunctionAppScaleAndConcurrency : IJsonModel<FunctionAppScaleAndConcurrency>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FunctionAppScaleAndConcurrency>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FunctionAppScaleAndConcurrency PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FunctionAppScaleAndConcurrency>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeFunctionAppScaleAndConcurrency(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FunctionAppScaleAndConcurrency)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FunctionAppScaleAndConcurrency>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(FunctionAppScaleAndConcurrency)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FunctionAppScaleAndConcurrency>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FunctionAppScaleAndConcurrency IPersistableModel<FunctionAppScaleAndConcurrency>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FunctionAppScaleAndConcurrency>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FunctionAppScaleAndConcurrency>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,17 +69,16 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FunctionAppScaleAndConcurrency>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FunctionAppScaleAndConcurrency>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FunctionAppScaleAndConcurrency)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(AlwaysReady))
             {
                 writer.WritePropertyName("alwaysReady"u8);
                 writer.WriteStartArray();
-                foreach (var item in AlwaysReady)
+                foreach (FunctionAppAlwaysReadyConfig item in AlwaysReady)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -61,15 +99,15 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("triggers"u8);
                 writer.WriteObjectValue(Triggers, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -78,203 +116,85 @@ namespace Azure.ResourceManager.AppService.Models
             }
         }
 
-        FunctionAppScaleAndConcurrency IJsonModel<FunctionAppScaleAndConcurrency>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FunctionAppScaleAndConcurrency IJsonModel<FunctionAppScaleAndConcurrency>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FunctionAppScaleAndConcurrency JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FunctionAppScaleAndConcurrency>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FunctionAppScaleAndConcurrency>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FunctionAppScaleAndConcurrency)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFunctionAppScaleAndConcurrency(document.RootElement, options);
         }
 
-        internal static FunctionAppScaleAndConcurrency DeserializeFunctionAppScaleAndConcurrency(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static FunctionAppScaleAndConcurrency DeserializeFunctionAppScaleAndConcurrency(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<FunctionAppAlwaysReadyConfig> alwaysReady = default;
-            int? maximumInstanceCount = default;
-            int? instanceMemoryMB = default;
+            int? functionAppMaximumInstanceCount = default;
+            int? functionAppInstanceMemoryMB = default;
             FunctionsScaleAndConcurrencyTriggers triggers = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("alwaysReady"u8))
+                if (prop.NameEquals("alwaysReady"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<FunctionAppAlwaysReadyConfig> array = new List<FunctionAppAlwaysReadyConfig>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(FunctionAppAlwaysReadyConfig.DeserializeFunctionAppAlwaysReadyConfig(item, options));
                     }
                     alwaysReady = array;
                     continue;
                 }
-                if (property.NameEquals("maximumInstanceCount"u8))
+                if (prop.NameEquals("maximumInstanceCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maximumInstanceCount = property.Value.GetInt32();
+                    functionAppMaximumInstanceCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("instanceMemoryMB"u8))
+                if (prop.NameEquals("instanceMemoryMB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    instanceMemoryMB = property.Value.GetInt32();
+                    functionAppInstanceMemoryMB = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("triggers"u8))
+                if (prop.NameEquals("triggers"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    triggers = FunctionsScaleAndConcurrencyTriggers.DeserializeFunctionsScaleAndConcurrencyTriggers(property.Value, options);
+                    triggers = FunctionsScaleAndConcurrencyTriggers.DeserializeFunctionsScaleAndConcurrencyTriggers(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new FunctionAppScaleAndConcurrency(alwaysReady ?? new ChangeTrackingList<FunctionAppAlwaysReadyConfig>(), maximumInstanceCount, instanceMemoryMB, triggers, serializedAdditionalRawData);
+            return new FunctionAppScaleAndConcurrency(alwaysReady ?? new ChangeTrackingList<FunctionAppAlwaysReadyConfig>(), functionAppMaximumInstanceCount, functionAppInstanceMemoryMB, triggers, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AlwaysReady), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  alwaysReady: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(AlwaysReady))
-                {
-                    if (AlwaysReady.Any())
-                    {
-                        builder.Append("  alwaysReady: ");
-                        builder.AppendLine("[");
-                        foreach (var item in AlwaysReady)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  alwaysReady: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FunctionAppMaximumInstanceCount), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  maximumInstanceCount: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(FunctionAppMaximumInstanceCount))
-                {
-                    builder.Append("  maximumInstanceCount: ");
-                    builder.AppendLine($"{FunctionAppMaximumInstanceCount.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FunctionAppInstanceMemoryMB), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  instanceMemoryMB: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(FunctionAppInstanceMemoryMB))
-                {
-                    builder.Append("  instanceMemoryMB: ");
-                    builder.AppendLine($"{FunctionAppInstanceMemoryMB.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ConcurrentHttpPerInstanceConcurrency", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  triggers: ");
-                builder.AppendLine("{");
-                builder.AppendLine("    http: {");
-                builder.Append("      perInstanceConcurrency: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("    }");
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(Triggers))
-                {
-                    builder.Append("  triggers: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Triggers, options, 2, false, "  triggers: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<FunctionAppScaleAndConcurrency>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FunctionAppScaleAndConcurrency>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(FunctionAppScaleAndConcurrency)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        FunctionAppScaleAndConcurrency IPersistableModel<FunctionAppScaleAndConcurrency>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FunctionAppScaleAndConcurrency>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeFunctionAppScaleAndConcurrency(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FunctionAppScaleAndConcurrency)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<FunctionAppScaleAndConcurrency>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

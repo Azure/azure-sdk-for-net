@@ -7,48 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The ApiKVReferencePropertiesSource.
-    /// Serialized Name: ApiKVReferencePropertiesSource
-    /// </summary>
+    /// <summary> The source of the configuration reference. </summary>
     public readonly partial struct ConfigReferenceSource : IEquatable<ConfigReferenceSource>
     {
         private readonly string _value;
+        /// <summary> KeyVault. </summary>
+        private const string KeyVaultValue = "KeyVault";
 
         /// <summary> Initializes a new instance of <see cref="ConfigReferenceSource"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConfigReferenceSource(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string KeyVaultValue = "KeyVault";
-
-        /// <summary>
-        /// KeyVault
-        /// Serialized Name: ApiKVReferencePropertiesSource.KeyVault
-        /// </summary>
+        /// <summary> KeyVault. </summary>
         public static ConfigReferenceSource KeyVault { get; } = new ConfigReferenceSource(KeyVaultValue);
+
         /// <summary> Determines if two <see cref="ConfigReferenceSource"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConfigReferenceSource left, ConfigReferenceSource right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConfigReferenceSource"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConfigReferenceSource left, ConfigReferenceSource right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConfigReferenceSource"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConfigReferenceSource"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConfigReferenceSource(string value) => new ConfigReferenceSource(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConfigReferenceSource"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConfigReferenceSource?(string value) => value == null ? null : new ConfigReferenceSource(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConfigReferenceSource other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConfigReferenceSource other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

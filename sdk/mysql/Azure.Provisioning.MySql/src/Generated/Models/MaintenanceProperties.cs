@@ -161,6 +161,10 @@ namespace Azure.Provisioning.MySql
             _maintenanceTitle = DefineProperty<string>(nameof(MaintenanceTitle), new string[] { "maintenanceTitle" }, isOutput: true);
             _maintenanceDescription = DefineProperty<string>(nameof(MaintenanceDescription), new string[] { "maintenanceDescription" }, isOutput: true);
             _provisioningState = DefineProperty<MySqlFlexibleServerMaintenanceProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for MaintenanceProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

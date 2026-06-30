@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 throw new FormatException($"The model {nameof(LoadBalancerHealthPerRulePerBackendAddress)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IpAddress))
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
-                writer.WriteStringValue(IpAddress);
+                writer.WriteStringValue(IPAddress);
             }
             if (Optional.IsDefined(NetworkInterfaceIPConfigurationId))
             {

@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class UpdateTopicSpacesConfigurationInfo : IUtf8JsonSerializable, IJsonModel<UpdateTopicSpacesConfigurationInfo>
+    /// <summary> Properties of the topic spaces configuration info of a namespace. </summary>
+    public partial class UpdateTopicSpacesConfigurationInfo : IJsonModel<UpdateTopicSpacesConfigurationInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateTopicSpacesConfigurationInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual UpdateTopicSpacesConfigurationInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<UpdateTopicSpacesConfigurationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeUpdateTopicSpacesConfigurationInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(UpdateTopicSpacesConfigurationInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<UpdateTopicSpacesConfigurationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEventGridContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(UpdateTopicSpacesConfigurationInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<UpdateTopicSpacesConfigurationInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        UpdateTopicSpacesConfigurationInfo IPersistableModel<UpdateTopicSpacesConfigurationInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<UpdateTopicSpacesConfigurationInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<UpdateTopicSpacesConfigurationInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UpdateTopicSpacesConfigurationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UpdateTopicSpacesConfigurationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(UpdateTopicSpacesConfigurationInfo)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
@@ -73,21 +113,21 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 writer.WritePropertyName("customDomains"u8);
                 writer.WriteStartArray();
-                foreach (var item in CustomDomains)
+                foreach (CustomDomainConfiguration item in CustomDomains)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -96,22 +136,27 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
         }
 
-        UpdateTopicSpacesConfigurationInfo IJsonModel<UpdateTopicSpacesConfigurationInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        UpdateTopicSpacesConfigurationInfo IJsonModel<UpdateTopicSpacesConfigurationInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual UpdateTopicSpacesConfigurationInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UpdateTopicSpacesConfigurationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UpdateTopicSpacesConfigurationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(UpdateTopicSpacesConfigurationInfo)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeUpdateTopicSpacesConfigurationInfo(document.RootElement, options);
         }
 
-        internal static UpdateTopicSpacesConfigurationInfo DeserializeUpdateTopicSpacesConfigurationInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static UpdateTopicSpacesConfigurationInfo DeserializeUpdateTopicSpacesConfigurationInfo(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -124,77 +169,76 @@ namespace Azure.ResourceManager.EventGrid.Models
             int? maximumClientSessionsPerAuthenticationName = default;
             RoutingIdentityInfo routingIdentityInfo = default;
             IList<CustomDomainConfiguration> customDomains = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("state"u8))
+                if (prop.NameEquals("state"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    state = new TopicSpacesConfigurationState(property.Value.GetString());
+                    state = new TopicSpacesConfigurationState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("routeTopicResourceId"u8))
+                if (prop.NameEquals("routeTopicResourceId"u8))
                 {
-                    routeTopicResourceId = property.Value.GetString();
+                    routeTopicResourceId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("routingEnrichments"u8))
+                if (prop.NameEquals("routingEnrichments"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    routingEnrichments = RoutingEnrichments.DeserializeRoutingEnrichments(property.Value, options);
+                    routingEnrichments = RoutingEnrichments.DeserializeRoutingEnrichments(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("clientAuthentication"u8))
+                if (prop.NameEquals("clientAuthentication"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    clientAuthentication = ClientAuthenticationSettings.DeserializeClientAuthenticationSettings(property.Value, options);
+                    clientAuthentication = ClientAuthenticationSettings.DeserializeClientAuthenticationSettings(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("maximumSessionExpiryInHours"u8))
+                if (prop.NameEquals("maximumSessionExpiryInHours"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maximumSessionExpiryInHours = property.Value.GetInt32();
+                    maximumSessionExpiryInHours = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maximumClientSessionsPerAuthenticationName"u8))
+                if (prop.NameEquals("maximumClientSessionsPerAuthenticationName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maximumClientSessionsPerAuthenticationName = property.Value.GetInt32();
+                    maximumClientSessionsPerAuthenticationName = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("routingIdentityInfo"u8))
+                if (prop.NameEquals("routingIdentityInfo"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    routingIdentityInfo = RoutingIdentityInfo.DeserializeRoutingIdentityInfo(property.Value, options);
+                    routingIdentityInfo = RoutingIdentityInfo.DeserializeRoutingIdentityInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("customDomains"u8))
+                if (prop.NameEquals("customDomains"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<CustomDomainConfiguration> array = new List<CustomDomainConfiguration>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(CustomDomainConfiguration.DeserializeCustomDomainConfiguration(item, options));
                     }
@@ -203,10 +247,9 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new UpdateTopicSpacesConfigurationInfo(
                 state,
                 routeTopicResourceId,
@@ -216,38 +259,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 maximumClientSessionsPerAuthenticationName,
                 routingIdentityInfo,
                 customDomains ?? new ChangeTrackingList<CustomDomainConfiguration>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<UpdateTopicSpacesConfigurationInfo>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<UpdateTopicSpacesConfigurationInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEventGridContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(UpdateTopicSpacesConfigurationInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        UpdateTopicSpacesConfigurationInfo IPersistableModel<UpdateTopicSpacesConfigurationInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<UpdateTopicSpacesConfigurationInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeUpdateTopicSpacesConfigurationInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(UpdateTopicSpacesConfigurationInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<UpdateTopicSpacesConfigurationInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

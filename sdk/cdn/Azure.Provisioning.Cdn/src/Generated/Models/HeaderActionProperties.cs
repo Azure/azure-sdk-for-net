@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Cdn
             _headerAction = DefineProperty<HeaderAction>(nameof(HeaderAction), new string[] { "headerAction" }, isRequired: true);
             _headerName = DefineProperty<string>(nameof(HeaderName), new string[] { "headerName" }, isRequired: true);
             _value = DefineProperty<string>(nameof(Value), new string[] { "value" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for HeaderActionProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

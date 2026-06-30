@@ -11,23 +11,40 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class DetectorInsightStatusExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this DetectorInsightStatus value) => value switch
         {
-            DetectorInsightStatus.None => "None",
             DetectorInsightStatus.Critical => "Critical",
             DetectorInsightStatus.Warning => "Warning",
             DetectorInsightStatus.Info => "Info",
             DetectorInsightStatus.Success => "Success",
+            DetectorInsightStatus.None => "None",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DetectorInsightStatus value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static DetectorInsightStatus ToDetectorInsightStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return DetectorInsightStatus.None;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Critical")) return DetectorInsightStatus.Critical;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Warning")) return DetectorInsightStatus.Warning;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Info")) return DetectorInsightStatus.Info;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Success")) return DetectorInsightStatus.Success;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Critical"))
+            {
+                return DetectorInsightStatus.Critical;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Warning"))
+            {
+                return DetectorInsightStatus.Warning;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Info"))
+            {
+                return DetectorInsightStatus.Info;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Success"))
+            {
+                return DetectorInsightStatus.Success;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None"))
+            {
+                return DetectorInsightStatus.None;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DetectorInsightStatus value.");
         }
     }
