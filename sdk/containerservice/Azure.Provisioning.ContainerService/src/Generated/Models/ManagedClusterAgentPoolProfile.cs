@@ -1055,6 +1055,10 @@ namespace Azure.Provisioning.ContainerService
             _virtualMachineNodesStatus = DefineListProperty<AgentPoolVirtualMachineNodes>(nameof(VirtualMachineNodesStatus), new string[] { "virtualMachineNodesStatus" });
             _status = DefineModelProperty<AgentPoolStatus>(nameof(Status), new string[] { "status" });
             _localDnsProfile = DefineModelProperty<LocalDnsProfile>(nameof(LocalDnsProfile), new string[] { "localDNSProfile" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterAgentPoolProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

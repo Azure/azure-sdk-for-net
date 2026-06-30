@@ -159,6 +159,10 @@ namespace Azure.Provisioning.ContainerService
             _fileCsiDriver = DefineModelProperty<ManagedClusterStorageProfileFileCsiDriver>(nameof(FileCsiDriver), new string[] { "fileCSIDriver" });
             _snapshotController = DefineModelProperty<ManagedClusterStorageProfileSnapshotController>(nameof(SnapshotController), new string[] { "snapshotController" });
             _blobCsiDriver = DefineModelProperty<ManagedClusterStorageProfileBlobCsiDriver>(nameof(BlobCsiDriver), new string[] { "blobCSIDriver" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterStorageProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

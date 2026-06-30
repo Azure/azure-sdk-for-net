@@ -91,6 +91,10 @@ namespace Azure.Provisioning.ContainerInstance
             _value = DefineProperty<string>(nameof(Value), new string[] { "value" });
             _secureValue = DefineProperty<string>(nameof(SecureValue), new string[] { "secureValue" });
             _secureValueReference = DefineProperty<string>(nameof(SecureValueReference), new string[] { "secureValueReference" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerEnvironmentVariable that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

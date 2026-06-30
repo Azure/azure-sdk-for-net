@@ -74,6 +74,10 @@ namespace Azure.Provisioning.CostManagement
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _operator = DefineProperty<BudgetOperatorType>(nameof(Operator), new string[] { "operator" }, isRequired: true);
             _values = DefineListProperty<string>(nameof(Values), new string[] { "values" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BudgetComparisonExpression that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

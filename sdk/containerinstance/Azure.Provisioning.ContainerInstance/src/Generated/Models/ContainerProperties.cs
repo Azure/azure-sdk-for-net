@@ -222,6 +222,10 @@ namespace Azure.Provisioning.ContainerInstance
             _readinessProbe = DefineModelProperty<ContainerProbe>(nameof(ReadinessProbe), new string[] { "readinessProbe" });
             _securityContext = DefineModelProperty<ContainerSecurityContextDefinition>(nameof(SecurityContext), new string[] { "securityContext" });
             _configMap = DefineModelProperty<ConfigMap>(nameof(ConfigMap), new string[] { "configMap" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

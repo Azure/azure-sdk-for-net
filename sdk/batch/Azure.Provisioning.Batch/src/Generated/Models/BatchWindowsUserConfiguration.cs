@@ -40,6 +40,10 @@ namespace Azure.Provisioning.Batch
         {
             base.DefineProvisionableProperties();
             _loginMode = DefineProperty<BatchWindowsLoginMode>(nameof(LoginMode), new string[] { "loginMode" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchWindowsUserConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

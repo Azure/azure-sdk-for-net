@@ -41,6 +41,10 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _publicIPs = DefineListProperty<WritableSubResource>(nameof(PublicIPs), new string[] { "publicIPs" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterLoadBalancerProfileOutboundIPs that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

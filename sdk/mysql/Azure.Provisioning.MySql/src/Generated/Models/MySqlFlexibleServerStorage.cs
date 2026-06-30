@@ -137,6 +137,10 @@ namespace Azure.Provisioning.MySql
             _storageSku = DefineProperty<string>(nameof(StorageSku), new string[] { "storageSku" }, isOutput: true);
             _autoIoScaling = DefineProperty<MySqlFlexibleServerEnableStatusEnum>(nameof(AutoIoScaling), new string[] { "autoIoScaling" });
             _storageRedundancy = DefineProperty<MySqlFlexibleServerStorageRedundancyType>(nameof(StorageRedundancy), new string[] { "storageRedundancy" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for MySqlFlexibleServerStorage that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

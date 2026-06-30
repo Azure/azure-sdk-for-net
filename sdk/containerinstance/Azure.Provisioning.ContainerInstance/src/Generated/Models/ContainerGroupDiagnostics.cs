@@ -39,6 +39,10 @@ namespace Azure.Provisioning.ContainerInstance
         {
             base.DefineProvisionableProperties();
             _logAnalytics = DefineModelProperty<ContainerGroupLogAnalytics>(nameof(LogAnalytics), new string[] { "logAnalytics" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerGroupDiagnostics that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

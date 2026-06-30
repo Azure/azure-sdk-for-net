@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Cdn
             base.DefineProvisionableProperties();
             _hostName = DefineProperty<string>(nameof(HostName), new string[] { "hostName" }, isRequired: true);
             _validationData = DefineProperty<string>(nameof(ValidationData), new string[] { "validationData" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DeepCreatedCustomDomainProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }
