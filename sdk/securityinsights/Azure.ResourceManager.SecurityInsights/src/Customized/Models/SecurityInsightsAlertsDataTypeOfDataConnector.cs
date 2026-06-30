@@ -10,7 +10,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     // Workaround for https://github.com/Azure/azure-sdk-for-net/issues/57058: the derived MCAS constructor passes the inner alerts model, so keep the previously shipped base constructor shape.
-    [CodeGenSuppress("SecurityInsightsAlertsDataTypeOfDataConnector")]
     [CodeGenSuppress("SecurityInsightsAlertsDataTypeOfDataConnector", typeof(SecurityInsightsDataTypeConnectionState))]
     [CodeGenSuppress("AlertsState")]
     public partial class SecurityInsightsAlertsDataTypeOfDataConnector

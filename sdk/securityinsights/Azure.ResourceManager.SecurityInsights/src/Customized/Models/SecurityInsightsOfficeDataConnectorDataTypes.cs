@@ -11,7 +11,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     // TypeSpec alternateType generates non-nullable state properties; keep the nullable GA SDK surface.
-    [CodeGenSuppress("SecurityInsightsOfficeDataConnectorDataTypes")]
     [CodeGenSuppress("SecurityInsightsOfficeDataConnectorDataTypes", typeof(SecurityInsightsDataTypeConnectionState), typeof(SecurityInsightsDataTypeConnectionState), typeof(SecurityInsightsDataTypeConnectionState))]
     [CodeGenSuppress("ExchangeState")]
     [CodeGenSuppress("SharePointState")]

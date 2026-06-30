@@ -8,7 +8,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     // Keep the GA SDK surface inheritable; generated code only has a discriminator constructor.
-    [CodeGenSuppress("SecurityInsightsAutomationRuleCondition")]
     public abstract partial class SecurityInsightsAutomationRuleCondition
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAutomationRuleCondition"/>. </summary>

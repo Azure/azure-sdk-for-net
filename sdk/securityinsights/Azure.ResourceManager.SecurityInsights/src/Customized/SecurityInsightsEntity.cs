@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// </summary>
     // Workaround for https://github.com/microsoft/typespec/issues/10996: TypeSpec generation exposes the discriminated base constructor publicly; keep the previously shipped parameterless constructor instead.
     [CodeGenType("SecurityInsightsEntityData")]
-    [CodeGenSuppress("SecurityInsightsEntity")]
     [CodeGenSuppress("SecurityInsightsEntity", typeof(SecurityInsightsEntityKind))]
     public partial class SecurityInsightsEntity
     {

@@ -9,7 +9,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.SecurityInsights
 {
     // Workaround for https://github.com/microsoft/typespec/issues/10996: TypeSpec generation exposes the discriminated base constructor publicly; keep the previously shipped parameterless constructor instead.
-    [CodeGenSuppress("SecurityInsightsThreatIntelligenceIndicatorBaseData")]
     [CodeGenSuppress("SecurityInsightsThreatIntelligenceIndicatorBaseData", typeof(ThreatIntelligenceResourceInnerKind))]
     public partial class SecurityInsightsThreatIntelligenceIndicatorBaseData
     {
