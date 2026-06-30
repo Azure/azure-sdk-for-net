@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> IPv6 Address PrefixProperties of the express route circuit connection. </summary>
         [WirePath("properties.ipv6CircuitConnectionConfig")]
-        public IPv6CircuitConnectionConfig Ipv6CircuitConnectionConfig
+        public IPv6CircuitConnectionConfig IPv6CircuitConnectionConfig
         {
             get
             {
-                return Properties is null ? default : Properties.Ipv6CircuitConnectionConfig;
+                return Properties is null ? default : Properties.IPv6CircuitConnectionConfig;
             }
             set
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new ExpressRouteCircuitConnectionPropertiesFormat();
                 }
-                Properties.Ipv6CircuitConnectionConfig = value;
+                Properties.IPv6CircuitConnectionConfig = value;
             }
         }
 

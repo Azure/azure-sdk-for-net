@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly string _value;
         /// <summary> EAPTLS. </summary>
-        private const string EAPTLSValue = "EAPTLS";
+        private const string EaptlsValue = "EAPTLS";
         /// <summary> EAPMSCHAPv2. </summary>
-        private const string EAPMSCHAPv2Value = "EAPMSCHAPv2";
+        private const string EapmschaPv2Value = "EAPMSCHAPv2";
 
         /// <summary> Initializes a new instance of <see cref="NetworkAuthenticationMethod"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> EAPTLS. </summary>
-        public static NetworkAuthenticationMethod EAPTLS { get; } = new NetworkAuthenticationMethod(EAPTLSValue);
+        public static NetworkAuthenticationMethod Eaptls { get; } = new NetworkAuthenticationMethod(EaptlsValue);
 
         /// <summary> EAPMSCHAPv2. </summary>
-        public static NetworkAuthenticationMethod EAPMSCHAPv2 { get; } = new NetworkAuthenticationMethod(EAPMSCHAPv2Value);
+        public static NetworkAuthenticationMethod EapmschaPv2 { get; } = new NetworkAuthenticationMethod(EapmschaPv2Value);
 
         /// <summary> Determines if two <see cref="NetworkAuthenticationMethod"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

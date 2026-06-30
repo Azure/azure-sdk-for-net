@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> A collection of references to express route circuit ipv6 peerings. </summary>
         [WirePath("properties.ipv6Peerings")]
-        public IReadOnlyList<ExpressRouteCircuitPeeringData> Ipv6Peerings
+        public IReadOnlyList<ExpressRouteCircuitPeeringData> IPv6Peerings
         {
             get
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new RouteFilterPropertiesFormat();
                 }
-                return Properties.Ipv6Peerings;
+                return Properties.IPv6Peerings;
             }
         }
 

@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("peerAsn"u8);
                 writer.WriteNumberValue(PeerAsn.Value);
             }
-            if (Optional.IsDefined(PeerIp))
+            if (Optional.IsDefined(PeerIP))
             {
                 writer.WritePropertyName("peerIp"u8);
-                writer.WriteStringValue(PeerIp);
+                writer.WriteStringValue(PeerIP);
             }
             if (Optional.IsDefined(HubVirtualNetworkConnection))
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             long? peerAsn = default;
-            string peerIp = default;
+            string peerIP = default;
             NetworkSubResource hubVirtualNetworkConnection = default;
             NetworkProvisioningState? provisioningState = default;
             HubBgpConnectionStatus? connectionState = default;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("peerIp"u8))
                 {
-                    peerIp = prop.Value.GetString();
+                    peerIP = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("hubVirtualNetworkConnection"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             return new BgpConnectionProperties(
                 peerAsn,
-                peerIp,
+                peerIP,
                 hubVirtualNetworkConnection,
                 provisioningState,
                 connectionState,

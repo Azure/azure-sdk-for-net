@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> CertificateGroupId. </summary>
         private const string CertificateGroupIdValue = "CertificateGroupId";
         /// <summary> AADGroupId. </summary>
-        private const string AADGroupIdValue = "AADGroupId";
+        private const string AadGroupIdValue = "AADGroupId";
         /// <summary> RadiusAzureGroupId. </summary>
         private const string RadiusAzureGroupIdValue = "RadiusAzureGroupId";
 
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         public static VpnPolicyMemberAttributeType CertificateGroupId { get; } = new VpnPolicyMemberAttributeType(CertificateGroupIdValue);
 
         /// <summary> AADGroupId. </summary>
-        public static VpnPolicyMemberAttributeType AADGroupId { get; } = new VpnPolicyMemberAttributeType(AADGroupIdValue);
+        public static VpnPolicyMemberAttributeType AadGroupId { get; } = new VpnPolicyMemberAttributeType(AadGroupIdValue);
 
         /// <summary> RadiusAzureGroupId. </summary>
         public static VpnPolicyMemberAttributeType RadiusAzureGroupId { get; } = new VpnPolicyMemberAttributeType(RadiusAzureGroupIdValue);

@@ -118,11 +118,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The IP Configuration ID this NAT rule applies to. </summary>
         [WirePath("properties.ipConfigurationId")]
-        public string IpConfigurationId
+        public string IPConfigurationId
         {
             get
             {
-                return Properties is null ? default : Properties.IpConfigurationId;
+                return Properties is null ? default : Properties.IPConfigurationId;
             }
             set
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new VpnGatewayNatRuleProperties();
                 }
-                Properties.IpConfigurationId = value;
+                Properties.IPConfigurationId = value;
             }
         }
     }

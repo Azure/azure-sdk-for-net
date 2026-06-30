@@ -18,15 +18,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> MD5. </summary>
         private const string MD5Value = "MD5";
         /// <summary> SHA1. </summary>
-        private const string SHA1Value = "SHA1";
+        private const string Sha1Value = "SHA1";
         /// <summary> SHA256. </summary>
-        private const string SHA256Value = "SHA256";
+        private const string Sha256Value = "SHA256";
         /// <summary> SHA384. </summary>
-        private const string SHA384Value = "SHA384";
+        private const string Sha384Value = "SHA384";
         /// <summary> GCMAES256. </summary>
-        private const string GCMAES256Value = "GCMAES256";
+        private const string GcmAes256Value = "GCMAES256";
         /// <summary> GCMAES128. </summary>
-        private const string GCMAES128Value = "GCMAES128";
+        private const string GcmAes128Value = "GCMAES128";
 
         /// <summary> Initializes a new instance of <see cref="IkeIntegrity"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.Network.Models
         public static IkeIntegrity MD5 { get; } = new IkeIntegrity(MD5Value);
 
         /// <summary> SHA1. </summary>
-        public static IkeIntegrity SHA1 { get; } = new IkeIntegrity(SHA1Value);
+        public static IkeIntegrity Sha1 { get; } = new IkeIntegrity(Sha1Value);
 
         /// <summary> SHA256. </summary>
-        public static IkeIntegrity SHA256 { get; } = new IkeIntegrity(SHA256Value);
+        public static IkeIntegrity Sha256 { get; } = new IkeIntegrity(Sha256Value);
 
         /// <summary> SHA384. </summary>
-        public static IkeIntegrity SHA384 { get; } = new IkeIntegrity(SHA384Value);
+        public static IkeIntegrity Sha384 { get; } = new IkeIntegrity(Sha384Value);
 
         /// <summary> GCMAES256. </summary>
-        public static IkeIntegrity GCMAES256 { get; } = new IkeIntegrity(GCMAES256Value);
+        public static IkeIntegrity GcmAes256 { get; } = new IkeIntegrity(GcmAes256Value);
 
         /// <summary> GCMAES128. </summary>
-        public static IkeIntegrity GCMAES128 { get; } = new IkeIntegrity(GCMAES128Value);
+        public static IkeIntegrity GcmAes128 { get; } = new IkeIntegrity(GcmAes128Value);
 
         /// <summary> Determines if two <see cref="IkeIntegrity"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

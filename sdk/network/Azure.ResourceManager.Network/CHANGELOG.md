@@ -1,10 +1,10 @@
 # Release History
 
-## 1.16.1 (2026-06-26)
+## 1.16.1 (2026-06-30)
 
 ### Bugs Fixed
 
-- Fixed duplicate IDPS enum types with different casing by preserving the GA `Idps`-cased enum types.
+- Fixed duplicate public APIs with different casing that were accidentally introduced during TypeSpec migration, and restored affected model properties to their previous GA API shape.
 
 ## 1.16.0 (2026-06-22)
 
