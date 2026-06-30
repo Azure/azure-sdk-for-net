@@ -1,17 +1,13 @@
-// Ensures a repo-relative shallow + sparse cache clone of a git repo exists and is
-// reasonably fresh. Port of Sync-EvalGitRepo.ps1.
-//
-// Primes the cache that Vally's `environment.git` worktree fixtures point at (`git worktree
-// add` needs the source on disk; Vally does not clone it). First run: shallow + blobless +
-// cone-sparse clone. Subsequent runs within maxAgeHours: no-op. Past that: fetch + hard reset.
+// Ensures a shallow + sparse cache clone of a git repo exists and is reasonably fresh.
+// First run: shallow blobless cone-sparse clone. Within maxAgeHours: no-op. Past that:
+// fetch + hard reset. Primes the cache Vally's `environment.git` fixtures point at.
 
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 
-// git in PowerShell 7 does not throw on non-zero exit; route every call through this so a
-// failed clone stops immediately instead of falling through to a confusing checkout error.
+// Throws on non-zero git exit so a failed clone stops immediately.
 function invokeGit(args) {
   const proc = spawnSync("git", args, { stdio: ["ignore", "ignore", "inherit"] });
   if (proc.status !== 0) {
@@ -48,10 +44,7 @@ export function syncRepo({
   if (!fs.existsSync(path.join(cache, ".git"))) {
     console.log(`[sync-eval-git-repo] Cloning ${repoName} (${ref}) into cache: ${cache}`);
     fs.mkdirSync(cache, { recursive: true });
-    // init + fetch <ref> instead of `clone --depth 1` + `checkout <ref>`: a shallow clone
-    // only fetches the remote's default-branch tip, so checking out any other branch, a
-    // tag, or a SHA would fail on a cold cache. Fetching the requested ref directly (the
-    // same thing the refresh path below does) pins every ref type uniformly.
+    // init + fetch <ref> (not clone --depth 1) so any branch/tag/SHA is pinned on a cold cache.
     invokeGit(["-C", cache, "init", "--quiet"]);
     invokeGit(["-C", cache, "remote", "add", "origin", repoUrl]);
     if (sparseCheckoutPaths.length > 0) {
@@ -70,8 +63,7 @@ export function syncRepo({
     if (stale) {
       console.log(`[sync-eval-git-repo] Refreshing cache (>${maxAgeHours}h old): ${cache}`);
       invokeGit(["-C", cache, "fetch", "--depth", "1", "origin", ref]);
-      // Reset to FETCH_HEAD, not origin/<ref>: a tag or commit SHA has no origin/<ref>
-      // tracking branch, so FETCH_HEAD is the only thing pinned by every ref type.
+      // Reset to FETCH_HEAD (a tag/SHA has no origin/<ref> tracking branch).
       invokeGit(["-C", cache, "reset", "--hard", "FETCH_HEAD"]);
       fs.writeFileSync(stamp, new Date().toISOString());
     } else {

@@ -1,12 +1,4 @@
-# Skill-compliance eval CI — runs the per-skill Vally evals under .github/skills.
-#
-# Fans out one job per skill via the shared archetype: BuildMcp (mock only) + Detect
-# (glob the skill evals into a matrix) -> RunShard (one leg per eval) -> Summary.
-#
-# Supersedes the single-job eng/pipelines/skill-eval.yml; once this gate is proven the
-# old pipeline can be retired. Both currently trigger on .github/skills/**.
-#
-# Thin entrypoint (D2): trigger + variable group, then `extends` the archetype.
+# Skill-compliance eval CI: runs the per-skill Vally evals under .github/skills (one job per skill).
 
 trigger:
   branches:
@@ -15,8 +7,7 @@ trigger:
   paths:
     include:
       - .github/skills/**
-      # The skill evals exercise the hermetic mock MCP, so a tool-catalog change can
-      # move results and must retrigger the gate.
+      # Retrigger when the mock MCP's tool catalog changes (it can move results).
       - tools/azsdk-cli/Azure.Sdk.Tools.Mock/**
       - eng/common/pipelines/skill-eval.yml
       - eng/pipelines/eval/mcp-mock.yml
@@ -31,21 +22,17 @@ pr: none
 variables:
   # Managed-pool image selection (LINUXPOOL/LINUXVMIMAGE). Repo-local.
   - template: /eng/pipelines/templates/variables/image.yml
-  # Per-shard job timeout (consumed by the archetype's RunShard job as $(shardTimeoutInMinutes)).
-  # The hermetic skill evals are quick; cap well under the default agent slot.
+  # Per-shard job timeout (read by the archetype as $(shardTimeoutInMinutes)).
   - name: shardTimeoutInMinutes
     value: 20
-  # GITHUB_TOKEN (the model-session PAT) is supplied by the eval variable group, linked at
-  # the ADO pipeline definition. It reaches the shard ambiently — no template wiring.
+  # GITHUB_TOKEN comes from the linked eval variable group (ambient — no template wiring).
 
 extends:
   template: /eng/common/pipelines/templates/stages/archetype-eval.yml
   parameters:
-    # Skill evals run against the hermetic mock MCP (azure-sdk-tools' repo-local build).
+    # Build the hermetic mock MCP.
     mcpSetupTemplate: /eng/pipelines/eval/mcp-mock.yml
-    # The skill evals + their .vally.yaml live under .github/skills; shards run from there.
     vallyRoot: .github/skills
-    # Each skill keeps its evals at <skill>/evals/*.eval.yaml. The single-level glob
-    # deliberately excludes azure-typespec-author/evaluate/ (its own benchmark pipeline).
+    # Single-level glob excludes azure-typespec-author/evaluate/ (its own benchmark pipeline).
     evalGlobs:
       - '*/evals/*.eval.yaml'

@@ -1,9 +1,5 @@
-// Tiny dependency-free glob used by the eval matrix discovery.
-//
-// Vally has no `list` command, so scenario discovery is a filesystem glob of the
-// same paths the suite uses. The default eval patterns only need `*` (single path
-// segment) and `**` (any number of segments); we implement exactly that so the
-// script has zero npm dependencies on the build agent.
+// Tiny dependency-free glob used by the eval matrix discovery. Supports `*` (one path
+// segment), `?` (one char), and `**` (any number of segments).
 
 import fs from "node:fs";
 import path from "node:path";
@@ -30,8 +26,7 @@ function walk(dir, segments, out) {
   try {
     entries = fs.readdirSync(dir, { withFileTypes: true });
   } catch {
-    // Missing/inaccessible directory: no matches (mirrors PowerShell's
-    // -ErrorAction SilentlyContinue on Get-ChildItem).
+    // Missing/inaccessible directory: no matches.
     return;
   }
 

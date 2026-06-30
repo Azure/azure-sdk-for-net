@@ -1,12 +1,5 @@
-# Vally live-tier eval CI — nightly end-to-end run of the live workflow scenarios.
-#
-# Drives the REAL azsdk-cli MCP against real Azure DevOps (AZSDKTOOLS_AGENT_TESTING=true,
-# set in .vally.yaml, keeps writes in the test area). Slow + non-hermetic, so it runs on a
-# nightly schedule rather than per-PR. Same archetype as the mock vertical, parameterized
-# for the live tier: build the cli MCP, glob the live evals, and wrap each shard in
-# AzureCLI@2 so the agent's DevOps calls inherit the service-connection identity.
-#
-# Thin entrypoint (D2): schedule + variable group, then `extends` the archetype.
+# Live-tier eval CI: nightly end-to-end run of the live workflow scenarios against the real
+# azsdk-cli MCP and real Azure DevOps (writes confined to a test area).
 
 # Nightly only — no CI/PR trigger.
 trigger: none
@@ -23,25 +16,19 @@ schedules:
 variables:
   # Managed-pool image selection (LINUXPOOL/LINUXVMIMAGE). Repo-local.
   - template: /eng/pipelines/templates/variables/image.yml
-  # Per-shard job timeout (consumed by the archetype's RunShard job as $(shardTimeoutInMinutes)).
-  # Live scenarios are slow (the eval config sets a 30m run timeout), so give the job headroom
-  # — well above the hermetic tiers' 20.
+  # Per-shard job timeout (read by the archetype as $(shardTimeoutInMinutes)).
   - name: shardTimeoutInMinutes
     value: 45
-  # GITHUB_TOKEN (the model-session PAT) is supplied by the eval variable group, linked at
-  # the ADO pipeline definition. It reaches the shard ambiently — no template wiring.
+  # GITHUB_TOKEN comes from the linked eval variable group (ambient — no template wiring).
 
 extends:
   template: /eng/common/pipelines/templates/stages/archetype-eval.yml
   parameters:
-    # Live scenarios drive the real Cli MCP (azure-sdk-tools' repo-local build).
+    # Build the real Cli MCP.
     mcpSetupTemplate: /eng/pipelines/eval/mcp-live.yml
-    # The live evals + .vally.yaml live in the Vally project; passed explicitly.
     vallyRoot: tools/azsdk-cli/Azure.Sdk.Tools.Vally
     evalGlobs:
       - 'evals/workflow-scenarios/live/*.eval.yaml'
-    # Run each shard inside AzureCLI@2 so the real MCP's DevOps calls are authenticated.
-    # The service connection is owned by this repo-local invoke step, not the orchestrator.
-    # Model auth (GITHUB_TOKEN) comes ambiently from the linked variable group.
+    # AzureCLI@2 wrap so the real MCP's DevOps calls are authenticated.
     evalInvokeTemplate: /eng/pipelines/eval/eval-invoke-live.yml
     failOnFailedTests: true
