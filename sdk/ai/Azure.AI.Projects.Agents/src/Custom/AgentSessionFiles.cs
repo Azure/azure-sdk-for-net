@@ -20,13 +20,15 @@ public partial class AgentSessionFiles
     private readonly string _agentName;
     private readonly string _sessionId;
     /// <summary> Initializes a new instance of AgentSessionFiles. </summary>
+    /// <param name="clientDiagnostics"> The client diagnostics instance. </param>
     /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
     /// <param name="endpoint"> Service endpoint. </param>
     /// <param name="apiVersion"></param>
     /// <param name="agentName"> The name of the agent. </param>
     /// <param name="sessionId"> The session ID. </param>
-    internal AgentSessionFiles(ClientPipeline pipeline, Uri endpoint, string apiVersion, string agentName, string sessionId)
+    internal AgentSessionFiles(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion, string agentName, string sessionId)
     {
+        ClientDiagnostics = clientDiagnostics;
         _endpoint = endpoint;
         Pipeline = pipeline;
         _apiVersion = apiVersion;

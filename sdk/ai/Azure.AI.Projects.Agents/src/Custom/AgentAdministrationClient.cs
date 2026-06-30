@@ -1081,13 +1081,13 @@ public partial class AgentAdministrationClient
     /// <summary> Gets the lazily-initialized agent toolboxes sub-client. </summary>
     public virtual AgentToolboxes GetAgentToolboxes()
     {
-        return Volatile.Read(ref _cachedAgentsToolboxes) ?? Interlocked.CompareExchange(ref _cachedAgentsToolboxes, new AgentToolboxes(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentsToolboxes;
+        return Volatile.Read(ref _cachedAgentsToolboxes) ?? Interlocked.CompareExchange(ref _cachedAgentsToolboxes, new AgentToolboxes(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentsToolboxes;
     }
 
     /// <summary> Gets the lazily-initialized project agent skills sub-client. </summary>
     public virtual ProjectAgentSkills GetAgentSkills()
     {
-        return Volatile.Read(ref _cachedAgentSkills) ?? Interlocked.CompareExchange(ref _cachedAgentSkills, new ProjectAgentSkills(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentSkills;
+        return Volatile.Read(ref _cachedAgentSkills) ?? Interlocked.CompareExchange(ref _cachedAgentSkills, new ProjectAgentSkills(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentSkills;
     }
 
     /// <summary> Gets the lazily-initialized agent session files sub-client. </summary>
@@ -1099,7 +1099,7 @@ public partial class AgentAdministrationClient
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
-        return new AgentSessionFiles(Pipeline, _endpoint, _apiVersion, agentName, sessionId);
+        return new AgentSessionFiles(ClientDiagnostics, Pipeline, _endpoint, _apiVersion, agentName, sessionId);
     }
 
     /// <summary> Gets the lazily-initialized agent optimization jobs sub-client. </summary>
