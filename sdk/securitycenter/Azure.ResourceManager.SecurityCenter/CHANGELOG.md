@@ -4,7 +4,6 @@
 
 ### Other Changes
 
-- Regenerated the Azure Resource Manager Security client library from TypeSpec.
 - Upgraded dependent Azure.Core to 1.59.0.
 - Upgraded dependent Azure.ResourceManager to 1.14.0.
 
