@@ -87,6 +87,7 @@ steps:
             -ServiceDirectory $ServiceDirectory `
             -SDKType ${{ parameters.SDKType }} `
             -SpellCheckPublicApiSurface `
+            -ProjectListOverrideFile "$(ProjectListOverrideFile)"
 
           if ($LASTEXITCODE -ne 0) {
             $failed = $true
