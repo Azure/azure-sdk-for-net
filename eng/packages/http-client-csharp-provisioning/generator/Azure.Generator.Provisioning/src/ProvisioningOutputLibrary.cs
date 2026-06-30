@@ -10,6 +10,7 @@ using Azure.Generator.Provisioning.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Generator.Provisioning
 {
@@ -127,6 +128,8 @@ namespace Azure.Generator.Provisioning
 
             var providers = new List<TypeProvider>();
 
+            ExpandFlattenPropertyMapForProjectedResources();
+
             // Add resource providers and mark them to survive post-processing.
             foreach (var resource in Resources)
             {
@@ -193,6 +196,39 @@ namespace Azure.Generator.Provisioning
             }
 
             return [.. providers];
+        }
+
+        private void ExpandFlattenPropertyMapForProjectedResources()
+        {
+            var map = new Dictionary<ModelProvider, HashSet<PropertyProvider>>();
+            var flattenPropertyMap =
+                (IReadOnlyDictionary<InputModelType, IList<InputModelProperty>>)
+                typeof(ManagementInputLibrary)
+                    .GetProperty("FlattenPropertyMap", BindingFlags.Instance | BindingFlags.NonPublic)!
+                    .GetValue(ProvisioningGenerator.Instance.InputLibrary)!;
+
+            foreach (var (inputModel, flattenedProperties) in flattenPropertyMap)
+            {
+                if (TryGetResourcesByModel(inputModel, out var resources))
+                {
+                    foreach (var resource in resources)
+                    {
+                        map[resource] = flattenedProperties
+                            .Select(property => ProvisioningGenerator.Instance.TypeFactory.CreateProperty(property, resource)!)
+                            .ToHashSet();
+                    }
+                }
+                else if (ProvisioningGenerator.Instance.TypeFactory.CreateModel(inputModel) is { } model)
+                {
+                    map[model] = flattenedProperties
+                        .Select(property => ProvisioningGenerator.Instance.TypeFactory.CreateProperty(property, model)!)
+                        .ToHashSet();
+                }
+            }
+
+            typeof(ManagementOutputLibrary)
+                .GetField("_outputFlattenPropertyMap", BindingFlags.Instance | BindingFlags.NonPublic)!
+                .SetValue(this, map);
         }
 
         /// <summary>

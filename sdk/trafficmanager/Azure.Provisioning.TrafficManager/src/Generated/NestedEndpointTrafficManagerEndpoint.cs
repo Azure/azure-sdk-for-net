@@ -81,6 +81,244 @@ namespace Azure.Provisioning.TrafficManager
             }
         }
 
+        /// <summary> Gets or sets the TargetResourceId. </summary>
+        public BicepValue<ResourceIdentifier> TargetResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TargetResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EndpointProperties();
+                }
+                Properties.TargetResourceId = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Target. </summary>
+        public BicepValue<string> Target
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Target;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EndpointProperties();
+                }
+                Properties.Target = value;
+            }
+        }
+
+        /// <summary> Gets or sets the EndpointStatus. </summary>
+        public BicepValue<TrafficManagerEndpointStatus> EndpointStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndpointStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EndpointProperties();
+                }
+                Properties.EndpointStatus = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Weight. </summary>
+        public BicepValue<long> Weight
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Weight;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EndpointProperties();
+                }
+                Properties.Weight = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Priority. </summary>
+        public BicepValue<long> Priority
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Priority;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EndpointProperties();
+                }
+                Properties.Priority = value;
+            }
+        }
+
+        /// <summary> Gets or sets the EndpointLocation. </summary>
+        public BicepValue<string> EndpointLocation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndpointLocation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EndpointProperties();
+                }
+                Properties.EndpointLocation = value;
+            }
+        }
+
+        /// <summary> Gets or sets the EndpointMonitorStatus. </summary>
+        public BicepValue<TrafficManagerEndpointMonitorStatus> EndpointMonitorStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndpointMonitorStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EndpointProperties();
+                }
+                Properties.EndpointMonitorStatus = value;
+            }
+        }
+
+        /// <summary> Gets or sets the MinChildEndpoints. </summary>
+        public BicepValue<long> MinChildEndpoints
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MinChildEndpoints;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EndpointProperties();
+                }
+                Properties.MinChildEndpoints = value;
+            }
+        }
+
+        /// <summary> Gets or sets the MinChildEndpointsIPv4. </summary>
+        public BicepValue<long> MinChildEndpointsIPv4
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MinChildEndpointsIPv4;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EndpointProperties();
+                }
+                Properties.MinChildEndpointsIPv4 = value;
+            }
+        }
+
+        /// <summary> Gets or sets the MinChildEndpointsIPv6. </summary>
+        public BicepValue<long> MinChildEndpointsIPv6
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MinChildEndpointsIPv6;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EndpointProperties();
+                }
+                Properties.MinChildEndpointsIPv6 = value;
+            }
+        }
+
+        /// <summary> Gets or sets the GeoMapping. </summary>
+        public BicepList<string> GeoMapping
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GeoMapping;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EndpointProperties();
+                }
+                Properties.GeoMapping = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Subnets. </summary>
+        public BicepList<TrafficManagerEndpointSubnetInfo> Subnets
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Subnets;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EndpointProperties();
+                }
+                Properties.Subnets = value;
+            }
+        }
+
+        /// <summary> Gets or sets the CustomHeaders. </summary>
+        public BicepList<TrafficManagerEndpointCustomHeaderInfo> CustomHeaders
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomHeaders;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EndpointProperties();
+                }
+                Properties.CustomHeaders = value;
+            }
+        }
+
+        /// <summary> Gets or sets the AlwaysServe. </summary>
+        public BicepValue<TrafficManagerEndpointAlwaysServeStatus> AlwaysServe
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AlwaysServe;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EndpointProperties();
+                }
+                Properties.AlwaysServe = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for NestedEndpointTrafficManagerEndpoint. </summary>
         protected override void DefineProvisionableProperties()
         {
