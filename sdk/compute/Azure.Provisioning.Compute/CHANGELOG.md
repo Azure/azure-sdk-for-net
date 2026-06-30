@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Migrated `Azure.Provisioning.Compute` to the TypeSpec-based provisioning generator.
+
 ### Breaking Changes
 
 ### Bugs Fixed
