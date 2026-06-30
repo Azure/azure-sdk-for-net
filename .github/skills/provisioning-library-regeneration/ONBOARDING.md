@@ -138,9 +138,15 @@ For each generated ARM resource type:
 2. Compare writable generated properties against the Bicep reference.
 3. Treat writable generated properties that do not exist in Bicep as suspicious.
 4. Treat Bicep-required writable properties that are generated as output-only as bugs.
-5. Always validate `name`; it should be writable and required unless the resource is a singleton with a fixed name.
+5. Always validate `Name`; it should be writable and required unless the resource is a singleton with a fixed name.
+6. Validate Bicep metadata properties:
 
-If discrepancies are found, document the exact resource, property, generated behavior, and Bicep reference URL before deciding whether a generator customization or spec fix is needed.
+| Property | Validation rule |
+| --- | --- |
+| `Parent` | Must be a metadata property, not a regular generated Bicep property. It should not be generated from a Bicep schema property named `parent`. Its type must be a concrete resource type that inherits `ProvisionableResource`. |
+| `Scope` | Must be a metadata property, not a regular generated Bicep property. It should not be generated from a Bicep schema property named `scope`. Its type must be `ProvisionableResource` or a concrete resource type that inherits `ProvisionableResource`. |
+
+If discrepancies are found, document the exact resource, property, generated behavior, expected Bicep/schema behavior, and Bicep reference URL before deciding whether a generator customization or spec fix is needed.
 
 ## 9. Run final checks
 
