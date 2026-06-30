@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     yield break;
                 }
-                IoTSecuritySolutionsList result = IoTSecuritySolutionsList.FromResponse(response);
+                IotSecuritySolutionsList result = IotSecuritySolutionsList.FromResponse(response);
                 yield return Page<IotSecuritySolutionData>.FromValues((IReadOnlyList<IotSecuritySolutionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)

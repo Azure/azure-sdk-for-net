@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IoTSecuritySolutionAnalyticsModelList>> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IotSecuritySolutionAnalyticsModelList>> GetAllAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _iotSecuritySolutionAnalyticsClientDiagnostics.CreateScope("IotSecuritySolutionResource.GetAll");
             scope.Start();
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _iotSecuritySolutionAnalyticsRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<IoTSecuritySolutionAnalyticsModelList> response = Response.FromValue(IoTSecuritySolutionAnalyticsModelList.FromResponse(result), result);
+                Response<IotSecuritySolutionAnalyticsModelList> response = Response.FromValue(IotSecuritySolutionAnalyticsModelList.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IoTSecuritySolutionAnalyticsModelList> GetAll(CancellationToken cancellationToken = default)
+        public virtual Response<IotSecuritySolutionAnalyticsModelList> GetAll(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _iotSecuritySolutionAnalyticsClientDiagnostics.CreateScope("IotSecuritySolutionResource.GetAll");
             scope.Start();
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _iotSecuritySolutionAnalyticsRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<IoTSecuritySolutionAnalyticsModelList> response = Response.FromValue(IoTSecuritySolutionAnalyticsModelList.FromResponse(result), result);
+                Response<IotSecuritySolutionAnalyticsModelList> response = Response.FromValue(IotSecuritySolutionAnalyticsModelList.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

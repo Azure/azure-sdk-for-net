@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     yield break;
                 }
-                IoTSecurityAggregatedAlertList result = IoTSecurityAggregatedAlertList.FromResponse(response);
+                IotSecurityAggregatedAlertList result = IotSecurityAggregatedAlertList.FromResponse(response);
                 yield return Page<IotSecurityAggregatedAlertData>.FromValues((IReadOnlyList<IotSecurityAggregatedAlertData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)

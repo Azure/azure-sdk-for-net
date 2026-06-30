@@ -12,32 +12,32 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> List of IoT Security solutions. </summary>
-    internal partial class IoTSecuritySolutionsList
+    /// <summary> List of IoT Security solution aggregated alert data. </summary>
+    internal partial class IotSecurityAggregatedAlertList
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IoTSecuritySolutionsList"/>. </summary>
-        /// <param name="value"> The IoTSecuritySolutionModel items on this page. </param>
-        internal IoTSecuritySolutionsList(IEnumerable<IotSecuritySolutionData> value)
+        /// <summary> Initializes a new instance of <see cref="IotSecurityAggregatedAlertList"/>. </summary>
+        /// <param name="value"> The IoTSecurityAggregatedAlert items on this page. </param>
+        internal IotSecurityAggregatedAlertList(IEnumerable<IotSecurityAggregatedAlertData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IoTSecuritySolutionsList"/>. </summary>
-        /// <param name="value"> The IoTSecuritySolutionModel items on this page. </param>
+        /// <summary> Initializes a new instance of <see cref="IotSecurityAggregatedAlertList"/>. </summary>
+        /// <param name="value"> The IoTSecurityAggregatedAlert items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IoTSecuritySolutionsList(IList<IotSecuritySolutionData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IotSecurityAggregatedAlertList(IList<IotSecurityAggregatedAlertData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The IoTSecuritySolutionModel items on this page. </summary>
-        public IList<IotSecuritySolutionData> Value { get; }
+        /// <summary> The IoTSecurityAggregatedAlert items on this page. </summary>
+        public IList<IotSecurityAggregatedAlertData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

@@ -13,23 +13,23 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> List of Security analytics of your IoT Security solution. </summary>
-    public partial class IoTSecuritySolutionAnalyticsModelList
+    public partial class IotSecuritySolutionAnalyticsModelList
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IoTSecuritySolutionAnalyticsModelList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionAnalyticsModelList"/>. </summary>
         /// <param name="value"> The IoTSecuritySolutionAnalyticsModel items on this page. </param>
-        internal IoTSecuritySolutionAnalyticsModelList(IEnumerable<IotSecuritySolutionAnalyticsModelData> value)
+        internal IotSecuritySolutionAnalyticsModelList(IEnumerable<IotSecuritySolutionAnalyticsModelData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IoTSecuritySolutionAnalyticsModelList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionAnalyticsModelList"/>. </summary>
         /// <param name="value"> The IoTSecuritySolutionAnalyticsModel items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IoTSecuritySolutionAnalyticsModelList(IList<IotSecuritySolutionAnalyticsModelData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IotSecuritySolutionAnalyticsModelList(IList<IotSecuritySolutionAnalyticsModelData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;

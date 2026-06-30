@@ -14,64 +14,64 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> List of IoT Security solutions. </summary>
-    internal partial class IoTSecuritySolutionsList : IJsonModel<IoTSecuritySolutionsList>
+    /// <summary> List of IoT Security solution aggregated recommendations. </summary>
+    internal partial class IotSecurityAggregatedRecommendationList : IJsonModel<IotSecurityAggregatedRecommendationList>
     {
-        /// <summary> Initializes a new instance of <see cref="IoTSecuritySolutionsList"/> for deserialization. </summary>
-        internal IoTSecuritySolutionsList()
+        /// <summary> Initializes a new instance of <see cref="IotSecurityAggregatedRecommendationList"/> for deserialization. </summary>
+        internal IotSecurityAggregatedRecommendationList()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IoTSecuritySolutionsList PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual IotSecurityAggregatedRecommendationList PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IoTSecuritySolutionsList>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IotSecurityAggregatedRecommendationList>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeIoTSecuritySolutionsList(document.RootElement, options);
+                        return DeserializeIotSecurityAggregatedRecommendationList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IoTSecuritySolutionsList)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotSecurityAggregatedRecommendationList)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IoTSecuritySolutionsList>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IotSecurityAggregatedRecommendationList>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(IoTSecuritySolutionsList)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotSecurityAggregatedRecommendationList)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IoTSecuritySolutionsList>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<IotSecurityAggregatedRecommendationList>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IoTSecuritySolutionsList IPersistableModel<IoTSecuritySolutionsList>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        IotSecurityAggregatedRecommendationList IPersistableModel<IotSecurityAggregatedRecommendationList>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IoTSecuritySolutionsList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IotSecurityAggregatedRecommendationList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IoTSecuritySolutionsList"/> from. </param>
-        internal static IoTSecuritySolutionsList FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IotSecurityAggregatedRecommendationList"/> from. </param>
+        internal static IotSecurityAggregatedRecommendationList FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeIoTSecuritySolutionsList(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeIotSecurityAggregatedRecommendationList(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<IoTSecuritySolutionsList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IotSecurityAggregatedRecommendationList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IoTSecuritySolutionsList>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IotSecurityAggregatedRecommendationList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IoTSecuritySolutionsList)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IotSecurityAggregatedRecommendationList)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (IotSecuritySolutionData item in Value)
+            foreach (IotSecurityAggregatedRecommendationData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -118,40 +118,40 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IoTSecuritySolutionsList IJsonModel<IoTSecuritySolutionsList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        IotSecurityAggregatedRecommendationList IJsonModel<IotSecurityAggregatedRecommendationList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IoTSecuritySolutionsList JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual IotSecurityAggregatedRecommendationList JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IoTSecuritySolutionsList>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IotSecurityAggregatedRecommendationList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IoTSecuritySolutionsList)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IotSecurityAggregatedRecommendationList)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIoTSecuritySolutionsList(document.RootElement, options);
+            return DeserializeIotSecurityAggregatedRecommendationList(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static IoTSecuritySolutionsList DeserializeIoTSecuritySolutionsList(JsonElement element, ModelReaderWriterOptions options)
+        internal static IotSecurityAggregatedRecommendationList DeserializeIotSecurityAggregatedRecommendationList(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<IotSecuritySolutionData> value = default;
+            IList<IotSecurityAggregatedRecommendationData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<IotSecuritySolutionData> array = new List<IotSecuritySolutionData>();
+                    List<IotSecurityAggregatedRecommendationData> array = new List<IotSecurityAggregatedRecommendationData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IotSecuritySolutionData.DeserializeIotSecuritySolutionData(item, options));
+                        array.Add(IotSecurityAggregatedRecommendationData.DeserializeIotSecurityAggregatedRecommendationData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new IoTSecuritySolutionsList(value, nextLink, additionalBinaryDataProperties);
+            return new IotSecurityAggregatedRecommendationList(value, nextLink, additionalBinaryDataProperties);
         }
     }
 }

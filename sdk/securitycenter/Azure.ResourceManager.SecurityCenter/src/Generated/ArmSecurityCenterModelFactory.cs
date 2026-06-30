@@ -4241,12 +4241,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="value"> The IoTSecuritySolutionAnalyticsModel items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.IoTSecuritySolutionAnalyticsModelList"/> instance for mocking. </returns>
-        public static IoTSecuritySolutionAnalyticsModelList IoTSecuritySolutionAnalyticsModelList(IEnumerable<IotSecuritySolutionAnalyticsModelData> value = default, Uri nextLink = default)
+        /// <returns> A new <see cref="Models.IotSecuritySolutionAnalyticsModelList"/> instance for mocking. </returns>
+        public static IotSecuritySolutionAnalyticsModelList IotSecuritySolutionAnalyticsModelList(IEnumerable<IotSecuritySolutionAnalyticsModelData> value = default, Uri nextLink = default)
         {
             value ??= new ChangeTrackingList<IotSecuritySolutionAnalyticsModelData>();
 
-            return new IoTSecuritySolutionAnalyticsModelList((value ?? new ChangeTrackingList<IotSecuritySolutionAnalyticsModelData>()).ToList(), nextLink, default);
+            return new IotSecuritySolutionAnalyticsModelList((value ?? new ChangeTrackingList<IotSecuritySolutionAnalyticsModelData>()).ToList(), nextLink, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
