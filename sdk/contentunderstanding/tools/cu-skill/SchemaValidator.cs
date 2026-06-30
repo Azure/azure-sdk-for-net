@@ -43,7 +43,7 @@ public static class SchemaValidator
     /// return <c>InvalidBaseAnalyzerId</c> if used here. See
     /// https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/analyzer-reference#baseanalyzerid
     /// </summary>
-    public static readonly IReadOnlySet<string> KnownBaseAnalyzerIds = new HashSet<string>
+    public static readonly IReadOnlyCollection<string> KnownBaseAnalyzerIds = new HashSet<string>
     {
         "prebuilt-document",
         "prebuilt-audio",
