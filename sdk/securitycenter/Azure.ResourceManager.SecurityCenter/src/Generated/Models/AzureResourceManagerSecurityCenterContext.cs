@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.SecurityCenter
     [ModelReaderWriterBuildable(typeof(IotSecurityDeviceRecommendation))]
     [ModelReaderWriterBuildable(typeof(IotSecuritySolutionAnalyticsModelData))]
     [ModelReaderWriterBuildable(typeof(IotSecuritySolutionAnalyticsModelDevicesMetrics))]
-    [ModelReaderWriterBuildable(typeof(IotSecuritySolutionAnalyticsModelList))]
+    [ModelReaderWriterBuildable(typeof(IoTSecuritySolutionAnalyticsModelList))]
     [ModelReaderWriterBuildable(typeof(IoTSecuritySolutionAnalyticsModelProperties))]
     [ModelReaderWriterBuildable(typeof(IotSecuritySolutionAnalyticsModelResource))]
     [ModelReaderWriterBuildable(typeof(IotSecuritySolutionData))]
