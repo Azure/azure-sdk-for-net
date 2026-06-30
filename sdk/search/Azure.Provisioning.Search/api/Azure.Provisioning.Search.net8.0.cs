@@ -35,7 +35,8 @@ namespace Azure.Provisioning.Search
     public enum SearchBypass
     {
         None = 0,
-        AzureServices = 1,
+        AzurePortal = 1,
+        AzureServices = 2,
     }
     public enum SearchDataExfiltrationProtection
     {
@@ -60,9 +61,9 @@ namespace Azure.Provisioning.Search
     }
     public enum SearchEncryptionWithCmkEnforcement
     {
-        Disabled = 0,
-        Enabled = 1,
-        Unspecified = 2,
+        Unspecified = 0,
+        Disabled = 1,
+        Enabled = 2,
     }
     [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future versions, please use search service resource properties instead.")]
     public partial class SearchManagementRequestOptions : Azure.Provisioning.Primitives.ProvisionableConstruct
