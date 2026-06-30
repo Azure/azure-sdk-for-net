@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.Network.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The IP address belonging to the backend address. </summary>
+        [WirePath("ipAddress")]
+        public string IPAddress { get; }
+
         /// <summary> Resource ID of the Network Interface IP Configuration. </summary>
         [WirePath("networkInterfaceIPConfigurationId")]
         public NetworkInterfaceIPConfigurationData NetworkInterfaceIPConfigurationId { get; }

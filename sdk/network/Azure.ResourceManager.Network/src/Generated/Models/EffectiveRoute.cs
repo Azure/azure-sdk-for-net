@@ -65,6 +65,10 @@ namespace Azure.ResourceManager.Network.Models
         [WirePath("addressPrefix")]
         public IReadOnlyList<string> AddressPrefix { get; }
 
+        /// <summary> The IP address of the next hop of the effective route. </summary>
+        [WirePath("nextHopIpAddress")]
+        public IReadOnlyList<string> NextHopIPAddress { get; }
+
         /// <summary> The type of Azure hop the packet should be sent to. </summary>
         [WirePath("nextHopType")]
         public RouteNextHopType? NextHopType { get; }

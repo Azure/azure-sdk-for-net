@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.Network.Models
         [WirePath("interface")]
         public string Interface { get; }
 
+        /// <summary> The IP address. </summary>
+        [WirePath("ipAddress")]
+        public string IPAddress { get; }
+
         /// <summary> The MAC address. </summary>
         [WirePath("macAddress")]
         public string MacAddress { get; }

@@ -5802,6 +5802,16 @@ namespace Azure.ResourceManager.Network.Models
                 default);
         }
 
+        /// <param name="description"></param>
+        /// <param name="sourceResourceId"> Source resource id of the intent. </param>
+        /// <param name="destinationResourceId"> Destination resource id of the intent. </param>
+        /// <param name="ipTraffic"> IP traffic information. </param>
+        /// <returns> A new <see cref="Models.AnalysisRunIntentContent"/> instance for mocking. </returns>
+        public static AnalysisRunIntentContent AnalysisRunIntentContent(string description = default, ResourceIdentifier sourceResourceId = default, ResourceIdentifier destinationResourceId = default, NetworkVerifierIPTraffic ipTraffic = default)
+        {
+            return new AnalysisRunIntentContent(description, sourceResourceId, destinationResourceId, ipTraffic, default);
+        }
+
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="type"> Resource type. </param>
@@ -11486,17 +11496,6 @@ namespace Azure.ResourceManager.Network.Models
         public static PublicIPDdosProtectionStatusResult PublicIPDdosProtectionStatusResult(ResourceIdentifier publicIpAddressId = default, string publicIpAddress = default, WorkloadProtectedFlag? isWorkloadProtected = default, ResourceIdentifier ddosProtectionPlanId = default)
         {
             return new PublicIPDdosProtectionStatusResult(publicIpAddressId, default, isWorkloadProtected, ddosProtectionPlanId, default);
-        }
-
-        /// <param name="description"></param>
-        /// <param name="sourceResourceId"> Source resource id of the intent. </param>
-        /// <param name="destinationResourceId"> Destination resource id of the intent. </param>
-        /// <param name="ipTraffic"> IP traffic information. </param>
-        /// <returns> A new <see cref="Models.AnalysisRunIntentContent"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AnalysisRunIntentContent AnalysisRunIntentContent(string description = default, ResourceIdentifier sourceResourceId = default, ResourceIdentifier destinationResourceId = default, NetworkVerifierIPTraffic ipTraffic = default)
-        {
-            return new AnalysisRunIntentContent(description, sourceResourceId, destinationResourceId, ipTraffic, default);
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayFrontendIPConfiguration. </summary>

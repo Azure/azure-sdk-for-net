@@ -6,6 +6,11 @@ TypesMustExist : Type 'Azure.ResourceManager.Network.Models.FirewallPolicyIDPSSi
 
 # Case-only duplicate APIs were accidentally introduced in Azure.ResourceManager.Network 1.16.0 during TypeSpec migration.
 # Suppress their removal so the SDK returns to the previous 1.15.0 GA surface.
+MembersMustExist : Member 'public void Azure.ResourceManager.Network.Models.AnalysisRunIntentContent.IPTraffic.set(Azure.ResourceManager.Network.Models.NetworkVerifierIPTraffic)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public void Azure.ResourceManager.Network.Models.EffectiveRoute.NextHopIPAddress.set(System.Collections.Generic.IReadOnlyList<System.String>)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public void Azure.ResourceManager.Network.Models.ExpressRouteCircuitArpTable.IPAddress.set(System.String)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public void Azure.ResourceManager.Network.Models.LoadBalancerHealthPerRulePerBackendAddress.IPAddress.set(System.String)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public void Azure.ResourceManager.Network.Models.NextHopResult.NextHopIPAddress.set(System.String)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'public Azure.Core.ResourceIdentifier Azure.ResourceManager.Network.CustomIPPrefixData.CustomIpPrefixParent.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'public Azure.Core.ResourceIdentifier Azure.ResourceManager.Network.Models.DisassociateCloudServicePublicIPContent.PublicIpArmId.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'public Azure.Core.ResourceIdentifier Azure.ResourceManager.Network.Models.PublicIPDdosProtectionStatusResult.PublicIpAddressId.get()' does not exist in the implementation but it does exist in the contract.

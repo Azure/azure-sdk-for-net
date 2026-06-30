@@ -55,5 +55,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Destination resource id of the intent. </summary>
         [WirePath("destinationResourceId")]
         public ResourceIdentifier DestinationResourceId { get; }
+
+        /// <summary> IP traffic information. </summary>
+        [WirePath("ipTraffic")]
+        public NetworkVerifierIPTraffic IPTraffic { get; }
     }
 }
