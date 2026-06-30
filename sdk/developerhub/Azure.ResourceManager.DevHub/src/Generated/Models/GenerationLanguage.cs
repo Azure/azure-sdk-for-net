@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <summary> go language. </summary>
         private const string GoValue = "go";
         /// <summary> gomodule language. </summary>
-        private const string GomoduleValue = "gomodule";
+        private const string GoModuleValue = "gomodule";
         /// <summary> gradle language. </summary>
         private const string GradleValue = "gradle";
         /// <summary> java language. </summary>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DevHub.Models
         public static GenerationLanguage Go { get; } = new GenerationLanguage(GoValue);
 
         /// <summary> gomodule language. </summary>
-        public static GenerationLanguage Gomodule { get; } = new GenerationLanguage(GomoduleValue);
+        public static GenerationLanguage GoModule { get; } = new GenerationLanguage(GoModuleValue);
 
         /// <summary> gradle language. </summary>
         public static GenerationLanguage Gradle { get; } = new GenerationLanguage(GradleValue);

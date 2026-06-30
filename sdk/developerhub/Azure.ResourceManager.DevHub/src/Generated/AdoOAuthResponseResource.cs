@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.DevHub
         /// </summary>
         /// <param name="content"> The fields required in ADO OAuth call request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DeveloperHubADOOAuthInfoResponseResult>> GetAdoOAuthInfoAsync(DeveloperHubADOOAuthCallRequestContent content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeveloperHubAdoOAuthInfoResponseResult>> GetAdoOAuthInfoAsync(DeveloperHubAdoOAuthCallRequestContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _devHubClientClientDiagnostics.CreateScope("AdoOAuthResponseResource.GetAdoOAuthInfo");
             scope.Start();
@@ -224,9 +224,9 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devHubClientRestClient.CreateGetAdoOAuthInfoRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, DeveloperHubADOOAuthCallRequestContent.ToRequestContent(content), context);
+                HttpMessage message = _devHubClientRestClient.CreateGetAdoOAuthInfoRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, DeveloperHubAdoOAuthCallRequestContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DeveloperHubADOOAuthInfoResponseResult> response = Response.FromValue(DeveloperHubADOOAuthInfoResponseResult.FromResponse(result), result);
+                Response<DeveloperHubAdoOAuthInfoResponseResult> response = Response.FromValue(DeveloperHubAdoOAuthInfoResponseResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.DevHub
         /// </summary>
         /// <param name="content"> The fields required in ADO OAuth call request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeveloperHubADOOAuthInfoResponseResult> GetAdoOAuthInfo(DeveloperHubADOOAuthCallRequestContent content = default, CancellationToken cancellationToken = default)
+        public virtual Response<DeveloperHubAdoOAuthInfoResponseResult> GetAdoOAuthInfo(DeveloperHubAdoOAuthCallRequestContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _devHubClientClientDiagnostics.CreateScope("AdoOAuthResponseResource.GetAdoOAuthInfo");
             scope.Start();
@@ -273,9 +273,9 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devHubClientRestClient.CreateGetAdoOAuthInfoRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, DeveloperHubADOOAuthCallRequestContent.ToRequestContent(content), context);
+                HttpMessage message = _devHubClientRestClient.CreateGetAdoOAuthInfoRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, DeveloperHubAdoOAuthCallRequestContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DeveloperHubADOOAuthInfoResponseResult> response = Response.FromValue(DeveloperHubADOOAuthInfoResponseResult.FromResponse(result), result);
+                Response<DeveloperHubAdoOAuthInfoResponseResult> response = Response.FromValue(DeveloperHubAdoOAuthInfoResponseResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

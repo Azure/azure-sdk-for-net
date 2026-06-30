@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DevHub.Models
 {
     /// <summary> Response containing ADO OAuth information. </summary>
-    public partial class DeveloperHubADOOAuthInfoResponseResult
+    public partial class DeveloperHubAdoOAuthInfoResponseResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeveloperHubADOOAuthInfoResponseResult"/>. </summary>
-        internal DeveloperHubADOOAuthInfoResponseResult()
+        /// <summary> Initializes a new instance of <see cref="DeveloperHubAdoOAuthInfoResponseResult"/>. </summary>
+        internal DeveloperHubAdoOAuthInfoResponseResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeveloperHubADOOAuthInfoResponseResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeveloperHubAdoOAuthInfoResponseResult"/>. </summary>
         /// <param name="authUri"> URL used to authorize ADO app using Entra ID. </param>
         /// <param name="token"> OAuth token used to make calls to ADO APIs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeveloperHubADOOAuthInfoResponseResult(string authUri, string token, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeveloperHubAdoOAuthInfoResponseResult(string authUri, string token, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AuthUri = authUri;
             Token = token;

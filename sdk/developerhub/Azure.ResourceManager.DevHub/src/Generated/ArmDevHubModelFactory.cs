@@ -93,18 +93,18 @@ namespace Azure.ResourceManager.DevHub.Models
         }
 
         /// <param name="redirectUri"> The URL the client will redirect to on successful authentication. If empty, no redirect will occur. </param>
-        /// <returns> A new <see cref="Models.DeveloperHubADOOAuthCallRequestContent"/> instance for mocking. </returns>
-        public static DeveloperHubADOOAuthCallRequestContent DeveloperHubADOOAuthCallRequestContent(string redirectUri = default)
+        /// <returns> A new <see cref="Models.DeveloperHubAdoOAuthCallRequestContent"/> instance for mocking. </returns>
+        public static DeveloperHubAdoOAuthCallRequestContent DeveloperHubAdoOAuthCallRequestContent(string redirectUri = default)
         {
-            return new DeveloperHubADOOAuthCallRequestContent(redirectUri, default);
+            return new DeveloperHubAdoOAuthCallRequestContent(redirectUri, default);
         }
 
         /// <param name="authUri"> URL used to authorize ADO app using Entra ID. </param>
         /// <param name="token"> OAuth token used to make calls to ADO APIs. </param>
-        /// <returns> A new <see cref="Models.DeveloperHubADOOAuthInfoResponseResult"/> instance for mocking. </returns>
-        public static DeveloperHubADOOAuthInfoResponseResult DeveloperHubADOOAuthInfoResponseResult(string authUri = default, string token = default)
+        /// <returns> A new <see cref="Models.DeveloperHubAdoOAuthInfoResponseResult"/> instance for mocking. </returns>
+        public static DeveloperHubAdoOAuthInfoResponseResult DeveloperHubAdoOAuthInfoResponseResult(string authUri = default, string token = default)
         {
-            return new DeveloperHubADOOAuthInfoResponseResult(authUri, token, default);
+            return new DeveloperHubAdoOAuthInfoResponseResult(authUri, token, default);
         }
 
         /// <param name="value"> The Operation items on this page. </param>

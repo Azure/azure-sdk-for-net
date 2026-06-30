@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <summary> Workflow run is queued. </summary>
         private const string QueuedValue = "queued";
         /// <summary> Workflow run is inprogress. </summary>
-        private const string InprogressValue = "inprogress";
+        private const string InProgressValue = "inprogress";
         /// <summary> Workflow run is completed. </summary>
         private const string CompletedValue = "completed";
 
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DevHub.Models
         public static WorkflowRunStatus Queued { get; } = new WorkflowRunStatus(QueuedValue);
 
         /// <summary> Workflow run is inprogress. </summary>
-        public static WorkflowRunStatus Inprogress { get; } = new WorkflowRunStatus(InprogressValue);
+        public static WorkflowRunStatus InProgress { get; } = new WorkflowRunStatus(InProgressValue);
 
         /// <summary> Workflow run is completed. </summary>
         public static WorkflowRunStatus Completed { get; } = new WorkflowRunStatus(CompletedValue);

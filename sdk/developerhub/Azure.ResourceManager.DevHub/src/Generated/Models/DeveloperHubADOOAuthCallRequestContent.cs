@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DevHub.Models
 {
     /// <summary> ADOOAuth request object. </summary>
-    public partial class DeveloperHubADOOAuthCallRequestContent
+    public partial class DeveloperHubAdoOAuthCallRequestContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeveloperHubADOOAuthCallRequestContent"/>. </summary>
-        public DeveloperHubADOOAuthCallRequestContent()
+        /// <summary> Initializes a new instance of <see cref="DeveloperHubAdoOAuthCallRequestContent"/>. </summary>
+        public DeveloperHubAdoOAuthCallRequestContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeveloperHubADOOAuthCallRequestContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeveloperHubAdoOAuthCallRequestContent"/>. </summary>
         /// <param name="redirectUri"> The URL the client will redirect to on successful authentication. If empty, no redirect will occur. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeveloperHubADOOAuthCallRequestContent(string redirectUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeveloperHubAdoOAuthCallRequestContent(string redirectUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RedirectUri = redirectUri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <summary> The template use quick start template of HCI. </summary>
         private const string HCIValue = "HCI";
         /// <summary> The template use quick start template of HCI and AKS. </summary>
-        private const string HCIAKSValue = "HCIAKS";
+        private const string HciAksValue = "HCIAKS";
         /// <summary> The template use quick start template of HCI and ArcVM. </summary>
-        private const string HCIARCVMValue = "HCIARCVM";
+        private const string HciArcVmValue = "HCIARCVM";
 
         /// <summary> Initializes a new instance of <see cref="QuickStartTemplateType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.DevHub.Models
         public static QuickStartTemplateType HCI { get; } = new QuickStartTemplateType(HCIValue);
 
         /// <summary> The template use quick start template of HCI and AKS. </summary>
-        public static QuickStartTemplateType HCIAKS { get; } = new QuickStartTemplateType(HCIAKSValue);
+        public static QuickStartTemplateType HciAks { get; } = new QuickStartTemplateType(HciAksValue);
 
         /// <summary> The template use quick start template of HCI and ArcVM. </summary>
-        public static QuickStartTemplateType HCIARCVM { get; } = new QuickStartTemplateType(HCIARCVMValue);
+        public static QuickStartTemplateType HciArcVm { get; } = new QuickStartTemplateType(HciArcVmValue);
 
         /// <summary> Determines if two <see cref="QuickStartTemplateType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
