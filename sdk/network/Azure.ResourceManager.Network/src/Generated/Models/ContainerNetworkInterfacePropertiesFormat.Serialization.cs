@@ -84,11 +84,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("container"u8);
                 writer.WriteObjectValue(Container, options);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IpConfigurations))
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (ContainerNetworkInterfaceIPConfiguration item in IpConfigurations)
+                foreach (ContainerNetworkInterfaceIPConfiguration item in IPConfigurations)
                 {
                     writer.WriteObjectValue(item, options);
                 }

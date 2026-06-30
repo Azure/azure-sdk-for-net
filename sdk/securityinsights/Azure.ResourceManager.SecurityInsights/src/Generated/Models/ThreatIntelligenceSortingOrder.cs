@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct ThreatIntelligenceSortingOrder : IEquatable<ThreatIntelligenceSortingOrder>
     {
         private readonly string _value;
+        /// <summary> unsorted. </summary>
+        private const string UnsortedValue = "unsorted";
+        /// <summary> ascending. </summary>
+        private const string AscendingValue = "ascending";
+        /// <summary> descending. </summary>
+        private const string DescendingValue = "descending";
 
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceSortingOrder"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ThreatIntelligenceSortingOrder(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnsortedValue = "unsorted";
-        private const string AscendingValue = "ascending";
-        private const string DescendingValue = "descending";
+            _value = value;
+        }
 
         /// <summary> unsorted. </summary>
         public static ThreatIntelligenceSortingOrder Unsorted { get; } = new ThreatIntelligenceSortingOrder(UnsortedValue);
+
         /// <summary> ascending. </summary>
         public static ThreatIntelligenceSortingOrder Ascending { get; } = new ThreatIntelligenceSortingOrder(AscendingValue);
+
         /// <summary> descending. </summary>
         public static ThreatIntelligenceSortingOrder Descending { get; } = new ThreatIntelligenceSortingOrder(DescendingValue);
+
         /// <summary> Determines if two <see cref="ThreatIntelligenceSortingOrder"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ThreatIntelligenceSortingOrder left, ThreatIntelligenceSortingOrder right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ThreatIntelligenceSortingOrder"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ThreatIntelligenceSortingOrder left, ThreatIntelligenceSortingOrder right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ThreatIntelligenceSortingOrder"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ThreatIntelligenceSortingOrder"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ThreatIntelligenceSortingOrder(string value) => new ThreatIntelligenceSortingOrder(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ThreatIntelligenceSortingOrder"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ThreatIntelligenceSortingOrder?(string value) => value == null ? null : new ThreatIntelligenceSortingOrder(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ThreatIntelligenceSortingOrder other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ThreatIntelligenceSortingOrder other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

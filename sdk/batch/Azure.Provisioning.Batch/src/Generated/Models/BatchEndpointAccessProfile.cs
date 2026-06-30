@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Batch
             base.DefineProvisionableProperties();
             _defaultAction = DefineProperty<BatchEndpointAccessDefaultAction>(nameof(DefaultAction), new string[] { "defaultAction" }, isRequired: true);
             _ipRules = DefineListProperty<BatchIPRule>(nameof(IPRules), new string[] { "ipRules" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchEndpointAccessProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

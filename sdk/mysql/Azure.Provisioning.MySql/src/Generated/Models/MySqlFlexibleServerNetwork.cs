@@ -75,6 +75,10 @@ namespace Azure.Provisioning.MySql
             _publicNetworkAccess = DefineProperty<MySqlFlexibleServerEnableStatusEnum>(nameof(PublicNetworkAccess), new string[] { "publicNetworkAccess" });
             _delegatedSubnetResourceId = DefineProperty<ResourceIdentifier>(nameof(DelegatedSubnetResourceId), new string[] { "delegatedSubnetResourceId" });
             _privateDnsZoneResourceId = DefineProperty<ResourceIdentifier>(nameof(PrivateDnsZoneResourceId), new string[] { "privateDnsZoneResourceId" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for MySqlFlexibleServerNetwork that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

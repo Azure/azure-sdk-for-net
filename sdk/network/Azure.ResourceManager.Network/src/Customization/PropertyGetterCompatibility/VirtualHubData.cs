@@ -3,9 +3,12 @@
 
 #nullable disable
 
+using Microsoft.TypeSpec.Generator.Customizations;
+
 namespace Azure.ResourceManager.Network
 {
     /// <summary> Compatibility declaration for the VirtualHubData type. </summary>
+    [CodeGenSuppress("IPConfigurations")]
     public partial class VirtualHubData
     {
         /// <summary> Compatibility member. </summary>

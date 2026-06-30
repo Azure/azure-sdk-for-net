@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="IpGroupPropertiesFormat"/>. </summary>
         public IpGroupPropertiesFormat()
         {
-            IpAddresses = new ChangeTrackingList<string>();
+            IPAddresses = new ChangeTrackingList<string>();
             Firewalls = new ChangeTrackingList<WritableSubResource>();
             FirewallPolicies = new ChangeTrackingList<WritableSubResource>();
         }
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
         internal IpGroupPropertiesFormat(NetworkProvisioningState? provisioningState, IList<string> ipAddresses, IReadOnlyList<WritableSubResource> firewalls, IReadOnlyList<WritableSubResource> firewallPolicies, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
-            IpAddresses = ipAddresses;
+            IPAddresses = ipAddresses;
             Firewalls = firewalls;
             FirewallPolicies = firewallPolicies;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> IpAddresses/IpAddressPrefixes in the IpGroups resource. </summary>
         [WirePath("ipAddresses")]
-        public IList<string> IpAddresses { get; } = new ChangeTrackingList<string>();
+        public IList<string> IPAddresses { get; } = new ChangeTrackingList<string>();
 
         /// <summary> List of references to Firewall resources that this IpGroups is associated with. </summary>
         [WirePath("firewalls")]

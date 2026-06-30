@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.ServiceLinker.Tests.Tests
         }
 
         [TestCase]
+        [Ignore("TODO: Re-enable after the new Azure.ResourceManager.AppService (TypeSpec-generated) version is released and this test's recording is re-recorded. The MPG-migrated AppService SDK omits the empty `properties: {}` envelope on WebSite PUT, which fails to match the existing recording.")]
         public async Task WebAppWebPubSubConnectionCRUD()
         {
             string resourceGroupName = Recording.GenerateAssetName("SdkRg");

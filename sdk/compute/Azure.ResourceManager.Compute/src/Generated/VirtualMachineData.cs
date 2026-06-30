@@ -496,6 +496,23 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        /// <summary> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
+        public ResourceIdentifier InterconnectBlockId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InterconnectBlockId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineProperties();
+                }
+                Properties.InterconnectBlockId = value;
+            }
+        }
+
         /// <summary> Specifies the gallery applications that should be made available to the VM/VMSS. </summary>
         public IList<VirtualMachineGalleryApplication> GalleryApplications
         {

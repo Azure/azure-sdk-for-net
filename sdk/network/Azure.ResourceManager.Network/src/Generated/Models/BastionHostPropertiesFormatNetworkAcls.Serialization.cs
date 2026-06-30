@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 throw new FormatException($"The model {nameof(BastionHostPropertiesFormatNetworkAcls)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(IpRules))
+            if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
-                foreach (BastionHostIPRule item in IpRules)
+                foreach (BastionHostIPRule item in IPRules)
                 {
                     writer.WriteObjectValue(item, options);
                 }

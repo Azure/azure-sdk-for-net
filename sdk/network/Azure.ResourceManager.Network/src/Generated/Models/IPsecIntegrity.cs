@@ -18,15 +18,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> MD5. </summary>
         private const string MD5Value = "MD5";
         /// <summary> SHA1. </summary>
-        private const string SHA1Value = "SHA1";
+        private const string Sha1Value = "SHA1";
         /// <summary> SHA256. </summary>
-        private const string SHA256Value = "SHA256";
+        private const string Sha256Value = "SHA256";
         /// <summary> GCMAES128. </summary>
-        private const string GCMAES128Value = "GCMAES128";
+        private const string GcmAes128Value = "GCMAES128";
         /// <summary> GCMAES192. </summary>
         private const string GCMAES192Value = "GCMAES192";
         /// <summary> GCMAES256. </summary>
-        private const string GCMAES256Value = "GCMAES256";
+        private const string GcmAes256Value = "GCMAES256";
 
         /// <summary> Initializes a new instance of <see cref="IPsecIntegrity"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.Network.Models
         public static IPsecIntegrity MD5 { get; } = new IPsecIntegrity(MD5Value);
 
         /// <summary> SHA1. </summary>
-        public static IPsecIntegrity SHA1 { get; } = new IPsecIntegrity(SHA1Value);
+        public static IPsecIntegrity Sha1 { get; } = new IPsecIntegrity(Sha1Value);
 
         /// <summary> SHA256. </summary>
-        public static IPsecIntegrity SHA256 { get; } = new IPsecIntegrity(SHA256Value);
+        public static IPsecIntegrity Sha256 { get; } = new IPsecIntegrity(Sha256Value);
 
         /// <summary> GCMAES128. </summary>
-        public static IPsecIntegrity GCMAES128 { get; } = new IPsecIntegrity(GCMAES128Value);
+        public static IPsecIntegrity GcmAes128 { get; } = new IPsecIntegrity(GcmAes128Value);
 
         /// <summary> GCMAES192. </summary>
         public static IPsecIntegrity GCMAES192 { get; } = new IPsecIntegrity(GCMAES192Value);
 
         /// <summary> GCMAES256. </summary>
-        public static IPsecIntegrity GCMAES256 { get; } = new IPsecIntegrity(GCMAES256Value);
+        public static IPsecIntegrity GcmAes256 { get; } = new IPsecIntegrity(GcmAes256Value);
 
         /// <summary> Determines if two <see cref="IPsecIntegrity"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

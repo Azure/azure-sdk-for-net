@@ -19,38 +19,38 @@ namespace Azure.ResourceManager.Network.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkVerifierIPTraffic"/>. </summary>
-        /// <param name="sourceIps"> List of source IP addresses of the traffic.. </param>
-        /// <param name="destinationIps"> List of destination IP addresses of the traffic.. </param>
+        /// <param name="sourceIPs"> List of source IP addresses of the traffic.. </param>
+        /// <param name="destinationIPs"> List of destination IP addresses of the traffic.. </param>
         /// <param name="sourcePorts"> The source ports of the traffic. </param>
         /// <param name="destinationPorts"> The destination ports of the traffic. </param>
         /// <param name="protocols"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceIps"/>, <paramref name="destinationIps"/>, <paramref name="sourcePorts"/>, <paramref name="destinationPorts"/> or <paramref name="protocols"/> is null. </exception>
-        public NetworkVerifierIPTraffic(IEnumerable<string> sourceIps, IEnumerable<string> destinationIps, IEnumerable<string> sourcePorts, IEnumerable<string> destinationPorts, IEnumerable<NetworkProtocol> protocols)
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceIPs"/>, <paramref name="destinationIPs"/>, <paramref name="sourcePorts"/>, <paramref name="destinationPorts"/> or <paramref name="protocols"/> is null. </exception>
+        public NetworkVerifierIPTraffic(IEnumerable<string> sourceIPs, IEnumerable<string> destinationIPs, IEnumerable<string> sourcePorts, IEnumerable<string> destinationPorts, IEnumerable<NetworkProtocol> protocols)
         {
-            Argument.AssertNotNull(sourceIps, nameof(sourceIps));
-            Argument.AssertNotNull(destinationIps, nameof(destinationIps));
+            Argument.AssertNotNull(sourceIPs, nameof(sourceIPs));
+            Argument.AssertNotNull(destinationIPs, nameof(destinationIPs));
             Argument.AssertNotNull(sourcePorts, nameof(sourcePorts));
             Argument.AssertNotNull(destinationPorts, nameof(destinationPorts));
             Argument.AssertNotNull(protocols, nameof(protocols));
 
-            SourceIps = sourceIps.ToList();
-            DestinationIps = destinationIps.ToList();
+            SourceIPs = sourceIPs.ToList();
+            DestinationIPs = destinationIPs.ToList();
             SourcePorts = sourcePorts.ToList();
             DestinationPorts = destinationPorts.ToList();
             Protocols = protocols.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkVerifierIPTraffic"/>. </summary>
-        /// <param name="sourceIps"> List of source IP addresses of the traffic.. </param>
-        /// <param name="destinationIps"> List of destination IP addresses of the traffic.. </param>
+        /// <param name="sourceIPs"> List of source IP addresses of the traffic.. </param>
+        /// <param name="destinationIPs"> List of destination IP addresses of the traffic.. </param>
         /// <param name="sourcePorts"> The source ports of the traffic. </param>
         /// <param name="destinationPorts"> The destination ports of the traffic. </param>
         /// <param name="protocols"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkVerifierIPTraffic(IList<string> sourceIps, IList<string> destinationIps, IList<string> sourcePorts, IList<string> destinationPorts, IList<NetworkProtocol> protocols, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkVerifierIPTraffic(IList<string> sourceIPs, IList<string> destinationIPs, IList<string> sourcePorts, IList<string> destinationPorts, IList<NetworkProtocol> protocols, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SourceIps = sourceIps;
-            DestinationIps = destinationIps;
+            SourceIPs = sourceIPs;
+            DestinationIPs = destinationIPs;
             SourcePorts = sourcePorts;
             DestinationPorts = destinationPorts;
             Protocols = protocols;
@@ -59,11 +59,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> List of source IP addresses of the traffic.. </summary>
         [WirePath("sourceIps")]
-        public IList<string> SourceIps { get; }
+        public IList<string> SourceIPs { get; }
 
         /// <summary> List of destination IP addresses of the traffic.. </summary>
         [WirePath("destinationIps")]
-        public IList<string> DestinationIps { get; }
+        public IList<string> DestinationIPs { get; }
 
         /// <summary> The source ports of the traffic. </summary>
         [WirePath("sourcePorts")]

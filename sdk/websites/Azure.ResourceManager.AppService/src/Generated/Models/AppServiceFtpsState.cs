@@ -7,60 +7,67 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// State of FTP / FTPS service
-    /// Serialized Name: FtpsState
-    /// </summary>
+    /// <summary> State of FTP / FTPS service. </summary>
     public readonly partial struct AppServiceFtpsState : IEquatable<AppServiceFtpsState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="AppServiceFtpsState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AppServiceFtpsState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AllAllowedValue = "AllAllowed";
         private const string FtpsOnlyValue = "FtpsOnly";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// AllAllowed
-        /// Serialized Name: FtpsState.AllAllowed
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceFtpsState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AppServiceFtpsState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the AllAllowed. </summary>
         public static AppServiceFtpsState AllAllowed { get; } = new AppServiceFtpsState(AllAllowedValue);
-        /// <summary>
-        /// FtpsOnly
-        /// Serialized Name: FtpsState.FtpsOnly
-        /// </summary>
+
+        /// <summary> Gets the FtpsOnly. </summary>
         public static AppServiceFtpsState FtpsOnly { get; } = new AppServiceFtpsState(FtpsOnlyValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: FtpsState.Disabled
-        /// </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static AppServiceFtpsState Disabled { get; } = new AppServiceFtpsState(DisabledValue);
+
         /// <summary> Determines if two <see cref="AppServiceFtpsState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AppServiceFtpsState left, AppServiceFtpsState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AppServiceFtpsState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AppServiceFtpsState left, AppServiceFtpsState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AppServiceFtpsState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AppServiceFtpsState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AppServiceFtpsState(string value) => new AppServiceFtpsState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AppServiceFtpsState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AppServiceFtpsState?(string value) => value == null ? null : new AppServiceFtpsState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AppServiceFtpsState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AppServiceFtpsState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

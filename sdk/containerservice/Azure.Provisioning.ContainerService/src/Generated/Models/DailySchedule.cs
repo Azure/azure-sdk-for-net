@@ -40,6 +40,10 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _intervalDays = DefineProperty<int>(nameof(IntervalDays), new string[] { "intervalDays" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DailySchedule that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

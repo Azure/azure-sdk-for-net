@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
+    /// <summary></summary>
     public partial class SiteBackupResource : IJsonModel<WebAppBackupData>
     {
-        private static WebAppBackupData s_dataDeserializationInstance;
-        private static WebAppBackupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<WebAppBackupData> s_dataDeserializationInstance;
 
+        private static IJsonModel<WebAppBackupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new WebAppBackupData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WebAppBackupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WebAppBackupData>)Data).Write(writer, options);
 
-        WebAppBackupData IJsonModel<WebAppBackupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WebAppBackupData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WebAppBackupData IJsonModel<WebAppBackupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<WebAppBackupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WebAppBackupData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         WebAppBackupData IPersistableModel<WebAppBackupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WebAppBackupData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<WebAppBackupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WebAppBackupData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WebAppBackupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -62,11 +62,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Peer IP. </summary>
         [WirePath("properties.peerIp")]
-        public string PeerIp
+        public string PeerIP
         {
             get
             {
-                return Properties is null ? default : Properties.PeerIp;
+                return Properties is null ? default : Properties.PeerIP;
             }
             set
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new VirtualRouterPeeringProperties();
                 }
-                Properties.PeerIp = value;
+                Properties.PeerIP = value;
             }
         }
 

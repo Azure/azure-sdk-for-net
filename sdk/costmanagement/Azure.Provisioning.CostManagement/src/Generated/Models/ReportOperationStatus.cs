@@ -40,6 +40,10 @@ namespace Azure.Provisioning.CostManagement
         {
             base.DefineProvisionableProperties();
             _statusValue = DefineProperty<ReportOperationStatusType>(nameof(StatusValue), new string[] { "status" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ReportOperationStatus that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

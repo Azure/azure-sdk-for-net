@@ -273,5 +273,14 @@ namespace Azure.ResourceManager.Compute
                 return Properties is null ? default : Properties.LogicalSectorSize;
             }
         }
+
+        /// <summary> The state of snapshot which determines the access availability of the snapshot. </summary>
+        public SnapshotAccessState? SnapshotAccessState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SnapshotAccessState;
+            }
+        }
     }
 }

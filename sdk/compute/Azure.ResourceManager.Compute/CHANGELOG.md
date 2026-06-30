@@ -1,14 +1,14 @@
 # Release History
 
-## 1.16.0-beta.1 (Unreleased)
+## 1.16.0 (2026-07-01)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded API versions: Compute to `2026-03-01`, Disk to `2026-03-02`, and Gallery to `2025-12-03`.
+- Added snapshot immutability policy support, including `SnapshotResource.UpdateImmutabilityPolicy`, `SnapshotResource.UpdateImmutabilityPolicyLock`, `ImmutabilityPolicy`, `ImmutabilityPolicyType`, `ImmutabilityPolicyContent`, and `ImmutabilityPolicyLockContent`.
+- Added shared gallery invite accept/reject extension methods.
+- Added `ConfidentialVmVersion` on `DiskSecurityProfile`.
+- Added `ImmutabilityPolicy` on `SnapshotProperties`.
 
 ## 1.15.0 (2026-06-29)
 

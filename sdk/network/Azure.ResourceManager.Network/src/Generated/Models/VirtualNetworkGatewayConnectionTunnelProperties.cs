@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayConnectionTunnelProperties"/>. </summary>
-        /// <param name="tunnelIpAddress"> Tunnel remote IP address. </param>
+        /// <param name="tunnelIPAddress"> Tunnel remote IP address. </param>
         /// <param name="bgpPeeringAddress"> Tunnel BGP peering address. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkGatewayConnectionTunnelProperties(string tunnelIpAddress, string bgpPeeringAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualNetworkGatewayConnectionTunnelProperties(string tunnelIPAddress, string bgpPeeringAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            TunnelIpAddress = tunnelIpAddress;
+            TunnelIPAddress = tunnelIPAddress;
             BgpPeeringAddress = bgpPeeringAddress;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Tunnel remote IP address. </summary>
         [WirePath("tunnelIpAddress")]
-        public string TunnelIpAddress { get; set; }
+        public string TunnelIPAddress { get; set; }
 
         /// <summary> Tunnel BGP peering address. </summary>
         [WirePath("bgpPeeringAddress")]

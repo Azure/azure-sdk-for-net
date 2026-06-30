@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly string _value;
         /// <summary> TCP. </summary>
-        private const string TCPValue = "TCP";
+        private const string TcpValue = "TCP";
         /// <summary> UDP. </summary>
-        private const string UDPValue = "UDP";
+        private const string UdpValue = "UDP";
         /// <summary> Any. </summary>
         private const string AnyValue = "Any";
         /// <summary> ICMP. </summary>
-        private const string ICMPValue = "ICMP";
+        private const string IcmpValue = "ICMP";
 
         /// <summary> Initializes a new instance of <see cref="AzureFirewallNetworkRuleProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -35,16 +35,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> TCP. </summary>
-        public static AzureFirewallNetworkRuleProtocol TCP { get; } = new AzureFirewallNetworkRuleProtocol(TCPValue);
+        public static AzureFirewallNetworkRuleProtocol Tcp { get; } = new AzureFirewallNetworkRuleProtocol(TcpValue);
 
         /// <summary> UDP. </summary>
-        public static AzureFirewallNetworkRuleProtocol UDP { get; } = new AzureFirewallNetworkRuleProtocol(UDPValue);
+        public static AzureFirewallNetworkRuleProtocol Udp { get; } = new AzureFirewallNetworkRuleProtocol(UdpValue);
 
         /// <summary> Any. </summary>
         public static AzureFirewallNetworkRuleProtocol Any { get; } = new AzureFirewallNetworkRuleProtocol(AnyValue);
 
         /// <summary> ICMP. </summary>
-        public static AzureFirewallNetworkRuleProtocol ICMP { get; } = new AzureFirewallNetworkRuleProtocol(ICMPValue);
+        public static AzureFirewallNetworkRuleProtocol Icmp { get; } = new AzureFirewallNetworkRuleProtocol(IcmpValue);
 
         /// <summary> Determines if two <see cref="AzureFirewallNetworkRuleProtocol"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -24,6 +24,10 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DeliveryRuleConditionProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

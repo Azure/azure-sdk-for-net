@@ -95,6 +95,10 @@ namespace Azure.Provisioning.MySql
             _supportedMemoryPerVCoreMB = DefineProperty<long>(nameof(SupportedMemoryPerVCoreMB), new string[] { "supportedMemoryPerVCoreMB" }, isOutput: true);
             _supportedZones = DefineListProperty<string>(nameof(SupportedZones), new string[] { "supportedZones" }, isOutput: true);
             _supportedHAMode = DefineListProperty<string>(nameof(SupportedHAMode), new string[] { "supportedHAMode" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SkuCapabilityV2 that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

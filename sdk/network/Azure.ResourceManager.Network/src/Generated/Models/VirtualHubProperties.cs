@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="VirtualHubProperties"/>. </summary>
         public VirtualHubProperties()
         {
-            VirtualHubRouteTableV2s = new ChangeTrackingList<VirtualHubRouteTableV2Data>();
+            VirtualHubRouteTableV2S = new ChangeTrackingList<VirtualHubRouteTableV2Data>();
             BgpConnections = new ChangeTrackingList<WritableSubResource>();
-            IpConfigurations = new ChangeTrackingList<NetworkSubResource>();
+            IPConfigurations = new ChangeTrackingList<NetworkSubResource>();
             RouteMaps = new ChangeTrackingList<WritableSubResource>();
-            VirtualRouterIps = new ChangeTrackingList<string>();
+            VirtualRouterIPs = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualHubProperties"/>. </summary>
@@ -40,20 +40,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="routeTable"> The routeTable associated with this virtual hub. </param>
         /// <param name="provisioningState"> The provisioning state of the virtual hub resource. </param>
         /// <param name="securityProviderName"> The Security Provider name. </param>
-        /// <param name="virtualHubRouteTableV2s"> List of all virtual hub route table v2s associated with this VirtualHub. </param>
+        /// <param name="virtualHubRouteTableV2S"> List of all virtual hub route table v2s associated with this VirtualHub. </param>
         /// <param name="sku"> The sku of this VirtualHub. </param>
         /// <param name="routingState"> The routing state. </param>
         /// <param name="bgpConnections"> List of references to Bgp Connections. </param>
         /// <param name="ipConfigurations"> List of references to IpConfigurations. </param>
         /// <param name="routeMaps"> List of references to RouteMaps. </param>
         /// <param name="virtualRouterAsn"> VirtualRouter ASN. </param>
-        /// <param name="virtualRouterIps"> VirtualRouter IPs. </param>
+        /// <param name="virtualRouterIPs"> VirtualRouter IPs. </param>
         /// <param name="allowBranchToBranchTraffic"> Flag to control transit for VirtualRouter hub. </param>
         /// <param name="preferredRoutingGateway"> The preferred gateway to route on-prem traffic. </param>
         /// <param name="hubRoutingPreference"> The hubRoutingPreference of this VirtualHub. </param>
         /// <param name="virtualRouterAutoScaleConfiguration"> The VirtualHub Router autoscale configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualHubProperties(NetworkSubResource virtualWan, NetworkSubResource vpnGateway, NetworkSubResource p2SVpnGateway, NetworkSubResource expressRouteGateway, NetworkSubResource azureFirewall, NetworkSubResource securityPartnerProvider, string addressPrefix, VirtualHubRouteTable routeTable, NetworkProvisioningState? provisioningState, string securityProviderName, IList<VirtualHubRouteTableV2Data> virtualHubRouteTableV2s, string sku, RoutingState? routingState, IReadOnlyList<WritableSubResource> bgpConnections, IReadOnlyList<NetworkSubResource> ipConfigurations, IReadOnlyList<WritableSubResource> routeMaps, long? virtualRouterAsn, IList<string> virtualRouterIps, bool? allowBranchToBranchTraffic, PreferredRoutingGateway? preferredRoutingGateway, HubRoutingPreference? hubRoutingPreference, VirtualRouterAutoScaleConfiguration virtualRouterAutoScaleConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualHubProperties(NetworkSubResource virtualWan, NetworkSubResource vpnGateway, NetworkSubResource p2SVpnGateway, NetworkSubResource expressRouteGateway, NetworkSubResource azureFirewall, NetworkSubResource securityPartnerProvider, string addressPrefix, VirtualHubRouteTable routeTable, NetworkProvisioningState? provisioningState, string securityProviderName, IList<VirtualHubRouteTableV2Data> virtualHubRouteTableV2S, string sku, RoutingState? routingState, IReadOnlyList<WritableSubResource> bgpConnections, IReadOnlyList<NetworkSubResource> ipConfigurations, IReadOnlyList<WritableSubResource> routeMaps, long? virtualRouterAsn, IList<string> virtualRouterIPs, bool? allowBranchToBranchTraffic, PreferredRoutingGateway? preferredRoutingGateway, HubRoutingPreference? hubRoutingPreference, VirtualRouterAutoScaleConfiguration virtualRouterAutoScaleConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualWan = virtualWan;
             VpnGateway = vpnGateway;
@@ -65,14 +65,14 @@ namespace Azure.ResourceManager.Network.Models
             RouteTable = routeTable;
             ProvisioningState = provisioningState;
             SecurityProviderName = securityProviderName;
-            VirtualHubRouteTableV2s = virtualHubRouteTableV2s;
+            VirtualHubRouteTableV2S = virtualHubRouteTableV2S;
             Sku = sku;
             RoutingState = routingState;
             BgpConnections = bgpConnections;
-            IpConfigurations = ipConfigurations;
+            IPConfigurations = ipConfigurations;
             RouteMaps = routeMaps;
             VirtualRouterAsn = virtualRouterAsn;
-            VirtualRouterIps = virtualRouterIps;
+            VirtualRouterIPs = virtualRouterIPs;
             AllowBranchToBranchTraffic = allowBranchToBranchTraffic;
             PreferredRoutingGateway = preferredRoutingGateway;
             HubRoutingPreference = hubRoutingPreference;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> List of all virtual hub route table v2s associated with this VirtualHub. </summary>
         [WirePath("virtualHubRouteTableV2s")]
-        public IList<VirtualHubRouteTableV2Data> VirtualHubRouteTableV2s { get; } = new ChangeTrackingList<VirtualHubRouteTableV2Data>();
+        public IList<VirtualHubRouteTableV2Data> VirtualHubRouteTableV2S { get; } = new ChangeTrackingList<VirtualHubRouteTableV2Data>();
 
         /// <summary> The sku of this VirtualHub. </summary>
         [WirePath("sku")]
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> List of references to IpConfigurations. </summary>
         [WirePath("ipConfigurations")]
-        public IReadOnlyList<NetworkSubResource> IpConfigurations { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IReadOnlyList<NetworkSubResource> IPConfigurations { get; } = new ChangeTrackingList<NetworkSubResource>();
 
         /// <summary> List of references to RouteMaps. </summary>
         [WirePath("routeMaps")]
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> VirtualRouter IPs. </summary>
         [WirePath("virtualRouterIps")]
-        public IList<string> VirtualRouterIps { get; } = new ChangeTrackingList<string>();
+        public IList<string> VirtualRouterIPs { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Flag to control transit for VirtualRouter hub. </summary>
         [WirePath("allowBranchToBranchTraffic")]

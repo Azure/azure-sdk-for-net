@@ -13,44 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the WorkflowTriggerHistory data model.
-    /// The workflow trigger history.
-    /// Serialized Name: WorkflowTriggerHistory
-    /// </summary>
+    /// <summary> The workflow trigger history. </summary>
     public partial class WorkflowTriggerHistoryData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowTriggerHistoryData"/>. </summary>
         public WorkflowTriggerHistoryData()
@@ -58,189 +25,148 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowTriggerHistoryData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="startOn">
-        /// Gets the start time.
-        /// Serialized Name: WorkflowTriggerHistory.properties.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// Gets the end time.
-        /// Serialized Name: WorkflowTriggerHistory.properties.endTime
-        /// </param>
-        /// <param name="scheduledOn">
-        /// The scheduled time.
-        /// Serialized Name: WorkflowTriggerHistory.properties.scheduledTime
-        /// </param>
-        /// <param name="status">
-        /// Gets the status.
-        /// Serialized Name: WorkflowTriggerHistory.properties.status
-        /// </param>
-        /// <param name="code">
-        /// Gets the code.
-        /// Serialized Name: WorkflowTriggerHistory.properties.code
-        /// </param>
-        /// <param name="error">
-        /// Gets the error.
-        /// Serialized Name: WorkflowTriggerHistory.properties.error
-        /// </param>
-        /// <param name="trackingId">
-        /// Gets the tracking id.
-        /// Serialized Name: WorkflowTriggerHistory.properties.trackingId
-        /// </param>
-        /// <param name="correlation">
-        /// The run correlation.
-        /// Serialized Name: WorkflowTriggerHistory.properties.correlation
-        /// </param>
-        /// <param name="inputsLink">
-        /// Gets the link to input parameters.
-        /// Serialized Name: WorkflowTriggerHistory.properties.inputsLink
-        /// </param>
-        /// <param name="outputsLink">
-        /// Gets the link to output parameters.
-        /// Serialized Name: WorkflowTriggerHistory.properties.outputsLink
-        /// </param>
-        /// <param name="isFired">
-        /// The value indicating whether trigger was fired.
-        /// Serialized Name: WorkflowTriggerHistory.properties.fired
-        /// </param>
-        /// <param name="run">
-        /// Gets the reference to workflow run.
-        /// Serialized Name: WorkflowTriggerHistory.properties.run
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowTriggerHistoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? scheduledOn, WorkflowStatus? status, string code, BinaryData error, string trackingId, Correlation correlation, WebAppContentLink inputsLink, WebAppContentLink outputsLink, bool? isFired, WorkflowResourceReference run, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Gets the workflow trigger history properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WorkflowTriggerHistoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkflowTriggerHistoryProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            StartOn = startOn;
-            EndOn = endOn;
-            ScheduledOn = scheduledOn;
-            Status = status;
-            Code = code;
-            Error = error;
-            TrackingId = trackingId;
-            Correlation = correlation;
-            InputsLink = inputsLink;
-            OutputsLink = outputsLink;
-            IsFired = isFired;
-            Run = run;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Gets the start time.
-        /// Serialized Name: WorkflowTriggerHistory.properties.startTime
-        /// </summary>
+        /// <summary> Gets the workflow trigger history properties. </summary>
+        [WirePath("properties")]
+        internal WorkflowTriggerHistoryProperties Properties { get; set; }
+
+        /// <summary> Gets the start time. </summary>
         [WirePath("properties.startTime")]
-        public DateTimeOffset? StartOn { get; }
-        /// <summary>
-        /// Gets the end time.
-        /// Serialized Name: WorkflowTriggerHistory.properties.endTime
-        /// </summary>
-        [WirePath("properties.endTime")]
-        public DateTimeOffset? EndOn { get; }
-        /// <summary>
-        /// The scheduled time.
-        /// Serialized Name: WorkflowTriggerHistory.properties.scheduledTime
-        /// </summary>
-        [WirePath("properties.scheduledTime")]
-        public DateTimeOffset? ScheduledOn { get; }
-        /// <summary>
-        /// Gets the status.
-        /// Serialized Name: WorkflowTriggerHistory.properties.status
-        /// </summary>
-        [WirePath("properties.status")]
-        public WorkflowStatus? Status { get; }
-        /// <summary>
-        /// Gets the code.
-        /// Serialized Name: WorkflowTriggerHistory.properties.code
-        /// </summary>
-        [WirePath("properties.code")]
-        public string Code { get; }
-        /// <summary>
-        /// Gets the error.
-        /// Serialized Name: WorkflowTriggerHistory.properties.error
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        [WirePath("properties.error")]
-        public BinaryData Error { get; }
-        /// <summary>
-        /// Gets the tracking id.
-        /// Serialized Name: WorkflowTriggerHistory.properties.trackingId
-        /// </summary>
-        [WirePath("properties.trackingId")]
-        public string TrackingId { get; }
-        /// <summary>
-        /// The run correlation.
-        /// Serialized Name: WorkflowTriggerHistory.properties.correlation
-        /// </summary>
-        internal Correlation Correlation { get; set; }
-        /// <summary>
-        /// The client tracking id.
-        /// Serialized Name: Correlation.clientTrackingId
-        /// </summary>
-        [WirePath("properties.correlation.clientTrackingId")]
-        public string CorrelationClientTrackingId
+        public DateTimeOffset? StartOn
         {
-            get => Correlation is null ? default : Correlation.ClientTrackingId;
-            set
+            get
             {
-                if (Correlation is null)
-                    Correlation = new Correlation();
-                Correlation.ClientTrackingId = value;
+                return Properties is null ? default : Properties.StartOn;
             }
         }
 
-        /// <summary>
-        /// Gets the link to input parameters.
-        /// Serialized Name: WorkflowTriggerHistory.properties.inputsLink
-        /// </summary>
+        /// <summary> Gets the end time. </summary>
+        [WirePath("properties.endTime")]
+        public DateTimeOffset? EndOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndOn;
+            }
+        }
+
+        /// <summary> The scheduled time. </summary>
+        [WirePath("properties.scheduledTime")]
+        public DateTimeOffset? ScheduledOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScheduledOn;
+            }
+        }
+
+        /// <summary> Gets the status. </summary>
+        [WirePath("properties.status")]
+        public WorkflowStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
+        /// <summary> Gets the code. </summary>
+        [WirePath("properties.code")]
+        public string Code
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Code;
+            }
+        }
+
+        /// <summary> Gets the error. </summary>
+        [WirePath("properties.error")]
+        public BinaryData Error
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Error;
+            }
+        }
+
+        /// <summary> Gets the tracking id. </summary>
+        [WirePath("properties.trackingId")]
+        public string TrackingId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TrackingId;
+            }
+        }
+
+        /// <summary> Gets the link to input parameters. </summary>
         [WirePath("properties.inputsLink")]
-        public WebAppContentLink InputsLink { get; }
-        /// <summary>
-        /// Gets the link to output parameters.
-        /// Serialized Name: WorkflowTriggerHistory.properties.outputsLink
-        /// </summary>
+        public WebAppContentLink InputsLink
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InputsLink;
+            }
+        }
+
+        /// <summary> Gets the link to output parameters. </summary>
         [WirePath("properties.outputsLink")]
-        public WebAppContentLink OutputsLink { get; }
-        /// <summary>
-        /// The value indicating whether trigger was fired.
-        /// Serialized Name: WorkflowTriggerHistory.properties.fired
-        /// </summary>
+        public WebAppContentLink OutputsLink
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OutputsLink;
+            }
+        }
+
+        /// <summary> The value indicating whether trigger was fired. </summary>
         [WirePath("properties.fired")]
-        public bool? IsFired { get; }
-        /// <summary>
-        /// Gets the reference to workflow run.
-        /// Serialized Name: WorkflowTriggerHistory.properties.run
-        /// </summary>
+        public bool? IsFired
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsFired;
+            }
+        }
+
+        /// <summary> Gets the reference to workflow run. </summary>
         [WirePath("properties.run")]
-        public WorkflowResourceReference Run { get; }
+        public WorkflowResourceReference Run
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Run;
+            }
+        }
+
+        /// <summary> The client tracking id. </summary>
+        [WirePath("properties.correlation.clientTrackingId")]
+        public string CorrelationClientTrackingId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CorrelationClientTrackingId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkflowTriggerHistoryProperties();
+                }
+                Properties.CorrelationClientTrackingId = value;
+            }
+        }
     }
 }

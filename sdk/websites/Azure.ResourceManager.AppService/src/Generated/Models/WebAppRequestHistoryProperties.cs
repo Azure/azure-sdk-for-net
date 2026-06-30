@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The request history.
-    /// Serialized Name: RequestHistoryProperties
-    /// </summary>
+    /// <summary> The request history. </summary>
     public partial class WebAppRequestHistoryProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebAppRequestHistoryProperties"/>. </summary>
         public WebAppRequestHistoryProperties()
@@ -54,54 +23,33 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppRequestHistoryProperties"/>. </summary>
-        /// <param name="startOn">
-        /// The time the request started.
-        /// Serialized Name: RequestHistoryProperties.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// The time the request ended.
-        /// Serialized Name: RequestHistoryProperties.endTime
-        /// </param>
-        /// <param name="request">
-        /// The request.
-        /// Serialized Name: RequestHistoryProperties.request
-        /// </param>
-        /// <param name="response">
-        /// The response.
-        /// Serialized Name: RequestHistoryProperties.response
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppRequestHistoryProperties(DateTimeOffset? startOn, DateTimeOffset? endOn, WebAppRequest request, WebAppResponse response, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="startOn"> The time the request started. </param>
+        /// <param name="endOn"> The time the request ended. </param>
+        /// <param name="request"> The request. </param>
+        /// <param name="response"> The response. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WebAppRequestHistoryProperties(DateTimeOffset? startOn, DateTimeOffset? endOn, WebAppRequest request, WebAppResponse response, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartOn = startOn;
             EndOn = endOn;
             Request = request;
             Response = response;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// The time the request started.
-        /// Serialized Name: RequestHistoryProperties.startTime
-        /// </summary>
+        /// <summary> The time the request started. </summary>
         [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; set; }
-        /// <summary>
-        /// The time the request ended.
-        /// Serialized Name: RequestHistoryProperties.endTime
-        /// </summary>
+
+        /// <summary> The time the request ended. </summary>
         [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; set; }
-        /// <summary>
-        /// The request.
-        /// Serialized Name: RequestHistoryProperties.request
-        /// </summary>
+
+        /// <summary> The request. </summary>
         [WirePath("request")]
         public WebAppRequest Request { get; set; }
-        /// <summary>
-        /// The response.
-        /// Serialized Name: RequestHistoryProperties.response
-        /// </summary>
+
+        /// <summary> The response. </summary>
         [WirePath("response")]
         public WebAppResponse Response { get; set; }
     }

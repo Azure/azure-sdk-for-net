@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
+    /// <summary></summary>
     public partial class WebSiteSlotWebJobResource : IJsonModel<WebJobData>
     {
-        private static WebJobData s_dataDeserializationInstance;
-        private static WebJobData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<WebJobData> s_dataDeserializationInstance;
 
+        private static IJsonModel<WebJobData> DataDeserializationInstance => s_dataDeserializationInstance ??= new WebJobData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WebJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WebJobData>)Data).Write(writer, options);
 
-        WebJobData IJsonModel<WebJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WebJobData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WebJobData IJsonModel<WebJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<WebJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WebJobData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         WebJobData IPersistableModel<WebJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WebJobData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<WebJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WebJobData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WebJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

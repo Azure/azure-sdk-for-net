@@ -7,6 +7,7 @@ using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
 
@@ -28,12 +29,15 @@ namespace Azure.ResourceManager.AppService.Mocking
 
             async Task<Page<AppServiceIdentifierData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllSiteIdentifierData");
+                using var scope = WebClientClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllSiteIdentifierData");
                 scope.Start();
                 try
                 {
-                    var response = await DefaultRestClient.ListSiteIdentifiersAssignedToHostNameAsync(Id.SubscriptionId, nameIdentifier, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
+                    RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                    using var message = WebClientRestClient.CreateGetAllSiteIdentifierDataRequest(Guid.Parse(Id.SubscriptionId), AppServiceDomainNameIdentifier.ToRequestContent(nameIdentifier), context);
+                    var response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    AppServiceIdentifierListResult result = AppServiceIdentifierListResult.FromResponse(response);
+                    return Page.FromValues(result.Value, result.NextLink?.AbsoluteUri, response);
                 }
                 catch (Exception e)
                 {
@@ -43,12 +47,15 @@ namespace Azure.ResourceManager.AppService.Mocking
             }
             async Task<Page<AppServiceIdentifierData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllSiteIdentifierData");
+                using var scope = WebClientClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllSiteIdentifierData");
                 scope.Start();
                 try
                 {
-                    var response = await DefaultRestClient.ListSiteIdentifiersAssignedToHostNameNextPageAsync(nextLink, Id.SubscriptionId, nameIdentifier, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
+                    RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                    using var message = WebClientRestClient.CreateNextGetAllSiteIdentifierDataRequest(new Uri(nextLink, UriKind.RelativeOrAbsolute), Guid.Parse(Id.SubscriptionId), AppServiceDomainNameIdentifier.ToRequestContent(nameIdentifier), context);
+                    var response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    AppServiceIdentifierListResult result = AppServiceIdentifierListResult.FromResponse(response);
+                    return Page.FromValues(result.Value, result.NextLink?.AbsoluteUri, response);
                 }
                 catch (Exception e)
                 {
@@ -73,12 +80,15 @@ namespace Azure.ResourceManager.AppService.Mocking
 
             Page<AppServiceIdentifierData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllSiteIdentifierData");
+                using var scope = WebClientClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllSiteIdentifierData");
                 scope.Start();
                 try
                 {
-                    var response = DefaultRestClient.ListSiteIdentifiersAssignedToHostName(Id.SubscriptionId, nameIdentifier, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
+                    RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                    using var message = WebClientRestClient.CreateGetAllSiteIdentifierDataRequest(Guid.Parse(Id.SubscriptionId), AppServiceDomainNameIdentifier.ToRequestContent(nameIdentifier), context);
+                    var response = Pipeline.ProcessMessage(message, context);
+                    AppServiceIdentifierListResult result = AppServiceIdentifierListResult.FromResponse(response);
+                    return Page.FromValues(result.Value, result.NextLink?.AbsoluteUri, response);
                 }
                 catch (Exception e)
                 {
@@ -88,12 +98,15 @@ namespace Azure.ResourceManager.AppService.Mocking
             }
             Page<AppServiceIdentifierData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllSiteIdentifierData");
+                using var scope = WebClientClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllSiteIdentifierData");
                 scope.Start();
                 try
                 {
-                    var response = DefaultRestClient.ListSiteIdentifiersAssignedToHostNameNextPage(nextLink, Id.SubscriptionId, nameIdentifier, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
+                    RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                    using var message = WebClientRestClient.CreateNextGetAllSiteIdentifierDataRequest(new Uri(nextLink, UriKind.RelativeOrAbsolute), Guid.Parse(Id.SubscriptionId), AppServiceDomainNameIdentifier.ToRequestContent(nameIdentifier), context);
+                    var response = Pipeline.ProcessMessage(message, context);
+                    AppServiceIdentifierListResult result = AppServiceIdentifierListResult.FromResponse(response);
+                    return Page.FromValues(result.Value, result.NextLink?.AbsoluteUri, response);
                 }
                 catch (Exception e)
                 {
@@ -131,7 +144,7 @@ namespace Azure.ResourceManager.AppService.Mocking
 
             var response = await CheckAppServiceNameAvailabilityAsync(nameAvailabilityContent, cancellationToken).ConfigureAwait(false);
 
-            return Response.FromValue(new ResourceNameAvailability(response.Value.IsNameAvailable, response.Value.Reason.ToString(), response.Value.Message, null), response.GetRawResponse());
+            return Response.FromValue(new ResourceNameAvailability(response.Value.IsNameAvailable, response.Value.Reason?.ToString(), response.Value.Message, null), response.GetRawResponse());
         }
 
         /// <summary>
@@ -161,7 +174,7 @@ namespace Azure.ResourceManager.AppService.Mocking
 
             var response = CheckAppServiceNameAvailability(nameAvailabilityContent, cancellationToken);
 
-            return Response.FromValue(new ResourceNameAvailability(response.Value.IsNameAvailable, response.Value.Reason.ToString(), response.Value.Message, null), response.GetRawResponse());
+            return Response.FromValue(new ResourceNameAvailability(response.Value.IsNameAvailable, response.Value.Reason?.ToString(), response.Value.Message, null), response.GetRawResponse());
         }
 
         /// <summary>

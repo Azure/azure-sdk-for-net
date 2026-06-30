@@ -92,6 +92,10 @@ namespace Azure.Provisioning.Batch
             _ipAddressIds = DefineListProperty<ResourceIdentifier>(nameof(IPAddressIds), new string[] { "ipAddressIds" });
             _ipFamilies = DefineListProperty<BatchIPFamily>(nameof(IPFamilies), new string[] { "ipFamilies" });
             _ipTags = DefineListProperty<BatchIPTag>(nameof(IPTags), new string[] { "ipTags" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchPublicIPAddressConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

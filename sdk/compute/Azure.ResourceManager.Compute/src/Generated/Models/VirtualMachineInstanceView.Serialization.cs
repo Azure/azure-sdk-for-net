@@ -182,6 +182,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("isVMInStandbyPool"u8);
                 writer.WriteBooleanValue(IsVmInStandbyPool.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(InterconnectInstanceView))
+            {
+                writer.WritePropertyName("interconnectInstanceView"u8);
+                writer.WriteObjectValue(InterconnectInstanceView, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -241,6 +246,7 @@ namespace Azure.ResourceManager.Compute.Models
             IReadOnlyList<InstanceViewStatus> statuses = default;
             VirtualMachinePatchStatus patchStatus = default;
             bool? isVmInStandbyPool = default;
+            InterconnectInstanceView interconnectInstanceView = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -392,6 +398,15 @@ namespace Azure.ResourceManager.Compute.Models
                     isVmInStandbyPool = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("interconnectInstanceView"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    interconnectInstanceView = InterconnectInstanceView.DeserializeInterconnectInstanceView(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -415,6 +430,7 @@ namespace Azure.ResourceManager.Compute.Models
                 statuses ?? new ChangeTrackingList<InstanceViewStatus>(),
                 patchStatus,
                 isVmInStandbyPool,
+                interconnectInstanceView,
                 additionalBinaryDataProperties);
         }
     }
