@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using NUnit.Framework;
+using NUnit.Framework.Interfaces;
+using NUnit.Framework.Internal;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using NUnit.Framework;
-using NUnit.Framework.Interfaces;
-using NUnit.Framework.Internal;
 
 namespace Microsoft.ClientModel.TestFramework;
 
@@ -105,7 +105,7 @@ public class ClientTestFixtureAttribute : NUnitAttribute, IFixtureBuilder2, IPre
 
         void AddResult(object? parameter)
         {
-            List<object> parameters = [true];
+            List<object> parameters =[ true ];
 
             if (parameter != null)
             {

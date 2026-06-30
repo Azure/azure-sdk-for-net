@@ -297,10 +297,8 @@ public class ConfigurationExtensionsTests
         int acceptCount = 0;
         foreach (string h in headers)
         {
-            if (string.Equals(h, "Content-Type", StringComparison.OrdinalIgnoreCase))
-                contentTypeCount++;
-            if (string.Equals(h, "Accept", StringComparison.OrdinalIgnoreCase))
-                acceptCount++;
+            if (string.Equals(h, "Content-Type", StringComparison.OrdinalIgnoreCase)) contentTypeCount++;
+            if (string.Equals(h, "Accept", StringComparison.OrdinalIgnoreCase)) acceptCount++;
         }
         Assert.That(contentTypeCount, Is.EqualTo(1), "Content-Type should not be duplicated");
         Assert.That(acceptCount, Is.EqualTo(1), "Accept should not be duplicated");
@@ -324,8 +322,7 @@ public class ConfigurationExtensionsTests
         int apiVersionCount = 0;
         foreach (string q in queryParams)
         {
-            if (string.Equals(q, "api-version", StringComparison.OrdinalIgnoreCase))
-                apiVersionCount++;
+            if (string.Equals(q, "api-version", StringComparison.OrdinalIgnoreCase)) apiVersionCount++;
         }
         Assert.That(apiVersionCount, Is.EqualTo(1), "api-version should not be duplicated");
     }

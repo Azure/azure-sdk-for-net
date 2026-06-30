@@ -1459,14 +1459,12 @@ public class CredentialResolverTests
             bool threw = false;
             var t = new Threading.Thread(() =>
             {
-                try
-                { provider.ResolveInner(); }
+                try { provider.ResolveInner(); }
                 catch (InvalidOperationException) { threw = true; }
             });
             t.Start();
             t.Join();
-            if (!threw)
-                missed++;
+            if (!threw) missed++;
         }
         Assert.That(missed, Is.Zero,
             $"{missed} of {iterations} cross-thread invocations did not throw — memory-ordering race in the guard flag.");

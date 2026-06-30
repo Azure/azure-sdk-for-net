@@ -541,8 +541,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
             TypeBuilderSpec modelInfo,
             TypeRef context)
         {
-            WrapInSuppress(modelInfo.Type, builder, () =>
-            {
+            WrapInSuppress(modelInfo.Type, builder, () => {
                 builder.Append(indent, "protected override ");
                 builder.AppendType(typeof(Type));
                 builder.AppendLine($" BuilderType => typeof({modelInfo.Type.FullyQualifiedName});");

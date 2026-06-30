@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Castle.DynamicProxy;
 using System;
 using System.ClientModel;
 using System.Reflection;
 using System.Threading.Tasks;
-using Castle.DynamicProxy;
 
 namespace Microsoft.ClientModel.TestFramework;
 

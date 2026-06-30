@@ -32,8 +32,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 expectedSerializedString += "\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",";
             expectedSerializedString += "\"sku\":{\"name\":\"Classic\"";
             expectedSerializedString += "},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\"}";
-            return expectedSerializedString;
-            ;
+            return expectedSerializedString; ;
         }
 
         protected override void VerifyModel(AvailabilitySetData model, string format)
