@@ -12,7 +12,6 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Search
 {
-    /// <summary> Properties of the search service. </summary>
     internal partial class SearchServiceProperties : ProvisionableConstruct
     {
         private BicepValue<int> _replicaCount;
@@ -330,6 +329,10 @@ namespace Azure.Provisioning.Search
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "eTag" }, isOutput: true);
             _isUpgradeAvailable = DefineProperty<SearchServiceUpgradeAvailable>(nameof(IsUpgradeAvailable), new string[] { "upgradeAvailable" });
             _serviceUpgradedOn = DefineProperty<DateTimeOffset>(nameof(ServiceUpgradedOn), new string[] { "serviceUpgradedAt" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SearchServiceProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

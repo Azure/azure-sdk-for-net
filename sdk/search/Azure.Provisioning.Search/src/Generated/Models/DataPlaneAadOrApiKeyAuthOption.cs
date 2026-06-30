@@ -40,6 +40,10 @@ namespace Azure.Provisioning.Search
         {
             base.DefineProvisionableProperties();
             _aadAuthFailureMode = DefineProperty<SearchAadAuthFailureMode>(nameof(AadAuthFailureMode), new string[] { "aadAuthFailureMode" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DataPlaneAadOrApiKeyAuthOption that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

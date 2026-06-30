@@ -40,6 +40,10 @@ namespace Azure.Provisioning.Search
         {
             base.DefineProvisionableProperties();
             _value = DefineProperty<string>(nameof(Value), new string[] { "value" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SearchServiceIPRule that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

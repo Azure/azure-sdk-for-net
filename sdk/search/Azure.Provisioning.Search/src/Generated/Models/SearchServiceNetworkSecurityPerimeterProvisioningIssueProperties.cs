@@ -84,6 +84,10 @@ namespace Azure.Provisioning.Search
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" }, isOutput: true);
             _suggestedResourceIds = DefineListProperty<ResourceIdentifier>(nameof(SuggestedResourceIds), new string[] { "suggestedResourceIds" }, isOutput: true);
             _suggestedAccessRules = DefineListProperty<SearchServiceNetworkSecurityPerimeterAccessRule>(nameof(SuggestedAccessRules), new string[] { "suggestedAccessRules" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

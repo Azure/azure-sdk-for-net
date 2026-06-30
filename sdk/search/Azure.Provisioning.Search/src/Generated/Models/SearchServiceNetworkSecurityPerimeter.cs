@@ -76,6 +76,10 @@ namespace Azure.Provisioning.Search
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" });
             _perimeterGuid = DefineProperty<Guid>(nameof(PerimeterGuid), new string[] { "perimeterGuid" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SearchServiceNetworkSecurityPerimeter that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

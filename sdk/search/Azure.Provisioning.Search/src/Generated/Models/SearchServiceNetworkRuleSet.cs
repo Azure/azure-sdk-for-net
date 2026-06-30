@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Search
             base.DefineProvisionableProperties();
             _ipRules = DefineListProperty<SearchServiceIPRule>(nameof(IPRules), new string[] { "ipRules" });
             _bypass = DefineProperty<SearchBypass>(nameof(Bypass), new string[] { "bypass" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SearchServiceNetworkRuleSet that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

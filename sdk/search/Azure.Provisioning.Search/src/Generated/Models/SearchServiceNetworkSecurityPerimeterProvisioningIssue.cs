@@ -47,6 +47,10 @@ namespace Azure.Provisioning.Search
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isOutput: true);
             _properties = DefineModelProperty<SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties>(nameof(Properties), new string[] { "properties" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SearchServiceNetworkSecurityPerimeterProvisioningIssue that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -109,6 +109,10 @@ namespace Azure.Provisioning.Search
             _connectionState = DefineModelProperty<SearchServicePrivateLinkServiceConnectionState>(nameof(ConnectionState), new string[] { "privateLinkServiceConnectionState" });
             _groupId = DefineProperty<string>(nameof(GroupId), new string[] { "groupId" });
             _provisioningState = DefineProperty<SearchPrivateLinkServiceConnectionProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SearchServicePrivateEndpointConnectionProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

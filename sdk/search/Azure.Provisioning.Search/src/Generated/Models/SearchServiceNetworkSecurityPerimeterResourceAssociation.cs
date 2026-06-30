@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Search
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _accessMode = DefineProperty<SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode>(nameof(AccessMode), new string[] { "accessMode" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SearchServiceNetworkSecurityPerimeterResourceAssociation that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

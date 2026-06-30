@@ -478,10 +478,14 @@ namespace Azure.Provisioning.Search
         public SharedSearchServicePrivateLinkResourceProperties() { }
         public Azure.Provisioning.BicepValue<string> GroupId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateLinkResourceId { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsoleted and will be removed in a future version, please use SharedPrivateLinkResourceProvisioningState instead.")]
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Search.SharedSearchServicePrivateLinkResourceProvisioningState> ProvisioningState { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> RequestMessage { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> ResourceRegion { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Search.SearchServiceSharedPrivateLinkResourceProvisioningState> SharedPrivateLinkResourceProvisioningState { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Search.SearchServiceSharedPrivateLinkResourceStatus> SharedPrivateLinkResourceStatus { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsoleted and will be removed in a future version, please use SharedPrivateLinkResourceStatus instead.")]
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Search.SharedSearchServicePrivateLinkResourceStatus> Status { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future versions, please use SearchServiceSharedPrivateLinkResourceProvisioningState instead.")]

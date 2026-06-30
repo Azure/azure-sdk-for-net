@@ -40,6 +40,10 @@ namespace Azure.Provisioning.Search
         {
             base.DefineProvisionableProperties();
             _searchSkuName = DefineProperty<SearchServiceSkuName>(nameof(SearchSkuName), new string[] { "name" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SearchSku that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

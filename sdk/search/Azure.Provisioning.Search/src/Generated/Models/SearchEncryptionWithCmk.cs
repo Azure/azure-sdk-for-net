@@ -52,6 +52,10 @@ namespace Azure.Provisioning.Search
             base.DefineProvisionableProperties();
             _enforcement = DefineProperty<SearchEncryptionWithCmkEnforcement>(nameof(Enforcement), new string[] { "enforcement" });
             _encryptionComplianceStatus = DefineProperty<SearchEncryptionComplianceStatus>(nameof(EncryptionComplianceStatus), new string[] { "encryptionComplianceStatus" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SearchEncryptionWithCmk that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

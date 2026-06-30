@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Search
             _status = DefineProperty<SearchServicePrivateLinkServiceConnectionStatus>(nameof(Status), new string[] { "status" });
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
             _actionsRequired = DefineProperty<string>(nameof(ActionsRequired), new string[] { "actionsRequired" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SearchServicePrivateLinkServiceConnectionState that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

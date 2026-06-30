@@ -98,6 +98,10 @@ namespace Azure.Provisioning.Search
             _networkSecurityPerimeter = DefineModelProperty<SearchServiceNetworkSecurityPerimeter>(nameof(NetworkSecurityPerimeter), new string[] { "networkSecurityPerimeter" });
             _resourceAssociation = DefineModelProperty<SearchServiceNetworkSecurityPerimeterResourceAssociation>(nameof(ResourceAssociation), new string[] { "resourceAssociation" });
             _profile = DefineModelProperty<SearchNetworkSecurityProfile>(nameof(Profile), new string[] { "profile" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SearchServiceNetworkSecurityPerimeterConfigurationProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -19,10 +19,6 @@ namespace Azure.Provisioning.Search
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SharedSearchServicePrivateLinkResourceProperties _properties;
-#pragma warning disable CS0618 // Compatibility shim intentionally references obsolete types.
-        private BicepValue<SharedSearchServicePrivateLinkResourceProvisioningState> _provisioningState;
-        private BicepValue<SharedSearchServicePrivateLinkResourceStatus> _status;
-#pragma warning restore CS0618
         private SystemData _systemData;
 
         public SharedSearchServicePrivateLinkResourceData()
@@ -41,14 +37,42 @@ namespace Azure.Provisioning.Search
 
         public BicepValue<SharedSearchServicePrivateLinkResourceProvisioningState> ProvisioningState
         {
-            get { Initialize(); return _provisioningState; }
-            set { Initialize(); _provisioningState.Assign(value); }
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SharedSearchServicePrivateLinkResourceProperties();
+                }
+                return Properties.ProvisioningState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SharedSearchServicePrivateLinkResourceProperties();
+                }
+                Properties.ProvisioningState = value;
+            }
         }
 
         public BicepValue<SharedSearchServicePrivateLinkResourceStatus> Status
         {
-            get { Initialize(); return _status; }
-            set { Initialize(); _status.Assign(value); }
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SharedSearchServicePrivateLinkResourceProperties();
+                }
+                return Properties.Status;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SharedSearchServicePrivateLinkResourceProperties();
+                }
+                Properties.Status = value;
+            }
         }
 
         public SystemData SystemData { get { Initialize(); return _systemData; } }
@@ -59,10 +83,6 @@ namespace Azure.Provisioning.Search
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isOutput: true);
             _properties = DefineModelProperty<SharedSearchServicePrivateLinkResourceProperties>(nameof(Properties), new string[] { "properties" });
-#pragma warning disable CS0618
-            _provisioningState = DefineProperty<SharedSearchServicePrivateLinkResourceProvisioningState>(nameof(ProvisioningState), new string[] { "properties", "provisioningState" });
-            _status = DefineProperty<SharedSearchServicePrivateLinkResourceStatus>(nameof(Status), new string[] { "properties", "status" });
-#pragma warning restore CS0618
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
         }
     }

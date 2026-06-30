@@ -126,6 +126,10 @@ namespace Azure.Provisioning.Search
             _resourceRegion = DefineProperty<AzureLocation>(nameof(ResourceRegion), new string[] { "resourceRegion" });
             _sharedPrivateLinkResourceStatus = DefineProperty<SearchServiceSharedPrivateLinkResourceStatus>(nameof(SharedPrivateLinkResourceStatus), new string[] { "status" });
             _sharedPrivateLinkResourceProvisioningState = DefineProperty<SearchServiceSharedPrivateLinkResourceProvisioningState>(nameof(SharedPrivateLinkResourceProvisioningState), new string[] { "provisioningState" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SharedSearchServicePrivateLinkResourceProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

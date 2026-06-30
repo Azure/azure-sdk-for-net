@@ -75,6 +75,10 @@ namespace Azure.Provisioning.Search
             base.DefineProvisionableProperties();
             _apiKeyOnly = DefineProperty<BinaryData>(nameof(ApiKeyOnly), new string[] { "apiKeyOnly" });
             _aadOrApiKey = DefineModelProperty<DataPlaneAadOrApiKeyAuthOption>(nameof(AadOrApiKey), new string[] { "aadOrApiKey" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SearchAadAuthDataPlaneAuthOptions that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

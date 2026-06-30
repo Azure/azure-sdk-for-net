@@ -142,6 +142,10 @@ namespace Azure.Provisioning.Search
             _fullyQualifiedDomainNames = DefineListProperty<string>(nameof(FullyQualifiedDomainNames), new string[] { "fullyQualifiedDomainNames" });
             _emailAddresses = DefineListProperty<string>(nameof(EmailAddresses), new string[] { "emailAddresses" });
             _phoneNumbers = DefineListProperty<string>(nameof(PhoneNumbers), new string[] { "phoneNumbers" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SearchServiceNetworkSecurityPerimeterAccessRuleProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }
