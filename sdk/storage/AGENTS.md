@@ -105,6 +105,20 @@ Rules:
 - Preserve HTTP status codes and service error codes.
 - Do not swallow, over-wrap, or transform errors unnecessarily.
 
+#### No Magic Exceptions
+
+Every newly introduced thrown exception must be defined through the appropriate error catalog helper, not as an ad-hoc inline throw.
+
+- If the throw is client-side validation or argument usage, add/update an entry in `Errors.Client.cs`.
+- If the throw maps to service/protocol error behavior, add/update an entry in `Error.cs`.
+- If the throw is in DataMovement components, add/update an entry in `DataMovementErrors.cs`.
+- Prefer helper-based throws (for example, `throw ErrorsClient.InvalidArgument(...)`) over raw string messages.
+
+Before merging, verify:
+- No new `throw new ...("literal message")` was added where an existing error helper should be used.
+- New helper messages are consistent with existing phrasing and parameter naming.
+- Tests assert expected exception type and (when appropriate) message/parameter name.
+
 ### Storage Service Semantics
 
 Do not assume uniform behavior across services.
