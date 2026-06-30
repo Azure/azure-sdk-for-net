@@ -1,10 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
-
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 // This is intentionally in the Azure.Messaging.EventGrid namespace to support type forwarding
@@ -23,9 +20,9 @@ namespace Azure.Messaging.EventGrid
         /// <param name="eventData">If the event is a system event, this will be populated
         /// with the deserialized system event data. Otherwise, this will be null.</param>
         /// <returns> Whether or not the event is a system event.</returns>
-        public static bool TryGetSystemEventData(this CloudEvent cloudEvent, [NotNullWhen(true)] out object? eventData)
+        public static bool TryGetSystemEventData(this CloudEvent cloudEvent, out object eventData)
         {
-            BinaryData? data = cloudEvent.Data;
+            BinaryData data = cloudEvent.Data;
             if (data == null)
             {
                 eventData = null;
