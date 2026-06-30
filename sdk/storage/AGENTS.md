@@ -109,10 +109,10 @@ Rules:
 
 Every newly introduced thrown exception must be defined through the appropriate error catalog helper, not as an ad-hoc inline throw.
 
-- If the throw is client-side validation or argument usage, add/update an entry in `Errors.Client.cs`.
-- If the throw maps to service/protocol error behavior, add/update an entry in `Error.cs`.
-- If the throw is in DataMovement components, add/update an entry in `DataMovementErrors.cs`.
-- Prefer helper-based throws (for example, `throw ErrorsClient.InvalidArgument(...)`) over raw string messages.
+- If the throw is for common/shared validation, add/update an entry in `Azure.Storage.Common/src/Shared/Errors.cs`.
+- If the throw is client-library-specific validation, add/update an entry in `Azure.Storage.Common/src/Shared/Errors.Clients.cs`.
+- If the throw is in DataMovement components, add/update an entry in `Azure.Storage.DataMovement/src/Shared/Errors.DataMovement.cs`.
+- Prefer helper-based throws (for example, `throw Errors.InvalidArgument(...)`) over raw string messages.
 
 Before merging, verify:
 - No new `throw new ...("literal message")` was added where an existing error helper should be used.
