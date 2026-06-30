@@ -6,6 +6,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Projects
@@ -15,6 +16,7 @@ namespace Azure.AI.Projects
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+        [Experimental("AAIP001")]
         protected virtual DataGenerationJob PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DataGenerationJob>)this).GetFormatFromOptions(options) : options.Format;
@@ -48,12 +50,14 @@ namespace Azure.AI.Projects
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+        [Experimental("AAIP001")]
         DataGenerationJob IPersistableModel<DataGenerationJob>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataGenerationJob>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="dataGenerationJob"> The <see cref="DataGenerationJob"/> to serialize into <see cref="BinaryContent"/>. </param>
+        [Experimental("AAIP001")]
         public static implicit operator BinaryContent(DataGenerationJob dataGenerationJob)
         {
             if (dataGenerationJob == null)
@@ -64,6 +68,7 @@ namespace Azure.AI.Projects
         }
 
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="DataGenerationJob"/> from. </param>
+        [Experimental("AAIP001")]
         public static explicit operator DataGenerationJob(ClientResult result)
         {
             PipelineResponse response = result.GetRawResponse();
@@ -143,10 +148,12 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+        [Experimental("AAIP001")]
         DataGenerationJob IJsonModel<DataGenerationJob>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+        [Experimental("AAIP001")]
         protected virtual DataGenerationJob JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DataGenerationJob>)this).GetFormatFromOptions(options) : options.Format;
@@ -160,6 +167,7 @@ namespace Azure.AI.Projects
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+        [Experimental("AAIP001")]
         internal static DataGenerationJob DeserializeDataGenerationJob(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)

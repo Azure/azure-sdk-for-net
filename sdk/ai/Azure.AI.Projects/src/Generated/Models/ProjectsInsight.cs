@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> The response body for cluster insights. </summary>
+    [Experimental("AAIP001")]
     public partial class ProjectsInsight
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -18,6 +20,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="displayName"> User friendly display name for the insight. </param>
         /// <param name="request"> Request for the insights analysis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> or <paramref name="request"/> is null. </exception>
+        [Experimental("AAIP001")]
         public ProjectsInsight(string displayName, InsightRequest request)
         {
             Argument.AssertNotNull(displayName, nameof(displayName));

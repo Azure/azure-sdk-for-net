@@ -4,9 +4,11 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Evaluation
 {
+    [Experimental("AAIP001")]
     internal readonly partial struct TriggerType : IEquatable<TriggerType>
     {
         private readonly string _value;
@@ -36,19 +38,23 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> Determines if two <see cref="TriggerType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
+        [Experimental("AAIP001")]
         public static bool operator ==(TriggerType left, TriggerType right) => left.Equals(right);
 
         /// <summary> Determines if two <see cref="TriggerType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
+        [Experimental("AAIP001")]
         public static bool operator !=(TriggerType left, TriggerType right) => !left.Equals(right);
 
         /// <summary> Converts a string to a <see cref="TriggerType"/>. </summary>
         /// <param name="value"> The value. </param>
+        [Experimental("AAIP001")]
         public static implicit operator TriggerType(string value) => new TriggerType(value);
 
         /// <summary> Converts a string to a <see cref="TriggerType"/>. </summary>
         /// <param name="value"> The value. </param>
+        [Experimental("AAIP001")]
         public static implicit operator TriggerType?(string value) => value == null ? null : new TriggerType(value);
 
         /// <inheritdoc/>
@@ -56,6 +62,7 @@ namespace Azure.AI.Projects.Evaluation
         public override bool Equals(object obj) => obj is TriggerType other && Equals(other);
 
         /// <inheritdoc/>
+        [Experimental("AAIP001")]
         public bool Equals(TriggerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>

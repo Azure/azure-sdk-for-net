@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Taxonomy sub-category definition. </summary>
+    [Experimental("AAIP001")]
     public partial class TaxonomySubCategory
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

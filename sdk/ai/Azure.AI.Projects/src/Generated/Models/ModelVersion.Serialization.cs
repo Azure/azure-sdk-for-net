@@ -6,6 +6,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Projects
@@ -20,6 +21,7 @@ namespace Azure.AI.Projects
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+        [Experimental("AAIP001")]
         protected virtual ModelVersion PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ModelVersion>)this).GetFormatFromOptions(options) : options.Format;
@@ -53,12 +55,14 @@ namespace Azure.AI.Projects
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+        [Experimental("AAIP001")]
         ModelVersion IPersistableModel<ModelVersion>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ModelVersion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="modelVersion"> The <see cref="ModelVersion"/> to serialize into <see cref="BinaryContent"/>. </param>
+        [Experimental("AAIP001")]
         public static implicit operator BinaryContent(ModelVersion modelVersion)
         {
             if (modelVersion == null)
@@ -69,6 +73,7 @@ namespace Azure.AI.Projects
         }
 
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="ModelVersion"/> from. </param>
+        [Experimental("AAIP001")]
         public static explicit operator ModelVersion(ClientResult result)
         {
             PipelineResponse response = result.GetRawResponse();
@@ -186,10 +191,12 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+        [Experimental("AAIP001")]
         ModelVersion IJsonModel<ModelVersion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+        [Experimental("AAIP001")]
         protected virtual ModelVersion JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ModelVersion>)this).GetFormatFromOptions(options) : options.Format;
@@ -203,6 +210,7 @@ namespace Azure.AI.Projects
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+        [Experimental("AAIP001")]
         internal static ModelVersion DeserializeModelVersion(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)

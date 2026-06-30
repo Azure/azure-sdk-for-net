@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Known lifecycle phases recorded for a routine run. </summary>
+    [Experimental("AAIP001")]
     public readonly partial struct RoutineRunPhase : IEquatable<RoutineRunPhase>
     {
         private readonly string _value;
@@ -45,19 +47,23 @@ namespace Azure.AI.Projects
         /// <summary> Determines if two <see cref="RoutineRunPhase"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
+        [Experimental("AAIP001")]
         public static bool operator ==(RoutineRunPhase left, RoutineRunPhase right) => left.Equals(right);
 
         /// <summary> Determines if two <see cref="RoutineRunPhase"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
+        [Experimental("AAIP001")]
         public static bool operator !=(RoutineRunPhase left, RoutineRunPhase right) => !left.Equals(right);
 
         /// <summary> Converts a string to a <see cref="RoutineRunPhase"/>. </summary>
         /// <param name="value"> The value. </param>
+        [Experimental("AAIP001")]
         public static implicit operator RoutineRunPhase(string value) => new RoutineRunPhase(value);
 
         /// <summary> Converts a string to a <see cref="RoutineRunPhase"/>. </summary>
         /// <param name="value"> The value. </param>
+        [Experimental("AAIP001")]
         public static implicit operator RoutineRunPhase?(string value) => value == null ? null : new RoutineRunPhase(value);
 
         /// <inheritdoc/>
@@ -65,6 +71,7 @@ namespace Azure.AI.Projects
         public override bool Equals(object obj) => obj is RoutineRunPhase other && Equals(other);
 
         /// <inheritdoc/>
+        [Experimental("AAIP001")]
         public bool Equals(RoutineRunPhase other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>

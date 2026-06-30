@@ -3,7 +3,7 @@
 namespace Azure.AI.Projects.Evaluation;
 
 /// <summary> The Schedules sub-client. </summary>
-[CodeGenType("Schedule")]
+[CodeGenType("ProjectsSchedule")]
 public partial class ProjectsSchedule
 {
 }

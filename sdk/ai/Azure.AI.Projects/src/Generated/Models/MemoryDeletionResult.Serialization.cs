@@ -6,10 +6,11 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
-using Azure.AI.Projects.Memory;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Memory
 {
     /// <summary> Response for deleting a memory item from a memory store. </summary>
     public partial class MemoryDeletionResult : IJsonModel<MemoryDeletionResult>
@@ -21,6 +22,7 @@ namespace Azure.AI.Projects
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+        [Experimental("AAIP001")]
         protected virtual MemoryDeletionResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MemoryDeletionResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -54,12 +56,14 @@ namespace Azure.AI.Projects
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+        [Experimental("AAIP001")]
         MemoryDeletionResult IPersistableModel<MemoryDeletionResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MemoryDeletionResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="MemoryDeletionResult"/> from. </param>
+        [Experimental("AAIP001")]
         public static explicit operator MemoryDeletionResult(ClientResult result)
         {
             PipelineResponse response = result.GetRawResponse();
@@ -110,10 +114,12 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+        [Experimental("AAIP001")]
         MemoryDeletionResult IJsonModel<MemoryDeletionResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+        [Experimental("AAIP001")]
         protected virtual MemoryDeletionResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MemoryDeletionResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -127,6 +133,7 @@ namespace Azure.AI.Projects
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+        [Experimental("AAIP001")]
         internal static MemoryDeletionResult DeserializeMemoryDeletionResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)

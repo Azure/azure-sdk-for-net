@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The discriminator values supported for routine triggers. </summary>
+    [Experimental("AAIP001")]
     public readonly partial struct RoutineTriggerKind : IEquatable<RoutineTriggerKind>
     {
         private readonly string _value;
@@ -45,19 +47,23 @@ namespace Azure.AI.Projects
         /// <summary> Determines if two <see cref="RoutineTriggerKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
+        [Experimental("AAIP001")]
         public static bool operator ==(RoutineTriggerKind left, RoutineTriggerKind right) => left.Equals(right);
 
         /// <summary> Determines if two <see cref="RoutineTriggerKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
+        [Experimental("AAIP001")]
         public static bool operator !=(RoutineTriggerKind left, RoutineTriggerKind right) => !left.Equals(right);
 
         /// <summary> Converts a string to a <see cref="RoutineTriggerKind"/>. </summary>
         /// <param name="value"> The value. </param>
+        [Experimental("AAIP001")]
         public static implicit operator RoutineTriggerKind(string value) => new RoutineTriggerKind(value);
 
         /// <summary> Converts a string to a <see cref="RoutineTriggerKind"/>. </summary>
         /// <param name="value"> The value. </param>
+        [Experimental("AAIP001")]
         public static implicit operator RoutineTriggerKind?(string value) => value == null ? null : new RoutineTriggerKind(value);
 
         /// <inheritdoc/>
@@ -65,6 +71,7 @@ namespace Azure.AI.Projects
         public override bool Equals(object obj) => obj is RoutineTriggerKind other && Equals(other);
 
         /// <inheritdoc/>
+        [Experimental("AAIP001")]
         public bool Equals(RoutineTriggerKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>

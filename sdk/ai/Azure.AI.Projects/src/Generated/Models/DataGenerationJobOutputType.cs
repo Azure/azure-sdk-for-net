@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The supported output file types for a data generation job. </summary>
+    [Experimental("AAIP001")]
     internal readonly partial struct DataGenerationJobOutputType : IEquatable<DataGenerationJobOutputType>
     {
         private readonly string _value;
@@ -35,19 +37,23 @@ namespace Azure.AI.Projects
         /// <summary> Determines if two <see cref="DataGenerationJobOutputType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
+        [Experimental("AAIP001")]
         public static bool operator ==(DataGenerationJobOutputType left, DataGenerationJobOutputType right) => left.Equals(right);
 
         /// <summary> Determines if two <see cref="DataGenerationJobOutputType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
+        [Experimental("AAIP001")]
         public static bool operator !=(DataGenerationJobOutputType left, DataGenerationJobOutputType right) => !left.Equals(right);
 
         /// <summary> Converts a string to a <see cref="DataGenerationJobOutputType"/>. </summary>
         /// <param name="value"> The value. </param>
+        [Experimental("AAIP001")]
         public static implicit operator DataGenerationJobOutputType(string value) => new DataGenerationJobOutputType(value);
 
         /// <summary> Converts a string to a <see cref="DataGenerationJobOutputType"/>. </summary>
         /// <param name="value"> The value. </param>
+        [Experimental("AAIP001")]
         public static implicit operator DataGenerationJobOutputType?(string value) => value == null ? null : new DataGenerationJobOutputType(value);
 
         /// <inheritdoc/>
@@ -55,6 +61,7 @@ namespace Azure.AI.Projects
         public override bool Equals(object obj) => obj is DataGenerationJobOutputType other && Equals(other);
 
         /// <inheritdoc/>
+        [Experimental("AAIP001")]
         public bool Equals(DataGenerationJobOutputType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>

@@ -6,10 +6,12 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects.Evaluation;
 
 namespace Azure.AI.Projects
 {
+    [Experimental("AAIP001")]
     internal partial class ProjectSchedulesGetAllCollectionResultOfT : CollectionResult<ProjectsSchedule>
     {
         private readonly ProjectSchedules _client;

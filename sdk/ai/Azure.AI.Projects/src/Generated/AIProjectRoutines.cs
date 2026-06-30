@@ -6,6 +6,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -85,6 +86,7 @@ namespace Azure.AI.Projects
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         internal virtual ClientResult<ProjectsRoutine> CreateOrUpdate(string routineName, string description = default, bool? enabled = default, IDictionary<string, RoutineTrigger> triggers = default, RoutineAction action = default, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             CreateOrUpdateRoutineRequest spreadModel = new CreateOrUpdateRoutineRequest(description, enabled, triggers ?? new ChangeTrackingDictionary<string, RoutineTrigger>(), action, default);
@@ -101,6 +103,7 @@ namespace Azure.AI.Projects
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         internal virtual async Task<ClientResult<ProjectsRoutine>> CreateOrUpdateAsync(string routineName, string description = default, bool? enabled = default, IDictionary<string, RoutineTrigger> triggers = default, RoutineAction action = default, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             CreateOrUpdateRoutineRequest spreadModel = new CreateOrUpdateRoutineRequest(description, enabled, triggers ?? new ChangeTrackingDictionary<string, RoutineTrigger>(), action, default);
@@ -151,6 +154,7 @@ namespace Azure.AI.Projects
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         internal virtual ClientResult<ProjectsRoutine> Get(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             ClientResult result = Get(routineName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
@@ -162,6 +166,7 @@ namespace Azure.AI.Projects
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         internal virtual async Task<ClientResult<ProjectsRoutine>> GetAsync(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             ClientResult result = await GetAsync(routineName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
@@ -211,6 +216,7 @@ namespace Azure.AI.Projects
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         internal virtual ClientResult<ProjectsRoutine> Enable(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             ClientResult result = Enable(routineName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
@@ -222,6 +228,7 @@ namespace Azure.AI.Projects
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         internal virtual async Task<ClientResult<ProjectsRoutine>> EnableAsync(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             ClientResult result = await EnableAsync(routineName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
@@ -271,6 +278,7 @@ namespace Azure.AI.Projects
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         internal virtual ClientResult<ProjectsRoutine> Disable(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             ClientResult result = Disable(routineName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
@@ -282,6 +290,7 @@ namespace Azure.AI.Projects
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         internal virtual async Task<ClientResult<ProjectsRoutine>> DisableAsync(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             ClientResult result = await DisableAsync(routineName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
@@ -392,6 +401,7 @@ namespace Azure.AI.Projects
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         internal virtual ClientResult<DispatchRoutineResult> Dispatch(string routineName, RoutineDispatchPayload payload = default, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             DispatchRoutineAsyncRequest spreadModel = new DispatchRoutineAsyncRequest(payload, default);
@@ -405,6 +415,7 @@ namespace Azure.AI.Projects
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         internal virtual async Task<ClientResult<DispatchRoutineResult>> DispatchAsync(string routineName, RoutineDispatchPayload payload = default, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             DispatchRoutineAsyncRequest spreadModel = new DispatchRoutineAsyncRequest(payload, default);

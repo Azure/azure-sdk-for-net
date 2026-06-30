@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The DispatchRoutineAsyncRequest. </summary>
+    [Experimental("AAIP001")]
     internal partial class DispatchRoutineAsyncRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -21,6 +23,7 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="DispatchRoutineAsyncRequest"/>. </summary>
         /// <param name="payload"> A direct action-input override sent downstream when testing a routine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        [Experimental("AAIP001")]
         internal DispatchRoutineAsyncRequest(RoutineDispatchPayload payload, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Payload = payload;

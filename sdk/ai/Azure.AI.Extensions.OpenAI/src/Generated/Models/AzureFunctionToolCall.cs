@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> An Azure Function tool call. </summary>
+    [Experimental("AAIP001")]
     public partial class AzureFunctionToolCall : AgentResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="AzureFunctionToolCall"/>. </summary>

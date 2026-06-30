@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
@@ -14,6 +15,7 @@ namespace Azure.AI.Projects
     /// specified delay and re-invokes the agent on the same conversation thread.
     /// No pre-created routine is required.
     /// </summary>
+    [Experimental("AAIP001")]
     internal partial class ReminderPreviewTool : InternalTool
     {
         /// <summary> Initializes a new instance of <see cref="ReminderPreviewTool"/>. </summary>

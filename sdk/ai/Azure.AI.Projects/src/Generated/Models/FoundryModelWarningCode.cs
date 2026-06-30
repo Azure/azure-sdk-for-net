@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Warning code for model artifacts. </summary>
+    [Experimental("AAIP001")]
     internal readonly partial struct FoundryModelWarningCode : IEquatable<FoundryModelWarningCode>
     {
         private readonly string _value;
@@ -35,19 +37,23 @@ namespace Azure.AI.Projects
         /// <summary> Determines if two <see cref="FoundryModelWarningCode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
+        [Experimental("AAIP001")]
         public static bool operator ==(FoundryModelWarningCode left, FoundryModelWarningCode right) => left.Equals(right);
 
         /// <summary> Determines if two <see cref="FoundryModelWarningCode"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
+        [Experimental("AAIP001")]
         public static bool operator !=(FoundryModelWarningCode left, FoundryModelWarningCode right) => !left.Equals(right);
 
         /// <summary> Converts a string to a <see cref="FoundryModelWarningCode"/>. </summary>
         /// <param name="value"> The value. </param>
+        [Experimental("AAIP001")]
         public static implicit operator FoundryModelWarningCode(string value) => new FoundryModelWarningCode(value);
 
         /// <summary> Converts a string to a <see cref="FoundryModelWarningCode"/>. </summary>
         /// <param name="value"> The value. </param>
+        [Experimental("AAIP001")]
         public static implicit operator FoundryModelWarningCode?(string value) => value == null ? null : new FoundryModelWarningCode(value);
 
         /// <inheritdoc/>
@@ -55,6 +61,7 @@ namespace Azure.AI.Projects
         public override bool Equals(object obj) => obj is FoundryModelWarningCode other && Equals(other);
 
         /// <inheritdoc/>
+        [Experimental("AAIP001")]
         public bool Equals(FoundryModelWarningCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>

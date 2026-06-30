@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A memory item containing a summary extracted from conversations. </summary>
+    [Experimental("AAIP001")]
     public partial class ChatSummaryMemoryItem : MemoryOutputItem
     {
         /// <summary> Initializes a new instance of <see cref="ChatSummaryMemoryItem"/>. </summary>

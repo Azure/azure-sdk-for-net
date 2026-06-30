@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects.Evaluation;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Prompt source for evaluator generation jobs — inline text provided by the user. </summary>
+    [Experimental("AAIP001")]
     public partial class PromptEvaluatorGenerationJobSource : EvaluatorGenerationJobSource
     {
         /// <summary> Initializes a new instance of <see cref="PromptEvaluatorGenerationJobSource"/>. </summary>

@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The supported question types for SimpleQnA data generation jobs used for fine-tuning scenarios. </summary>
+    [Experimental("AAIP001")]
     public readonly partial struct SimpleQnAFineTuningQuestionType : IEquatable<SimpleQnAFineTuningQuestionType>
     {
         private readonly string _value;
@@ -35,19 +37,23 @@ namespace Azure.AI.Projects
         /// <summary> Determines if two <see cref="SimpleQnAFineTuningQuestionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
+        [Experimental("AAIP001")]
         public static bool operator ==(SimpleQnAFineTuningQuestionType left, SimpleQnAFineTuningQuestionType right) => left.Equals(right);
 
         /// <summary> Determines if two <see cref="SimpleQnAFineTuningQuestionType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
+        [Experimental("AAIP001")]
         public static bool operator !=(SimpleQnAFineTuningQuestionType left, SimpleQnAFineTuningQuestionType right) => !left.Equals(right);
 
         /// <summary> Converts a string to a <see cref="SimpleQnAFineTuningQuestionType"/>. </summary>
         /// <param name="value"> The value. </param>
+        [Experimental("AAIP001")]
         public static implicit operator SimpleQnAFineTuningQuestionType(string value) => new SimpleQnAFineTuningQuestionType(value);
 
         /// <summary> Converts a string to a <see cref="SimpleQnAFineTuningQuestionType"/>. </summary>
         /// <param name="value"> The value. </param>
+        [Experimental("AAIP001")]
         public static implicit operator SimpleQnAFineTuningQuestionType?(string value) => value == null ? null : new SimpleQnAFineTuningQuestionType(value);
 
         /// <inheritdoc/>
@@ -55,6 +61,7 @@ namespace Azure.AI.Projects
         public override bool Equals(object obj) => obj is SimpleQnAFineTuningQuestionType other && Equals(other);
 
         /// <inheritdoc/>
+        [Experimental("AAIP001")]
         public bool Equals(SimpleQnAFineTuningQuestionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>

@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> A GitHub issue routine trigger. </summary>
+    [Experimental("AAIP001")]
     public partial class GitHubIssueRoutineTrigger : RoutineTrigger
     {
         /// <summary> Initializes a new instance of <see cref="GitHubIssueRoutineTrigger"/>. </summary>

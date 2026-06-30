@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The discriminator values supported for routine actions. </summary>
+    [Experimental("AAIP001")]
     public readonly partial struct RoutineActionKind : IEquatable<RoutineActionKind>
     {
         private readonly string _value;
@@ -35,19 +37,23 @@ namespace Azure.AI.Projects
         /// <summary> Determines if two <see cref="RoutineActionKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
+        [Experimental("AAIP001")]
         public static bool operator ==(RoutineActionKind left, RoutineActionKind right) => left.Equals(right);
 
         /// <summary> Determines if two <see cref="RoutineActionKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
+        [Experimental("AAIP001")]
         public static bool operator !=(RoutineActionKind left, RoutineActionKind right) => !left.Equals(right);
 
         /// <summary> Converts a string to a <see cref="RoutineActionKind"/>. </summary>
         /// <param name="value"> The value. </param>
+        [Experimental("AAIP001")]
         public static implicit operator RoutineActionKind(string value) => new RoutineActionKind(value);
 
         /// <summary> Converts a string to a <see cref="RoutineActionKind"/>. </summary>
         /// <param name="value"> The value. </param>
+        [Experimental("AAIP001")]
         public static implicit operator RoutineActionKind?(string value) => value == null ? null : new RoutineActionKind(value);
 
         /// <inheritdoc/>
@@ -55,6 +61,7 @@ namespace Azure.AI.Projects
         public override bool Equals(object obj) => obj is RoutineActionKind other && Equals(other);
 
         /// <inheritdoc/>
+        [Experimental("AAIP001")]
         public bool Equals(RoutineActionKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>

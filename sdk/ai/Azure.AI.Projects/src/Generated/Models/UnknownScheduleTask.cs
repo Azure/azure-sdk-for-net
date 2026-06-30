@@ -4,16 +4,19 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
+    [Experimental("AAIP001")]
     internal partial class UnknownScheduleTask : ProjectsScheduleTask
     {
         /// <summary> Initializes a new instance of <see cref="UnknownScheduleTask"/>. </summary>
         /// <param name="type"> Type of the task. </param>
         /// <param name="configuration"> Configuration for the task. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        [Experimental("AAIP001")]
         internal UnknownScheduleTask(ScheduleTaskType @type, IDictionary<string, string> configuration, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", configuration, additionalBinaryDataProperties)
         {
         }

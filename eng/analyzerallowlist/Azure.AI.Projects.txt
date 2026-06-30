@@ -8,7 +8,10 @@
 # experimental usage; internal use across the assembly is by design. File-scoped
 # pragmas would be wiped on every codegen regen of the ~27 affected generated
 # files and add no review value.
-nowarn:AAIP001
+nowarn:AAIP001 T:Azure.AI.Projects.AIProjectClient
+nowarn:AAIP001 M:Azure.AI.Projects.InternalTool.DeserializeInternalTool(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
+nowarn:AAIP001 M:Azure.AI.Projects.Evaluation.EvaluationRuleAction.DeserializeEvaluationRuleAction(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
+
 
 # OPENAI001 is the [Experimental] marker on the OpenAI SDK types this library
 # wraps (ResponseItem, OpenAIContext, etc.). The library is intentionally a

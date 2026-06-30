@@ -6,10 +6,12 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace Azure.AI.Projects.Evaluation
 {
+    [Experimental("AAIP001")]
     internal partial class ProjectEvaluatorsGetLatestVersionsAsyncCollectionResultOfT : AsyncCollectionResult<EvaluatorVersion>
     {
         private readonly ProjectEvaluators _client;

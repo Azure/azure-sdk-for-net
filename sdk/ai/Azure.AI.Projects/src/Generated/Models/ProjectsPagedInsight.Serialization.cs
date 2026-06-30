@@ -8,69 +8,67 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Projects;
-using Azure.AI.Projects.Evaluation;
 
-namespace Azure.Core
+namespace Azure.AI.Projects.Evaluation
 {
-    /// <summary> Paged collection of Insight items. </summary>
-    internal partial class PagedInsight : IJsonModel<PagedInsight>
+    internal partial class ProjectsPagedInsight : IJsonModel<ProjectsPagedInsight>
     {
-        /// <summary> Initializes a new instance of <see cref="PagedInsight"/> for deserialization. </summary>
-        internal PagedInsight()
+        /// <summary> Initializes a new instance of <see cref="ProjectsPagedInsight"/> for deserialization. </summary>
+        internal ProjectsPagedInsight()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PagedInsight PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ProjectsPagedInsight PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PagedInsight>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProjectsPagedInsight>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePagedInsight(document.RootElement, options);
+                        return DeserializeProjectsPagedInsight(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PagedInsight)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProjectsPagedInsight)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PagedInsight>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProjectsPagedInsight>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PagedInsight)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProjectsPagedInsight)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PagedInsight>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ProjectsPagedInsight>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PagedInsight IPersistableModel<PagedInsight>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ProjectsPagedInsight IPersistableModel<ProjectsPagedInsight>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PagedInsight>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ProjectsPagedInsight>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="PagedInsight"/> from. </param>
-        public static explicit operator PagedInsight(ClientResult result)
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="ProjectsPagedInsight"/> from. </param>
+        public static explicit operator ProjectsPagedInsight(ClientResult result)
         {
             PipelineResponse response = result.GetRawResponse();
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializePagedInsight(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeProjectsPagedInsight(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PagedInsight>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ProjectsPagedInsight>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -81,10 +79,10 @@ namespace Azure.Core
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PagedInsight>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProjectsPagedInsight>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PagedInsight)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ProjectsPagedInsight)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
@@ -117,24 +115,24 @@ namespace Azure.Core
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PagedInsight IJsonModel<PagedInsight>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ProjectsPagedInsight IJsonModel<ProjectsPagedInsight>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PagedInsight JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ProjectsPagedInsight JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PagedInsight>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProjectsPagedInsight>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PagedInsight)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ProjectsPagedInsight)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePagedInsight(document.RootElement, options);
+            return DeserializeProjectsPagedInsight(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PagedInsight DeserializePagedInsight(JsonElement element, ModelReaderWriterOptions options)
+        internal static ProjectsPagedInsight DeserializeProjectsPagedInsight(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -169,7 +167,7 @@ namespace Azure.Core
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PagedInsight(value, nextLink, additionalBinaryDataProperties);
+            return new ProjectsPagedInsight(value, nextLink, additionalBinaryDataProperties);
         }
     }
 }

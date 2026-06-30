@@ -4,14 +4,14 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
-using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The AIProjectModels sub-client. </summary>
+    [Experimental("AAIP001")]
     public partial class AIProjectModels
     {
         internal virtual CollectionResult GetModelVersions(string name, RequestOptions options)
@@ -48,6 +48,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         internal virtual CollectionResult<ModelVersion> GetModelVersions(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));

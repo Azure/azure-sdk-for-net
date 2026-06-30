@@ -5,6 +5,7 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -317,6 +318,7 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         public virtual ClientResult<SkillVersion> CreateSkillVersion(string name, SkillInlineContent inlineContent = default, bool? isDefault = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -334,6 +336,7 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         public virtual async Task<ClientResult<SkillVersion>> CreateSkillVersionAsync(string name, SkillInlineContent inlineContent = default, bool? isDefault = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));

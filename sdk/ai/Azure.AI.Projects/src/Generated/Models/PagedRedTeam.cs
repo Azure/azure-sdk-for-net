@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.AI.Projects.Evaluation
 {
+    [Experimental("AAIP001")]
     internal partial class PagedRedTeam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -15,6 +17,7 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> Initializes a new instance of <see cref="PagedRedTeam"/>. </summary>
         /// <param name="value"> The RedTeam items on this page. </param>
+        [Experimental("AAIP001")]
         internal PagedRedTeam(IEnumerable<RedTeam> value)
         {
             Value = value.ToList();

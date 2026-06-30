@@ -4,11 +4,13 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> The type of evaluator definition. </summary>
+    [Experimental("AAIP001")]
     public readonly partial struct EvaluatorDefinitionType : IEquatable<EvaluatorDefinitionType>
     {
         private readonly string _value;
@@ -61,19 +63,23 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> Determines if two <see cref="EvaluatorDefinitionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
+        [Experimental("AAIP001")]
         public static bool operator ==(EvaluatorDefinitionType left, EvaluatorDefinitionType right) => left.Equals(right);
 
         /// <summary> Determines if two <see cref="EvaluatorDefinitionType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
+        [Experimental("AAIP001")]
         public static bool operator !=(EvaluatorDefinitionType left, EvaluatorDefinitionType right) => !left.Equals(right);
 
         /// <summary> Converts a string to a <see cref="EvaluatorDefinitionType"/>. </summary>
         /// <param name="value"> The value. </param>
+        [Experimental("AAIP001")]
         public static implicit operator EvaluatorDefinitionType(string value) => new EvaluatorDefinitionType(value);
 
         /// <summary> Converts a string to a <see cref="EvaluatorDefinitionType"/>. </summary>
         /// <param name="value"> The value. </param>
+        [Experimental("AAIP001")]
         public static implicit operator EvaluatorDefinitionType?(string value) => value == null ? null : new EvaluatorDefinitionType(value);
 
         /// <inheritdoc/>
@@ -81,6 +87,7 @@ namespace Azure.AI.Projects.Evaluation
         public override bool Equals(object obj) => obj is EvaluatorDefinitionType other && Equals(other);
 
         /// <inheritdoc/>
+        [Experimental("AAIP001")]
         public bool Equals(EvaluatorDefinitionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>

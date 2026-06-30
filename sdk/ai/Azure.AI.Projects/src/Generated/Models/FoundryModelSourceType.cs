@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The source type of the model. </summary>
+    [Experimental("AAIP001")]
     internal readonly partial struct FoundryModelSourceType : IEquatable<FoundryModelSourceType>
     {
         private readonly string _value;
@@ -35,19 +37,23 @@ namespace Azure.AI.Projects
         /// <summary> Determines if two <see cref="FoundryModelSourceType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
+        [Experimental("AAIP001")]
         public static bool operator ==(FoundryModelSourceType left, FoundryModelSourceType right) => left.Equals(right);
 
         /// <summary> Determines if two <see cref="FoundryModelSourceType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
+        [Experimental("AAIP001")]
         public static bool operator !=(FoundryModelSourceType left, FoundryModelSourceType right) => !left.Equals(right);
 
         /// <summary> Converts a string to a <see cref="FoundryModelSourceType"/>. </summary>
         /// <param name="value"> The value. </param>
+        [Experimental("AAIP001")]
         public static implicit operator FoundryModelSourceType(string value) => new FoundryModelSourceType(value);
 
         /// <summary> Converts a string to a <see cref="FoundryModelSourceType"/>. </summary>
         /// <param name="value"> The value. </param>
+        [Experimental("AAIP001")]
         public static implicit operator FoundryModelSourceType?(string value) => value == null ? null : new FoundryModelSourceType(value);
 
         /// <inheritdoc/>
@@ -55,6 +61,7 @@ namespace Azure.AI.Projects
         public override bool Equals(object obj) => obj is FoundryModelSourceType other && Equals(other);
 
         /// <inheritdoc/>
+        [Experimental("AAIP001")]
         public bool Equals(FoundryModelSourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>

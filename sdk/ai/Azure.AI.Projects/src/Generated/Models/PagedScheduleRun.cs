@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.AI.Projects.Evaluation
 {
+    [Experimental("AAIP001")]
     internal partial class PagedScheduleRun
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -15,6 +17,7 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> Initializes a new instance of <see cref="PagedScheduleRun"/>. </summary>
         /// <param name="value"> The ScheduleRun items on this page. </param>
+        [Experimental("AAIP001")]
         internal PagedScheduleRun(IEnumerable<ScheduleRun> value)
         {
             Value = value.ToList();

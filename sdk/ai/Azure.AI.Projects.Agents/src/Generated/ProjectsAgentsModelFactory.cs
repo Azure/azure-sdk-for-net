@@ -351,6 +351,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The input definition information for a Microsoft Fabric tool as used to configure an agent. </summary>
         /// <param name="toolOptions"> The fabric data agent tool parameters. </param>
         /// <returns> A new <see cref="Agents.MicrosoftFabricPreviewTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static MicrosoftFabricPreviewTool MicrosoftFabricPreviewTool(FabricDataAgentToolOptions toolOptions = default)
         {
             return new MicrosoftFabricPreviewTool(ToolType.FabricDataagentPreview, additionalBinaryDataProperties: null, toolOptions);
@@ -380,6 +381,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The input definition information for a sharepoint tool as used to configure an agent. </summary>
         /// <param name="toolOptions"> The sharepoint grounding tool parameters. </param>
         /// <returns> A new <see cref="Agents.SharepointPreviewTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static SharepointPreviewTool SharepointPreviewTool(SharePointGroundingToolOptions toolOptions = default)
         {
             return new SharepointPreviewTool(ToolType.SharepointGroundingPreview, additionalBinaryDataProperties: null, toolOptions);
@@ -550,6 +552,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The input definition information for a Bing custom search tool as used to configure an agent. </summary>
         /// <param name="bingCustomSearchPreview"> The bing custom search tool parameters. </param>
         /// <returns> A new <see cref="Agents.BingCustomSearchPreviewTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static BingCustomSearchPreviewTool BingCustomSearchPreviewTool(BingCustomSearchToolOptions bingCustomSearchPreview = default)
         {
             return new BingCustomSearchPreviewTool(ToolType.BingCustomSearchPreview, additionalBinaryDataProperties: null, bingCustomSearchPreview);
@@ -561,6 +564,7 @@ namespace Azure.AI.Projects.Agents
         /// resource attached to the tool.
         /// </param>
         /// <returns> A new <see cref="Agents.BingCustomSearchToolOptions"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static BingCustomSearchToolOptions BingCustomSearchToolOptions(IEnumerable<BingCustomSearchConfiguration> searchConfigurations = default)
         {
             searchConfigurations ??= new ChangeTrackingList<BingCustomSearchConfiguration>();
@@ -591,6 +595,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The input definition information for a Browser Automation Tool, as used to configure an Agent. </summary>
         /// <param name="toolParameters"> The Browser Automation Tool parameters. </param>
         /// <returns> A new <see cref="Agents.BrowserAutomationPreviewTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static BrowserAutomationPreviewTool BrowserAutomationPreviewTool(BrowserAutomationToolOptions toolParameters = default)
         {
             return new BrowserAutomationPreviewTool(ToolType.BrowserAutomationPreview, additionalBinaryDataProperties: null, toolParameters);
@@ -599,6 +604,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Definition of input parameters for the Browser Automation Tool. </summary>
         /// <param name="toolConnectionParameters"> The project connection parameters associated with the Browser Automation Tool. </param>
         /// <returns> A new <see cref="Agents.BrowserAutomationToolOptions"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static BrowserAutomationToolOptions BrowserAutomationToolOptions(BrowserAutomationToolConnectionParameters toolConnectionParameters = default)
         {
             return new BrowserAutomationToolOptions(toolConnectionParameters, additionalBinaryDataProperties: null);
@@ -737,6 +743,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="searchOptions"> Options for searching the memory store. </param>
         /// <param name="updateDelayInSecs"> Time to wait before updating memories after inactivity (seconds). Default 300. </param>
         /// <returns> A new <see cref="Agents.MemorySearchPreviewTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static MemorySearchPreviewTool MemorySearchPreviewTool(string memoryStoreName = default, string scope = default, MemorySearchToolOptions searchOptions = default, int? updateDelayInSecs = default)
         {
             return new MemorySearchPreviewTool(
@@ -1446,6 +1453,7 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <param name="toolParameters"> The Browser Automation Tool parameters. </param>
         /// <returns> A new <see cref="Agents.BrowserAutomationPreviewToolboxTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static BrowserAutomationPreviewToolboxTool BrowserAutomationPreviewToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, BrowserAutomationToolOptions toolParameters = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
@@ -1699,6 +1707,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="evaluators"> Job-level evaluators referenced by name and optional version. Required; at least one must be provided. </param>
         /// <param name="options"> Tuning knobs and run-mode. </param>
         /// <returns> A new <see cref="Agents.OptimizationJobInputs"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static OptimizationJobInputs OptimizationJobInputs(OptimizationAgentIdentifier agent = default, OptimizationDatasetInput trainDataset = default, OptimizationDatasetInput validationDataset = default, IEnumerable<OptimizationEvaluatorRef> evaluators = default, OptimizationOptions options = default)
         {
             evaluators ??= new ChangeTrackingList<OptimizationEvaluatorRef>();
@@ -1735,6 +1744,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Inline dataset — items supplied directly in the request body. </summary>
         /// <param name="items"> Dataset items. </param>
         /// <returns> A new <see cref="Agents.OptimizationInlineDatasetInput"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static OptimizationInlineDatasetInput OptimizationInlineDatasetInput(IEnumerable<OptimizationDatasetItem> items = default)
         {
             items ??= new ChangeTrackingList<OptimizationDatasetItem>();
@@ -1748,6 +1758,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="desiredTurnCount"> Desired number of conversation turns for simulation mode (1-20). </param>
         /// <param name="criteria"> Per-item evaluation criteria. </param>
         /// <returns> A new <see cref="Agents.OptimizationDatasetItem"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static OptimizationDatasetItem OptimizationDatasetItem(string query = default, string groundTruth = default, int? desiredTurnCount = default, IEnumerable<OptimizationDatasetCriterion> criteria = default)
         {
             criteria ??= new ChangeTrackingList<OptimizationDatasetCriterion>();
@@ -1807,6 +1818,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="best"> Candidate ID of the highest-scoring candidate found during optimization. </param>
         /// <param name="candidates"> All evaluated candidates including baseline. </param>
         /// <returns> A new <see cref="Agents.OptimizationJobResult"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static OptimizationJobResult OptimizationJobResult(string baseline = default, string best = default, IEnumerable<OptimizationCandidate> candidates = default)
         {
             candidates ??= new ChangeTrackingList<OptimizationCandidate>();
@@ -1824,6 +1836,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="evalRunId"> Foundry evaluation run identifier for this candidate's scoring run. </param>
         /// <param name="promotion"> Promotion metadata. Null if the candidate has not been promoted. </param>
         /// <returns> A new <see cref="Agents.OptimizationCandidate"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static OptimizationCandidate OptimizationCandidate(string candidateId = default, string name = default, IDictionary<string, BinaryData> mutations = default, double avgScore = default, double avgTokens = default, string evalId = default, string evalRunId = default, PromotionInfo promotion = default)
         {
             mutations ??= new ChangeTrackingDictionary<string, BinaryData>();

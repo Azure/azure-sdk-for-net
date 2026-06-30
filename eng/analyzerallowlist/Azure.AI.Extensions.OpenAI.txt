@@ -9,3 +9,7 @@
 # exists so external consumers explicitly acknowledge experimental usage;
 # acknowledging it once at the assembly level matches intent.
 nowarn:OPENAI001
+
+# Point suppressions for AAIP001 warnings
+nowarn:AAIP001 M:Azure.AI.Extensions.OpenAI.AgentResponseItem.DeserializeAgentResponseItem(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
+nowarn:AAIP001 M:Azure.AI.Extensions.OpenAI.ResponsesTool.DeserializeResponsesTool(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)

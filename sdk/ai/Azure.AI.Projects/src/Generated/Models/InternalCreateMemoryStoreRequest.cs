@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects.Memory;
 
 namespace Azure.AI.Projects
 {
+    [Experimental("AAIP001")]
     internal partial class InternalCreateMemoryStoreRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -16,6 +18,7 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="InternalCreateMemoryStoreRequest"/>. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="definition"> The memory store definition. </param>
+        [Experimental("AAIP001")]
         internal InternalCreateMemoryStoreRequest(string name, MemoryStoreDefinition definition)
         {
             Name = name;

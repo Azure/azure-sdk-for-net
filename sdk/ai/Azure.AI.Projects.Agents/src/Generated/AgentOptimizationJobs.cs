@@ -5,6 +5,7 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -81,6 +82,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         internal virtual ClientResult<OptimizationJob> Create(OptimizationJob job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
         {
             ClientResult result = Create(job, foundryFeatures?.ToString(), operationId, cancellationToken.ToRequestOptions());
@@ -93,6 +95,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         internal virtual async Task<ClientResult<OptimizationJob>> CreateAsync(OptimizationJob job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
         {
             ClientResult result = await CreateAsync(job, foundryFeatures?.ToString(), operationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);

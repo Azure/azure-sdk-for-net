@@ -4,11 +4,13 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Memory
 {
     /// <summary> Memory item kind. </summary>
+    [Experimental("AAIP001")]
     public readonly partial struct MemoryItemKind : IEquatable<MemoryItemKind>
     {
         private readonly string _value;
@@ -41,19 +43,23 @@ namespace Azure.AI.Projects.Memory
         /// <summary> Determines if two <see cref="MemoryItemKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
+        [Experimental("AAIP001")]
         public static bool operator ==(MemoryItemKind left, MemoryItemKind right) => left.Equals(right);
 
         /// <summary> Determines if two <see cref="MemoryItemKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
+        [Experimental("AAIP001")]
         public static bool operator !=(MemoryItemKind left, MemoryItemKind right) => !left.Equals(right);
 
         /// <summary> Converts a string to a <see cref="MemoryItemKind"/>. </summary>
         /// <param name="value"> The value. </param>
+        [Experimental("AAIP001")]
         public static implicit operator MemoryItemKind(string value) => new MemoryItemKind(value);
 
         /// <summary> Converts a string to a <see cref="MemoryItemKind"/>. </summary>
         /// <param name="value"> The value. </param>
+        [Experimental("AAIP001")]
         public static implicit operator MemoryItemKind?(string value) => value == null ? null : new MemoryItemKind(value);
 
         /// <inheritdoc/>
@@ -61,6 +67,7 @@ namespace Azure.AI.Projects.Memory
         public override bool Equals(object obj) => obj is MemoryItemKind other && Equals(other);
 
         /// <inheritdoc/>
+        [Experimental("AAIP001")]
         public bool Equals(MemoryItemKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>

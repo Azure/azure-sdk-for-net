@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The artifact profile category. </summary>
+    [Experimental("AAIP001")]
     internal readonly partial struct FoundryModelArtifactProfileCategory : IEquatable<FoundryModelArtifactProfileCategory>
     {
         private readonly string _value;
@@ -40,19 +42,23 @@ namespace Azure.AI.Projects
         /// <summary> Determines if two <see cref="FoundryModelArtifactProfileCategory"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
+        [Experimental("AAIP001")]
         public static bool operator ==(FoundryModelArtifactProfileCategory left, FoundryModelArtifactProfileCategory right) => left.Equals(right);
 
         /// <summary> Determines if two <see cref="FoundryModelArtifactProfileCategory"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
+        [Experimental("AAIP001")]
         public static bool operator !=(FoundryModelArtifactProfileCategory left, FoundryModelArtifactProfileCategory right) => !left.Equals(right);
 
         /// <summary> Converts a string to a <see cref="FoundryModelArtifactProfileCategory"/>. </summary>
         /// <param name="value"> The value. </param>
+        [Experimental("AAIP001")]
         public static implicit operator FoundryModelArtifactProfileCategory(string value) => new FoundryModelArtifactProfileCategory(value);
 
         /// <summary> Converts a string to a <see cref="FoundryModelArtifactProfileCategory"/>. </summary>
         /// <param name="value"> The value. </param>
+        [Experimental("AAIP001")]
         public static implicit operator FoundryModelArtifactProfileCategory?(string value) => value == null ? null : new FoundryModelArtifactProfileCategory(value);
 
         /// <inheritdoc/>
@@ -60,6 +66,7 @@ namespace Azure.AI.Projects
         public override bool Equals(object obj) => obj is FoundryModelArtifactProfileCategory other && Equals(other);
 
         /// <inheritdoc/>
+        [Experimental("AAIP001")]
         public bool Equals(FoundryModelArtifactProfileCategory other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
