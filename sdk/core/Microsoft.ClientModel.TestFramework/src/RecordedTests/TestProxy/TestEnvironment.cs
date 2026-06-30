@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using NUnit.Framework;
 using System;
 using System.ClientModel;
 using System.Collections.Generic;
@@ -10,7 +11,6 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using NUnit.Framework;
 
 namespace Microsoft.ClientModel.TestFramework;
 

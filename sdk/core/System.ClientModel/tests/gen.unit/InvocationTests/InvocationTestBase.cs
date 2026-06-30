@@ -447,7 +447,7 @@ $$"""
     {
     }
 """;
-            return result;
+        return result;
         }
 
         private string LocalCall(bool contextAdded, string type, string invocation)
@@ -497,16 +497,16 @@ $$"""
             {
                 code +=
 $$"""
-                ModelReaderWriter.Read <{{string.Format(TypeStringFormat, type)}}> (BinaryData.Empty, ModelReaderWriterOptions.Json, LocalContext.Default);
-                ModelReaderWriter.Read <{{string.Format(TypeStringFormat, type)}}> (BinaryData.Empty, ModelReaderWriterOptions.Json, LocalContext.Default);
+                ModelReaderWriter.Read <{{ string.Format(TypeStringFormat, type)}}> (BinaryData.Empty, ModelReaderWriterOptions.Json, LocalContext.Default);
+                ModelReaderWriter.Read <{{ string.Format(TypeStringFormat, type)}}> (BinaryData.Empty, ModelReaderWriterOptions.Json, LocalContext.Default);
 """;
             }
             else
             {
                 code +=
 $$"""
-                ModelReaderWriter.Read <{{string.Format(TypeStringFormat, type)}}> (BinaryData.Empty, ModelReaderWriterOptions.Json);
-                ModelReaderWriter.Read <{{string.Format(TypeStringFormat, type)}}> (BinaryData.Empty, ModelReaderWriterOptions.Json);
+                ModelReaderWriter.Read <{{ string.Format(TypeStringFormat, type)}}> (BinaryData.Empty, ModelReaderWriterOptions.Json);
+                ModelReaderWriter.Read <{{ string.Format(TypeStringFormat, type)}}> (BinaryData.Empty, ModelReaderWriterOptions.Json);
 """;
             }
 

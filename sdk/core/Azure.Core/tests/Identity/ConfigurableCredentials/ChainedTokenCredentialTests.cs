@@ -2,14 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.ClientModel.Primitives;
 using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
+
+using Azure.Identity;
 namespace Azure.Core.Tests.Identity.ConfigurableCredentials
 {
     internal class ChainedTokenCredentialTests : Azure.Core.Tests.Identity.ChainedTokenCredentialTests

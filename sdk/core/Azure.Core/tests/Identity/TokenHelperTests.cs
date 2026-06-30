@@ -4,8 +4,9 @@
 using System;
 using System.Diagnostics.Tracing;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using NUnit.Framework;
+
+using Azure.Identity;
 namespace Azure.Core.Tests.Identity
 {
     public class TokenHelperTests

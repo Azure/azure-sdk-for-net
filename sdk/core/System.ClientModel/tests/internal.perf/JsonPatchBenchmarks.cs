@@ -32,7 +32,7 @@ namespace System.ClientModel.Tests.Internal.Perf
         {
 #if NET8_0_OR_GREATER
             Span<byte> buffer = stackalloc byte[256];
-            for (int i = 0; i < ItemsInDictionary; i++)
+            for (int i=0; i< ItemsInDictionary; i++)
             {
                 int length = Encoding.UTF8.GetBytes(_property.AsSpan(), buffer);
                 _jpMatch.Contains("$.tags"u8, buffer.Slice(0, length));

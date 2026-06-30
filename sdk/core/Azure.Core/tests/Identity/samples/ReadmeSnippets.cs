@@ -3,9 +3,10 @@
 
 using System;
 using Azure.Core;
-using Azure.Identity;
 using Azure.Storage.Blobs;
 using NUnit.Framework;
+
+using Azure.Identity;
 namespace Azure.Core.Tests.Identity.Samples
 {
     public class ReadmeSnippets

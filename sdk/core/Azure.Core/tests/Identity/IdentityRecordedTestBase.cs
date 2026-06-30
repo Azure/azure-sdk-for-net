@@ -4,8 +4,9 @@
 using System.IO;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
-using Azure.Identity;
 using NUnit.Framework;
+
+using Azure.Identity;
 namespace Azure.Core.Tests.Identity
 {
     public abstract class IdentityRecordedTestBase : RecordedTestBase<IdentityTestEnvironment>

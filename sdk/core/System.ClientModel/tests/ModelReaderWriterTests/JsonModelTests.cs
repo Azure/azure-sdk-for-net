@@ -34,29 +34,29 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             }
 
             protected override SimpleTestModel CreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-            {
-                using var doc = JsonDocument.ParseValue(ref reader);
-                return DeserializeSimpleTestModel(doc.RootElement);
-            }
+        {
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSimpleTestModel(doc.RootElement);
+        }
 
-            private static SimpleTestModel DeserializeSimpleTestModel(JsonElement element)
-            {
-                var model = new SimpleTestModel();
+        private static SimpleTestModel DeserializeSimpleTestModel(JsonElement element)
+        {
+            var model = new SimpleTestModel();
 
-                foreach (var property in element.EnumerateObject())
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("name"u8))
                 {
-                    if (property.NameEquals("name"u8))
-                    {
-                        model.Name = property.Value.GetString();
-                    }
-                    else if (property.NameEquals("value"u8))
-                    {
-                        model.Value = property.Value.GetInt32();
-                    }
+                    model.Name = property.Value.GetString();
                 }
-
-                return model;
+                else if (property.NameEquals("value"u8))
+                {
+                    model.Value = property.Value.GetInt32();
+                }
             }
+
+            return model;
+        }
         }
 
         // Test model that throws in WriteCore for validation

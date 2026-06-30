@@ -4,8 +4,9 @@
 using System;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Microsoft.Extensions.Configuration;
+
+using Azure.Identity;
 namespace Azure.Core.Tests.Identity.ConfigurableCredentials.VisualStudio
 {
     /// <summary>

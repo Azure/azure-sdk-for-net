@@ -5,8 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Identity;
 using Microsoft.Identity.Client;
+
+using Azure.Identity;
 namespace Azure.Core.Tests.Identity.Mock
 {
     internal class MockMsalConfidentialClient : MsalConfidentialClient

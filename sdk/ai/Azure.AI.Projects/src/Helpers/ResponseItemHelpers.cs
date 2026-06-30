@@ -4,7 +4,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using OpenAI;
 using OpenAI.Responses;

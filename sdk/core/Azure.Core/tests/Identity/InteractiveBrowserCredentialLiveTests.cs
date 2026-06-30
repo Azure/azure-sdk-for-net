@@ -6,8 +6,9 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Identity;
 using NUnit.Framework;
+
+using Azure.Identity;
 namespace Azure.Core.Tests.Identity
 {
     public class InteractiveBrowserCredentialLiveTests

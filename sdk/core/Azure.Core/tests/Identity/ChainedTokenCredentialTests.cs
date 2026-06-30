@@ -9,8 +9,9 @@ using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests;
 using Azure.Core.Tests.Identity.Mock;
-using Azure.Identity;
 using NUnit.Framework;
+
+using Azure.Identity;
 namespace Azure.Core.Tests.Identity
 {
     public class ChainedTokenCredentialTests : ClientTestBase

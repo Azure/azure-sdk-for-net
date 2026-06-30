@@ -8,8 +8,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Tests.Identity.Mock;
-using Azure.Identity;
 using NUnit.Framework;
+
+using Azure.Identity;
 namespace Azure.Core.Tests.Identity
 {
     internal class AzureDeveloperCliCredentialTests : CredentialTestBase<AzureDeveloperCliCredentialOptions>

@@ -14,8 +14,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Diagnostics;
 using Azure.Core.Tests;
-using Azure.Identity;
 using NUnit.Framework;
+
+using Azure.Identity;
 namespace Azure.Core.Tests.Identity
 {
     [TestFixture(true)]

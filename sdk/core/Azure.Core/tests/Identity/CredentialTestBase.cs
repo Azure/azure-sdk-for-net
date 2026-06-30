@@ -15,10 +15,11 @@ using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests.Identity.Mock;
-using Azure.Identity;
 using Microsoft.Identity.Client;
 using Moq;
 using NUnit.Framework;
+
+using Azure.Identity;
 namespace Azure.Core.Tests.Identity
 {
     public abstract class CredentialTestBase<TCredOptions> : ClientTestBase where TCredOptions : TokenCredentialOptions

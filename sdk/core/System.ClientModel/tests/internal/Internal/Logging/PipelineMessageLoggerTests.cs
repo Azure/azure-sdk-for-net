@@ -74,12 +74,12 @@ public class PipelineMessageLoggerTests : SyncAsyncPolicyTestBase
         MockPipelineResponse response = new(500);
 
         messageLogger.LogRequest("requestId", request, "assembly");
-        messageLogger.LogRequestContent("requestId", [1, 2, 3], null);
+        messageLogger.LogRequestContent("requestId", [1,2,3], null);
         messageLogger.LogRequestContent("requestId", "Hello"u8.ToArray(), Encoding.UTF8); // text
         messageLogger.LogResponse("requestId", response, 1);
-        messageLogger.LogResponseContent("requestId", [1, 2, 3], null);
+        messageLogger.LogResponseContent("requestId", [1,2,3], null);
         messageLogger.LogResponseContent("requestId", "Hello"u8.ToArray(), Encoding.UTF8); // text
-        messageLogger.LogResponseContentBlock("requestId", 1, [1, 2, 3], null);
+        messageLogger.LogResponseContentBlock("requestId", 1, [1,2,3], null);
         messageLogger.LogResponseContentBlock("requestId", 1, "Hello"u8.ToArray(), Encoding.UTF8); // text
         messageLogger.LogErrorResponse("requestId", response, 1);
         messageLogger.LogErrorResponseContent("requestId", [1, 2, 3], null);

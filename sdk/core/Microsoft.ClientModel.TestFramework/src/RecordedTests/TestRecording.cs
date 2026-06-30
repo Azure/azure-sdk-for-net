@@ -2,14 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.ClientModel.Primitives;
 using System.Runtime.CompilerServices;
-using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
 using Microsoft.ClientModel.TestFramework.TestProxy;
+using System.ClientModel;
 using Microsoft.ClientModel.TestFramework.TestProxy.Admin;
 
 namespace Microsoft.ClientModel.TestFramework;

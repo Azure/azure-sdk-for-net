@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.ClientModel.TestFramework;
+using NUnit.Framework;
 using System;
 using System.ClientModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.ClientModel.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.AI.Speech.Transcription.Tests
 {

@@ -4,8 +4,9 @@
 using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
-using Azure.Identity;
 using NUnit.Framework;
+
+using Azure.Identity;
 namespace Azure.Core.Tests.Identity
 {
     internal sealed class TestProcessService : IProcessService

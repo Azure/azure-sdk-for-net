@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using NUnit.Framework;
+
+using Azure.Identity;
 namespace Azure.Core.Tests.Identity
 {
     internal class DefaultAzureCredentialFactoryTests

@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Identity;
 using NUnit.Framework;
+
+using Azure.Identity;
 namespace Azure.Core.Tests.Identity
 {
     public class InteractiveBrowserCredentialCtorTests

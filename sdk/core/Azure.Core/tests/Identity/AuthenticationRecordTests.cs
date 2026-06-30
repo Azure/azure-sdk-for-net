@@ -6,9 +6,12 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Identity;
+
 using Microsoft.Identity.Client;
+
 using NUnit.Framework;
+
+using Azure.Identity;
 namespace Azure.Core.Tests.Identity
 {
     public class AuthenticationRecordTests

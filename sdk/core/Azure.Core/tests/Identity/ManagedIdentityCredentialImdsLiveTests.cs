@@ -5,10 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
+
+using Azure.Identity;
 namespace Azure.Core.Tests.Identity
 {
     // These tests are intended to be only run live on an azure VM with managed identity enabled.

@@ -10,9 +10,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+
+using Azure.Identity;
 namespace Azure.Core.Tests.Identity
 {
     public class WorkloadIdentityCredentialLiveTests : IdentityRecordedTestBase

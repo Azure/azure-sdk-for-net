@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Internal;
 using NUnit.Framework;
+using System.ClientModel.Internal;
 
 namespace System.ClientModel.Tests.Internal;
 

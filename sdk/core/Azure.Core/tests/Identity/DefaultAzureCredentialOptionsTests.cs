@@ -7,9 +7,10 @@ using System.Collections.Generic;
 using System.Reflection;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
+
+using Azure.Identity;
 namespace Azure.Core.Tests.Identity
 {
     public class DefaultAzureCredentialOptionsTests

@@ -467,7 +467,7 @@ public class HttpClientPipelineTransportTests : SyncAsyncTestBase
 
         message.Response!.ContentStream!.ReadByte();
 
-        Assert.ThrowsAsync<InvalidOperationException>(async () => { await message.Response!.BufferContentSyncOrAsync(default, IsAsync); });
+        Assert.ThrowsAsync<InvalidOperationException>(async() => { await message.Response!.BufferContentSyncOrAsync(default, IsAsync); });
     }
 
     [Test]

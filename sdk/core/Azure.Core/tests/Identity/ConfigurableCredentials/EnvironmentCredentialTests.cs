@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Identity;
 using Microsoft.Extensions.Configuration;
+
+using Azure.Identity;
 namespace Azure.Core.Tests.Identity.ConfigurableCredentials.Environment
 {
     internal class EnvironmentCredentialTests : Azure.Core.Tests.Identity.EnvironmentCredentialTests

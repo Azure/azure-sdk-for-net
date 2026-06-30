@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 
 namespace Azure.AI.Projects.Evaluation;
 

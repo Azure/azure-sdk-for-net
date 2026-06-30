@@ -4,9 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Azure.Identity;
 using Microsoft.Identity.Client;
 using NUnit.Framework;
+
+using Azure.Identity;
 namespace Azure.Core.Tests.Identity.Mock
 {
     public class AuthenticationResultFactory
