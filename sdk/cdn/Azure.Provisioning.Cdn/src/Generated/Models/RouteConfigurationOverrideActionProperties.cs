@@ -55,6 +55,10 @@ namespace Azure.Provisioning.Cdn
             DefineProperty<string>("typeName", new string[] { "typeName" }, defaultValue: "DeliveryRuleRouteConfigurationOverrideActionParameters");
             _originGroupOverride = DefineModelProperty<OriginGroupOverride>(nameof(OriginGroupOverride), new string[] { "originGroupOverride" });
             _cacheConfiguration = DefineModelProperty<CacheConfiguration>(nameof(CacheConfiguration), new string[] { "cacheConfiguration" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for RouteConfigurationOverrideActionProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

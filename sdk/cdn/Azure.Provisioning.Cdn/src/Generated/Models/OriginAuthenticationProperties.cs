@@ -93,6 +93,10 @@ namespace Azure.Provisioning.Cdn
             _authenticationType = DefineProperty<OriginAuthenticationType>(nameof(AuthenticationType), new string[] { "type" });
             _userAssignedIdentity = DefineModelProperty<CdnResourceReference>(nameof(UserAssignedIdentity), new string[] { "userAssignedIdentity" });
             _scope = DefineProperty<Uri>(nameof(Scope), new string[] { "scope" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for OriginAuthenticationProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

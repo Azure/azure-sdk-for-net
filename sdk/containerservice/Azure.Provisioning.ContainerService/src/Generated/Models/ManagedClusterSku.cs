@@ -57,6 +57,10 @@ namespace Azure.Provisioning.ContainerService
             base.DefineProvisionableProperties();
             _name = DefineProperty<ManagedClusterSkuName>(nameof(Name), new string[] { "name" });
             _tier = DefineProperty<ManagedClusterSkuTier>(nameof(Tier), new string[] { "tier" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterSku that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

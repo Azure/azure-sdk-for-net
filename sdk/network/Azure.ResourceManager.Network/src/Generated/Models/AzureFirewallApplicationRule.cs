@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
             Protocols = new ChangeTrackingList<AzureFirewallApplicationRuleProtocol>();
             TargetFqdns = new ChangeTrackingList<string>();
             FqdnTags = new ChangeTrackingList<string>();
-            SourceIpGroups = new ChangeTrackingList<string>();
+            SourceIPGroups = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureFirewallApplicationRule"/>. </summary>
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="protocols"> Array of ApplicationRuleProtocols. </param>
         /// <param name="targetFqdns"> List of FQDNs for this rule. </param>
         /// <param name="fqdnTags"> List of FQDN Tags for this rule. </param>
-        /// <param name="sourceIpGroups"> List of source IpGroups for this rule. </param>
+        /// <param name="sourceIPGroups"> List of source IpGroups for this rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureFirewallApplicationRule(string name, string description, IList<string> sourceAddresses, IList<AzureFirewallApplicationRuleProtocol> protocols, IList<string> targetFqdns, IList<string> fqdnTags, IList<string> sourceIpGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureFirewallApplicationRule(string name, string description, IList<string> sourceAddresses, IList<AzureFirewallApplicationRuleProtocol> protocols, IList<string> targetFqdns, IList<string> fqdnTags, IList<string> sourceIPGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
             Protocols = protocols;
             TargetFqdns = targetFqdns;
             FqdnTags = fqdnTags;
-            SourceIpGroups = sourceIpGroups;
+            SourceIPGroups = sourceIPGroups;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -74,6 +74,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> List of source IpGroups for this rule. </summary>
         [WirePath("sourceIpGroups")]
-        public IList<string> SourceIpGroups { get; }
+        public IList<string> SourceIPGroups { get; }
     }
 }

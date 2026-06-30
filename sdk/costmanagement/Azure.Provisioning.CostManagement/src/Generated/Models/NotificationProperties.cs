@@ -108,6 +108,10 @@ namespace Azure.Provisioning.CostManagement
             _message = DefineProperty<string>(nameof(Message), new string[] { "message" });
             _regionalFormat = DefineProperty<string>(nameof(RegionalFormat), new string[] { "regionalFormat" });
             _subject = DefineProperty<string>(nameof(Subject), new string[] { "subject" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for NotificationProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

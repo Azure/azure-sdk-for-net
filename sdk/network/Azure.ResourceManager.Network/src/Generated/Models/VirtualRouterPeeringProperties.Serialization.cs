@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("peerAsn"u8);
                 writer.WriteNumberValue(PeerAsn.Value);
             }
-            if (Optional.IsDefined(PeerIp))
+            if (Optional.IsDefined(PeerIP))
             {
                 writer.WritePropertyName("peerIp"u8);
-                writer.WriteStringValue(PeerIp);
+                writer.WriteStringValue(PeerIP);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             long? peerAsn = default;
-            string peerIp = default;
+            string peerIP = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("peerIp"u8))
                 {
-                    peerIp = prop.Value.GetString();
+                    peerIP = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualRouterPeeringProperties(peerAsn, peerIp, provisioningState, additionalBinaryDataProperties);
+            return new VirtualRouterPeeringProperties(peerAsn, peerIP, provisioningState, additionalBinaryDataProperties);
         }
     }
 }

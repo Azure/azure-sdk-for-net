@@ -75,6 +75,10 @@ namespace Azure.Provisioning.CostManagement
             _kpiType = DefineProperty<ViewKpiType>(nameof(KpiType), new string[] { "type" });
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" });
             _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "enabled" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ViewKpiProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

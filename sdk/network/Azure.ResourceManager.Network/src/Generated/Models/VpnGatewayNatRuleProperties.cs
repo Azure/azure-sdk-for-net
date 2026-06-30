@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
             Mode = mode;
             InternalMappings = internalMappings;
             ExternalMappings = externalMappings;
-            IpConfigurationId = ipConfigurationId;
+            IPConfigurationId = ipConfigurationId;
             EgressVpnSiteLinkConnections = egressVpnSiteLinkConnections;
             IngressVpnSiteLinkConnections = ingressVpnSiteLinkConnections;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The IP Configuration ID this NAT rule applies to. </summary>
         [WirePath("ipConfigurationId")]
-        public string IpConfigurationId { get; set; }
+        public string IPConfigurationId { get; set; }
 
         /// <summary> List of egress VpnSiteLinkConnections. </summary>
         [WirePath("egressVpnSiteLinkConnections")]

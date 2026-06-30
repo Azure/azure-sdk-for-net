@@ -10,7 +10,5 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <summary> Compatibility member. </summary>
         public global::System.Collections.Generic.IList<global::System.String> VpnClientAddressPrefixes { get; } = new global::System.Collections.Generic.List<global::System.String>();
-        /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.IPsecPolicy> VpnClientIPsecPolicies { get; } = new global::System.Collections.Generic.List<global::Azure.ResourceManager.Network.Models.IPsecPolicy>();
     }
 }

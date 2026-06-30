@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("ipConfiguration"u8);
                 writer.WriteStringValue(IpConfiguration);
             }
-            if (Optional.IsDefined(IpAddress))
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
-                writer.WriteStringValue(IpAddress);
+                writer.WriteStringValue(IPAddress);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

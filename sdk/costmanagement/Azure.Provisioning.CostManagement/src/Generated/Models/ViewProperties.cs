@@ -304,6 +304,10 @@ namespace Azure.Provisioning.CostManagement
             _metric = DefineProperty<ViewMetricType>(nameof(Metric), new string[] { "metric" });
             _kpis = DefineListProperty<ViewKpiProperties>(nameof(Kpis), new string[] { "kpis" });
             _pivots = DefineListProperty<ViewPivotProperties>(nameof(Pivots), new string[] { "pivots" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ViewProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

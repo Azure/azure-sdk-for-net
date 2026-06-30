@@ -126,6 +126,10 @@ namespace Azure.Provisioning.ContainerInstance
             _passwordReference = DefineProperty<string>(nameof(PasswordReference), new string[] { "passwordReference" });
             _identity = DefineProperty<string>(nameof(Identity), new string[] { "identity" });
             _identityUri = DefineProperty<Uri>(nameof(IdentityUri), new string[] { "identityUrl" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerGroupImageRegistryCredential that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

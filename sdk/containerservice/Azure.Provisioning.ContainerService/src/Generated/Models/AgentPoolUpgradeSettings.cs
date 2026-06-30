@@ -108,6 +108,10 @@ namespace Azure.Provisioning.ContainerService
             _drainTimeoutInMinutes = DefineProperty<int>(nameof(DrainTimeoutInMinutes), new string[] { "drainTimeoutInMinutes" });
             _nodeSoakDurationInMinutes = DefineProperty<int>(nameof(NodeSoakDurationInMinutes), new string[] { "nodeSoakDurationInMinutes" });
             _undrainableNodeBehavior = DefineProperty<UndrainableNodeBehavior>(nameof(UndrainableNodeBehavior), new string[] { "undrainableNodeBehavior" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for AgentPoolUpgradeSettings that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }
