@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.SecurityInsights
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != "Microsoft.OperationalInsights/workspaces")
+            if (id.ResourceType != SecurityInsightsBookmarkResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, "Microsoft.OperationalInsights/workspaces"), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SecurityInsightsBookmarkResource.ResourceType), nameof(id));
             }
         }
 
