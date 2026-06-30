@@ -12,6 +12,7 @@ namespace Azure.Provisioning.Search
 {
     public partial class SearchService
     {
+        /// <summary> Gets the private endpoint connection resources. </summary>
         [CodeGenMember("PrivateEndpointConnections")]
         public BicepList<SearchPrivateEndpointConnection> PrivateEndpointConnectionResources
         {
@@ -25,6 +26,7 @@ namespace Azure.Provisioning.Search
             }
         }
 
+        /// <summary> Gets the private endpoint connection data. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is obsoleted and will be removed in a future version, please use PrivateEndpointConnectionResources instead.")]
         public BicepList<SearchPrivateEndpointConnectionData> PrivateEndpointConnections
@@ -39,6 +41,7 @@ namespace Azure.Provisioning.Search
             }
         }
 
+        /// <summary> Gets or sets the disabled data exfiltration options. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is obsoleted and will be removed in a future version, please use DataExfiltrationProtections instead.")]
         public BicepList<SearchDisabledDataExfiltrationOption> DisabledDataExfiltrationOptions
@@ -61,6 +64,7 @@ namespace Azure.Provisioning.Search
             }
         }
 
+        /// <summary> Gets or sets the IP rules. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public BicepList<SearchServiceIPRule> IPRules
         {
@@ -82,6 +86,7 @@ namespace Azure.Provisioning.Search
             }
         }
 
+        /// <summary> Gets or sets the public network access setting. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is obsoleted and will be removed in a future version, please use PublicInternetAccess instead.")]
         public BicepValue<SearchServicePublicNetworkAccess> PublicNetworkAccess
@@ -100,6 +105,7 @@ namespace Azure.Provisioning.Search
             }
         }
 
+        /// <summary> Gets the shared private link resource items. </summary>
         [CodeGenMember("SharedPrivateLinkResources")]
         public BicepList<SharedSearchServicePrivateLink> SharedPrivateLinkResourceItems
         {
@@ -113,6 +119,7 @@ namespace Azure.Provisioning.Search
             }
         }
 
+        /// <summary> Gets the shared private link resource data. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is obsoleted and will be removed in a future version, please use SharedPrivateLinkResourceItems instead.")]
         public BicepList<SharedSearchServicePrivateLinkResourceData> SharedPrivateLinkResources

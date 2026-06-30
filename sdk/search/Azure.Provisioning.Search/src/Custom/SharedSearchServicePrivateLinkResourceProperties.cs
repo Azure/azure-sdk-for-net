@@ -16,6 +16,7 @@ namespace Azure.Provisioning.Search
         private BicepValue<SharedSearchServicePrivateLinkResourceStatus> _status;
 #pragma warning restore CS0618
 
+        /// <summary> Gets or sets the provisioning state. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is obsoleted and will be removed in a future version, please use SharedPrivateLinkResourceProvisioningState instead.")]
         public BicepValue<SharedSearchServicePrivateLinkResourceProvisioningState> ProvisioningState
@@ -24,6 +25,7 @@ namespace Azure.Provisioning.Search
             set { Initialize(); _provisioningState.Assign(value); }
         }
 
+        /// <summary> Gets or sets the status. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is obsoleted and will be removed in a future version, please use SharedPrivateLinkResourceStatus instead.")]
         public BicepValue<SharedSearchServicePrivateLinkResourceStatus> Status

@@ -12,6 +12,7 @@ using System.ComponentModel;
 
 namespace Azure.Provisioning.Search
 {
+    /// <summary> Shared private link resource data. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("This type is obsoleted and will be removed in a future versions, please use SharedSearchServicePrivateLink instead.")]
     public partial class SharedSearchServicePrivateLinkResourceData : ProvisionableConstruct
@@ -21,20 +22,25 @@ namespace Azure.Provisioning.Search
         private SharedSearchServicePrivateLinkResourceProperties _properties;
         private SystemData _systemData;
 
+        /// <summary> Creates a new SharedSearchServicePrivateLinkResourceData. </summary>
         public SharedSearchServicePrivateLinkResourceData()
         {
         }
 
+        /// <summary> Gets the resource id. </summary>
         public BicepValue<ResourceIdentifier> Id { get { Initialize(); return _id; } }
 
+        /// <summary> Gets the resource name. </summary>
         public BicepValue<string> Name { get { Initialize(); return _name; } }
 
+        /// <summary> Gets or sets the shared private link resource properties. </summary>
         public SharedSearchServicePrivateLinkResourceProperties Properties
         {
             get { Initialize(); return _properties; }
             set { Initialize(); AssignOrReplace(ref _properties, value); }
         }
 
+        /// <summary> Gets or sets the provisioning state. </summary>
         public BicepValue<SharedSearchServicePrivateLinkResourceProvisioningState> ProvisioningState
         {
             get
@@ -55,6 +61,7 @@ namespace Azure.Provisioning.Search
             }
         }
 
+        /// <summary> Gets or sets the status. </summary>
         public BicepValue<SharedSearchServicePrivateLinkResourceStatus> Status
         {
             get
@@ -75,8 +82,10 @@ namespace Azure.Provisioning.Search
             }
         }
 
+        /// <summary> Gets the system data. </summary>
         public SystemData SystemData { get { Initialize(); return _systemData; } }
 
+        /// <inheritdoc/>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();

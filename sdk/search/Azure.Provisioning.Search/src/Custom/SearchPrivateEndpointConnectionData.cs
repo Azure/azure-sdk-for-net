@@ -12,6 +12,7 @@ using System.ComponentModel;
 
 namespace Azure.Provisioning.Search
 {
+    /// <summary> Private endpoint connection data. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("This type is obsoleted and will be removed in a future versions, please use SearchPrivateEndpointConnection instead.")]
     public partial class SearchPrivateEndpointConnectionData : ProvisionableConstruct
@@ -21,22 +22,28 @@ namespace Azure.Provisioning.Search
         private SearchServicePrivateEndpointConnectionProperties _properties;
         private SystemData _systemData;
 
+        /// <summary> Creates a new SearchPrivateEndpointConnectionData. </summary>
         public SearchPrivateEndpointConnectionData()
         {
         }
 
+        /// <summary> Gets the resource id. </summary>
         public BicepValue<ResourceIdentifier> Id { get { Initialize(); return _id; } }
 
+        /// <summary> Gets the resource name. </summary>
         public BicepValue<string> Name { get { Initialize(); return _name; } }
 
+        /// <summary> Gets or sets the private endpoint connection properties. </summary>
         public SearchServicePrivateEndpointConnectionProperties Properties
         {
             get { Initialize(); return _properties; }
             set { Initialize(); AssignOrReplace(ref _properties, value); }
         }
 
+        /// <summary> Gets the system data. </summary>
         public SystemData SystemData { get { Initialize(); return _systemData; } }
 
+        /// <inheritdoc/>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
