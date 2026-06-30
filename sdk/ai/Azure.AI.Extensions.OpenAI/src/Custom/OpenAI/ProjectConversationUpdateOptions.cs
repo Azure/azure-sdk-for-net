@@ -14,7 +14,7 @@ public partial class ProjectConversationUpdateOptions
     private global::Azure.AI.Extensions.OpenAI.InternalMetadataContainer InternalMetadata { get; set; }
 
     /// <summary> Gets the metadata to update on the conversation. </summary>
-    public IReadOnlyDictionary<string, string> Metadata => InternalMetadata.AdditionalProperties;
+    public IDictionary<string, string> Metadata => InternalMetadata.AdditionalProperties;
 
     /// <summary> Initializes a new instance of <see cref="ProjectConversationUpdateOptions"/>. </summary>
     public ProjectConversationUpdateOptions()
@@ -32,7 +32,7 @@ public partial class ProjectConversationUpdateOptions
     /// with a maximum length of 512 characters.
     /// </param>
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-    internal ProjectConversationUpdateOptions(IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+    internal ProjectConversationUpdateOptions(IDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
     {
         InternalMetadata = new global::Azure.AI.Extensions.OpenAI.InternalMetadataContainer(metadata, null);
         _additionalBinaryDataProperties = additionalBinaryDataProperties;

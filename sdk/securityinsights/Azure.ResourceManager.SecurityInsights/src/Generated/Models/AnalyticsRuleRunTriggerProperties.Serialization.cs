@@ -13,45 +13,75 @@ using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
+<<<<<<<< HEAD:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Generated/Models/AnalyticsRuleRunTriggerProperties.Serialization.cs
     /// <summary> The Analytics Rule Run Trigger properties. </summary>
     internal partial class AnalyticsRuleRunTriggerProperties : IJsonModel<AnalyticsRuleRunTriggerProperties>
     {
         /// <summary> Initializes a new instance of <see cref="AnalyticsRuleRunTriggerProperties"/> for deserialization. </summary>
         internal AnalyticsRuleRunTriggerProperties()
+========
+    /// <summary> Code interpreter output logs. </summary>
+    public partial class CodeInterpreterOutputLogs : IJsonModel<CodeInterpreterOutputLogs>
+    {
+        /// <summary> Initializes a new instance of <see cref="CodeInterpreterOutputLogs"/> for deserialization. </summary>
+        internal CodeInterpreterOutputLogs()
+>>>>>>>> 1082303a11e80fb2cb081e37d1679bd984d289e9:sdk/ai/Azure.AI.Extensions.OpenAI/src/Generated/Models/CodeInterpreterOutputLogs.Serialization.cs
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+<<<<<<<< HEAD:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Generated/Models/AnalyticsRuleRunTriggerProperties.Serialization.cs
         protected virtual AnalyticsRuleRunTriggerProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AnalyticsRuleRunTriggerProperties>)this).GetFormatFromOptions(options) : options.Format;
+========
+        protected virtual CodeInterpreterOutputLogs PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CodeInterpreterOutputLogs>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> 1082303a11e80fb2cb081e37d1679bd984d289e9:sdk/ai/Azure.AI.Extensions.OpenAI/src/Generated/Models/CodeInterpreterOutputLogs.Serialization.cs
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
+<<<<<<<< HEAD:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Generated/Models/AnalyticsRuleRunTriggerProperties.Serialization.cs
                         return DeserializeAnalyticsRuleRunTriggerProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(AnalyticsRuleRunTriggerProperties)} does not support reading '{options.Format}' format.");
+========
+                        return DeserializeCodeInterpreterOutputLogs(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CodeInterpreterOutputLogs)} does not support reading '{options.Format}' format.");
+>>>>>>>> 1082303a11e80fb2cb081e37d1679bd984d289e9:sdk/ai/Azure.AI.Extensions.OpenAI/src/Generated/Models/CodeInterpreterOutputLogs.Serialization.cs
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
+<<<<<<<< HEAD:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Generated/Models/AnalyticsRuleRunTriggerProperties.Serialization.cs
             string format = options.Format == "W" ? ((IPersistableModel<AnalyticsRuleRunTriggerProperties>)this).GetFormatFromOptions(options) : options.Format;
+========
+            string format = options.Format == "W" ? ((IPersistableModel<CodeInterpreterOutputLogs>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> 1082303a11e80fb2cb081e37d1679bd984d289e9:sdk/ai/Azure.AI.Extensions.OpenAI/src/Generated/Models/CodeInterpreterOutputLogs.Serialization.cs
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
                 default:
+<<<<<<<< HEAD:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Generated/Models/AnalyticsRuleRunTriggerProperties.Serialization.cs
                     throw new FormatException($"The model {nameof(AnalyticsRuleRunTriggerProperties)} does not support writing '{options.Format}' format.");
+========
+                    throw new FormatException($"The model {nameof(CodeInterpreterOutputLogs)} does not support writing '{options.Format}' format.");
+>>>>>>>> 1082303a11e80fb2cb081e37d1679bd984d289e9:sdk/ai/Azure.AI.Extensions.OpenAI/src/Generated/Models/CodeInterpreterOutputLogs.Serialization.cs
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
+<<<<<<<< HEAD:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Generated/Models/AnalyticsRuleRunTriggerProperties.Serialization.cs
         BinaryData IPersistableModel<AnalyticsRuleRunTriggerProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
@@ -64,6 +94,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AnalyticsRuleRunTriggerProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+========
+        BinaryData IPersistableModel<CodeInterpreterOutputLogs>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CodeInterpreterOutputLogs IPersistableModel<CodeInterpreterOutputLogs>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CodeInterpreterOutputLogs>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<CodeInterpreterOutputLogs>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+>>>>>>>> 1082303a11e80fb2cb081e37d1679bd984d289e9:sdk/ai/Azure.AI.Extensions.OpenAI/src/Generated/Models/CodeInterpreterOutputLogs.Serialization.cs
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +118,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+<<<<<<<< HEAD:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Generated/Models/AnalyticsRuleRunTriggerProperties.Serialization.cs
             string format = options.Format == "W" ? ((IPersistableModel<AnalyticsRuleRunTriggerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AnalyticsRuleRunTriggerProperties)} does not support writing '{format}' format.");
+========
+            string format = options.Format == "W" ? ((IPersistableModel<CodeInterpreterOutputLogs>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CodeInterpreterOutputLogs)} does not support writing '{format}' format.");
+>>>>>>>> 1082303a11e80fb2cb081e37d1679bd984d289e9:sdk/ai/Azure.AI.Extensions.OpenAI/src/Generated/Models/CodeInterpreterOutputLogs.Serialization.cs
             }
             writer.WritePropertyName("executionTimeUtc"u8);
             writer.WriteStringValue(ExecuteOn, "O");
@@ -100,6 +151,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+<<<<<<<< HEAD:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Generated/Models/AnalyticsRuleRunTriggerProperties.Serialization.cs
         AnalyticsRuleRunTriggerProperties IJsonModel<AnalyticsRuleRunTriggerProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
@@ -113,11 +165,30 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAnalyticsRuleRunTriggerProperties(document.RootElement, options);
+========
+        CodeInterpreterOutputLogs IJsonModel<CodeInterpreterOutputLogs>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CodeInterpreterOutputLogs JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CodeInterpreterOutputLogs>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CodeInterpreterOutputLogs)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCodeInterpreterOutputLogs(document.RootElement, options);
+>>>>>>>> 1082303a11e80fb2cb081e37d1679bd984d289e9:sdk/ai/Azure.AI.Extensions.OpenAI/src/Generated/Models/CodeInterpreterOutputLogs.Serialization.cs
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+<<<<<<<< HEAD:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Generated/Models/AnalyticsRuleRunTriggerProperties.Serialization.cs
         internal static AnalyticsRuleRunTriggerProperties DeserializeAnalyticsRuleRunTriggerProperties(JsonElement element, ModelReaderWriterOptions options)
+========
+        internal static CodeInterpreterOutputLogs DeserializeCodeInterpreterOutputLogs(JsonElement element, ModelReaderWriterOptions options)
+>>>>>>>> 1082303a11e80fb2cb081e37d1679bd984d289e9:sdk/ai/Azure.AI.Extensions.OpenAI/src/Generated/Models/CodeInterpreterOutputLogs.Serialization.cs
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -137,7 +208,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
+<<<<<<<< HEAD:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Generated/Models/AnalyticsRuleRunTriggerProperties.Serialization.cs
             return new AnalyticsRuleRunTriggerProperties(executeOn, additionalBinaryDataProperties);
+========
+            return new CodeInterpreterOutputLogs(@type, logs, additionalBinaryDataProperties);
+>>>>>>>> 1082303a11e80fb2cb081e37d1679bd984d289e9:sdk/ai/Azure.AI.Extensions.OpenAI/src/Generated/Models/CodeInterpreterOutputLogs.Serialization.cs
         }
     }
 }
