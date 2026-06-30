@@ -1,0 +1,3 @@
+# CS0169 is currently produced by preview generated Elastic/ActiveDirectory resource partials where private client fields are emitted but not referenced.
+# Keep this temporary allow-list entry while preview code paths use generated types; remove after generator output is updated to consume or omit these fields.
+nowarn:CS0169

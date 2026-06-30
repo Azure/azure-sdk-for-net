@@ -7,4 +7,12 @@
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.NetApp.</Description>
     <PackageTags>azure;management;arm;resource manager;netapp</PackageTags>
   </PropertyGroup>
+
+  <!-- In prerelease builds, prefer generated Elastic/ActiveDirectory types over legacy compatibility custom code. -->
+  <ItemGroup Condition="$([System.String]::Copy('$(Version)').Contains('-beta'))">
+    <Compile Remove="Custom\**\*Elastic*Compatibility*.cs" />
+    <Compile Remove="Custom\**\*ActiveDirectory*Compatibility*.cs" />
+    <Compile Remove="Custom\**\*ElasticCompatibility.cs" />
+    <Compile Remove="Custom\**\*ActiveDirectoryCompatibility.cs" />
+  </ItemGroup>
 </Project>

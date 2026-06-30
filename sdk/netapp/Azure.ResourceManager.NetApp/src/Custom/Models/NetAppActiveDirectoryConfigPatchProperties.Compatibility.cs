@@ -64,6 +64,16 @@ namespace Azure.ResourceManager.NetApp.Models
 
         public NetAppSecretPassword SecretPassword { get; set; }
 
+        internal static NetAppActiveDirectoryConfigPatchProperties DeserializeNetAppActiveDirectoryConfigPatchProperties(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+
+            return new NetAppActiveDirectoryConfigPatchProperties();
+        }
+
         protected virtual NetAppActiveDirectoryConfigPatchProperties PersistableModelCreateCore(System.BinaryData data, ModelReaderWriterOptions options)
         {
             var reader = new Utf8JsonReader(data.ToArray());
