@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a virtual machine scale set VM network profile. </summary>
-    public partial class VirtualMachineScaleSetVmNetworkProfileConfiguration : IJsonModel<VirtualMachineScaleSetVmNetworkProfileConfiguration>
+    internal partial class VirtualMachineScaleSetVmNetworkProfileConfiguration : IJsonModel<VirtualMachineScaleSetVmNetworkProfileConfiguration>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -84,11 +84,6 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(InterconnectGroupProfile))
-            {
-                writer.WritePropertyName("interconnectGroupProfile"u8);
-                writer.WriteObjectValue(InterconnectGroupProfile, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -132,7 +127,6 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             IList<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations = default;
-            InterconnectGroupProfile interconnectGroupProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -150,21 +144,12 @@ namespace Azure.ResourceManager.Compute.Models
                     networkInterfaceConfigurations = array;
                     continue;
                 }
-                if (prop.NameEquals("interconnectGroupProfile"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    interconnectGroupProfile = InterconnectGroupProfile.DeserializeInterconnectGroupProfile(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualMachineScaleSetVmNetworkProfileConfiguration(networkInterfaceConfigurations ?? new ChangeTrackingList<VirtualMachineScaleSetNetworkConfiguration>(), interconnectGroupProfile, additionalBinaryDataProperties);
+            return new VirtualMachineScaleSetVmNetworkProfileConfiguration(networkInterfaceConfigurations ?? new ChangeTrackingList<VirtualMachineScaleSetNetworkConfiguration>(), additionalBinaryDataProperties);
         }
     }
 }

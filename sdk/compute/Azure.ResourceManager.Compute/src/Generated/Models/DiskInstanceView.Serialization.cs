@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute.Models
             string name = default;
             IReadOnlyList<DiskEncryptionSettings> encryptionSettings = default;
             IReadOnlyList<InstanceViewStatus> statuses = default;
-            StorageAlignmentStatus? storageAlignmentStatus = default;
+            ComputeStorageAlignmentStatus? storageAlignmentStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    storageAlignmentStatus = new StorageAlignmentStatus(prop.Value.GetString());
+                    storageAlignmentStatus = new ComputeStorageAlignmentStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

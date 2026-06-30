@@ -1,0 +1,235 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+// GA API compatibility: The generated PrivateLinkResources operation group uses a shared
+// (parentType, parentName) pattern and returns the generic EventGridPrivateLinkResource model.
+// The old SDK exposed typed per-resource collections (Domain/Topic/PartnerNamespace) returning
+// specific resource wrapper types. This full custom class bridges that gap.
+
+#nullable disable
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
+using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.EventGrid.Mocking;
+
+namespace Azure.ResourceManager.EventGrid
+{
+    /// <summary> A class representing a collection of <see cref="PartnerNamespacePrivateLinkResource"/> and their operations. </summary>
+    public partial class PartnerNamespacePrivateLinkResourceCollection : ArmCollection, IAsyncEnumerable<PartnerNamespacePrivateLinkResource>, IEnumerable<PartnerNamespacePrivateLinkResource>
+    {
+        private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
+        private readonly PrivateLinkResources _privateLinkResourcesRestClient;
+
+        /// <summary> Initializes a new instance of <see cref="PartnerNamespacePrivateLinkResourceCollection"/> for mocking. </summary>
+        protected PartnerNamespacePrivateLinkResourceCollection()
+        {
+        }
+
+        internal PartnerNamespacePrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        {
+            TryGetApiVersion(PartnerNamespacePrivateLinkResource.ResourceType, out string apiVersion);
+            _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", PartnerNamespacePrivateLinkResource.ResourceType.Namespace, Diagnostics);
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, apiVersion ?? "2025-07-15-preview");
+            ValidateResourceId(id);
+        }
+
+        [Conditional("DEBUG")]
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != PartnerNamespaceResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PartnerNamespaceResource.ResourceType), nameof(id));
+            }
+        }
+
+        /// <summary> Gets a specific private link resource. </summary>
+        /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<PartnerNamespacePrivateLinkResource>> GetAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+            MockableEventGridResourceGroupResource resourceGroup = new MockableEventGridResourceGroupResource(Client, Id.Parent);
+            Response<global::Azure.ResourceManager.EventGrid.Models.EventGridPrivateLinkResource> response = await resourceGroup.GetAsync("partnerNamespaces", Id.Name, privateLinkResourceName, cancellationToken).ConfigureAwait(false);
+            return PrivateLinkResourceCompat.Convert(response, PrivateLinkResourceCompat.ToPartnerNamespaceResource(Client, response.Value));
+        }
+
+        /// <summary> Gets a specific private link resource. </summary>
+        /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<PartnerNamespacePrivateLinkResource> Get(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+            MockableEventGridResourceGroupResource resourceGroup = new MockableEventGridResourceGroupResource(Client, Id.Parent);
+            Response<global::Azure.ResourceManager.EventGrid.Models.EventGridPrivateLinkResource> response = resourceGroup.Get("partnerNamespaces", Id.Name, privateLinkResourceName, cancellationToken);
+            return PrivateLinkResourceCompat.Convert(response, PrivateLinkResourceCompat.ToPartnerNamespaceResource(Client, response.Value));
+        }
+
+        /// <summary> Returns the list of private link resources. </summary>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. </param>
+        /// <param name="top"> The number of results to return per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<PartnerNamespacePrivateLinkResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            return new AsyncPageableWrapper<global::Azure.ResourceManager.EventGrid.Models.EventGridPrivateLinkResource, PartnerNamespacePrivateLinkResource>(
+                new PrivateLinkResourcesGetByResourceAsyncCollectionResultOfT(
+                    _privateLinkResourcesRestClient,
+                    Guid.Parse(Id.SubscriptionId),
+                    Id.ResourceGroupName,
+                    "partnerNamespaces",
+                    Id.Name,
+                    filter,
+                    top,
+                    context,
+                    "PartnerNamespacePrivateLinkResourceCollection.GetAll"),
+                item => PrivateLinkResourceCompat.ToPartnerNamespaceResource(Client, item));
+        }
+
+        /// <summary> Returns the list of private link resources. </summary>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. </param>
+        /// <param name="top"> The number of results to return per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<PartnerNamespacePrivateLinkResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            return new PageableWrapper<global::Azure.ResourceManager.EventGrid.Models.EventGridPrivateLinkResource, PartnerNamespacePrivateLinkResource>(
+                new PrivateLinkResourcesGetByResourceCollectionResultOfT(
+                    _privateLinkResourcesRestClient,
+                    Guid.Parse(Id.SubscriptionId),
+                    Id.ResourceGroupName,
+                    "partnerNamespaces",
+                    Id.Name,
+                    filter,
+                    top,
+                    context,
+                    "PartnerNamespacePrivateLinkResourceCollection.GetAll"),
+                item => PrivateLinkResourceCompat.ToPartnerNamespaceResource(Client, item));
+        }
+
+        /// <summary> Checks to see if the resource exists. </summary>
+        /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<bool>> ExistsAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("PartnerNamespacePrivateLinkResourceCollection.Exists");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "partnerNamespaces", Id.Name, privateLinkResourceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                return result.Status switch
+                {
+                    200 => Response.FromValue(true, result),
+                    404 => Response.FromValue(false, result),
+                    _ => throw new RequestFailedException(result)
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Checks to see if the resource exists. </summary>
+        /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<bool> Exists(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("PartnerNamespacePrivateLinkResourceCollection.Exists");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "partnerNamespaces", Id.Name, privateLinkResourceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                return result.Status switch
+                {
+                    200 => Response.FromValue(true, result),
+                    404 => Response.FromValue(false, result),
+                    _ => throw new RequestFailedException(result)
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<PartnerNamespacePrivateLinkResource>> GetIfExistsAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("PartnerNamespacePrivateLinkResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "partnerNamespaces", Id.Name, privateLinkResourceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                return result.Status switch
+                {
+                    200 => Response.FromValue(PrivateLinkResourceCompat.ToPartnerNamespaceResource(Client, global::Azure.ResourceManager.EventGrid.Models.EventGridPrivateLinkResource.FromResponse(result)), result),
+                    404 => new NoValueResponse<PartnerNamespacePrivateLinkResource>(result),
+                    _ => throw new RequestFailedException(result)
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<PartnerNamespacePrivateLinkResource> GetIfExists(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("PartnerNamespacePrivateLinkResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "partnerNamespaces", Id.Name, privateLinkResourceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                return result.Status switch
+                {
+                    200 => Response.FromValue(PrivateLinkResourceCompat.ToPartnerNamespaceResource(Client, global::Azure.ResourceManager.EventGrid.Models.EventGridPrivateLinkResource.FromResponse(result)), result),
+                    404 => new NoValueResponse<PartnerNamespacePrivateLinkResource>(result),
+                    _ => throw new RequestFailedException(result)
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        IEnumerator<PartnerNamespacePrivateLinkResource> IEnumerable<PartnerNamespacePrivateLinkResource>.GetEnumerator() => GetAll().GetEnumerator();
+
+        IAsyncEnumerator<PartnerNamespacePrivateLinkResource> IAsyncEnumerable<PartnerNamespacePrivateLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken) => GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+
+        IEnumerator IEnumerable.GetEnumerator() => GetAll().GetEnumerator();
+    }
+}

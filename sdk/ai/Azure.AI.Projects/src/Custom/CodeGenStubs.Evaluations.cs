@@ -16,6 +16,7 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("CronTrigger")] public partial class CronTrigger { }
 [CodeGenType("DailyRecurrenceSchedule")] public partial class DailyRecurrenceSchedule { }
 [CodeGenType("Dimension")] public partial class EvaluationsDimension { }
+[CodeGenType("EndpointBasedEvaluatorDefinition")] public partial class EndpointBasedEvaluatorDefinition { }
 [CodeGenType("EvalResult")] public partial class EvalResult { }
 [CodeGenType("EvalRunResultCompareItem")] public partial class EvalRunResultCompareItem { }
 [CodeGenType("EvalRunResultComparison")] public partial class EvalRunResultComparison { }
