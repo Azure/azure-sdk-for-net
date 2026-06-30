@@ -592,7 +592,9 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         public virtual Operation ImportDevices(WaitUntil waitUntil, ImportType importType, CancellationToken cancellationToken = default)
         {
-            return ImportDevices(waitUntil, RequestContent.Create(BinaryData.FromObjectAsJson(importType.ToString())), cancellationToken.ToRequestContext());
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteStringValue(importType.ToString());
+            return ImportDevices(waitUntil, content, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -604,7 +606,9 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         public virtual async Task<Operation> ImportDevicesAsync(WaitUntil waitUntil, ImportType importType, CancellationToken cancellationToken = default)
         {
-            return await ImportDevicesAsync(waitUntil, RequestContent.Create(BinaryData.FromObjectAsJson(importType.ToString())), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteStringValue(importType.ToString());
+            return await ImportDevicesAsync(waitUntil, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
