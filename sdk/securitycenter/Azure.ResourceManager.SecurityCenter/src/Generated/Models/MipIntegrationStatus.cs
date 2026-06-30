@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public readonly partial struct MipIntegrationStatus : IEquatable<MipIntegrationStatus>
     {
         private readonly string _value;
+        /// <summary> Ok. </summary>
+        private const string OkValue = "Ok";
+        /// <summary> noConsent. </summary>
+        private const string NoConsentValue = "noConsent";
+        /// <summary> noAutoLabelingRules. </summary>
+        private const string NoAutoLabelingRulesValue = "noAutoLabelingRules";
+        /// <summary> noMipLabels. </summary>
+        private const string NoMipLabelsValue = "noMipLabels";
 
         /// <summary> Initializes a new instance of <see cref="MipIntegrationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MipIntegrationStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OkValue = "Ok";
-        private const string NoConsentValue = "noConsent";
-        private const string NoAutoLabelingRulesValue = "noAutoLabelingRules";
-        private const string NoMipLabelsValue = "noMipLabels";
+            _value = value;
+        }
 
         /// <summary> Ok. </summary>
         public static MipIntegrationStatus Ok { get; } = new MipIntegrationStatus(OkValue);
+
         /// <summary> noConsent. </summary>
         public static MipIntegrationStatus NoConsent { get; } = new MipIntegrationStatus(NoConsentValue);
+
         /// <summary> noAutoLabelingRules. </summary>
         public static MipIntegrationStatus NoAutoLabelingRules { get; } = new MipIntegrationStatus(NoAutoLabelingRulesValue);
+
         /// <summary> noMipLabels. </summary>
         public static MipIntegrationStatus NoMipLabels { get; } = new MipIntegrationStatus(NoMipLabelsValue);
+
         /// <summary> Determines if two <see cref="MipIntegrationStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MipIntegrationStatus left, MipIntegrationStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MipIntegrationStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MipIntegrationStatus left, MipIntegrationStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MipIntegrationStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MipIntegrationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MipIntegrationStatus(string value) => new MipIntegrationStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MipIntegrationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MipIntegrationStatus?(string value) => value == null ? null : new MipIntegrationStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MipIntegrationStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MipIntegrationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

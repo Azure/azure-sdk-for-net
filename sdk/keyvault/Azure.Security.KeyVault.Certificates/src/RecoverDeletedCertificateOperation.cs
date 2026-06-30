@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.Security.KeyVault.Certificates
 {
@@ -16,15 +17,15 @@ namespace Azure.Security.KeyVault.Certificates
     {
         private static readonly TimeSpan s_defaultPollingInterval = TimeSpan.FromSeconds(2);
 
-        private readonly KeyVaultPipeline _pipeline;
+        private readonly KeyVaultCertificatesClient _generated;
         private readonly OperationInternal _operationInternal;
         private readonly KeyVaultCertificateWithPolicy _value;
 
-        internal RecoverDeletedCertificateOperation(KeyVaultPipeline pipeline, Response<KeyVaultCertificateWithPolicy> response)
+        internal RecoverDeletedCertificateOperation(KeyVaultCertificatesClient generated, ClientDiagnostics diagnostics, Response<KeyVaultCertificateWithPolicy> response)
         {
-            _pipeline = pipeline;
+            _generated = generated ?? throw new ArgumentNullException(nameof(generated));
             _value = response.Value ?? throw new InvalidOperationException("The response does not contain a value.");
-            _operationInternal = new(this, _pipeline.Diagnostics, response.GetRawResponse(), nameof(RecoverDeletedCertificateOperation), new[]
+            _operationInternal = new(this, diagnostics, response.GetRawResponse(), nameof(RecoverDeletedCertificateOperation), new[]
             {
                 new KeyValuePair<string, string>("secret", _value.Name), // Retained for backward compatibility.
                 new KeyValuePair<string, string>("certificate", _value.Name),
@@ -87,9 +88,10 @@ namespace Azure.Security.KeyVault.Certificates
 
         async ValueTask<OperationState> IOperation.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
+            var ctx = new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow };
             Response response = async
-                ? await _pipeline.GetResponseAsync(RequestMethod.Get, cancellationToken, CertificateClient.CertificatesPath, _value.Name).ConfigureAwait(false)
-                : _pipeline.GetResponse(RequestMethod.Get, cancellationToken, CertificateClient.CertificatesPath, _value.Name);
+                ? await _generated.GetCertificateAsync(_value.Name, certificateVersion: null, context: ctx).ConfigureAwait(false)
+                : _generated.GetCertificate(_value.Name, certificateVersion: null, context: ctx);
 
             switch (response.Status)
             {

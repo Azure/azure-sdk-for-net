@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -17,47 +18,72 @@ namespace Azure.ResourceManager.EventGrid.Models
     public readonly partial struct MonitorAlertSeverity : IEquatable<MonitorAlertSeverity>
     {
         private readonly string _value;
+        /// <summary> Sev0. </summary>
+        private const string Sev0Value = "Sev0";
+        /// <summary> Sev1. </summary>
+        private const string Sev1Value = "Sev1";
+        /// <summary> Sev2. </summary>
+        private const string Sev2Value = "Sev2";
+        /// <summary> Sev3. </summary>
+        private const string Sev3Value = "Sev3";
+        /// <summary> Sev4. </summary>
+        private const string Sev4Value = "Sev4";
 
         /// <summary> Initializes a new instance of <see cref="MonitorAlertSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MonitorAlertSeverity(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string Sev0Value = "Sev0";
-        private const string Sev1Value = "Sev1";
-        private const string Sev2Value = "Sev2";
-        private const string Sev3Value = "Sev3";
-        private const string Sev4Value = "Sev4";
+            _value = value;
+        }
 
         /// <summary> Sev0. </summary>
         public static MonitorAlertSeverity Sev0 { get; } = new MonitorAlertSeverity(Sev0Value);
+
         /// <summary> Sev1. </summary>
         public static MonitorAlertSeverity Sev1 { get; } = new MonitorAlertSeverity(Sev1Value);
+
         /// <summary> Sev2. </summary>
         public static MonitorAlertSeverity Sev2 { get; } = new MonitorAlertSeverity(Sev2Value);
+
         /// <summary> Sev3. </summary>
         public static MonitorAlertSeverity Sev3 { get; } = new MonitorAlertSeverity(Sev3Value);
+
         /// <summary> Sev4. </summary>
         public static MonitorAlertSeverity Sev4 { get; } = new MonitorAlertSeverity(Sev4Value);
+
         /// <summary> Determines if two <see cref="MonitorAlertSeverity"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MonitorAlertSeverity left, MonitorAlertSeverity right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MonitorAlertSeverity"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MonitorAlertSeverity left, MonitorAlertSeverity right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitorAlertSeverity"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MonitorAlertSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MonitorAlertSeverity(string value) => new MonitorAlertSeverity(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MonitorAlertSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MonitorAlertSeverity?(string value) => value == null ? null : new MonitorAlertSeverity(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MonitorAlertSeverity other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MonitorAlertSeverity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

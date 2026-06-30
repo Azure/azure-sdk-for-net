@@ -19,16 +19,16 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputerScreenshotImage"/>. </summary>
-        /// <param name="type">
+        /// <param name="imageKind">
         /// Specifies the event type. For a computer screenshot, this property is
         ///   always set to `computer_screenshot`.
         /// </param>
         /// <param name="imageUri"> The URL of the screenshot image. </param>
         /// <param name="fileId"> The identifier of an uploaded file that contains the screenshot. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputerScreenshotImage(string @type, Uri imageUri, string fileId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputerScreenshotImage(string imageKind, Uri imageUri, string fileId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            ImageKind = imageKind;
             ImageUri = imageUri;
             FileId = fileId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -38,7 +38,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// Specifies the event type. For a computer screenshot, this property is
         ///   always set to `computer_screenshot`.
         /// </summary>
-        public string Type { get; } = "computer_screenshot";
+        public string ImageKind { get; } = "computer_screenshot";
 
         /// <summary> The URL of the screenshot image. </summary>
         public Uri ImageUri { get; set; }

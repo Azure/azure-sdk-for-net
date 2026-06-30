@@ -77,7 +77,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("syntax"u8);
-            writer.WriteStringValue(Syntax.ToSerialString());
+            writer.WriteStringValue(Syntax.ToString());
             writer.WritePropertyName("definition"u8);
             writer.WriteStringValue(Definition);
         }
@@ -120,7 +120,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("syntax"u8))
                 {
-                    syntax = prop.Value.GetString().ToResponsesGrammarSyntax();
+                    syntax = new ResponsesGrammarSyntax(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("definition"u8))

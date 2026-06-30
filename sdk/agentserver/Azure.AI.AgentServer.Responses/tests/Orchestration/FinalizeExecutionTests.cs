@@ -60,12 +60,12 @@ public class FinalizeExecutionTests : IDisposable
         execution.Response.SetCompleted();
 
         // First create the response so UpdateResponseAsync can find it
-        await _provider.CreateResponseAsync(new CreateResponseRequest(execution.Response, null, null), IsolationContext.Empty);
+        await _provider.CreateResponseAsync(new CreateResponseRequest(execution.Response, null, null), PlatformContext.Empty);
 
         await _orchestrator.FinalizeExecutionAsync(execution, publisher);
 
         // Should call UpdateResponseAsync (bg=true: Create already happened at response.created)
-        var stored = await _provider.GetResponseAsync("resp_fin_02", IsolationContext.Empty);
+        var stored = await _provider.GetResponseAsync("resp_fin_02", PlatformContext.Empty);
         Assert.That(stored, Is.Not.Null);
         Assert.That(stored!.Status, Is.EqualTo(ResponseStatus.Completed));
     }
@@ -81,7 +81,7 @@ public class FinalizeExecutionTests : IDisposable
         await _orchestrator.FinalizeExecutionAsync(execution, publisher);
 
         // Should call CreateResponseAsync (bg=false: single persist at terminal state)
-        var stored = await _provider.GetResponseAsync("resp_fin_03", IsolationContext.Empty);
+        var stored = await _provider.GetResponseAsync("resp_fin_03", PlatformContext.Empty);
         Assert.That(stored, Is.Not.Null);
     }
 
@@ -97,7 +97,7 @@ public class FinalizeExecutionTests : IDisposable
 
         // Cancelled non-bg responses are not persisted
         Assert.ThrowsAsync<ResourceNotFoundException>(
-            () => _provider.GetResponseAsync("resp_fin_04", IsolationContext.Empty));
+            () => _provider.GetResponseAsync("resp_fin_04", PlatformContext.Empty));
     }
 
     [Test]
@@ -112,7 +112,7 @@ public class FinalizeExecutionTests : IDisposable
 
         // store=false -> no persistence
         Assert.ThrowsAsync<ResourceNotFoundException>(
-            () => _provider.GetResponseAsync("resp_fin_05", IsolationContext.Empty));
+            () => _provider.GetResponseAsync("resp_fin_05", PlatformContext.Empty));
     }
 
     [Test]
@@ -151,7 +151,7 @@ public class FinalizeExecutionTests : IDisposable
 
         // Models.ResponseObject is null -> no persistence regardless of store/bg
         Assert.ThrowsAsync<ResourceNotFoundException>(
-            () => _provider.GetResponseAsync("resp_fin_07", IsolationContext.Empty));
+            () => _provider.GetResponseAsync("resp_fin_07", PlatformContext.Empty));
     }
 
     private async Task<(ResponseExecution Execution, IAsyncObserver<ResponseStreamEvent> Publisher)>

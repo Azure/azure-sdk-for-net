@@ -26,13 +26,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="ComputeSkuProfile"/>. </summary>
         /// <param name="vmSizes"> Specifies the VM sizes for the virtual machine scale set. </param>
         /// <param name="allocationStrategy"> Specifies the allocation strategy for the virtual machine scale set based on which the VMs will be allocated. </param>
-        /// <param name="automaticSkuMigrationPolicy"> Specifies the policy that controls whether the platform may automatically migrate scale set instances to a different VM size from the SKU profile depending on platform demands. When omitted, automatic SKU migration is disabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeSkuProfile(IList<ComputeSkuProfileVmSize> vmSizes, ComputeAllocationStrategy? allocationStrategy, AutomaticSkuMigrationPolicy automaticSkuMigrationPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeSkuProfile(IList<ComputeSkuProfileVmSize> vmSizes, ComputeAllocationStrategy? allocationStrategy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmSizes = vmSizes;
             AllocationStrategy = allocationStrategy;
-            AutomaticSkuMigrationPolicy = automaticSkuMigrationPolicy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,25 +39,5 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Specifies the allocation strategy for the virtual machine scale set based on which the VMs will be allocated. </summary>
         public ComputeAllocationStrategy? AllocationStrategy { get; set; }
-
-        /// <summary> Specifies the policy that controls whether the platform may automatically migrate scale set instances to a different VM size from the SKU profile depending on platform demands. When omitted, automatic SKU migration is disabled. </summary>
-        internal AutomaticSkuMigrationPolicy AutomaticSkuMigrationPolicy { get; set; }
-
-        /// <summary> Specifies whether automatic SKU migration should be enabled on the virtual machine scale set. The default value is false. </summary>
-        public bool? IsAutomaticSkuMigrationPolicyEnabled
-        {
-            get
-            {
-                return AutomaticSkuMigrationPolicy is null ? default : AutomaticSkuMigrationPolicy.IsAutomaticSkuMigrationPolicyEnabled;
-            }
-            set
-            {
-                if (AutomaticSkuMigrationPolicy is null)
-                {
-                    AutomaticSkuMigrationPolicy = new AutomaticSkuMigrationPolicy();
-                }
-                AutomaticSkuMigrationPolicy.IsAutomaticSkuMigrationPolicyEnabled = value;
-            }
-        }
     }
 }

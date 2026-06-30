@@ -602,7 +602,7 @@ namespace Azure.Security.CodeTransparency
 
         internal HttpMessage CreateCreateEntryRequest(RequestContent content, RequestContext context)
         {
-            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier201202);
+            var message = Pipeline.CreateMessage(context, ResponseClassifier201202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -661,6 +661,72 @@ namespace Azure.Security.CodeTransparency
             request.Headers.Add("Accept", "application/cose");
             return message;
         }
+
+        // Backward-compatible wrapper methods delegating to the V09 generated methods.
+
+        /// <summary> Post an entry to be registered on the CodeTransparency instance. </summary>
+        [Obsolete("Use CreateEntryV09 instead.")]
+        public virtual Response CreateEntry(RequestContent content, bool? waitForCommit = default, RequestContext context = null) => CreateEntryV09(content, waitForCommit, context);
+
+        /// <summary> Post an entry to be registered on the CodeTransparency instance. </summary>
+        [Obsolete("Use CreateEntryV09Async instead.")]
+        public virtual async Task<Response> CreateEntryAsync(RequestContent content, bool? waitForCommit = default, RequestContext context = null) => await CreateEntryV09Async(content, waitForCommit, context).ConfigureAwait(false);
+
+        /// <summary> Post an entry to be registered on the CodeTransparency instance. </summary>
+        [Obsolete("Use CreateEntryV09 instead.")]
+        public virtual Response<BinaryData> CreateEntry(BinaryData body, bool? waitForCommit = default, CancellationToken cancellationToken = default) => CreateEntryV09(body, waitForCommit, cancellationToken);
+
+        /// <summary> Post an entry to be registered on the CodeTransparency instance. </summary>
+        [Obsolete("Use CreateEntryV09Async instead.")]
+        public virtual async Task<Response<BinaryData>> CreateEntryAsync(BinaryData body, bool? waitForCommit = default, CancellationToken cancellationToken = default) => await CreateEntryV09Async(body, waitForCommit, cancellationToken).ConfigureAwait(false);
+
+        /// <summary> Get receipt. </summary>
+        [Obsolete("Use GetEntryV09 instead.")]
+        public virtual Response GetEntry(string entryId, RequestContext context) => GetEntryV09(entryId, context);
+
+        /// <summary> Get receipt. </summary>
+        [Obsolete("Use GetEntryV09Async instead.")]
+        public virtual async Task<Response> GetEntryAsync(string entryId, RequestContext context) => await GetEntryV09Async(entryId, context).ConfigureAwait(false);
+
+        /// <summary> Get receipt. </summary>
+        [Obsolete("Use GetEntryV09 instead.")]
+        public virtual Response<BinaryData> GetEntry(string entryId, CancellationToken cancellationToken = default) => GetEntryV09(entryId, cancellationToken);
+
+        /// <summary> Get receipt. </summary>
+        [Obsolete("Use GetEntryV09Async instead.")]
+        public virtual async Task<Response<BinaryData>> GetEntryAsync(string entryId, CancellationToken cancellationToken = default) => await GetEntryV09Async(entryId, cancellationToken).ConfigureAwait(false);
+
+        /// <summary> Get the transparent statement. </summary>
+        [Obsolete("Use GetEntryStatementV09 instead.")]
+        public virtual Response GetEntryStatement(string entryId, RequestContext context) => GetEntryStatementV09(entryId, context);
+
+        /// <summary> Get the transparent statement. </summary>
+        [Obsolete("Use GetEntryStatementV09Async instead.")]
+        public virtual async Task<Response> GetEntryStatementAsync(string entryId, RequestContext context) => await GetEntryStatementV09Async(entryId, context).ConfigureAwait(false);
+
+        /// <summary> Get the transparent statement. </summary>
+        [Obsolete("Use GetEntryStatementV09 instead.")]
+        public virtual Response<BinaryData> GetEntryStatement(string entryId, CancellationToken cancellationToken = default) => GetEntryStatementV09(entryId, cancellationToken);
+
+        /// <summary> Get the transparent statement. </summary>
+        [Obsolete("Use GetEntryStatementV09Async instead.")]
+        public virtual async Task<Response<BinaryData>> GetEntryStatementAsync(string entryId, CancellationToken cancellationToken = default) => await GetEntryStatementV09Async(entryId, cancellationToken).ConfigureAwait(false);
+
+        /// <summary> Get operation status. </summary>
+        [Obsolete("Use GetOperationV09 instead.")]
+        public virtual Response GetOperation(string operationId, RequestContext context) => GetOperationV09(operationId, context);
+
+        /// <summary> Get operation status. </summary>
+        [Obsolete("Use GetOperationV09Async instead.")]
+        public virtual async Task<Response> GetOperationAsync(string operationId, RequestContext context) => await GetOperationV09Async(operationId, context).ConfigureAwait(false);
+
+        /// <summary> Get operation status. </summary>
+        [Obsolete("Use GetOperationV09 instead.")]
+        public virtual Response<BinaryData> GetOperation(string operationId, CancellationToken cancellationToken = default) => GetOperationV09(operationId, cancellationToken);
+
+        /// <summary> Get operation status. </summary>
+        [Obsolete("Use GetOperationV09Async instead.")]
+        public virtual async Task<Response<BinaryData>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default) => await GetOperationV09Async(operationId, cancellationToken).ConfigureAwait(false);
 
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });

@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Token consumption summary for an evaluator generation job. Populated when the job reaches a terminal state. </summary>
     public partial class EvaluatorGenerationTokenUsage

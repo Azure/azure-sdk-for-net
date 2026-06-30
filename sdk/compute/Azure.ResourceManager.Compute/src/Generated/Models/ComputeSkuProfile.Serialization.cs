@@ -89,11 +89,6 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("allocationStrategy"u8);
                 writer.WriteStringValue(AllocationStrategy.Value.ToString());
             }
-            if (Optional.IsDefined(AutomaticSkuMigrationPolicy))
-            {
-                writer.WritePropertyName("automaticSkuMigrationPolicy"u8);
-                writer.WriteObjectValue(AutomaticSkuMigrationPolicy, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -138,7 +133,6 @@ namespace Azure.ResourceManager.Compute.Models
             }
             IList<ComputeSkuProfileVmSize> vmSizes = default;
             ComputeAllocationStrategy? allocationStrategy = default;
-            AutomaticSkuMigrationPolicy automaticSkuMigrationPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -165,21 +159,12 @@ namespace Azure.ResourceManager.Compute.Models
                     allocationStrategy = new ComputeAllocationStrategy(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("automaticSkuMigrationPolicy"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    automaticSkuMigrationPolicy = AutomaticSkuMigrationPolicy.DeserializeAutomaticSkuMigrationPolicy(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ComputeSkuProfile(vmSizes ?? new ChangeTrackingList<ComputeSkuProfileVmSize>(), allocationStrategy, automaticSkuMigrationPolicy, additionalBinaryDataProperties);
+            return new ComputeSkuProfile(vmSizes ?? new ChangeTrackingList<ComputeSkuProfileVmSize>(), allocationStrategy, additionalBinaryDataProperties);
         }
     }
 }
