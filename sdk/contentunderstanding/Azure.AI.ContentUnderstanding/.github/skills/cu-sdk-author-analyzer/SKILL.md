@@ -160,8 +160,8 @@ with two required top-level keys:
 >   produce vague extractions.
 > - Use **text anchors** (labels, headings, neighbouring fields) — never
 >   visual cues like colour, font, or position-without-text-context. This
->   matches the two-stage pipeline rule in
->   [`cu-sdk-common-knowledge`](../cu-sdk-common-knowledge/SKILL.md#field-description-rule-the-two-stage-pipeline).
+>   matches the two-stage pipeline rule documented in the [Content
+>   Understanding best-practices guide][best-practices].
 > - Include **format examples** and **alternative label names** when a value
 >   can appear in multiple wordings or formats.
 > - Prefer `"method": "extract"` when the value appears verbatim; use
@@ -191,9 +191,20 @@ shapes. Delete the example fields you don't need.
 
 #### Choosing `baseAnalyzerId`
 
-See the prebuilt-analyzer table in
-[`cu-sdk-common-knowledge` § Choosing `baseAnalyzerId`](../cu-sdk-common-knowledge/SKILL.md#choosing-baseanalyzerid).
-The local validator (Step 3) rejects any value not on that list.
+Only modality-level prebuilt analyzers are valid for `baseAnalyzerId`:
+
+| Document modality | Use |
+|---|---|
+| Document (PDF, page images) | `prebuilt-document` |
+| Audio (mp3, wav, m4a)       | `prebuilt-audio`    |
+| Video (mp4, mov)            | `prebuilt-video`    |
+| Image (jpg, png, tif)       | `prebuilt-image`    |
+
+`*Search` variants and task-specific prebuilts (`prebuilt-invoice`,
+`prebuilt-receipt`) are **not** valid as `baseAnalyzerId` for a custom
+analyzer — the service returns `InvalidBaseAnalyzerId`. See the
+[analyzer reference][analyzer-reference] for the authoritative list. The
+local validator (Step 3) rejects any value not on that list.
 
 #### Example single-type schema
 
@@ -238,9 +249,8 @@ The local validator (Step 3) rejects any value not on that list.
 
 > **Field-description rule (two-stage pipeline):** descriptions must reference
 > **text content and structure** (labels, headings, neighbouring fields), not
-> visual appearance (colour, font, size). See
-> [`cu-sdk-common-knowledge`](../cu-sdk-common-knowledge/SKILL.md) §
-> "two-stage pipeline".
+> visual appearance (colour, font, size). See the [Content Understanding
+> best-practices guide][best-practices] for the underlying rule.
 
 ### Step 3 — Validate the schema locally
 
@@ -398,7 +408,8 @@ and
 
 ## Related skills
 
-- [`cu-sdk-setup`](../cu-sdk-setup/SKILL.md) — install the SDK, configure env.
-- [`cu-sdk-sample-run`](../cu-sdk-sample-run/SKILL.md) — run one reference sample.
-- [`cu-sdk-common-knowledge`](../cu-sdk-common-knowledge/SKILL.md) — service concepts and field-description rules.
 - [`cu-sdk-author-analyzer-classify-route`](../cu-sdk-author-analyzer-classify-route/SKILL.md) — multi-doc-type packets.
+
+<!-- LINKS -->
+[best-practices]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/best-practices
+[analyzer-reference]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/analyzer-reference#baseanalyzerid

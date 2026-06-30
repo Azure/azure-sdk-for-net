@@ -1,23 +1,34 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net10.0</TargetFramework>
+    <!--
+      Multi-target the same TFMs the SDK is built for so the repo-wide
+      service.proj test traversal can restore and build this csproj on
+      every framework leg. The tool itself only runs on net10.0; the
+      net8.0 target exists purely so that CI legs which pin a non-net10
+      framework do not fail with NETSDK1005 (no target for the requested
+      framework).
+    -->
+    <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>AzureSdkContentUnderstanding.Skills</RootNamespace>
     <AssemblyName>cu-skill</AssemblyName>
-    <!-- Skill scripts are tooling, not shipped — suppress noisy analyzer warnings. -->
+    <!-- Skill scripts are tooling, not shipped; suppress noisy analyzer warnings. -->
     <NoWarn>CS8600;CS8602;CS8604;CS0168;CS0219;CA1303;CA1031;CA2007</NoWarn>
     <IsPackable>false</IsPackable>
+    <IsTestProject>false</IsTestProject>
+    <IsShipping>false</IsShipping>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <!--
       Reference the locally-built Azure.AI.ContentUnderstanding so the skill
-      always runs against the SDK version in this branch. Matches the pattern
-      from .sample_runner/.
+      always runs against the SDK version in this branch. The HintPath is
+      TFM-conditional so each leg picks the matching DLL.
     -->
     <Reference Include="Azure.AI.ContentUnderstanding">
-      <HintPath>$(MSBuildThisFileDirectory)../../../../../../artifacts/bin/Azure.AI.ContentUnderstanding/Debug/net10.0/Azure.AI.ContentUnderstanding.dll</HintPath>
+      <HintPath>$(MSBuildThisFileDirectory)../../../../../../artifacts/bin/Azure.AI.ContentUnderstanding/Debug/$(TargetFramework)/Azure.AI.ContentUnderstanding.dll</HintPath>
       <Private>true</Private>
     </Reference>
     <PackageReference Include="Azure.Core" Version="1.*" />

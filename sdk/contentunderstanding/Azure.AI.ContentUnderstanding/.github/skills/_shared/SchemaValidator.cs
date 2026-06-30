@@ -10,7 +10,7 @@
 // Understanding service. Failing fast here gives users an actionable error
 // message and avoids a wasted service round-trip.
 //
-// Design rules (see README.md in this directory):
+// Design rules (see about.md in this directory):
 //   * No Azure.* SDK imports — pure System.Text.Json.
 //   * No network calls.
 //   * Self-contained — drop-in for any tool or test.

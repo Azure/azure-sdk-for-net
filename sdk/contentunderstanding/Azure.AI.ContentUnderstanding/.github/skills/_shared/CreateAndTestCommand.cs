@@ -323,7 +323,10 @@ internal static class CreateAndTestCommand
         // Match Python's hashlib.sha1(json.dumps(schema, sort_keys=True))[:8].
         var canonical = JsonCanonicalizer.Canonicalize(schema);
         var bytes = SHA1.HashData(Encoding.UTF8.GetBytes(canonical));
-        var hex = Convert.ToHexStringLower(bytes);
+        // Convert.ToHexStringLower is .NET 9+; do it by hand so this also
+        // compiles on net8.0 (the repo-wide service.proj traversal exercises
+        // multiple TFMs and we don't want the skill csproj to break those legs).
+        var hex = Convert.ToHexString(bytes).ToLowerInvariant();
         return hex[..8];
     }
 

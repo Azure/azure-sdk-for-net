@@ -86,9 +86,9 @@ with `CONTENTUNDERSTANDING_ENDPOINT` (plus `CONTENTUNDERSTANDING_KEY` or
                        loan app extractor  ◄──── routes here for loan pages
 ```
 
-Key rules (also captured in
-[`cu-sdk-common-knowledge`](../cu-sdk-common-knowledge/SKILL.md) §
-"classify-and-route"):
+Key rules (also captured in the
+[Content Understanding best-practices guide][best-practices] and the
+[analyzer reference][analyzer-reference] under "classify-and-route"):
 
 1. **Category descriptions reference text anchors**, not visual cues
    (matches the two-stage pipeline rule for fields).
@@ -162,10 +162,11 @@ dotnet run --project sdk/contentunderstanding/Azure.AI.ContentUnderstanding/.git
 ### Step 2 — Draft one inner schema per type
 
 Treat each type as a single-doc-type analyzer (pick `baseAnalyzerId` from
-the table in
-[`cu-sdk-common-knowledge` § Choosing `baseAnalyzerId`](../cu-sdk-common-knowledge/SKILL.md#choosing-baseanalyzerid),
+the modality-level prebuilts — see the
+[analyzer reference][analyzer-reference] —
 then add `fieldSchema.fields`). Field descriptions follow the
-[two-stage pipeline rule](../cu-sdk-common-knowledge/SKILL.md#field-description-rule-the-two-stage-pipeline)
+two-stage pipeline rule documented in the
+[Content Understanding best-practices guide][best-practices]
 — reference text and structure, never visual appearance. See
 [`cu-sdk-author-analyzer`](../cu-sdk-author-analyzer/SKILL.md) Step 2 for
 the full field-schema walkthrough.
@@ -267,8 +268,8 @@ pass. Two exceptions skip alias resolution:
 >   that distinguishes this category from the others in the packet.
 > - **Text-anchored, not visual** — reference headings, labels, and
 >   neighbouring text, never colour / font / position-without-text. Same
->   reason as the field-description rule in
->   [`cu-sdk-common-knowledge`](../cu-sdk-common-knowledge/SKILL.md#field-description-rule-the-two-stage-pipeline).
+>   reason as the field-description rule in the
+>   [Content Understanding best-practices guide][best-practices].
 
 ### Step 4 — Validate, create, and batch-test
 
@@ -476,6 +477,8 @@ delete all of them at the end of the run.
 ## Related skills
 
 - [`cu-sdk-author-analyzer`](../cu-sdk-author-analyzer/SKILL.md) — single doc type.
-- [`cu-sdk-common-knowledge`](../cu-sdk-common-knowledge/SKILL.md) — service concepts, two-stage pipeline, `baseAnalyzerId` table, classify-and-route rules.
-- [`cu-sdk-sample-run`](../cu-sdk-sample-run/SKILL.md) — run individual SDK samples (e.g. `Sample05_CreateClassifier.md`) for deeper reference.
-- [`cu-sdk-setup`](../cu-sdk-setup/SKILL.md) — install the SDK, configure env.
+- [Sample05_CreateClassifier.md](../../../samples/Sample05_CreateClassifier.md) — the reference SDK sample this skill is patterned on.
+
+<!-- LINKS -->
+[best-practices]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/best-practices
+[analyzer-reference]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/analyzer-reference#baseanalyzerid
