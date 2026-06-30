@@ -3,7 +3,7 @@ on:
   pull_request_target:
     types: [opened, reopened, synchronize]
     paths:
-      - "sdk/**/Azure.ResourceManager.*/**"
+      - "sdk/*/Azure.ResourceManager.*/**"
   check_run:
     types: [completed]
   workflow_dispatch:
