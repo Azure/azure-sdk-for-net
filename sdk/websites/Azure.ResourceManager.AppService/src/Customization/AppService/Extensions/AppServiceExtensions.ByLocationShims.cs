@@ -12,6 +12,13 @@ using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.AppService.Mocking;
 using Azure.ResourceManager.Resources;
 
+// ROOT CAUSE: Extension-level companions to MockableAppServiceSubscriptionResource.ByLocationShims /
+// MockableAppServiceTenantResource.ByLocationShims. GA 1.5.0 exposed by-location helpers on
+// SubscriptionResource / TenantResource that took AzureLocation. The new TypeSpec emitter exposes
+// them taking `string location` and rebases the deleted-site lookups onto a collection-based API
+// (GetDeletedSiteAtLocations). These extension methods forward to the mockable companions so the
+// GA SubscriptionResource.GetXxxByLocation*(AzureLocation, ...) / TenantResource.GetXxxByLocation*
+// signatures remain callable.
 namespace Azure.ResourceManager.AppService
 {
     public static partial class AppServiceExtensions

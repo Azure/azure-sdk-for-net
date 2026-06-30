@@ -12,6 +12,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
+    // ROOT CAUSE: SiteAuthSettingsV2 is a GA compatibility shim (see SiteAuthSettingsV2.cs) re-introduced
+    // to preserve the 1.5.0 public surface after the TypeSpec emitter renamed the generated counterpart
+    // and changed several inner property types/names. Because the type is hand-declared on the SDK side,
+    // there is no generator-emitted JsonModel implementation, so the matching IJsonModel/IPersistableModel
+    // serialization must also be hand-maintained here. Removing this file would leave the shim
+    // un-(de)serializable and break round-tripping for any caller using the GA model.
     public partial class SiteAuthSettingsV2 : IJsonModel<SiteAuthSettingsV2>
     {
         void IJsonModel<SiteAuthSettingsV2>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)

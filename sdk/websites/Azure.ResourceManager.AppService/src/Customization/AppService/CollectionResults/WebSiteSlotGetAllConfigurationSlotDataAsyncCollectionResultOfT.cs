@@ -12,6 +12,10 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.AppService
 {
+    // Compatibility shim: GA 1.5.0 exposed WebSiteSlotResource.GetAllConfigurationSlotDataAsync returning
+    // AsyncPageable<SiteConfigData>. The generator emits WebApps.CreateGetAllConfigurationSlotDataRequest
+    // but no CollectionResult, so this wrapper is needed to preserve the GA public surface.
+    // Sibling: WebSiteSlotGetAllConfigurationSlotDataCollectionResultOfT for the sync path.
     internal partial class WebSiteSlotGetAllConfigurationSlotDataAsyncCollectionResultOfT : AsyncPageable<SiteConfigData>
     {
         private readonly WebApps _client;

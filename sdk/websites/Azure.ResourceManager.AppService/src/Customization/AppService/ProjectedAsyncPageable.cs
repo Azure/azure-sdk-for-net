@@ -8,6 +8,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService
 {
+    // ROOT CAUSE: Async sibling of ProjectedPageable, used by the GA compatibility shims to convert
+    // a generated AsyncPageable<TIn> into the GA AsyncPageable<TOut>. The generator does not emit
+    // a pageable-projection helper, so this hand-written wrapper composes an inner AsyncPageable<TIn>
+    // with a Func<TIn, TOut> to convert each page.
     internal sealed class ProjectedAsyncPageable<TIn, TOut> : AsyncPageable<TOut>
     {
         private readonly AsyncPageable<TIn> _inner;

@@ -12,6 +12,10 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.AppService
 {
+    // Compatibility shim: GA 1.5.0 exposed WebSiteResource.GetAllConfigurationData returning
+    // Pageable<SiteConfigData>. The generator emits Sites.CreateGetAllConfigurationDataRequest but no
+    // CollectionResult, so this synchronous wrapper is needed to preserve the GA public surface.
+    // Sibling: WebSiteGetAllConfigurationDataAsyncCollectionResultOfT for the async path.
     internal partial class WebSiteGetAllConfigurationDataCollectionResultOfT : Pageable<SiteConfigData>
     {
         private readonly Sites _client;

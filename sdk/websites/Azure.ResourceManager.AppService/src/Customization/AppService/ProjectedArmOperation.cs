@@ -9,6 +9,13 @@ using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.AppService
 {
+    // ROOT CAUSE: Several GA compatibility shims (e.g. GetVipInfo on AppServiceEnvironmentResource,
+    // CreateOrUpdate overloads on the private-endpoint-connection collections) must return the GA
+    // result type while the underlying generated LRO operates on the new TypeSpec model. The
+    // generator does not emit an in-flight projection helper, so this hand-written wrapper composes
+    // an existing ArmOperation<TIn> with a Func<TIn, TOut> to translate the terminal Value (and
+    // the WaitForCompletion result) into the GA-named type. Mirror types ProjectedPageable and
+    // ProjectedAsyncPageable cover the corresponding pageable shims.
     internal sealed class ProjectedArmOperation<TIn, TOut> : ArmOperation<TOut>
     {
         private readonly ArmOperation<TIn> _inner;

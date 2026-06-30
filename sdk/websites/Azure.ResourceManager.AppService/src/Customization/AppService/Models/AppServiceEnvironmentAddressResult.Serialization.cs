@@ -13,6 +13,13 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
+    // ROOT CAUSE: AppServiceEnvironmentAddressResult is a GA compatibility shim (see
+    // AppServiceEnvironmentAddressResult.cs) re-introduced to preserve the 1.5.0 public surface
+    // returned by AppServiceEnvironmentResource.GetVipInfo*. The TypeSpec emitter generates this
+    // shape as a different resource type, so the GA-named model is hand-declared on the SDK side.
+    // Because there is no generator-emitted JsonModel implementation for the hand-declared type,
+    // IJsonModel/IPersistableModel must also be hand-maintained here. Removing this file would
+    // leave the shim un-(de)serializable and break callers that still consume the GA model.
     public partial class AppServiceEnvironmentAddressResult : IJsonModel<AppServiceEnvironmentAddressResult>
     {
         void IJsonModel<AppServiceEnvironmentAddressResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
