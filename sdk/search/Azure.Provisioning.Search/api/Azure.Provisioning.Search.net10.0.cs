@@ -41,6 +41,11 @@ namespace Azure.Provisioning.Search
     {
         BlockAll = 0,
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future versions, please use SearchDataExfiltrationProtection instead.")]
+    public enum SearchDisabledDataExfiltrationOption
+    {
+        All = 0,
+    }
     public enum SearchEncryptionComplianceStatus
     {
         Compliant = 0,
@@ -138,6 +143,8 @@ namespace Azure.Provisioning.Search
         public Azure.Provisioning.Search.SearchAadAuthDataPlaneAuthOptions AuthOptions { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Search.SearchServiceComputeType> ComputeType { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Search.SearchDataExfiltrationProtection> DataExfiltrationProtections { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsoleted and will be removed in a future version, please use DataExfiltrationProtections instead.")]
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Search.SearchDisabledDataExfiltrationOption> DisabledDataExfiltrationOptions { get { throw null; } set { } }
         public Azure.Provisioning.Search.SearchEncryptionWithCmk EncryptionWithCmk { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Uri> Endpoint { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }

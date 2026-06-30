@@ -40,6 +40,28 @@ namespace Azure.Provisioning.Search
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsoleted and will be removed in a future version, please use DataExfiltrationProtections instead.")]
+        public BicepList<SearchDisabledDataExfiltrationOption> DisabledDataExfiltrationOptions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SearchServiceProperties();
+                }
+                return Properties.DisabledDataExfiltrationOptions;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SearchServiceProperties();
+                }
+                Properties.DisabledDataExfiltrationOptions = value;
+            }
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public BicepList<SearchServiceIPRule> IPRules
         {
             get

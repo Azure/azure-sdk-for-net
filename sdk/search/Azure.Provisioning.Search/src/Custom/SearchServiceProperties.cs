@@ -10,9 +10,18 @@ namespace Azure.Provisioning.Search
     internal partial class SearchServiceProperties
     {
 #pragma warning disable CS0618 // Compatibility shims intentionally reference obsolete types.
+        private BicepList<SearchDisabledDataExfiltrationOption> _disabledDataExfiltrationOptions;
         private BicepList<SearchPrivateEndpointConnectionData> _privateEndpointConnectionData;
         private BicepList<SharedSearchServicePrivateLinkResourceData> _sharedPrivateLinkResourceData;
         private BicepValue<SearchServicePublicNetworkAccess> _publicNetworkAccess;
+#pragma warning restore CS0618
+
+#pragma warning disable CS0618 // Compatibility shim intentionally exposes obsolete type.
+        internal BicepList<SearchDisabledDataExfiltrationOption> DisabledDataExfiltrationOptions
+        {
+            get { Initialize(); return _disabledDataExfiltrationOptions; }
+            set { Initialize(); _disabledDataExfiltrationOptions.Assign(value); }
+        }
 #pragma warning restore CS0618
 
 #pragma warning disable CS0618 // Compatibility shim intentionally exposes obsolete type.
@@ -40,6 +49,7 @@ namespace Azure.Provisioning.Search
         partial void DefineAdditionalProperties()
         {
 #pragma warning disable CS0618 // Compatibility shims intentionally register obsolete types.
+            _disabledDataExfiltrationOptions = DefineListProperty<SearchDisabledDataExfiltrationOption>("DisabledDataExfiltrationOptions", new string[] { "disabledDataExfiltrationOptions" });
             _privateEndpointConnectionData = DefineListProperty<SearchPrivateEndpointConnectionData>("PrivateEndpointConnections", new string[] { "privateEndpointConnections" }, isOutput: true);
             _sharedPrivateLinkResourceData = DefineListProperty<SharedSearchServicePrivateLinkResourceData>("SharedPrivateLinkResources", new string[] { "sharedPrivateLinkResources" }, isOutput: true);
             _publicNetworkAccess = DefineProperty<SearchServicePublicNetworkAccess>("PublicNetworkAccess", new string[] { "publicNetworkAccess" });
