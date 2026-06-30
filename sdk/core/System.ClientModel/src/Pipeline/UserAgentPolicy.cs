@@ -15,6 +15,7 @@ namespace System.ClientModel.Primitives;
 public class UserAgentPolicy : PipelinePolicy
 {
     private const int MaxApplicationIdLength = 24;
+    private const int DefaultMaxUserAgentLength = 300;
     private readonly string _userAgent;
 
     /// <summary>
@@ -28,6 +29,11 @@ public class UserAgentPolicy : PipelinePolicy
     public string? ApplicationId { get; }
 
     /// <summary>
+    /// The maximum length of the user agent string. If the generated user agent exceeds this length, it will be truncated.
+    /// </summary>
+    public int MaxUserAgentLength { get; }
+
+    /// <summary>
     /// The formatted user agent string that will be added to HTTP requests by this policy.
     /// </summary>
     public string UserAgentValue => _userAgent;
@@ -38,6 +44,17 @@ public class UserAgentPolicy : PipelinePolicy
     /// <param name="callerAssembly">The <see cref="System.Reflection.Assembly"/> used to generate the package name and version information for the user agent.</param>
     /// <param name="applicationId">An optional value to be prepended to the user agent string.</param>
     public UserAgentPolicy(Assembly callerAssembly, string? applicationId = null)
+        : this(callerAssembly, applicationId, DefaultMaxUserAgentLength)
+    {
+    }
+
+    /// <summary>
+    /// Initialize an instance of <see cref="UserAgentPolicy"/> by extracting the name and version information from the <see cref="System.Reflection.Assembly"/> associated with the <paramref name="callerAssembly"/>.
+    /// </summary>
+    /// <param name="callerAssembly">The <see cref="System.Reflection.Assembly"/> used to generate the package name and version information for the user agent.</param>
+    /// <param name="applicationId">An optional value to be prepended to the user agent string.</param>
+    /// <param name="maxUserAgentLength">The maximum length of the user agent string. If the generated user agent exceeds this length, it will be truncated. Default is 300.</param>
+    public UserAgentPolicy(Assembly callerAssembly, string? applicationId, int maxUserAgentLength)
     {
         Argument.AssertNotNull(callerAssembly, nameof(callerAssembly));
         if (applicationId?.Length > MaxApplicationIdLength)
@@ -45,9 +62,16 @@ public class UserAgentPolicy : PipelinePolicy
             throw new ArgumentOutOfRangeException(nameof(applicationId), $"{nameof(applicationId)} must be shorter than {MaxApplicationIdLength + 1} characters");
         }
 
+        if (maxUserAgentLength <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(maxUserAgentLength), $"{nameof(maxUserAgentLength)} must be greater than 0");
+        }
+
         Assembly = callerAssembly;
         ApplicationId = applicationId;
-        _userAgent = GenerateUserAgentString(callerAssembly, applicationId, new RuntimeInformationWrapper());
+        MaxUserAgentLength = maxUserAgentLength;
+        string fullUserAgent = GenerateUserAgentString(callerAssembly, applicationId, new RuntimeInformationWrapper());
+        _userAgent = TruncateUserAgent(fullUserAgent, maxUserAgentLength);
     }
 
     /// <summary>
@@ -206,5 +230,21 @@ public class UserAgentPolicy : PipelinePolicy
         }
         return false;
 #endif
+    }
+
+    /// <summary>
+    /// Truncates the user agent string to the specified maximum length if it exceeds that length.
+    /// </summary>
+    /// <param name="userAgent">The user agent string to truncate.</param>
+    /// <param name="maxLength">The maximum allowed length.</param>
+    /// <returns>The truncated user agent string if it exceeded the maximum length, otherwise the original string.</returns>
+    private static string TruncateUserAgent(string userAgent, int maxLength)
+    {
+        if (userAgent.Length <= maxLength)
+        {
+            return userAgent;
+        }
+
+        return userAgent.Substring(0, maxLength);
     }
 }
