@@ -126,13 +126,7 @@ Confirm the package files contain the expected first-release metadata:
 
 ## 8. Validate generated resources against Bicep reference
 
-Use `schema.log` when available:
-
-```text
-sdk\{service}\Azure.Provisioning.{Service}\src\Generated\schema.log
-```
-
-If `schema.log` is not produced, enumerate generated resource types from generated resource constructors:
+The TypeSpec provisioning emitter does not produce `schema.log`. Enumerate generated ARM resource types from generated resource constructors instead:
 
 ```powershell
 Select-String sdk\{service}\Azure.Provisioning.{Service}\src\Generated\*.cs -Pattern 'base\(bicepIdentifier,\s*"(Microsoft\.[^"]+)"'
