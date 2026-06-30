@@ -4,9 +4,7 @@ trigger: none
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    SDKType: mgmt
     ServiceDirectory: azureresiliencemanagement
-    BuildSnippets: false
     LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.ResilienceManagement

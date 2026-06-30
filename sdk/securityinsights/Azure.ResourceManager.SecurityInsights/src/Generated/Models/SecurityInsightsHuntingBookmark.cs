@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -16,118 +17,243 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class SecurityInsightsHuntingBookmark : SecurityInsightsEntity
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsHuntingBookmark"/>. </summary>
-        public SecurityInsightsHuntingBookmark()
+        public SecurityInsightsHuntingBookmark() : base(SecurityInsightsEntityKind.Bookmark)
         {
-            AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
-            Labels = new ChangeTrackingList<string>();
-            Kind = SecurityInsightsEntityKind.Bookmark;
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsHuntingBookmark"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the entity. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
-        /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
-        /// <param name="createdOn"> The time the bookmark was created. </param>
-        /// <param name="createdBy"> Describes a user that created the bookmark. </param>
-        /// <param name="displayName"> The display name of the bookmark. </param>
-        /// <param name="eventOn"> The time of the event. </param>
-        /// <param name="labels"> List of labels relevant to this bookmark. </param>
-        /// <param name="notes"> The notes of the bookmark. </param>
-        /// <param name="query"> The query of the bookmark. </param>
-        /// <param name="queryResult"> The query result of the bookmark. </param>
-        /// <param name="updatedOn"> The last time the bookmark was updated. </param>
-        /// <param name="updatedBy"> Describes a user that updated the bookmark. </param>
-        /// <param name="incidentInfo"> Describes an incident that relates to bookmark. </param>
-        internal SecurityInsightsHuntingBookmark(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, DateTimeOffset? createdOn, SecurityInsightsUserInfo createdBy, string displayName, DateTimeOffset? eventOn, IList<string> labels, string notes, string query, string queryResult, DateTimeOffset? updatedOn, SecurityInsightsUserInfo updatedBy, SecurityInsightsBookmarkIncidentInfo incidentInfo) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> HuntingBookmark entity properties. </param>
+        internal SecurityInsightsHuntingBookmark(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, HuntingBookmarkProperties properties) : base(id, name, resourceType, systemData, kind, additionalBinaryDataProperties)
         {
-            AdditionalData = additionalData;
-            FriendlyName = friendlyName;
-            CreatedOn = createdOn;
-            CreatedBy = createdBy;
-            DisplayName = displayName;
-            EventOn = eventOn;
-            Labels = labels;
-            Notes = notes;
-            Query = query;
-            QueryResult = queryResult;
-            UpdatedOn = updatedOn;
-            UpdatedBy = updatedBy;
-            IncidentInfo = incidentInfo;
-            Kind = kind;
+            Properties = properties;
         }
 
-        /// <summary>
-        /// A bag of custom fields that should be part of the entity and will be presented to the user.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
+        /// <summary> HuntingBookmark entity properties. </summary>
+        [WirePath("properties")]
+        internal HuntingBookmarkProperties Properties { get; set; }
+
+        /// <summary> A bag of custom fields that should be part of the entity and will be presented to the user. </summary>
         [WirePath("properties.additionalData")]
-        public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
+        public IReadOnlyDictionary<string, BinaryData> AdditionalData
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new HuntingBookmarkProperties();
+                }
+                return Properties.AdditionalData;
+            }
+        }
+
         /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
         [WirePath("properties.friendlyName")]
-        public string FriendlyName { get; }
+        public string FriendlyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FriendlyName;
+            }
+        }
+
         /// <summary> The time the bookmark was created. </summary>
         [WirePath("properties.created")]
-        public DateTimeOffset? CreatedOn { get; set; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HuntingBookmarkProperties();
+                }
+                Properties.CreatedOn = value;
+            }
+        }
+
         /// <summary> Describes a user that created the bookmark. </summary>
         [WirePath("properties.createdBy")]
-        public SecurityInsightsUserInfo CreatedBy { get; set; }
+        public SecurityInsightsUserInfo CreatedBy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedBy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HuntingBookmarkProperties();
+                }
+                Properties.CreatedBy = value;
+            }
+        }
+
         /// <summary> The display name of the bookmark. </summary>
         [WirePath("properties.displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HuntingBookmarkProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
         /// <summary> The time of the event. </summary>
         [WirePath("properties.eventTime")]
-        public DateTimeOffset? EventOn { get; set; }
+        public DateTimeOffset? EventOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EventOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HuntingBookmarkProperties();
+                }
+                Properties.EventOn = value;
+            }
+        }
+
         /// <summary> List of labels relevant to this bookmark. </summary>
         [WirePath("properties.labels")]
-        public IList<string> Labels { get; }
+        public IList<string> Labels
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new HuntingBookmarkProperties();
+                }
+                return Properties.Labels;
+            }
+        }
+
         /// <summary> The notes of the bookmark. </summary>
         [WirePath("properties.notes")]
-        public string Notes { get; set; }
+        public string Notes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Notes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HuntingBookmarkProperties();
+                }
+                Properties.Notes = value;
+            }
+        }
+
         /// <summary> The query of the bookmark. </summary>
         [WirePath("properties.query")]
-        public string Query { get; set; }
+        public string Query
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Query;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HuntingBookmarkProperties();
+                }
+                Properties.Query = value;
+            }
+        }
+
         /// <summary> The query result of the bookmark. </summary>
         [WirePath("properties.queryResult")]
-        public string QueryResult { get; set; }
+        public string QueryResult
+        {
+            get
+            {
+                return Properties is null ? default : Properties.QueryResult;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HuntingBookmarkProperties();
+                }
+                Properties.QueryResult = value;
+            }
+        }
+
         /// <summary> The last time the bookmark was updated. </summary>
         [WirePath("properties.updated")]
-        public DateTimeOffset? UpdatedOn { get; set; }
+        public DateTimeOffset? UpdatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpdatedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HuntingBookmarkProperties();
+                }
+                Properties.UpdatedOn = value;
+            }
+        }
+
         /// <summary> Describes a user that updated the bookmark. </summary>
         [WirePath("properties.updatedBy")]
-        public SecurityInsightsUserInfo UpdatedBy { get; set; }
+        public SecurityInsightsUserInfo UpdatedBy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpdatedBy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HuntingBookmarkProperties();
+                }
+                Properties.UpdatedBy = value;
+            }
+        }
+
         /// <summary> Describes an incident that relates to bookmark. </summary>
         [WirePath("properties.incidentInfo")]
-        public SecurityInsightsBookmarkIncidentInfo IncidentInfo { get; set; }
+        public SecurityInsightsBookmarkIncidentInfo IncidentInfo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IncidentInfo;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HuntingBookmarkProperties();
+                }
+                Properties.IncidentInfo = value;
+            }
+        }
     }
 }

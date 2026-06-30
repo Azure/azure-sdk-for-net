@@ -8,196 +8,240 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Description of a restore request.
-    /// Serialized Name: RestoreRequest
-    /// </summary>
+    /// <summary> Description of a restore request. </summary>
     public partial class RestoreRequestInfo : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RestoreRequestInfo"/>. </summary>
         public RestoreRequestInfo()
         {
-            Databases = new ChangeTrackingList<AppServiceDatabaseBackupSetting>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RestoreRequestInfo"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="storageAccountUri">
-        /// SAS URL to the container.
-        /// Serialized Name: RestoreRequest.properties.storageAccountUrl
-        /// </param>
-        /// <param name="blobName">
-        /// Name of a blob which contains the backup.
-        /// Serialized Name: RestoreRequest.properties.blobName
-        /// </param>
-        /// <param name="canOverwrite">
-        /// &lt;code&gt;true&lt;/code&gt; if the restore operation can overwrite target app; otherwise, &lt;code&gt;false&lt;/code&gt;. &lt;code&gt;true&lt;/code&gt; is needed if trying to restore over an existing app.
-        /// Serialized Name: RestoreRequest.properties.overwrite
-        /// </param>
-        /// <param name="siteName">
-        /// Name of an app.
-        /// Serialized Name: RestoreRequest.properties.siteName
-        /// </param>
-        /// <param name="databases">
-        /// Collection of databases which should be restored. This list has to match the list of databases included in the backup.
-        /// Serialized Name: RestoreRequest.properties.databases
-        /// </param>
-        /// <param name="ignoreConflictingHostNames">
-        /// Changes a logic when restoring an app with custom domains. &lt;code&gt;true&lt;/code&gt; to remove custom domains automatically. If &lt;code&gt;false&lt;/code&gt;, custom domains are added to \nthe app's object when it is being restored, but that might fail due to conflicts during the operation.
-        /// Serialized Name: RestoreRequest.properties.ignoreConflictingHostNames
-        /// </param>
-        /// <param name="ignoreDatabases">
-        /// Ignore the databases and only restore the site content
-        /// Serialized Name: RestoreRequest.properties.ignoreDatabases
-        /// </param>
-        /// <param name="appServicePlan">
-        /// Specify app service plan that will own restored site.
-        /// Serialized Name: RestoreRequest.properties.appServicePlan
-        /// </param>
-        /// <param name="operationType">
-        /// Operation type.
-        /// Serialized Name: RestoreRequest.properties.operationType
-        /// </param>
-        /// <param name="adjustConnectionStrings">
-        /// &lt;code&gt;true&lt;/code&gt; if SiteConfig.ConnectionStrings should be set in new app; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: RestoreRequest.properties.adjustConnectionStrings
-        /// </param>
-        /// <param name="hostingEnvironment">
-        /// App Service Environment name, if needed (only when restoring an app to an App Service Environment).
-        /// Serialized Name: RestoreRequest.properties.hostingEnvironment
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RestoreRequestInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri storageAccountUri, string blobName, bool? canOverwrite, string siteName, IList<AppServiceDatabaseBackupSetting> databases, bool? ignoreConflictingHostNames, bool? ignoreDatabases, string appServicePlan, BackupRestoreOperationType? operationType, bool? adjustConnectionStrings, string hostingEnvironment, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> RestoreRequest resource specific properties. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RestoreRequestInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RestoreRequestProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            StorageAccountUri = storageAccountUri;
-            BlobName = blobName;
-            CanOverwrite = canOverwrite;
-            SiteName = siteName;
-            Databases = databases;
-            IgnoreConflictingHostNames = ignoreConflictingHostNames;
-            IgnoreDatabases = ignoreDatabases;
-            AppServicePlan = appServicePlan;
-            OperationType = operationType;
-            AdjustConnectionStrings = adjustConnectionStrings;
-            HostingEnvironment = hostingEnvironment;
+            Properties = properties;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// SAS URL to the container.
-        /// Serialized Name: RestoreRequest.properties.storageAccountUrl
-        /// </summary>
-        [WirePath("properties.storageAccountUrl")]
-        public Uri StorageAccountUri { get; set; }
-        /// <summary>
-        /// Name of a blob which contains the backup.
-        /// Serialized Name: RestoreRequest.properties.blobName
-        /// </summary>
-        [WirePath("properties.blobName")]
-        public string BlobName { get; set; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if the restore operation can overwrite target app; otherwise, &lt;code&gt;false&lt;/code&gt;. &lt;code&gt;true&lt;/code&gt; is needed if trying to restore over an existing app.
-        /// Serialized Name: RestoreRequest.properties.overwrite
-        /// </summary>
-        [WirePath("properties.overwrite")]
-        public bool? CanOverwrite { get; set; }
-        /// <summary>
-        /// Name of an app.
-        /// Serialized Name: RestoreRequest.properties.siteName
-        /// </summary>
-        [WirePath("properties.siteName")]
-        public string SiteName { get; set; }
-        /// <summary>
-        /// Collection of databases which should be restored. This list has to match the list of databases included in the backup.
-        /// Serialized Name: RestoreRequest.properties.databases
-        /// </summary>
-        [WirePath("properties.databases")]
-        public IList<AppServiceDatabaseBackupSetting> Databases { get; }
-        /// <summary>
-        /// Changes a logic when restoring an app with custom domains. &lt;code&gt;true&lt;/code&gt; to remove custom domains automatically. If &lt;code&gt;false&lt;/code&gt;, custom domains are added to \nthe app's object when it is being restored, but that might fail due to conflicts during the operation.
-        /// Serialized Name: RestoreRequest.properties.ignoreConflictingHostNames
-        /// </summary>
-        [WirePath("properties.ignoreConflictingHostNames")]
-        public bool? IgnoreConflictingHostNames { get; set; }
-        /// <summary>
-        /// Ignore the databases and only restore the site content
-        /// Serialized Name: RestoreRequest.properties.ignoreDatabases
-        /// </summary>
-        [WirePath("properties.ignoreDatabases")]
-        public bool? IgnoreDatabases { get; set; }
-        /// <summary>
-        /// Specify app service plan that will own restored site.
-        /// Serialized Name: RestoreRequest.properties.appServicePlan
-        /// </summary>
-        [WirePath("properties.appServicePlan")]
-        public string AppServicePlan { get; set; }
-        /// <summary>
-        /// Operation type.
-        /// Serialized Name: RestoreRequest.properties.operationType
-        /// </summary>
-        [WirePath("properties.operationType")]
-        public BackupRestoreOperationType? OperationType { get; set; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if SiteConfig.ConnectionStrings should be set in new app; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: RestoreRequest.properties.adjustConnectionStrings
-        /// </summary>
-        [WirePath("properties.adjustConnectionStrings")]
-        public bool? AdjustConnectionStrings { get; set; }
-        /// <summary>
-        /// App Service Environment name, if needed (only when restoring an app to an App Service Environment).
-        /// Serialized Name: RestoreRequest.properties.hostingEnvironment
-        /// </summary>
-        [WirePath("properties.hostingEnvironment")]
-        public string HostingEnvironment { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> RestoreRequest resource specific properties. </summary>
+        [WirePath("properties")]
+        internal RestoreRequestProperties Properties { get; set; }
+
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+
+        /// <summary> SAS URL to the container. </summary>
+        [WirePath("properties.storageAccountUrl")]
+        public Uri StorageAccountUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageAccountUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RestoreRequestProperties();
+                }
+                Properties.StorageAccountUri = value;
+            }
+        }
+
+        /// <summary> Name of a blob which contains the backup. </summary>
+        [WirePath("properties.blobName")]
+        public string BlobName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BlobName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RestoreRequestProperties();
+                }
+                Properties.BlobName = value;
+            }
+        }
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if the restore operation can overwrite target app; otherwise, &lt;code&gt;false&lt;/code&gt;. &lt;code&gt;true&lt;/code&gt; is needed if trying to restore over an existing app. </summary>
+        [WirePath("properties.overwrite")]
+        public bool? CanOverwrite
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CanOverwrite;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new RestoreRequestProperties();
+                    }
+                    Properties.CanOverwrite = value.Value;
+                }
+            }
+        }
+
+        /// <summary> Name of an app. </summary>
+        [WirePath("properties.siteName")]
+        public string SiteName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SiteName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RestoreRequestProperties();
+                }
+                Properties.SiteName = value;
+            }
+        }
+
+        /// <summary> Collection of databases which should be restored. This list has to match the list of databases included in the backup. </summary>
+        [WirePath("properties.databases")]
+        public IList<AppServiceDatabaseBackupSetting> Databases
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RestoreRequestProperties();
+                }
+                return Properties.Databases;
+            }
+        }
+
+        /// <summary> Changes a logic when restoring an app with custom domains. &lt;code&gt;true&lt;/code&gt; to remove custom domains automatically. If &lt;code&gt;false&lt;/code&gt;, custom domains are added to \nthe app's object when it is being restored, but that might fail due to conflicts during the operation. </summary>
+        [WirePath("properties.ignoreConflictingHostNames")]
+        public bool? IgnoreConflictingHostNames
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IgnoreConflictingHostNames;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RestoreRequestProperties();
+                }
+                Properties.IgnoreConflictingHostNames = value;
+            }
+        }
+
+        /// <summary> Ignore the databases and only restore the site content. </summary>
+        [WirePath("properties.ignoreDatabases")]
+        public bool? IgnoreDatabases
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IgnoreDatabases;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RestoreRequestProperties();
+                }
+                Properties.IgnoreDatabases = value;
+            }
+        }
+
+        /// <summary> Specify app service plan that will own restored site. </summary>
+        [WirePath("properties.appServicePlan")]
+        public string AppServicePlan
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AppServicePlan;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RestoreRequestProperties();
+                }
+                Properties.AppServicePlan = value;
+            }
+        }
+
+        /// <summary> Operation type. </summary>
+        [WirePath("properties.operationType")]
+        public BackupRestoreOperationType? OperationType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OperationType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RestoreRequestProperties();
+                }
+                Properties.OperationType = value;
+            }
+        }
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if SiteConfig.ConnectionStrings should be set in new app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.adjustConnectionStrings")]
+        public bool? AdjustConnectionStrings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdjustConnectionStrings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RestoreRequestProperties();
+                }
+                Properties.AdjustConnectionStrings = value;
+            }
+        }
+
+        /// <summary> App Service Environment name, if needed (only when restoring an app to an App Service Environment). </summary>
+        [WirePath("properties.hostingEnvironment")]
+        public string HostingEnvironment
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HostingEnvironment;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RestoreRequestProperties();
+                }
+                Properties.HostingEnvironment = value;
+            }
+        }
     }
 }

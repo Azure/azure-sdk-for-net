@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01. </description>
+        /// <description> 2026-04-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01. </description>
+        /// <description> 2026-04-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -94,6 +94,71 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             return GetContainerServiceManagedClusters().Get(resourceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of MaintenanceWindows in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of MaintenanceWindows and their operations over a MaintenanceWindowResource. </returns>
+        public virtual MaintenanceWindowCollection GetMaintenanceWindows()
+        {
+            return GetCachedClient(client => new MaintenanceWindowCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the specified maintenance window.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/maintenanceWindows/{maintenanceWindowName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MaintenanceWindows_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-02-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="maintenanceWindowName"> The name of the maintenance window. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="maintenanceWindowName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="maintenanceWindowName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MaintenanceWindowResource>> GetMaintenanceWindowAsync(string maintenanceWindowName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(maintenanceWindowName, nameof(maintenanceWindowName));
+
+            return await GetMaintenanceWindows().GetAsync(maintenanceWindowName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified maintenance window.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/maintenanceWindows/{maintenanceWindowName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MaintenanceWindows_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-02-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="maintenanceWindowName"> The name of the maintenance window. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="maintenanceWindowName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="maintenanceWindowName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MaintenanceWindowResource> GetMaintenanceWindow(string maintenanceWindowName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(maintenanceWindowName, nameof(maintenanceWindowName));
+
+            return GetMaintenanceWindows().Get(maintenanceWindowName, cancellationToken);
         }
 
         /// <summary> Gets a collection of AgentPoolSnapshots in the <see cref="ResourceGroupResource"/>. </summary>
@@ -116,7 +181,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01. </description>
+        /// <description> 2026-04-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -145,7 +210,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01. </description>
+        /// <description> 2026-04-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -159,6 +224,71 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             return GetAgentPoolSnapshots().Get(resourceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ManagedClusterSnapshots in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ManagedClusterSnapshots and their operations over a ManagedClusterSnapshotResource. </returns>
+        public virtual ManagedClusterSnapshotCollection GetManagedClusterSnapshots()
+        {
+            return GetCachedClient(client => new ManagedClusterSnapshotCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a managed cluster snapshot.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedclustersnapshots/{resourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedClusterSnapshots_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-02-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceName"> The name of the managed cluster resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ManagedClusterSnapshotResource>> GetManagedClusterSnapshotAsync(string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return await GetManagedClusterSnapshots().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a managed cluster snapshot.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedclustersnapshots/{resourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedClusterSnapshots_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-02-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceName"> The name of the managed cluster resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ManagedClusterSnapshotResource> GetManagedClusterSnapshot(string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetManagedClusterSnapshots().Get(resourceName, cancellationToken);
         }
     }
 }

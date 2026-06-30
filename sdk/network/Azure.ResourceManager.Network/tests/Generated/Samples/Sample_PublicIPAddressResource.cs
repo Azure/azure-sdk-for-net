@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network.Samples
             PublicIPAddressResource publicIPAddress = client.GetPublicIPAddressResource(publicIPAddressResourceId);
 
             // invoke the operation
-            await publicIPAddress.DeleteAsync(WaitUntil.Completed);
+            await publicIPAddress.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Network.Samples
             PublicIPAddressResource publicIPAddress = client.GetPublicIPAddressResource(publicIPAddressResourceId);
 
             // invoke the operation
-            ArmOperation<PublicIPDdosProtectionStatusResult> lro = await publicIPAddress.DdosProtectionStatusAsync(WaitUntil.Completed);
+            ArmOperation<PublicIPDdosProtectionStatusResult> lro = await publicIPAddress.DdosProtectionStatusAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
             PublicIPDdosProtectionStatusResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             ReserveCloudServicePublicIPAddressContent content = new ReserveCloudServicePublicIPAddressContent(UndoReservationType.False);
-            ArmOperation<PublicIPAddressResource> lro = await publicIPAddress.ReserveCloudServicePublicIPAddressAsync(WaitUntil.Completed, content);
+            ArmOperation<PublicIPAddressResource> lro = await publicIPAddress.ReserveCloudServicePublicIPAddressAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
             PublicIPAddressResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             DisassociateCloudServicePublicIPContent content = new DisassociateCloudServicePublicIPContent(new ResourceIdentifier("/subscriptions/subid/resourcegroups/rg1/providers/Microsoft.Network/publicIpAddresses/pip2"));
-            ArmOperation<PublicIPAddressResource> lro = await publicIPAddress.DisassociateCloudServiceReservedPublicIPAsync(WaitUntil.Completed, content);
+            ArmOperation<PublicIPAddressResource> lro = await publicIPAddress.DisassociateCloudServiceReservedPublicIPAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
             PublicIPAddressResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

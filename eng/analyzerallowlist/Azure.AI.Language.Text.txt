@@ -1,0 +1,18 @@
+# Azure.AI.Language.Text approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# These public model names mirror the predecessor Azure.AI.TextAnalytics
+# surface for migration continuity; the colliding libraries are never
+# referenced together.
+nowarn:AZC0034 T:Azure.AI.Language.Text.AbstractiveSummary
+nowarn:AZC0034 T:Azure.AI.Language.Text.AnalyzeTextResult
+nowarn:AZC0034 T:Azure.AI.Language.Text.DetectedLanguage
+nowarn:AZC0034 T:Azure.AI.Language.Text.DocumentSentiment
+nowarn:AZC0034 T:Azure.AI.Language.Text.EntityCategory
+nowarn:AZC0034 T:Azure.AI.Language.Text.HealthcareEntity
+nowarn:AZC0034 T:Azure.AI.Language.Text.HealthcareEntityCategory
+nowarn:AZC0034 T:Azure.AI.Language.Text.LengthUnit
+nowarn:AZC0034 T:Azure.AI.Language.Text.LinkedEntity
+nowarn:AZC0034 T:Azure.AI.Language.Text.PiiEntity
+nowarn:AZC0034 T:Azure.AI.Language.Text.SentenceSentiment
+nowarn:AZC0034 T:Azure.AI.Language.Text.SentimentConfidenceScores

@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -40,6 +41,17 @@ namespace Azure.ResourceManager.Chaos
             TryGetApiVersion(ChaosCapabilityResource.ResourceType, out string chaosCapabilityApiVersion);
             _capabilitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ChaosCapabilityResource.ResourceType.Namespace, Diagnostics);
             _capabilitiesRestClient = new Capabilities(_capabilitiesClientDiagnostics, Pipeline, Endpoint, chaosCapabilityApiVersion ?? "2026-05-01-preview");
+            ValidateResourceId(id);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ChaosTargetResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ChaosTargetResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>

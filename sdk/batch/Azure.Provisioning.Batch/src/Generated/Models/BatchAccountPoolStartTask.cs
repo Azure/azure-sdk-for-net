@@ -142,6 +142,10 @@ namespace Azure.Provisioning.Batch
             _maxTaskRetryCount = DefineProperty<int>(nameof(MaxTaskRetryCount), new string[] { "maxTaskRetryCount" });
             _waitForSuccess = DefineProperty<bool>(nameof(WaitForSuccess), new string[] { "waitForSuccess" });
             _containerSettings = DefineModelProperty<BatchTaskContainerSettings>(nameof(ContainerSettings), new string[] { "containerSettings" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchAccountPoolStartTask that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

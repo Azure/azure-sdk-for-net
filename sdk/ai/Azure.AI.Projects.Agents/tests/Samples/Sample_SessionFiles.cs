@@ -12,7 +12,6 @@ using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Agents.Tests.Samples;
-#pragma warning disable AAIP001
 
 public class Sample_SessionFiles : SamplesBase
 {
@@ -30,10 +29,7 @@ public class Sample_SessionFiles : SamplesBase
         var hostedAgentName = TestEnvironment.HOSTED_AGENT_NAME;
         var hostedAgentVersion = TestEnvironment.HOSTED_AGENT_VERSION;
 #endif
-        AgentAdministrationClientOptions options = new();
-        options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview,AgentEndpoints=V1Preview"), PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
-        AgentSessionFiles sessionClient = agentsClient.GetAgentSessionFiles();
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #endregion
         #region Snippet:Sample_CreateAgentAndSession_SessionFiles_Async
         ProjectsAgentVersion agentVersion = await agentsClient.GetAgentVersionAsync(
@@ -45,6 +41,7 @@ public class Sample_SessionFiles : SamplesBase
             agentSessionId: sessionId,
             versionIndicator: new VersionRefIndicator(agentVersion.Version)
         );
+        AgentSessionFiles sessionClient = agentsClient.GetAgentSessionFiles(agentVersion.Name, session.AgentSessionId);
         while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
@@ -56,9 +53,7 @@ public class Sample_SessionFiles : SamplesBase
         File.WriteAllText(
             path: filePath,
             contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-        SessionFileWriteResponse writeResponse = await sessionClient.UploadSessionFileAsync(
-                agentName: agentVersion.Name,
-                sessionId: session.AgentSessionId,
+        SessionFileWriteResponse writeResponse = await sessionClient.UploadAsync(
                 sessionStoragePath: filePath,
                 localPath: filePath
             );
@@ -68,9 +63,7 @@ public class Sample_SessionFiles : SamplesBase
         File.WriteAllText(
             path: filePath,
             contents: "The word 'grape' uses the code 111222, while the word 'mango' uses the code 222111.");
-        writeResponse = await sessionClient.UploadSessionFileAsync(
-            agentName: agentVersion.Name,
-            sessionId: session.AgentSessionId,
+        writeResponse = await sessionClient.UploadAsync(
             sessionStoragePath: $"{filePath}",
             localPath: filePath
         );
@@ -78,19 +71,17 @@ public class Sample_SessionFiles : SamplesBase
         File.Delete(filePath);
         #endregion
         #region Snippet:Sample_List_SessionFiles_Async
-        AsyncCollectionResult<SessionDirectoryEntry> response = sessionClient.GetSessionFilesAsync(agentName: agentVersion.Name, agentSessionId: session.AgentSessionId, sessionStoragePath: ".");
+        AsyncCollectionResult<SessionDirectoryEntry> response = sessionClient.GetAllAsync(sessionStoragePath: ".");
         Console.WriteLine($"The path contains the next files:");
         await foreach (SessionDirectoryEntry entry in response)
         {
-            Console.WriteLine($"    - {entry.Name}, size {entry.Size}");
+            Console.WriteLine($"    - {entry.Name}, size {entry.SizeInBytes}");
         }
         #endregion
 
         #region Snippet:Sample_Download_SessionFiles_Async
         filePath = "saved.txt";
-        await sessionClient.DownloadSessionFileAsync(
-            agentName: agentVersion.Name,
-            sessionId: session.AgentSessionId,
+        await sessionClient.DownloadAsync(
             sessionStoragePath: "sample_file_for_upload1.txt",
             localPath: filePath
         );
@@ -99,8 +90,8 @@ public class Sample_SessionFiles : SamplesBase
         #endregion
 
         #region Snippet:Sample_DeleteFiles_SessionFiles_Async
-        await sessionClient.DeleteSessionFileAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "sample_file_for_upload1.txt");
-        await sessionClient.DeleteSessionFileAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "sample_file_for_upload2.txt");
+        await sessionClient.DeleteAsync(localPath: "sample_file_for_upload1.txt");
+        await sessionClient.DeleteAsync(localPath: "sample_file_for_upload2.txt");
         await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
         #endregion
     }
@@ -118,11 +109,7 @@ public class Sample_SessionFiles : SamplesBase
         var hostedAgentName = TestEnvironment.HOSTED_AGENT_NAME;
         var hostedAgentVersion = TestEnvironment.HOSTED_AGENT_VERSION;
 #endif
-        AgentAdministrationClientOptions options = new();
-        options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview"), PipelinePosition.PerCall);
-        options.AddPolicy(GetDumpPolicy(), PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
-        AgentSessionFiles sessionClient = agentsClient.GetAgentSessionFiles();
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #region Snippet:Sample_CreateAgentAndSession_SessionFiles_Sync
         ProjectsAgentVersion agentVersion = agentsClient.GetAgentVersion(
             agentName: hostedAgentName,
@@ -133,6 +120,7 @@ public class Sample_SessionFiles : SamplesBase
             agentSessionId: sessionId,
             versionIndicator: new VersionRefIndicator(agentVersion.Version)
         );
+        AgentSessionFiles sessionClient = agentsClient.GetAgentSessionFiles(agentVersion.Name, session.AgentSessionId);
         while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
@@ -145,9 +133,7 @@ public class Sample_SessionFiles : SamplesBase
             path: filePath,
             contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
 
-        SessionFileWriteResponse writeResponse = sessionClient.UploadSessionFile(
-            agentName: agentVersion.Name,
-            sessionId: session.AgentSessionId,
+        SessionFileWriteResponse writeResponse = sessionClient.Upload(
             sessionStoragePath: filePath,
             localPath: filePath
         );
@@ -157,9 +143,7 @@ public class Sample_SessionFiles : SamplesBase
         File.WriteAllText(
             path: filePath,
             contents: "The word 'grape' uses the code 111222, while the word 'mango' uses the code 222111.");
-        writeResponse = sessionClient.UploadSessionFile(
-            agentName: agentVersion.Name,
-            sessionId: session.AgentSessionId,
+        writeResponse = sessionClient.Upload(
             sessionStoragePath: filePath,
             localPath: filePath
         );
@@ -167,19 +151,17 @@ public class Sample_SessionFiles : SamplesBase
         File.Delete(filePath);
         #endregion
         #region Snippet:Sample_List_SessionFiles_Sync
-        CollectionResult<SessionDirectoryEntry> response = sessionClient.GetSessionFiles(agentName: agentVersion.Name, agentSessionId: session.AgentSessionId, sessionStoragePath: ".");
+        CollectionResult<SessionDirectoryEntry> response = sessionClient.GetAll(sessionStoragePath: ".");
         Console.WriteLine($"The path contains the next files:");
         foreach (SessionDirectoryEntry entry in response)
         {
-            Console.WriteLine($"    - {entry.Name}, size {entry.Size}");
+            Console.WriteLine($"    - {entry.Name}, size {entry.SizeInBytes}");
         }
         #endregion
 
         #region Snippet:Sample_Download_SessionFiles_Sync
         filePath = "saved.txt";
-        sessionClient.DownloadSessionFile(
-            agentName: agentVersion.Name,
-            sessionId: session.AgentSessionId,
+        sessionClient.Download(
             sessionStoragePath: "sample_file_for_upload1.txt",
             localPath: filePath
         );
@@ -188,8 +170,8 @@ public class Sample_SessionFiles : SamplesBase
         #endregion
 
         #region Snippet:Sample_DeleteFiles_SessionFiles_Sync
-        sessionClient.DeleteSessionFile(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "sample_file_for_upload1.txt");
-        sessionClient.DeleteSessionFile(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "sample_file_for_upload2.txt");
+        sessionClient.Delete(localPath: "sample_file_for_upload1.txt");
+        sessionClient.Delete(localPath: "sample_file_for_upload2.txt");
         agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
         #endregion
     }

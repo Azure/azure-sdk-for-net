@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> An Activity Log Alert rule object for the body of patch operations. </summary>
     public partial class ActivityLogAlertPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ActivityLogAlertPatch"/>. </summary>
         public ActivityLogAlertPatch()
@@ -53,18 +25,36 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of <see cref="ActivityLogAlertPatch"/>. </summary>
         /// <param name="tags"> The resource tags. </param>
-        /// <param name="isEnabled"> Indicates whether this Activity Log Alert rule is enabled. If an Activity Log Alert rule is not enabled, then none of its actions will be activated. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ActivityLogAlertPatch(IDictionary<string, string> tags, bool? isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> The activity log alert settings for an update operation. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ActivityLogAlertPatch(IDictionary<string, string> tags, AlertRulePatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
-            IsEnabled = isEnabled;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+
+        /// <summary> The activity log alert settings for an update operation. </summary>
+        internal AlertRulePatchProperties Properties { get; set; }
+
         /// <summary> Indicates whether this Activity Log Alert rule is enabled. If an Activity Log Alert rule is not enabled, then none of its actions will be activated. </summary>
-        public bool? IsEnabled { get; set; }
+        public bool? IsEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AlertRulePatchProperties();
+                }
+                Properties.IsEnabled = value;
+            }
+        }
     }
 }

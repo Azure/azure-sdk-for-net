@@ -10,22 +10,17 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// A custom alert rule that checks if a value (depends on the custom alert type) is within the given range.
-    /// Please note <see cref="ThresholdCustomAlertRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="ActiveConnectionsNotInAllowedRange"/>, <see cref="AmqpC2DMessagesNotInAllowedRange"/>, <see cref="AmqpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="AmqpD2CMessagesNotInAllowedRange"/>, <see cref="DirectMethodInvokesNotInAllowedRange"/>, <see cref="FailedLocalLoginsNotInAllowedRange"/>, <see cref="FileUploadsNotInAllowedRange"/>, <see cref="HttpC2DMessagesNotInAllowedRange"/>, <see cref="HttpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="HttpD2CMessagesNotInAllowedRange"/>, <see cref="MqttC2DMessagesNotInAllowedRange"/>, <see cref="MqttC2DRejectedMessagesNotInAllowedRange"/>, <see cref="MqttD2CMessagesNotInAllowedRange"/>, <see cref="QueuePurgesNotInAllowedRange"/>, <see cref="TimeWindowCustomAlertRule"/>, <see cref="TwinUpdatesNotInAllowedRange"/> and <see cref="UnauthorizedOperationsNotInAllowedRange"/>.
-    /// </summary>
+    /// <summary> A custom alert rule that checks if a value (depends on the custom alert type) is within the given range. </summary>
     public partial class ThresholdCustomAlertRule : CustomAlertRule
     {
         /// <summary> Initializes a new instance of <see cref="ThresholdCustomAlertRule"/>. </summary>
         /// <param name="isEnabled"> Status of the custom alert. </param>
         /// <param name="minThreshold"> The minimum threshold. </param>
         /// <param name="maxThreshold"> The maximum threshold. </param>
-        public ThresholdCustomAlertRule(bool isEnabled, int minThreshold, int maxThreshold) : base(isEnabled)
+        public ThresholdCustomAlertRule(bool isEnabled, int minThreshold, int maxThreshold) : base("ThresholdCustomAlertRule", isEnabled)
         {
             MinThreshold = minThreshold;
             MaxThreshold = maxThreshold;
-            RuleType = "ThresholdCustomAlertRule";
         }
 
         /// <summary> Initializes a new instance of <see cref="ThresholdCustomAlertRule"/>. </summary>
@@ -33,23 +28,29 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
         /// <param name="ruleType"> The type of the custom alert rule. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="minThreshold"> The minimum threshold. </param>
         /// <param name="maxThreshold"> The maximum threshold. </param>
-        internal ThresholdCustomAlertRule(string displayName, string description, bool isEnabled, string ruleType, IDictionary<string, BinaryData> serializedAdditionalRawData, int minThreshold, int maxThreshold) : base(displayName, description, isEnabled, ruleType, serializedAdditionalRawData)
+        internal ThresholdCustomAlertRule(string displayName, string description, bool isEnabled, string ruleType, IDictionary<string, BinaryData> additionalBinaryDataProperties, int minThreshold, int maxThreshold) : base(displayName, description, isEnabled, ruleType, additionalBinaryDataProperties)
         {
             MinThreshold = minThreshold;
             MaxThreshold = maxThreshold;
-            RuleType = ruleType ?? "ThresholdCustomAlertRule";
         }
 
-        /// <summary> Initializes a new instance of <see cref="ThresholdCustomAlertRule"/> for deserialization. </summary>
-        internal ThresholdCustomAlertRule()
+        /// <summary> Initializes a new instance of <see cref="ThresholdCustomAlertRule"/>. </summary>
+        /// <param name="isEnabled"> Status of the custom alert. </param>
+        /// <param name="ruleType"> The type of the custom alert rule. </param>
+        /// <param name="minThreshold"> The minimum threshold. </param>
+        /// <param name="maxThreshold"> The maximum threshold. </param>
+        private protected ThresholdCustomAlertRule(bool isEnabled, string ruleType, int minThreshold, int maxThreshold) : base(ruleType, isEnabled)
         {
+            MinThreshold = minThreshold;
+            MaxThreshold = maxThreshold;
         }
 
         /// <summary> The minimum threshold. </summary>
         public int MinThreshold { get; set; }
+
         /// <summary> The maximum threshold. </summary>
         public int MaxThreshold { get; set; }
     }

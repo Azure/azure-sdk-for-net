@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,59 +15,92 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct RunQueryOrderByField : IEquatable<RunQueryOrderByField>
     {
         private readonly string _value;
+        /// <summary> RunStart. </summary>
+        private const string RunStartValue = "RunStart";
+        /// <summary> RunEnd. </summary>
+        private const string RunEndValue = "RunEnd";
+        /// <summary> PipelineName. </summary>
+        private const string PipelineNameValue = "PipelineName";
+        /// <summary> Status. </summary>
+        private const string StatusValue = "Status";
+        /// <summary> ActivityName. </summary>
+        private const string ActivityNameValue = "ActivityName";
+        /// <summary> ActivityRunStart. </summary>
+        private const string ActivityRunStartValue = "ActivityRunStart";
+        /// <summary> ActivityRunEnd. </summary>
+        private const string ActivityRunEndValue = "ActivityRunEnd";
+        /// <summary> TriggerName. </summary>
+        private const string TriggerNameValue = "TriggerName";
+        /// <summary> TriggerRunTimestamp. </summary>
+        private const string TriggerRunTimestampValue = "TriggerRunTimestamp";
 
         /// <summary> Initializes a new instance of <see cref="RunQueryOrderByField"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RunQueryOrderByField(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RunStartValue = "RunStart";
-        private const string RunEndValue = "RunEnd";
-        private const string PipelineNameValue = "PipelineName";
-        private const string StatusValue = "Status";
-        private const string ActivityNameValue = "ActivityName";
-        private const string ActivityRunStartValue = "ActivityRunStart";
-        private const string ActivityRunEndValue = "ActivityRunEnd";
-        private const string TriggerNameValue = "TriggerName";
-        private const string TriggerRunTimestampValue = "TriggerRunTimestamp";
+            _value = value;
+        }
 
         /// <summary> RunStart. </summary>
         public static RunQueryOrderByField RunStart { get; } = new RunQueryOrderByField(RunStartValue);
+
         /// <summary> RunEnd. </summary>
         public static RunQueryOrderByField RunEnd { get; } = new RunQueryOrderByField(RunEndValue);
+
         /// <summary> PipelineName. </summary>
         public static RunQueryOrderByField PipelineName { get; } = new RunQueryOrderByField(PipelineNameValue);
+
         /// <summary> Status. </summary>
         public static RunQueryOrderByField Status { get; } = new RunQueryOrderByField(StatusValue);
+
         /// <summary> ActivityName. </summary>
         public static RunQueryOrderByField ActivityName { get; } = new RunQueryOrderByField(ActivityNameValue);
+
         /// <summary> ActivityRunStart. </summary>
         public static RunQueryOrderByField ActivityRunStart { get; } = new RunQueryOrderByField(ActivityRunStartValue);
+
         /// <summary> ActivityRunEnd. </summary>
         public static RunQueryOrderByField ActivityRunEnd { get; } = new RunQueryOrderByField(ActivityRunEndValue);
+
         /// <summary> TriggerName. </summary>
         public static RunQueryOrderByField TriggerName { get; } = new RunQueryOrderByField(TriggerNameValue);
+
         /// <summary> TriggerRunTimestamp. </summary>
         public static RunQueryOrderByField TriggerRunTimestamp { get; } = new RunQueryOrderByField(TriggerRunTimestampValue);
+
         /// <summary> Determines if two <see cref="RunQueryOrderByField"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RunQueryOrderByField left, RunQueryOrderByField right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RunQueryOrderByField"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RunQueryOrderByField left, RunQueryOrderByField right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RunQueryOrderByField"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RunQueryOrderByField"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RunQueryOrderByField(string value) => new RunQueryOrderByField(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RunQueryOrderByField"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RunQueryOrderByField?(string value) => value == null ? null : new RunQueryOrderByField(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RunQueryOrderByField other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RunQueryOrderByField other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

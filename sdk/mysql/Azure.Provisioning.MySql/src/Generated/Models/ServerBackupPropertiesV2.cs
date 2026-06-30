@@ -104,6 +104,10 @@ namespace Azure.Provisioning.MySql
             _completedOn = DefineProperty<DateTimeOffset>(nameof(CompletedOn), new string[] { "completedTime" });
             _source = DefineProperty<string>(nameof(Source), new string[] { "source" });
             _provisioningState = DefineProperty<MySqlFlexibleServerBackupProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ServerBackupPropertiesV2 that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

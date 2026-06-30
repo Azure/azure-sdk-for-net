@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct RouteMapNextStepBehavior : IEquatable<RouteMapNextStepBehavior>
     {
         private readonly string _value;
+        /// <summary> Unknown. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> Continue. </summary>
+        private const string ContinueValue = "Continue";
+        /// <summary> Terminate. </summary>
+        private const string TerminateValue = "Terminate";
 
         /// <summary> Initializes a new instance of <see cref="RouteMapNextStepBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RouteMapNextStepBehavior(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnknownValue = "Unknown";
-        private const string ContinueValue = "Continue";
-        private const string TerminateValue = "Terminate";
+            _value = value;
+        }
 
         /// <summary> Unknown. </summary>
         public static RouteMapNextStepBehavior Unknown { get; } = new RouteMapNextStepBehavior(UnknownValue);
+
         /// <summary> Continue. </summary>
         public static RouteMapNextStepBehavior Continue { get; } = new RouteMapNextStepBehavior(ContinueValue);
+
         /// <summary> Terminate. </summary>
         public static RouteMapNextStepBehavior Terminate { get; } = new RouteMapNextStepBehavior(TerminateValue);
+
         /// <summary> Determines if two <see cref="RouteMapNextStepBehavior"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RouteMapNextStepBehavior left, RouteMapNextStepBehavior right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RouteMapNextStepBehavior"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RouteMapNextStepBehavior left, RouteMapNextStepBehavior right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RouteMapNextStepBehavior"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RouteMapNextStepBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RouteMapNextStepBehavior(string value) => new RouteMapNextStepBehavior(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RouteMapNextStepBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RouteMapNextStepBehavior?(string value) => value == null ? null : new RouteMapNextStepBehavior(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RouteMapNextStepBehavior other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RouteMapNextStepBehavior other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

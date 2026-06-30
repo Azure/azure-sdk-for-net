@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct DatasetSourceValueType : IEquatable<DatasetSourceValueType>
     {
         private readonly string _value;
+        /// <summary> actual. </summary>
+        private const string ActualValue = "actual";
+        /// <summary> display. </summary>
+        private const string DisplayValue = "display";
 
         /// <summary> Initializes a new instance of <see cref="DatasetSourceValueType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DatasetSourceValueType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActualValue = "actual";
-        private const string DisplayValue = "display";
+            _value = value;
+        }
 
         /// <summary> actual. </summary>
         public static DatasetSourceValueType Actual { get; } = new DatasetSourceValueType(ActualValue);
+
         /// <summary> display. </summary>
         public static DatasetSourceValueType Display { get; } = new DatasetSourceValueType(DisplayValue);
+
         /// <summary> Determines if two <see cref="DatasetSourceValueType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DatasetSourceValueType left, DatasetSourceValueType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DatasetSourceValueType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DatasetSourceValueType left, DatasetSourceValueType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DatasetSourceValueType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DatasetSourceValueType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DatasetSourceValueType(string value) => new DatasetSourceValueType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DatasetSourceValueType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DatasetSourceValueType?(string value) => value == null ? null : new DatasetSourceValueType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DatasetSourceValueType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DatasetSourceValueType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

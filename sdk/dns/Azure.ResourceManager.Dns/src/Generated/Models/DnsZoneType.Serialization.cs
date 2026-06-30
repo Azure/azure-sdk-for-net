@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Dns.Models
 {
     internal static partial class DnsZoneTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this DnsZoneType value) => value switch
         {
             DnsZoneType.Public => "Public",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Dns.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DnsZoneType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static DnsZoneType ToDnsZoneType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Public")) return DnsZoneType.Public;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Private")) return DnsZoneType.Private;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Public"))
+            {
+                return DnsZoneType.Public;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Private"))
+            {
+                return DnsZoneType.Private;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DnsZoneType value.");
         }
     }

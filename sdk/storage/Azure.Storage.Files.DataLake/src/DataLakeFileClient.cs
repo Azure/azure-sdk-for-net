@@ -6320,8 +6320,10 @@ namespace Azure.Storage.Files.DataLake
                         cancellationToken)
                         .ConfigureAwait(false);
                 },
-                UploadPartitionStreaming = async (stream, offset, args, progressHandler, validationOptions, async, cancellationToken)
-                    => await client.AppendInternal(
+                UploadPartitionStreaming = async (stream, offset, blockId, args, progressHandler, validationOptions, async, cancellationToken)
+                    =>
+                {
+                    await client.AppendInternal(
                         stream,
                         offset,
                         validationOptions,
@@ -6332,9 +6334,12 @@ namespace Azure.Storage.Files.DataLake
                         progressHandler,
                         flush: null,
                         async,
-                        cancellationToken).ConfigureAwait(false),
-                UploadPartitionBinaryData = async (content, offset, args, progressHandler, validationOptions, async, cancellationToken)
-                    => await client.AppendInternal(
+                        cancellationToken).ConfigureAwait(false);
+                },
+                UploadPartitionBinaryData = async (content, offset, blockId, args, progressHandler, validationOptions, async, cancellationToken)
+                    =>
+                {
+                    await client.AppendInternal(
                         content.ToStream(),
                         offset,
                         validationOptions,
@@ -6345,10 +6350,11 @@ namespace Azure.Storage.Files.DataLake
                         progressHandler,
                         flush: null,
                         async,
-                        cancellationToken).ConfigureAwait(false),
+                        cancellationToken).ConfigureAwait(false);
+                },
                 CommitPartitionedUpload = async (partitions, args, async, cancellationToken) =>
                 {
-                    (var offset, var size) = partitions.LastOrDefault();
+                    (var offset, var size, var _) = partitions.LastOrDefault();
 
                     // After the File is Create, Lease ID is the only valid request parameter.
                     if (args?.Conditions != null)

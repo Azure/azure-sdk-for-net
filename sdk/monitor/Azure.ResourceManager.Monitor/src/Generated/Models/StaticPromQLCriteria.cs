@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -17,26 +18,19 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="name"> Name of the criteria. </param>
         /// <param name="query"> The query used to evaluate the alert rule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="query"/> is null. </exception>
-        public StaticPromQLCriteria(string name, string query) : base(name, query)
+        public StaticPromQLCriteria(string name, string query) : base(ScheduledQueryRuleCriterionType.StaticThresholdCriterion, name, query)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(query, nameof(query));
 
-            CriterionType = CriterionType.StaticThresholdCriterion;
         }
 
         /// <summary> Initializes a new instance of <see cref="StaticPromQLCriteria"/>. </summary>
         /// <param name="criterionType"> Specifies the type of threshold criteria. Previously undocumented values might be returned. </param>
         /// <param name="name"> Name of the criteria. </param>
         /// <param name="query"> The query used to evaluate the alert rule. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticPromQLCriteria(CriterionType criterionType, string name, string query, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(criterionType, name, query, serializedAdditionalRawData)
-        {
-            CriterionType = criterionType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="StaticPromQLCriteria"/> for deserialization. </summary>
-        internal StaticPromQLCriteria()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StaticPromQLCriteria(ScheduledQueryRuleCriterionType criterionType, string name, string query, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(criterionType, name, query, additionalBinaryDataProperties)
         {
         }
     }

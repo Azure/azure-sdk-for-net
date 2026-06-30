@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct QueryMetricUnitType : IEquatable<QueryMetricUnitType>
     {
         private readonly string _value;
+        /// <summary> percentage. </summary>
+        private const string PercentageValue = "percentage";
+        /// <summary> KB. </summary>
+        private const string KBValue = "KB";
+        /// <summary> microseconds. </summary>
+        private const string MicrosecondsValue = "microseconds";
+        /// <summary> count. </summary>
+        private const string CountValue = "count";
 
         /// <summary> Initializes a new instance of <see cref="QueryMetricUnitType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public QueryMetricUnitType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PercentageValue = "percentage";
-        private const string KBValue = "KB";
-        private const string MicrosecondsValue = "microseconds";
-        private const string CountValue = "count";
+            _value = value;
+        }
 
         /// <summary> percentage. </summary>
         public static QueryMetricUnitType Percentage { get; } = new QueryMetricUnitType(PercentageValue);
+
         /// <summary> KB. </summary>
         public static QueryMetricUnitType KB { get; } = new QueryMetricUnitType(KBValue);
+
         /// <summary> microseconds. </summary>
         public static QueryMetricUnitType Microseconds { get; } = new QueryMetricUnitType(MicrosecondsValue);
+
         /// <summary> count. </summary>
         public static QueryMetricUnitType Count { get; } = new QueryMetricUnitType(CountValue);
+
         /// <summary> Determines if two <see cref="QueryMetricUnitType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(QueryMetricUnitType left, QueryMetricUnitType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="QueryMetricUnitType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(QueryMetricUnitType left, QueryMetricUnitType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="QueryMetricUnitType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="QueryMetricUnitType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator QueryMetricUnitType(string value) => new QueryMetricUnitType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="QueryMetricUnitType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator QueryMetricUnitType?(string value) => value == null ? null : new QueryMetricUnitType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is QueryMetricUnitType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(QueryMetricUnitType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

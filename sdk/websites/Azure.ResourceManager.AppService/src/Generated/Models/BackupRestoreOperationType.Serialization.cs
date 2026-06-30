@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class BackupRestoreOperationTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BackupRestoreOperationType value) => value switch
         {
             BackupRestoreOperationType.Default => "Default",
@@ -21,13 +22,29 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BackupRestoreOperationType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static BackupRestoreOperationType ToBackupRestoreOperationType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Default")) return BackupRestoreOperationType.Default;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Clone")) return BackupRestoreOperationType.Clone;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Relocation")) return BackupRestoreOperationType.Relocation;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Snapshot")) return BackupRestoreOperationType.Snapshot;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CloudFS")) return BackupRestoreOperationType.CloudFS;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Default"))
+            {
+                return BackupRestoreOperationType.Default;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Clone"))
+            {
+                return BackupRestoreOperationType.Clone;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Relocation"))
+            {
+                return BackupRestoreOperationType.Relocation;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Snapshot"))
+            {
+                return BackupRestoreOperationType.Snapshot;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CloudFS"))
+            {
+                return BackupRestoreOperationType.CloudFS;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BackupRestoreOperationType value.");
         }
     }

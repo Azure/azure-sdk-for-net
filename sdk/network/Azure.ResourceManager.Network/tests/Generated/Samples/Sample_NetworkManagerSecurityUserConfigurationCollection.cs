@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 Description = "A sample policy",
             };
-            ArmOperation<NetworkManagerSecurityUserConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configurationName, data);
+            ArmOperation<NetworkManagerSecurityUserConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configurationName, data, cancellationToken: System.Threading.CancellationToken.None);
             NetworkManagerSecurityUserConfigurationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

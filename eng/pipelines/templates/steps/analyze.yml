@@ -55,10 +55,10 @@ steps:
     parameters:
       PackagePropertiesFolder: '$(Build.ArtifactStagingDirectory)/PackageInfo'
 
-  - task: NodeTool@0
+  - task: UseNode@1
     inputs:
-      versionSpec: 20.x
-    displayName: 'Use Node 20.x'
+      version: 24.x
+    displayName: 'Use Node 24.x'
 
   # Authenticate npm to Azure Artifacts
   - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
@@ -87,6 +87,7 @@ steps:
             -ServiceDirectory $ServiceDirectory `
             -SDKType ${{ parameters.SDKType }} `
             -SpellCheckPublicApiSurface `
+            -ProjectListOverrideFile "$(ProjectListOverrideFile)"
 
           if ($LASTEXITCODE -ne 0) {
             $failed = $true

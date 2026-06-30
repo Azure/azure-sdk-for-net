@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataMigrationServiceData> response = Response.FromValue(DataMigrationServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataMigrationServiceData> response = Response.FromValue(DataMigrationServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, DataMigrationServiceData.ToRequestContent(data), context);
+                HttpMessage message = _servicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DataMigrationServiceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataMigrationArmOperation<DataMigrationServiceResource> operation = new DataMigrationArmOperation<DataMigrationServiceResource>(
                     new DataMigrationServiceResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, DataMigrationServiceData.ToRequestContent(data), context);
+                HttpMessage message = _servicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DataMigrationServiceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataMigrationArmOperation<DataMigrationServiceResource> operation = new DataMigrationArmOperation<DataMigrationServiceResource>(
                     new DataMigrationServiceResourceOperationSource(Client),
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, deleteRunningTasks, context);
+                HttpMessage message = _servicesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deleteRunningTasks, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataMigrationArmOperation operation = new DataMigrationArmOperation(_servicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, deleteRunningTasks, context);
+                HttpMessage message = _servicesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deleteRunningTasks, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataMigrationArmOperation operation = new DataMigrationArmOperation(_servicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateCheckDataMigrationServiceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, DataMigrationServiceNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = _servicesRestClient.CreateCheckDataMigrationServiceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DataMigrationServiceNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataMigrationServiceNameAvailabilityResult> response = Response.FromValue(DataMigrationServiceNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateCheckDataMigrationServiceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, DataMigrationServiceNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = _servicesRestClient.CreateCheckDataMigrationServiceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DataMigrationServiceNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataMigrationServiceNameAvailabilityResult> response = Response.FromValue(DataMigrationServiceNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateCheckStatusRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _servicesRestClient.CreateCheckStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataMigrationServiceStatusResponse> response = Response.FromValue(DataMigrationServiceStatusResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateCheckStatusRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _servicesRestClient.CreateCheckStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataMigrationServiceStatusResponse> response = Response.FromValue(DataMigrationServiceStatusResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.DataMigration
             return new ServicesGetSkusAsyncCollectionResultOfT(
                 _servicesRestClient,
                 Guid.Parse(Id.SubscriptionId),
-                Id.Parent.Name,
+                Id.ResourceGroupName,
                 Id.Name,
                 context,
                 "DataMigrationServiceResource.GetSkus");
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.DataMigration
             return new ServicesGetSkusCollectionResultOfT(
                 _servicesRestClient,
                 Guid.Parse(Id.SubscriptionId),
-                Id.Parent.Name,
+                Id.ResourceGroupName,
                 Id.Name,
                 context,
                 "DataMigrationServiceResource.GetSkus");
@@ -716,7 +716,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _servicesRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataMigrationArmOperation operation = new DataMigrationArmOperation(_servicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -765,7 +765,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _servicesRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataMigrationArmOperation operation = new DataMigrationArmOperation(_servicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -814,7 +814,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _servicesRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataMigrationArmOperation operation = new DataMigrationArmOperation(_servicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -863,7 +863,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _servicesRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataMigrationArmOperation operation = new DataMigrationArmOperation(_servicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -902,7 +902,7 @@ namespace Azure.ResourceManager.DataMigration
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DataMigrationServiceData> response = Response.FromValue(DataMigrationServiceData.FromResponse(result), result);
                     return Response.FromValue(new DataMigrationServiceResource(Client, response.Value), response.GetRawResponse());
@@ -950,7 +950,7 @@ namespace Azure.ResourceManager.DataMigration
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DataMigrationServiceData> response = Response.FromValue(DataMigrationServiceData.FromResponse(result), result);
                     return Response.FromValue(new DataMigrationServiceResource(Client, response.Value), response.GetRawResponse());
@@ -997,7 +997,7 @@ namespace Azure.ResourceManager.DataMigration
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DataMigrationServiceData> response = Response.FromValue(DataMigrationServiceData.FromResponse(result), result);
                     return Response.FromValue(new DataMigrationServiceResource(Client, response.Value), response.GetRawResponse());
@@ -1040,7 +1040,7 @@ namespace Azure.ResourceManager.DataMigration
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DataMigrationServiceData> response = Response.FromValue(DataMigrationServiceData.FromResponse(result), result);
                     return Response.FromValue(new DataMigrationServiceResource(Client, response.Value), response.GetRawResponse());
@@ -1082,7 +1082,7 @@ namespace Azure.ResourceManager.DataMigration
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DataMigrationServiceData> response = Response.FromValue(DataMigrationServiceData.FromResponse(result), result);
                     return Response.FromValue(new DataMigrationServiceResource(Client, response.Value), response.GetRawResponse());
@@ -1128,7 +1128,7 @@ namespace Azure.ResourceManager.DataMigration
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DataMigrationServiceData> response = Response.FromValue(DataMigrationServiceData.FromResponse(result), result);
                     return Response.FromValue(new DataMigrationServiceResource(Client, response.Value), response.GetRawResponse());

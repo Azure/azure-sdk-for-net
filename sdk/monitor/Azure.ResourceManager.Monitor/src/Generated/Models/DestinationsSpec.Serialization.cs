@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class DestinationsSpec : IUtf8JsonSerializable, IJsonModel<DestinationsSpec>
+    /// <summary> Specification of destinations that can be used in data flows. </summary>
+    public partial class DestinationsSpec : IJsonModel<DestinationsSpec>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DestinationsSpec>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DestinationsSpec PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DestinationsSpec>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDestinationsSpec(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DestinationsSpec)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DestinationsSpec>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DestinationsSpec)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DestinationsSpec>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DestinationsSpec IPersistableModel<DestinationsSpec>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DestinationsSpec>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DestinationsSpec>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,17 +69,16 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DestinationsSpec>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DestinationsSpec>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DestinationsSpec)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(LogAnalytics))
             {
                 writer.WritePropertyName("logAnalytics"u8);
                 writer.WriteStartArray();
-                foreach (var item in LogAnalytics)
+                foreach (LogAnalyticsDestination item in LogAnalytics)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -48,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("monitoringAccounts"u8);
                 writer.WriteStartArray();
-                foreach (var item in MonitoringAccounts)
+                foreach (MonitoringAccountDestination item in MonitoringAccounts)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -63,7 +103,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("eventHubs"u8);
                 writer.WriteStartArray();
-                foreach (var item in EventHubs)
+                foreach (DataCollectionRuleEventHubDestination item in EventHubs)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -73,7 +113,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("eventHubsDirect"u8);
                 writer.WriteStartArray();
-                foreach (var item in EventHubsDirect)
+                foreach (DataCollectionRuleEventHubDirectDestination item in EventHubsDirect)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -83,7 +123,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("storageBlobsDirect"u8);
                 writer.WriteStartArray();
-                foreach (var item in StorageBlobsDirect)
+                foreach (DataCollectionRuleStorageBlobDestination item in StorageBlobsDirect)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -93,7 +133,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("storageTablesDirect"u8);
                 writer.WriteStartArray();
-                foreach (var item in StorageTablesDirect)
+                foreach (DataCollectionRuleStorageTableDestination item in StorageTablesDirect)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -103,21 +143,41 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();
-                foreach (var item in StorageAccounts)
+                foreach (DataCollectionRuleStorageBlobDestination item in StorageAccounts)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsCollectionDefined(MicrosoftFabric))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("microsoftFabric"u8);
+                writer.WriteStartArray();
+                foreach (MicrosoftFabricDestination item in MicrosoftFabric)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(AzureDataExplorer))
+            {
+                writer.WritePropertyName("azureDataExplorer"u8);
+                writer.WriteStartArray();
+                foreach (AdxDestination item in AzureDataExplorer)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -126,22 +186,27 @@ namespace Azure.ResourceManager.Monitor.Models
             }
         }
 
-        DestinationsSpec IJsonModel<DestinationsSpec>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DestinationsSpec IJsonModel<DestinationsSpec>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DestinationsSpec JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DestinationsSpec>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DestinationsSpec>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DestinationsSpec)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDestinationsSpec(document.RootElement, options);
         }
 
-        internal static DestinationsSpec DeserializeDestinationsSpec(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DestinationsSpec DeserializeDestinationsSpec(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -154,123 +219,151 @@ namespace Azure.ResourceManager.Monitor.Models
             IList<DataCollectionRuleStorageBlobDestination> storageBlobsDirect = default;
             IList<DataCollectionRuleStorageTableDestination> storageTablesDirect = default;
             IList<DataCollectionRuleStorageBlobDestination> storageAccounts = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<MicrosoftFabricDestination> microsoftFabric = default;
+            IList<AdxDestination> azureDataExplorer = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("logAnalytics"u8))
+                if (prop.NameEquals("logAnalytics"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<LogAnalyticsDestination> array = new List<LogAnalyticsDestination>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(LogAnalyticsDestination.DeserializeLogAnalyticsDestination(item, options));
                     }
                     logAnalytics = array;
                     continue;
                 }
-                if (property.NameEquals("monitoringAccounts"u8))
+                if (prop.NameEquals("monitoringAccounts"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MonitoringAccountDestination> array = new List<MonitoringAccountDestination>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(MonitoringAccountDestination.DeserializeMonitoringAccountDestination(item, options));
                     }
                     monitoringAccounts = array;
                     continue;
                 }
-                if (property.NameEquals("azureMonitorMetrics"u8))
+                if (prop.NameEquals("azureMonitorMetrics"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    azureMonitorMetrics = DestinationsSpecAzureMonitorMetrics.DeserializeDestinationsSpecAzureMonitorMetrics(property.Value, options);
+                    azureMonitorMetrics = DestinationsSpecAzureMonitorMetrics.DeserializeDestinationsSpecAzureMonitorMetrics(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("eventHubs"u8))
+                if (prop.NameEquals("eventHubs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DataCollectionRuleEventHubDestination> array = new List<DataCollectionRuleEventHubDestination>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DataCollectionRuleEventHubDestination.DeserializeDataCollectionRuleEventHubDestination(item, options));
                     }
                     eventHubs = array;
                     continue;
                 }
-                if (property.NameEquals("eventHubsDirect"u8))
+                if (prop.NameEquals("eventHubsDirect"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DataCollectionRuleEventHubDirectDestination> array = new List<DataCollectionRuleEventHubDirectDestination>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DataCollectionRuleEventHubDirectDestination.DeserializeDataCollectionRuleEventHubDirectDestination(item, options));
                     }
                     eventHubsDirect = array;
                     continue;
                 }
-                if (property.NameEquals("storageBlobsDirect"u8))
+                if (prop.NameEquals("storageBlobsDirect"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DataCollectionRuleStorageBlobDestination> array = new List<DataCollectionRuleStorageBlobDestination>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DataCollectionRuleStorageBlobDestination.DeserializeDataCollectionRuleStorageBlobDestination(item, options));
                     }
                     storageBlobsDirect = array;
                     continue;
                 }
-                if (property.NameEquals("storageTablesDirect"u8))
+                if (prop.NameEquals("storageTablesDirect"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DataCollectionRuleStorageTableDestination> array = new List<DataCollectionRuleStorageTableDestination>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DataCollectionRuleStorageTableDestination.DeserializeDataCollectionRuleStorageTableDestination(item, options));
                     }
                     storageTablesDirect = array;
                     continue;
                 }
-                if (property.NameEquals("storageAccounts"u8))
+                if (prop.NameEquals("storageAccounts"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DataCollectionRuleStorageBlobDestination> array = new List<DataCollectionRuleStorageBlobDestination>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DataCollectionRuleStorageBlobDestination.DeserializeDataCollectionRuleStorageBlobDestination(item, options));
                     }
                     storageAccounts = array;
                     continue;
                 }
+                if (prop.NameEquals("microsoftFabric"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<MicrosoftFabricDestination> array = new List<MicrosoftFabricDestination>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(MicrosoftFabricDestination.DeserializeMicrosoftFabricDestination(item, options));
+                    }
+                    microsoftFabric = array;
+                    continue;
+                }
+                if (prop.NameEquals("azureDataExplorer"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<AdxDestination> array = new List<AdxDestination>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(AdxDestination.DeserializeAdxDestination(item, options));
+                    }
+                    azureDataExplorer = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DestinationsSpec(
                 logAnalytics ?? new ChangeTrackingList<LogAnalyticsDestination>(),
                 monitoringAccounts ?? new ChangeTrackingList<MonitoringAccountDestination>(),
@@ -280,38 +373,9 @@ namespace Azure.ResourceManager.Monitor.Models
                 storageBlobsDirect ?? new ChangeTrackingList<DataCollectionRuleStorageBlobDestination>(),
                 storageTablesDirect ?? new ChangeTrackingList<DataCollectionRuleStorageTableDestination>(),
                 storageAccounts ?? new ChangeTrackingList<DataCollectionRuleStorageBlobDestination>(),
-                serializedAdditionalRawData);
+                microsoftFabric ?? new ChangeTrackingList<MicrosoftFabricDestination>(),
+                azureDataExplorer ?? new ChangeTrackingList<AdxDestination>(),
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<DestinationsSpec>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DestinationsSpec>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DestinationsSpec)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DestinationsSpec IPersistableModel<DestinationsSpec>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DestinationsSpec>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDestinationsSpec(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DestinationsSpec)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DestinationsSpec>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

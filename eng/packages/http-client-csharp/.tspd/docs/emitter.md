@@ -38,9 +38,14 @@ See [Configuring output directory for more info](https://typespec.io/docs/handbo
 
 ### `api-version`
 
-**Type:** `string`
+**Type:** `string | object`
 
-For TypeSpec files using the [`@versioned`](https://typespec.io/docs/libraries/versioning/reference/decorators/#@TypeSpec.Versioning.versioned) decorator, set this option to the version that should be used to generate against.
+Use this flag if you would like to generate the sdk only for a specific version. Default value is the latest version. Also accepts values `latest` and `all`. For multi-service packages, provide a map from each service namespace's full name to its desired version; services not listed default to their latest version.
+
+**Options:**
+
+- `string`
+- `object`
 
 ### `generate-protocol-methods`
 
@@ -95,6 +100,12 @@ Set the log level for which to collect traces. The default value is `info`.
 **Type:** `boolean`
 
 Set to `true` to disable XML documentation generation. The default value is `false`.
+
+### `disable-roslyn-reduce`
+
+**Type:** `boolean`
+
+Set to `true` to skip the Roslyn reduce (simplification) post-processing step. This speeds up generation and is useful when iterating quickly. The default value is `false`.
 
 ### `generator-name`
 

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct IntegrationRuntimeSsisCatalogPricingTier : IEquatable<IntegrationRuntimeSsisCatalogPricingTier>
     {
         private readonly string _value;
+        /// <summary> Basic. </summary>
+        private const string BasicValue = "Basic";
+        /// <summary> Standard. </summary>
+        private const string StandardValue = "Standard";
+        /// <summary> Premium. </summary>
+        private const string PremiumValue = "Premium";
+        /// <summary> PremiumRS. </summary>
+        private const string PremiumRSValue = "PremiumRS";
 
         /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeSsisCatalogPricingTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IntegrationRuntimeSsisCatalogPricingTier(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BasicValue = "Basic";
-        private const string StandardValue = "Standard";
-        private const string PremiumValue = "Premium";
-        private const string PremiumRSValue = "PremiumRS";
+            _value = value;
+        }
 
         /// <summary> Basic. </summary>
         public static IntegrationRuntimeSsisCatalogPricingTier Basic { get; } = new IntegrationRuntimeSsisCatalogPricingTier(BasicValue);
+
         /// <summary> Standard. </summary>
         public static IntegrationRuntimeSsisCatalogPricingTier Standard { get; } = new IntegrationRuntimeSsisCatalogPricingTier(StandardValue);
+
         /// <summary> Premium. </summary>
         public static IntegrationRuntimeSsisCatalogPricingTier Premium { get; } = new IntegrationRuntimeSsisCatalogPricingTier(PremiumValue);
+
         /// <summary> PremiumRS. </summary>
         public static IntegrationRuntimeSsisCatalogPricingTier PremiumRS { get; } = new IntegrationRuntimeSsisCatalogPricingTier(PremiumRSValue);
+
         /// <summary> Determines if two <see cref="IntegrationRuntimeSsisCatalogPricingTier"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IntegrationRuntimeSsisCatalogPricingTier left, IntegrationRuntimeSsisCatalogPricingTier right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IntegrationRuntimeSsisCatalogPricingTier"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IntegrationRuntimeSsisCatalogPricingTier left, IntegrationRuntimeSsisCatalogPricingTier right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IntegrationRuntimeSsisCatalogPricingTier"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IntegrationRuntimeSsisCatalogPricingTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IntegrationRuntimeSsisCatalogPricingTier(string value) => new IntegrationRuntimeSsisCatalogPricingTier(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IntegrationRuntimeSsisCatalogPricingTier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IntegrationRuntimeSsisCatalogPricingTier?(string value) => value == null ? null : new IntegrationRuntimeSsisCatalogPricingTier(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IntegrationRuntimeSsisCatalogPricingTier other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IntegrationRuntimeSsisCatalogPricingTier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

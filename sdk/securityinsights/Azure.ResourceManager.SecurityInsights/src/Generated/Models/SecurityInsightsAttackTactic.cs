@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,83 +15,132 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct SecurityInsightsAttackTactic : IEquatable<SecurityInsightsAttackTactic>
     {
         private readonly string _value;
+        /// <summary> Reconnaissance. </summary>
+        private const string ReconnaissanceValue = "Reconnaissance";
+        /// <summary> ResourceDevelopment. </summary>
+        private const string ResourceDevelopmentValue = "ResourceDevelopment";
+        /// <summary> InitialAccess. </summary>
+        private const string InitialAccessValue = "InitialAccess";
+        /// <summary> Execution. </summary>
+        private const string ExecutionValue = "Execution";
+        /// <summary> Persistence. </summary>
+        private const string PersistenceValue = "Persistence";
+        /// <summary> PrivilegeEscalation. </summary>
+        private const string PrivilegeEscalationValue = "PrivilegeEscalation";
+        /// <summary> DefenseEvasion. </summary>
+        private const string DefenseEvasionValue = "DefenseEvasion";
+        /// <summary> CredentialAccess. </summary>
+        private const string CredentialAccessValue = "CredentialAccess";
+        /// <summary> Discovery. </summary>
+        private const string DiscoveryValue = "Discovery";
+        /// <summary> LateralMovement. </summary>
+        private const string LateralMovementValue = "LateralMovement";
+        /// <summary> Collection. </summary>
+        private const string CollectionValue = "Collection";
+        /// <summary> Exfiltration. </summary>
+        private const string ExfiltrationValue = "Exfiltration";
+        /// <summary> CommandAndControl. </summary>
+        private const string CommandAndControlValue = "CommandAndControl";
+        /// <summary> Impact. </summary>
+        private const string ImpactValue = "Impact";
+        /// <summary> PreAttack. </summary>
+        private const string PreAttackValue = "PreAttack";
+        /// <summary> ImpairProcessControl. </summary>
+        private const string ImpairProcessControlValue = "ImpairProcessControl";
+        /// <summary> InhibitResponseFunction. </summary>
+        private const string InhibitResponseFunctionValue = "InhibitResponseFunction";
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAttackTactic"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityInsightsAttackTactic(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ReconnaissanceValue = "Reconnaissance";
-        private const string ResourceDevelopmentValue = "ResourceDevelopment";
-        private const string InitialAccessValue = "InitialAccess";
-        private const string ExecutionValue = "Execution";
-        private const string PersistenceValue = "Persistence";
-        private const string PrivilegeEscalationValue = "PrivilegeEscalation";
-        private const string DefenseEvasionValue = "DefenseEvasion";
-        private const string CredentialAccessValue = "CredentialAccess";
-        private const string DiscoveryValue = "Discovery";
-        private const string LateralMovementValue = "LateralMovement";
-        private const string CollectionValue = "Collection";
-        private const string ExfiltrationValue = "Exfiltration";
-        private const string CommandAndControlValue = "CommandAndControl";
-        private const string ImpactValue = "Impact";
-        private const string PreAttackValue = "PreAttack";
-        private const string ImpairProcessControlValue = "ImpairProcessControl";
-        private const string InhibitResponseFunctionValue = "InhibitResponseFunction";
+            _value = value;
+        }
 
         /// <summary> Reconnaissance. </summary>
         public static SecurityInsightsAttackTactic Reconnaissance { get; } = new SecurityInsightsAttackTactic(ReconnaissanceValue);
+
         /// <summary> ResourceDevelopment. </summary>
         public static SecurityInsightsAttackTactic ResourceDevelopment { get; } = new SecurityInsightsAttackTactic(ResourceDevelopmentValue);
+
         /// <summary> InitialAccess. </summary>
         public static SecurityInsightsAttackTactic InitialAccess { get; } = new SecurityInsightsAttackTactic(InitialAccessValue);
+
         /// <summary> Execution. </summary>
         public static SecurityInsightsAttackTactic Execution { get; } = new SecurityInsightsAttackTactic(ExecutionValue);
+
         /// <summary> Persistence. </summary>
         public static SecurityInsightsAttackTactic Persistence { get; } = new SecurityInsightsAttackTactic(PersistenceValue);
+
         /// <summary> PrivilegeEscalation. </summary>
         public static SecurityInsightsAttackTactic PrivilegeEscalation { get; } = new SecurityInsightsAttackTactic(PrivilegeEscalationValue);
+
         /// <summary> DefenseEvasion. </summary>
         public static SecurityInsightsAttackTactic DefenseEvasion { get; } = new SecurityInsightsAttackTactic(DefenseEvasionValue);
+
         /// <summary> CredentialAccess. </summary>
         public static SecurityInsightsAttackTactic CredentialAccess { get; } = new SecurityInsightsAttackTactic(CredentialAccessValue);
+
         /// <summary> Discovery. </summary>
         public static SecurityInsightsAttackTactic Discovery { get; } = new SecurityInsightsAttackTactic(DiscoveryValue);
+
         /// <summary> LateralMovement. </summary>
         public static SecurityInsightsAttackTactic LateralMovement { get; } = new SecurityInsightsAttackTactic(LateralMovementValue);
+
         /// <summary> Collection. </summary>
         public static SecurityInsightsAttackTactic Collection { get; } = new SecurityInsightsAttackTactic(CollectionValue);
+
         /// <summary> Exfiltration. </summary>
         public static SecurityInsightsAttackTactic Exfiltration { get; } = new SecurityInsightsAttackTactic(ExfiltrationValue);
+
         /// <summary> CommandAndControl. </summary>
         public static SecurityInsightsAttackTactic CommandAndControl { get; } = new SecurityInsightsAttackTactic(CommandAndControlValue);
+
         /// <summary> Impact. </summary>
         public static SecurityInsightsAttackTactic Impact { get; } = new SecurityInsightsAttackTactic(ImpactValue);
+
         /// <summary> PreAttack. </summary>
         public static SecurityInsightsAttackTactic PreAttack { get; } = new SecurityInsightsAttackTactic(PreAttackValue);
+
         /// <summary> ImpairProcessControl. </summary>
         public static SecurityInsightsAttackTactic ImpairProcessControl { get; } = new SecurityInsightsAttackTactic(ImpairProcessControlValue);
+
         /// <summary> InhibitResponseFunction. </summary>
         public static SecurityInsightsAttackTactic InhibitResponseFunction { get; } = new SecurityInsightsAttackTactic(InhibitResponseFunctionValue);
+
         /// <summary> Determines if two <see cref="SecurityInsightsAttackTactic"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityInsightsAttackTactic left, SecurityInsightsAttackTactic right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityInsightsAttackTactic"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityInsightsAttackTactic left, SecurityInsightsAttackTactic right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityInsightsAttackTactic"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityInsightsAttackTactic"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityInsightsAttackTactic(string value) => new SecurityInsightsAttackTactic(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityInsightsAttackTactic"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityInsightsAttackTactic?(string value) => value == null ? null : new SecurityInsightsAttackTactic(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityInsightsAttackTactic other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityInsightsAttackTactic other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

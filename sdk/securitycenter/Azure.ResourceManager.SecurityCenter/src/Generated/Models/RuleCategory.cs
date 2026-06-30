@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -22,50 +23,77 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public readonly partial struct RuleCategory : IEquatable<RuleCategory>
     {
         private readonly string _value;
+        /// <summary> Code. </summary>
+        private const string CodeValue = "Code";
+        /// <summary> Artifacts. </summary>
+        private const string ArtifactsValue = "Artifacts";
+        /// <summary> Dependencies. </summary>
+        private const string DependenciesValue = "Dependencies";
+        /// <summary> Secrets. </summary>
+        private const string SecretsValue = "Secrets";
+        /// <summary> IaC. </summary>
+        private const string IaCValue = "IaC";
+        /// <summary> Containers. </summary>
+        private const string ContainersValue = "Containers";
 
         /// <summary> Initializes a new instance of <see cref="RuleCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RuleCategory(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CodeValue = "Code";
-        private const string ArtifactsValue = "Artifacts";
-        private const string DependenciesValue = "Dependencies";
-        private const string SecretsValue = "Secrets";
-        private const string IaCValue = "IaC";
-        private const string ContainersValue = "Containers";
+            _value = value;
+        }
 
         /// <summary> Code. </summary>
         public static RuleCategory Code { get; } = new RuleCategory(CodeValue);
+
         /// <summary> Artifacts. </summary>
         public static RuleCategory Artifacts { get; } = new RuleCategory(ArtifactsValue);
+
         /// <summary> Dependencies. </summary>
         public static RuleCategory Dependencies { get; } = new RuleCategory(DependenciesValue);
+
         /// <summary> Secrets. </summary>
         public static RuleCategory Secrets { get; } = new RuleCategory(SecretsValue);
+
         /// <summary> IaC. </summary>
         public static RuleCategory IaC { get; } = new RuleCategory(IaCValue);
+
         /// <summary> Containers. </summary>
         public static RuleCategory Containers { get; } = new RuleCategory(ContainersValue);
+
         /// <summary> Determines if two <see cref="RuleCategory"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RuleCategory left, RuleCategory right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RuleCategory"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RuleCategory left, RuleCategory right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RuleCategory"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RuleCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RuleCategory(string value) => new RuleCategory(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RuleCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RuleCategory?(string value) => value == null ? null : new RuleCategory(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RuleCategory other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RuleCategory other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

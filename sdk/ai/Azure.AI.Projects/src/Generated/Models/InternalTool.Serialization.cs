@@ -149,20 +149,20 @@ namespace Azure.AI.Projects
                         return FabricIQPreviewTool.DeserializeFabricIQPreviewTool(element, options);
                     case "memory_search_preview":
                         return MemorySearchPreviewTool.DeserializeMemorySearchPreviewTool(element, options);
-                    case "toolbox_search_preview":
-                        return ToolboxSearchPreviewTool.DeserializeToolboxSearchPreviewTool(element, options);
+                    case "reminder_preview":
+                        return ReminderPreviewTool.DeserializeReminderPreviewTool(element, options);
                     case "code_interpreter":
                         return InternalCodeInterpreterTool.DeserializeInternalCodeInterpreterTool(element, options);
-                    case "function":
-                        return InternalFunctionTool.DeserializeInternalFunctionTool(element, options);
                     case "file_search":
                         return InternalFileSearchTool.DeserializeInternalFileSearchTool(element, options);
-                    case "computer_use_preview":
-                        return InternalComputerUsePreviewTool.DeserializeInternalComputerUsePreviewTool(element, options);
                     case "web_search":
                         return WebSearchTool.DeserializeWebSearchTool(element, options);
                     case "mcp":
                         return InternalMCPTool.DeserializeInternalMCPTool(element, options);
+                    case "function":
+                        return InternalFunctionTool.DeserializeInternalFunctionTool(element, options);
+                    case "computer_use_preview":
+                        return InternalComputerUsePreviewTool.DeserializeInternalComputerUsePreviewTool(element, options);
                     case "image_generation":
                         return InternalImageGenTool.DeserializeInternalImageGenTool(element, options);
                     case "local_shell":

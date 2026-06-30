@@ -12,10 +12,7 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the ExpressRouteLink data model.
-    /// ExpressRouteLink child resource definition.
-    /// </summary>
+    /// <summary> ExpressRouteLink. </summary>
     public partial class ExpressRouteLinkData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of <see cref="ExpressRouteLinkData"/>. </summary>
@@ -25,62 +22,123 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteLinkData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="routerName"> Name of Azure router associated with physical port. </param>
-        /// <param name="interfaceName"> Name of Azure router interface. </param>
-        /// <param name="patchPanelId"> Mapping between physical port to patch panel port. </param>
-        /// <param name="rackId"> Mapping of physical patch panel to rack. </param>
-        /// <param name="coloLocation"> Cololocation for ExpressRoute Hybrid Direct. </param>
-        /// <param name="connectorType"> Physical fiber port type. </param>
-        /// <param name="adminState"> Administrative state of the physical port. </param>
-        /// <param name="provisioningState"> The provisioning state of the express route link resource. </param>
-        /// <param name="macSecConfig"> MacSec configuration. </param>
-        internal ExpressRouteLinkData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string routerName, string interfaceName, string patchPanelId, string rackId, string coloLocation, ExpressRouteLinkConnectorType? connectorType, ExpressRouteLinkAdminState? adminState, NetworkProvisioningState? provisioningState, ExpressRouteLinkMacSecConfig macSecConfig) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> ExpressRouteLink properties. </param>
+        internal ExpressRouteLinkData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, ExpressRouteLinkPropertiesFormat properties) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            RouterName = routerName;
-            InterfaceName = interfaceName;
-            PatchPanelId = patchPanelId;
-            RackId = rackId;
-            ColoLocation = coloLocation;
-            ConnectorType = connectorType;
-            AdminState = adminState;
-            ProvisioningState = provisioningState;
-            MacSecConfig = macSecConfig;
+            Properties = properties;
         }
 
-        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
-        public ETag? ETag { get; }
+        /// <summary> ExpressRouteLink properties. </summary>
+        [WirePath("properties")]
+        internal ExpressRouteLinkPropertiesFormat Properties { get; set; }
+
         /// <summary> Name of Azure router associated with physical port. </summary>
         [WirePath("properties.routerName")]
-        public string RouterName { get; }
+        public string RouterName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RouterName;
+            }
+        }
+
         /// <summary> Name of Azure router interface. </summary>
         [WirePath("properties.interfaceName")]
-        public string InterfaceName { get; }
+        public string InterfaceName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InterfaceName;
+            }
+        }
+
         /// <summary> Mapping between physical port to patch panel port. </summary>
         [WirePath("properties.patchPanelId")]
-        public string PatchPanelId { get; }
+        public string PatchPanelId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PatchPanelId;
+            }
+        }
+
         /// <summary> Mapping of physical patch panel to rack. </summary>
         [WirePath("properties.rackId")]
-        public string RackId { get; }
+        public string RackId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RackId;
+            }
+        }
+
         /// <summary> Cololocation for ExpressRoute Hybrid Direct. </summary>
         [WirePath("properties.coloLocation")]
-        public string ColoLocation { get; }
+        public string ColoLocation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ColoLocation;
+            }
+        }
+
         /// <summary> Physical fiber port type. </summary>
         [WirePath("properties.connectorType")]
-        public ExpressRouteLinkConnectorType? ConnectorType { get; }
+        public ExpressRouteLinkConnectorType? ConnectorType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectorType;
+            }
+        }
+
         /// <summary> Administrative state of the physical port. </summary>
         [WirePath("properties.adminState")]
-        public ExpressRouteLinkAdminState? AdminState { get; set; }
+        public ExpressRouteLinkAdminState? AdminState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdminState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteLinkPropertiesFormat();
+                }
+                Properties.AdminState = value;
+            }
+        }
+
         /// <summary> The provisioning state of the express route link resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> MacSec configuration. </summary>
         [WirePath("properties.macSecConfig")]
-        public ExpressRouteLinkMacSecConfig MacSecConfig { get; set; }
+        public ExpressRouteLinkMacSecConfig MacSecConfig
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MacSecConfig;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteLinkPropertiesFormat();
+                }
+                Properties.MacSecConfig = value;
+            }
+        }
     }
 }

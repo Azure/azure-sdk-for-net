@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
+    /// <summary></summary>
     public partial class SiteSlotFunctionResource : IJsonModel<FunctionEnvelopeData>
     {
-        private static FunctionEnvelopeData s_dataDeserializationInstance;
-        private static FunctionEnvelopeData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<FunctionEnvelopeData> s_dataDeserializationInstance;
 
+        private static IJsonModel<FunctionEnvelopeData> DataDeserializationInstance => s_dataDeserializationInstance ??= new FunctionEnvelopeData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FunctionEnvelopeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FunctionEnvelopeData>)Data).Write(writer, options);
 
-        FunctionEnvelopeData IJsonModel<FunctionEnvelopeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FunctionEnvelopeData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FunctionEnvelopeData IJsonModel<FunctionEnvelopeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<FunctionEnvelopeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FunctionEnvelopeData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         FunctionEnvelopeData IPersistableModel<FunctionEnvelopeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FunctionEnvelopeData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<FunctionEnvelopeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FunctionEnvelopeData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FunctionEnvelopeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

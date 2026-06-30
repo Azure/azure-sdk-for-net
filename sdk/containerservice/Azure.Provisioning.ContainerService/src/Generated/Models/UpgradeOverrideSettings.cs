@@ -58,6 +58,10 @@ namespace Azure.Provisioning.ContainerService
             base.DefineProvisionableProperties();
             _isForceUpgradeEnabled = DefineProperty<bool>(nameof(IsForceUpgradeEnabled), new string[] { "forceUpgrade" });
             _until = DefineProperty<DateTimeOffset>(nameof(Until), new string[] { "until" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for UpgradeOverrideSettings that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

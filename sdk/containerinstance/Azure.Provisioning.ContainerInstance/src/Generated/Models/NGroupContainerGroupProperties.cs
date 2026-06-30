@@ -74,6 +74,10 @@ namespace Azure.Provisioning.ContainerInstance
             _subnetIds = DefineListProperty<ContainerGroupSubnetId>(nameof(SubnetIds), new string[] { "subnetIds" });
             _volumes = DefineListProperty<NGroupContainerGroupPropertyVolume>(nameof(Volumes), new string[] { "volumes" });
             _containers = DefineListProperty<NGroupContainerGroupPropertyContainer>(nameof(Containers), new string[] { "containers" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for NGroupContainerGroupProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class LoadBalancerResource : IJsonModel<LoadBalancerData>
     {
-        private static LoadBalancerData s_dataDeserializationInstance;
-        private static LoadBalancerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<LoadBalancerData> s_dataDeserializationInstance;
 
+        private static IJsonModel<LoadBalancerData> DataDeserializationInstance => s_dataDeserializationInstance ??= new LoadBalancerData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LoadBalancerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LoadBalancerData>)Data).Write(writer, options);
 
-        LoadBalancerData IJsonModel<LoadBalancerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LoadBalancerData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LoadBalancerData IJsonModel<LoadBalancerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<LoadBalancerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LoadBalancerData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         LoadBalancerData IPersistableModel<LoadBalancerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LoadBalancerData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<LoadBalancerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LoadBalancerData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<LoadBalancerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

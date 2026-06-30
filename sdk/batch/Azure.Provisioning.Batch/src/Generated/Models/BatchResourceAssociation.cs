@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Batch
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _accessMode = DefineProperty<ResourceAssociationAccessMode>(nameof(AccessMode), new string[] { "accessMode" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchResourceAssociation that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

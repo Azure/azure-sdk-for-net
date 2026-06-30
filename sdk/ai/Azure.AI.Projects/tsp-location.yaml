@@ -1,5 +1,5 @@
 directory: specification/ai-foundry/data-plane/Foundry/src/sdk-csharp-azure-ai-projects
-commit: cc1ed52737f3733e6f0a7770f2c067bec5aaaa96
+commit: 8a7501ba2c45dee9428cadcde30cdabcfce8d2f5
 repo: Azure/azure-rest-api-specs
 additionalDirectories:
 - specification/ai-foundry/data-plane/Foundry/src/agents
@@ -33,5 +33,5 @@ additionalDirectories:
 - specification/ai-foundry/data-plane/Foundry/src/skills
 - specification/ai-foundry/data-plane/Foundry/src/toolboxes
 - specification/ai-foundry/data-plane/Foundry/src/tools
-- specification/ai-foundry/data-plane/Foundry/src/servicepatterns.tsp
+- specification/ai-foundry/data-plane/Foundry/src/sdk-common
 emitterPackageJsonPath: eng/http-client-csharp-emitter-package.json

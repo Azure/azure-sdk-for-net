@@ -191,11 +191,9 @@ internal sealed partial class FoundryStorageLoggingPolicy : HttpPipelinePolicy
         response.Headers.TryGetValue(PlatformHeaders.RequestId, out var xRequestId);
         response.Headers.TryGetValue("apim-request-id", out var apimRequestId);
 
-        // Check if isolation headers were sent on the outbound request.
-        var hasUserIsolationKey = message.Request.Headers.TryGetValue(
-            PlatformHeaders.UserIsolationKey, out _);
-        var hasChatIsolationKey = message.Request.Headers.TryGetValue(
-            PlatformHeaders.ChatIsolationKey, out _);
+        // Check whether the call ID was forwarded on the outbound request.
+        var hasCallId = message.Request.Headers.TryGetValue(
+            PlatformHeaders.FoundryCallId, out _);
 
         if (response.IsError)
         {
@@ -208,8 +206,7 @@ internal sealed partial class FoundryStorageLoggingPolicy : HttpPipelinePolicy
                 traceParent,
                 xRequestId,
                 apimRequestId,
-                hasUserIsolationKey,
-                hasChatIsolationKey);
+                hasCallId);
         }
         else
         {
@@ -222,8 +219,7 @@ internal sealed partial class FoundryStorageLoggingPolicy : HttpPipelinePolicy
                 traceParent,
                 xRequestId,
                 apimRequestId,
-                hasUserIsolationKey,
-                hasChatIsolationKey);
+                hasCallId);
         }
     }
 
@@ -232,11 +228,11 @@ internal sealed partial class FoundryStorageLoggingPolicy : HttpPipelinePolicy
     [LoggerMessage(Level = LogLevel.Debug, Message = "Foundry storage {Method} {Uri} starting (x-ms-client-request-id: {ClientRequestId}, traceparent: {TraceParent})")]
     private partial void LogRequestStarted(string method, string uri, string clientRequestId, string? traceParent);
 
-    [LoggerMessage(Level = LogLevel.Information, Message = "Foundry storage {Method} {Uri} completed HTTP {StatusCode} in {DurationMs}ms (x-ms-client-request-id: {ClientRequestId}, traceparent: {TraceParent}, x-request-id: {XRequestId}, apim-request-id: {ApimRequestId}, HasUserIsolationKey: {HasUserIsolationKey}, HasChatIsolationKey: {HasChatIsolationKey})")]
-    private partial void LogRequestSucceeded(string method, string uri, int statusCode, long durationMs, string clientRequestId, string? traceParent, string? xRequestId, string? apimRequestId, bool hasUserIsolationKey, bool hasChatIsolationKey);
+    [LoggerMessage(Level = LogLevel.Information, Message = "Foundry storage {Method} {Uri} completed HTTP {StatusCode} in {DurationMs}ms (x-ms-client-request-id: {ClientRequestId}, traceparent: {TraceParent}, x-request-id: {XRequestId}, apim-request-id: {ApimRequestId}, HasCallId: {HasCallId})")]
+    private partial void LogRequestSucceeded(string method, string uri, int statusCode, long durationMs, string clientRequestId, string? traceParent, string? xRequestId, string? apimRequestId, bool hasCallId);
 
-    [LoggerMessage(Level = LogLevel.Warning, Message = "Foundry storage {Method} {Uri} failed HTTP {StatusCode} in {DurationMs}ms (x-ms-client-request-id: {ClientRequestId}, traceparent: {TraceParent}, x-request-id: {XRequestId}, apim-request-id: {ApimRequestId}, HasUserIsolationKey: {HasUserIsolationKey}, HasChatIsolationKey: {HasChatIsolationKey})")]
-    private partial void LogRequestFailed(string method, string uri, int statusCode, long durationMs, string clientRequestId, string? traceParent, string? xRequestId, string? apimRequestId, bool hasUserIsolationKey, bool hasChatIsolationKey);
+    [LoggerMessage(Level = LogLevel.Warning, Message = "Foundry storage {Method} {Uri} failed HTTP {StatusCode} in {DurationMs}ms (x-ms-client-request-id: {ClientRequestId}, traceparent: {TraceParent}, x-request-id: {XRequestId}, apim-request-id: {ApimRequestId}, HasCallId: {HasCallId})")]
+    private partial void LogRequestFailed(string method, string uri, int statusCode, long durationMs, string clientRequestId, string? traceParent, string? xRequestId, string? apimRequestId, bool hasCallId);
 
     [LoggerMessage(Level = LogLevel.Error, Message = "Foundry storage {Method} {Uri} transport failure after {DurationMs}ms (x-ms-client-request-id: {ClientRequestId}, traceparent: {TraceParent})")]
     private partial void LogTransportFailure(Exception exception, string method, string uri, long durationMs, string clientRequestId, string? traceParent);

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
+    /// <summary></summary>
     public partial class MigrateMySqlStatusResource : IJsonModel<MigrateMySqlStatusData>
     {
-        private static MigrateMySqlStatusData s_dataDeserializationInstance;
-        private static MigrateMySqlStatusData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<MigrateMySqlStatusData> s_dataDeserializationInstance;
 
+        private static IJsonModel<MigrateMySqlStatusData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MigrateMySqlStatusData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MigrateMySqlStatusData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MigrateMySqlStatusData>)Data).Write(writer, options);
 
-        MigrateMySqlStatusData IJsonModel<MigrateMySqlStatusData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MigrateMySqlStatusData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MigrateMySqlStatusData IJsonModel<MigrateMySqlStatusData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<MigrateMySqlStatusData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MigrateMySqlStatusData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         MigrateMySqlStatusData IPersistableModel<MigrateMySqlStatusData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MigrateMySqlStatusData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<MigrateMySqlStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MigrateMySqlStatusData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MigrateMySqlStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

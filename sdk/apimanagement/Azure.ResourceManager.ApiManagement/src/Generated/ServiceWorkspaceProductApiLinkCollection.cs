@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ApiManagement
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ServiceWorkspaceProductApiLinkCollection : ArmCollection, IEnumerable<ServiceWorkspaceProductApiLinkResource>, IAsyncEnumerable<ServiceWorkspaceProductApiLinkResource>
     {
-        private readonly ClientDiagnostics _serviceWorkspaceProductApiLinkWorkspaceProductApiLinkClientDiagnostics;
-        private readonly WorkspaceProductApiLinkRestOperations _serviceWorkspaceProductApiLinkWorkspaceProductApiLinkRestClient;
+        private readonly ClientDiagnostics _workspaceProductApiLinkClientDiagnostics;
+        private readonly WorkspaceProductApiLink _workspaceProductApiLinkRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceWorkspaceProductApiLinkCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ServiceWorkspaceProductApiLinkCollection for mocking. </summary>
         protected ServiceWorkspaceProductApiLinkCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceWorkspaceProductApiLinkCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceWorkspaceProductApiLinkCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServiceWorkspaceProductApiLinkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serviceWorkspaceProductApiLinkWorkspaceProductApiLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceProductApiLinkResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ServiceWorkspaceProductApiLinkResource.ResourceType, out string serviceWorkspaceProductApiLinkWorkspaceProductApiLinkApiVersion);
-            _serviceWorkspaceProductApiLinkWorkspaceProductApiLinkRestClient = new WorkspaceProductApiLinkRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceWorkspaceProductApiLinkWorkspaceProductApiLinkApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ServiceWorkspaceProductApiLinkResource.ResourceType, out string serviceWorkspaceProductApiLinkApiVersion);
+            _workspaceProductApiLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceProductApiLinkResource.ResourceType.Namespace, Diagnostics);
+            _workspaceProductApiLinkRestClient = new WorkspaceProductApiLink(_workspaceProductApiLinkClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceProductApiLinkApiVersion ?? "2025-09-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ServiceWorkspaceProductResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServiceWorkspaceProductResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ServiceWorkspaceProductResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Adds an API to the specified product via link.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/products/{productId}/apiLinks/{apiLinkId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/products/{productId}/apiLinks/{apiLinkId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceProductApiLink_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceProductApiLink_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceProductApiLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,23 +75,31 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="apiLinkId"> Product-API link identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="data"> Create or update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiLinkId"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ServiceWorkspaceProductApiLinkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string apiLinkId, ProductApiLinkContractData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiLinkId, nameof(apiLinkId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serviceWorkspaceProductApiLinkWorkspaceProductApiLinkClientDiagnostics.CreateScope("ServiceWorkspaceProductApiLinkCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workspaceProductApiLinkClientDiagnostics.CreateScope("ServiceWorkspaceProductApiLinkCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _serviceWorkspaceProductApiLinkWorkspaceProductApiLinkRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, apiLinkId, data, cancellationToken).ConfigureAwait(false);
-                var uri = _serviceWorkspaceProductApiLinkWorkspaceProductApiLinkRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, apiLinkId, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation<ServiceWorkspaceProductApiLinkResource>(Response.FromValue(new ServiceWorkspaceProductApiLinkResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceProductApiLinkRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, apiLinkId, ProductApiLinkContractData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ProductApiLinkContractData> response = Response.FromValue(ProductApiLinkContractData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiManagementArmOperation<ServiceWorkspaceProductApiLinkResource> operation = new ApiManagementArmOperation<ServiceWorkspaceProductApiLinkResource>(Response.FromValue(new ServiceWorkspaceProductApiLinkResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,20 +113,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// Adds an API to the specified product via link.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/products/{productId}/apiLinks/{apiLinkId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/products/{productId}/apiLinks/{apiLinkId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceProductApiLink_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceProductApiLink_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceProductApiLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,23 +130,31 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="apiLinkId"> Product-API link identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="data"> Create or update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiLinkId"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ServiceWorkspaceProductApiLinkResource> CreateOrUpdate(WaitUntil waitUntil, string apiLinkId, ProductApiLinkContractData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiLinkId, nameof(apiLinkId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serviceWorkspaceProductApiLinkWorkspaceProductApiLinkClientDiagnostics.CreateScope("ServiceWorkspaceProductApiLinkCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workspaceProductApiLinkClientDiagnostics.CreateScope("ServiceWorkspaceProductApiLinkCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _serviceWorkspaceProductApiLinkWorkspaceProductApiLinkRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, apiLinkId, data, cancellationToken);
-                var uri = _serviceWorkspaceProductApiLinkWorkspaceProductApiLinkRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, apiLinkId, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation<ServiceWorkspaceProductApiLinkResource>(Response.FromValue(new ServiceWorkspaceProductApiLinkResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceProductApiLinkRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, apiLinkId, ProductApiLinkContractData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ProductApiLinkContractData> response = Response.FromValue(ProductApiLinkContractData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiManagementArmOperation<ServiceWorkspaceProductApiLinkResource> operation = new ApiManagementArmOperation<ServiceWorkspaceProductApiLinkResource>(Response.FromValue(new ServiceWorkspaceProductApiLinkResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,38 +168,42 @@ namespace Azure.ResourceManager.ApiManagement
         /// Gets the API link for the product.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/products/{productId}/apiLinks/{apiLinkId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/products/{productId}/apiLinks/{apiLinkId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceProductApiLink_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceProductApiLink_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceProductApiLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="apiLinkId"> Product-API link identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiLinkId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ServiceWorkspaceProductApiLinkResource>> GetAsync(string apiLinkId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiLinkId, nameof(apiLinkId));
 
-            using var scope = _serviceWorkspaceProductApiLinkWorkspaceProductApiLinkClientDiagnostics.CreateScope("ServiceWorkspaceProductApiLinkCollection.Get");
+            using DiagnosticScope scope = _workspaceProductApiLinkClientDiagnostics.CreateScope("ServiceWorkspaceProductApiLinkCollection.Get");
             scope.Start();
             try
             {
-                var response = await _serviceWorkspaceProductApiLinkWorkspaceProductApiLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, apiLinkId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceProductApiLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, apiLinkId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ProductApiLinkContractData> response = Response.FromValue(ProductApiLinkContractData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceWorkspaceProductApiLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,38 +217,42 @@ namespace Azure.ResourceManager.ApiManagement
         /// Gets the API link for the product.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/products/{productId}/apiLinks/{apiLinkId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/products/{productId}/apiLinks/{apiLinkId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceProductApiLink_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceProductApiLink_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceProductApiLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="apiLinkId"> Product-API link identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiLinkId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ServiceWorkspaceProductApiLinkResource> Get(string apiLinkId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiLinkId, nameof(apiLinkId));
 
-            using var scope = _serviceWorkspaceProductApiLinkWorkspaceProductApiLinkClientDiagnostics.CreateScope("ServiceWorkspaceProductApiLinkCollection.Get");
+            using DiagnosticScope scope = _workspaceProductApiLinkClientDiagnostics.CreateScope("ServiceWorkspaceProductApiLinkCollection.Get");
             scope.Start();
             try
             {
-                var response = _serviceWorkspaceProductApiLinkWorkspaceProductApiLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, apiLinkId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceProductApiLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, apiLinkId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ProductApiLinkContractData> response = Response.FromValue(ProductApiLinkContractData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceWorkspaceProductApiLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,53 +266,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// Lists a collection of the API links associated with a product.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/products/{productId}/apiLinks</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/products/{productId}/apiLinks. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceProductApiLink_ListByProduct</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceProductApiLink_ListByProduct. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceProductApiLinkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| apiId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceWorkspaceProductApiLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServiceWorkspaceProductApiLinkResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceWorkspaceProductApiLinkWorkspaceProductApiLinkRestClient.CreateListByProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, top, skip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceWorkspaceProductApiLinkWorkspaceProductApiLinkRestClient.CreateListByProductNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceWorkspaceProductApiLinkResource(Client, ProductApiLinkContractData.DeserializeProductApiLinkContractData(e)), _serviceWorkspaceProductApiLinkWorkspaceProductApiLinkClientDiagnostics, Pipeline, "ServiceWorkspaceProductApiLinkCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists a collection of the API links associated with a product.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/products/{productId}/apiLinks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceProductApiLink_ListByProduct</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceProductApiLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -302,47 +284,116 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServiceWorkspaceProductApiLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServiceWorkspaceProductApiLinkResource> GetAll(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ServiceWorkspaceProductApiLinkResource> GetAllAsync(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceWorkspaceProductApiLinkWorkspaceProductApiLinkRestClient.CreateListByProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, top, skip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceWorkspaceProductApiLinkWorkspaceProductApiLinkRestClient.CreateListByProductNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceWorkspaceProductApiLinkResource(Client, ProductApiLinkContractData.DeserializeProductApiLinkContractData(e)), _serviceWorkspaceProductApiLinkWorkspaceProductApiLinkClientDiagnostics, Pipeline, "ServiceWorkspaceProductApiLinkCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ProductApiLinkContractData, ServiceWorkspaceProductApiLinkResource>(new WorkspaceProductApiLinkGetByProductAsyncCollectionResultOfT(
+                _workspaceProductApiLinkRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                filter,
+                top,
+                skip,
+                context,
+                "ServiceWorkspaceProductApiLinkCollection.GetAll"), data => new ServiceWorkspaceProductApiLinkResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of the API links associated with a product.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/products/{productId}/apiLinks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceProductApiLink_ListByProduct. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| apiId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ServiceWorkspaceProductApiLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServiceWorkspaceProductApiLinkResource> GetAll(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ProductApiLinkContractData, ServiceWorkspaceProductApiLinkResource>(new WorkspaceProductApiLinkGetByProductCollectionResultOfT(
+                _workspaceProductApiLinkRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                filter,
+                top,
+                skip,
+                context,
+                "ServiceWorkspaceProductApiLinkCollection.GetAll"), data => new ServiceWorkspaceProductApiLinkResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/products/{productId}/apiLinks/{apiLinkId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/products/{productId}/apiLinks/{apiLinkId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceProductApiLink_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceProductApiLink_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceProductApiLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="apiLinkId"> Product-API link identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiLinkId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string apiLinkId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiLinkId, nameof(apiLinkId));
 
-            using var scope = _serviceWorkspaceProductApiLinkWorkspaceProductApiLinkClientDiagnostics.CreateScope("ServiceWorkspaceProductApiLinkCollection.Exists");
+            using DiagnosticScope scope = _workspaceProductApiLinkClientDiagnostics.CreateScope("ServiceWorkspaceProductApiLinkCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _serviceWorkspaceProductApiLinkWorkspaceProductApiLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, apiLinkId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceProductApiLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, apiLinkId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ProductApiLinkContractData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ProductApiLinkContractData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ProductApiLinkContractData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -356,36 +407,50 @@ namespace Azure.ResourceManager.ApiManagement
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/products/{productId}/apiLinks/{apiLinkId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/products/{productId}/apiLinks/{apiLinkId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceProductApiLink_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceProductApiLink_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceProductApiLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="apiLinkId"> Product-API link identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiLinkId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string apiLinkId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiLinkId, nameof(apiLinkId));
 
-            using var scope = _serviceWorkspaceProductApiLinkWorkspaceProductApiLinkClientDiagnostics.CreateScope("ServiceWorkspaceProductApiLinkCollection.Exists");
+            using DiagnosticScope scope = _workspaceProductApiLinkClientDiagnostics.CreateScope("ServiceWorkspaceProductApiLinkCollection.Exists");
             scope.Start();
             try
             {
-                var response = _serviceWorkspaceProductApiLinkWorkspaceProductApiLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, apiLinkId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceProductApiLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, apiLinkId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ProductApiLinkContractData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ProductApiLinkContractData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ProductApiLinkContractData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -399,38 +464,54 @@ namespace Azure.ResourceManager.ApiManagement
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/products/{productId}/apiLinks/{apiLinkId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/products/{productId}/apiLinks/{apiLinkId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceProductApiLink_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceProductApiLink_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceProductApiLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="apiLinkId"> Product-API link identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiLinkId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ServiceWorkspaceProductApiLinkResource>> GetIfExistsAsync(string apiLinkId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiLinkId, nameof(apiLinkId));
 
-            using var scope = _serviceWorkspaceProductApiLinkWorkspaceProductApiLinkClientDiagnostics.CreateScope("ServiceWorkspaceProductApiLinkCollection.GetIfExists");
+            using DiagnosticScope scope = _workspaceProductApiLinkClientDiagnostics.CreateScope("ServiceWorkspaceProductApiLinkCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _serviceWorkspaceProductApiLinkWorkspaceProductApiLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, apiLinkId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceProductApiLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, apiLinkId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ProductApiLinkContractData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ProductApiLinkContractData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ProductApiLinkContractData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ServiceWorkspaceProductApiLinkResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceWorkspaceProductApiLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -444,38 +525,54 @@ namespace Azure.ResourceManager.ApiManagement
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/products/{productId}/apiLinks/{apiLinkId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/products/{productId}/apiLinks/{apiLinkId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceProductApiLink_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceProductApiLink_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceProductApiLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="apiLinkId"> Product-API link identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiLinkId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ServiceWorkspaceProductApiLinkResource> GetIfExists(string apiLinkId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiLinkId, nameof(apiLinkId));
 
-            using var scope = _serviceWorkspaceProductApiLinkWorkspaceProductApiLinkClientDiagnostics.CreateScope("ServiceWorkspaceProductApiLinkCollection.GetIfExists");
+            using DiagnosticScope scope = _workspaceProductApiLinkClientDiagnostics.CreateScope("ServiceWorkspaceProductApiLinkCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _serviceWorkspaceProductApiLinkWorkspaceProductApiLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, apiLinkId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceProductApiLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, apiLinkId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ProductApiLinkContractData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ProductApiLinkContractData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ProductApiLinkContractData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ServiceWorkspaceProductApiLinkResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceWorkspaceProductApiLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -495,6 +592,7 @@ namespace Azure.ResourceManager.ApiManagement
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ServiceWorkspaceProductApiLinkResource> IAsyncEnumerable<ServiceWorkspaceProductApiLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

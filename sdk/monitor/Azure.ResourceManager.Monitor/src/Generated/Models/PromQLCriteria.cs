@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -14,45 +15,39 @@ namespace Azure.ResourceManager.Monitor.Models
     public partial class PromQLCriteria : MetricAlertCriteria
     {
         /// <summary> Initializes a new instance of <see cref="PromQLCriteria"/>. </summary>
-        public PromQLCriteria()
+        public PromQLCriteria() : base(Odatatype.MicrosoftAzureMonitorPromQLCriteria)
         {
             AllOf = new ChangeTrackingList<MultiPromQLCriteria>();
-            OdataType = MonitorOdataType.MicrosoftAzureMonitorPromQLCriteria;
         }
 
         /// <summary> Initializes a new instance of <see cref="PromQLCriteria"/>. </summary>
         /// <param name="odataType"> Specifies the type of the alert criteria. Previously undocumented values might be returned. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="failingPeriods"> Configuration for failing periods in query-based alerts. </param>
-        /// <param name="allOf">
-        /// The list of promQL criteria. Alert will be raised when all conditions are met.
-        /// Please note <see cref="MultiPromQLCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DynamicPromQLCriteria"/> and <see cref="StaticPromQLCriteria"/>.
-        /// </param>
-        internal PromQLCriteria(MonitorOdataType odataType, IDictionary<string, BinaryData> additionalProperties, QueryFailingPeriods failingPeriods, IList<MultiPromQLCriteria> allOf) : base(odataType, additionalProperties)
+        /// <param name="allOf"> The list of promQL criteria. Alert will be raised when all conditions are met. </param>
+        internal PromQLCriteria(Odatatype odataType, IDictionary<string, BinaryData> additionalProperties, QueryFailingPeriods failingPeriods, IList<MultiPromQLCriteria> allOf) : base(odataType, additionalProperties)
         {
             FailingPeriods = failingPeriods;
             AllOf = allOf;
-            OdataType = odataType;
         }
 
         /// <summary> Configuration for failing periods in query-based alerts. </summary>
         internal QueryFailingPeriods FailingPeriods { get; set; }
+
+        /// <summary> The list of promQL criteria. Alert will be raised when all conditions are met. </summary>
+        public IList<MultiPromQLCriteria> AllOf { get; }
+
         /// <summary> The amount of time (in ISO 8601 duration format) alert must be active before firing. </summary>
         public TimeSpan? FailingPeriodsFor
         {
-            get => FailingPeriods is null ? default(TimeSpan?) : FailingPeriods.For;
+            get
+            {
+                return FailingPeriods is null ? default : FailingPeriods.For;
+            }
             set
             {
-                FailingPeriods = value.HasValue ? new QueryFailingPeriods(value.Value) : null;
+                FailingPeriods = value.HasValue ? new QueryFailingPeriods(value.Value) : default;
             }
         }
-
-        /// <summary>
-        /// The list of promQL criteria. Alert will be raised when all conditions are met.
-        /// Please note <see cref="MultiPromQLCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DynamicPromQLCriteria"/> and <see cref="StaticPromQLCriteria"/>.
-        /// </summary>
-        public IList<MultiPromQLCriteria> AllOf { get; }
     }
 }

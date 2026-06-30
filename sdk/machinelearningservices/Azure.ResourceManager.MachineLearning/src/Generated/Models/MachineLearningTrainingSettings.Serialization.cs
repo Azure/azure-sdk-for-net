@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningTrainingSettings : IUtf8JsonSerializable, IJsonModel<MachineLearningTrainingSettings>
+    /// <summary> Training related configuration. </summary>
+    public partial class MachineLearningTrainingSettings : IJsonModel<MachineLearningTrainingSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningTrainingSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MachineLearningTrainingSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningTrainingSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMachineLearningTrainingSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningTrainingSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningTrainingSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningTrainingSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MachineLearningTrainingSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineLearningTrainingSettings IPersistableModel<MachineLearningTrainingSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MachineLearningTrainingSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MachineLearningTrainingSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,63 +69,55 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningTrainingSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningTrainingSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineLearningTrainingSettings)} does not support writing '{format}' format.");
             }
-
-            if (Optional.IsDefined(IsOnnxCompatibleModelsEnabled))
+            if (Optional.IsDefined(EnableDnnTraining))
+            {
+                writer.WritePropertyName("enableDnnTraining"u8);
+                writer.WriteBooleanValue(EnableDnnTraining.Value);
+            }
+            if (Optional.IsDefined(EnableModelExplainability))
+            {
+                writer.WritePropertyName("enableModelExplainability"u8);
+                writer.WriteBooleanValue(EnableModelExplainability.Value);
+            }
+            if (Optional.IsDefined(EnableOnnxCompatibleModels))
             {
                 writer.WritePropertyName("enableOnnxCompatibleModels"u8);
-                writer.WriteBooleanValue(IsOnnxCompatibleModelsEnabled.Value);
+                writer.WriteBooleanValue(EnableOnnxCompatibleModels.Value);
             }
-            if (Optional.IsDefined(StackEnsembleSettings))
-            {
-                if (StackEnsembleSettings != null)
-                {
-                    writer.WritePropertyName("stackEnsembleSettings"u8);
-                    writer.WriteObjectValue(StackEnsembleSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("stackEnsembleSettings");
-                }
-            }
-            if (Optional.IsDefined(IsStackEnsembleEnabled))
+            if (Optional.IsDefined(EnableStackEnsemble))
             {
                 writer.WritePropertyName("enableStackEnsemble"u8);
-                writer.WriteBooleanValue(IsStackEnsembleEnabled.Value);
+                writer.WriteBooleanValue(EnableStackEnsemble.Value);
             }
-            if (Optional.IsDefined(IsVoteEnsembleEnabled))
+            if (Optional.IsDefined(EnableVoteEnsemble))
             {
                 writer.WritePropertyName("enableVoteEnsemble"u8);
-                writer.WriteBooleanValue(IsVoteEnsembleEnabled.Value);
+                writer.WriteBooleanValue(EnableVoteEnsemble.Value);
             }
             if (Optional.IsDefined(EnsembleModelDownloadTimeout))
             {
                 writer.WritePropertyName("ensembleModelDownloadTimeout"u8);
                 writer.WriteStringValue(EnsembleModelDownloadTimeout.Value, "P");
             }
-            if (Optional.IsDefined(IsModelExplainabilityEnabled))
+            if (Optional.IsDefined(StackEnsembleSettings))
             {
-                writer.WritePropertyName("enableModelExplainability"u8);
-                writer.WriteBooleanValue(IsModelExplainabilityEnabled.Value);
+                writer.WritePropertyName("stackEnsembleSettings"u8);
+                writer.WriteObjectValue(StackEnsembleSettings, options);
             }
-            if (Optional.IsDefined(IsDnnTrainingEnabled))
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("enableDnnTraining"u8);
-                writer.WriteBooleanValue(IsDnnTrainingEnabled.Value);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -94,275 +126,119 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        MachineLearningTrainingSettings IJsonModel<MachineLearningTrainingSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineLearningTrainingSettings IJsonModel<MachineLearningTrainingSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MachineLearningTrainingSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningTrainingSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningTrainingSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineLearningTrainingSettings)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMachineLearningTrainingSettings(document.RootElement, options);
         }
 
-        internal static MachineLearningTrainingSettings DeserializeMachineLearningTrainingSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MachineLearningTrainingSettings DeserializeMachineLearningTrainingSettings(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            bool? enableDnnTraining = default;
+            bool? enableModelExplainability = default;
             bool? enableOnnxCompatibleModels = default;
-            MachineLearningStackEnsembleSettings stackEnsembleSettings = default;
             bool? enableStackEnsemble = default;
             bool? enableVoteEnsemble = default;
             TimeSpan? ensembleModelDownloadTimeout = default;
-            bool? enableModelExplainability = default;
-            bool? enableDnnTraining = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            MachineLearningStackEnsembleSettings stackEnsembleSettings = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("enableOnnxCompatibleModels"u8))
+                if (prop.NameEquals("enableDnnTraining"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enableOnnxCompatibleModels = property.Value.GetBoolean();
+                    enableDnnTraining = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("stackEnsembleSettings"u8))
+                if (prop.NameEquals("enableModelExplainability"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableModelExplainability = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("enableOnnxCompatibleModels"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableOnnxCompatibleModels = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("enableStackEnsemble"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableStackEnsemble = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("enableVoteEnsemble"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableVoteEnsemble = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("ensembleModelDownloadTimeout"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ensembleModelDownloadTimeout = prop.Value.GetTimeSpan("P");
+                    continue;
+                }
+                if (prop.NameEquals("stackEnsembleSettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         stackEnsembleSettings = null;
                         continue;
                     }
-                    stackEnsembleSettings = MachineLearningStackEnsembleSettings.DeserializeMachineLearningStackEnsembleSettings(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("enableStackEnsemble"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    enableStackEnsemble = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("enableVoteEnsemble"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    enableVoteEnsemble = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("ensembleModelDownloadTimeout"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    ensembleModelDownloadTimeout = property.Value.GetTimeSpan("P");
-                    continue;
-                }
-                if (property.NameEquals("enableModelExplainability"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    enableModelExplainability = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("enableDnnTraining"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    enableDnnTraining = property.Value.GetBoolean();
+                    stackEnsembleSettings = MachineLearningStackEnsembleSettings.DeserializeMachineLearningStackEnsembleSettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningTrainingSettings(
+                enableDnnTraining,
+                enableModelExplainability,
                 enableOnnxCompatibleModels,
-                stackEnsembleSettings,
                 enableStackEnsemble,
                 enableVoteEnsemble,
                 ensembleModelDownloadTimeout,
-                enableModelExplainability,
-                enableDnnTraining,
-                serializedAdditionalRawData);
+                stackEnsembleSettings,
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsOnnxCompatibleModelsEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  enableOnnxCompatibleModels: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsOnnxCompatibleModelsEnabled))
-                {
-                    builder.Append("  enableOnnxCompatibleModels: ");
-                    var boolValue = IsOnnxCompatibleModelsEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StackEnsembleSettings), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  stackEnsembleSettings: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(StackEnsembleSettings))
-                {
-                    builder.Append("  stackEnsembleSettings: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, StackEnsembleSettings, options, 2, false, "  stackEnsembleSettings: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsStackEnsembleEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  enableStackEnsemble: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsStackEnsembleEnabled))
-                {
-                    builder.Append("  enableStackEnsemble: ");
-                    var boolValue = IsStackEnsembleEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsVoteEnsembleEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  enableVoteEnsemble: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsVoteEnsembleEnabled))
-                {
-                    builder.Append("  enableVoteEnsemble: ");
-                    var boolValue = IsVoteEnsembleEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnsembleModelDownloadTimeout), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  ensembleModelDownloadTimeout: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EnsembleModelDownloadTimeout))
-                {
-                    builder.Append("  ensembleModelDownloadTimeout: ");
-                    var formattedTimeSpan = TypeFormatters.ToString(EnsembleModelDownloadTimeout.Value, "P");
-                    builder.AppendLine($"'{formattedTimeSpan}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsModelExplainabilityEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  enableModelExplainability: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsModelExplainabilityEnabled))
-                {
-                    builder.Append("  enableModelExplainability: ");
-                    var boolValue = IsModelExplainabilityEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDnnTrainingEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  enableDnnTraining: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsDnnTrainingEnabled))
-                {
-                    builder.Append("  enableDnnTraining: ");
-                    var boolValue = IsDnnTrainingEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<MachineLearningTrainingSettings>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningTrainingSettings>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(MachineLearningTrainingSettings)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        MachineLearningTrainingSettings IPersistableModel<MachineLearningTrainingSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningTrainingSettings>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMachineLearningTrainingSettings(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MachineLearningTrainingSettings)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<MachineLearningTrainingSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

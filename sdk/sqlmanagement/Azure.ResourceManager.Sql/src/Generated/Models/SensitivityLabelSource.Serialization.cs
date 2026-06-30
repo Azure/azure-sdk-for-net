@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     internal static partial class SensitivityLabelSourceExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SensitivityLabelSource value) => value switch
         {
             SensitivityLabelSource.Current => "current",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Sql.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SensitivityLabelSource value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static SensitivityLabelSource ToSensitivityLabelSource(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "current")) return SensitivityLabelSource.Current;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "recommended")) return SensitivityLabelSource.Recommended;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "current"))
+            {
+                return SensitivityLabelSource.Current;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "recommended"))
+            {
+                return SensitivityLabelSource.Recommended;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SensitivityLabelSource value.");
         }
     }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
+    /// <summary></summary>
     public partial class NetworkBootstrapDeviceResource : IJsonModel<NetworkBootstrapDeviceData>
     {
-        private static NetworkBootstrapDeviceData s_dataDeserializationInstance;
-        private static NetworkBootstrapDeviceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetworkBootstrapDeviceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NetworkBootstrapDeviceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetworkBootstrapDeviceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkBootstrapDeviceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkBootstrapDeviceData>)Data).Write(writer, options);
 
-        NetworkBootstrapDeviceData IJsonModel<NetworkBootstrapDeviceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkBootstrapDeviceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkBootstrapDeviceData IJsonModel<NetworkBootstrapDeviceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NetworkBootstrapDeviceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkBootstrapDeviceData>(Data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NetworkBootstrapDeviceData IPersistableModel<NetworkBootstrapDeviceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkBootstrapDeviceData>(data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
-        string IPersistableModel<NetworkBootstrapDeviceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkBootstrapDeviceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkBootstrapDeviceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

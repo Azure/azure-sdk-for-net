@@ -31,6 +31,31 @@ namespace Azure.Generator.Management.Tests.Providers
         }
 
         [TestCase]
+        public void Verify_ExtensionChildCollectionValidateResourceIdUsesParentResource()
+        {
+            var (parentClient, childClient, models) = InputResourceData.ClientWithNestedExtensionChildResource();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => models,
+                clients: () => [parentClient, childClient]);
+
+            var collection = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ResourceCollectionClientProvider>()
+                .SingleOrDefault(p => p.Name == "WatchlistItemCollection");
+            Assert.That(collection, Is.Not.Null);
+
+            var validateResourceId = collection!.Methods.SingleOrDefault(m => m.Signature.Name == "ValidateResourceId");
+            Assert.That(validateResourceId, Is.Not.Null);
+
+            var bodyStatements = validateResourceId!.BodyStatements?.ToDisplayString();
+            Assert.That(bodyStatements, Does.Contain("global::Samples.WatchlistResource.ResourceType"));
+            Assert.That(bodyStatements, Does.Not.Contain("\"Microsoft.OperationalInsights/workspaces\""));
+
+            var constructor = collection.Constructors.SingleOrDefault(c => c.Signature.Parameters.Any(p => p.Name == "id"));
+            Assert.That(constructor, Is.Not.Null);
+            Assert.That(constructor!.BodyStatements?.ToDisplayString(), Does.Contain("global::Samples.WatchlistItemCollection.ValidateResourceId(id);"));
+        }
+
+        [TestCase]
         public void Verify_GetOperationMethod()
         {
             MethodProvider getMethod = GetResourceCollectionClientProviderMethodByName("Get");

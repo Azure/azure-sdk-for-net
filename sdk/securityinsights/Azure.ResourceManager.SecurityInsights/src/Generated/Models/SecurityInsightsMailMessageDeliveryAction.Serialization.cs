@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     internal static partial class SecurityInsightsMailMessageDeliveryActionExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SecurityInsightsMailMessageDeliveryAction value) => value switch
         {
             SecurityInsightsMailMessageDeliveryAction.Unknown => "Unknown",
@@ -21,13 +22,29 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SecurityInsightsMailMessageDeliveryAction value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static SecurityInsightsMailMessageDeliveryAction ToSecurityInsightsMailMessageDeliveryAction(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unknown")) return SecurityInsightsMailMessageDeliveryAction.Unknown;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DeliveredAsSpam")) return SecurityInsightsMailMessageDeliveryAction.DeliveredAsSpam;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Delivered")) return SecurityInsightsMailMessageDeliveryAction.Delivered;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Blocked")) return SecurityInsightsMailMessageDeliveryAction.Blocked;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Replaced")) return SecurityInsightsMailMessageDeliveryAction.Replaced;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unknown"))
+            {
+                return SecurityInsightsMailMessageDeliveryAction.Unknown;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DeliveredAsSpam"))
+            {
+                return SecurityInsightsMailMessageDeliveryAction.DeliveredAsSpam;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Delivered"))
+            {
+                return SecurityInsightsMailMessageDeliveryAction.Delivered;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Blocked"))
+            {
+                return SecurityInsightsMailMessageDeliveryAction.Blocked;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Replaced"))
+            {
+                return SecurityInsightsMailMessageDeliveryAction.Replaced;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SecurityInsightsMailMessageDeliveryAction value.");
         }
     }

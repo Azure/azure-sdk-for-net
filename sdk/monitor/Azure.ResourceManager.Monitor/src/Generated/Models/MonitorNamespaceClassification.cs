@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Monitor.Models
     public readonly partial struct MonitorNamespaceClassification : IEquatable<MonitorNamespaceClassification>
     {
         private readonly string _value;
+        /// <summary> Platform. </summary>
+        private const string PlatformValue = "Platform";
+        /// <summary> Custom. </summary>
+        private const string CustomValue = "Custom";
+        /// <summary> Qos. </summary>
+        private const string QosValue = "Qos";
 
         /// <summary> Initializes a new instance of <see cref="MonitorNamespaceClassification"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MonitorNamespaceClassification(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PlatformValue = "Platform";
-        private const string CustomValue = "Custom";
-        private const string QosValue = "Qos";
+            _value = value;
+        }
 
         /// <summary> Platform. </summary>
         public static MonitorNamespaceClassification Platform { get; } = new MonitorNamespaceClassification(PlatformValue);
+
         /// <summary> Custom. </summary>
         public static MonitorNamespaceClassification Custom { get; } = new MonitorNamespaceClassification(CustomValue);
+
         /// <summary> Qos. </summary>
         public static MonitorNamespaceClassification Qos { get; } = new MonitorNamespaceClassification(QosValue);
+
         /// <summary> Determines if two <see cref="MonitorNamespaceClassification"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MonitorNamespaceClassification left, MonitorNamespaceClassification right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MonitorNamespaceClassification"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MonitorNamespaceClassification left, MonitorNamespaceClassification right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitorNamespaceClassification"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MonitorNamespaceClassification"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MonitorNamespaceClassification(string value) => new MonitorNamespaceClassification(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MonitorNamespaceClassification"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MonitorNamespaceClassification?(string value) => value == null ? null : new MonitorNamespaceClassification(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MonitorNamespaceClassification other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MonitorNamespaceClassification other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

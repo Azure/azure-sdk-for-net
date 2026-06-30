@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SiteConfigPropertiesDictionary : IUtf8JsonSerializable, IJsonModel<SiteConfigPropertiesDictionary>
+    /// <summary> Site config properties dictionary. </summary>
+    public partial class SiteConfigPropertiesDictionary : IJsonModel<SiteConfigPropertiesDictionary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteConfigPropertiesDictionary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SiteConfigPropertiesDictionary PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SiteConfigPropertiesDictionary>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSiteConfigPropertiesDictionary(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SiteConfigPropertiesDictionary)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SiteConfigPropertiesDictionary>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SiteConfigPropertiesDictionary)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SiteConfigPropertiesDictionary>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SiteConfigPropertiesDictionary IPersistableModel<SiteConfigPropertiesDictionary>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SiteConfigPropertiesDictionary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SiteConfigPropertiesDictionary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteConfigPropertiesDictionary>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SiteConfigPropertiesDictionary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SiteConfigPropertiesDictionary)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(Use32BitWorkerProcess))
             {
                 writer.WritePropertyName("use32BitWorkerProcess"u8);
@@ -55,15 +94,15 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("powerShellVersion"u8);
                 writer.WriteStringValue(PowerShellVersion);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -72,22 +111,27 @@ namespace Azure.ResourceManager.AppService.Models
             }
         }
 
-        SiteConfigPropertiesDictionary IJsonModel<SiteConfigPropertiesDictionary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SiteConfigPropertiesDictionary IJsonModel<SiteConfigPropertiesDictionary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SiteConfigPropertiesDictionary JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteConfigPropertiesDictionary>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SiteConfigPropertiesDictionary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SiteConfigPropertiesDictionary)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSiteConfigPropertiesDictionary(document.RootElement, options);
         }
 
-        internal static SiteConfigPropertiesDictionary DeserializeSiteConfigPropertiesDictionary(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SiteConfigPropertiesDictionary DeserializeSiteConfigPropertiesDictionary(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -96,174 +140,39 @@ namespace Azure.ResourceManager.AppService.Models
             string linuxFxVersion = default;
             string javaVersion = default;
             string powerShellVersion = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("use32BitWorkerProcess"u8))
+                if (prop.NameEquals("use32BitWorkerProcess"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    use32BitWorkerProcess = property.Value.GetBoolean();
+                    use32BitWorkerProcess = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("linuxFxVersion"u8))
+                if (prop.NameEquals("linuxFxVersion"u8))
                 {
-                    linuxFxVersion = property.Value.GetString();
+                    linuxFxVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("javaVersion"u8))
+                if (prop.NameEquals("javaVersion"u8))
                 {
-                    javaVersion = property.Value.GetString();
+                    javaVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("powerShellVersion"u8))
+                if (prop.NameEquals("powerShellVersion"u8))
                 {
-                    powerShellVersion = property.Value.GetString();
+                    powerShellVersion = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new SiteConfigPropertiesDictionary(use32BitWorkerProcess, linuxFxVersion, javaVersion, powerShellVersion, serializedAdditionalRawData);
+            return new SiteConfigPropertiesDictionary(use32BitWorkerProcess, linuxFxVersion, javaVersion, powerShellVersion, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Use32BitWorkerProcess), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  use32BitWorkerProcess: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Use32BitWorkerProcess))
-                {
-                    builder.Append("  use32BitWorkerProcess: ");
-                    var boolValue = Use32BitWorkerProcess.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinuxFxVersion), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  linuxFxVersion: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LinuxFxVersion))
-                {
-                    builder.Append("  linuxFxVersion: ");
-                    if (LinuxFxVersion.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{LinuxFxVersion}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{LinuxFxVersion}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JavaVersion), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  javaVersion: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(JavaVersion))
-                {
-                    builder.Append("  javaVersion: ");
-                    if (JavaVersion.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{JavaVersion}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{JavaVersion}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PowerShellVersion), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  powerShellVersion: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PowerShellVersion))
-                {
-                    builder.Append("  powerShellVersion: ");
-                    if (PowerShellVersion.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PowerShellVersion}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PowerShellVersion}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<SiteConfigPropertiesDictionary>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteConfigPropertiesDictionary>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(SiteConfigPropertiesDictionary)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SiteConfigPropertiesDictionary IPersistableModel<SiteConfigPropertiesDictionary>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteConfigPropertiesDictionary>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSiteConfigPropertiesDictionary(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SiteConfigPropertiesDictionary)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SiteConfigPropertiesDictionary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

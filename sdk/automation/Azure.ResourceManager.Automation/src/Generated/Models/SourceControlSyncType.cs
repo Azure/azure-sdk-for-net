@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Automation.Models
     public readonly partial struct SourceControlSyncType : IEquatable<SourceControlSyncType>
     {
         private readonly string _value;
+        /// <summary> PartialSync. </summary>
+        private const string PartialSyncValue = "PartialSync";
+        /// <summary> FullSync. </summary>
+        private const string FullSyncValue = "FullSync";
 
         /// <summary> Initializes a new instance of <see cref="SourceControlSyncType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SourceControlSyncType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PartialSyncValue = "PartialSync";
-        private const string FullSyncValue = "FullSync";
+            _value = value;
+        }
 
         /// <summary> PartialSync. </summary>
         public static SourceControlSyncType PartialSync { get; } = new SourceControlSyncType(PartialSyncValue);
+
         /// <summary> FullSync. </summary>
         public static SourceControlSyncType FullSync { get; } = new SourceControlSyncType(FullSyncValue);
+
         /// <summary> Determines if two <see cref="SourceControlSyncType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SourceControlSyncType left, SourceControlSyncType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SourceControlSyncType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SourceControlSyncType left, SourceControlSyncType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SourceControlSyncType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SourceControlSyncType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SourceControlSyncType(string value) => new SourceControlSyncType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SourceControlSyncType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SourceControlSyncType?(string value) => value == null ? null : new SourceControlSyncType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SourceControlSyncType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SourceControlSyncType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

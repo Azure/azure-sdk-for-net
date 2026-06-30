@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class SiteSlotSiteContainerCollection : ArmCollection, IEnumerable<SiteSlotSiteContainerResource>, IAsyncEnumerable<SiteSlotSiteContainerResource>
     {
-        private readonly ClientDiagnostics _siteSlotSiteContainerWebAppsClientDiagnostics;
-        private readonly WebAppsRestOperations _siteSlotSiteContainerWebAppsRestClient;
+        private readonly ClientDiagnostics _siteContainerOperationGroupClientDiagnostics;
+        private readonly SiteContainerOperationGroup _siteContainerOperationGroupRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotSiteContainerCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SiteSlotSiteContainerCollection for mocking. </summary>
         protected SiteSlotSiteContainerCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotSiteContainerCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteSlotSiteContainerCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SiteSlotSiteContainerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteSlotSiteContainerWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotSiteContainerResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SiteSlotSiteContainerResource.ResourceType, out string siteSlotSiteContainerWebAppsApiVersion);
-            _siteSlotSiteContainerWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotSiteContainerWebAppsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(SiteSlotSiteContainerResource.ResourceType, out string siteSlotSiteContainerApiVersion);
+            _siteContainerOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotSiteContainerResource.ResourceType.Namespace, Diagnostics);
+            _siteContainerOperationGroupRestClient = new SiteContainerOperationGroup(_siteContainerOperationGroupClientDiagnostics, Pipeline, Endpoint, siteSlotSiteContainerApiVersion ?? "2026-03-15");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != WebSiteSlotResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSiteSlotResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WebSiteSlotResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or Updates a site container for a site, or a deployment slot.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sitecontainers/{containerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sitecontainers/{containerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_CreateOrUpdateSiteContainerSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteContainerOperationGroup_CreateOrUpdateSiteContainerSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteSlotSiteContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,23 +75,31 @@ namespace Azure.ResourceManager.AppService
         /// <param name="containerName"> Site Container Name. </param>
         /// <param name="data"> Container Entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<SiteSlotSiteContainerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string containerName, SiteContainerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _siteSlotSiteContainerWebAppsClientDiagnostics.CreateScope("SiteSlotSiteContainerCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _siteContainerOperationGroupClientDiagnostics.CreateScope("SiteSlotSiteContainerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _siteSlotSiteContainerWebAppsRestClient.CreateOrUpdateSiteContainerSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _siteSlotSiteContainerWebAppsRestClient.CreateCreateOrUpdateSiteContainerSlotRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppServiceArmOperation<SiteSlotSiteContainerResource>(Response.FromValue(new SiteSlotSiteContainerResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _siteContainerOperationGroupRestClient.CreateCreateOrUpdateSiteContainerSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, SiteContainerData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SiteContainerData> response = Response.FromValue(SiteContainerData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AppServiceArmOperation<SiteSlotSiteContainerResource> operation = new AppServiceArmOperation<SiteSlotSiteContainerResource>(Response.FromValue(new SiteSlotSiteContainerResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,20 +113,16 @@ namespace Azure.ResourceManager.AppService
         /// Creates or Updates a site container for a site, or a deployment slot.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sitecontainers/{containerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sitecontainers/{containerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_CreateOrUpdateSiteContainerSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteContainerOperationGroup_CreateOrUpdateSiteContainerSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteSlotSiteContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,23 +130,31 @@ namespace Azure.ResourceManager.AppService
         /// <param name="containerName"> Site Container Name. </param>
         /// <param name="data"> Container Entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<SiteSlotSiteContainerResource> CreateOrUpdate(WaitUntil waitUntil, string containerName, SiteContainerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _siteSlotSiteContainerWebAppsClientDiagnostics.CreateScope("SiteSlotSiteContainerCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _siteContainerOperationGroupClientDiagnostics.CreateScope("SiteSlotSiteContainerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _siteSlotSiteContainerWebAppsRestClient.CreateOrUpdateSiteContainerSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, data, cancellationToken);
-                var uri = _siteSlotSiteContainerWebAppsRestClient.CreateCreateOrUpdateSiteContainerSlotRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppServiceArmOperation<SiteSlotSiteContainerResource>(Response.FromValue(new SiteSlotSiteContainerResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _siteContainerOperationGroupRestClient.CreateCreateOrUpdateSiteContainerSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, SiteContainerData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SiteContainerData> response = Response.FromValue(SiteContainerData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AppServiceArmOperation<SiteSlotSiteContainerResource> operation = new AppServiceArmOperation<SiteSlotSiteContainerResource>(Response.FromValue(new SiteSlotSiteContainerResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,38 +168,42 @@ namespace Azure.ResourceManager.AppService
         /// Gets a site container of a site, or a deployment slot.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sitecontainers/{containerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sitecontainers/{containerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetSiteContainerSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteContainerOperationGroup_GetSiteContainerSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteSlotSiteContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="containerName"> Site Container Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SiteSlotSiteContainerResource>> GetAsync(string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using var scope = _siteSlotSiteContainerWebAppsClientDiagnostics.CreateScope("SiteSlotSiteContainerCollection.Get");
+            using DiagnosticScope scope = _siteContainerOperationGroupClientDiagnostics.CreateScope("SiteSlotSiteContainerCollection.Get");
             scope.Start();
             try
             {
-                var response = await _siteSlotSiteContainerWebAppsRestClient.GetSiteContainerSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _siteContainerOperationGroupRestClient.CreateGetSiteContainerSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SiteContainerData> response = Response.FromValue(SiteContainerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteSlotSiteContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,38 +217,42 @@ namespace Azure.ResourceManager.AppService
         /// Gets a site container of a site, or a deployment slot.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sitecontainers/{containerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sitecontainers/{containerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetSiteContainerSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteContainerOperationGroup_GetSiteContainerSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteSlotSiteContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="containerName"> Site Container Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SiteSlotSiteContainerResource> Get(string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using var scope = _siteSlotSiteContainerWebAppsClientDiagnostics.CreateScope("SiteSlotSiteContainerCollection.Get");
+            using DiagnosticScope scope = _siteContainerOperationGroupClientDiagnostics.CreateScope("SiteSlotSiteContainerCollection.Get");
             scope.Start();
             try
             {
-                var response = _siteSlotSiteContainerWebAppsRestClient.GetSiteContainerSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _siteContainerOperationGroupRestClient.CreateGetSiteContainerSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SiteContainerData> response = Response.FromValue(SiteContainerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteSlotSiteContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,50 +266,51 @@ namespace Azure.ResourceManager.AppService
         /// Lists all the site containers of a site, or a deployment slot.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sitecontainers</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sitecontainers. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_ListSiteContainersSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteContainerOperationGroup_ListSiteContainersSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteSlotSiteContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteSlotSiteContainerResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SiteSlotSiteContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteSlotSiteContainerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotSiteContainerWebAppsRestClient.CreateListSiteContainersSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotSiteContainerWebAppsRestClient.CreateListSiteContainersSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteSlotSiteContainerResource(Client, SiteContainerData.DeserializeSiteContainerData(e)), _siteSlotSiteContainerWebAppsClientDiagnostics, Pipeline, "SiteSlotSiteContainerCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SiteContainerData, SiteSlotSiteContainerResource>(new SiteContainerOperationGroupGetSiteContainersSlotAsyncCollectionResultOfT(
+                _siteContainerOperationGroupRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "SiteSlotSiteContainerCollection.GetAll"), data => new SiteSlotSiteContainerResource(Client, data));
         }
 
         /// <summary>
         /// Lists all the site containers of a site, or a deployment slot.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sitecontainers</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sitecontainers. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_ListSiteContainersSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteContainerOperationGroup_ListSiteContainersSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteSlotSiteContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,45 +318,68 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="SiteSlotSiteContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteSlotSiteContainerResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotSiteContainerWebAppsRestClient.CreateListSiteContainersSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotSiteContainerWebAppsRestClient.CreateListSiteContainersSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteSlotSiteContainerResource(Client, SiteContainerData.DeserializeSiteContainerData(e)), _siteSlotSiteContainerWebAppsClientDiagnostics, Pipeline, "SiteSlotSiteContainerCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SiteContainerData, SiteSlotSiteContainerResource>(new SiteContainerOperationGroupGetSiteContainersSlotCollectionResultOfT(
+                _siteContainerOperationGroupRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "SiteSlotSiteContainerCollection.GetAll"), data => new SiteSlotSiteContainerResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sitecontainers/{containerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sitecontainers/{containerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetSiteContainerSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteContainerOperationGroup_GetSiteContainerSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteSlotSiteContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="containerName"> Site Container Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using var scope = _siteSlotSiteContainerWebAppsClientDiagnostics.CreateScope("SiteSlotSiteContainerCollection.Exists");
+            using DiagnosticScope scope = _siteContainerOperationGroupClientDiagnostics.CreateScope("SiteSlotSiteContainerCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _siteSlotSiteContainerWebAppsRestClient.GetSiteContainerSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _siteContainerOperationGroupRestClient.CreateGetSiteContainerSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SiteContainerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SiteContainerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SiteContainerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -350,36 +393,50 @@ namespace Azure.ResourceManager.AppService
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sitecontainers/{containerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sitecontainers/{containerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetSiteContainerSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteContainerOperationGroup_GetSiteContainerSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteSlotSiteContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="containerName"> Site Container Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using var scope = _siteSlotSiteContainerWebAppsClientDiagnostics.CreateScope("SiteSlotSiteContainerCollection.Exists");
+            using DiagnosticScope scope = _siteContainerOperationGroupClientDiagnostics.CreateScope("SiteSlotSiteContainerCollection.Exists");
             scope.Start();
             try
             {
-                var response = _siteSlotSiteContainerWebAppsRestClient.GetSiteContainerSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _siteContainerOperationGroupRestClient.CreateGetSiteContainerSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SiteContainerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SiteContainerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SiteContainerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -393,38 +450,54 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sitecontainers/{containerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sitecontainers/{containerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetSiteContainerSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteContainerOperationGroup_GetSiteContainerSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteSlotSiteContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="containerName"> Site Container Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SiteSlotSiteContainerResource>> GetIfExistsAsync(string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using var scope = _siteSlotSiteContainerWebAppsClientDiagnostics.CreateScope("SiteSlotSiteContainerCollection.GetIfExists");
+            using DiagnosticScope scope = _siteContainerOperationGroupClientDiagnostics.CreateScope("SiteSlotSiteContainerCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _siteSlotSiteContainerWebAppsRestClient.GetSiteContainerSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _siteContainerOperationGroupRestClient.CreateGetSiteContainerSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SiteContainerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SiteContainerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SiteContainerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SiteSlotSiteContainerResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteSlotSiteContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -438,38 +511,54 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sitecontainers/{containerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sitecontainers/{containerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetSiteContainerSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteContainerOperationGroup_GetSiteContainerSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteSlotSiteContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="containerName"> Site Container Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SiteSlotSiteContainerResource> GetIfExists(string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using var scope = _siteSlotSiteContainerWebAppsClientDiagnostics.CreateScope("SiteSlotSiteContainerCollection.GetIfExists");
+            using DiagnosticScope scope = _siteContainerOperationGroupClientDiagnostics.CreateScope("SiteSlotSiteContainerCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _siteSlotSiteContainerWebAppsRestClient.GetSiteContainerSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _siteContainerOperationGroupRestClient.CreateGetSiteContainerSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SiteContainerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SiteContainerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SiteContainerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SiteSlotSiteContainerResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteSlotSiteContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -489,6 +578,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SiteSlotSiteContainerResource> IAsyncEnumerable<SiteSlotSiteContainerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

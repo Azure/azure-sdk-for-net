@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Samples
             ExpressRouteCrossConnectionPeeringResource expressRouteCrossConnectionPeering = client.GetExpressRouteCrossConnectionPeeringResource(expressRouteCrossConnectionPeeringResourceId);
 
             // invoke the operation
-            await expressRouteCrossConnectionPeering.DeleteAsync(WaitUntil.Completed);
+            await expressRouteCrossConnectionPeering.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Network.Samples
                     SecondaryPeerAddressPrefix = "3FFE:FFFF:0:CD30::4/126",
                 },
             };
-            ArmOperation<ExpressRouteCrossConnectionPeeringResource> lro = await expressRouteCrossConnectionPeering.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<ExpressRouteCrossConnectionPeeringResource> lro = await expressRouteCrossConnectionPeering.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             ExpressRouteCrossConnectionPeeringResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             string devicePath = "primary";
-            ArmOperation<ExpressRouteCircuitsArpTableListResult> lro = await expressRouteCrossConnectionPeering.GetArpTableExpressRouteCrossConnectionAsync(WaitUntil.Completed, devicePath);
+            ArmOperation<ExpressRouteCircuitsArpTableListResult> lro = await expressRouteCrossConnectionPeering.GetArpTableExpressRouteCrossConnectionAsync(WaitUntil.Completed, devicePath, cancellationToken: System.Threading.CancellationToken.None);
             ExpressRouteCircuitsArpTableListResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             string devicePath = "primary";
-            ArmOperation<ExpressRouteCrossConnectionsRoutesTableSummaryListResult> lro = await expressRouteCrossConnectionPeering.GetRoutesTableSummaryExpressRouteCrossConnectionAsync(WaitUntil.Completed, devicePath);
+            ArmOperation<ExpressRouteCrossConnectionsRoutesTableSummaryListResult> lro = await expressRouteCrossConnectionPeering.GetRoutesTableSummaryExpressRouteCrossConnectionAsync(WaitUntil.Completed, devicePath, cancellationToken: System.Threading.CancellationToken.None);
             ExpressRouteCrossConnectionsRoutesTableSummaryListResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             string devicePath = "primary";
-            ArmOperation<ExpressRouteCircuitsRoutesTableListResult> lro = await expressRouteCrossConnectionPeering.GetRoutesTableExpressRouteCrossConnectionAsync(WaitUntil.Completed, devicePath);
+            ArmOperation<ExpressRouteCircuitsRoutesTableListResult> lro = await expressRouteCrossConnectionPeering.GetRoutesTableExpressRouteCrossConnectionAsync(WaitUntil.Completed, devicePath, cancellationToken: System.Threading.CancellationToken.None);
             ExpressRouteCircuitsRoutesTableListResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class AppServiceResourceTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this AppServiceResourceType value) => value switch
         {
             AppServiceResourceType.Website => "Website",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AppServiceResourceType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static AppServiceResourceType ToAppServiceResourceType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Website")) return AppServiceResourceType.Website;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TrafficManager")) return AppServiceResourceType.TrafficManager;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Website"))
+            {
+                return AppServiceResourceType.Website;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TrafficManager"))
+            {
+                return AppServiceResourceType.TrafficManager;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AppServiceResourceType value.");
         }
     }

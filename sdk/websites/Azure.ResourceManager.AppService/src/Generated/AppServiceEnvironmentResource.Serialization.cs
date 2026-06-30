@@ -8,22 +8,33 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class AppServiceEnvironmentResource : IJsonModel<AppServiceEnvironmentData>
+    /// <summary></summary>
+    public partial class AppServiceEnvironmentResource : ArmResource, IJsonModel<AppServiceEnvironmentData>
     {
-        private static AppServiceEnvironmentData s_dataDeserializationInstance;
-        private static AppServiceEnvironmentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AppServiceEnvironmentData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AppServiceEnvironmentData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AppServiceEnvironmentData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AppServiceEnvironmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppServiceEnvironmentData>)Data).Write(writer, options);
 
-        AppServiceEnvironmentData IJsonModel<AppServiceEnvironmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppServiceEnvironmentData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AppServiceEnvironmentData IJsonModel<AppServiceEnvironmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AppServiceEnvironmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppServiceEnvironmentData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AppServiceEnvironmentData IPersistableModel<AppServiceEnvironmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppServiceEnvironmentData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<AppServiceEnvironmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppServiceEnvironmentData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AppServiceEnvironmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

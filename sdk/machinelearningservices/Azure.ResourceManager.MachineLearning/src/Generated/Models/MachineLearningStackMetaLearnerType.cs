@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -18,56 +19,83 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct MachineLearningStackMetaLearnerType : IEquatable<MachineLearningStackMetaLearnerType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningStackMetaLearnerType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MachineLearningStackMetaLearnerType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NoneValue = "None";
+        /// <summary> Default meta-learners are LogisticRegression for classification tasks. </summary>
         private const string LogisticRegressionValue = "LogisticRegression";
+        /// <summary> Default meta-learners are LogisticRegression for classification task when CV is on. </summary>
         private const string LogisticRegressionCVValue = "LogisticRegressionCV";
         private const string LightGBMClassifierValue = "LightGBMClassifier";
+        /// <summary> Default meta-learners are LogisticRegression for regression task. </summary>
         private const string ElasticNetValue = "ElasticNet";
+        /// <summary> Default meta-learners are LogisticRegression for regression task when CV is on. </summary>
         private const string ElasticNetCVValue = "ElasticNetCV";
         private const string LightGBMRegressorValue = "LightGBMRegressor";
         private const string LinearRegressionValue = "LinearRegression";
 
-        /// <summary> None. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningStackMetaLearnerType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MachineLearningStackMetaLearnerType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the None. </summary>
         public static MachineLearningStackMetaLearnerType None { get; } = new MachineLearningStackMetaLearnerType(NoneValue);
+
         /// <summary> Default meta-learners are LogisticRegression for classification tasks. </summary>
         public static MachineLearningStackMetaLearnerType LogisticRegression { get; } = new MachineLearningStackMetaLearnerType(LogisticRegressionValue);
+
         /// <summary> Default meta-learners are LogisticRegression for classification task when CV is on. </summary>
         public static MachineLearningStackMetaLearnerType LogisticRegressionCV { get; } = new MachineLearningStackMetaLearnerType(LogisticRegressionCVValue);
-        /// <summary> LightGBMClassifier. </summary>
+
+        /// <summary> Gets the LightGBMClassifier. </summary>
         public static MachineLearningStackMetaLearnerType LightGBMClassifier { get; } = new MachineLearningStackMetaLearnerType(LightGBMClassifierValue);
+
         /// <summary> Default meta-learners are LogisticRegression for regression task. </summary>
         public static MachineLearningStackMetaLearnerType ElasticNet { get; } = new MachineLearningStackMetaLearnerType(ElasticNetValue);
+
         /// <summary> Default meta-learners are LogisticRegression for regression task when CV is on. </summary>
         public static MachineLearningStackMetaLearnerType ElasticNetCV { get; } = new MachineLearningStackMetaLearnerType(ElasticNetCVValue);
-        /// <summary> LightGBMRegressor. </summary>
+
+        /// <summary> Gets the LightGBMRegressor. </summary>
         public static MachineLearningStackMetaLearnerType LightGBMRegressor { get; } = new MachineLearningStackMetaLearnerType(LightGBMRegressorValue);
-        /// <summary> LinearRegression. </summary>
+
+        /// <summary> Gets the LinearRegression. </summary>
         public static MachineLearningStackMetaLearnerType LinearRegression { get; } = new MachineLearningStackMetaLearnerType(LinearRegressionValue);
+
         /// <summary> Determines if two <see cref="MachineLearningStackMetaLearnerType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MachineLearningStackMetaLearnerType left, MachineLearningStackMetaLearnerType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MachineLearningStackMetaLearnerType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MachineLearningStackMetaLearnerType left, MachineLearningStackMetaLearnerType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningStackMetaLearnerType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MachineLearningStackMetaLearnerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MachineLearningStackMetaLearnerType(string value) => new MachineLearningStackMetaLearnerType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MachineLearningStackMetaLearnerType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MachineLearningStackMetaLearnerType?(string value) => value == null ? null : new MachineLearningStackMetaLearnerType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MachineLearningStackMetaLearnerType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MachineLearningStackMetaLearnerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

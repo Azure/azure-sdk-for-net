@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.EventGrid.Models
     public readonly partial struct EventGridPrivateEndpointPersistedConnectionStatus : IEquatable<EventGridPrivateEndpointPersistedConnectionStatus>
     {
         private readonly string _value;
+        /// <summary> Pending. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> Approved. </summary>
+        private const string ApprovedValue = "Approved";
+        /// <summary> Rejected. </summary>
+        private const string RejectedValue = "Rejected";
+        /// <summary> Disconnected. </summary>
+        private const string DisconnectedValue = "Disconnected";
 
         /// <summary> Initializes a new instance of <see cref="EventGridPrivateEndpointPersistedConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EventGridPrivateEndpointPersistedConnectionStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PendingValue = "Pending";
-        private const string ApprovedValue = "Approved";
-        private const string RejectedValue = "Rejected";
-        private const string DisconnectedValue = "Disconnected";
+            _value = value;
+        }
 
         /// <summary> Pending. </summary>
         public static EventGridPrivateEndpointPersistedConnectionStatus Pending { get; } = new EventGridPrivateEndpointPersistedConnectionStatus(PendingValue);
+
         /// <summary> Approved. </summary>
         public static EventGridPrivateEndpointPersistedConnectionStatus Approved { get; } = new EventGridPrivateEndpointPersistedConnectionStatus(ApprovedValue);
+
         /// <summary> Rejected. </summary>
         public static EventGridPrivateEndpointPersistedConnectionStatus Rejected { get; } = new EventGridPrivateEndpointPersistedConnectionStatus(RejectedValue);
+
         /// <summary> Disconnected. </summary>
         public static EventGridPrivateEndpointPersistedConnectionStatus Disconnected { get; } = new EventGridPrivateEndpointPersistedConnectionStatus(DisconnectedValue);
+
         /// <summary> Determines if two <see cref="EventGridPrivateEndpointPersistedConnectionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EventGridPrivateEndpointPersistedConnectionStatus left, EventGridPrivateEndpointPersistedConnectionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EventGridPrivateEndpointPersistedConnectionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EventGridPrivateEndpointPersistedConnectionStatus left, EventGridPrivateEndpointPersistedConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EventGridPrivateEndpointPersistedConnectionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EventGridPrivateEndpointPersistedConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EventGridPrivateEndpointPersistedConnectionStatus(string value) => new EventGridPrivateEndpointPersistedConnectionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EventGridPrivateEndpointPersistedConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EventGridPrivateEndpointPersistedConnectionStatus?(string value) => value == null ? null : new EventGridPrivateEndpointPersistedConnectionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EventGridPrivateEndpointPersistedConnectionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EventGridPrivateEndpointPersistedConnectionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -8,171 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.HybridNetwork;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HybridNetwork.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableHybridNetworkResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableHybridNetworkResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableHybridNetworkResourceGroupResource for mocking. </summary>
         protected MockableHybridNetworkResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableHybridNetworkResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableHybridNetworkResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableHybridNetworkResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of ConfigurationGroupValueResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ConfigurationGroupValueResources and their operations over a ConfigurationGroupValueResource. </returns>
-        public virtual ConfigurationGroupValueCollection GetConfigurationGroupValues()
-        {
-            return GetCachedClient(client => new ConfigurationGroupValueCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets information about the specified hybrid configuration group values.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/configurationGroupValues/{configurationGroupValueName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationGroupValues_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConfigurationGroupValueResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationGroupValueName"> The name of the configuration group value. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationGroupValueName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="configurationGroupValueName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ConfigurationGroupValueResource>> GetConfigurationGroupValueAsync(string configurationGroupValueName, CancellationToken cancellationToken = default)
-        {
-            return await GetConfigurationGroupValues().GetAsync(configurationGroupValueName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets information about the specified hybrid configuration group values.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/configurationGroupValues/{configurationGroupValueName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationGroupValues_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConfigurationGroupValueResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationGroupValueName"> The name of the configuration group value. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationGroupValueName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="configurationGroupValueName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ConfigurationGroupValueResource> GetConfigurationGroupValue(string configurationGroupValueName, CancellationToken cancellationToken = default)
-        {
-            return GetConfigurationGroupValues().Get(configurationGroupValueName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of NetworkFunctionResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of NetworkFunctionResources and their operations over a NetworkFunctionResource. </returns>
-        public virtual NetworkFunctionCollection GetNetworkFunctions()
-        {
-            return GetCachedClient(client => new NetworkFunctionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets information about the specified network function resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/networkFunctions/{networkFunctionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkFunctions_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFunctionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="networkFunctionName"> The name of the network function resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="networkFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkFunctionResource>> GetNetworkFunctionAsync(string networkFunctionName, CancellationToken cancellationToken = default)
-        {
-            return await GetNetworkFunctions().GetAsync(networkFunctionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets information about the specified network function resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/networkFunctions/{networkFunctionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkFunctions_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFunctionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="networkFunctionName"> The name of the network function resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="networkFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<NetworkFunctionResource> GetNetworkFunction(string networkFunctionName, CancellationToken cancellationToken = default)
-        {
-            return GetNetworkFunctions().Get(networkFunctionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of PublisherResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of PublisherResources and their operations over a PublisherResource. </returns>
+        /// <summary> Gets a collection of Publishers in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of Publishers and their operations over a PublisherResource. </returns>
         public virtual PublisherCollection GetPublishers()
         {
             return GetCachedClient(client => new PublisherCollection(client, Id));
@@ -182,20 +42,16 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// Gets information about the specified publisher.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Publishers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Publishers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublisherResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -206,6 +62,8 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<PublisherResource>> GetPublisherAsync(string publisherName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+
             return await GetPublishers().GetAsync(publisherName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -213,20 +71,16 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// Gets information about the specified publisher.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Publishers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Publishers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublisherResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,11 +91,143 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         [ForwardsClientCalls]
         public virtual Response<PublisherResource> GetPublisher(string publisherName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+
             return GetPublishers().Get(publisherName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SiteResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of SiteResources and their operations over a SiteResource. </returns>
+        /// <summary> Gets a collection of ConfigurationGroupValues in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ConfigurationGroupValues and their operations over a ConfigurationGroupValueResource. </returns>
+        public virtual ConfigurationGroupValueCollection GetConfigurationGroupValues()
+        {
+            return GetCachedClient(client => new ConfigurationGroupValueCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets information about the specified hybrid configuration group values.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/configurationGroupValues/{configurationGroupValueName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigurationGroupValues_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configurationGroupValueName"> The name of the configuration group value. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationGroupValueName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationGroupValueName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ConfigurationGroupValueResource>> GetConfigurationGroupValueAsync(string configurationGroupValueName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationGroupValueName, nameof(configurationGroupValueName));
+
+            return await GetConfigurationGroupValues().GetAsync(configurationGroupValueName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets information about the specified hybrid configuration group values.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/configurationGroupValues/{configurationGroupValueName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigurationGroupValues_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configurationGroupValueName"> The name of the configuration group value. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationGroupValueName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationGroupValueName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ConfigurationGroupValueResource> GetConfigurationGroupValue(string configurationGroupValueName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationGroupValueName, nameof(configurationGroupValueName));
+
+            return GetConfigurationGroupValues().Get(configurationGroupValueName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of NetworkFunctions in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkFunctions and their operations over a NetworkFunctionResource. </returns>
+        public virtual NetworkFunctionCollection GetNetworkFunctions()
+        {
+            return GetCachedClient(client => new NetworkFunctionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets information about the specified network function resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/networkFunctions/{networkFunctionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkFunctions_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkFunctionName"> Resource name for the network function resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NetworkFunctionResource>> GetNetworkFunctionAsync(string networkFunctionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkFunctionName, nameof(networkFunctionName));
+
+            return await GetNetworkFunctions().GetAsync(networkFunctionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets information about the specified network function resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/networkFunctions/{networkFunctionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkFunctions_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkFunctionName"> Resource name for the network function resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetworkFunctionResource> GetNetworkFunction(string networkFunctionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkFunctionName, nameof(networkFunctionName));
+
+            return GetNetworkFunctions().Get(networkFunctionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of Sites in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of Sites and their operations over a SiteResource. </returns>
         public virtual SiteCollection GetSites()
         {
             return GetCachedClient(client => new SiteCollection(client, Id));
@@ -251,20 +237,16 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// Gets information about the specified network site.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/sites/{siteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/sites/{siteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Sites_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Sites_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,6 +257,8 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteResource>> GetSiteAsync(string siteName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
+
             return await GetSites().GetAsync(siteName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -282,20 +266,16 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// Gets information about the specified network site.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/sites/{siteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/sites/{siteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Sites_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Sites_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -306,11 +286,13 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         [ForwardsClientCalls]
         public virtual Response<SiteResource> GetSite(string siteName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
+
             return GetSites().Get(siteName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SiteNetworkServiceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of SiteNetworkServiceResources and their operations over a SiteNetworkServiceResource. </returns>
+        /// <summary> Gets a collection of SiteNetworkServices in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of SiteNetworkServices and their operations over a SiteNetworkServiceResource. </returns>
         public virtual SiteNetworkServiceCollection GetSiteNetworkServices()
         {
             return GetCachedClient(client => new SiteNetworkServiceCollection(client, Id));
@@ -320,20 +302,16 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// Gets information about the specified site network service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/siteNetworkServices/{siteNetworkServiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/siteNetworkServices/{siteNetworkServiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SiteNetworkServices_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteNetworkServices_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteNetworkServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -344,6 +322,8 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteNetworkServiceResource>> GetSiteNetworkServiceAsync(string siteNetworkServiceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(siteNetworkServiceName, nameof(siteNetworkServiceName));
+
             return await GetSiteNetworkServices().GetAsync(siteNetworkServiceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -351,20 +331,16 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// Gets information about the specified site network service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/siteNetworkServices/{siteNetworkServiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/siteNetworkServices/{siteNetworkServiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SiteNetworkServices_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteNetworkServices_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteNetworkServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -375,6 +351,8 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         [ForwardsClientCalls]
         public virtual Response<SiteNetworkServiceResource> GetSiteNetworkService(string siteNetworkServiceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(siteNetworkServiceName, nameof(siteNetworkServiceName));
+
             return GetSiteNetworkServices().Get(siteNetworkServiceName, cancellationToken);
         }
     }

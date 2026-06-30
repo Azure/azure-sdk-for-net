@@ -100,6 +100,10 @@ namespace Azure.Provisioning.ContainerService
             _identityType = DefineProperty<ManagedServiceIdentityType>(nameof(IdentityType), new string[] { "type" });
             _delegatedResources = DefineDictionaryProperty<ManagedClusterDelegatedIdentity>(nameof(DelegatedResources), new string[] { "delegatedResources" });
             _userAssignedIdentities = DefineDictionaryProperty<ManagedServiceIdentityUserAssignedIdentitiesValue>(nameof(UserAssignedIdentities), new string[] { "userAssignedIdentities" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterIdentity that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

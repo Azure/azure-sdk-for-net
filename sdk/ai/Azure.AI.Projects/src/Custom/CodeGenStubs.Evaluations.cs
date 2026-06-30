@@ -16,12 +16,19 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("CronTrigger")] public partial class CronTrigger { }
 [CodeGenType("DailyRecurrenceSchedule")] public partial class DailyRecurrenceSchedule { }
 [CodeGenType("Dimension")] public partial class EvaluationsDimension { }
+[CodeGenType("EndpointBasedEvaluatorDefinition")] public partial class EndpointBasedEvaluatorDefinition { }
 [CodeGenType("EvalResult")] public partial class EvalResult { }
 [CodeGenType("EvalRunResultCompareItem")] public partial class EvalRunResultCompareItem { }
 [CodeGenType("EvalRunResultComparison")] public partial class EvalRunResultComparison { }
 [CodeGenType("EvalRunResultSummary")] public partial class EvalRunResultSummary { }
 [CodeGenType("EvaluationComparisonInsightRequest")] public partial class EvaluationComparisonInsightRequest { }
 [CodeGenType("EvaluationComparisonInsightResult")] public partial class EvaluationComparisonInsightResult { }
+[CodeGenType("EvaluatorCredentialRequest")] public partial class EvaluationCredentialContent { }
+[CodeGenType("EvaluatorGenerationArtifacts")] public partial class EvaluatorGenerationArtifacts { }
+[CodeGenType("EvaluatorGenerationInputs")] public partial class EvaluatorGenerationInputs { }
+[CodeGenType("EvaluatorGenerationJobSource")] public partial class EvaluatorGenerationJobSource { }
+[CodeGenType("EvaluatorGenerationTokenUsage")] public partial class EvaluatorGenerationTokenUsage{ }
+[CodeGenType("EvaluationLevel")] public readonly partial struct ProjectsEvaluationLevel { }
 [CodeGenType("EvaluationResultSample")] public partial class EvaluationResultSample { }
 [CodeGenType("EvaluationRule")] public partial class EvaluationRule { }
 [CodeGenType("EvaluationRuleAction")] public abstract partial class EvaluationRuleAction { }

@@ -17,21 +17,21 @@
     <MicrosoftAspNetCoreHttpVersion>2.3.0</MicrosoftAspNetCoreHttpVersion>
     <MicrosoftAspNetCoreVersion>2.3.0</MicrosoftAspNetCoreVersion>
     <MicrosoftExtensionsAzureVersion>1.14.0</MicrosoftExtensionsAzureVersion>
-    <MicrosoftExtensionsConfigurationAbstractionsVersion>10.0.3</MicrosoftExtensionsConfigurationAbstractionsVersion>
-    <MicrosoftExtensionsConfigurationBinderVersion>10.0.3</MicrosoftExtensionsConfigurationBinderVersion>
-    <MicrosoftExtensionsConfigurationEnvironmentVariablesVersion>10.0.3</MicrosoftExtensionsConfigurationEnvironmentVariablesVersion>
-    <MicrosoftExtensionsConfigurationJsonVersion>10.0.3</MicrosoftExtensionsConfigurationJsonVersion>
-    <MicrosoftExtensionsConfigurationVersion>10.0.3</MicrosoftExtensionsConfigurationVersion>
-    <MicrosoftExtensionsConfigurationUserSecretsVersion>10.0.3</MicrosoftExtensionsConfigurationUserSecretsVersion>
-    <MicrosoftExtensionsDependencyInjectionAbstractionsVersion>10.0.3</MicrosoftExtensionsDependencyInjectionAbstractionsVersion>
-    <MicrosoftExtensionsDependencyInjectionVersion>10.0.3</MicrosoftExtensionsDependencyInjectionVersion>
-    <MicrosoftExtensionsHostingVersion>10.0.3</MicrosoftExtensionsHostingVersion>
-    <MicrosoftExtensionsHttpVersion>10.0.3</MicrosoftExtensionsHttpVersion>
-    <MicrosoftExtensionsLoggingConfigurationVersion>10.0.3</MicrosoftExtensionsLoggingConfigurationVersion>
-    <MicrosoftExtensionsLoggingConsoleVersion>10.0.3</MicrosoftExtensionsLoggingConsoleVersion>
-    <MicrosoftExtensionsLoggingVersion>10.0.3</MicrosoftExtensionsLoggingVersion>
-    <MicrosoftExtensionsPrimitivesVersion>10.0.3</MicrosoftExtensionsPrimitivesVersion>
-    <SystemIOPipelinesVersion>10.0.3</SystemIOPipelinesVersion>
+    <MicrosoftExtensionsConfigurationAbstractionsVersion>10.0.9</MicrosoftExtensionsConfigurationAbstractionsVersion>
+    <MicrosoftExtensionsConfigurationBinderVersion>10.0.9</MicrosoftExtensionsConfigurationBinderVersion>
+    <MicrosoftExtensionsConfigurationEnvironmentVariablesVersion>10.0.9</MicrosoftExtensionsConfigurationEnvironmentVariablesVersion>
+    <MicrosoftExtensionsConfigurationJsonVersion>10.0.9</MicrosoftExtensionsConfigurationJsonVersion>
+    <MicrosoftExtensionsConfigurationVersion>10.0.9</MicrosoftExtensionsConfigurationVersion>
+    <MicrosoftExtensionsConfigurationUserSecretsVersion>10.0.9</MicrosoftExtensionsConfigurationUserSecretsVersion>
+    <MicrosoftExtensionsDependencyInjectionAbstractionsVersion>10.0.9</MicrosoftExtensionsDependencyInjectionAbstractionsVersion>
+    <MicrosoftExtensionsDependencyInjectionVersion>10.0.9</MicrosoftExtensionsDependencyInjectionVersion>
+    <MicrosoftExtensionsHostingVersion>10.0.9</MicrosoftExtensionsHostingVersion>
+    <MicrosoftExtensionsHttpVersion>10.0.9</MicrosoftExtensionsHttpVersion>
+    <MicrosoftExtensionsLoggingConfigurationVersion>10.0.9</MicrosoftExtensionsLoggingConfigurationVersion>
+    <MicrosoftExtensionsLoggingConsoleVersion>10.0.9</MicrosoftExtensionsLoggingConsoleVersion>
+    <MicrosoftExtensionsLoggingVersion>10.0.9</MicrosoftExtensionsLoggingVersion>
+    <MicrosoftExtensionsPrimitivesVersion>10.0.9</MicrosoftExtensionsPrimitivesVersion>
+    <SystemIOPipelinesVersion>10.0.9</SystemIOPipelinesVersion>
     <MicrosoftSpatialVersion>7.5.3</MicrosoftSpatialVersion>
     <NewtonsoftJsonVersion>13.0.4</NewtonsoftJsonVersion>
     <MSTestVersion>1.3.2</MSTestVersion>
@@ -77,26 +77,26 @@
       or '$(IsStressProject)' == 'true'">
 
     <!-- BCL packages -->
-    <PackageVersion Include="Microsoft.Bcl.AsyncInterfaces" Version="10.0.3" />
+    <PackageVersion Include="Microsoft.Bcl.AsyncInterfaces" Version="10.0.9" />
     <PackageVersion Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.3" />
-    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.3" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.3" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.9" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.9" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.9" />
     <PackageVersion Include="System.Buffers" Version="4.6.1" />
     <PackageVersion Include="System.ClientModel" Version="1.14.0" />
-    <PackageVersion Include="System.Diagnostics.DiagnosticSource" Version="10.0.3" />
-    <PackageVersion Include="System.IO.Hashing" Version="10.0.3" />
+    <PackageVersion Include="System.Diagnostics.DiagnosticSource" Version="10.0.9" />
+    <PackageVersion Include="System.IO.Hashing" Version="10.0.9" />
     <PackageVersion Include="System.Memory" Version="4.6.3" />
-    <PackageVersion Include="System.Memory.Data" Version="10.0.3" />
+    <PackageVersion Include="System.Memory.Data" Version="10.0.9" />
     <PackageVersion Include="System.Net.Http" Version="4.3.4" />
-    <PackageVersion Include="System.Net.ServerSentEvents" Version="10.0.3" />
+    <PackageVersion Include="System.Net.ServerSentEvents" Version="10.0.9" />
     <PackageVersion Include="System.Numerics.Vectors" Version="4.6.1" />
     <PackageVersion Include="System.Reflection.TypeExtensions" Version="4.7.0" />
     <PackageVersion Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
-    <PackageVersion Include="System.Security.Cryptography.Cose" Version="10.0.3" />
-    <PackageVersion Include="System.Text.Encodings.Web" Version="10.0.3" />
-    <PackageVersion Include="System.Text.Json" Version="10.0.3" />
-    <PackageVersion Include="System.Threading.Channels" Version="10.0.3" />
+    <PackageVersion Include="System.Security.Cryptography.Cose" Version="10.0.9" />
+    <PackageVersion Include="System.Text.Encodings.Web" Version="10.0.9" />
+    <PackageVersion Include="System.Text.Json" Version="10.0.9" />
+    <PackageVersion Include="System.Threading.Channels" Version="10.0.9" />
     <PackageVersion Include="System.Threading.Tasks.Extensions" Version="4.6.3" />
     <PackageVersion Include="System.ValueTuple" Version="4.6.2" />
 
@@ -109,7 +109,7 @@
     <PackageVersion Include="Azure.Core.Amqp" Version="1.3.1" />
     <PackageVersion Include="Azure.Core.Experimental" Version="0.1.0-preview.36" />
     <PackageVersion Include="Azure.Core.Expressions.DataFactory" Version="1.0.0" />
-    <PackageVersion Include="Azure.Data.AppConfiguration" Version="1.9.0"/>
+    <PackageVersion Include="Azure.Data.AppConfiguration" Version="1.10.0"/>
     <PackageVersion Include="Azure.Data.Tables" Version="12.11.0" />
     <PackageVersion Include="Azure.Identity.Broker" Version="1.7.0" />
     <PackageVersion Include="Azure.Messaging.EventGrid" Version="4.21.0" />
@@ -131,26 +131,26 @@
     <PackageVersion Include="Azure.ResourceManager.CognitiveServices" Version="1.5.2" />
     <PackageVersion Include="Azure.ResourceManager.Communication" Version="1.3.1" />
     <PackageVersion Include="Azure.ResourceManager.ContainerRegistry" Version="1.4.0" />
-    <PackageVersion Include="Azure.ResourceManager.ContainerService" Version="1.4.0" />
+    <PackageVersion Include="Azure.ResourceManager.ContainerService" Version="1.5.0" />
     <PackageVersion Include="Azure.ResourceManager.CosmosDB" Version="1.4.1" />
     <PackageVersion Include="Azure.ResourceManager.DataFactory" Version="1.11.1" />
     <PackageVersion Include="Azure.ResourceManager.Dns" Version="1.2.0-beta.2" />
     <PackageVersion Include="Azure.ResourceManager.EventGrid" Version="1.1.0" />
     <PackageVersion Include="Azure.ResourceManager.EventHubs" Version="1.2.1" />
-    <PackageVersion Include="Azure.ResourceManager.FrontDoor" Version="1.4.1" />
+    <PackageVersion Include="Azure.ResourceManager.FrontDoor" Version="1.4.2" />
     <PackageVersion Include="Azure.ResourceManager.IotHub" Version="1.1.1" />
     <PackageVersion Include="Azure.ResourceManager.KeyVault" Version="1.4.0" />
     <PackageVersion Include="Azure.ResourceManager.Kubernetes" Version="1.0.0-beta.5" />
     <PackageVersion Include="Azure.ResourceManager.KubernetesConfiguration" Version="1.2.1" />
-    <PackageVersion Include="Azure.ResourceManager.Kusto" Version="1.6.2" />
+    <PackageVersion Include="Azure.ResourceManager.Kusto" Version="1.6.3" />
     <PackageVersion Include="Azure.ResourceManager.Logic" Version="1.2.0" />
     <PackageVersion Include="Azure.ResourceManager.ManagedServiceIdentities" Version="1.4.1" />
     <PackageVersion Include="Azure.ResourceManager.Monitor" Version="1.3.1" />
-    <PackageVersion Include="Azure.ResourceManager.Network" Version="1.15.0" />
-    <PackageVersion Include="Azure.ResourceManager.OperationalInsights" Version="1.3.1" />
+    <PackageVersion Include="Azure.ResourceManager.Network" Version="1.16.0" />
+    <PackageVersion Include="Azure.ResourceManager.OperationalInsights" Version="1.3.2" />
     <PackageVersion Include="Azure.ResourceManager.PostgreSql" Version="1.4.2" />
     <PackageVersion Include="Azure.ResourceManager.Redis" Version="1.5.1" />
-    <PackageVersion Include="Azure.ResourceManager.ResourceGraph" Version="1.1.0" />
+    <PackageVersion Include="Azure.ResourceManager.ResourceGraph" Version="1.1.1" />
     <PackageVersion Include="Azure.ResourceManager.RedisEnterprise" Version="1.3.0" />
     <PackageVersion Include="Azure.ResourceManager.Resources" Version="1.11.2" />
     <PackageVersion Include="Azure.ResourceManager.Search" Version="1.3.0" />
@@ -182,7 +182,7 @@
     <PackageVersion Include="Azure.Provisioning.Network" Version="1.1.0" />
     <PackageVersion Include="Azure.Provisioning.ServiceBus" Version="1.1.0" />
     <PackageVersion Include="Azure.Provisioning.Storage" Version="1.1.2" />
-    <PackageVersion Include="Microsoft.Bcl.Numerics" Version="10.0.3" />
+    <PackageVersion Include="Microsoft.Bcl.Numerics" Version="10.0.9" />
 
     <!-- Other approved packages -->
     <PackageVersion Include="Microsoft.Azure.Amqp" Version="2.7.0" />
@@ -201,8 +201,8 @@
     <PackageVersion Include="CoreWCF.Queue" Version="1.7.0" />
     <PackageVersion Include="CoreWCF.Primitives" Version="1.7.0" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.UserSecrets" Version="$(MicrosoftExtensionsConfigurationUserSecretsVersion)" />
-    <PackageVersion Include="System.Formats.Asn1" Version="10.0.1" />
-    <PackageVersion Include="System.Security.Cryptography.Pkcs" Version="10.0.1" />
+    <PackageVersion Include="System.Formats.Asn1" Version="10.0.9" />
+    <PackageVersion Include="System.Security.Cryptography.Pkcs" Version="10.0.9" />
     <PackageVersion Include="System.ServiceModel.Primitives" Version="6.2.0" />
     <PackageVersion Update="Azure.Storage.Files.Shares" Version="12.21.0" />
     <PackageVersion Update="Azure.Storage.Queues" Version="12.21.0" />
@@ -234,7 +234,7 @@
   <!--                  package dependencies                          -->
   <!-- ============================================================== -->
   <ItemGroup>
-    <PackageVersion Include="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20260604.1" PrivateAssets="All" />
+    <PackageVersion Include="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20260624.1" PrivateAssets="All" />
     <PackageVersion Include="coverlet.collector" Version="6.0.4" PrivateAssets="All" />
     <PackageVersion Include="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20251023.1" PrivateAssets="All" />
 

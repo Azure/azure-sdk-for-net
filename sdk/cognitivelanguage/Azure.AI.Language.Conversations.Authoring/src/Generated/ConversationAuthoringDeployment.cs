@@ -193,7 +193,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployment.DeployProjectAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployment.DeployProject", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -281,7 +281,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
                 using HttpMessage message = CreateDeleteDeploymentRequest(projectName, deploymentName, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployment.DeleteDeploymentAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployment.DeleteDeployment", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -369,7 +369,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateDeleteDeploymentFromResourcesRequest(projectName, deploymentName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployment.DeleteDeploymentFromResourcesAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringDeployment.DeleteDeploymentFromResources", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {

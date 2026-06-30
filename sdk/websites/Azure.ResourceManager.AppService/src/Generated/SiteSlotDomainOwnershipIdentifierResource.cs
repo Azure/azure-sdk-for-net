@@ -6,47 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A Class representing a SiteSlotDomainOwnershipIdentifier along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteSlotDomainOwnershipIdentifierResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetSiteSlotDomainOwnershipIdentifierResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotResource"/> using the GetSiteSlotDomainOwnershipIdentifier method.
+    /// A class representing a SiteSlotDomainOwnershipIdentifier along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteSlotDomainOwnershipIdentifierResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotResource"/> using the GetSiteSlotDomainOwnershipIdentifiers method.
     /// </summary>
     public partial class SiteSlotDomainOwnershipIdentifierResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SiteSlotDomainOwnershipIdentifierResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="slot"> The slot. </param>
-        /// <param name="domainOwnershipIdentifierName"> The domainOwnershipIdentifierName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _siteSlotDomainOwnershipIdentifierWebAppsClientDiagnostics;
-        private readonly WebAppsRestOperations _siteSlotDomainOwnershipIdentifierWebAppsRestClient;
+        private readonly ClientDiagnostics _identifierOperationGroupClientDiagnostics;
+        private readonly IdentifierOperationGroup _identifierOperationGroupRestClient;
         private readonly AppServiceIdentifierData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/sites/slots/domainOwnershipIdentifiers";
 
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotDomainOwnershipIdentifierResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SiteSlotDomainOwnershipIdentifierResource for mocking. </summary>
         protected SiteSlotDomainOwnershipIdentifierResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotDomainOwnershipIdentifierResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteSlotDomainOwnershipIdentifierResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteSlotDomainOwnershipIdentifierResource(ArmClient client, AppServiceIdentifierData data) : this(client, data.Id)
@@ -55,71 +43,94 @@ namespace Azure.ResourceManager.AppService
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotDomainOwnershipIdentifierResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteSlotDomainOwnershipIdentifierResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SiteSlotDomainOwnershipIdentifierResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteSlotDomainOwnershipIdentifierWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string siteSlotDomainOwnershipIdentifierWebAppsApiVersion);
-            _siteSlotDomainOwnershipIdentifierWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotDomainOwnershipIdentifierWebAppsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string siteSlotDomainOwnershipIdentifierApiVersion);
+            _identifierOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            _identifierOperationGroupRestClient = new IdentifierOperationGroup(_identifierOperationGroupClientDiagnostics, Pipeline, Endpoint, siteSlotDomainOwnershipIdentifierApiVersion ?? "2026-03-15");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual AppServiceIdentifierData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="slot"> The slot. </param>
+        /// <param name="domainOwnershipIdentifierName"> The domainOwnershipIdentifierName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Description for Get domain ownership identifier for web app.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetDomainOwnershipIdentifierSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> IdentifierOperationGroup_GetDomainOwnershipIdentifierSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteSlotDomainOwnershipIdentifierResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteSlotDomainOwnershipIdentifierResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SiteSlotDomainOwnershipIdentifierResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteSlotDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteSlotDomainOwnershipIdentifierResource.Get");
+            using DiagnosticScope scope = _identifierOperationGroupClientDiagnostics.CreateScope("SiteSlotDomainOwnershipIdentifierResource.Get");
             scope.Start();
             try
             {
-                var response = await _siteSlotDomainOwnershipIdentifierWebAppsRestClient.GetDomainOwnershipIdentifierSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _identifierOperationGroupRestClient.CreateGetDomainOwnershipIdentifierSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AppServiceIdentifierData> response = Response.FromValue(AppServiceIdentifierData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteSlotDomainOwnershipIdentifierResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -133,33 +144,145 @@ namespace Azure.ResourceManager.AppService
         /// Description for Get domain ownership identifier for web app.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetDomainOwnershipIdentifierSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> IdentifierOperationGroup_GetDomainOwnershipIdentifierSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteSlotDomainOwnershipIdentifierResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteSlotDomainOwnershipIdentifierResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SiteSlotDomainOwnershipIdentifierResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteSlotDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteSlotDomainOwnershipIdentifierResource.Get");
+            using DiagnosticScope scope = _identifierOperationGroupClientDiagnostics.CreateScope("SiteSlotDomainOwnershipIdentifierResource.Get");
             scope.Start();
             try
             {
-                var response = _siteSlotDomainOwnershipIdentifierWebAppsRestClient.GetDomainOwnershipIdentifierSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _identifierOperationGroupRestClient.CreateGetDomainOwnershipIdentifierSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AppServiceIdentifierData> response = Response.FromValue(AppServiceIdentifierData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new SiteSlotDomainOwnershipIdentifierResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Creates a domain ownership identifier for web app, or updates an existing ownership identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IdentifierOperationGroup_UpdateDomainOwnershipIdentifierSlot. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteSlotDomainOwnershipIdentifierResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<SiteSlotDomainOwnershipIdentifierResource>> UpdateAsync(AppServiceIdentifierData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _identifierOperationGroupClientDiagnostics.CreateScope("SiteSlotDomainOwnershipIdentifierResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _identifierOperationGroupRestClient.CreateUpdateDomainOwnershipIdentifierSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, AppServiceIdentifierData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AppServiceIdentifierData> response = Response.FromValue(AppServiceIdentifierData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new SiteSlotDomainOwnershipIdentifierResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Creates a domain ownership identifier for web app, or updates an existing ownership identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IdentifierOperationGroup_UpdateDomainOwnershipIdentifierSlot. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteSlotDomainOwnershipIdentifierResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<SiteSlotDomainOwnershipIdentifierResource> Update(AppServiceIdentifierData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _identifierOperationGroupClientDiagnostics.CreateScope("SiteSlotDomainOwnershipIdentifierResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _identifierOperationGroupRestClient.CreateUpdateDomainOwnershipIdentifierSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, AppServiceIdentifierData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AppServiceIdentifierData> response = Response.FromValue(AppServiceIdentifierData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteSlotDomainOwnershipIdentifierResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -173,20 +296,20 @@ namespace Azure.ResourceManager.AppService
         /// Description for Deletes a domain ownership identifier for a web app.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_DeleteDomainOwnershipIdentifierSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> IdentifierOperationGroup_DeleteDomainOwnershipIdentifierSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteSlotDomainOwnershipIdentifierResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteSlotDomainOwnershipIdentifierResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -194,16 +317,23 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _siteSlotDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteSlotDomainOwnershipIdentifierResource.Delete");
+            using DiagnosticScope scope = _identifierOperationGroupClientDiagnostics.CreateScope("SiteSlotDomainOwnershipIdentifierResource.Delete");
             scope.Start();
             try
             {
-                var response = await _siteSlotDomainOwnershipIdentifierWebAppsRestClient.DeleteDomainOwnershipIdentifierSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _siteSlotDomainOwnershipIdentifierWebAppsRestClient.CreateDeleteDomainOwnershipIdentifierSlotRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppServiceArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _identifierOperationGroupRestClient.CreateDeleteDomainOwnershipIdentifierSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AppServiceArmOperation operation = new AppServiceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -217,20 +347,20 @@ namespace Azure.ResourceManager.AppService
         /// Description for Deletes a domain ownership identifier for a web app.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_DeleteDomainOwnershipIdentifierSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> IdentifierOperationGroup_DeleteDomainOwnershipIdentifierSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteSlotDomainOwnershipIdentifierResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteSlotDomainOwnershipIdentifierResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -238,101 +368,24 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _siteSlotDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteSlotDomainOwnershipIdentifierResource.Delete");
+            using DiagnosticScope scope = _identifierOperationGroupClientDiagnostics.CreateScope("SiteSlotDomainOwnershipIdentifierResource.Delete");
             scope.Start();
             try
             {
-                var response = _siteSlotDomainOwnershipIdentifierWebAppsRestClient.DeleteDomainOwnershipIdentifierSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _siteSlotDomainOwnershipIdentifierWebAppsRestClient.CreateDeleteDomainOwnershipIdentifierSlotRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppServiceArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _identifierOperationGroupRestClient.CreateDeleteDomainOwnershipIdentifierSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AppServiceArmOperation operation = new AppServiceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Description for Creates a domain ownership identifier for web app, or updates an existing ownership identifier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_UpdateDomainOwnershipIdentifierSlot</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteSlotDomainOwnershipIdentifierResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="data"> A JSON representation of the domain ownership properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<SiteSlotDomainOwnershipIdentifierResource>> UpdateAsync(AppServiceIdentifierData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = _siteSlotDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteSlotDomainOwnershipIdentifierResource.Update");
-            scope.Start();
-            try
-            {
-                var response = await _siteSlotDomainOwnershipIdentifierWebAppsRestClient.UpdateDomainOwnershipIdentifierSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlotDomainOwnershipIdentifierResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Description for Creates a domain ownership identifier for web app, or updates an existing ownership identifier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_UpdateDomainOwnershipIdentifierSlot</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteSlotDomainOwnershipIdentifierResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="data"> A JSON representation of the domain ownership properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<SiteSlotDomainOwnershipIdentifierResource> Update(AppServiceIdentifierData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = _siteSlotDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteSlotDomainOwnershipIdentifierResource.Update");
-            scope.Start();
-            try
-            {
-                var response = _siteSlotDomainOwnershipIdentifierWebAppsRestClient.UpdateDomainOwnershipIdentifierSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                return Response.FromValue(new SiteSlotDomainOwnershipIdentifierResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

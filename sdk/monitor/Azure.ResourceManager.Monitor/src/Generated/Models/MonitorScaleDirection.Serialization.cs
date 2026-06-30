@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     internal static partial class MonitorScaleDirectionExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this MonitorScaleDirection value) => value switch
         {
             MonitorScaleDirection.None => "None",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.Monitor.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MonitorScaleDirection value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static MonitorScaleDirection ToMonitorScaleDirection(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return MonitorScaleDirection.None;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Increase")) return MonitorScaleDirection.Increase;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Decrease")) return MonitorScaleDirection.Decrease;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None"))
+            {
+                return MonitorScaleDirection.None;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Increase"))
+            {
+                return MonitorScaleDirection.Increase;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Decrease"))
+            {
+                return MonitorScaleDirection.Decrease;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MonitorScaleDirection value.");
         }
     }

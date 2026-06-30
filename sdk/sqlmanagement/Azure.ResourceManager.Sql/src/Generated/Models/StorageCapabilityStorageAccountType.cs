@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct StorageCapabilityStorageAccountType : IEquatable<StorageCapabilityStorageAccountType>
     {
         private readonly string _value;
+        /// <summary> GRS. </summary>
+        private const string GrsValue = "GRS";
+        /// <summary> LRS. </summary>
+        private const string LrsValue = "LRS";
+        /// <summary> ZRS. </summary>
+        private const string ZrsValue = "ZRS";
+        /// <summary> GZRS. </summary>
+        private const string GzrsValue = "GZRS";
 
         /// <summary> Initializes a new instance of <see cref="StorageCapabilityStorageAccountType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StorageCapabilityStorageAccountType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string GrsValue = "GRS";
-        private const string LrsValue = "LRS";
-        private const string ZrsValue = "ZRS";
-        private const string GzrsValue = "GZRS";
+            _value = value;
+        }
 
         /// <summary> GRS. </summary>
         public static StorageCapabilityStorageAccountType Grs { get; } = new StorageCapabilityStorageAccountType(GrsValue);
+
         /// <summary> LRS. </summary>
         public static StorageCapabilityStorageAccountType Lrs { get; } = new StorageCapabilityStorageAccountType(LrsValue);
+
         /// <summary> ZRS. </summary>
         public static StorageCapabilityStorageAccountType Zrs { get; } = new StorageCapabilityStorageAccountType(ZrsValue);
+
         /// <summary> GZRS. </summary>
         public static StorageCapabilityStorageAccountType Gzrs { get; } = new StorageCapabilityStorageAccountType(GzrsValue);
+
         /// <summary> Determines if two <see cref="StorageCapabilityStorageAccountType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageCapabilityStorageAccountType left, StorageCapabilityStorageAccountType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageCapabilityStorageAccountType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageCapabilityStorageAccountType left, StorageCapabilityStorageAccountType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageCapabilityStorageAccountType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageCapabilityStorageAccountType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageCapabilityStorageAccountType(string value) => new StorageCapabilityStorageAccountType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StorageCapabilityStorageAccountType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageCapabilityStorageAccountType?(string value) => value == null ? null : new StorageCapabilityStorageAccountType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageCapabilityStorageAccountType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageCapabilityStorageAccountType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

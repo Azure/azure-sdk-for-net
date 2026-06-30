@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Kusto.Models
     public readonly partial struct KustoDatabasePrincipalsModificationKind : IEquatable<KustoDatabasePrincipalsModificationKind>
     {
         private readonly string _value;
+        /// <summary> Union. </summary>
+        private const string UnionValue = "Union";
+        /// <summary> Replace. </summary>
+        private const string ReplaceValue = "Replace";
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
 
         /// <summary> Initializes a new instance of <see cref="KustoDatabasePrincipalsModificationKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KustoDatabasePrincipalsModificationKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnionValue = "Union";
-        private const string ReplaceValue = "Replace";
-        private const string NoneValue = "None";
+            _value = value;
+        }
 
         /// <summary> Union. </summary>
         public static KustoDatabasePrincipalsModificationKind Union { get; } = new KustoDatabasePrincipalsModificationKind(UnionValue);
+
         /// <summary> Replace. </summary>
         public static KustoDatabasePrincipalsModificationKind Replace { get; } = new KustoDatabasePrincipalsModificationKind(ReplaceValue);
+
         /// <summary> None. </summary>
         public static KustoDatabasePrincipalsModificationKind None { get; } = new KustoDatabasePrincipalsModificationKind(NoneValue);
+
         /// <summary> Determines if two <see cref="KustoDatabasePrincipalsModificationKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KustoDatabasePrincipalsModificationKind left, KustoDatabasePrincipalsModificationKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KustoDatabasePrincipalsModificationKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KustoDatabasePrincipalsModificationKind left, KustoDatabasePrincipalsModificationKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KustoDatabasePrincipalsModificationKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KustoDatabasePrincipalsModificationKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KustoDatabasePrincipalsModificationKind(string value) => new KustoDatabasePrincipalsModificationKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KustoDatabasePrincipalsModificationKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KustoDatabasePrincipalsModificationKind?(string value) => value == null ? null : new KustoDatabasePrincipalsModificationKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KustoDatabasePrincipalsModificationKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KustoDatabasePrincipalsModificationKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

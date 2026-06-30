@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.MachineLearning
 {
+    /// <summary></summary>
     public partial class MachineLearninRegistryComponentVersionResource : IJsonModel<MachineLearningComponentVersionData>
     {
-        private static MachineLearningComponentVersionData s_dataDeserializationInstance;
-        private static MachineLearningComponentVersionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<MachineLearningComponentVersionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<MachineLearningComponentVersionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MachineLearningComponentVersionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MachineLearningComponentVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningComponentVersionData>)Data).Write(writer, options);
 
-        MachineLearningComponentVersionData IJsonModel<MachineLearningComponentVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningComponentVersionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineLearningComponentVersionData IJsonModel<MachineLearningComponentVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<MachineLearningComponentVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MachineLearningComponentVersionData>(Data, options, AzureResourceManagerMachineLearningContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         MachineLearningComponentVersionData IPersistableModel<MachineLearningComponentVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningComponentVersionData>(data, options, AzureResourceManagerMachineLearningContext.Default);
 
-        string IPersistableModel<MachineLearningComponentVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningComponentVersionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MachineLearningComponentVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }
