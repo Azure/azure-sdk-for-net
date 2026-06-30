@@ -10,20 +10,14 @@
 # layout must match the relative DLL/exe paths the repo's .vally.yaml environments resolve
 # against.
 
-parameters:
-  - name: mcpStageRoot
-    # Common parent the built/installed servers are published from (relative to Build.SourcesDirectory).
-    type: string
-    default: artifacts/mcp
-
 steps:
   - checkout: self
     fetchDepth: 1
 
   # EXAMPLE: build the live azsdk-cli MCP from this repo. Replace the body with your own
   # server's build or install — e.g. `npm ci` + `npm exec`, or a Java/Maven build — keeping
-  # the output under $(Build.SourcesDirectory)/${{ parameters.mcpStageRoot }}/<name>.
+  # the output under $(Build.SourcesDirectory)/artifacts/mcp/<name>.
   - script: |
       set -e
-      dotnet build tools/azsdk-cli/Azure.Sdk.Tools.Cli -c Release -o "$(Build.SourcesDirectory)/${{ parameters.mcpStageRoot }}/cli" --nologo
+      dotnet build tools/azsdk-cli/Azure.Sdk.Tools.Cli -c Release -o "$(Build.SourcesDirectory)/artifacts/mcp/cli" --nologo
     displayName: 'Build MCP: live server (example — replace me)'

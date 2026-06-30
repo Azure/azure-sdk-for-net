@@ -12,23 +12,24 @@
 // the paths resolve even when a root sits outside that base. Custom suites are selected via
 // repeated `--pattern`.
 //
-// Granularity is a dial controlled by --shard-by:
-//   - file : one shard per eval file (finest; default).
-//   - area : one shard per `area` tag (coarser; collapses many files into a handful of
-//            jobs once job-startup overhead dominates). No pipeline edits needed to switch.
+// Sharding is always by `area` tag: one shard per area, collapsing every eval that carries
+// that tag into a single job (keeps the live tier out, unlike `--suite <area>`). A file with
+// no `area` tag falls back to its parent folder so it still groups with its neighbours.
 //
 // Each shard leg exposes two variables to the matrix job:
 //   - shardName : a filesystem-safe identifier (used for per-shard result folders)
 //   - evalArgs  : the `-e <file>` argument string passed verbatim to `vally eval`
-//                 (one file in 'file' mode, every file of an area in 'area' mode)
+//                 (every file of an area, joined by repeated `-e` flags)
 
 import fs from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { globFiles } from "./lib/glob.js";
 
-// Default "mock vertical": unit tools + mock workflow scenarios. The live tier is
-// deliberately excluded so the default matrix stays hermetic.
+// Local-CLI fallback when the script is run by hand with no --pattern: the hermetic "mock
+// vertical" (unit tools + mock workflow scenarios), live tier excluded so the matrix stays
+// hermetic. The PIPELINE never relies on this — its canonical default is spelled out in
+// archetype-eval.yml's evalGlobs param; keep the two lists in sync.
 const DEFAULT_PATTERNS = [
   "evals/tools/*.eval.yaml",
   "evals/workflow-scenarios/mock/*.eval.yaml",
@@ -90,7 +91,6 @@ export function getEvalArea(filePath) {
  * @param {string[]} [options.patterns] Forward-slashed globs relative to each root.
  * @param {string|null} [options.pathBase] Anchor for emitted `-e` paths (the run root). When
  *   null, each file's path is relative to the root it was found under.
- * @param {"file"|"area"} [options.shardBy] Sharding granularity.
  * @param {(message: string) => void} [options.warn] Sink for non-fatal warnings.
  * @returns {Record<string, {shardName: string, evalArgs: string}>}
  */
@@ -98,7 +98,6 @@ export function buildMatrix({
   roots,
   patterns = DEFAULT_PATTERNS,
   pathBase = null,
-  shardBy = "file",
   warn = (message) => console.warn(message),
 } = {}) {
   const files = getEvalFiles(roots, patterns, pathBase);
@@ -110,27 +109,8 @@ export function buildMatrix({
 
   const matrix = {};
 
-  if (shardBy === "file") {
-    // One shard per file. Shard name = the file's full relative path (sans the
-    // .eval.yaml extension), sanitized. Deriving from the whole path — not just
-    // parent+leaf — guarantees global uniqueness across layouts where the immediate
-    // parent repeats: the Vally tree distinguishes by parent (tools/ vs mock/), but the
-    // skills tree puts every eval under `<skill>/evals/`, so `evals_trigger` would
-    // collide across all skills. The full path keeps each shard name unique and stable.
-    for (const file of files) {
-      const shardName = file.relative.replace(/\.eval\.yaml$/i, "").replace(SANITIZE, "_");
-      if (Object.prototype.hasOwnProperty.call(matrix, shardName)) {
-        throw new Error(
-          `Duplicate shard name '${shardName}' (from '${file.relative}'). Shard names must be unique.`
-        );
-      }
-      matrix[shardName] = { shardName, evalArgs: `-e ${file.relative}` };
-    }
-    return matrix;
-  }
-
-  // area mode: one shard per `area` tag. Every file carrying that area is run in the same
-  // job via repeated `-e` flags (keeps the live tier out, unlike `--suite <area>`).
+  // One shard per `area` tag. Every file carrying that area is run in the same job via
+  // repeated `-e` flags (keeps the live tier out, unlike `--suite <area>`).
   const byArea = new Map();
   const sorted = [...files].sort((a, b) => a.relative.localeCompare(b.relative));
   for (const file of sorted) {
@@ -169,7 +149,6 @@ function parseArgs(argv) {
     roots: [],
     patterns: [],
     pathBase: null,
-    shardBy: "file",
     outputVariable: "matrix",
   };
 
@@ -186,9 +165,6 @@ function parseArgs(argv) {
       case "--pattern":
         options.patterns.push(next());
         break;
-      case "--shard-by":
-        options.shardBy = next();
-        break;
       case "--output-variable":
         options.outputVariable = next();
         break;
@@ -203,9 +179,6 @@ function parseArgs(argv) {
   if (options.patterns.length === 0) {
     options.patterns = DEFAULT_PATTERNS;
   }
-  if (options.shardBy !== "file" && options.shardBy !== "area") {
-    throw new Error(`--shard-by must be 'file' or 'area' (got '${options.shardBy}').`);
-  }
 
   return options;
 }
@@ -216,12 +189,11 @@ function main(argv) {
     roots: options.roots,
     patterns: options.patterns,
     pathBase: options.pathBase,
-    shardBy: options.shardBy,
   });
   const json = JSON.stringify(matrix);
 
   const keys = Object.keys(matrix);
-  console.log(`Discovered ${keys.length} shard(s) (shardBy=${options.shardBy}):`);
+  console.log(`Discovered ${keys.length} shard(s):`);
   for (const key of keys) {
     console.log(`  - ${key} -> ${matrix[key].evalArgs}`);
   }

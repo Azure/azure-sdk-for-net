@@ -6,7 +6,7 @@
 # for the live tier: build the cli MCP, glob the live evals, and wrap each shard in
 # AzureCLI@2 so the agent's DevOps calls inherit the service-connection identity.
 #
-# Thin entrypoint (D2): schedule + params + variable group, then `extends` the archetype.
+# Thin entrypoint (D2): schedule + variable group, then `extends` the archetype.
 
 # Nightly only — no CI/PR trigger.
 trigger: none
@@ -20,30 +20,20 @@ schedules:
         - main
     always: true             # run even when main has not changed
 
-parameters:
-  - name: shardBy
-    displayName: 'Shard granularity'
-    type: string
-    default: file
-    values:
-      - file
-      - area
-
 variables:
   # Managed-pool image selection (LINUXPOOL/LINUXVMIMAGE). Repo-local.
   - template: /eng/pipelines/templates/variables/image.yml
-  # Per-shard job timeout (consumed by eval-shard.yml as $(shardTimeoutInMinutes)). Live
-  # scenarios are slow (the eval config sets a 30m run timeout), so give the job headroom
+  # Per-shard job timeout (consumed by the archetype's RunShard job as $(shardTimeoutInMinutes)).
+  # Live scenarios are slow (the eval config sets a 30m run timeout), so give the job headroom
   # — well above the hermetic tiers' 20.
   - name: shardTimeoutInMinutes
     value: 45
-  # azuresdk-copilot-github-pat is supplied by AzSDK_Eval_Variable_group, linked at the
-  # ADO pipeline definition.
+  # GITHUB_TOKEN (the model-session PAT) is supplied by the eval variable group, linked at
+  # the ADO pipeline definition. It reaches the shard ambiently — no template wiring.
 
 extends:
   template: /eng/common/pipelines/templates/stages/archetype-eval.yml
   parameters:
-    shardBy: ${{ parameters.shardBy }}
     # Live scenarios drive the real Cli MCP (azure-sdk-tools' repo-local build).
     mcpSetupTemplate: /eng/pipelines/eval/mcp-live.yml
     # The live evals + .vally.yaml live in the Vally project; passed explicitly.
@@ -52,6 +42,6 @@ extends:
       - 'evals/workflow-scenarios/live/*.eval.yaml'
     # Run each shard inside AzureCLI@2 so the real MCP's DevOps calls are authenticated.
     # The service connection is owned by this repo-local invoke step, not the orchestrator.
-    # Model auth stays copilot-sdk via GITHUB_TOKEN (the default githubTokenVariable).
+    # Model auth (GITHUB_TOKEN) comes ambiently from the linked variable group.
     evalInvokeTemplate: /eng/pipelines/eval/eval-invoke-live.yml
     failOnFailedTests: true

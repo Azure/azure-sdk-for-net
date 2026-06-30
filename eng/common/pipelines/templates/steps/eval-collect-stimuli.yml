@@ -1,72 +1,34 @@
 # Discover the eval files and emit the fan-out matrix the Eval stage shards over.
-# The eval CLI has no `list` command, so collect-stimuli.js globs the filesystem. It can
-# read evals from several roots in one pass (evals scattered across folders) and anchors
-# every emitted `-e` path to `pathBase` (the single dir the shard runs from) so the paths
-# resolve at run time. The matrix is published as an output variable: <stepName>.<outputVariable>.
+# The eval CLI has no `list` command, so collect-stimuli.js globs the filesystem under a
+# single eval root (`pathBase` — the dir each shard runs `vally eval` from) and anchors every
+# emitted `-e` path to it so the paths resolve at run time. The matrix is published as an
+# output variable: <stepName>.<outputVariable>.
 
 parameters:
-  - name: evalRoots
-    # Dirs to glob for eval files (each absolute or relative to $(Build.SourcesDirectory)).
-    # Empty = fall back to pathBase (the run root).
-    type: object
-    default: []
   - name: pathBase
-    # Anchor for the emitted `-e` paths (the single dir the shard runs `vally eval` from),
-    # so paths resolve even when a root sits outside it. Empty = paths relative to each root.
+    # The single eval root: the dir each shard runs `vally eval` from and the anchor for
+    # the emitted `-e` paths. Globs and discovery are scoped to this one directory.
     type: string
     default: ''
   - name: evalGlobs
-    # File globs selecting *.eval.yaml under each root (relative, forward-slashed, * ? **).
+    # File globs selecting *.eval.yaml under the root (relative, forward-slashed, * ? **).
     # Empty = let collect-stimuli.js use its built-in default (the mock tool-scenario globs).
     type: object
     default: []
-  - name: shardBy
-    type: string
-    default: file
-    values:
-      - file
-      - area
-  - name: scriptDir
-    type: string
-    default: eng/common/scripts/eval
-  - name: outputVariableName
-    type: string
-    default: matrix
-  - name: stepName
-    # The matrix consumer references dependencies.<job>.outputs['<stepName>.<outputVariableName>'].
-    type: string
-    default: detect
-  - name: nodeVersion
-    type: string
-    default: 22.x
 
 steps:
   - checkout: self
     fetchDepth: 1
 
   - task: UseNode@1
-    displayName: 'Use Node.js ${{ parameters.nodeVersion }}'
+    displayName: 'Use Node.js 22.x'
     inputs:
-      version: ${{ parameters.nodeVersion }}
+      version: 22.x
 
   - script: |
-      # EVAL_ROOTS / EVAL_PATTERNS are space-joined lists passed via env so they survive as
-      # real bash vars. set -f stops the shell glob-expanding the patterns' `*` before they
-      # reach the script. With no explicit roots, fall back to pathBase (the run root).
-      roots=()
-      if [ -n "$EVAL_ROOTS" ]; then
-        set -f
-        for r in $EVAL_ROOTS; do
-          roots+=(--eval-root "$r")
-        done
-        set +f
-      elif [ -n "${{ parameters.pathBase }}" ]; then
-        roots+=(--eval-root "${{ parameters.pathBase }}")
-      fi
-      base=()
-      if [ -n "${{ parameters.pathBase }}" ]; then
-        base=(--path-base "${{ parameters.pathBase }}")
-      fi
+      # EVAL_PATTERNS is a space-joined list passed via env so it survives as a real bash
+      # var. set -f stops the shell glob-expanding the patterns' `*` before they reach the
+      # script. The single eval root is pathBase (the dir each shard runs `vally eval` from).
       patterns=()
       if [ -n "$EVAL_PATTERNS" ]; then
         set -f
@@ -75,14 +37,15 @@ steps:
         done
         set +f
       fi
-      node "$(Build.SourcesDirectory)/${{ parameters.scriptDir }}/collect-stimuli.js" \
-        "${roots[@]}" \
-        "${base[@]}" \
+      node "$(Build.SourcesDirectory)/eng/common/scripts/eval/collect-stimuli.js" \
+        --eval-root "${{ parameters.pathBase }}" \
+        --path-base "${{ parameters.pathBase }}" \
         "${patterns[@]}" \
-        --shard-by ${{ parameters.shardBy }} \
-        --output-variable ${{ parameters.outputVariableName }}
-    name: ${{ parameters.stepName }}
+        --output-variable matrix
+    # Job name is fixed: the Eval stage reads this output at the hardcoded cross-stage path
+    # generate_eval_matrix.outputs['detect.matrix'], so the step name and output var are
+    # inlined constants, not parameters.
+    name: detect
     displayName: 'Build fan-out matrix'
     env:
-      EVAL_ROOTS: ${{ join(' ', parameters.evalRoots) }}
       EVAL_PATTERNS: ${{ join(' ', parameters.evalGlobs) }}

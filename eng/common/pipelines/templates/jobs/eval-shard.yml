@@ -2,10 +2,6 @@
 # evals from vallyRoot and publishes per-leg JUnit (always) + transcripts (on failure).
 
 parameters:
-  - name: Matrix
-    # Cross-stage matrix from the Prepare generate job.
-    type: string
-    default: stageDependencies.Prepare.generate_eval_matrix.outputs['detect.matrix']
   - name: vallyRoot
     type: string
     default: tools/azsdk-cli/Azure.Sdk.Tools.Vally
@@ -14,9 +10,6 @@ parameters:
     # eval-run-shard.yml; defaults to the hermetic node runner, live overrides it.
     type: string
     default: /eng/common/pipelines/templates/steps/eval-invoke.yml
-  - name: maxParallel
-    type: number
-    default: 10
 
 jobs:
   - job: RunShard
@@ -32,8 +25,10 @@ jobs:
     # rather than a parameter — each thin pipeline sets it in its own `variables` block.
     timeoutInMinutes: $(shardTimeoutInMinutes)
     strategy:
-      matrix: $[ ${{ parameters.Matrix }} ]
-      maxParallel: ${{ parameters.maxParallel }}
+      # Cross-stage matrix from the Prepare generate job and the fan-out cap — both fixed
+      # (no caller has ever overridden them, so they're inlined rather than parameterized).
+      matrix: $[ stageDependencies.Prepare.generate_eval_matrix.outputs['detect.matrix'] ]
+      maxParallel: 10
     # Per-leg artifacts (matrix injects $(shardName)). JUnit always; transcripts
     # only on a genuine failure. Both staged by the eval-run-shard.yml steps.
     templateContext:

@@ -25,7 +25,6 @@ trigger:
       - eng/common/pipelines/workflow-eval.yml
       - eng/pipelines/eval/mcp-mock.yml
       - eng/common/pipelines/templates/steps/eval-collect-stimuli.yml
-      - eng/common/pipelines/templates/steps/eval-run-shard.yml
       - eng/common/pipelines/templates/steps/eval-invoke.yml
       - eng/common/pipelines/templates/steps/eval-summarize.yml
       - eng/common/pipelines/templates/stages/archetype-eval.yml
@@ -44,40 +43,25 @@ pr:
       - eng/common/pipelines/workflow-eval.yml
       - eng/pipelines/eval/mcp-mock.yml
       - eng/common/pipelines/templates/steps/eval-collect-stimuli.yml
-      - eng/common/pipelines/templates/steps/eval-run-shard.yml
       - eng/common/pipelines/templates/steps/eval-invoke.yml
       - eng/common/pipelines/templates/steps/eval-summarize.yml
       - eng/common/pipelines/templates/stages/archetype-eval.yml
       - eng/common/scripts/eval/**
 
-parameters:
-  # How finely to split the run into parallel jobs:
-  #   file = one job per eval file (default; best while the file count is small).
-  #   area = one job per `area` tag (fewer, larger jobs once startup cost dominates).
-  # Switching modes needs no other edits.
-  - name: shardBy
-    displayName: 'Shard granularity'
-    type: string
-    default: file
-    values:
-      - file
-      - area
-
 variables:
   # Managed-pool image selection: defines LINUXPOOL (azsdk-pool) + LINUXVMIMAGE that
   # the archetype's jobs reference. Repo-local; each repo supplies its own.
   - template: /eng/pipelines/templates/variables/image.yml
-  # Per-shard job timeout (consumed by eval-shard.yml as $(shardTimeoutInMinutes)). The
-  # hermetic mock vertical is quick; cap well under the default agent slot.
+  # Per-shard job timeout (consumed by the archetype's RunShard job as $(shardTimeoutInMinutes)).
+  # The hermetic mock vertical is quick; cap well under the default agent slot.
   - name: shardTimeoutInMinutes
     value: 20
-  # azuresdk-copilot-github-pat (the model-session PAT) is supplied by
-  # AzSDK_Eval_Variable_group, linked at the ADO pipeline definition.
+  # GITHUB_TOKEN (the model-session PAT) is supplied by the eval variable group, linked at
+  # the ADO pipeline definition. It reaches the shard ambiently — no template wiring.
 
 extends:
   template: /eng/common/pipelines/templates/stages/archetype-eval.yml
   parameters:
-    shardBy: ${{ parameters.shardBy }}
     # Hermetic mock vertical runs against the mock MCP (azure-sdk-tools' repo-local build).
     mcpSetupTemplate: /eng/pipelines/eval/mcp-mock.yml
     # The evals + .vally.yaml live in the Vally project; passed explicitly.
