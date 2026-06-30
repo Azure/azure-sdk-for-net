@@ -22,9 +22,6 @@ pr: none
 variables:
   # Managed-pool image selection (LINUXPOOL/LINUXVMIMAGE). Repo-local.
   - template: /eng/pipelines/templates/variables/image.yml
-  # Per-shard job timeout (read by the archetype as $(shardTimeoutInMinutes)).
-  - name: shardTimeoutInMinutes
-    value: 20
   # GITHUB_TOKEN comes from the linked eval variable group (ambient — no template wiring).
 
 extends:
@@ -36,3 +33,5 @@ extends:
     # Single-level glob excludes azure-typespec-author/evaluate/ (its own benchmark pipeline).
     evalGlobs:
       - '*/evals/*.eval.yaml'
+    # Per-shard job timeout (report-only tier).
+    shardTimeoutInMinutes: 20
