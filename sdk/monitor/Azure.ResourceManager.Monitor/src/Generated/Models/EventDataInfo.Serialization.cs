@@ -10,13 +10,55 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class EventDataInfo : IUtf8JsonSerializable, IJsonModel<EventDataInfo>
+    /// <summary> The Azure event log entries are of type EventData. </summary>
+    public partial class EventDataInfo : IJsonModel<EventDataInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventDataInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EventDataInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EventDataInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEventDataInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EventDataInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EventDataInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(EventDataInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EventDataInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EventDataInfo IPersistableModel<EventDataInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EventDataInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EventDataInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +70,11 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EventDataInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventDataInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EventDataInfo)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(Authorization))
             {
                 writer.WritePropertyName("authorization"u8);
@@ -46,6 +87,11 @@ namespace Azure.ResourceManager.Monitor.Models
                 foreach (var item in Claims)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -132,6 +178,11 @@ namespace Azure.ResourceManager.Monitor.Models
                 foreach (var item in Properties)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -166,15 +217,15 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -183,22 +234,27 @@ namespace Azure.ResourceManager.Monitor.Models
             }
         }
 
-        EventDataInfo IJsonModel<EventDataInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EventDataInfo IJsonModel<EventDataInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EventDataInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EventDataInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventDataInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EventDataInfo)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEventDataInfo(document.RootElement, options);
         }
 
-        internal static EventDataInfo DeserializeEventDataInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static EventDataInfo DeserializeEventDataInfo(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -227,206 +283,222 @@ namespace Azure.ResourceManager.Monitor.Models
             DateTimeOffset? submissionTimestamp = default;
             string subscriptionId = default;
             Guid? tenantId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("authorization"u8))
+                if (prop.NameEquals("authorization"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    authorization = SenderAuthorization.DeserializeSenderAuthorization(property.Value, options);
+                    authorization = SenderAuthorization.DeserializeSenderAuthorization(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("claims"u8))
+                if (prop.NameEquals("claims"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     claims = dictionary;
                     continue;
                 }
-                if (property.NameEquals("caller"u8))
+                if (prop.NameEquals("caller"u8))
                 {
-                    caller = property.Value.GetString();
+                    caller = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    description = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    id = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("eventDataId"u8))
+                if (prop.NameEquals("eventDataId"u8))
                 {
-                    eventDataId = property.Value.GetString();
+                    eventDataId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("correlationId"u8))
+                if (prop.NameEquals("correlationId"u8))
                 {
-                    correlationId = property.Value.GetString();
+                    correlationId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("eventName"u8))
+                if (prop.NameEquals("eventName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    eventName = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value, options);
+                    eventName = MonitorLocalizableString.DeserializeMonitorLocalizableString(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("category"u8))
+                if (prop.NameEquals("category"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    category = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value, options);
+                    category = MonitorLocalizableString.DeserializeMonitorLocalizableString(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("httpRequest"u8))
+                if (prop.NameEquals("httpRequest"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    httpRequest = EventDataHttpRequestInfo.DeserializeEventDataHttpRequestInfo(property.Value, options);
+                    httpRequest = EventDataHttpRequestInfo.DeserializeEventDataHttpRequestInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("level"u8))
+                if (prop.NameEquals("level"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    level = property.Value.GetString().ToMonitorEventLevel();
+                    level = prop.Value.GetString().ToMonitorEventLevel();
                     continue;
                 }
-                if (property.NameEquals("resourceGroupName"u8))
+                if (prop.NameEquals("resourceGroupName"u8))
                 {
-                    resourceGroupName = property.Value.GetString();
+                    resourceGroupName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceProviderName"u8))
+                if (prop.NameEquals("resourceProviderName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resourceProviderName = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value, options);
+                    resourceProviderName = MonitorLocalizableString.DeserializeMonitorLocalizableString(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("resourceId"u8))
+                if (prop.NameEquals("resourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resourceId = new ResourceIdentifier(property.Value.GetString());
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceType"u8))
+                if (prop.NameEquals("resourceType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resourceType = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value, options);
+                    resourceType = MonitorLocalizableString.DeserializeMonitorLocalizableString(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("operationId"u8))
+                if (prop.NameEquals("operationId"u8))
                 {
-                    operationId = property.Value.GetString();
+                    operationId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("operationName"u8))
+                if (prop.NameEquals("operationName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    operationName = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value, options);
+                    operationName = MonitorLocalizableString.DeserializeMonitorLocalizableString(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     properties = dictionary;
                     continue;
                 }
-                if (property.NameEquals("status"u8))
+                if (prop.NameEquals("status"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    status = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value, options);
+                    status = MonitorLocalizableString.DeserializeMonitorLocalizableString(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("subStatus"u8))
+                if (prop.NameEquals("subStatus"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    subStatus = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value, options);
+                    subStatus = MonitorLocalizableString.DeserializeMonitorLocalizableString(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("eventTimestamp"u8))
+                if (prop.NameEquals("eventTimestamp"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    eventTimestamp = property.Value.GetDateTimeOffset("O");
+                    eventTimestamp = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("submissionTimestamp"u8))
+                if (prop.NameEquals("submissionTimestamp"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    submissionTimestamp = property.Value.GetDateTimeOffset("O");
+                    submissionTimestamp = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("subscriptionId"u8))
+                if (prop.NameEquals("subscriptionId"u8))
                 {
-                    subscriptionId = property.Value.GetString();
+                    subscriptionId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tenantId"u8))
+                if (prop.NameEquals("tenantId"u8))
                 {
-                    DeserializeTenantIdValue(property, ref tenantId);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new EventDataInfo(
                 authorization,
                 claims ?? new ChangeTrackingDictionary<string, string>(),
@@ -452,38 +524,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 submissionTimestamp,
                 subscriptionId,
                 tenantId,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<EventDataInfo>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EventDataInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(EventDataInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        EventDataInfo IPersistableModel<EventDataInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EventDataInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeEventDataInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EventDataInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<EventDataInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

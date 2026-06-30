@@ -9,14 +9,58 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class SyslogDataSource : IUtf8JsonSerializable, IJsonModel<SyslogDataSource>
+    /// <summary>
+    /// Definition of which syslog data will be collected and how it will be collected.
+    /// Only collected from Linux machines.
+    /// </summary>
+    public partial class SyslogDataSource : IJsonModel<SyslogDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SyslogDataSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SyslogDataSource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SyslogDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSyslogDataSource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SyslogDataSource)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SyslogDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SyslogDataSource)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SyslogDataSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SyslogDataSource IPersistableModel<SyslogDataSource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SyslogDataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SyslogDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,17 +72,16 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SyslogDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SyslogDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SyslogDataSource)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(Streams))
             {
                 writer.WritePropertyName("streams"u8);
                 writer.WriteStartArray();
-                foreach (var item in Streams)
+                foreach (SyslogDataSourceStream item in Streams)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -48,7 +91,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("facilityNames"u8);
                 writer.WriteStartArray();
-                foreach (var item in FacilityNames)
+                foreach (SyslogDataSourceFacilityName item in FacilityNames)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -58,26 +101,31 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("logLevels"u8);
                 writer.WriteStartArray();
-                foreach (var item in LogLevels)
+                foreach (SyslogDataSourceLogLevel item in LogLevels)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(TransformKql))
+            {
+                writer.WritePropertyName("transformKql"u8);
+                writer.WriteStringValue(TransformKql);
             }
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -86,22 +134,27 @@ namespace Azure.ResourceManager.Monitor.Models
             }
         }
 
-        SyslogDataSource IJsonModel<SyslogDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SyslogDataSource IJsonModel<SyslogDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SyslogDataSource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SyslogDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SyslogDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SyslogDataSource)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSyslogDataSource(document.RootElement, options);
         }
 
-        internal static SyslogDataSource DeserializeSyslogDataSource(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SyslogDataSource DeserializeSyslogDataSource(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -109,96 +162,75 @@ namespace Azure.ResourceManager.Monitor.Models
             IList<SyslogDataSourceStream> streams = default;
             IList<SyslogDataSourceFacilityName> facilityNames = default;
             IList<SyslogDataSourceLogLevel> logLevels = default;
+            string transformKql = default;
             string name = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("streams"u8))
+                if (prop.NameEquals("streams"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SyslogDataSourceStream> array = new List<SyslogDataSourceStream>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new SyslogDataSourceStream(item.GetString()));
                     }
                     streams = array;
                     continue;
                 }
-                if (property.NameEquals("facilityNames"u8))
+                if (prop.NameEquals("facilityNames"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SyslogDataSourceFacilityName> array = new List<SyslogDataSourceFacilityName>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new SyslogDataSourceFacilityName(item.GetString()));
                     }
                     facilityNames = array;
                     continue;
                 }
-                if (property.NameEquals("logLevels"u8))
+                if (prop.NameEquals("logLevels"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SyslogDataSourceLogLevel> array = new List<SyslogDataSourceLogLevel>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new SyslogDataSourceLogLevel(item.GetString()));
                     }
                     logLevels = array;
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("transformKql"u8))
                 {
-                    name = property.Value.GetString();
+                    transformKql = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new SyslogDataSource(streams ?? new ChangeTrackingList<SyslogDataSourceStream>(), facilityNames ?? new ChangeTrackingList<SyslogDataSourceFacilityName>(), logLevels ?? new ChangeTrackingList<SyslogDataSourceLogLevel>(), name, serializedAdditionalRawData);
+            return new SyslogDataSource(
+                streams ?? new ChangeTrackingList<SyslogDataSourceStream>(),
+                facilityNames ?? new ChangeTrackingList<SyslogDataSourceFacilityName>(),
+                logLevels ?? new ChangeTrackingList<SyslogDataSourceLogLevel>(),
+                transformKql,
+                name,
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<SyslogDataSource>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SyslogDataSource>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SyslogDataSource)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SyslogDataSource IPersistableModel<SyslogDataSource>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SyslogDataSource>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSyslogDataSource(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SyslogDataSource)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SyslogDataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
