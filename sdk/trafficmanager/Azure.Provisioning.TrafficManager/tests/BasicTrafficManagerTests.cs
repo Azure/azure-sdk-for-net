@@ -40,12 +40,12 @@ public class BasicTrafficManagerTests
                     };
                 infra.Add(profile);
 
-                ExternalEndpointTrafficManagerEndpoint endpoint =
-                    new(nameof(endpoint), ExternalEndpointTrafficManagerEndpoint.ResourceVersions.V2022_04_01)
+                AzureEndpointTrafficManagerEndpoint endpoint =
+                    new(nameof(endpoint), AzureEndpointTrafficManagerEndpoint.ResourceVersions.V2022_04_01)
                     {
                         Parent = profile,
                         EndpointStatus = TrafficManagerEndpointStatus.Enabled,
-                        Target = "www.example.com",
+                        TargetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRg/providers/Microsoft.Network/publicIPAddresses/myPublicIp"),
                         Weight = 1,
                     };
                 infra.Add(endpoint);
@@ -81,10 +81,10 @@ public class BasicTrafficManagerTests
               }
             }
 
-            resource endpoint 'Microsoft.Network/trafficmanagerprofiles/ExternalEndpoints@2022-04-01' = {
+            resource endpoint 'Microsoft.Network/trafficmanagerprofiles/AzureEndpoints@2022-04-01' = {
               name: take('endpoint${uniqueString(resourceGroup().id)}', 24)
               properties: {
-                target: 'www.example.com'
+                targetResourceId: '/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRg/providers/Microsoft.Network/publicIPAddresses/myPublicIp'
                 endpointStatus: 'Enabled'
                 weight: 1
               }

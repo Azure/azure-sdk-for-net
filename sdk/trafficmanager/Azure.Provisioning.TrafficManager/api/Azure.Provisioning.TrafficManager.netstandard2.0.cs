@@ -44,23 +44,9 @@ namespace Azure.Provisioning.TrafficManager
     public partial class ExternalEndpointTrafficManagerEndpoint : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ExternalEndpointTrafficManagerEndpoint(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.TrafficManager.TrafficManagerEndpointAlwaysServeStatus> AlwaysServe { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.TrafficManager.TrafficManagerEndpointCustomHeaderInfo> CustomHeaders { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> EndpointLocation { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.TrafficManager.TrafficManagerEndpointMonitorStatus> EndpointMonitorStatus { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.TrafficManager.TrafficManagerEndpointStatus> EndpointStatus { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<string> GeoMapping { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<long> MinChildEndpoints { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<long> MinChildEndpointsIPv4 { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<long> MinChildEndpointsIPv6 { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.TrafficManager.TrafficManagerProfile Parent { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<long> Priority { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.TrafficManager.TrafficManagerEndpointSubnetInfo> Subnets { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Target { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetResourceId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<long> Weight { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.TrafficManager.ExternalEndpointTrafficManagerEndpoint FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
@@ -71,23 +57,9 @@ namespace Azure.Provisioning.TrafficManager
     public partial class NestedEndpointTrafficManagerEndpoint : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public NestedEndpointTrafficManagerEndpoint(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.TrafficManager.TrafficManagerEndpointAlwaysServeStatus> AlwaysServe { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.TrafficManager.TrafficManagerEndpointCustomHeaderInfo> CustomHeaders { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> EndpointLocation { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.TrafficManager.TrafficManagerEndpointMonitorStatus> EndpointMonitorStatus { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.TrafficManager.TrafficManagerEndpointStatus> EndpointStatus { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<string> GeoMapping { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<long> MinChildEndpoints { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<long> MinChildEndpointsIPv4 { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<long> MinChildEndpointsIPv6 { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.TrafficManager.TrafficManagerProfile Parent { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<long> Priority { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.TrafficManager.TrafficManagerEndpointSubnetInfo> Subnets { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Target { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetResourceId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<long> Weight { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.TrafficManager.NestedEndpointTrafficManagerEndpoint FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions

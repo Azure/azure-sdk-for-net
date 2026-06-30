@@ -53,12 +53,12 @@ TrafficManagerProfile profile =
     };
 infra.Add(profile);
 
-ExternalEndpointTrafficManagerEndpoint endpoint =
-    new(nameof(endpoint), ExternalEndpointTrafficManagerEndpoint.ResourceVersions.V2022_04_01)
+AzureEndpointTrafficManagerEndpoint endpoint =
+    new(nameof(endpoint), AzureEndpointTrafficManagerEndpoint.ResourceVersions.V2022_04_01)
     {
         Parent = profile,
         EndpointStatus = TrafficManagerEndpointStatus.Enabled,
-        Target = "www.example.com",
+        TargetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRg/providers/Microsoft.Network/publicIPAddresses/myPublicIp"),
         Weight = 1,
     };
 infra.Add(endpoint);
