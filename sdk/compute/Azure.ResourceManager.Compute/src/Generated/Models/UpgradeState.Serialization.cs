@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static string ToSerialString(this UpgradeState value) => value switch
         {
             UpgradeState.RollingForward => "RollingForward",
+            UpgradeState.RollingBack => "RollingBack",
             UpgradeState.Cancelled => "Cancelled",
             UpgradeState.Completed => "Completed",
             UpgradeState.Faulted => "Faulted",
@@ -27,6 +28,10 @@ namespace Azure.ResourceManager.Compute.Models
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "RollingForward"))
             {
                 return UpgradeState.RollingForward;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RollingBack"))
+            {
+                return UpgradeState.RollingBack;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cancelled"))
             {
