@@ -6,6 +6,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
+using Azure;
 using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning
@@ -15,7 +16,10 @@ namespace Azure.ResourceManager.MachineLearning
     /// Each <see cref="MachineLearningJobResource" /> in the collection will belong to the same instance of <see cref="MachineLearningWorkspaceResource" />.
     /// To get a <see cref="MachineLearningJobCollection" /> instance call the GetMachineLearningJobs method from an instance of <see cref="MachineLearningWorkspaceResource" />.
     /// </summary>
-    public partial class MachineLearningJobCollection : ArmCollection, IEnumerable<MachineLearningJobResource>, IAsyncEnumerable<MachineLearningJobResource>
+    // Customized: preserve the GA list overloads that did not expose the newer optional filter.
+    // The TypeSpec generator only emits the current operation signature, so these hidden overloads
+    // forward to the generated overload to keep source compatibility with the previous SDK.
+    public partial class MachineLearningJobCollection
     {
         /// <summary>
         /// Lists Jobs in the workspace.

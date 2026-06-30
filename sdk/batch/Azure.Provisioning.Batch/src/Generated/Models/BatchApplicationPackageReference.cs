@@ -58,6 +58,10 @@ namespace Azure.Provisioning.Batch
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isRequired: true);
             _version = DefineProperty<string>(nameof(Version), new string[] { "version" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchApplicationPackageReference that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

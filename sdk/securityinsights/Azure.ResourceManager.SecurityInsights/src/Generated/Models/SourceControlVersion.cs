@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct SourceControlVersion : IEquatable<SourceControlVersion>
     {
         private readonly string _value;
+        /// <summary> V1. </summary>
+        private const string V1Value = "V1";
+        /// <summary> V2. </summary>
+        private const string V2Value = "V2";
 
         /// <summary> Initializes a new instance of <see cref="SourceControlVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SourceControlVersion(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string V1Value = "V1";
-        private const string V2Value = "V2";
+            _value = value;
+        }
 
         /// <summary> V1. </summary>
         public static SourceControlVersion V1 { get; } = new SourceControlVersion(V1Value);
+
         /// <summary> V2. </summary>
         public static SourceControlVersion V2 { get; } = new SourceControlVersion(V2Value);
+
         /// <summary> Determines if two <see cref="SourceControlVersion"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SourceControlVersion left, SourceControlVersion right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SourceControlVersion"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SourceControlVersion left, SourceControlVersion right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SourceControlVersion"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SourceControlVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SourceControlVersion(string value) => new SourceControlVersion(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SourceControlVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SourceControlVersion?(string value) => value == null ? null : new SourceControlVersion(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SourceControlVersion other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SourceControlVersion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

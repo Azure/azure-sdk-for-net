@@ -2,10 +2,10 @@ namespace Azure.AI.AgentServer.Invocations
 {
     public sealed partial class InvocationContext
     {
-        public InvocationContext(string invocationId, string sessionId, System.Collections.Generic.IReadOnlyDictionary<string, string> clientHeaders, System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Extensions.Primitives.StringValues> queryParameters, Azure.AI.AgentServer.Core.IsolationContext isolation) { }
+        public InvocationContext(string invocationId, string sessionId, System.Collections.Generic.IReadOnlyDictionary<string, string> clientHeaders, System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Extensions.Primitives.StringValues> queryParameters, Azure.AI.AgentServer.Core.PlatformContext platformContext) { }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> ClientHeaders { get { throw null; } }
         public string InvocationId { get { throw null; } }
-        public Azure.AI.AgentServer.Core.IsolationContext Isolation { get { throw null; } }
+        public Azure.AI.AgentServer.Core.PlatformContext PlatformContext { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Extensions.Primitives.StringValues> QueryParameters { get { throw null; } }
         public string SessionId { get { throw null; } }
     }

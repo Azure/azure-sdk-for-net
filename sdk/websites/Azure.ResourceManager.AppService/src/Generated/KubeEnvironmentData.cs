@@ -14,202 +14,211 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the KubeEnvironment data model.
-    /// A Kubernetes cluster specialized for web workloads by Azure App Service
-    /// Serialized Name: KubeEnvironment
-    /// </summary>
+    /// <summary> A Kubernetes cluster specialized for web workloads by Azure App Service. </summary>
     public partial class KubeEnvironmentData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KubeEnvironmentData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public KubeEnvironmentData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="KubeEnvironmentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="extendedLocation">
-        /// Extended Location.
-        /// Serialized Name: KubeEnvironment.extendedLocation
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: KubeEnvironment.kind
-        /// </param>
-        /// <param name="provisioningState">
-        /// Provisioning state of the Kubernetes Environment.
-        /// Serialized Name: KubeEnvironment.properties.provisioningState
-        /// </param>
-        /// <param name="deploymentErrors">
-        /// Any errors that occurred during deployment or deployment validation
-        /// Serialized Name: KubeEnvironment.properties.deploymentErrors
-        /// </param>
-        /// <param name="isInternalLoadBalancerEnabled">
-        /// Only visible within Vnet/Subnet
-        /// Serialized Name: KubeEnvironment.properties.internalLoadBalancerEnabled
-        /// </param>
-        /// <param name="defaultDomain">
-        /// Default Domain Name for the cluster
-        /// Serialized Name: KubeEnvironment.properties.defaultDomain
-        /// </param>
-        /// <param name="staticIP">
-        /// Static IP of the KubeEnvironment
-        /// Serialized Name: KubeEnvironment.properties.staticIp
-        /// </param>
-        /// <param name="environmentType">
-        /// Type of Kubernetes Environment. Only supported for Container App Environments with value as Managed
-        /// Serialized Name: KubeEnvironment.properties.environmentType
-        /// </param>
-        /// <param name="arcConfiguration">
-        /// Cluster configuration which determines the ARC cluster
-        /// components types. Eg: Choosing between BuildService kind,
-        /// FrontEnd Service ArtifactsStorageType etc.
-        /// Serialized Name: KubeEnvironment.properties.arcConfiguration
-        /// </param>
-        /// <param name="appLogsConfiguration">
-        /// Cluster configuration which enables the log daemon to export
-        /// app logs to a destination. Currently only "log-analytics" is
-        /// supported
-        /// Serialized Name: KubeEnvironment.properties.appLogsConfiguration
-        /// </param>
-        /// <param name="containerAppsConfiguration">
-        /// Cluster configuration for Container Apps Environments to configure Dapr Instrumentation Key and VNET Configuration
-        /// Serialized Name: KubeEnvironment.properties.containerAppsConfiguration
-        /// </param>
-        /// <param name="aksResourceId"> Serialized Name: KubeEnvironment.properties.aksResourceID. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KubeEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string kind, KubeEnvironmentProvisioningState? provisioningState, string deploymentErrors, bool? isInternalLoadBalancerEnabled, string defaultDomain, string staticIP, string environmentType, ArcConfiguration arcConfiguration, AppLogsConfiguration appLogsConfiguration, ContainerAppsConfiguration containerAppsConfiguration, ResourceIdentifier aksResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> KubeEnvironment resource specific properties. </param>
+        /// <param name="extendedLocation"> Extended Location. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal KubeEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, KubeEnvironmentProperties properties, ExtendedLocation extendedLocation, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
+            Properties = properties;
             ExtendedLocation = extendedLocation;
             Kind = kind;
-            ProvisioningState = provisioningState;
-            DeploymentErrors = deploymentErrors;
-            IsInternalLoadBalancerEnabled = isInternalLoadBalancerEnabled;
-            DefaultDomain = defaultDomain;
-            StaticIP = staticIP;
-            EnvironmentType = environmentType;
-            ArcConfiguration = arcConfiguration;
-            AppLogsConfiguration = appLogsConfiguration;
-            ContainerAppsConfiguration = containerAppsConfiguration;
-            AksResourceId = aksResourceId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KubeEnvironmentData"/> for deserialization. </summary>
-        internal KubeEnvironmentData()
-        {
-        }
+        /// <summary> KubeEnvironment resource specific properties. </summary>
+        [WirePath("properties")]
+        internal KubeEnvironmentProperties Properties { get; set; }
 
-        /// <summary>
-        /// Extended Location.
-        /// Serialized Name: KubeEnvironment.extendedLocation
-        /// </summary>
+        /// <summary> Extended Location. </summary>
         [WirePath("extendedLocation")]
         public ExtendedLocation ExtendedLocation { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: KubeEnvironment.kind
-        /// </summary>
+
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
-        /// <summary>
-        /// Provisioning state of the Kubernetes Environment.
-        /// Serialized Name: KubeEnvironment.properties.provisioningState
-        /// </summary>
+
+        /// <summary> Provisioning state of the Kubernetes Environment. </summary>
         [WirePath("properties.provisioningState")]
-        public KubeEnvironmentProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// Any errors that occurred during deployment or deployment validation
-        /// Serialized Name: KubeEnvironment.properties.deploymentErrors
-        /// </summary>
+        public KubeEnvironmentProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Any errors that occurred during deployment or deployment validation. </summary>
         [WirePath("properties.deploymentErrors")]
-        public string DeploymentErrors { get; }
-        /// <summary>
-        /// Only visible within Vnet/Subnet
-        /// Serialized Name: KubeEnvironment.properties.internalLoadBalancerEnabled
-        /// </summary>
+        public string DeploymentErrors
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeploymentErrors;
+            }
+        }
+
+        /// <summary> Only visible within Vnet/Subnet. </summary>
         [WirePath("properties.internalLoadBalancerEnabled")]
-        public bool? IsInternalLoadBalancerEnabled { get; set; }
-        /// <summary>
-        /// Default Domain Name for the cluster
-        /// Serialized Name: KubeEnvironment.properties.defaultDomain
-        /// </summary>
+        public bool? IsInternalLoadBalancerEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsInternalLoadBalancerEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new KubeEnvironmentProperties();
+                }
+                Properties.IsInternalLoadBalancerEnabled = value;
+            }
+        }
+
+        /// <summary> Default Domain Name for the cluster. </summary>
         [WirePath("properties.defaultDomain")]
-        public string DefaultDomain { get; }
-        /// <summary>
-        /// Static IP of the KubeEnvironment
-        /// Serialized Name: KubeEnvironment.properties.staticIp
-        /// </summary>
+        public string DefaultDomain
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultDomain;
+            }
+        }
+
+        /// <summary> Static IP of the KubeEnvironment. </summary>
         [WirePath("properties.staticIp")]
-        public string StaticIP { get; set; }
-        /// <summary>
-        /// Type of Kubernetes Environment. Only supported for Container App Environments with value as Managed
-        /// Serialized Name: KubeEnvironment.properties.environmentType
-        /// </summary>
+        public string StaticIP
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StaticIP;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new KubeEnvironmentProperties();
+                }
+                Properties.StaticIP = value;
+            }
+        }
+
+        /// <summary> Type of Kubernetes Environment. Only supported for Container App Environments with value as Managed. </summary>
         [WirePath("properties.environmentType")]
-        public string EnvironmentType { get; set; }
+        public string EnvironmentType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnvironmentType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new KubeEnvironmentProperties();
+                }
+                Properties.EnvironmentType = value;
+            }
+        }
+
         /// <summary>
         /// Cluster configuration which determines the ARC cluster
         /// components types. Eg: Choosing between BuildService kind,
         /// FrontEnd Service ArtifactsStorageType etc.
-        /// Serialized Name: KubeEnvironment.properties.arcConfiguration
         /// </summary>
         [WirePath("properties.arcConfiguration")]
-        public ArcConfiguration ArcConfiguration { get; set; }
+        public ArcConfiguration ArcConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ArcConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new KubeEnvironmentProperties();
+                }
+                Properties.ArcConfiguration = value;
+            }
+        }
+
         /// <summary>
         /// Cluster configuration which enables the log daemon to export
         /// app logs to a destination. Currently only "log-analytics" is
         /// supported
-        /// Serialized Name: KubeEnvironment.properties.appLogsConfiguration
         /// </summary>
         [WirePath("properties.appLogsConfiguration")]
-        public AppLogsConfiguration AppLogsConfiguration { get; set; }
-        /// <summary>
-        /// Cluster configuration for Container Apps Environments to configure Dapr Instrumentation Key and VNET Configuration
-        /// Serialized Name: KubeEnvironment.properties.containerAppsConfiguration
-        /// </summary>
+        public AppLogsConfiguration AppLogsConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AppLogsConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new KubeEnvironmentProperties();
+                }
+                Properties.AppLogsConfiguration = value;
+            }
+        }
+
+        /// <summary> Cluster configuration for Container Apps Environments to configure Dapr Instrumentation Key and VNET Configuration. </summary>
         [WirePath("properties.containerAppsConfiguration")]
-        public ContainerAppsConfiguration ContainerAppsConfiguration { get; set; }
-        /// <summary> Serialized Name: KubeEnvironment.properties.aksResourceID. </summary>
+        public ContainerAppsConfiguration ContainerAppsConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ContainerAppsConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new KubeEnvironmentProperties();
+                }
+                Properties.ContainerAppsConfiguration = value;
+            }
+        }
+
+        /// <summary> Gets or sets the AksResourceId. </summary>
         [WirePath("properties.aksResourceID")]
-        public ResourceIdentifier AksResourceId { get; set; }
+        public ResourceIdentifier AksResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AksResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new KubeEnvironmentProperties();
+                }
+                Properties.AksResourceId = value;
+            }
+        }
     }
 }

@@ -10,13 +10,70 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RequestRateByIntervalContent : IUtf8JsonSerializable, IJsonModel<RequestRateByIntervalContent>
+    /// <summary> Api request input for LogAnalytics getRequestRateByInterval Api. </summary>
+    public partial class RequestRateByIntervalContent : LogAnalyticsInputBase, IJsonModel<RequestRateByIntervalContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RequestRateByIntervalContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="RequestRateByIntervalContent"/> for deserialization. </summary>
+        internal RequestRateByIntervalContent()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override LogAnalyticsInputBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RequestRateByIntervalContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRequestRateByIntervalContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RequestRateByIntervalContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RequestRateByIntervalContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RequestRateByIntervalContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RequestRateByIntervalContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RequestRateByIntervalContent IPersistableModel<RequestRateByIntervalContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (RequestRateByIntervalContent)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RequestRateByIntervalContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="requestRateByIntervalContent"> The <see cref="RequestRateByIntervalContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(RequestRateByIntervalContent requestRateByIntervalContent)
+        {
+            if (requestRateByIntervalContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(requestRateByIntervalContent, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RequestRateByIntervalContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,38 +85,41 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RequestRateByIntervalContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RequestRateByIntervalContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RequestRateByIntervalContent)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("intervalLength"u8);
             writer.WriteStringValue(IntervalLength.ToSerialString());
         }
 
-        RequestRateByIntervalContent IJsonModel<RequestRateByIntervalContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RequestRateByIntervalContent IJsonModel<RequestRateByIntervalContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RequestRateByIntervalContent)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override LogAnalyticsInputBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RequestRateByIntervalContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RequestRateByIntervalContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RequestRateByIntervalContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRequestRateByIntervalContent(document.RootElement, options);
         }
 
-        internal static RequestRateByIntervalContent DeserializeRequestRateByIntervalContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RequestRateByIntervalContent DeserializeRequestRateByIntervalContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IntervalInMins intervalLength = default;
             Uri blobContainerSasUri = default;
             DateTimeOffset fromTime = default;
             DateTimeOffset toTime = default;
@@ -68,81 +128,80 @@ namespace Azure.ResourceManager.Compute.Models
             bool? groupByResourceName = default;
             bool? groupByClientApplicationId = default;
             bool? groupByUserAgent = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IntervalInMins intervalLength = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("intervalLength"u8))
+                if (prop.NameEquals("blobContainerSasUri"u8))
                 {
-                    intervalLength = property.Value.GetString().ToIntervalInMins();
+                    blobContainerSasUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
-                if (property.NameEquals("blobContainerSasUri"u8))
+                if (prop.NameEquals("fromTime"u8))
                 {
-                    blobContainerSasUri = new Uri(property.Value.GetString());
+                    fromTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("fromTime"u8))
+                if (prop.NameEquals("toTime"u8))
                 {
-                    fromTime = property.Value.GetDateTimeOffset("O");
+                    toTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("toTime"u8))
+                if (prop.NameEquals("groupByThrottlePolicy"u8))
                 {
-                    toTime = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("groupByThrottlePolicy"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    groupByThrottlePolicy = property.Value.GetBoolean();
+                    groupByThrottlePolicy = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("groupByOperationName"u8))
+                if (prop.NameEquals("groupByOperationName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    groupByOperationName = property.Value.GetBoolean();
+                    groupByOperationName = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("groupByResourceName"u8))
+                if (prop.NameEquals("groupByResourceName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    groupByResourceName = property.Value.GetBoolean();
+                    groupByResourceName = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("groupByClientApplicationId"u8))
+                if (prop.NameEquals("groupByClientApplicationId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    groupByClientApplicationId = property.Value.GetBoolean();
+                    groupByClientApplicationId = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("groupByUserAgent"u8))
+                if (prop.NameEquals("groupByUserAgent"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    groupByUserAgent = property.Value.GetBoolean();
+                    groupByUserAgent = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("intervalLength"u8))
+                {
+                    intervalLength = prop.Value.GetString().ToIntervalInMins();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new RequestRateByIntervalContent(
                 blobContainerSasUri,
                 fromTime,
@@ -152,39 +211,8 @@ namespace Azure.ResourceManager.Compute.Models
                 groupByResourceName,
                 groupByClientApplicationId,
                 groupByUserAgent,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 intervalLength);
         }
-
-        BinaryData IPersistableModel<RequestRateByIntervalContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RequestRateByIntervalContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RequestRateByIntervalContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        RequestRateByIntervalContent IPersistableModel<RequestRateByIntervalContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RequestRateByIntervalContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRequestRateByIntervalContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RequestRateByIntervalContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<RequestRateByIntervalContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

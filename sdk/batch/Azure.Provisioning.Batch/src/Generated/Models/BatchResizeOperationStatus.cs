@@ -126,6 +126,10 @@ namespace Azure.Provisioning.Batch
             _nodeDeallocationOption = DefineProperty<BatchNodeDeallocationOption>(nameof(NodeDeallocationOption), new string[] { "nodeDeallocationOption" });
             _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" });
             _errors = DefineListProperty<BatchResizeError>(nameof(Errors), new string[] { "errors" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchResizeOperationStatus that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

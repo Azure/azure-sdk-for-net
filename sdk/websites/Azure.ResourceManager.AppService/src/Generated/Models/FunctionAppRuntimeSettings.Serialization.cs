@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class FunctionAppRuntimeSettings : IUtf8JsonSerializable, IJsonModel<FunctionAppRuntimeSettings>
+    /// <summary> Function App runtime settings. </summary>
+    public partial class FunctionAppRuntimeSettings : IJsonModel<FunctionAppRuntimeSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FunctionAppRuntimeSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FunctionAppRuntimeSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FunctionAppRuntimeSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeFunctionAppRuntimeSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FunctionAppRuntimeSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FunctionAppRuntimeSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(FunctionAppRuntimeSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FunctionAppRuntimeSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FunctionAppRuntimeSettings IPersistableModel<FunctionAppRuntimeSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FunctionAppRuntimeSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FunctionAppRuntimeSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +69,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FunctionAppRuntimeSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FunctionAppRuntimeSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FunctionAppRuntimeSettings)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(RuntimeVersion))
             {
                 writer.WritePropertyName("runtimeVersion"u8);
@@ -63,6 +101,11 @@ namespace Azure.ResourceManager.AppService.Models
                 foreach (var item in AppSettingsDictionary)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -76,8 +119,13 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("supportedFunctionsExtensionVersions"u8);
                 writer.WriteStartArray();
-                foreach (var item in SupportedFunctionsExtensionVersions)
+                foreach (string item in SupportedFunctionsExtensionVersions)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -117,15 +165,15 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("isDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -134,28 +182,33 @@ namespace Azure.ResourceManager.AppService.Models
             }
         }
 
-        FunctionAppRuntimeSettings IJsonModel<FunctionAppRuntimeSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FunctionAppRuntimeSettings IJsonModel<FunctionAppRuntimeSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FunctionAppRuntimeSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FunctionAppRuntimeSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FunctionAppRuntimeSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FunctionAppRuntimeSettings)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFunctionAppRuntimeSettings(document.RootElement, options);
         }
 
-        internal static FunctionAppRuntimeSettings DeserializeFunctionAppRuntimeSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static FunctionAppRuntimeSettings DeserializeFunctionAppRuntimeSettings(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string runtimeVersion = default;
-            bool? remoteDebuggingSupported = default;
+            bool? isRemoteDebuggingSupported = default;
             AppInsightsWebAppStackSettings appInsightsSettings = default;
             GitHubActionWebAppStackSettings gitHubActionSettings = default;
             IReadOnlyDictionary<string, string> appSettingsDictionary = default;
@@ -164,155 +217,167 @@ namespace Azure.ResourceManager.AppService.Models
             bool? isPreview = default;
             bool? isDeprecated = default;
             bool? isHidden = default;
-            DateTimeOffset? endOfLifeDate = default;
+            DateTimeOffset? endOfLifeOn = default;
             bool? isAutoUpdate = default;
             bool? isEarlyAccess = default;
             bool? isDefault = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("runtimeVersion"u8))
+                if (prop.NameEquals("runtimeVersion"u8))
                 {
-                    runtimeVersion = property.Value.GetString();
+                    runtimeVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("remoteDebuggingSupported"u8))
+                if (prop.NameEquals("remoteDebuggingSupported"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    remoteDebuggingSupported = property.Value.GetBoolean();
+                    isRemoteDebuggingSupported = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("appInsightsSettings"u8))
+                if (prop.NameEquals("appInsightsSettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    appInsightsSettings = AppInsightsWebAppStackSettings.DeserializeAppInsightsWebAppStackSettings(property.Value, options);
+                    appInsightsSettings = AppInsightsWebAppStackSettings.DeserializeAppInsightsWebAppStackSettings(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("gitHubActionSettings"u8))
+                if (prop.NameEquals("gitHubActionSettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    gitHubActionSettings = GitHubActionWebAppStackSettings.DeserializeGitHubActionWebAppStackSettings(property.Value, options);
+                    gitHubActionSettings = GitHubActionWebAppStackSettings.DeserializeGitHubActionWebAppStackSettings(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("appSettingsDictionary"u8))
+                if (prop.NameEquals("appSettingsDictionary"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     appSettingsDictionary = dictionary;
                     continue;
                 }
-                if (property.NameEquals("siteConfigPropertiesDictionary"u8))
+                if (prop.NameEquals("siteConfigPropertiesDictionary"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    siteConfigPropertiesDictionary = SiteConfigPropertiesDictionary.DeserializeSiteConfigPropertiesDictionary(property.Value, options);
+                    siteConfigPropertiesDictionary = SiteConfigPropertiesDictionary.DeserializeSiteConfigPropertiesDictionary(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("supportedFunctionsExtensionVersions"u8))
+                if (prop.NameEquals("supportedFunctionsExtensionVersions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     supportedFunctionsExtensionVersions = array;
                     continue;
                 }
-                if (property.NameEquals("isPreview"u8))
+                if (prop.NameEquals("isPreview"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isPreview = property.Value.GetBoolean();
+                    isPreview = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isDeprecated"u8))
+                if (prop.NameEquals("isDeprecated"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isDeprecated = property.Value.GetBoolean();
+                    isDeprecated = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isHidden"u8))
+                if (prop.NameEquals("isHidden"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isHidden = property.Value.GetBoolean();
+                    isHidden = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("endOfLifeDate"u8))
+                if (prop.NameEquals("endOfLifeDate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    endOfLifeDate = property.Value.GetDateTimeOffset("O");
+                    endOfLifeOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("isAutoUpdate"u8))
+                if (prop.NameEquals("isAutoUpdate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isAutoUpdate = property.Value.GetBoolean();
+                    isAutoUpdate = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isEarlyAccess"u8))
+                if (prop.NameEquals("isEarlyAccess"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isEarlyAccess = property.Value.GetBoolean();
+                    isEarlyAccess = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isDefault"u8))
+                if (prop.NameEquals("isDefault"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isDefault = property.Value.GetBoolean();
+                    isDefault = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new FunctionAppRuntimeSettings(
                 runtimeVersion,
-                remoteDebuggingSupported,
+                isRemoteDebuggingSupported,
                 appInsightsSettings,
                 gitHubActionSettings,
                 appSettingsDictionary ?? new ChangeTrackingDictionary<string, string>(),
@@ -321,328 +386,11 @@ namespace Azure.ResourceManager.AppService.Models
                 isPreview,
                 isDeprecated,
                 isHidden,
-                endOfLifeDate,
+                endOfLifeOn,
                 isAutoUpdate,
                 isEarlyAccess,
                 isDefault,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuntimeVersion), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  runtimeVersion: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RuntimeVersion))
-                {
-                    builder.Append("  runtimeVersion: ");
-                    if (RuntimeVersion.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{RuntimeVersion}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{RuntimeVersion}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsRemoteDebuggingSupported), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  remoteDebuggingSupported: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsRemoteDebuggingSupported))
-                {
-                    builder.Append("  remoteDebuggingSupported: ");
-                    var boolValue = IsRemoteDebuggingSupported.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppInsightsSettings), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  appInsightsSettings: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AppInsightsSettings))
-                {
-                    builder.Append("  appInsightsSettings: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, AppInsightsSettings, options, 2, false, "  appInsightsSettings: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GitHubActionSettings), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  gitHubActionSettings: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(GitHubActionSettings))
-                {
-                    builder.Append("  gitHubActionSettings: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, GitHubActionSettings, options, 2, false, "  gitHubActionSettings: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppSettingsDictionary), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  appSettingsDictionary: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(AppSettingsDictionary))
-                {
-                    if (AppSettingsDictionary.Any())
-                    {
-                        builder.Append("  appSettingsDictionary: ");
-                        builder.AppendLine("{");
-                        foreach (var item in AppSettingsDictionary)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Value.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("'''");
-                                builder.AppendLine($"{item.Value}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"'{item.Value}'");
-                            }
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SiteConfigPropertiesDictionary), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  siteConfigPropertiesDictionary: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SiteConfigPropertiesDictionary))
-                {
-                    builder.Append("  siteConfigPropertiesDictionary: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, SiteConfigPropertiesDictionary, options, 2, false, "  siteConfigPropertiesDictionary: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedFunctionsExtensionVersions), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  supportedFunctionsExtensionVersions: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(SupportedFunctionsExtensionVersions))
-                {
-                    if (SupportedFunctionsExtensionVersions.Any())
-                    {
-                        builder.Append("  supportedFunctionsExtensionVersions: ");
-                        builder.AppendLine("[");
-                        foreach (var item in SupportedFunctionsExtensionVersions)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsPreview), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  isPreview: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsPreview))
-                {
-                    builder.Append("  isPreview: ");
-                    var boolValue = IsPreview.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDeprecated), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  isDeprecated: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsDeprecated))
-                {
-                    builder.Append("  isDeprecated: ");
-                    var boolValue = IsDeprecated.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsHidden), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  isHidden: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsHidden))
-                {
-                    builder.Append("  isHidden: ");
-                    var boolValue = IsHidden.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndOfLifeOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  endOfLifeDate: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EndOfLifeOn))
-                {
-                    builder.Append("  endOfLifeDate: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(EndOfLifeOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAutoUpdate), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  isAutoUpdate: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsAutoUpdate))
-                {
-                    builder.Append("  isAutoUpdate: ");
-                    var boolValue = IsAutoUpdate.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEarlyAccess), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  isEarlyAccess: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsEarlyAccess))
-                {
-                    builder.Append("  isEarlyAccess: ");
-                    var boolValue = IsEarlyAccess.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDefault), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  isDefault: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsDefault))
-                {
-                    builder.Append("  isDefault: ");
-                    var boolValue = IsDefault.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<FunctionAppRuntimeSettings>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FunctionAppRuntimeSettings>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(FunctionAppRuntimeSettings)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        FunctionAppRuntimeSettings IPersistableModel<FunctionAppRuntimeSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FunctionAppRuntimeSettings>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeFunctionAppRuntimeSettings(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FunctionAppRuntimeSettings)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<FunctionAppRuntimeSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

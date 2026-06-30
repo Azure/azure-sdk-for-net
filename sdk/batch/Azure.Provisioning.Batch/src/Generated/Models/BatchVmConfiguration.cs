@@ -279,6 +279,10 @@ namespace Azure.Provisioning.Batch
             _osDisk = DefineModelProperty<BatchOSDisk>(nameof(OSDisk), new string[] { "osDisk" });
             _securityProfile = DefineModelProperty<BatchSecurityProfile>(nameof(SecurityProfile), new string[] { "securityProfile" });
             _serviceArtifactReference = DefineModelProperty<ServiceArtifactReference>(nameof(ServiceArtifactReference), new string[] { "serviceArtifactReference" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchVmConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

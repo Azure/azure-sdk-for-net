@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="serverName"> The Sql server name installed on the machine. </param>
         /// <param name="databaseName"> The Sql database name installed on the machine. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/>, <paramref name="sourceComputerId"/>, <paramref name="machineName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is null. </exception>
-        public OnPremiseSqlResourceDetails(ResourceIdentifier workspaceId, Guid vmUuid, string sourceComputerId, string machineName, string serverName, string databaseName) : base(workspaceId, vmUuid, sourceComputerId, machineName)
+        public OnPremiseSqlResourceDetails(ResourceIdentifier workspaceId, Guid vmUuid, string sourceComputerId, string machineName, string serverName, string databaseName) : base("OnPremiseSql", workspaceId, vmUuid, sourceComputerId, machineName)
         {
             Argument.AssertNotNull(workspaceId, nameof(workspaceId));
             Argument.AssertNotNull(sourceComputerId, nameof(sourceComputerId));
@@ -32,32 +33,26 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
             ServerName = serverName;
             DatabaseName = databaseName;
-            Source = HealthReportSource.OnPremiseSql;
         }
 
         /// <summary> Initializes a new instance of <see cref="OnPremiseSqlResourceDetails"/>. </summary>
         /// <param name="source"> The platform where the assessed resource resides. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="workspaceId"> Azure resource Id of the workspace the machine is attached to. </param>
         /// <param name="vmUuid"> The unique Id of the machine. </param>
         /// <param name="sourceComputerId"> The oms agent Id installed on the machine. </param>
         /// <param name="machineName"> The name of the machine. </param>
         /// <param name="serverName"> The Sql server name installed on the machine. </param>
         /// <param name="databaseName"> The Sql database name installed on the machine. </param>
-        internal OnPremiseSqlResourceDetails(HealthReportSource source, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier workspaceId, Guid vmUuid, string sourceComputerId, string machineName, string serverName, string databaseName) : base(source, serializedAdditionalRawData, workspaceId, vmUuid, sourceComputerId, machineName)
+        internal OnPremiseSqlResourceDetails(SecurityCenterResourceSource source, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier workspaceId, Guid vmUuid, string sourceComputerId, string machineName, string serverName, string databaseName) : base(source, additionalBinaryDataProperties, workspaceId, vmUuid, sourceComputerId, machineName)
         {
             ServerName = serverName;
             DatabaseName = databaseName;
-            Source = source;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OnPremiseSqlResourceDetails"/> for deserialization. </summary>
-        internal OnPremiseSqlResourceDetails()
-        {
         }
 
         /// <summary> The Sql server name installed on the machine. </summary>
         public string ServerName { get; set; }
+
         /// <summary> The Sql database name installed on the machine. </summary>
         public string DatabaseName { get; set; }
     }

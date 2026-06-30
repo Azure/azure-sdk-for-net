@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct IpamIPType : IEquatable<IpamIPType>
     {
         private readonly string _value;
+        /// <summary> IPv4. </summary>
+        private const string IPv4Value = "IPv4";
+        /// <summary> IPv6. </summary>
+        private const string IPv6Value = "IPv6";
 
         /// <summary> Initializes a new instance of <see cref="IpamIPType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IpamIPType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string IPv4Value = "IPv4";
-        private const string IPv6Value = "IPv6";
+            _value = value;
+        }
 
         /// <summary> IPv4. </summary>
         public static IpamIPType IPv4 { get; } = new IpamIPType(IPv4Value);
+
         /// <summary> IPv6. </summary>
         public static IpamIPType IPv6 { get; } = new IpamIPType(IPv6Value);
+
         /// <summary> Determines if two <see cref="IpamIPType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IpamIPType left, IpamIPType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IpamIPType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IpamIPType left, IpamIPType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IpamIPType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IpamIPType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IpamIPType(string value) => new IpamIPType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IpamIPType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IpamIPType?(string value) => value == null ? null : new IpamIPType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IpamIPType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IpamIPType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

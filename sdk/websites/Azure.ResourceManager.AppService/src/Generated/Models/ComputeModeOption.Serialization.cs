@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class ComputeModeOptionExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ComputeModeOption value) => value switch
         {
             ComputeModeOption.Shared => "Shared",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ComputeModeOption value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ComputeModeOption ToComputeModeOption(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Shared")) return ComputeModeOption.Shared;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Dedicated")) return ComputeModeOption.Dedicated;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Dynamic")) return ComputeModeOption.Dynamic;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Shared"))
+            {
+                return ComputeModeOption.Shared;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Dedicated"))
+            {
+                return ComputeModeOption.Dedicated;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Dynamic"))
+            {
+                return ComputeModeOption.Dynamic;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ComputeModeOption value.");
         }
     }

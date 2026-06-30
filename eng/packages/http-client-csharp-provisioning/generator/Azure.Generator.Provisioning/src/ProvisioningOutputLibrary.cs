@@ -131,7 +131,7 @@ namespace Azure.Generator.Provisioning
             foreach (var resource in Resources)
             {
                 providers.Add(resource);
-                ProvisioningGenerator.Instance.AddTypeToKeep(resource.Name);
+                ProvisioningGenerator.Instance.AddTypeToKeep(resource);
             }
 
             // Add BuiltInRole struct if any resources have RBAC roles defined.
@@ -150,9 +150,17 @@ namespace Azure.Generator.Provisioning
             foreach (var inputModel in reachableModels)
             {
                 var model = ProvisioningGenerator.Instance.TypeFactory.CreateModel(inputModel);
-                if (model is not null && model is not ProvisioningResourceProvider)
+                if (model is not null)
                 {
                     providers.Add(model);
+                    // CollectReachableTypes excludes models already backed by ArmProviderSchema.Resources,
+                    // so this does not duplicate the pre-created resource providers added above.
+                    // CreateModel can still return a resource provider here for discriminator-derived
+                    // models whose base chain is a resource, and those providers must also be kept.
+                    if (model is ProvisioningResourceProvider resource)
+                    {
+                        ProvisioningGenerator.Instance.AddTypeToKeep(resource);
+                    }
                 }
             }
 
@@ -161,6 +169,17 @@ namespace Azure.Generator.Provisioning
                 var enumProvider = ProvisioningGenerator.Instance.TypeFactory.CreateEnum(inputEnum);
                 if (enumProvider != null)
                 {
+                    // Provisioning manually builds the provider list instead of calling the base
+                    // OutputLibrary.BuildTypeProviders(), so we must preserve the base pipeline's
+                    // custom enum replacement behavior here. When a custom enum is decorated with
+                    // [CodeGenType("GeneratedEnumName")], the generated enum provider still exists
+                    // (often internalized), but C# cannot merge two enum declarations with the
+                    // same name. Skipping the generated provider lets the custom enum fully replace
+                    // it, matching the base/mgmt generator behavior.
+                    if (enumProvider.CustomCodeView != null)
+                    {
+                        continue;
+                    }
                     providers.Add(enumProvider);
                 }
             }

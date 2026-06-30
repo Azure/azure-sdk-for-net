@@ -6,65 +6,73 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.PolicyInsights.Models;
 
 namespace Azure.ResourceManager.PolicyInsights
 {
-    internal partial class ComponentPolicyStatesRestOperations
+    internal partial class ComponentPolicyStates
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of ComponentPolicyStatesRestOperations. </summary>
+        /// <summary> Initializes a new instance of ComponentPolicyStates for mocking. </summary>
+        protected ComponentPolicyStates()
+        {
+        }
+
+        /// <summary> Initializes a new instance of ComponentPolicyStates. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ComponentPolicyStatesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal ComponentPolicyStates(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-10-01";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateListQueryResultsForSubscriptionRequestUri(string subscriptionId, ComponentPolicyStatesResource componentPolicyStatesResource, int? top, string orderBy, string select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetQueryResultsForSubscriptionComponentPolicyStatesRequest(string subscriptionId, string componentPolicyStatesResource, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/componentPolicyStates/", false);
-            uri.AppendPath(componentPolicyStatesResource.ToString(), true);
+            uri.AppendPath(componentPolicyStatesResource, true);
             uri.AppendPath("/queryResults", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (top != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("$top", top.Value, true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (maxCount != null)
+            {
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
             }
             if (orderBy != null)
             {
                 uri.AppendQuery("$orderby", orderBy, true);
             }
-            if (select != null)
+            if (@select != null)
             {
-                uri.AppendQuery("$select", select, true);
+                uri.AppendQuery("$select", @select, true);
             }
             if (@from != null)
             {
-                uri.AppendQuery("$from", @from.Value, "O", true);
+                uri.AppendQuery("$from", TypeFormatters.ConvertToString(@from, SerializationFormat.DateTime_RFC3339), true);
             }
             if (to != null)
             {
-                uri.AppendQuery("$to", to.Value, "O", true);
+                uri.AppendQuery("$to", TypeFormatters.ConvertToString(to, SerializationFormat.DateTime_RFC3339), true);
             }
             if (filter != null)
             {
@@ -74,153 +82,48 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 uri.AppendQuery("$apply", apply, true);
             }
-            return uri;
-        }
-
-        internal HttpMessage CreateListQueryResultsForSubscriptionRequest(string subscriptionId, ComponentPolicyStatesResource componentPolicyStatesResource, int? top, string orderBy, string select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.PolicyInsights/componentPolicyStates/", false);
-            uri.AppendPath(componentPolicyStatesResource.ToString(), true);
-            uri.AppendPath("/queryResults", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (top != null)
-            {
-                uri.AppendQuery("$top", top.Value, true);
-            }
-            if (orderBy != null)
-            {
-                uri.AppendQuery("$orderby", orderBy, true);
-            }
-            if (select != null)
-            {
-                uri.AppendQuery("$select", select, true);
-            }
-            if (@from != null)
-            {
-                uri.AppendQuery("$from", @from.Value, "O", true);
-            }
-            if (to != null)
-            {
-                uri.AppendQuery("$to", to.Value, "O", true);
-            }
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, true);
-            }
-            if (apply != null)
-            {
-                uri.AppendQuery("$apply", apply, true);
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Queries component policy states under subscription scope. </summary>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="componentPolicyStatesResource"> The virtual resource under ComponentPolicyStates resource type. In a given time range, 'latest' represents the latest component policy state(s). </param>
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="orderBy"> Ordering expression using OData notation. One or more comma-separated column names with an optional "desc" (the default) or "asc", e.g. "$orderby=PolicyAssignmentId, ResourceId asc". </param>
-        /// <param name="select"> Select expression using OData notation. Limits the columns on each record to just those requested, e.g. "$select=PolicyAssignmentId, ResourceId". </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. When not specified, the service uses ($to - 1-day). </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. When not specified, the service uses request time. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <param name="apply"> OData apply expression for aggregations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ComponentPolicyStatesQueryResults>> ListQueryResultsForSubscriptionAsync(string subscriptionId, ComponentPolicyStatesResource componentPolicyStatesResource, int? top = null, string orderBy = null, string select = null, DateTimeOffset? @from = null, DateTimeOffset? to = null, string filter = null, string apply = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetQueryResultsForResourceGroupComponentPolicyStatesRequest(string subscriptionId, string resourceGroupName, string componentPolicyStatesResource, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListQueryResultsForSubscriptionRequest(subscriptionId, componentPolicyStatesResource, top, orderBy, select, @from, to, filter, apply);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ComponentPolicyStatesQueryResults value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ComponentPolicyStatesQueryResults.DeserializeComponentPolicyStatesQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Queries component policy states under subscription scope. </summary>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="componentPolicyStatesResource"> The virtual resource under ComponentPolicyStates resource type. In a given time range, 'latest' represents the latest component policy state(s). </param>
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="orderBy"> Ordering expression using OData notation. One or more comma-separated column names with an optional "desc" (the default) or "asc", e.g. "$orderby=PolicyAssignmentId, ResourceId asc". </param>
-        /// <param name="select"> Select expression using OData notation. Limits the columns on each record to just those requested, e.g. "$select=PolicyAssignmentId, ResourceId". </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. When not specified, the service uses ($to - 1-day). </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. When not specified, the service uses request time. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <param name="apply"> OData apply expression for aggregations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ComponentPolicyStatesQueryResults> ListQueryResultsForSubscription(string subscriptionId, ComponentPolicyStatesResource componentPolicyStatesResource, int? top = null, string orderBy = null, string select = null, DateTimeOffset? @from = null, DateTimeOffset? to = null, string filter = null, string apply = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListQueryResultsForSubscriptionRequest(subscriptionId, componentPolicyStatesResource, top, orderBy, select, @from, to, filter, apply);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ComponentPolicyStatesQueryResults value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ComponentPolicyStatesQueryResults.DeserializeComponentPolicyStatesQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListQueryResultsForResourceGroupRequestUri(string subscriptionId, string resourceGroupName, ComponentPolicyStatesResource componentPolicyStatesResource, int? top, string orderBy, string select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/componentPolicyStates/", false);
-            uri.AppendPath(componentPolicyStatesResource.ToString(), true);
+            uri.AppendPath(componentPolicyStatesResource, true);
             uri.AppendPath("/queryResults", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (top != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("$top", top.Value, true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (maxCount != null)
+            {
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
             }
             if (orderBy != null)
             {
                 uri.AppendQuery("$orderby", orderBy, true);
             }
-            if (select != null)
+            if (@select != null)
             {
-                uri.AppendQuery("$select", select, true);
+                uri.AppendQuery("$select", @select, true);
             }
             if (@from != null)
             {
-                uri.AppendQuery("$from", @from.Value, "O", true);
+                uri.AppendQuery("$from", TypeFormatters.ConvertToString(@from, SerializationFormat.DateTime_RFC3339), true);
             }
             if (to != null)
             {
-                uri.AppendQuery("$to", to.Value, "O", true);
+                uri.AppendQuery("$to", TypeFormatters.ConvertToString(to, SerializationFormat.DateTime_RFC3339), true);
             }
             if (filter != null)
             {
@@ -230,157 +133,46 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 uri.AppendQuery("$apply", apply, true);
             }
-            return uri;
-        }
-
-        internal HttpMessage CreateListQueryResultsForResourceGroupRequest(string subscriptionId, string resourceGroupName, ComponentPolicyStatesResource componentPolicyStatesResource, int? top, string orderBy, string select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.PolicyInsights/componentPolicyStates/", false);
-            uri.AppendPath(componentPolicyStatesResource.ToString(), true);
-            uri.AppendPath("/queryResults", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (top != null)
-            {
-                uri.AppendQuery("$top", top.Value, true);
-            }
-            if (orderBy != null)
-            {
-                uri.AppendQuery("$orderby", orderBy, true);
-            }
-            if (select != null)
-            {
-                uri.AppendQuery("$select", select, true);
-            }
-            if (@from != null)
-            {
-                uri.AppendQuery("$from", @from.Value, "O", true);
-            }
-            if (to != null)
-            {
-                uri.AppendQuery("$to", to.Value, "O", true);
-            }
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, true);
-            }
-            if (apply != null)
-            {
-                uri.AppendQuery("$apply", apply, true);
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Queries component policy states under resource group scope. </summary>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> Resource group name. </param>
-        /// <param name="componentPolicyStatesResource"> The virtual resource under ComponentPolicyStates resource type. In a given time range, 'latest' represents the latest component policy state(s). </param>
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="orderBy"> Ordering expression using OData notation. One or more comma-separated column names with an optional "desc" (the default) or "asc", e.g. "$orderby=PolicyAssignmentId, ResourceId asc". </param>
-        /// <param name="select"> Select expression using OData notation. Limits the columns on each record to just those requested, e.g. "$select=PolicyAssignmentId, ResourceId". </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. When not specified, the service uses ($to - 1-day). </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. When not specified, the service uses request time. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <param name="apply"> OData apply expression for aggregations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ComponentPolicyStatesQueryResults>> ListQueryResultsForResourceGroupAsync(string subscriptionId, string resourceGroupName, ComponentPolicyStatesResource componentPolicyStatesResource, int? top = null, string orderBy = null, string select = null, DateTimeOffset? @from = null, DateTimeOffset? to = null, string filter = null, string apply = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetQueryResultsForResourceComponentPolicyStatesRequest(string resourceId, string componentPolicyStatesResource, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string expand, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-
-            using var message = CreateListQueryResultsForResourceGroupRequest(subscriptionId, resourceGroupName, componentPolicyStatesResource, top, orderBy, select, @from, to, filter, apply);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ComponentPolicyStatesQueryResults value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ComponentPolicyStatesQueryResults.DeserializeComponentPolicyStatesQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Queries component policy states under resource group scope. </summary>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> Resource group name. </param>
-        /// <param name="componentPolicyStatesResource"> The virtual resource under ComponentPolicyStates resource type. In a given time range, 'latest' represents the latest component policy state(s). </param>
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="orderBy"> Ordering expression using OData notation. One or more comma-separated column names with an optional "desc" (the default) or "asc", e.g. "$orderby=PolicyAssignmentId, ResourceId asc". </param>
-        /// <param name="select"> Select expression using OData notation. Limits the columns on each record to just those requested, e.g. "$select=PolicyAssignmentId, ResourceId". </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. When not specified, the service uses ($to - 1-day). </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. When not specified, the service uses request time. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <param name="apply"> OData apply expression for aggregations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ComponentPolicyStatesQueryResults> ListQueryResultsForResourceGroup(string subscriptionId, string resourceGroupName, ComponentPolicyStatesResource componentPolicyStatesResource, int? top = null, string orderBy = null, string select = null, DateTimeOffset? @from = null, DateTimeOffset? to = null, string filter = null, string apply = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-
-            using var message = CreateListQueryResultsForResourceGroupRequest(subscriptionId, resourceGroupName, componentPolicyStatesResource, top, orderBy, select, @from, to, filter, apply);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ComponentPolicyStatesQueryResults value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ComponentPolicyStatesQueryResults.DeserializeComponentPolicyStatesQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListQueryResultsForResourceRequestUri(string resourceId, ComponentPolicyStatesResource componentPolicyStatesResource, int? top, string orderBy, string select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string expand)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(resourceId, false);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/componentPolicyStates/", false);
-            uri.AppendPath(componentPolicyStatesResource.ToString(), true);
+            uri.AppendPath(componentPolicyStatesResource, true);
             uri.AppendPath("/queryResults", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (top != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("$top", top.Value, true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (maxCount != null)
+            {
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
             }
             if (orderBy != null)
             {
                 uri.AppendQuery("$orderby", orderBy, true);
             }
-            if (select != null)
+            if (@select != null)
             {
-                uri.AppendQuery("$select", select, true);
+                uri.AppendQuery("$select", @select, true);
             }
             if (@from != null)
             {
-                uri.AppendQuery("$from", @from.Value, "O", true);
+                uri.AppendQuery("$from", TypeFormatters.ConvertToString(@from, SerializationFormat.DateTime_RFC3339), true);
             }
             if (to != null)
             {
-                uri.AppendQuery("$to", to.Value, "O", true);
+                uri.AppendQuery("$to", TypeFormatters.ConvertToString(to, SerializationFormat.DateTime_RFC3339), true);
             }
             if (filter != null)
             {
@@ -394,129 +186,17 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 uri.AppendQuery("$expand", expand, true);
             }
-            return uri;
-        }
-
-        internal HttpMessage CreateListQueryResultsForResourceRequest(string resourceId, ComponentPolicyStatesResource componentPolicyStatesResource, int? top, string orderBy, string select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string expand)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(resourceId, false);
-            uri.AppendPath("/providers/Microsoft.PolicyInsights/componentPolicyStates/", false);
-            uri.AppendPath(componentPolicyStatesResource.ToString(), true);
-            uri.AppendPath("/queryResults", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (top != null)
-            {
-                uri.AppendQuery("$top", top.Value, true);
-            }
-            if (orderBy != null)
-            {
-                uri.AppendQuery("$orderby", orderBy, true);
-            }
-            if (select != null)
-            {
-                uri.AppendQuery("$select", select, true);
-            }
-            if (@from != null)
-            {
-                uri.AppendQuery("$from", @from.Value, "O", true);
-            }
-            if (to != null)
-            {
-                uri.AppendQuery("$to", to.Value, "O", true);
-            }
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, true);
-            }
-            if (apply != null)
-            {
-                uri.AppendQuery("$apply", apply, true);
-            }
-            if (expand != null)
-            {
-                uri.AppendQuery("$expand", expand, true);
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Queries component policy states for the resource. </summary>
-        /// <param name="resourceId"> Resource ID. </param>
-        /// <param name="componentPolicyStatesResource"> The virtual resource under ComponentPolicyStates resource type. In a given time range, 'latest' represents the latest component policy state(s). </param>
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="orderBy"> Ordering expression using OData notation. One or more comma-separated column names with an optional "desc" (the default) or "asc", e.g. "$orderby=PolicyAssignmentId, ResourceId asc". </param>
-        /// <param name="select"> Select expression using OData notation. Limits the columns on each record to just those requested, e.g. "$select=PolicyAssignmentId, ResourceId". </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. When not specified, the service uses ($to - 1-day). </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. When not specified, the service uses request time. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <param name="apply"> OData apply expression for aggregations. </param>
-        /// <param name="expand"> The $expand query parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public async Task<Response<ComponentPolicyStatesQueryResults>> ListQueryResultsForResourceAsync(string resourceId, ComponentPolicyStatesResource componentPolicyStatesResource, int? top = null, string orderBy = null, string select = null, DateTimeOffset? @from = null, DateTimeOffset? to = null, string filter = null, string apply = null, string expand = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetQueryResultsForPolicyDefinitionComponentPolicyStatesRequest(string subscriptionId, string policyDefinitionName, string componentPolicyStatesResource, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, RequestContext context)
         {
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
-
-            using var message = CreateListQueryResultsForResourceRequest(resourceId, componentPolicyStatesResource, top, orderBy, select, @from, to, filter, apply, expand);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ComponentPolicyStatesQueryResults value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ComponentPolicyStatesQueryResults.DeserializeComponentPolicyStatesQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Queries component policy states for the resource. </summary>
-        /// <param name="resourceId"> Resource ID. </param>
-        /// <param name="componentPolicyStatesResource"> The virtual resource under ComponentPolicyStates resource type. In a given time range, 'latest' represents the latest component policy state(s). </param>
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="orderBy"> Ordering expression using OData notation. One or more comma-separated column names with an optional "desc" (the default) or "asc", e.g. "$orderby=PolicyAssignmentId, ResourceId asc". </param>
-        /// <param name="select"> Select expression using OData notation. Limits the columns on each record to just those requested, e.g. "$select=PolicyAssignmentId, ResourceId". </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. When not specified, the service uses ($to - 1-day). </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. When not specified, the service uses request time. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <param name="apply"> OData apply expression for aggregations. </param>
-        /// <param name="expand"> The $expand query parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public Response<ComponentPolicyStatesQueryResults> ListQueryResultsForResource(string resourceId, ComponentPolicyStatesResource componentPolicyStatesResource, int? top = null, string orderBy = null, string select = null, DateTimeOffset? @from = null, DateTimeOffset? to = null, string filter = null, string apply = null, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
-
-            using var message = CreateListQueryResultsForResourceRequest(resourceId, componentPolicyStatesResource, top, orderBy, select, @from, to, filter, apply, expand);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ComponentPolicyStatesQueryResults value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ComponentPolicyStatesQueryResults.DeserializeComponentPolicyStatesQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListQueryResultsForPolicyDefinitionRequestUri(string subscriptionId, string policyDefinitionName, ComponentPolicyStatesResource componentPolicyStatesResource, int? top, string orderBy, string select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -525,28 +205,31 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/policyDefinitions/", false);
             uri.AppendPath(policyDefinitionName, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/componentPolicyStates/", false);
-            uri.AppendPath(componentPolicyStatesResource.ToString(), true);
+            uri.AppendPath(componentPolicyStatesResource, true);
             uri.AppendPath("/queryResults", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (top != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("$top", top.Value, true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (maxCount != null)
+            {
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
             }
             if (orderBy != null)
             {
                 uri.AppendQuery("$orderby", orderBy, true);
             }
-            if (select != null)
+            if (@select != null)
             {
-                uri.AppendQuery("$select", select, true);
+                uri.AppendQuery("$select", @select, true);
             }
             if (@from != null)
             {
-                uri.AppendQuery("$from", @from.Value, "O", true);
+                uri.AppendQuery("$from", TypeFormatters.ConvertToString(@from, SerializationFormat.DateTime_RFC3339), true);
             }
             if (to != null)
             {
-                uri.AppendQuery("$to", to.Value, "O", true);
+                uri.AppendQuery("$to", TypeFormatters.ConvertToString(to, SerializationFormat.DateTime_RFC3339), true);
             }
             if (filter != null)
             {
@@ -556,133 +239,17 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 uri.AppendQuery("$apply", apply, true);
             }
-            return uri;
-        }
-
-        internal HttpMessage CreateListQueryResultsForPolicyDefinitionRequest(string subscriptionId, string policyDefinitionName, ComponentPolicyStatesResource componentPolicyStatesResource, int? top, string orderBy, string select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/", false);
-            uri.AppendPath("Microsoft.Authorization", true);
-            uri.AppendPath("/policyDefinitions/", false);
-            uri.AppendPath(policyDefinitionName, true);
-            uri.AppendPath("/providers/Microsoft.PolicyInsights/componentPolicyStates/", false);
-            uri.AppendPath(componentPolicyStatesResource.ToString(), true);
-            uri.AppendPath("/queryResults", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (top != null)
-            {
-                uri.AppendQuery("$top", top.Value, true);
-            }
-            if (orderBy != null)
-            {
-                uri.AppendQuery("$orderby", orderBy, true);
-            }
-            if (select != null)
-            {
-                uri.AppendQuery("$select", select, true);
-            }
-            if (@from != null)
-            {
-                uri.AppendQuery("$from", @from.Value, "O", true);
-            }
-            if (to != null)
-            {
-                uri.AppendQuery("$to", to.Value, "O", true);
-            }
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, true);
-            }
-            if (apply != null)
-            {
-                uri.AppendQuery("$apply", apply, true);
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Queries component policy states for the subscription level policy definition. </summary>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="componentPolicyStatesResource"> The virtual resource under ComponentPolicyStates resource type. In a given time range, 'latest' represents the latest component policy state(s). </param>
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="orderBy"> Ordering expression using OData notation. One or more comma-separated column names with an optional "desc" (the default) or "asc", e.g. "$orderby=PolicyAssignmentId, ResourceId asc". </param>
-        /// <param name="select"> Select expression using OData notation. Limits the columns on each record to just those requested, e.g. "$select=PolicyAssignmentId, ResourceId". </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. When not specified, the service uses ($to - 1-day). </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. When not specified, the service uses request time. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <param name="apply"> OData apply expression for aggregations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ComponentPolicyStatesQueryResults>> ListQueryResultsForPolicyDefinitionAsync(string subscriptionId, string policyDefinitionName, ComponentPolicyStatesResource componentPolicyStatesResource, int? top = null, string orderBy = null, string select = null, DateTimeOffset? @from = null, DateTimeOffset? to = null, string filter = null, string apply = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesRequest(string subscriptionId, string policyAssignmentName, string componentPolicyStatesResource, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-
-            using var message = CreateListQueryResultsForPolicyDefinitionRequest(subscriptionId, policyDefinitionName, componentPolicyStatesResource, top, orderBy, select, @from, to, filter, apply);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ComponentPolicyStatesQueryResults value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ComponentPolicyStatesQueryResults.DeserializeComponentPolicyStatesQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Queries component policy states for the subscription level policy definition. </summary>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="componentPolicyStatesResource"> The virtual resource under ComponentPolicyStates resource type. In a given time range, 'latest' represents the latest component policy state(s). </param>
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="orderBy"> Ordering expression using OData notation. One or more comma-separated column names with an optional "desc" (the default) or "asc", e.g. "$orderby=PolicyAssignmentId, ResourceId asc". </param>
-        /// <param name="select"> Select expression using OData notation. Limits the columns on each record to just those requested, e.g. "$select=PolicyAssignmentId, ResourceId". </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. When not specified, the service uses ($to - 1-day). </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. When not specified, the service uses request time. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <param name="apply"> OData apply expression for aggregations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ComponentPolicyStatesQueryResults> ListQueryResultsForPolicyDefinition(string subscriptionId, string policyDefinitionName, ComponentPolicyStatesResource componentPolicyStatesResource, int? top = null, string orderBy = null, string select = null, DateTimeOffset? @from = null, DateTimeOffset? to = null, string filter = null, string apply = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-
-            using var message = CreateListQueryResultsForPolicyDefinitionRequest(subscriptionId, policyDefinitionName, componentPolicyStatesResource, top, orderBy, select, @from, to, filter, apply);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ComponentPolicyStatesQueryResults value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ComponentPolicyStatesQueryResults.DeserializeComponentPolicyStatesQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListQueryResultsForSubscriptionLevelPolicyAssignmentRequestUri(string subscriptionId, string policyAssignmentName, ComponentPolicyStatesResource componentPolicyStatesResource, int? top, string orderBy, string select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -691,28 +258,31 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/policyAssignments/", false);
             uri.AppendPath(policyAssignmentName, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/componentPolicyStates/", false);
-            uri.AppendPath(componentPolicyStatesResource.ToString(), true);
+            uri.AppendPath(componentPolicyStatesResource, true);
             uri.AppendPath("/queryResults", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (top != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("$top", top.Value, true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (maxCount != null)
+            {
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
             }
             if (orderBy != null)
             {
                 uri.AppendQuery("$orderby", orderBy, true);
             }
-            if (select != null)
+            if (@select != null)
             {
-                uri.AppendQuery("$select", select, true);
+                uri.AppendQuery("$select", @select, true);
             }
             if (@from != null)
             {
-                uri.AppendQuery("$from", @from.Value, "O", true);
+                uri.AppendQuery("$from", TypeFormatters.ConvertToString(@from, SerializationFormat.DateTime_RFC3339), true);
             }
             if (to != null)
             {
-                uri.AppendQuery("$to", to.Value, "O", true);
+                uri.AppendQuery("$to", TypeFormatters.ConvertToString(to, SerializationFormat.DateTime_RFC3339), true);
             }
             if (filter != null)
             {
@@ -722,133 +292,17 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 uri.AppendQuery("$apply", apply, true);
             }
-            return uri;
-        }
-
-        internal HttpMessage CreateListQueryResultsForSubscriptionLevelPolicyAssignmentRequest(string subscriptionId, string policyAssignmentName, ComponentPolicyStatesResource componentPolicyStatesResource, int? top, string orderBy, string select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/", false);
-            uri.AppendPath("Microsoft.Authorization", true);
-            uri.AppendPath("/policyAssignments/", false);
-            uri.AppendPath(policyAssignmentName, true);
-            uri.AppendPath("/providers/Microsoft.PolicyInsights/componentPolicyStates/", false);
-            uri.AppendPath(componentPolicyStatesResource.ToString(), true);
-            uri.AppendPath("/queryResults", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (top != null)
-            {
-                uri.AppendQuery("$top", top.Value, true);
-            }
-            if (orderBy != null)
-            {
-                uri.AppendQuery("$orderby", orderBy, true);
-            }
-            if (select != null)
-            {
-                uri.AppendQuery("$select", select, true);
-            }
-            if (@from != null)
-            {
-                uri.AppendQuery("$from", @from.Value, "O", true);
-            }
-            if (to != null)
-            {
-                uri.AppendQuery("$to", to.Value, "O", true);
-            }
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, true);
-            }
-            if (apply != null)
-            {
-                uri.AppendQuery("$apply", apply, true);
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Queries component policy states for the subscription level policy assignment. </summary>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="componentPolicyStatesResource"> The virtual resource under ComponentPolicyStates resource type. In a given time range, 'latest' represents the latest component policy state(s). </param>
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="orderBy"> Ordering expression using OData notation. One or more comma-separated column names with an optional "desc" (the default) or "asc", e.g. "$orderby=PolicyAssignmentId, ResourceId asc". </param>
-        /// <param name="select"> Select expression using OData notation. Limits the columns on each record to just those requested, e.g. "$select=PolicyAssignmentId, ResourceId". </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. When not specified, the service uses ($to - 1-day). </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. When not specified, the service uses request time. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <param name="apply"> OData apply expression for aggregations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ComponentPolicyStatesQueryResults>> ListQueryResultsForSubscriptionLevelPolicyAssignmentAsync(string subscriptionId, string policyAssignmentName, ComponentPolicyStatesResource componentPolicyStatesResource, int? top = null, string orderBy = null, string select = null, DateTimeOffset? @from = null, DateTimeOffset? to = null, string filter = null, string apply = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStatesRequest(string subscriptionId, string resourceGroupName, string policyAssignmentName, string componentPolicyStatesResource, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
-
-            using var message = CreateListQueryResultsForSubscriptionLevelPolicyAssignmentRequest(subscriptionId, policyAssignmentName, componentPolicyStatesResource, top, orderBy, select, @from, to, filter, apply);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ComponentPolicyStatesQueryResults value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ComponentPolicyStatesQueryResults.DeserializeComponentPolicyStatesQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Queries component policy states for the subscription level policy assignment. </summary>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="componentPolicyStatesResource"> The virtual resource under ComponentPolicyStates resource type. In a given time range, 'latest' represents the latest component policy state(s). </param>
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="orderBy"> Ordering expression using OData notation. One or more comma-separated column names with an optional "desc" (the default) or "asc", e.g. "$orderby=PolicyAssignmentId, ResourceId asc". </param>
-        /// <param name="select"> Select expression using OData notation. Limits the columns on each record to just those requested, e.g. "$select=PolicyAssignmentId, ResourceId". </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. When not specified, the service uses ($to - 1-day). </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. When not specified, the service uses request time. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <param name="apply"> OData apply expression for aggregations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ComponentPolicyStatesQueryResults> ListQueryResultsForSubscriptionLevelPolicyAssignment(string subscriptionId, string policyAssignmentName, ComponentPolicyStatesResource componentPolicyStatesResource, int? top = null, string orderBy = null, string select = null, DateTimeOffset? @from = null, DateTimeOffset? to = null, string filter = null, string apply = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
-
-            using var message = CreateListQueryResultsForSubscriptionLevelPolicyAssignmentRequest(subscriptionId, policyAssignmentName, componentPolicyStatesResource, top, orderBy, select, @from, to, filter, apply);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ComponentPolicyStatesQueryResults value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ComponentPolicyStatesQueryResults.DeserializeComponentPolicyStatesQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListQueryResultsForResourceGroupLevelPolicyAssignmentRequestUri(string subscriptionId, string resourceGroupName, string policyAssignmentName, ComponentPolicyStatesResource componentPolicyStatesResource, int? top, string orderBy, string select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -859,28 +313,31 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/policyAssignments/", false);
             uri.AppendPath(policyAssignmentName, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/componentPolicyStates/", false);
-            uri.AppendPath(componentPolicyStatesResource.ToString(), true);
+            uri.AppendPath(componentPolicyStatesResource, true);
             uri.AppendPath("/queryResults", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (top != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("$top", top.Value, true);
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (maxCount != null)
+            {
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
             }
             if (orderBy != null)
             {
                 uri.AppendQuery("$orderby", orderBy, true);
             }
-            if (select != null)
+            if (@select != null)
             {
-                uri.AppendQuery("$select", select, true);
+                uri.AppendQuery("$select", @select, true);
             }
             if (@from != null)
             {
-                uri.AppendQuery("$from", @from.Value, "O", true);
+                uri.AppendQuery("$from", TypeFormatters.ConvertToString(@from, SerializationFormat.DateTime_RFC3339), true);
             }
             if (to != null)
             {
-                uri.AppendQuery("$to", to.Value, "O", true);
+                uri.AppendQuery("$to", TypeFormatters.ConvertToString(to, SerializationFormat.DateTime_RFC3339), true);
             }
             if (filter != null)
             {
@@ -890,134 +347,12 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 uri.AppendQuery("$apply", apply, true);
             }
-            return uri;
-        }
-
-        internal HttpMessage CreateListQueryResultsForResourceGroupLevelPolicyAssignmentRequest(string subscriptionId, string resourceGroupName, string policyAssignmentName, ComponentPolicyStatesResource componentPolicyStatesResource, int? top, string orderBy, string select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/", false);
-            uri.AppendPath("Microsoft.Authorization", true);
-            uri.AppendPath("/policyAssignments/", false);
-            uri.AppendPath(policyAssignmentName, true);
-            uri.AppendPath("/providers/Microsoft.PolicyInsights/componentPolicyStates/", false);
-            uri.AppendPath(componentPolicyStatesResource.ToString(), true);
-            uri.AppendPath("/queryResults", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (top != null)
-            {
-                uri.AppendQuery("$top", top.Value, true);
-            }
-            if (orderBy != null)
-            {
-                uri.AppendQuery("$orderby", orderBy, true);
-            }
-            if (select != null)
-            {
-                uri.AppendQuery("$select", select, true);
-            }
-            if (@from != null)
-            {
-                uri.AppendQuery("$from", @from.Value, "O", true);
-            }
-            if (to != null)
-            {
-                uri.AppendQuery("$to", to.Value, "O", true);
-            }
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, true);
-            }
-            if (apply != null)
-            {
-                uri.AppendQuery("$apply", apply, true);
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
-        }
-
-        /// <summary> Queries component policy states for the resource group level policy assignment. </summary>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> Resource group name. </param>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="componentPolicyStatesResource"> The virtual resource under ComponentPolicyStates resource type. In a given time range, 'latest' represents the latest component policy state(s). </param>
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="orderBy"> Ordering expression using OData notation. One or more comma-separated column names with an optional "desc" (the default) or "asc", e.g. "$orderby=PolicyAssignmentId, ResourceId asc". </param>
-        /// <param name="select"> Select expression using OData notation. Limits the columns on each record to just those requested, e.g. "$select=PolicyAssignmentId, ResourceId". </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. When not specified, the service uses ($to - 1-day). </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. When not specified, the service uses request time. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <param name="apply"> OData apply expression for aggregations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ComponentPolicyStatesQueryResults>> ListQueryResultsForResourceGroupLevelPolicyAssignmentAsync(string subscriptionId, string resourceGroupName, string policyAssignmentName, ComponentPolicyStatesResource componentPolicyStatesResource, int? top = null, string orderBy = null, string select = null, DateTimeOffset? @from = null, DateTimeOffset? to = null, string filter = null, string apply = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
-
-            using var message = CreateListQueryResultsForResourceGroupLevelPolicyAssignmentRequest(subscriptionId, resourceGroupName, policyAssignmentName, componentPolicyStatesResource, top, orderBy, select, @from, to, filter, apply);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ComponentPolicyStatesQueryResults value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ComponentPolicyStatesQueryResults.DeserializeComponentPolicyStatesQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Queries component policy states for the resource group level policy assignment. </summary>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> Resource group name. </param>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="componentPolicyStatesResource"> The virtual resource under ComponentPolicyStates resource type. In a given time range, 'latest' represents the latest component policy state(s). </param>
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="orderBy"> Ordering expression using OData notation. One or more comma-separated column names with an optional "desc" (the default) or "asc", e.g. "$orderby=PolicyAssignmentId, ResourceId asc". </param>
-        /// <param name="select"> Select expression using OData notation. Limits the columns on each record to just those requested, e.g. "$select=PolicyAssignmentId, ResourceId". </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. When not specified, the service uses ($to - 1-day). </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. When not specified, the service uses request time. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <param name="apply"> OData apply expression for aggregations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ComponentPolicyStatesQueryResults> ListQueryResultsForResourceGroupLevelPolicyAssignment(string subscriptionId, string resourceGroupName, string policyAssignmentName, ComponentPolicyStatesResource componentPolicyStatesResource, int? top = null, string orderBy = null, string select = null, DateTimeOffset? @from = null, DateTimeOffset? to = null, string filter = null, string apply = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
-
-            using var message = CreateListQueryResultsForResourceGroupLevelPolicyAssignmentRequest(subscriptionId, resourceGroupName, policyAssignmentName, componentPolicyStatesResource, top, orderBy, select, @from, to, filter, apply);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ComponentPolicyStatesQueryResults value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ComponentPolicyStatesQueryResults.DeserializeComponentPolicyStatesQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
     }
 }

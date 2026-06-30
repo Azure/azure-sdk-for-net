@@ -8,48 +8,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the HybridConnection data model.
-    /// Hybrid Connection contract. This is used to configure a Hybrid Connection.
-    /// Serialized Name: HybridConnection
-    /// </summary>
+    /// <summary> Hybrid Connection contract. This is used to configure a Hybrid Connection. </summary>
     public partial class HybridConnectionData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HybridConnectionData"/>. </summary>
         public HybridConnectionData()
@@ -57,116 +25,173 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridConnectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: HybridConnection.kind
-        /// </param>
-        /// <param name="serviceBusNamespace">
-        /// The name of the Service Bus namespace.
-        /// Serialized Name: HybridConnection.properties.serviceBusNamespace
-        /// </param>
-        /// <param name="relayName">
-        /// The name of the Service Bus relay.
-        /// Serialized Name: HybridConnection.properties.relayName
-        /// </param>
-        /// <param name="relayArmId">
-        /// The ARM URI to the Service Bus relay.
-        /// Serialized Name: HybridConnection.properties.relayArmUri
-        /// </param>
-        /// <param name="hostname">
-        /// The hostname of the endpoint.
-        /// Serialized Name: HybridConnection.properties.hostname
-        /// </param>
-        /// <param name="port">
-        /// The port of the endpoint.
-        /// Serialized Name: HybridConnection.properties.port
-        /// </param>
-        /// <param name="sendKeyName">
-        /// The name of the Service Bus key which has Send permissions. This is used to authenticate to Service Bus.
-        /// Serialized Name: HybridConnection.properties.sendKeyName
-        /// </param>
-        /// <param name="sendKeyValue">
-        /// The value of the Service Bus key. This is used to authenticate to Service Bus. In ARM this key will not be returned
-        /// normally, use the POST /listKeys API instead.
-        /// Serialized Name: HybridConnection.properties.sendKeyValue
-        /// </param>
-        /// <param name="serviceBusSuffix">
-        /// The suffix for the service bus endpoint. By default this is .servicebus.windows.net
-        /// Serialized Name: HybridConnection.properties.serviceBusSuffix
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string serviceBusNamespace, string relayName, ResourceIdentifier relayArmId, string hostname, int? port, string sendKeyName, string sendKeyValue, string serviceBusSuffix, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> HybridConnection resource specific properties. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HybridConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HybridConnectionProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
             Kind = kind;
-            ServiceBusNamespace = serviceBusNamespace;
-            RelayName = relayName;
-            RelayArmId = relayArmId;
-            Hostname = hostname;
-            Port = port;
-            SendKeyName = sendKeyName;
-            SendKeyValue = sendKeyValue;
-            ServiceBusSuffix = serviceBusSuffix;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> HybridConnection resource specific properties. </summary>
+        [WirePath("properties")]
+        internal HybridConnectionProperties Properties { get; set; }
+
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
+
+        /// <summary> The name of the Service Bus namespace. </summary>
+        [WirePath("properties.serviceBusNamespace")]
+        public string ServiceBusNamespace
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServiceBusNamespace;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HybridConnectionProperties();
+                }
+                Properties.ServiceBusNamespace = value;
+            }
+        }
+
+        /// <summary> The name of the Service Bus relay. </summary>
+        [WirePath("properties.relayName")]
+        public string RelayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RelayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HybridConnectionProperties();
+                }
+                Properties.RelayName = value;
+            }
+        }
+
+        /// <summary> The ARM URI to the Service Bus relay. </summary>
+        [WirePath("properties.relayArmUri")]
+        public ResourceIdentifier RelayArmId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RelayArmId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HybridConnectionProperties();
+                }
+                Properties.RelayArmId = value;
+            }
+        }
+
+        /// <summary> The hostname of the endpoint. </summary>
+        [WirePath("properties.hostname")]
+        public string Hostname
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Hostname;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HybridConnectionProperties();
+                }
+                Properties.Hostname = value;
+            }
+        }
+
+        /// <summary> The port of the endpoint. </summary>
+        [WirePath("properties.port")]
+        public int? Port
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Port;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HybridConnectionProperties();
+                }
+                Properties.Port = value;
+            }
+        }
+
+        /// <summary> The name of the Service Bus key which has Send permissions. This is used to authenticate to Service Bus. </summary>
+        [WirePath("properties.sendKeyName")]
+        public string SendKeyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SendKeyName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HybridConnectionProperties();
+                }
+                Properties.SendKeyName = value;
+            }
         }
 
         /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: HybridConnection.kind
-        /// </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
-        /// <summary>
-        /// The name of the Service Bus namespace.
-        /// Serialized Name: HybridConnection.properties.serviceBusNamespace
-        /// </summary>
-        [WirePath("properties.serviceBusNamespace")]
-        public string ServiceBusNamespace { get; set; }
-        /// <summary>
-        /// The name of the Service Bus relay.
-        /// Serialized Name: HybridConnection.properties.relayName
-        /// </summary>
-        [WirePath("properties.relayName")]
-        public string RelayName { get; set; }
-        /// <summary>
-        /// The ARM URI to the Service Bus relay.
-        /// Serialized Name: HybridConnection.properties.relayArmUri
-        /// </summary>
-        [WirePath("properties.relayArmUri")]
-        public ResourceIdentifier RelayArmId { get; set; }
-        /// <summary>
-        /// The hostname of the endpoint.
-        /// Serialized Name: HybridConnection.properties.hostname
-        /// </summary>
-        [WirePath("properties.hostname")]
-        public string Hostname { get; set; }
-        /// <summary>
-        /// The port of the endpoint.
-        /// Serialized Name: HybridConnection.properties.port
-        /// </summary>
-        [WirePath("properties.port")]
-        public int? Port { get; set; }
-        /// <summary>
-        /// The name of the Service Bus key which has Send permissions. This is used to authenticate to Service Bus.
-        /// Serialized Name: HybridConnection.properties.sendKeyName
-        /// </summary>
-        [WirePath("properties.sendKeyName")]
-        public string SendKeyName { get; set; }
-        /// <summary>
         /// The value of the Service Bus key. This is used to authenticate to Service Bus. In ARM this key will not be returned
         /// normally, use the POST /listKeys API instead.
-        /// Serialized Name: HybridConnection.properties.sendKeyValue
         /// </summary>
         [WirePath("properties.sendKeyValue")]
-        public string SendKeyValue { get; set; }
-        /// <summary>
-        /// The suffix for the service bus endpoint. By default this is .servicebus.windows.net
-        /// Serialized Name: HybridConnection.properties.serviceBusSuffix
-        /// </summary>
+        public string SendKeyValue
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SendKeyValue;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HybridConnectionProperties();
+                }
+                Properties.SendKeyValue = value;
+            }
+        }
+
+        /// <summary> The suffix for the service bus endpoint. By default this is .servicebus.windows.net. </summary>
         [WirePath("properties.serviceBusSuffix")]
-        public string ServiceBusSuffix { get; set; }
+        public string ServiceBusSuffix
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServiceBusSuffix;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HybridConnectionProperties();
+                }
+                Properties.ServiceBusSuffix = value;
+            }
+        }
     }
 }

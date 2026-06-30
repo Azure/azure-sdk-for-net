@@ -91,6 +91,10 @@ namespace Azure.Provisioning.ContainerInstance
             _port = DefineProperty<int>(nameof(Port), new string[] { "port" }, isRequired: true);
             _scheme = DefineProperty<ContainerHttpGetScheme>(nameof(Scheme), new string[] { "scheme" });
             _httpHeaders = DefineListProperty<ContainerHttpHeader>(nameof(HttpHeaders), new string[] { "httpHeaders" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerHttpGet that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

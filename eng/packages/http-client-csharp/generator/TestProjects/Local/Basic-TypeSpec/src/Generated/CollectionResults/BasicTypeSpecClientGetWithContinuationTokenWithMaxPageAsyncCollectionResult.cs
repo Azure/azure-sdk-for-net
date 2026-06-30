@@ -53,13 +53,13 @@ namespace BasicTypeSpec
                     yield break;
                 }
                 ListWithContinuationTokenWithMaxPageResponse result = (ListWithContinuationTokenWithMaxPageResponse)response;
+                nextPage = result.NextToken;
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Things)
                 {
                     items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default));
                 }
                 yield return Page<BinaryData>.FromValues(items, nextPage, response);
-                nextPage = result.NextToken;
                 if (string.IsNullOrEmpty(nextPage))
                 {
                     yield break;

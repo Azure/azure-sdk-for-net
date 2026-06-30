@@ -8,18 +8,77 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class FunctionEnvelopeData : IUtf8JsonSerializable, IJsonModel<FunctionEnvelopeData>
+    /// <summary> Function information. </summary>
+    public partial class FunctionEnvelopeData : ResourceData, IJsonModel<FunctionEnvelopeData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FunctionEnvelopeData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FunctionEnvelopeData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeFunctionEnvelopeData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FunctionEnvelopeData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FunctionEnvelopeData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(FunctionEnvelopeData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FunctionEnvelopeData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FunctionEnvelopeData IPersistableModel<FunctionEnvelopeData>.Create(BinaryData data, ModelReaderWriterOptions options) => (FunctionEnvelopeData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FunctionEnvelopeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="functionEnvelopeData"> The <see cref="FunctionEnvelopeData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(FunctionEnvelopeData functionEnvelopeData)
+        {
+            if (functionEnvelopeData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(functionEnvelopeData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="FunctionEnvelopeData"/> from. </param>
+        internal static FunctionEnvelopeData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeFunctionEnvelopeData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FunctionEnvelopeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,717 +90,132 @@ namespace Azure.ResourceManager.AppService
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FunctionEnvelopeData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FunctionEnvelopeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FunctionEnvelopeData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(FunctionAppId))
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("function_app_id"u8);
-                writer.WriteStringValue(FunctionAppId);
-            }
-            if (Optional.IsDefined(ScriptRootPathHref))
-            {
-                writer.WritePropertyName("script_root_path_href"u8);
-                writer.WriteStringValue(ScriptRootPathHref);
-            }
-            if (Optional.IsDefined(ScriptHref))
-            {
-                writer.WritePropertyName("script_href"u8);
-                writer.WriteStringValue(ScriptHref);
-            }
-            if (Optional.IsDefined(ConfigHref))
-            {
-                writer.WritePropertyName("config_href"u8);
-                writer.WriteStringValue(ConfigHref);
-            }
-            if (Optional.IsDefined(TestDataHref))
-            {
-                writer.WritePropertyName("test_data_href"u8);
-                writer.WriteStringValue(TestDataHref);
-            }
-            if (Optional.IsDefined(SecretsFileHref))
-            {
-                writer.WritePropertyName("secrets_file_href"u8);
-                writer.WriteStringValue(SecretsFileHref);
-            }
-            if (Optional.IsDefined(Href))
-            {
-                writer.WritePropertyName("href"u8);
-                writer.WriteStringValue(Href);
-            }
-            if (Optional.IsDefined(Config))
-            {
-                writer.WritePropertyName("config"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Config);
-#else
-                using (JsonDocument document = JsonDocument.Parse(Config, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
-            if (Optional.IsCollectionDefined(Files))
-            {
-                writer.WritePropertyName("files"u8);
-                writer.WriteStartObject();
-                foreach (var item in Files)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
-                writer.WriteEndObject();
             }
-            if (Optional.IsDefined(TestData))
-            {
-                writer.WritePropertyName("test_data"u8);
-                writer.WriteStringValue(TestData);
-            }
-            if (Optional.IsDefined(InvokeUrlTemplate))
-            {
-                writer.WritePropertyName("invoke_url_template"u8);
-                writer.WriteStringValue(InvokeUrlTemplate);
-            }
-            if (Optional.IsDefined(Language))
-            {
-                writer.WritePropertyName("language"u8);
-                writer.WriteStringValue(Language);
-            }
-            if (Optional.IsDefined(IsDisabled))
-            {
-                writer.WritePropertyName("isDisabled"u8);
-                writer.WriteBooleanValue(IsDisabled.Value);
-            }
-            writer.WriteEndObject();
         }
 
-        FunctionEnvelopeData IJsonModel<FunctionEnvelopeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FunctionEnvelopeData IJsonModel<FunctionEnvelopeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (FunctionEnvelopeData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FunctionEnvelopeData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FunctionEnvelopeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FunctionEnvelopeData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFunctionEnvelopeData(document.RootElement, options);
         }
 
-        internal static FunctionEnvelopeData DeserializeFunctionEnvelopeData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static FunctionEnvelopeData DeserializeFunctionEnvelopeData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            string functionAppId = default;
-            string scriptRootPathHref = default;
-            string scriptHref = default;
-            string configHref = default;
-            string testDataHref = default;
-            string secretsFileHref = default;
-            string href = default;
-            BinaryData config = default;
-            IDictionary<string, string> files = default;
-            string testData = default;
-            string invokeUrlTemplate = default;
-            string language = default;
-            bool? isDisabled = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            FunctionEnvelopeProperties properties = default;
+            string kind = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    kind = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("function_app_id"u8))
-                        {
-                            functionAppId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("script_root_path_href"u8))
-                        {
-                            scriptRootPathHref = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("script_href"u8))
-                        {
-                            scriptHref = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("config_href"u8))
-                        {
-                            configHref = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("test_data_href"u8))
-                        {
-                            testDataHref = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("secrets_file_href"u8))
-                        {
-                            secretsFileHref = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("href"u8))
-                        {
-                            href = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("config"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            config = BinaryData.FromString(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("files"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, property1.Value.GetString());
-                            }
-                            files = dictionary;
-                            continue;
-                        }
-                        if (property0.NameEquals("test_data"u8))
-                        {
-                            testData = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("invoke_url_template"u8))
-                        {
-                            invokeUrlTemplate = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("language"u8))
-                        {
-                            language = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("isDisabled"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isDisabled = property0.Value.GetBoolean();
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = FunctionEnvelopeProperties.DeserializeFunctionEnvelopeProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("kind"u8))
+                {
+                    kind = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new FunctionEnvelopeData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
+                properties,
                 kind,
-                functionAppId,
-                scriptRootPathHref,
-                scriptHref,
-                configHref,
-                testDataHref,
-                secretsFileHref,
-                href,
-                config,
-                files ?? new ChangeTrackingDictionary<string, string>(),
-                testData,
-                invokeUrlTemplate,
-                language,
-                isDisabled,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  kind: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Kind))
-                {
-                    builder.Append("  kind: ");
-                    if (Kind.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Kind}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Kind}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SystemData))
-                {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FunctionAppId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    function_app_id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(FunctionAppId))
-                {
-                    builder.Append("    function_app_id: ");
-                    if (FunctionAppId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{FunctionAppId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{FunctionAppId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScriptRootPathHref), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    script_root_path_href: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ScriptRootPathHref))
-                {
-                    builder.Append("    script_root_path_href: ");
-                    if (ScriptRootPathHref.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ScriptRootPathHref}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ScriptRootPathHref}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScriptHref), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    script_href: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ScriptHref))
-                {
-                    builder.Append("    script_href: ");
-                    if (ScriptHref.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ScriptHref}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ScriptHref}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConfigHref), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    config_href: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ConfigHref))
-                {
-                    builder.Append("    config_href: ");
-                    if (ConfigHref.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ConfigHref}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ConfigHref}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TestDataHref), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    test_data_href: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TestDataHref))
-                {
-                    builder.Append("    test_data_href: ");
-                    if (TestDataHref.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{TestDataHref}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{TestDataHref}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecretsFileHref), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    secrets_file_href: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SecretsFileHref))
-                {
-                    builder.Append("    secrets_file_href: ");
-                    if (SecretsFileHref.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SecretsFileHref}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SecretsFileHref}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Href), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    href: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Href))
-                {
-                    builder.Append("    href: ");
-                    if (Href.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Href}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Href}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Config), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    config: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Config))
-                {
-                    builder.Append("    config: ");
-                    builder.AppendLine($"'{Config.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Files), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    files: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Files))
-                {
-                    if (Files.Any())
-                    {
-                        builder.Append("    files: ");
-                        builder.AppendLine("{");
-                        foreach (var item in Files)
-                        {
-                            builder.Append($"        '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Value.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("'''");
-                                builder.AppendLine($"{item.Value}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"'{item.Value}'");
-                            }
-                        }
-                        builder.AppendLine("    }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TestData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    test_data: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TestData))
-                {
-                    builder.Append("    test_data: ");
-                    if (TestData.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{TestData}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{TestData}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InvokeUrlTemplate), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    invoke_url_template: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(InvokeUrlTemplate))
-                {
-                    builder.Append("    invoke_url_template: ");
-                    if (InvokeUrlTemplate.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{InvokeUrlTemplate}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{InvokeUrlTemplate}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Language), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    language: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Language))
-                {
-                    builder.Append("    language: ");
-                    if (Language.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Language}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Language}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDisabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    isDisabled: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsDisabled))
-                {
-                    builder.Append("    isDisabled: ");
-                    var boolValue = IsDisabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<FunctionEnvelopeData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FunctionEnvelopeData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(FunctionEnvelopeData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        FunctionEnvelopeData IPersistableModel<FunctionEnvelopeData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FunctionEnvelopeData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeFunctionEnvelopeData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FunctionEnvelopeData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<FunctionEnvelopeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

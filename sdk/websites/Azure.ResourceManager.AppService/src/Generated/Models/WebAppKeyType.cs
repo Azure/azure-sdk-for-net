@@ -7,60 +7,67 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The key type.
-    /// Serialized Name: KeyType
-    /// </summary>
+    /// <summary> The key type. </summary>
     public readonly partial struct WebAppKeyType : IEquatable<WebAppKeyType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="WebAppKeyType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public WebAppKeyType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NotSpecifiedValue = "NotSpecified";
         private const string PrimaryValue = "Primary";
         private const string SecondaryValue = "Secondary";
 
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: KeyType.NotSpecified
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public WebAppKeyType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NotSpecified. </summary>
         public static WebAppKeyType NotSpecified { get; } = new WebAppKeyType(NotSpecifiedValue);
-        /// <summary>
-        /// Primary
-        /// Serialized Name: KeyType.Primary
-        /// </summary>
+
+        /// <summary> Gets the Primary. </summary>
         public static WebAppKeyType Primary { get; } = new WebAppKeyType(PrimaryValue);
-        /// <summary>
-        /// Secondary
-        /// Serialized Name: KeyType.Secondary
-        /// </summary>
+
+        /// <summary> Gets the Secondary. </summary>
         public static WebAppKeyType Secondary { get; } = new WebAppKeyType(SecondaryValue);
+
         /// <summary> Determines if two <see cref="WebAppKeyType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WebAppKeyType left, WebAppKeyType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WebAppKeyType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WebAppKeyType left, WebAppKeyType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WebAppKeyType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WebAppKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WebAppKeyType(string value) => new WebAppKeyType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WebAppKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WebAppKeyType?(string value) => value == null ? null : new WebAppKeyType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WebAppKeyType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WebAppKeyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
+    /// <summary></summary>
     public partial class SiteSlotNetworkConfigResource : IJsonModel<SwiftVirtualNetworkData>
     {
-        private static SwiftVirtualNetworkData s_dataDeserializationInstance;
-        private static SwiftVirtualNetworkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SwiftVirtualNetworkData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SwiftVirtualNetworkData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SwiftVirtualNetworkData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SwiftVirtualNetworkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SwiftVirtualNetworkData>)Data).Write(writer, options);
 
-        SwiftVirtualNetworkData IJsonModel<SwiftVirtualNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SwiftVirtualNetworkData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SwiftVirtualNetworkData IJsonModel<SwiftVirtualNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SwiftVirtualNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SwiftVirtualNetworkData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SwiftVirtualNetworkData IPersistableModel<SwiftVirtualNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SwiftVirtualNetworkData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<SwiftVirtualNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SwiftVirtualNetworkData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SwiftVirtualNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

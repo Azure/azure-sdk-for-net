@@ -8,180 +8,175 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Class representing Response from Diagnostic Detectors
-    /// Serialized Name: DiagnosticDetectorResponse
-    /// </summary>
+    /// <summary> Class representing Response from Diagnostic Detectors. </summary>
     public partial class DiagnosticDetectorResponse : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticDetectorResponse"/>. </summary>
         public DiagnosticDetectorResponse()
         {
-            Metrics = new ChangeTrackingList<DiagnosticMetricSet>();
-            AbnormalTimePeriods = new ChangeTrackingList<DetectorAbnormalTimePeriod>();
-            Data = new ChangeTrackingList<IList<AppServiceNameValuePair>>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticDetectorResponse"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="startOn">
-        /// Start time of the period
-        /// Serialized Name: DiagnosticDetectorResponse.properties.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// End time of the period
-        /// Serialized Name: DiagnosticDetectorResponse.properties.endTime
-        /// </param>
-        /// <param name="issueDetected">
-        /// Flag representing Issue was detected.
-        /// Serialized Name: DiagnosticDetectorResponse.properties.issueDetected
-        /// </param>
-        /// <param name="detectorDefinition">
-        /// Detector's definition
-        /// Serialized Name: DiagnosticDetectorResponse.properties.detectorDefinition
-        /// </param>
-        /// <param name="metrics">
-        /// Metrics provided by the detector
-        /// Serialized Name: DiagnosticDetectorResponse.properties.metrics
-        /// </param>
-        /// <param name="abnormalTimePeriods">
-        /// List of Correlated events found by the detector
-        /// Serialized Name: DiagnosticDetectorResponse.properties.abnormalTimePeriods
-        /// </param>
-        /// <param name="data">
-        /// Additional Data that detector wants to send.
-        /// Serialized Name: DiagnosticDetectorResponse.properties.data
-        /// </param>
-        /// <param name="responseMetaData">
-        /// Meta Data
-        /// Serialized Name: DiagnosticDetectorResponse.properties.responseMetaData
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiagnosticDetectorResponse(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, bool? issueDetected, DetectorDefinition detectorDefinition, IList<DiagnosticMetricSet> metrics, IList<DetectorAbnormalTimePeriod> abnormalTimePeriods, IList<IList<AppServiceNameValuePair>> data, DetectorMetadata responseMetaData, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> DiagnosticDetectorResponse resource specific properties. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DiagnosticDetectorResponse(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DiagnosticDetectorResponseProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            StartOn = startOn;
-            EndOn = endOn;
-            IssueDetected = issueDetected;
-            DetectorDefinition = detectorDefinition;
-            Metrics = metrics;
-            AbnormalTimePeriods = abnormalTimePeriods;
-            Data = data;
-            ResponseMetaData = responseMetaData;
+            Properties = properties;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Start time of the period
-        /// Serialized Name: DiagnosticDetectorResponse.properties.startTime
-        /// </summary>
+        /// <summary> DiagnosticDetectorResponse resource specific properties. </summary>
+        [WirePath("properties")]
+        internal DiagnosticDetectorResponseProperties Properties { get; set; }
+
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
+
+        /// <summary> Start time of the period. </summary>
         [WirePath("properties.startTime")]
-        public DateTimeOffset? StartOn { get; set; }
-        /// <summary>
-        /// End time of the period
-        /// Serialized Name: DiagnosticDetectorResponse.properties.endTime
-        /// </summary>
-        [WirePath("properties.endTime")]
-        public DateTimeOffset? EndOn { get; set; }
-        /// <summary>
-        /// Flag representing Issue was detected.
-        /// Serialized Name: DiagnosticDetectorResponse.properties.issueDetected
-        /// </summary>
-        [WirePath("properties.issueDetected")]
-        public bool? IssueDetected { get; set; }
-        /// <summary>
-        /// Detector's definition
-        /// Serialized Name: DiagnosticDetectorResponse.properties.detectorDefinition
-        /// </summary>
-        [WirePath("properties.detectorDefinition")]
-        public DetectorDefinition DetectorDefinition { get; set; }
-        /// <summary>
-        /// Metrics provided by the detector
-        /// Serialized Name: DiagnosticDetectorResponse.properties.metrics
-        /// </summary>
-        [WirePath("properties.metrics")]
-        public IList<DiagnosticMetricSet> Metrics { get; }
-        /// <summary>
-        /// List of Correlated events found by the detector
-        /// Serialized Name: DiagnosticDetectorResponse.properties.abnormalTimePeriods
-        /// </summary>
-        [WirePath("properties.abnormalTimePeriods")]
-        public IList<DetectorAbnormalTimePeriod> AbnormalTimePeriods { get; }
-        /// <summary>
-        /// Additional Data that detector wants to send.
-        /// Serialized Name: DiagnosticDetectorResponse.properties.data
-        /// </summary>
-        [WirePath("properties.data")]
-        public IList<IList<AppServiceNameValuePair>> Data { get; }
-        /// <summary>
-        /// Meta Data
-        /// Serialized Name: DiagnosticDetectorResponse.properties.responseMetaData
-        /// </summary>
-        internal DetectorMetadata ResponseMetaData { get; set; }
-        /// <summary>
-        /// Source of the Data
-        /// Serialized Name: ResponseMetaData.dataSource
-        /// </summary>
-        [WirePath("properties.responseMetaData.dataSource")]
-        public DetectorDataSource DataSource
+        public DateTimeOffset? StartOn
         {
-            get => ResponseMetaData is null ? default : ResponseMetaData.DataSource;
+            get
+            {
+                return Properties is null ? default : Properties.StartOn;
+            }
             set
             {
-                if (ResponseMetaData is null)
-                    ResponseMetaData = new DetectorMetadata();
-                ResponseMetaData.DataSource = value;
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticDetectorResponseProperties();
+                }
+                Properties.StartOn = value;
             }
         }
 
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
+        /// <summary> End time of the period. </summary>
+        [WirePath("properties.endTime")]
+        public DateTimeOffset? EndOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticDetectorResponseProperties();
+                }
+                Properties.EndOn = value;
+            }
+        }
+
+        /// <summary> Flag representing Issue was detected. </summary>
+        [WirePath("properties.issueDetected")]
+        public bool? IssueDetected
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IssueDetected;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticDetectorResponseProperties();
+                }
+                Properties.IssueDetected = value;
+            }
+        }
+
+        /// <summary> Detector's definition. </summary>
+        [WirePath("properties.detectorDefinition")]
+        public DetectorDefinition DetectorDefinition
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DetectorDefinition;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticDetectorResponseProperties();
+                }
+                Properties.DetectorDefinition = value;
+            }
+        }
+
+        /// <summary> Metrics provided by the detector. </summary>
+        [WirePath("properties.metrics")]
+        public IList<DiagnosticMetricSet> Metrics
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticDetectorResponseProperties();
+                }
+                return Properties.Metrics;
+            }
+        }
+
+        /// <summary> List of Correlated events found by the detector. </summary>
+        [WirePath("properties.abnormalTimePeriods")]
+        public IList<DetectorAbnormalTimePeriod> AbnormalTimePeriods
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticDetectorResponseProperties();
+                }
+                return Properties.AbnormalTimePeriods;
+            }
+        }
+
+        /// <summary> Additional Data that detector wants to send. </summary>
+        [WirePath("properties.data")]
+        public IList<IList<AppServiceNameValuePair>> Data
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticDetectorResponseProperties();
+                }
+                return Properties.Data;
+            }
+        }
+
+        /// <summary> Source of the Data. </summary>
+        [WirePath("properties.responseMetaData.dataSource")]
+        public DetectorDataSource DataSource
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataSource;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticDetectorResponseProperties();
+                }
+                Properties.DataSource = value;
+            }
+        }
     }
 }

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> ExpressRoute failover single test details. </summary>
     public partial class ExpressRouteFailoverSingleTestDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteFailoverSingleTestDetails"/>. </summary>
         internal ExpressRouteFailoverSingleTestDetails()
@@ -62,8 +34,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="nonRedundantRoutes"> List of al the routes that were received only from this peering location. </param>
         /// <param name="wasSimulationSuccessful"> Whether the failover simulation was successful or not. </param>
         /// <param name="failoverConnectionDetails"> List of all the failover connections for this peering location. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressRouteFailoverSingleTestDetails(string peeringLocation, FailoverTestStatusForSingleTest? status, string startTimeUtc, string endTimeUtc, IReadOnlyList<ExpressRouteFailoverRedundantRoute> redundantRoutes, IReadOnlyList<string> nonRedundantRoutes, bool? wasSimulationSuccessful, IReadOnlyList<FailoverConnectionDetails> failoverConnectionDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ExpressRouteFailoverSingleTestDetails(string peeringLocation, FailoverTestStatusForSingleTest? status, string startTimeUtc, string endTimeUtc, IReadOnlyList<ExpressRouteFailoverRedundantRoute> redundantRoutes, IReadOnlyList<string> nonRedundantRoutes, bool? wasSimulationSuccessful, IReadOnlyList<FailoverConnectionDetails> failoverConnectionDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PeeringLocation = peeringLocation;
             Status = status;
@@ -73,30 +45,37 @@ namespace Azure.ResourceManager.Network.Models
             NonRedundantRoutes = nonRedundantRoutes;
             WasSimulationSuccessful = wasSimulationSuccessful;
             FailoverConnectionDetails = failoverConnectionDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Peering location of the test. </summary>
         [WirePath("peeringLocation")]
         public string PeeringLocation { get; }
+
         /// <summary> The current status of the test. </summary>
         [WirePath("status")]
         public FailoverTestStatusForSingleTest? Status { get; }
+
         /// <summary> Time when the test was started. </summary>
         [WirePath("startTimeUtc")]
         public string StartTimeUtc { get; }
+
         /// <summary> Time when the test was completed. </summary>
         [WirePath("endTimeUtc")]
         public string EndTimeUtc { get; }
+
         /// <summary> List of routes received from this peering as well as some other peering location. </summary>
         [WirePath("redundantRoutes")]
         public IReadOnlyList<ExpressRouteFailoverRedundantRoute> RedundantRoutes { get; }
+
         /// <summary> List of al the routes that were received only from this peering location. </summary>
         [WirePath("nonRedundantRoutes")]
         public IReadOnlyList<string> NonRedundantRoutes { get; }
+
         /// <summary> Whether the failover simulation was successful or not. </summary>
         [WirePath("wasSimulationSuccessful")]
         public bool? WasSimulationSuccessful { get; }
+
         /// <summary> List of all the failover connections for this peering location. </summary>
         [WirePath("failoverConnectionDetails")]
         public IReadOnlyList<FailoverConnectionDetails> FailoverConnectionDetails { get; }

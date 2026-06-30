@@ -119,6 +119,10 @@ namespace Azure.Provisioning.KeyVault
             _id = DefineProperty<string>(nameof(Id), new string[] { "id" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
             _properties = DefineModelProperty<PrivateEndpointConnectionProperties>(nameof(Properties), new string[] { "properties" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for KeyVaultPrivateEndpointConnectionItemData that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

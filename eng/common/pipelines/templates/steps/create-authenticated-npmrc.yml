@@ -1,34 +1,41 @@
 parameters:
   - name: npmrcPath
     type: string
+    # When empty, defaults to the agent user's .npmrc ($HOME/.npmrc on
+    # Linux/macOS, %USERPROFILE%\.npmrc on Windows) so every subsequent
+    # npm / pnpm / npx call in the job inherits the registry + auth.
+    default: ""
   - name: registryUrl
     type: string
-    default: 'https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js/npm/registry/'
+    default: "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js/npm/registry/"
   - name: CustomCondition
     type: string
     default: succeeded()
   - name: ServiceConnection
     type: string
-    default: ''
+    default: ""
 
 steps:
-- pwsh: |
-    Write-Host "Creating .npmrc file ${{ parameters.npmrcPath }} for registry ${{ parameters.registryUrl }}"
-    $parentFolder = Split-Path -Path '${{ parameters.npmrcPath }}' -Parent
-    
-    if (!(Test-Path $parentFolder)) {
-      Write-Host "Creating folder $parentFolder"
-      New-Item -Path $parentFolder -ItemType Directory | Out-Null
-    }
+  - pwsh: |
+      $npmrcPath = '${{ parameters.npmrcPath }}'
+      if (-not $npmrcPath) { $npmrcPath = Join-Path $HOME '.npmrc' }
 
-    $content = "registry=${{ parameters.registryUrl }}"
-    $content | Out-File '${{ parameters.npmrcPath }}'
-  displayName: 'Create .npmrc'
-  condition: ${{ parameters.CustomCondition }}
+      Write-Host "Creating .npmrc file $npmrcPath for registry ${{ parameters.registryUrl }}"
+      $parentFolder = Split-Path -Path $npmrcPath -Parent
 
-- task: npmAuthenticate@0
-  displayName: Authenticate .npmrc
-  condition: ${{ parameters.CustomCondition }}
-  inputs:
-    workingFile: ${{ parameters.npmrcPath }}
-    azureDevOpsServiceConnection: ${{ parameters.ServiceConnection }}
+      if ($parentFolder -and -not (Test-Path $parentFolder)) {
+        Write-Host "Creating folder $parentFolder"
+        New-Item -Path $parentFolder -ItemType Directory | Out-Null
+      }
+
+      "registry=${{ parameters.registryUrl }}" | Out-File $npmrcPath
+      Write-Host "##vso[task.setvariable variable=resolvedNpmrcPath]$npmrcPath"
+    displayName: "Create .npmrc"
+    condition: ${{ parameters.CustomCondition }}
+
+  - task: npmAuthenticate@0
+    displayName: Authenticate .npmrc
+    condition: ${{ parameters.CustomCondition }}
+    inputs:
+      workingFile: $(resolvedNpmrcPath)
+      azureDevOpsServiceConnection: ${{ parameters.ServiceConnection }}

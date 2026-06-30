@@ -91,6 +91,10 @@ namespace Azure.Provisioning.ContainerService
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _osType = DefineProperty<ContainerServiceOSType>(nameof(OSType), new string[] { "osType" }, isRequired: true);
             _upgrades = DefineListProperty<ManagedClusterPoolUpgradeProfileUpgradesItem>(nameof(Upgrades), new string[] { "upgrades" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterPoolUpgradeProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

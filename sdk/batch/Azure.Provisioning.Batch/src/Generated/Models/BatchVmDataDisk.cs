@@ -91,6 +91,10 @@ namespace Azure.Provisioning.Batch
             _caching = DefineProperty<BatchDiskCachingType>(nameof(Caching), new string[] { "caching" });
             _diskSizeInGB = DefineProperty<int>(nameof(DiskSizeInGB), new string[] { "diskSizeGB" }, isRequired: true);
             _managedDisk = DefineModelProperty<ManagedDisk>(nameof(ManagedDisk), new string[] { "managedDisk" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchVmDataDisk that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

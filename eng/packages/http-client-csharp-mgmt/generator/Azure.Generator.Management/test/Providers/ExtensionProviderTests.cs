@@ -4,6 +4,10 @@
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
+using Azure.Generator.Management.Utilities;
+using Azure;
+using Azure.Core;
+using Azure.ResourceManager;
 using Humanizer;
 using NUnit.Framework;
 
@@ -88,6 +92,53 @@ namespace Azure.Generator.Management.Tests.Providers
                 Assert.That(mockableResource.Methods.Count, Is.GreaterThan(0),
                     $"MockableResourceProvider '{mockableResource.Name}' should have at least one method to be included in the output.");
             }
+        }
+
+        [TestCase]
+        public void Verify_MockingCrefQualifiesModelParameters()
+        {
+            var model = InputFactory.Model("ResponseType", clientNamespace: "Samples.Models");
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [model]);
+            var modelType = plugin.Object.TypeFactory.CreateCSharpType(model);
+            Assert.That(modelType, Is.Not.Null);
+
+            Assert.That(modelType!.GetXmlDocTypeName(), Is.EqualTo("Samples.Models.ResponseType"));
+        }
+
+        [TestCase]
+        public void Verify_ExtensionScopedResourceListMethod_GeneratedOnArmClient()
+        {
+            var (client, models) = InputResourceData.ClientWithExtensionScopedResourceList();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => models,
+                clients: () => [client]);
+
+            var mockableArmClient = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<MockableResourceProvider>()
+                .SingleOrDefault(p => p.ArmCoreType.Equals(typeof(ArmClient)));
+            Assert.That(mockableArmClient, Is.Not.Null);
+
+            var mockableMethod = mockableArmClient!.Methods.SingleOrDefault(m => m.Signature.Name == "GetEvents");
+            Assert.That(mockableMethod, Is.Not.Null);
+            var returnType = mockableMethod!.Signature.ReturnType;
+            Assert.That(returnType, Is.Not.Null);
+            Assert.That(returnType!.FrameworkType, Is.EqualTo(typeof(Pageable<>)));
+            Assert.That(returnType.Arguments[0].Name, Is.EqualTo("EventResource"));
+            Assert.That(mockableMethod.Signature.Parameters[0].Name, Is.EqualTo("scope"));
+            Assert.That(mockableMethod.Signature.Parameters[0].Type.Name, Is.EqualTo(nameof(ResourceIdentifier)));
+
+            var extension = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ExtensionProvider>()
+                .SingleOrDefault();
+            Assert.That(extension, Is.Not.Null);
+
+            var extensionMethod = extension!.Methods.FirstOrDefault(m =>
+                m.Signature.Name == "GetEvents" &&
+                m.Signature.Parameters[0].Type.Name == nameof(ArmClient));
+            Assert.That(extensionMethod, Is.Not.Null);
+            Assert.That(extensionMethod!.Signature.Parameters[0].Type.Name, Is.EqualTo(nameof(ArmClient)));
+            Assert.That(extensionMethod.Signature.Parameters[1].Name, Is.EqualTo("scope"));
+            Assert.That(extensionMethod.Signature.Parameters[1].Type.Name, Is.EqualTo(nameof(ResourceIdentifier)));
         }
     }
 }

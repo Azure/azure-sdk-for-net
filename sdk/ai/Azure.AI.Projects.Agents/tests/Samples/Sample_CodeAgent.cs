@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -12,7 +11,6 @@ using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Agents.Tests.Samples;
-# pragma warning disable AAIP001
 public class Sample_CodeAgent : SamplesBase
 {
     protected static string GetDirectory(string path, [CallerFilePath] string pth = "")
@@ -22,7 +20,7 @@ public class Sample_CodeAgent : SamplesBase
     }
 
     #region Snippet:Sample_CodeAgentMetadata_CodeAgent
-    private static CreateAgentVersionFromCodeMetadata GetAgentMetadata()
+    private static AgentVersionFromCodeMetadata GetAgentMetadata()
     {
         HostedAgentDefinition agentDefinition = new(
             cpu: "0.5",
@@ -36,7 +34,7 @@ public class Sample_CodeAgent : SamplesBase
                 dependencyResolution: CodeDependencyResolution.RemoteBuild
             ),
         };
-        CreateAgentVersionFromCodeMetadata metadata = new(agentDefinition);
+        AgentVersionFromCodeMetadata metadata = new(agentDefinition);
         metadata.Metadata["enableVnextExperience"] = "true";
         return metadata;
     }
@@ -57,9 +55,7 @@ public class Sample_CodeAgent : SamplesBase
         }
         catch { }
         #region Snippet:Sample_CodeAgentDeployment_CodeAgent_Async
-        AgentAdministrationClientOptions options = new();
-        options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview,CodeAgents=V1Preview"), PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         ProjectsAgentVersion agentVersion = await agentsClient.CreateAgentVersionFromCodeAsync(
             agentName: "myCodeAgent",
             filePath: GetDirectory(Path.Combine(["AgentsCode"])),
@@ -95,9 +91,7 @@ public class Sample_CodeAgent : SamplesBase
             Directory.Delete(Path.GetFullPath("./AgentCode"), recursive: true);
         }
         catch { }
-        AgentAdministrationClientOptions options = new();
-        options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview,CodeAgents=V1Preview"), PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         ProjectsAgentVersion agentVersion = agentsClient.CreateAgentVersionFromCode(
             agentName: "myCodeAgent",
             filePath: GetDirectory(Path.Combine(["AgentsCode"])),

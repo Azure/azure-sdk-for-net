@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct WebApplicationFirewallAction : IEquatable<WebApplicationFirewallAction>
     {
         private readonly string _value;
+        /// <summary> Allow. </summary>
+        private const string AllowValue = "Allow";
+        /// <summary> Block. </summary>
+        private const string BlockValue = "Block";
+        /// <summary> Log. </summary>
+        private const string LogValue = "Log";
+        /// <summary> JSChallenge. </summary>
+        private const string JSChallengeValue = "JSChallenge";
+        /// <summary> CAPTCHA. </summary>
+        private const string CaptchaValue = "CAPTCHA";
 
         /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WebApplicationFirewallAction(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AllowValue = "Allow";
-        private const string BlockValue = "Block";
-        private const string LogValue = "Log";
-        private const string JSChallengeValue = "JSChallenge";
-        private const string CaptchaValue = "CAPTCHA";
+            _value = value;
+        }
 
         /// <summary> Allow. </summary>
         public static WebApplicationFirewallAction Allow { get; } = new WebApplicationFirewallAction(AllowValue);
+
         /// <summary> Block. </summary>
         public static WebApplicationFirewallAction Block { get; } = new WebApplicationFirewallAction(BlockValue);
+
         /// <summary> Log. </summary>
         public static WebApplicationFirewallAction Log { get; } = new WebApplicationFirewallAction(LogValue);
+
         /// <summary> JSChallenge. </summary>
         public static WebApplicationFirewallAction JSChallenge { get; } = new WebApplicationFirewallAction(JSChallengeValue);
+
         /// <summary> CAPTCHA. </summary>
         public static WebApplicationFirewallAction Captcha { get; } = new WebApplicationFirewallAction(CaptchaValue);
+
         /// <summary> Determines if two <see cref="WebApplicationFirewallAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WebApplicationFirewallAction left, WebApplicationFirewallAction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WebApplicationFirewallAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WebApplicationFirewallAction left, WebApplicationFirewallAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WebApplicationFirewallAction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WebApplicationFirewallAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WebApplicationFirewallAction(string value) => new WebApplicationFirewallAction(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WebApplicationFirewallAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WebApplicationFirewallAction?(string value) => value == null ? null : new WebApplicationFirewallAction(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WebApplicationFirewallAction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WebApplicationFirewallAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

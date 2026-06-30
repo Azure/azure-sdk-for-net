@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct WorkloadProtectedFlag : IEquatable<WorkloadProtectedFlag>
     {
         private readonly string _value;
+        /// <summary> False. </summary>
+        private const string FalseValue = "False";
+        /// <summary> True. </summary>
+        private const string TrueValue = "True";
 
         /// <summary> Initializes a new instance of <see cref="WorkloadProtectedFlag"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WorkloadProtectedFlag(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string FalseValue = "False";
-        private const string TrueValue = "True";
+            _value = value;
+        }
 
         /// <summary> False. </summary>
         public static WorkloadProtectedFlag False { get; } = new WorkloadProtectedFlag(FalseValue);
+
         /// <summary> True. </summary>
         public static WorkloadProtectedFlag True { get; } = new WorkloadProtectedFlag(TrueValue);
+
         /// <summary> Determines if two <see cref="WorkloadProtectedFlag"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WorkloadProtectedFlag left, WorkloadProtectedFlag right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WorkloadProtectedFlag"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WorkloadProtectedFlag left, WorkloadProtectedFlag right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkloadProtectedFlag"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WorkloadProtectedFlag"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WorkloadProtectedFlag(string value) => new WorkloadProtectedFlag(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WorkloadProtectedFlag"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WorkloadProtectedFlag?(string value) => value == null ? null : new WorkloadProtectedFlag(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WorkloadProtectedFlag other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WorkloadProtectedFlag other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

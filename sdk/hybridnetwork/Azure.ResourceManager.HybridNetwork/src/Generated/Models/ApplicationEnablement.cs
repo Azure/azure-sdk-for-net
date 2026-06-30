@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     public readonly partial struct ApplicationEnablement : IEquatable<ApplicationEnablement>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ApplicationEnablement"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ApplicationEnablement(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnknownValue = "Unknown";
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationEnablement"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ApplicationEnablement(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Unknown. </summary>
         public static ApplicationEnablement Unknown { get; } = new ApplicationEnablement(UnknownValue);
-        /// <summary> Enabled. </summary>
+
+        /// <summary> Gets the Enabled. </summary>
         public static ApplicationEnablement Enabled { get; } = new ApplicationEnablement(EnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static ApplicationEnablement Disabled { get; } = new ApplicationEnablement(DisabledValue);
+
         /// <summary> Determines if two <see cref="ApplicationEnablement"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApplicationEnablement left, ApplicationEnablement right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApplicationEnablement"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApplicationEnablement left, ApplicationEnablement right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationEnablement"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApplicationEnablement"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApplicationEnablement(string value) => new ApplicationEnablement(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApplicationEnablement"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApplicationEnablement?(string value) => value == null ? null : new ApplicationEnablement(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApplicationEnablement other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApplicationEnablement other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

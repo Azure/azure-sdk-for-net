@@ -92,6 +92,10 @@ namespace Azure.Provisioning.Batch
             _targetDedicatedNodes = DefineProperty<int>(nameof(TargetDedicatedNodes), new string[] { "targetDedicatedNodes" });
             _targetLowPriorityNodes = DefineProperty<int>(nameof(TargetLowPriorityNodes), new string[] { "targetLowPriorityNodes" });
             _nodeDeallocationOption = DefineProperty<BatchNodeDeallocationOption>(nameof(NodeDeallocationOption), new string[] { "nodeDeallocationOption" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchAccountFixedScaleSettings that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

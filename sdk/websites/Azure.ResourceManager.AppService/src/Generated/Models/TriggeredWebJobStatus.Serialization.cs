@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class TriggeredWebJobStatusExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this TriggeredWebJobStatus value) => value switch
         {
             TriggeredWebJobStatus.Success => "Success",
@@ -21,13 +22,29 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TriggeredWebJobStatus value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static TriggeredWebJobStatus ToTriggeredWebJobStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Success")) return TriggeredWebJobStatus.Success;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return TriggeredWebJobStatus.Failed;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Error")) return TriggeredWebJobStatus.Error;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Aborted")) return TriggeredWebJobStatus.Aborted;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Running")) return TriggeredWebJobStatus.Running;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Success"))
+            {
+                return TriggeredWebJobStatus.Success;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed"))
+            {
+                return TriggeredWebJobStatus.Failed;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Error"))
+            {
+                return TriggeredWebJobStatus.Error;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Aborted"))
+            {
+                return TriggeredWebJobStatus.Aborted;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Running"))
+            {
+                return TriggeredWebJobStatus.Running;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TriggeredWebJobStatus value.");
         }
     }

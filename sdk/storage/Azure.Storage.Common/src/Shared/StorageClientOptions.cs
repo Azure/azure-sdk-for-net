@@ -121,7 +121,10 @@ namespace Azure.Storage
                     StorageServerTimeoutPolicy.Shared, RangeHeaderPolicy.Shared, new StorageClassifierPolicy(classifier),
                 },
                 // needed *after* core applies the user agent; can't have that without going per-retry
-                PerRetryPolicies = { StorageTelemetryPolicy.Shared },
+                PerRetryPolicies =
+                {
+                    StorageTelemetryPolicy.Shared, RangeHeaderPolicy.Shared
+                },
                 ResponseClassifier = classifier,
                 RequestFailedDetailsParser = new StorageRequestFailedDetailsParser()
             };

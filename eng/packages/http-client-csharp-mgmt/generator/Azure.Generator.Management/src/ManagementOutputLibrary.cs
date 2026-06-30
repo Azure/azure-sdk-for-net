@@ -36,6 +36,12 @@ namespace Azure.Generator.Management
         private WirePathAttributeDefinition? _wirePathAttributeProvider;
         internal TypeProvider WirePathAttributeDefinition => _wirePathAttributeProvider ??= new WirePathAttributeDefinition();
 
+        private CodeGenResourceDataAttributeDefinition? _codeGenResourceDataAttributeProvider;
+        internal CustomCodeAttributeDefinition CodeGenResourceDataAttributeDefinition => _codeGenResourceDataAttributeProvider ??= new CodeGenResourceDataAttributeDefinition();
+
+        private CodeGenTagPatchHookAttributeDefinition? _codeGenTagPatchHookAttributeProvider;
+        internal CustomCodeAttributeDefinition CodeGenTagPatchHookAttributeDefinition => _codeGenTagPatchHookAttributeProvider ??= new CodeGenTagPatchHookAttributeDefinition();
+
         private CSharpType? _modelReaderWriterContextType;
         internal CSharpType ModelReaderWriterContextType => _modelReaderWriterContextType ??= new ModelReaderWriterContextDefinition().Type;
 
@@ -48,6 +54,20 @@ namespace Azure.Generator.Management
 
         private IReadOnlyDictionary<CSharpType, OperationSourceProvider>? _operationSourceDict;
         internal IReadOnlyDictionary<CSharpType, OperationSourceProvider> OperationSourceDict => _operationSourceDict ??= BuildOperationSources();
+        internal OperationSourceProvider GetOperationSource(ResourceClientProvider resource)
+        {
+            var operationSources = OperationSourceDict;
+            if (!operationSources.TryGetValue(resource.Type, out var operationSource))
+            {
+                operationSource = new OperationSourceProvider(resource);
+                if (operationSources is Dictionary<CSharpType, OperationSourceProvider> mutableOperationSources)
+                {
+                    mutableOperationSources.Add(resource.Type, operationSource);
+                }
+            }
+
+            return operationSource;
+        }
 
         internal IReadOnlyList<ResourceClientProvider> ResourceProviders => GetValue(ref _resources);
         internal IReadOnlyList<ResourceCollectionClientProvider> ResourceCollectionProviders => GetValue(ref _resourceCollections);
@@ -160,12 +180,10 @@ namespace Azure.Generator.Management
                 resourceMethodCategories,
                 ManagementClientGenerator.Instance.InputLibrary.NonResourceMethods);
 
-            // Extract extension non-resource methods for MockableArmClientProvider
-            var extensionNonResourceMethods = resourcesAndMethodsPerScope.TryGetValue(ResourceScope.Extension, out var extensionScope)
-                ? extensionScope.NonResourceMethods
-                : [];
+            // Extract extension methods for MockableArmClientProvider
+            var extensionScope = resourcesAndMethodsPerScope[ResourceScope.Extension];
 
-            var mockableArmClientResource = MockableArmClientProvider.TryCreate(_resources, extensionNonResourceMethods);
+            var mockableArmClientResource = MockableArmClientProvider.TryCreate(_resources, extensionScope.ResourceMethods, extensionScope.NonResourceMethods);
             var mockableResources = new Dictionary<ResourceScope, MockableResourceProvider>(resourcesAndMethodsPerScope.Count);
             foreach (var (scope, (resourcesInScope, resourceMethods, nonResourceMethods)) in resourcesAndMethodsPerScope)
             {
@@ -427,10 +445,7 @@ namespace Azure.Generator.Management
         internal bool TryGetResourceClientProvider(CSharpType resourceDataType, [MaybeNullWhen(false)] out ResourceClientProvider resourceClientProvider)
         {
             resourceClientProvider = null;
-            if (!GetResourceDataTypes().TryGetValue(resourceDataType, out var providers))
-            {
-                return false;
-            }
+            var providers = ResourceProviders.Where(p => p.IsResourceDataType(resourceDataType)).ToList();
 
             // Only wrap when the data type is exclusively used by one resource.
             // When multiple resources share the same data type, wrapping would pick an arbitrary resource,

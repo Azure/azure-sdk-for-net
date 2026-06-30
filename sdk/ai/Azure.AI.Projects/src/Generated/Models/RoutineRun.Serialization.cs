@@ -75,10 +75,17 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Status))
+            if (Optional.IsDefined(StatusInternal))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(StatusInternal);
+#else
+                using (JsonDocument document = JsonDocument.Parse(StatusInternal))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Phase))
             {
@@ -94,6 +101,29 @@ namespace Azure.AI.Projects
             {
                 writer.WritePropertyName("trigger_name"u8);
                 writer.WriteStringValue(TriggerName);
+            }
+            if (Optional.IsCollectionDefined(TriggerEventPayload))
+            {
+                writer.WritePropertyName("trigger_event_payload"u8);
+                writer.WriteStartObject();
+                foreach (var item in TriggerEventPayload)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(AttemptSource))
             {
@@ -223,12 +253,13 @@ namespace Azure.AI.Projects
                 return null;
             }
             string id = default;
-            string status = default;
+            BinaryData statusInternal = default;
             RoutineRunPhase? phase = default;
-            RoutineTriggerType? triggerType = default;
+            RoutineTriggerKind? triggerType = default;
             string triggerName = default;
+            IDictionary<string, BinaryData> triggerEventPayload = default;
             RoutineAttemptSource? attemptSource = default;
-            RoutineActionType? actionType = default;
+            RoutineActionKind? actionType = default;
             string agentId = default;
             string agentEndpointId = default;
             string conversationId = default;
@@ -254,7 +285,11 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    statusInternal = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("phase"u8))
@@ -272,12 +307,33 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    triggerType = new RoutineTriggerType(prop.Value.GetString());
+                    triggerType = new RoutineTriggerKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("trigger_name"u8))
                 {
                     triggerName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("trigger_event_payload"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                        }
+                    }
+                    triggerEventPayload = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("attempt_source"u8))
@@ -295,7 +351,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    actionType = new RoutineActionType(prop.Value.GetString());
+                    actionType = new RoutineActionKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("agent_id"u8))
@@ -400,10 +456,11 @@ namespace Azure.AI.Projects
             }
             return new RoutineRun(
                 id,
-                status,
+                statusInternal,
                 phase,
                 triggerType,
                 triggerName,
+                triggerEventPayload ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 attemptSource,
                 actionType,
                 agentId,

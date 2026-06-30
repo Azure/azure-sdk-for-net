@@ -21,6 +21,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         private const string BareMetalMachineRunDataExtractsValue = "BareMetalMachineRunDataExtracts";
         /// <summary> BareMetalMachineRunReadCommands output type. </summary>
         private const string BareMetalMachineRunReadCommandsValue = "BareMetalMachineRunReadCommands";
+        /// <summary> ClusterSupportAdministrativeActions output type supporting administrative actions that can be run on a cluster for support purposes. </summary>
+        private const string ClusterSupportAdministrativeActionsValue = "ClusterSupportAdministrativeActions";
         /// <summary> StorageRunReadCommands output type. </summary>
         private const string StorageRunReadCommandsValue = "StorageRunReadCommands";
         /// <summary> BareMetalMachineRunDataExtractsRestricted output type. </summary>
@@ -44,6 +46,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> BareMetalMachineRunReadCommands output type. </summary>
         public static CommandOutputType BareMetalMachineRunReadCommands { get; } = new CommandOutputType(BareMetalMachineRunReadCommandsValue);
+
+        /// <summary> ClusterSupportAdministrativeActions output type supporting administrative actions that can be run on a cluster for support purposes. </summary>
+        public static CommandOutputType ClusterSupportAdministrativeActions { get; } = new CommandOutputType(ClusterSupportAdministrativeActionsValue);
 
         /// <summary> StorageRunReadCommands output type. </summary>
         public static CommandOutputType StorageRunReadCommands { get; } = new CommandOutputType(StorageRunReadCommandsValue);

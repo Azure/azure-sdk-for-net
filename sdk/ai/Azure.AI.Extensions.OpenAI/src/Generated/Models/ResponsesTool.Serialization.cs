@@ -11,7 +11,7 @@ namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary>
     /// A tool that can be used to generate a response.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponsesBingGroundingTool"/>, <see cref="ResponsesMicrosoftFabricPreviewTool"/>, <see cref="ResponsesSharepointPreviewTool"/>, <see cref="ResponsesAzureAISearchTool"/>, <see cref="ResponsesOpenApiTool"/>, <see cref="ResponsesBingCustomSearchPreviewTool"/>, <see cref="ResponsesBrowserAutomationPreviewTool"/>, <see cref="ResponsesAzureFunctionTool"/>, <see cref="ResponsesCaptureStructuredOutputsTool"/>, <see cref="ResponsesA2APreviewTool"/>, <see cref="ResponsesWorkIQPreviewTool"/>, <see cref="ResponsesFabricIQPreviewTool"/>, <see cref="ResponsesMemorySearchPreviewTool"/>, <see cref="ResponsesToolboxSearchPreviewTool"/>, <see cref="ResponsesWebSearchTool"/>, <see cref="ResponsesLocalShellToolParam"/>, <see cref="ResponsesFunctionShellToolParam"/>, <see cref="ResponsesCustomToolParam"/>, <see cref="ResponsesComputerTool"/>, <see cref="ResponsesNamespaceToolParam"/>, and <see cref="ResponsesToolSearchToolParam"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponsesBingGroundingTool"/>, <see cref="ResponsesMicrosoftFabricPreviewTool"/>, <see cref="ResponsesSharepointPreviewTool"/>, <see cref="ResponsesAzureAISearchTool"/>, <see cref="ResponsesOpenApiTool"/>, <see cref="ResponsesBingCustomSearchPreviewTool"/>, <see cref="ResponsesBrowserAutomationPreviewTool"/>, <see cref="ResponsesAzureFunctionTool"/>, <see cref="ResponsesCaptureStructuredOutputsTool"/>, <see cref="ResponsesA2APreviewTool"/>, <see cref="ResponsesWorkIQPreviewTool"/>, <see cref="ResponsesFabricIQPreviewTool"/>, <see cref="ResponsesMemorySearchPreviewTool"/>, <see cref="ResponsesReminderPreviewTool"/>, <see cref="ResponsesWebSearchTool"/>, <see cref="ResponsesLocalShellToolParam"/>, <see cref="ResponsesFunctionShellToolParam"/>, <see cref="ResponsesCustomToolParam"/>, <see cref="ResponsesComputerTool"/>, <see cref="ResponsesNamespaceToolParam"/>, and <see cref="ResponsesToolSearchToolParam"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownTool))]
     public abstract partial class ResponsesTool : IJsonModel<ResponsesTool>
@@ -153,20 +153,20 @@ namespace Azure.AI.Extensions.OpenAI
                         return ResponsesFabricIQPreviewTool.DeserializeResponsesFabricIQPreviewTool(element, options);
                     case "memory_search_preview":
                         return ResponsesMemorySearchPreviewTool.DeserializeResponsesMemorySearchPreviewTool(element, options);
-                    case "toolbox_search_preview":
-                        return ResponsesToolboxSearchPreviewTool.DeserializeResponsesToolboxSearchPreviewTool(element, options);
+                    case "reminder_preview":
+                        return ResponsesReminderPreviewTool.DeserializeResponsesReminderPreviewTool(element, options);
                     case "code_interpreter":
                         return InternalCodeInterpreterTool.DeserializeInternalCodeInterpreterTool(element, options);
-                    case "function":
-                        return InternalFunctionTool.DeserializeInternalFunctionTool(element, options);
                     case "file_search":
                         return InternalFileSearchTool.DeserializeInternalFileSearchTool(element, options);
-                    case "computer_use_preview":
-                        return InternalComputerUsePreviewTool.DeserializeInternalComputerUsePreviewTool(element, options);
                     case "web_search":
                         return ResponsesWebSearchTool.DeserializeResponsesWebSearchTool(element, options);
                     case "mcp":
                         return InternalMCPTool.DeserializeInternalMCPTool(element, options);
+                    case "function":
+                        return InternalFunctionTool.DeserializeInternalFunctionTool(element, options);
+                    case "computer_use_preview":
+                        return InternalComputerUsePreviewTool.DeserializeInternalComputerUsePreviewTool(element, options);
                     case "image_generation":
                         return InternalImageGenTool.DeserializeInternalImageGenTool(element, options);
                     case "local_shell":

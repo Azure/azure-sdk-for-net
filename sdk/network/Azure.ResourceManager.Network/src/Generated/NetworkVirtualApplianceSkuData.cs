@@ -7,54 +7,66 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the NetworkVirtualApplianceSku data model.
-    /// Definition of the NetworkVirtualApplianceSkus resource.
-    /// </summary>
+    /// <summary> Available NetworkVirtualApplianceSkus. </summary>
     public partial class NetworkVirtualApplianceSkuData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceSkuData"/>. </summary>
-        public NetworkVirtualApplianceSkuData()
-        {
-            AvailableVersions = new ChangeTrackingList<string>();
-            AvailableScaleUnits = new ChangeTrackingList<NetworkVirtualApplianceSkuInstances>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceSkuData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="vendor"> Network Virtual Appliance Sku vendor. </param>
-        /// <param name="availableVersions"> Available Network Virtual Appliance versions. </param>
-        /// <param name="availableScaleUnits"> The list of scale units available. </param>
-        internal NetworkVirtualApplianceSkuData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string vendor, IReadOnlyList<string> availableVersions, IList<NetworkVirtualApplianceSkuInstances> availableScaleUnits) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> NetworkVirtualApplianceSku properties. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal NetworkVirtualApplianceSkuData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkVirtualApplianceSkuPropertiesFormat properties, ETag? eTag) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
-            ETag = etag;
-            Vendor = vendor;
-            AvailableVersions = availableVersions;
-            AvailableScaleUnits = availableScaleUnits;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> NetworkVirtualApplianceSku properties. </summary>
+        [WirePath("properties")]
+        internal NetworkVirtualApplianceSkuPropertiesFormat Properties { get; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> Network Virtual Appliance Sku vendor. </summary>
         [WirePath("properties.vendor")]
-        public string Vendor { get; }
+        public string Vendor
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Vendor;
+            }
+        }
+
         /// <summary> Available Network Virtual Appliance versions. </summary>
         [WirePath("properties.availableVersions")]
-        public IReadOnlyList<string> AvailableVersions { get; }
+        public IReadOnlyList<string> AvailableVersions
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AvailableVersions;
+            }
+        }
+
         /// <summary> The list of scale units available. </summary>
         [WirePath("properties.availableScaleUnits")]
-        public IList<NetworkVirtualApplianceSkuInstances> AvailableScaleUnits { get; }
+        public IList<NetworkVirtualApplianceSkuInstances> AvailableScaleUnits
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AvailableScaleUnits;
+            }
+        }
     }
 }

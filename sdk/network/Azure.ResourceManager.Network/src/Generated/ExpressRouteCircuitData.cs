@@ -7,142 +7,321 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the ExpressRouteCircuit data model.
-    /// ExpressRouteCircuit resource.
-    /// </summary>
+    /// <summary> ExpressRouteCircuit resource. </summary>
     public partial class ExpressRouteCircuitData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitData"/>. </summary>
         public ExpressRouteCircuitData()
         {
-            Authorizations = new ChangeTrackingList<ExpressRouteCircuitAuthorizationData>();
-            Peerings = new ChangeTrackingList<ExpressRouteCircuitPeeringData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the express route circuit. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="sku"> The SKU. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="allowClassicOperations"> Allow classic operations. </param>
-        /// <param name="circuitProvisioningState"> The CircuitProvisioningState state of the resource. </param>
-        /// <param name="serviceProviderProvisioningState"> The ServiceProviderProvisioningState state of the resource. </param>
-        /// <param name="authorizations"> The list of authorizations. </param>
-        /// <param name="peerings"> The list of peerings. </param>
-        /// <param name="serviceKey"> The ServiceKey. </param>
-        /// <param name="serviceProviderNotes"> The ServiceProviderNotes. </param>
-        /// <param name="serviceProviderProperties"> The ServiceProviderProperties. </param>
-        /// <param name="expressRoutePort"> The reference to the ExpressRoutePort resource when the circuit is provisioned on an ExpressRoutePort resource. </param>
-        /// <param name="bandwidthInGbps"> The bandwidth of the circuit when the circuit is provisioned on an ExpressRoutePort resource. </param>
-        /// <param name="stag"> The identifier of the circuit traffic. Outer tag for QinQ encapsulation. </param>
-        /// <param name="provisioningState"> The provisioning state of the express route circuit resource. </param>
-        /// <param name="gatewayManagerETag"> The GatewayManager Etag. </param>
-        /// <param name="globalReachEnabled"> Flag denoting global reach status. </param>
-        /// <param name="authorizationKey"> The authorizationKey. </param>
-        /// <param name="authorizationStatus"> The authorization status of the Circuit. </param>
-        /// <param name="enableDirectPortRateLimit"> Flag denoting rate-limiting status of the ExpressRoute direct-port circuit. </param>
-        internal ExpressRouteCircuitData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ExpressRouteCircuitSku sku, ETag? etag, bool? allowClassicOperations, string circuitProvisioningState, ServiceProviderProvisioningState? serviceProviderProvisioningState, IList<ExpressRouteCircuitAuthorizationData> authorizations, IList<ExpressRouteCircuitPeeringData> peerings, string serviceKey, string serviceProviderNotes, ExpressRouteCircuitServiceProviderProperties serviceProviderProperties, WritableSubResource expressRoutePort, float? bandwidthInGbps, int? stag, NetworkProvisioningState? provisioningState, string gatewayManagerETag, bool? globalReachEnabled, string authorizationKey, string authorizationStatus, bool? enableDirectPortRateLimit) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal ExpressRouteCircuitData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExpressRouteCircuitPropertiesFormat properties, ETag? eTag, ExpressRouteCircuitSku sku) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
+            Properties = properties;
+            ETag = eTag;
             Sku = sku;
-            ETag = etag;
-            AllowClassicOperations = allowClassicOperations;
-            CircuitProvisioningState = circuitProvisioningState;
-            ServiceProviderProvisioningState = serviceProviderProvisioningState;
-            Authorizations = authorizations;
-            Peerings = peerings;
-            ServiceKey = serviceKey;
-            ServiceProviderNotes = serviceProviderNotes;
-            ServiceProviderProperties = serviceProviderProperties;
-            ExpressRoutePort = expressRoutePort;
-            BandwidthInGbps = bandwidthInGbps;
-            STag = stag;
-            ProvisioningState = provisioningState;
-            GatewayManagerETag = gatewayManagerETag;
-            GlobalReachEnabled = globalReachEnabled;
-            AuthorizationKey = authorizationKey;
-            AuthorizationStatus = authorizationStatus;
-            EnableDirectPortRateLimit = enableDirectPortRateLimit;
         }
+
+        /// <summary> Properties of the express route circuit. </summary>
+        [WirePath("properties")]
+        internal ExpressRouteCircuitPropertiesFormat Properties { get; set; }
+
+        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
+        public ETag? ETag { get; }
 
         /// <summary> The SKU. </summary>
         [WirePath("sku")]
         public ExpressRouteCircuitSku Sku { get; set; }
-        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
-        public ETag? ETag { get; }
+
         /// <summary> Allow classic operations. </summary>
         [WirePath("properties.allowClassicOperations")]
-        public bool? AllowClassicOperations { get; set; }
-        /// <summary> The CircuitProvisioningState state of the resource. </summary>
-        [WirePath("properties.circuitProvisioningState")]
-        public string CircuitProvisioningState { get; set; }
-        /// <summary> The ServiceProviderProvisioningState state of the resource. </summary>
-        [WirePath("properties.serviceProviderProvisioningState")]
-        public ServiceProviderProvisioningState? ServiceProviderProvisioningState { get; set; }
-        /// <summary> The list of authorizations. </summary>
-        [WirePath("properties.authorizations")]
-        public IList<ExpressRouteCircuitAuthorizationData> Authorizations { get; }
-        /// <summary> The list of peerings. </summary>
-        [WirePath("properties.peerings")]
-        public IList<ExpressRouteCircuitPeeringData> Peerings { get; }
-        /// <summary> The ServiceKey. </summary>
-        [WirePath("properties.serviceKey")]
-        public string ServiceKey { get; set; }
-        /// <summary> The ServiceProviderNotes. </summary>
-        [WirePath("properties.serviceProviderNotes")]
-        public string ServiceProviderNotes { get; set; }
-        /// <summary> The ServiceProviderProperties. </summary>
-        [WirePath("properties.serviceProviderProperties")]
-        public ExpressRouteCircuitServiceProviderProperties ServiceProviderProperties { get; set; }
-        /// <summary> The reference to the ExpressRoutePort resource when the circuit is provisioned on an ExpressRoutePort resource. </summary>
-        internal WritableSubResource ExpressRoutePort { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.expressRoutePort.id")]
-        public ResourceIdentifier ExpressRoutePortId
+        public bool? AllowClassicOperations
         {
-            get => ExpressRoutePort is null ? default : ExpressRoutePort.Id;
+            get
+            {
+                return Properties is null ? default : Properties.AllowClassicOperations;
+            }
             set
             {
-                if (ExpressRoutePort is null)
-                    ExpressRoutePort = new WritableSubResource();
-                ExpressRoutePort.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitPropertiesFormat();
+                }
+                Properties.AllowClassicOperations = value;
+            }
+        }
+
+        /// <summary> The CircuitProvisioningState state of the resource. </summary>
+        [WirePath("properties.circuitProvisioningState")]
+        public string CircuitProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CircuitProvisioningState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitPropertiesFormat();
+                }
+                Properties.CircuitProvisioningState = value;
+            }
+        }
+
+        /// <summary> The ServiceProviderProvisioningState state of the resource. </summary>
+        [WirePath("properties.serviceProviderProvisioningState")]
+        public ServiceProviderProvisioningState? ServiceProviderProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServiceProviderProvisioningState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitPropertiesFormat();
+                }
+                Properties.ServiceProviderProvisioningState = value;
+            }
+        }
+
+        /// <summary> The list of authorizations. </summary>
+        [WirePath("properties.authorizations")]
+        public IList<ExpressRouteCircuitAuthorizationData> Authorizations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitPropertiesFormat();
+                }
+                return Properties.Authorizations;
+            }
+        }
+
+        /// <summary> The list of peerings. </summary>
+        [WirePath("properties.peerings")]
+        public IList<ExpressRouteCircuitPeeringData> Peerings
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitPropertiesFormat();
+                }
+                return Properties.Peerings;
+            }
+        }
+
+        /// <summary> The ServiceKey. </summary>
+        [WirePath("properties.serviceKey")]
+        public string ServiceKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServiceKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitPropertiesFormat();
+                }
+                Properties.ServiceKey = value;
+            }
+        }
+
+        /// <summary> The ServiceProviderNotes. </summary>
+        [WirePath("properties.serviceProviderNotes")]
+        public string ServiceProviderNotes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServiceProviderNotes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitPropertiesFormat();
+                }
+                Properties.ServiceProviderNotes = value;
+            }
+        }
+
+        /// <summary> The ServiceProviderProperties. </summary>
+        [WirePath("properties.serviceProviderProperties")]
+        public ExpressRouteCircuitServiceProviderProperties ServiceProviderProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServiceProviderProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitPropertiesFormat();
+                }
+                Properties.ServiceProviderProperties = value;
             }
         }
 
         /// <summary> The bandwidth of the circuit when the circuit is provisioned on an ExpressRoutePort resource. </summary>
         [WirePath("properties.bandwidthInGbps")]
-        public float? BandwidthInGbps { get; set; }
+        public float? BandwidthInGbps
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BandwidthInGbps;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitPropertiesFormat();
+                }
+                Properties.BandwidthInGbps = value;
+            }
+        }
+
         /// <summary> The identifier of the circuit traffic. Outer tag for QinQ encapsulation. </summary>
         [WirePath("properties.stag")]
-        public int? STag { get; }
+        public int? STag
+        {
+            get
+            {
+                return Properties is null ? default : Properties.STag;
+            }
+        }
+
         /// <summary> The provisioning state of the express route circuit resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The GatewayManager Etag. </summary>
         [WirePath("properties.gatewayManagerEtag")]
-        public string GatewayManagerETag { get; set; }
+        public string GatewayManagerETag
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GatewayManagerETag;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitPropertiesFormat();
+                }
+                Properties.GatewayManagerETag = value;
+            }
+        }
+
         /// <summary> Flag denoting global reach status. </summary>
         [WirePath("properties.globalReachEnabled")]
-        public bool? GlobalReachEnabled { get; set; }
+        public bool? GlobalReachEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GlobalReachEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitPropertiesFormat();
+                }
+                Properties.GlobalReachEnabled = value;
+            }
+        }
+
         /// <summary> The authorizationKey. </summary>
         [WirePath("properties.authorizationKey")]
-        public string AuthorizationKey { get; set; }
+        public string AuthorizationKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuthorizationKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitPropertiesFormat();
+                }
+                Properties.AuthorizationKey = value;
+            }
+        }
+
         /// <summary> The authorization status of the Circuit. </summary>
         [WirePath("properties.authorizationStatus")]
-        public string AuthorizationStatus { get; }
+        public string AuthorizationStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuthorizationStatus;
+            }
+        }
+
         /// <summary> Flag denoting rate-limiting status of the ExpressRoute direct-port circuit. </summary>
         [WirePath("properties.enableDirectPortRateLimit")]
-        public bool? EnableDirectPortRateLimit { get; set; }
+        public bool? EnableDirectPortRateLimit
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableDirectPortRateLimit;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitPropertiesFormat();
+                }
+                Properties.EnableDirectPortRateLimit = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.expressRoutePort.id")]
+        public ResourceIdentifier ExpressRoutePortId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpressRoutePortId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitPropertiesFormat();
+                }
+                Properties.ExpressRoutePortId = value;
+            }
+        }
     }
 }

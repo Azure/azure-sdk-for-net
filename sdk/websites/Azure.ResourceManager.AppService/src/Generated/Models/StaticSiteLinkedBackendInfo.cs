@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Static Site Linked Backend ARM resource.
-    /// Serialized Name: StaticSiteLinkedBackend
-    /// </summary>
+    /// <summary> Static Site Linked Backend ARM resource. </summary>
     public partial class StaticSiteLinkedBackendInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteLinkedBackendInfo"/>. </summary>
         internal StaticSiteLinkedBackendInfo()
@@ -54,54 +23,33 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteLinkedBackendInfo"/>. </summary>
-        /// <param name="backendResourceId">
-        /// The resource id of the backend linked to the static site
-        /// Serialized Name: StaticSiteLinkedBackend.backendResourceId
-        /// </param>
-        /// <param name="region">
-        /// The region of the backend linked to the static site
-        /// Serialized Name: StaticSiteLinkedBackend.region
-        /// </param>
-        /// <param name="createdOn">
-        /// The date and time on which the backend was linked to the static site.
-        /// Serialized Name: StaticSiteLinkedBackend.createdOn
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the linking process.
-        /// Serialized Name: StaticSiteLinkedBackend.provisioningState
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteLinkedBackendInfo(string backendResourceId, string region, DateTimeOffset? createdOn, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="backendResourceId"> The resource id of the backend linked to the static site. </param>
+        /// <param name="region"> The region of the backend linked to the static site. </param>
+        /// <param name="createdOn"> The date and time on which the backend was linked to the static site. </param>
+        /// <param name="provisioningState"> The provisioning state of the linking process. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StaticSiteLinkedBackendInfo(string backendResourceId, string region, DateTimeOffset? createdOn, string provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BackendResourceId = backendResourceId;
             Region = region;
             CreatedOn = createdOn;
             ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// The resource id of the backend linked to the static site
-        /// Serialized Name: StaticSiteLinkedBackend.backendResourceId
-        /// </summary>
+        /// <summary> The resource id of the backend linked to the static site. </summary>
         [WirePath("backendResourceId")]
         public string BackendResourceId { get; }
-        /// <summary>
-        /// The region of the backend linked to the static site
-        /// Serialized Name: StaticSiteLinkedBackend.region
-        /// </summary>
+
+        /// <summary> The region of the backend linked to the static site. </summary>
         [WirePath("region")]
         public string Region { get; }
-        /// <summary>
-        /// The date and time on which the backend was linked to the static site.
-        /// Serialized Name: StaticSiteLinkedBackend.createdOn
-        /// </summary>
+
+        /// <summary> The date and time on which the backend was linked to the static site. </summary>
         [WirePath("createdOn")]
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// The provisioning state of the linking process.
-        /// Serialized Name: StaticSiteLinkedBackend.provisioningState
-        /// </summary>
+
+        /// <summary> The provisioning state of the linking process. </summary>
         [WirePath("provisioningState")]
         public string ProvisioningState { get; }
     }

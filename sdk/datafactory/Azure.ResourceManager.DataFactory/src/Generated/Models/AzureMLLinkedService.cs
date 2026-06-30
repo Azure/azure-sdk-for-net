@@ -15,68 +15,124 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AzureMLLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="AzureMLLinkedService"/>. </summary>
-        /// <param name="mlEndpoint"> The Batch Execution REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string). </param>
-        /// <param name="apiKey"> The API key for accessing the Azure ML model endpoint. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="mlEndpoint"/> or <paramref name="apiKey"/> is null. </exception>
-        public AzureMLLinkedService(DataFactoryElement<string> mlEndpoint, DataFactorySecret apiKey)
-        {
-            Argument.AssertNotNull(mlEndpoint, nameof(mlEndpoint));
-            Argument.AssertNotNull(apiKey, nameof(apiKey));
-
-            MLEndpoint = mlEndpoint;
-            ApiKey = apiKey;
-            LinkedServiceType = "AzureML";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AzureMLLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="mlEndpoint"> The Batch Execution REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string). </param>
-        /// <param name="apiKey"> The API key for accessing the Azure ML model endpoint. </param>
-        /// <param name="updateResourceEndpoint"> The Update Resource REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalId"> The ID of the service principal used to authenticate against the ARM-based updateResourceEndpoint of an Azure ML Studio web service. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalKey"> The key of the service principal used to authenticate against the ARM-based updateResourceEndpoint of an Azure ML Studio web service. </param>
-        /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        /// <param name="authentication"> Type of authentication (Required to specify MSI) used to connect to AzureML. Type: string (or Expression with resultType string). </param>
-        internal AzureMLLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> mlEndpoint, DataFactorySecret apiKey, DataFactoryElement<string> updateResourceEndpoint, DataFactoryElement<string> servicePrincipalId, DataFactorySecret servicePrincipalKey, DataFactoryElement<string> tenant, string encryptedCredential, DataFactoryElement<string> authentication) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Azure ML Studio Web Service linked service properties. </param>
+        /// <param name="servicePrincipalKey"></param>
+        internal AzureMLLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, AzureMLLinkedServiceTypeProperties typeProperties, DataFactorySecret servicePrincipalKey) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            MLEndpoint = mlEndpoint;
-            ApiKey = apiKey;
-            UpdateResourceEndpoint = updateResourceEndpoint;
-            ServicePrincipalId = servicePrincipalId;
+            TypeProperties = typeProperties;
             ServicePrincipalKey = servicePrincipalKey;
-            Tenant = tenant;
-            EncryptedCredential = encryptedCredential;
-            Authentication = authentication;
-            LinkedServiceType = linkedServiceType ?? "AzureML";
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureMLLinkedService"/> for deserialization. </summary>
-        internal AzureMLLinkedService()
-        {
-        }
+        /// <summary> Azure ML Studio Web Service linked service properties. </summary>
+        internal AzureMLLinkedServiceTypeProperties TypeProperties { get; set; }
 
         /// <summary> The Batch Execution REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> MLEndpoint { get; set; }
-        /// <summary> The API key for accessing the Azure ML model endpoint. </summary>
-        public DataFactorySecret ApiKey { get; set; }
+        public DataFactoryElement<string> MLEndpoint
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.MLEndpoint;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureMLLinkedServiceTypeProperties();
+                }
+                TypeProperties.MLEndpoint = value;
+            }
+        }
+
         /// <summary> The Update Resource REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> UpdateResourceEndpoint { get; set; }
+        public DataFactoryElement<string> UpdateResourceEndpoint
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.UpdateResourceEndpoint;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureMLLinkedServiceTypeProperties();
+                }
+                TypeProperties.UpdateResourceEndpoint = value;
+            }
+        }
+
         /// <summary> The ID of the service principal used to authenticate against the ARM-based updateResourceEndpoint of an Azure ML Studio web service. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ServicePrincipalId { get; set; }
-        /// <summary> The key of the service principal used to authenticate against the ARM-based updateResourceEndpoint of an Azure ML Studio web service. </summary>
-        public DataFactorySecret ServicePrincipalKey { get; set; }
+        public DataFactoryElement<string> ServicePrincipalId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ServicePrincipalId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureMLLinkedServiceTypeProperties();
+                }
+                TypeProperties.ServicePrincipalId = value;
+            }
+        }
+
         /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Tenant { get; set; }
+        public DataFactoryElement<string> Tenant
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Tenant;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureMLLinkedServiceTypeProperties();
+                }
+                TypeProperties.Tenant = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureMLLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
+
         /// <summary> Type of authentication (Required to specify MSI) used to connect to AzureML. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Authentication { get; set; }
+        public DataFactoryElement<string> Authentication
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Authentication;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureMLLinkedServiceTypeProperties();
+                }
+                TypeProperties.Authentication = value;
+            }
+        }
     }
 }

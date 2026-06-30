@@ -14,7 +14,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> VPA (Vertical Pod Autoscaler) settings for the workload auto-scaler profile. </summary>
-    internal partial class ManagedClusterVerticalPodAutoscaler : IJsonModel<ManagedClusterVerticalPodAutoscaler>
+    public partial class ManagedClusterVerticalPodAutoscaler : IJsonModel<ManagedClusterVerticalPodAutoscaler>
     {
         /// <summary> Initializes a new instance of <see cref="ManagedClusterVerticalPodAutoscaler"/> for deserialization. </summary>
         internal ManagedClusterVerticalPodAutoscaler()
@@ -81,6 +81,11 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsVpaEnabled);
+            if (Optional.IsDefined(AddonAutoscaling))
+            {
+                writer.WritePropertyName("addonAutoscaling"u8);
+                writer.WriteStringValue(AddonAutoscaling.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -124,6 +129,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             bool isVpaEnabled = default;
+            ManagedClusterAddonAutoscaling? addonAutoscaling = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -132,12 +138,21 @@ namespace Azure.ResourceManager.ContainerService.Models
                     isVpaEnabled = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("addonAutoscaling"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    addonAutoscaling = new ManagedClusterAddonAutoscaling(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterVerticalPodAutoscaler(isVpaEnabled, additionalBinaryDataProperties);
+            return new ManagedClusterVerticalPodAutoscaler(isVpaEnabled, addonAutoscaling, additionalBinaryDataProperties);
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public readonly partial struct HybridComputeAccessMode : IEquatable<HybridComputeAccessMode>
     {
         private readonly string _value;
+        /// <summary> Indicates that resource access is controlled by the NSP definition. </summary>
+        private const string EnforcedValue = "enforced";
+        /// <summary> Dry run mode, where traffic is evaluated against NSP Rules, logged but not enforced. </summary>
+        private const string AuditValue = "audit";
+        /// <summary> Enables traffic evaluation to fall back to resource-specific firewall configurations. </summary>
+        private const string LearningValue = "learning";
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeAccessMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HybridComputeAccessMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnforcedValue = "enforced";
-        private const string AuditValue = "audit";
-        private const string LearningValue = "learning";
+            _value = value;
+        }
 
         /// <summary> Indicates that resource access is controlled by the NSP definition. </summary>
         public static HybridComputeAccessMode Enforced { get; } = new HybridComputeAccessMode(EnforcedValue);
+
         /// <summary> Dry run mode, where traffic is evaluated against NSP Rules, logged but not enforced. </summary>
         public static HybridComputeAccessMode Audit { get; } = new HybridComputeAccessMode(AuditValue);
+
         /// <summary> Enables traffic evaluation to fall back to resource-specific firewall configurations. </summary>
         public static HybridComputeAccessMode Learning { get; } = new HybridComputeAccessMode(LearningValue);
+
         /// <summary> Determines if two <see cref="HybridComputeAccessMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HybridComputeAccessMode left, HybridComputeAccessMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HybridComputeAccessMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HybridComputeAccessMode left, HybridComputeAccessMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HybridComputeAccessMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HybridComputeAccessMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HybridComputeAccessMode(string value) => new HybridComputeAccessMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HybridComputeAccessMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HybridComputeAccessMode?(string value) => value == null ? null : new HybridComputeAccessMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HybridComputeAccessMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HybridComputeAccessMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

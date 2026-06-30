@@ -14,7 +14,7 @@ Check the package `.csproj`, `CHANGELOG.md`, and compatibility files. Comment on
 Rules:
 - **No major version bump** unless .NET architects explicitly require a coordinated management-SDK major bump. Flag `1.x` -> `2.0.0` as Critical.
 - **Do not remove `ApiCompatVersion`**. It enforces compatibility against the last stable release. If removed, recover the prior value from base branch or latest released tag for later phases.
-- **No new `ApiCompatBaseline.txt` entries**. Do not suppress compatibility errors; mitigate with customization code or generator/spec fixes.
+- **No new ApiCompat baseline entries**. Do not suppress compatibility errors; mitigate with customization code or generator/spec fixes. Exception: MPG migration `WirePathAttribute` removal diffs may use targeted entries in `eng/apicompatbaselines/<Project>.txt`.
 
 Continue to Phase 2 unless the versioning issue makes the API-review scope impossible to determine, e.g. `ApiCompatVersion` was removed and no prior stable baseline can be recovered. In that narrow case, request changes and say API review was skipped because the baseline is unknown.
 
@@ -92,6 +92,7 @@ Operation/model/property rules:
 - Integer interval/duration properties include units, e.g. `MonitoringIntervalInSeconds`.
 - TTL properties use `TimeToLiveIn<Unit>`.
 - Enums use singular names unless flags; numeric version members use underscore, e.g. `Tls1_0`, `Ver5_6`.
+- Enum member renames that preserve shipped names should be expressed in TypeSpec when possible. If a member target is defined in TypeSpec and needs an exact C# name (especially underscores), prefer `@@clientName(Enum.Member, Azure.ClientGenerator.Core.exact("Old_Name"), "csharp")` over SDK-side `[CodeGenMember]`.
 - CheckNameAvailability method: `Check[Resource/RP name]NameAvailability`; model/response: `[Resource/RP name]NameAvailabilityXXX`; unavailable reason enum: `[Resource/RP name]NameUnavailableReason`.
 - PUT/PATCH optional body parameters should be required.
 - Discriminator base models should be `abstract`.
@@ -111,6 +112,7 @@ Contextual type naming:
 
 Naming fix recommendation:
 - If the symbol is defined in TypeSpec, recommend `@@clientName(..., "csharp")` in `client.tsp`, e.g. `@@clientName(PublicNetworkAccess, "DurableTaskPublicNetworkAccess", "csharp");`.
+- For exact enum member names, recommend `@@clientName(..., Azure.ClientGenerator.Core.exact("Old_Name"), "csharp")`.
 - If not defined in TypeSpec, recommend SDK customization such as `[CodeGenType("OriginalGeneratedName")]` on a renamed partial class.
 - For migration PRs, compare against previous GA API first. If the generated name is a rename of shipped API, restore the shipped name rather than inventing a third stylistic name.
 

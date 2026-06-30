@@ -8,67 +8,66 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridNetwork
 {
     /// <summary>
     /// A class representing a collection of <see cref="ArtifactStoreResource"/> and their operations.
     /// Each <see cref="ArtifactStoreResource"/> in the collection will belong to the same instance of <see cref="PublisherResource"/>.
-    /// To get an <see cref="ArtifactStoreCollection"/> instance call the GetArtifactStores method from an instance of <see cref="PublisherResource"/>.
+    /// To get a <see cref="ArtifactStoreCollection"/> instance call the GetArtifactStores method from an instance of <see cref="PublisherResource"/>.
     /// </summary>
     public partial class ArtifactStoreCollection : ArmCollection, IEnumerable<ArtifactStoreResource>, IAsyncEnumerable<ArtifactStoreResource>
     {
-        private readonly ClientDiagnostics _artifactStoreClientDiagnostics;
-        private readonly ArtifactStoresRestOperations _artifactStoreRestClient;
+        private readonly ClientDiagnostics _artifactStoresClientDiagnostics;
+        private readonly ArtifactStores _artifactStoresRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ArtifactStoreCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ArtifactStoreCollection for mocking. </summary>
         protected ArtifactStoreCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ArtifactStoreCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactStoreCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ArtifactStoreCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _artifactStoreClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ArtifactStoreResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ArtifactStoreResource.ResourceType, out string artifactStoreApiVersion);
-            _artifactStoreRestClient = new ArtifactStoresRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, artifactStoreApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _artifactStoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ArtifactStoreResource.ResourceType.Namespace, Diagnostics);
+            _artifactStoresRestClient = new ArtifactStores(_artifactStoresClientDiagnostics, Pipeline, Endpoint, artifactStoreApiVersion ?? "2025-03-30");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != PublisherResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PublisherResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PublisherResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates a artifact store.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactStores_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactStores_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactStoreResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="artifactStoreName"> The name of the artifact store. </param>
         /// <param name="data"> Parameters supplied to the create or update application group operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="artifactStoreName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ArtifactStoreResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string artifactStoreName, ArtifactStoreData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _artifactStoresClientDiagnostics.CreateScope("ArtifactStoreCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _artifactStoreRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactStoreName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridNetworkArmOperation<ArtifactStoreResource>(new ArtifactStoreOperationSource(Client), _artifactStoreClientDiagnostics, Pipeline, _artifactStoreRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactStoreName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactStoresRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactStoreName, ArtifactStoreData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HybridNetworkArmOperation<ArtifactStoreResource> operation = new HybridNetworkArmOperation<ArtifactStoreResource>(
+                    new ArtifactStoreResourceOperationSource(Client),
+                    _artifactStoresClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Creates or updates a artifact store.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactStores_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactStores_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactStoreResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="artifactStoreName"> The name of the artifact store. </param>
         /// <param name="data"> Parameters supplied to the create or update application group operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="artifactStoreName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ArtifactStoreResource> CreateOrUpdate(WaitUntil waitUntil, string artifactStoreName, ArtifactStoreData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _artifactStoresClientDiagnostics.CreateScope("ArtifactStoreCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _artifactStoreRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactStoreName, data, cancellationToken);
-                var operation = new HybridNetworkArmOperation<ArtifactStoreResource>(new ArtifactStoreOperationSource(Client), _artifactStoreClientDiagnostics, Pipeline, _artifactStoreRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactStoreName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactStoresRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactStoreName, ArtifactStoreData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HybridNetworkArmOperation<ArtifactStoreResource> operation = new HybridNetworkArmOperation<ArtifactStoreResource>(
+                    new ArtifactStoreResourceOperationSource(Client),
+                    _artifactStoresClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Gets information about the specified artifact store.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactStores_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactStores_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactStoreResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="artifactStoreName"> The name of the artifact store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="artifactStoreName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ArtifactStoreResource>> GetAsync(string artifactStoreName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
 
-            using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreCollection.Get");
+            using DiagnosticScope scope = _artifactStoresClientDiagnostics.CreateScope("ArtifactStoreCollection.Get");
             scope.Start();
             try
             {
-                var response = await _artifactStoreRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactStoreName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactStoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactStoreName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ArtifactStoreData> response = Response.FromValue(ArtifactStoreData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ArtifactStoreResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Gets information about the specified artifact store.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactStores_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactStores_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactStoreResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="artifactStoreName"> The name of the artifact store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="artifactStoreName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ArtifactStoreResource> Get(string artifactStoreName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
 
-            using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreCollection.Get");
+            using DiagnosticScope scope = _artifactStoresClientDiagnostics.CreateScope("ArtifactStoreCollection.Get");
             scope.Start();
             try
             {
-                var response = _artifactStoreRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactStoreName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactStoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactStoreName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ArtifactStoreData> response = Response.FromValue(ArtifactStoreData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ArtifactStoreResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,50 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Gets information of the ArtifactStores under publisher.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactStores_ListByPublisher</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactStores_ListByPublisher. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactStoreResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ArtifactStoreResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ArtifactStoreResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ArtifactStoreResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _artifactStoreRestClient.CreateListByPublisherRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _artifactStoreRestClient.CreateListByPublisherNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ArtifactStoreResource(Client, ArtifactStoreData.DeserializeArtifactStoreData(e)), _artifactStoreClientDiagnostics, Pipeline, "ArtifactStoreCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ArtifactStoreData, ArtifactStoreResource>(new ArtifactStoresGetByPublisherAsyncCollectionResultOfT(
+                _artifactStoresRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ArtifactStoreCollection.GetAll"), data => new ArtifactStoreResource(Client, data));
         }
 
         /// <summary>
         /// Gets information of the ArtifactStores under publisher.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactStores_ListByPublisher</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactStores_ListByPublisher. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactStoreResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +323,67 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> A collection of <see cref="ArtifactStoreResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ArtifactStoreResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _artifactStoreRestClient.CreateListByPublisherRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _artifactStoreRestClient.CreateListByPublisherNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ArtifactStoreResource(Client, ArtifactStoreData.DeserializeArtifactStoreData(e)), _artifactStoreClientDiagnostics, Pipeline, "ArtifactStoreCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ArtifactStoreData, ArtifactStoreResource>(new ArtifactStoresGetByPublisherCollectionResultOfT(
+                _artifactStoresRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ArtifactStoreCollection.GetAll"), data => new ArtifactStoreResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactStores_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactStores_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactStoreResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="artifactStoreName"> The name of the artifact store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="artifactStoreName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string artifactStoreName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
 
-            using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreCollection.Exists");
+            using DiagnosticScope scope = _artifactStoresClientDiagnostics.CreateScope("ArtifactStoreCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _artifactStoreRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactStoreName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactStoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactStoreName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ArtifactStoreData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ArtifactStoreData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ArtifactStoreData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +397,50 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactStores_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactStores_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactStoreResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="artifactStoreName"> The name of the artifact store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="artifactStoreName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string artifactStoreName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
 
-            using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreCollection.Exists");
+            using DiagnosticScope scope = _artifactStoresClientDiagnostics.CreateScope("ArtifactStoreCollection.Exists");
             scope.Start();
             try
             {
-                var response = _artifactStoreRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactStoreName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactStoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactStoreName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ArtifactStoreData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ArtifactStoreData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ArtifactStoreData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +454,54 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactStores_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactStores_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactStoreResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="artifactStoreName"> The name of the artifact store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="artifactStoreName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ArtifactStoreResource>> GetIfExistsAsync(string artifactStoreName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
 
-            using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreCollection.GetIfExists");
+            using DiagnosticScope scope = _artifactStoresClientDiagnostics.CreateScope("ArtifactStoreCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _artifactStoreRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactStoreName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactStoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactStoreName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ArtifactStoreData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ArtifactStoreData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ArtifactStoreData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ArtifactStoreResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ArtifactStoreResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +515,54 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactStores_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactStores_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactStoreResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="artifactStoreName"> The name of the artifact store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="artifactStoreName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ArtifactStoreResource> GetIfExists(string artifactStoreName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
 
-            using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreCollection.GetIfExists");
+            using DiagnosticScope scope = _artifactStoresClientDiagnostics.CreateScope("ArtifactStoreCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _artifactStoreRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactStoreName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactStoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactStoreName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ArtifactStoreData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ArtifactStoreData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ArtifactStoreData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ArtifactStoreResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ArtifactStoreResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +582,7 @@ namespace Azure.ResourceManager.HybridNetwork
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ArtifactStoreResource> IAsyncEnumerable<ArtifactStoreResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

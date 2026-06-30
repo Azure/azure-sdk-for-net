@@ -18,33 +18,25 @@ namespace Azure.AI.Projects.Agents
         {
             Argument.AssertNotNull(azureFunction, nameof(azureFunction));
 
-            AzureFunction = azureFunction;
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+            AzureFunction = azureFunction;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureFunctionTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="azureFunction"> The Azure Function Tool definition. </param>
-        /// <param name="toolConfigs">
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </param>
-        internal AzureFunctionTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureFunctionDefinition azureFunction, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
+        internal AzureFunctionTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, ToolConfig> toolConfigs, AzureFunctionDefinition azureFunction) : base(@type, additionalBinaryDataProperties)
         {
-            AzureFunction = azureFunction;
             ToolConfigs = toolConfigs;
+            AzureFunction = azureFunction;
         }
+
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public IDictionary<string, ToolConfig> ToolConfigs { get; }
 
         /// <summary> The Azure Function Tool definition. </summary>
         public AzureFunctionDefinition AzureFunction { get; set; }
-
-        /// <summary>
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
     }
 }

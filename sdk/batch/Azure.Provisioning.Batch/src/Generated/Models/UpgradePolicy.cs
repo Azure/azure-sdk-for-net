@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Batch
             _mode = DefineProperty<UpgradeMode>(nameof(Mode), new string[] { "mode" }, isRequired: true);
             _automaticOSUpgradePolicy = DefineModelProperty<AutomaticOSUpgradePolicy>(nameof(AutomaticOSUpgradePolicy), new string[] { "automaticOSUpgradePolicy" });
             _rollingUpgradePolicy = DefineModelProperty<RollingUpgradePolicy>(nameof(RollingUpgradePolicy), new string[] { "rollingUpgradePolicy" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for UpgradePolicy that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

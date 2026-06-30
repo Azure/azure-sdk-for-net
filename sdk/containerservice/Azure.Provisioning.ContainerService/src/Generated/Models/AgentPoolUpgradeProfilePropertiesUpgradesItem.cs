@@ -57,6 +57,10 @@ namespace Azure.Provisioning.ContainerService
             base.DefineProvisionableProperties();
             _kubernetesVersion = DefineProperty<string>(nameof(KubernetesVersion), new string[] { "kubernetesVersion" });
             _isPreview = DefineProperty<bool>(nameof(IsPreview), new string[] { "isPreview" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for AgentPoolUpgradeProfilePropertiesUpgradesItem that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

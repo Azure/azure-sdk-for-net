@@ -34,6 +34,8 @@ namespace Azure.Data.AppConfiguration
         private const string ItemsCountValue = "items_count";
         /// <summary> Tags field. </summary>
         private const string TagsValue = "tags";
+        /// <summary> Description field. </summary>
+        private const string DescriptionValue = "description";
         /// <summary> Etag field. </summary>
         private const string EtagValue = "etag";
 
@@ -58,6 +60,9 @@ namespace Azure.Data.AppConfiguration
 
         /// <summary> Tags field. </summary>
         public static SnapshotFields Tags { get; } = new SnapshotFields(TagsValue);
+
+        /// <summary> Description field. </summary>
+        public static SnapshotFields Description { get; } = new SnapshotFields(DescriptionValue);
 
         /// <summary> Determines if two <see cref="SnapshotFields"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

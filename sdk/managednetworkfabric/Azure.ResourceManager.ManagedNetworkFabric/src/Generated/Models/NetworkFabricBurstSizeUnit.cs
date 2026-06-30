@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct NetworkFabricBurstSizeUnit : IEquatable<NetworkFabricBurstSizeUnit>
     {
         private readonly string _value;
+        /// <summary> Burst size unit in bytes. </summary>
+        private const string BytesValue = "Bytes";
+        /// <summary> Burst size unit in kilobytes. </summary>
+        private const string KBytesValue = "KBytes";
+        /// <summary> Burst size unit in megabytes. </summary>
+        private const string MBytesValue = "MBytes";
+        /// <summary> Burst size unit in gigabytes. </summary>
+        private const string GBytesValue = "GBytes";
+        /// <summary> Burst size unit in packets. </summary>
+        private const string PacketsValue = "Packets";
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricBurstSizeUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkFabricBurstSizeUnit(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BytesValue = "Bytes";
-        private const string KBytesValue = "KBytes";
-        private const string MBytesValue = "MBytes";
-        private const string GBytesValue = "GBytes";
-        private const string PacketsValue = "Packets";
+            _value = value;
+        }
 
         /// <summary> Burst size unit in bytes. </summary>
         public static NetworkFabricBurstSizeUnit Bytes { get; } = new NetworkFabricBurstSizeUnit(BytesValue);
+
         /// <summary> Burst size unit in kilobytes. </summary>
         public static NetworkFabricBurstSizeUnit KBytes { get; } = new NetworkFabricBurstSizeUnit(KBytesValue);
+
         /// <summary> Burst size unit in megabytes. </summary>
         public static NetworkFabricBurstSizeUnit MBytes { get; } = new NetworkFabricBurstSizeUnit(MBytesValue);
+
         /// <summary> Burst size unit in gigabytes. </summary>
         public static NetworkFabricBurstSizeUnit GBytes { get; } = new NetworkFabricBurstSizeUnit(GBytesValue);
+
         /// <summary> Burst size unit in packets. </summary>
         public static NetworkFabricBurstSizeUnit Packets { get; } = new NetworkFabricBurstSizeUnit(PacketsValue);
+
         /// <summary> Determines if two <see cref="NetworkFabricBurstSizeUnit"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkFabricBurstSizeUnit left, NetworkFabricBurstSizeUnit right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkFabricBurstSizeUnit"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkFabricBurstSizeUnit left, NetworkFabricBurstSizeUnit right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkFabricBurstSizeUnit"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkFabricBurstSizeUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkFabricBurstSizeUnit(string value) => new NetworkFabricBurstSizeUnit(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkFabricBurstSizeUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkFabricBurstSizeUnit?(string value) => value == null ? null : new NetworkFabricBurstSizeUnit(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkFabricBurstSizeUnit other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkFabricBurstSizeUnit other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
