@@ -13,19 +13,19 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Describes properties common to all threat intelligence objects. </summary>
-    internal partial class TIObjectCommonProperties
+    internal partial class TiObjectCommonProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TIObjectCommonProperties"/>. </summary>
-        internal TIObjectCommonProperties()
+        /// <summary> Initializes a new instance of <see cref="TiObjectCommonProperties"/>. </summary>
+        internal TiObjectCommonProperties()
         {
             Data = new ChangeTrackingDictionary<string, BinaryData>();
             RelationshipHints = new ChangeTrackingList<RelationshipHint>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TIObjectCommonProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TiObjectCommonProperties"/>. </summary>
         /// <param name="data"> The core STIX object that this TI object represents. </param>
         /// <param name="createdBy"> The UserInfo of the user/entity which originally created this TI object. </param>
         /// <param name="source"> The source name for this TI object. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="lastUpdatedOn"> The timestamp for the last time this TI object was updated. </param>
         /// <param name="relationshipHints"> A dictionary used to help follow relationships from this object to other STIX objects. The keys are field names from the STIX object (in the 'data' field), and the values are lists of sources that can be prepended to the object ID in order to efficiently locate the target TI object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TIObjectCommonProperties(IReadOnlyDictionary<string, BinaryData> data, SecurityInsightsUserInfo createdBy, string source, DateTimeOffset? firstIngestedOn, DateTimeOffset? lastIngestedOn, Guid? ingestionRulesVersion, string lastUpdateMethod, SecurityInsightsUserInfo lastModifiedBy, DateTimeOffset? lastUpdatedOn, IReadOnlyList<RelationshipHint> relationshipHints, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TiObjectCommonProperties(IReadOnlyDictionary<string, BinaryData> data, SecurityInsightsUserInfo createdBy, string source, DateTimeOffset? firstIngestedOn, DateTimeOffset? lastIngestedOn, Guid? ingestionRulesVersion, string lastUpdateMethod, SecurityInsightsUserInfo lastModifiedBy, DateTimeOffset? lastUpdatedOn, IReadOnlyList<RelationshipHint> relationshipHints, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Data = data;
             CreatedBy = createdBy;

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class ThreatIntelligenceIdentity : ThreatIntelligenceObject
     {
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceIdentity"/>. </summary>
-        internal ThreatIntelligenceIdentity() : base(TIObjectKind.Identity)
+        internal ThreatIntelligenceIdentity() : base(TiObjectKind.Identity)
         {
         }
 
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="properties"> The properties of the TI object. </param>
         /// <param name="kind"> The kind of the TI object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ThreatIntelligenceIdentity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TIObjectCommonProperties properties, TIObjectKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, properties, kind, additionalBinaryDataProperties)
+        internal ThreatIntelligenceIdentity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TiObjectCommonProperties properties, TiObjectKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, properties, kind, additionalBinaryDataProperties)
         {
         }
     }

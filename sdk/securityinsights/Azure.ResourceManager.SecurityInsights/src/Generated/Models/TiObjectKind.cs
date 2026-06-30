@@ -12,7 +12,7 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> The kind of the TI object. </summary>
-    internal readonly partial struct TIObjectKind : IEquatable<TIObjectKind>
+    internal readonly partial struct TiObjectKind : IEquatable<TiObjectKind>
     {
         private readonly string _value;
         /// <summary> A TI object that represents an attack pattern. </summary>
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> A TI object that represents a threat actor. </summary>
         private const string ThreatActorValue = "ThreatActor";
 
-        /// <summary> Initializes a new instance of <see cref="TIObjectKind"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TiObjectKind"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public TIObjectKind(string value)
+        public TiObjectKind(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -37,44 +37,44 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> A TI object that represents an attack pattern. </summary>
-        public static TIObjectKind AttackPattern { get; } = new TIObjectKind(AttackPatternValue);
+        public static TiObjectKind AttackPattern { get; } = new TiObjectKind(AttackPatternValue);
 
         /// <summary> A TI object that represents an identity. </summary>
-        public static TIObjectKind Identity { get; } = new TIObjectKind(IdentityValue);
+        public static TiObjectKind Identity { get; } = new TiObjectKind(IdentityValue);
 
         /// <summary> A TI object that represents an indicator. </summary>
-        public static TIObjectKind Indicator { get; } = new TIObjectKind(IndicatorValue);
+        public static TiObjectKind Indicator { get; } = new TiObjectKind(IndicatorValue);
 
         /// <summary> A TI object that represents a relationship between two TI objects. </summary>
-        public static TIObjectKind Relationship { get; } = new TIObjectKind(RelationshipValue);
+        public static TiObjectKind Relationship { get; } = new TiObjectKind(RelationshipValue);
 
         /// <summary> A TI object that represents a threat actor. </summary>
-        public static TIObjectKind ThreatActor { get; } = new TIObjectKind(ThreatActorValue);
+        public static TiObjectKind ThreatActor { get; } = new TiObjectKind(ThreatActorValue);
 
-        /// <summary> Determines if two <see cref="TIObjectKind"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="TiObjectKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(TIObjectKind left, TIObjectKind right) => left.Equals(right);
+        public static bool operator ==(TiObjectKind left, TiObjectKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="TIObjectKind"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="TiObjectKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(TIObjectKind left, TIObjectKind right) => !left.Equals(right);
+        public static bool operator !=(TiObjectKind left, TiObjectKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="TIObjectKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="TiObjectKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TIObjectKind(string value) => new TIObjectKind(value);
+        public static implicit operator TiObjectKind(string value) => new TiObjectKind(value);
 
-        /// <summary> Converts a string to a <see cref="TIObjectKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="TiObjectKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TIObjectKind?(string value) => value == null ? null : new TIObjectKind(value);
+        public static implicit operator TiObjectKind?(string value) => value == null ? null : new TiObjectKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is TIObjectKind other && Equals(other);
+        public override bool Equals(object obj) => obj is TiObjectKind other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(TIObjectKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(TiObjectKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

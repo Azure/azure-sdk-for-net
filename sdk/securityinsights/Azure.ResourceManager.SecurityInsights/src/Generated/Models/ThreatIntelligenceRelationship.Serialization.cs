@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            TIObjectCommonProperties properties = default;
-            TIObjectKind kind = default;
+            TiObjectCommonProperties properties = default;
+            TiObjectKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -152,12 +152,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    properties = TIObjectCommonProperties.DeserializeTIObjectCommonProperties(prop.Value, options);
+                    properties = TiObjectCommonProperties.DeserializeTiObjectCommonProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))
                 {
-                    kind = new TIObjectKind(prop.Value.GetString());
+                    kind = new TiObjectKind(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

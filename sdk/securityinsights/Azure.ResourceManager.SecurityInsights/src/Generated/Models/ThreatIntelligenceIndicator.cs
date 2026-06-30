@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class ThreatIntelligenceIndicator : ThreatIntelligenceObject
     {
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceIndicator"/>. </summary>
-        internal ThreatIntelligenceIndicator() : base(TIObjectKind.Indicator)
+        internal ThreatIntelligenceIndicator() : base(TiObjectKind.Indicator)
         {
             Observables = new ChangeTrackingList<IndicatorObservablesItem>();
         }
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="kind"> The kind of the TI object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="observables"> The observables of this indicator. </param>
-        internal ThreatIntelligenceIndicator(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TIObjectCommonProperties properties, TIObjectKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<IndicatorObservablesItem> observables) : base(id, name, resourceType, systemData, properties, kind, additionalBinaryDataProperties)
+        internal ThreatIntelligenceIndicator(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TiObjectCommonProperties properties, TiObjectKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<IndicatorObservablesItem> observables) : base(id, name, resourceType, systemData, properties, kind, additionalBinaryDataProperties)
         {
             Observables = observables;
         }

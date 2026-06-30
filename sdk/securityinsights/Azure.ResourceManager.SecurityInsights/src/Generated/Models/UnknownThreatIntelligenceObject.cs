@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="properties"> The properties of the TI object. </param>
         /// <param name="kind"> The kind of the TI object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownThreatIntelligenceObject(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TIObjectCommonProperties properties, TIObjectKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, properties, kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownThreatIntelligenceObject(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TiObjectCommonProperties properties, TiObjectKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, properties, kind != default ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

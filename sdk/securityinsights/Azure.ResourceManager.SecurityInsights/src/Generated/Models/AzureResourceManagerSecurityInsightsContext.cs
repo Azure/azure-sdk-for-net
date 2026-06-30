@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.SecurityInsights
     [ModelReaderWriterBuildable(typeof(TimelineAggregation))]
     [ModelReaderWriterBuildable(typeof(TimelineError))]
     [ModelReaderWriterBuildable(typeof(TimelineResultsMetadata))]
-    [ModelReaderWriterBuildable(typeof(TIObjectCommonProperties))]
+    [ModelReaderWriterBuildable(typeof(TiObjectCommonProperties))]
     [ModelReaderWriterBuildable(typeof(TiTaxiiCheckRequirementsProperties))]
     [ModelReaderWriterBuildable(typeof(TiTaxiiDataConnectorDataTypes))]
     [ModelReaderWriterBuildable(typeof(TiTaxiiDataConnectorDataTypesTaxiiClientInfo))]

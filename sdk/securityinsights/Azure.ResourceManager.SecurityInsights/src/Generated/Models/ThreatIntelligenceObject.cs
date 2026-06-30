@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceObject"/>. </summary>
         /// <param name="kind"> The kind of the TI object. </param>
-        private protected ThreatIntelligenceObject(TIObjectKind kind)
+        private protected ThreatIntelligenceObject(TiObjectKind kind)
         {
             Kind = kind;
         }
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="properties"> The properties of the TI object. </param>
         /// <param name="kind"> The kind of the TI object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ThreatIntelligenceObject(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TIObjectCommonProperties properties, TIObjectKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal ThreatIntelligenceObject(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TiObjectCommonProperties properties, TiObjectKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Kind = kind;
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The properties of the TI object. </summary>
         [WirePath("properties")]
-        internal TIObjectCommonProperties Properties { get; }
+        internal TiObjectCommonProperties Properties { get; }
 
         /// <summary> The kind of the TI object. </summary>
         [WirePath("kind")]
-        internal TIObjectKind Kind { get; set; }
+        internal TiObjectKind Kind { get; set; }
 
         /// <summary> The core STIX object that this TI object represents. </summary>
         [WirePath("properties.data")]

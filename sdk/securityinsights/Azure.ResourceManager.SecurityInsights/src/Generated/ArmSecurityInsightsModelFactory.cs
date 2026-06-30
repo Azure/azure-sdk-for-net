@@ -6364,7 +6364,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                data is null && createdBy is null && source is null && firstIngestedOn is null && lastIngestedOn is null && ingestionRulesVersion is null && lastUpdateMethod is null && lastModifiedBy is null && lastUpdatedOn is null && relationshipHints is null ? default : new TIObjectCommonProperties(
+                data is null && createdBy is null && source is null && firstIngestedOn is null && lastIngestedOn is null && ingestionRulesVersion is null && lastUpdateMethod is null && lastModifiedBy is null && lastUpdatedOn is null && relationshipHints is null ? default : new TiObjectCommonProperties(
                     data ?? new ChangeTrackingDictionary<string, BinaryData>(),
                     createdBy,
                     source,
@@ -6410,7 +6410,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                data is null && createdBy is null && source is null && firstIngestedOn is null && lastIngestedOn is null && ingestionRulesVersion is null && lastUpdateMethod is null && lastModifiedBy is null && lastUpdatedOn is null && relationshipHints is null ? default : new TIObjectCommonProperties(
+                data is null && createdBy is null && source is null && firstIngestedOn is null && lastIngestedOn is null && ingestionRulesVersion is null && lastUpdateMethod is null && lastModifiedBy is null && lastUpdatedOn is null && relationshipHints is null ? default : new TiObjectCommonProperties(
                     data ?? new ChangeTrackingDictionary<string, BinaryData>(),
                     createdBy,
                     source,
@@ -6448,7 +6448,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                data is null && createdBy is null && source is null && firstIngestedOn is null && lastIngestedOn is null && ingestionRulesVersion is null && lastUpdateMethod is null && lastModifiedBy is null && lastUpdatedOn is null && relationshipHints is null ? default : new TIObjectCommonProperties(
+                data is null && createdBy is null && source is null && firstIngestedOn is null && lastIngestedOn is null && ingestionRulesVersion is null && lastUpdateMethod is null && lastModifiedBy is null && lastUpdatedOn is null && relationshipHints is null ? default : new TiObjectCommonProperties(
                     data ?? new ChangeTrackingDictionary<string, BinaryData>(),
                     createdBy,
                     source,
@@ -6486,7 +6486,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                data is null && createdBy is null && source is null && firstIngestedOn is null && lastIngestedOn is null && ingestionRulesVersion is null && lastUpdateMethod is null && lastModifiedBy is null && lastUpdatedOn is null && relationshipHints is null ? default : new TIObjectCommonProperties(
+                data is null && createdBy is null && source is null && firstIngestedOn is null && lastIngestedOn is null && ingestionRulesVersion is null && lastUpdateMethod is null && lastModifiedBy is null && lastUpdatedOn is null && relationshipHints is null ? default : new TiObjectCommonProperties(
                     data ?? new ChangeTrackingDictionary<string, BinaryData>(),
                     createdBy,
                     source,
@@ -6524,7 +6524,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                data is null && createdBy is null && source is null && firstIngestedOn is null && lastIngestedOn is null && ingestionRulesVersion is null && lastUpdateMethod is null && lastModifiedBy is null && lastUpdatedOn is null && relationshipHints is null ? default : new TIObjectCommonProperties(
+                data is null && createdBy is null && source is null && firstIngestedOn is null && lastIngestedOn is null && ingestionRulesVersion is null && lastUpdateMethod is null && lastModifiedBy is null && lastUpdatedOn is null && relationshipHints is null ? default : new TiObjectCommonProperties(
                     data ?? new ChangeTrackingDictionary<string, BinaryData>(),
                     createdBy,
                     source,
@@ -6565,7 +6565,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                data is null && createdBy is null && source is null && firstIngestedOn is null && lastIngestedOn is null && ingestionRulesVersion is null && lastUpdateMethod is null && lastModifiedBy is null && lastUpdatedOn is null && relationshipHints is null ? default : new TIObjectCommonProperties(
+                data is null && createdBy is null && source is null && firstIngestedOn is null && lastIngestedOn is null && ingestionRulesVersion is null && lastUpdateMethod is null && lastModifiedBy is null && lastUpdatedOn is null && relationshipHints is null ? default : new TiObjectCommonProperties(
                     data ?? new ChangeTrackingDictionary<string, BinaryData>(),
                     createdBy,
                     source,
