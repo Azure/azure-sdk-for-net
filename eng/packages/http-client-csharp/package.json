@@ -64,7 +64,7 @@
     "@typespec/tspd": "0.75.0",
     "@typespec/versioning": "0.83.0",
     "@typespec/xml": "0.83.0",
-    "@vitest/coverage-v8": "^3.0.5",
+    "@vitest/coverage-v8": "^4.1.9",
     "@vitest/ui": "^3.0.5",
     "c8": "^10.1.2",
     "eslint": "^8.57.0",
