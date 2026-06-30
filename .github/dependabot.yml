@@ -80,7 +80,7 @@ updates:
     versioning-strategy: increase-if-necessary
   - package-ecosystem: "npm"
     directories:
-      - "/eng/packages/http-client-csharp-aspnet"
+      - "/eng/packages/http-server-csharp-aspnet"
     schedule:
       interval: "daily"
     cooldown:
