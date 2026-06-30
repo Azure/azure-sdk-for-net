@@ -88,21 +88,21 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> GatewayCustomBgpIpAddresses to be used for virtual network gateway Connection. </summary>
         [WirePath("properties.gatewayCustomBgpIpAddresses")]
-        public IList<GatewayCustomBgpIPAddressIPConfiguration> GatewayCustomBgpIpAddresses
+        public IList<GatewayCustomBgpIPAddressIPConfiguration> GatewayCustomBgpIPAddresses
         {
             get
             {
-                return Properties is null ? default : Properties.GatewayCustomBgpIpAddresses;
+                return Properties is null ? default : Properties.GatewayCustomBgpIPAddresses;
             }
         }
 
         /// <summary> The IPSec Policies to be considered by this connection. </summary>
         [WirePath("properties.ipsecPolicies")]
-        public IList<IPsecPolicy> IpsecPolicies
+        public IList<IPsecPolicy> IPsecPolicies
         {
             get
             {
-                return Properties is null ? default : Properties.IpsecPolicies;
+                return Properties is null ? default : Properties.IPsecPolicies;
             }
         }
 

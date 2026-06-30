@@ -11,7 +11,7 @@ namespace Azure.AI.Projects.Evaluation
 {
     /// <summary>
     /// Base evaluator configuration with discriminator
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CodeBasedEvaluatorDefinition"/>, <see cref="PromptBasedEvaluatorDefinition"/>, and <see cref="RubricBasedEvaluatorDefinition"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CodeBasedEvaluatorDefinition"/>, <see cref="PromptBasedEvaluatorDefinition"/>, <see cref="RubricBasedEvaluatorDefinition"/>, and <see cref="EndpointBasedEvaluatorDefinition"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownEvaluatorDefinition))]
     public abstract partial class EvaluatorDefinition : IJsonModel<EvaluatorDefinition>
@@ -168,6 +168,8 @@ namespace Azure.AI.Projects.Evaluation
                         return PromptBasedEvaluatorDefinition.DeserializePromptBasedEvaluatorDefinition(element, options);
                     case "rubric":
                         return RubricBasedEvaluatorDefinition.DeserializeRubricBasedEvaluatorDefinition(element, options);
+                    case "endpoint":
+                        return EndpointBasedEvaluatorDefinition.DeserializeEndpointBasedEvaluatorDefinition(element, options);
                 }
             }
             return UnknownEvaluatorDefinition.DeserializeUnknownEvaluatorDefinition(element, options);

@@ -60,6 +60,10 @@ namespace Azure.Provisioning.Cdn
             base.DefineProvisionableProperties();
             _protocolType = DefineProperty<SecureDeliveryProtocolType>(nameof(ProtocolType), new string[] { "protocolType" }, isRequired: true);
             _minimumTlsVersion = DefineProperty<CdnMinimumTlsVersion>(nameof(MinimumTlsVersion), new string[] { "minimumTlsVersion" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for CustomDomainHttpsContent that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

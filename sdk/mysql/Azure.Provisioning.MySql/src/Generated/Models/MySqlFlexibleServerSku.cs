@@ -57,6 +57,10 @@ namespace Azure.Provisioning.MySql
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _tier = DefineProperty<MySqlFlexibleServerSkuTier>(nameof(Tier), new string[] { "tier" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for MySqlFlexibleServerSku that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

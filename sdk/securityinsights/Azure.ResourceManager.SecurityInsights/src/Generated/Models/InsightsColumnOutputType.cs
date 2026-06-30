@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct InsightsColumnOutputType : IEquatable<InsightsColumnOutputType>
     {
         private readonly string _value;
+        /// <summary> Number. </summary>
+        private const string NumberValue = "Number";
+        /// <summary> String. </summary>
+        private const string StringValue = "String";
+        /// <summary> Date. </summary>
+        private const string DateValue = "Date";
+        /// <summary> Entity. </summary>
+        private const string EntityValue = "Entity";
 
         /// <summary> Initializes a new instance of <see cref="InsightsColumnOutputType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public InsightsColumnOutputType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NumberValue = "Number";
-        private const string StringValue = "String";
-        private const string DateValue = "Date";
-        private const string EntityValue = "Entity";
+            _value = value;
+        }
 
         /// <summary> Number. </summary>
         public static InsightsColumnOutputType Number { get; } = new InsightsColumnOutputType(NumberValue);
+
         /// <summary> String. </summary>
         public static InsightsColumnOutputType String { get; } = new InsightsColumnOutputType(StringValue);
+
         /// <summary> Date. </summary>
         public static InsightsColumnOutputType Date { get; } = new InsightsColumnOutputType(DateValue);
+
         /// <summary> Entity. </summary>
         public static InsightsColumnOutputType Entity { get; } = new InsightsColumnOutputType(EntityValue);
+
         /// <summary> Determines if two <see cref="InsightsColumnOutputType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(InsightsColumnOutputType left, InsightsColumnOutputType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="InsightsColumnOutputType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(InsightsColumnOutputType left, InsightsColumnOutputType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="InsightsColumnOutputType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="InsightsColumnOutputType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator InsightsColumnOutputType(string value) => new InsightsColumnOutputType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="InsightsColumnOutputType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator InsightsColumnOutputType?(string value) => value == null ? null : new InsightsColumnOutputType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is InsightsColumnOutputType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(InsightsColumnOutputType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

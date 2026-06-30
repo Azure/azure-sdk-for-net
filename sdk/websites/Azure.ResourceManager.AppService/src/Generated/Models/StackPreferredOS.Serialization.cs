@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class StackPreferredOSExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this StackPreferredOS value) => value switch
         {
             StackPreferredOS.Windows => "Windows",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StackPreferredOS value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static StackPreferredOS ToStackPreferredOS(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Windows")) return StackPreferredOS.Windows;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Linux")) return StackPreferredOS.Linux;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Windows"))
+            {
+                return StackPreferredOS.Windows;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Linux"))
+            {
+                return StackPreferredOS.Linux;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StackPreferredOS value.");
         }
     }

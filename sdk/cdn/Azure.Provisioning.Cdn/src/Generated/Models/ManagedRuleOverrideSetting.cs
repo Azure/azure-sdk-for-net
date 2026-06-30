@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Cdn
             _ruleId = DefineProperty<string>(nameof(RuleId), new string[] { "ruleId" }, isRequired: true);
             _enabledState = DefineProperty<ManagedRuleSetupState>(nameof(EnabledState), new string[] { "enabledState" });
             _action = DefineProperty<OverrideActionType>(nameof(Action), new string[] { "action" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedRuleOverrideSetting that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

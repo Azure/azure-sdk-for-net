@@ -142,6 +142,10 @@ namespace Azure.Provisioning.CostManagement
             _grouping = DefineListProperty<ReportConfigGrouping>(nameof(Grouping), new string[] { "grouping" });
             _sorting = DefineListProperty<ReportConfigSorting>(nameof(Sorting), new string[] { "sorting" });
             _filter = DefineModelProperty<ReportConfigFilter>(nameof(Filter), new string[] { "filter" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ReportConfigDataset that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -7,24 +7,14 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Type of the registry adapter.
-    /// Serialized Name: RegistryAdapterType
-    /// </summary>
+    /// <summary> Type of the registry adapter. </summary>
     public readonly partial struct RegistryAdapterType : IEquatable<RegistryAdapterType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="RegistryAdapterType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RegistryAdapterType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string BinaryValue = "Binary";
         private const string StringValue = "String";
         private const string ExpandStringValue = "Expand_String";
@@ -32,53 +22,64 @@ namespace Azure.ResourceManager.AppService.Models
         private const string DWordValue = "DWord";
         private const string QWordValue = "QWord";
 
-        /// <summary>
-        /// Binary
-        /// Serialized Name: RegistryAdapterType.Binary
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="RegistryAdapterType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RegistryAdapterType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Binary. </summary>
         public static RegistryAdapterType Binary { get; } = new RegistryAdapterType(BinaryValue);
-        /// <summary>
-        /// String
-        /// Serialized Name: RegistryAdapterType.String
-        /// </summary>
+
+        /// <summary> Gets the String. </summary>
         public static RegistryAdapterType String { get; } = new RegistryAdapterType(StringValue);
-        /// <summary>
-        /// Expand_String
-        /// Serialized Name: RegistryAdapterType.Expand_String
-        /// </summary>
+
+        /// <summary> Gets the ExpandString. </summary>
         public static RegistryAdapterType ExpandString { get; } = new RegistryAdapterType(ExpandStringValue);
-        /// <summary>
-        /// Multi_String
-        /// Serialized Name: RegistryAdapterType.Multi_String
-        /// </summary>
+
+        /// <summary> Gets the MultiString. </summary>
         public static RegistryAdapterType MultiString { get; } = new RegistryAdapterType(MultiStringValue);
-        /// <summary>
-        /// DWord
-        /// Serialized Name: RegistryAdapterType.DWord
-        /// </summary>
+
+        /// <summary> Gets the DWord. </summary>
         public static RegistryAdapterType DWord { get; } = new RegistryAdapterType(DWordValue);
-        /// <summary>
-        /// QWord
-        /// Serialized Name: RegistryAdapterType.QWord
-        /// </summary>
+
+        /// <summary> Gets the QWord. </summary>
         public static RegistryAdapterType QWord { get; } = new RegistryAdapterType(QWordValue);
+
         /// <summary> Determines if two <see cref="RegistryAdapterType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RegistryAdapterType left, RegistryAdapterType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RegistryAdapterType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RegistryAdapterType left, RegistryAdapterType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RegistryAdapterType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RegistryAdapterType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RegistryAdapterType(string value) => new RegistryAdapterType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RegistryAdapterType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RegistryAdapterType?(string value) => value == null ? null : new RegistryAdapterType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RegistryAdapterType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RegistryAdapterType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

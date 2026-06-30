@@ -391,6 +391,10 @@ namespace Azure.Provisioning.MySql
             _maintenancePolicy = DefineModelProperty<MaintenancePolicy>(nameof(MaintenancePolicy), new string[] { "maintenancePolicy" });
             _maintenanceWindow = DefineModelProperty<MySqlFlexibleServerMaintenanceWindow>(nameof(MaintenanceWindow), new string[] { "maintenanceWindow" });
             _importSourceProperties = DefineModelProperty<ImportSourceProperties>(nameof(ImportSourceProperties), new string[] { "importSourceProperties" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ServerProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

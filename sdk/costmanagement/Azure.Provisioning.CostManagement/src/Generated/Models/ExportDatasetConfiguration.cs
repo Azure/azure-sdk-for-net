@@ -74,6 +74,10 @@ namespace Azure.Provisioning.CostManagement
             _columns = DefineListProperty<string>(nameof(Columns), new string[] { "columns" });
             _dataVersion = DefineProperty<string>(nameof(DataVersion), new string[] { "dataVersion" });
             _filters = DefineListProperty<FilterItems>(nameof(Filters), new string[] { "filters" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ExportDatasetConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

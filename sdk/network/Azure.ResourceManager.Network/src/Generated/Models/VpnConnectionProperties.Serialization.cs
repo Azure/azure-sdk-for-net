@@ -129,11 +129,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("usePolicyBasedTrafficSelectors"u8);
                 writer.WriteBooleanValue(UsePolicyBasedTrafficSelectors.Value);
             }
-            if (Optional.IsCollectionDefined(IpsecPolicies))
+            if (Optional.IsCollectionDefined(IPsecPolicies))
             {
                 writer.WritePropertyName("ipsecPolicies"u8);
                 writer.WriteStartArray();
-                foreach (IPsecPolicy item in IpsecPolicies)
+                foreach (IPsecPolicy item in IPsecPolicies)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -159,10 +159,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("enableInternetSecurity"u8);
                 writer.WriteBooleanValue(EnableInternetSecurity.Value);
             }
-            if (Optional.IsDefined(UseLocalAzureIpAddress))
+            if (Optional.IsDefined(UseLocalAzureIPAddress))
             {
                 writer.WritePropertyName("useLocalAzureIpAddress"u8);
-                writer.WriteBooleanValue(UseLocalAzureIpAddress.Value);
+                writer.WriteBooleanValue(UseLocalAzureIPAddress.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -237,11 +237,11 @@ namespace Azure.ResourceManager.Network.Models
             string sharedKey = default;
             bool? enableBgp = default;
             bool? usePolicyBasedTrafficSelectors = default;
-            IList<IPsecPolicy> ipsecPolicies = default;
+            IList<IPsecPolicy> iPsecPolicies = default;
             IList<TrafficSelectorPolicy> trafficSelectorPolicies = default;
             bool? enableRateLimiting = default;
             bool? enableInternetSecurity = default;
-            bool? useLocalAzureIpAddress = default;
+            bool? useLocalAzureIPAddress = default;
             NetworkProvisioningState? provisioningState = default;
             IList<VpnSiteLinkConnectionData> vpnLinkConnections = default;
             RoutingConfigurationNfv routingConfiguration = default;
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(IPsecPolicy.DeserializeIPsecPolicy(item, options));
                     }
-                    ipsecPolicies = array;
+                    iPsecPolicies = array;
                     continue;
                 }
                 if (prop.NameEquals("trafficSelectorPolicies"u8))
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    useLocalAzureIpAddress = prop.Value.GetBoolean();
+                    useLocalAzureIPAddress = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -447,11 +447,11 @@ namespace Azure.ResourceManager.Network.Models
                 sharedKey,
                 enableBgp,
                 usePolicyBasedTrafficSelectors,
-                ipsecPolicies ?? new ChangeTrackingList<IPsecPolicy>(),
+                iPsecPolicies ?? new ChangeTrackingList<IPsecPolicy>(),
                 trafficSelectorPolicies ?? new ChangeTrackingList<TrafficSelectorPolicy>(),
                 enableRateLimiting,
                 enableInternetSecurity,
-                useLocalAzureIpAddress,
+                useLocalAzureIPAddress,
                 provisioningState,
                 vpnLinkConnections ?? new ChangeTrackingList<VpnSiteLinkConnectionData>(),
                 routingConfiguration,

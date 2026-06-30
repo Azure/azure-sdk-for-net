@@ -6,44 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A Class representing an AppServiceSourceControl along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppServiceSourceControlResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetAppServiceSourceControlResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetAppServiceSourceControl method.
+    /// A class representing a AppServiceSourceControl along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AppServiceSourceControlResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetAppServiceSourceControls method.
     /// </summary>
     public partial class AppServiceSourceControlResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="AppServiceSourceControlResource"/> instance. </summary>
-        /// <param name="sourceControlType"> The sourceControlType. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string sourceControlType)
-        {
-            var resourceId = $"/providers/Microsoft.Web/sourcecontrols/{sourceControlType}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _appServiceSourceControlClientDiagnostics;
-        private readonly AppServiceManagementRestOperations _appServiceSourceControlRestClient;
+        private readonly ClientDiagnostics _sourceControlsClientDiagnostics;
+        private readonly SourceControls _sourceControlsRestClient;
         private readonly AppServiceSourceControlData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/sourcecontrols";
 
-        /// <summary> Initializes a new instance of the <see cref="AppServiceSourceControlResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of AppServiceSourceControlResource for mocking. </summary>
         protected AppServiceSourceControlResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AppServiceSourceControlResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceSourceControlResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppServiceSourceControlResource(ArmClient client, AppServiceSourceControlData data) : this(client, data.Id)
@@ -52,71 +44,90 @@ namespace Azure.ResourceManager.AppService
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AppServiceSourceControlResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceSourceControlResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AppServiceSourceControlResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _appServiceSourceControlClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string appServiceSourceControlApiVersion);
-            _appServiceSourceControlRestClient = new AppServiceManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appServiceSourceControlApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _sourceControlsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            _sourceControlsRestClient = new SourceControls(_sourceControlsClientDiagnostics, Pipeline, Endpoint, appServiceSourceControlApiVersion ?? "2026-03-15");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual AppServiceSourceControlData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="sourceControlType"> The sourceControlType. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string sourceControlType)
+        {
+            string resourceId = $"/providers/Microsoft.Web/sourcecontrols/{sourceControlType}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Description for Gets source control token
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Web/sourcecontrols/{sourceControlType}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Web/sourcecontrols/{sourceControlType}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GetSourceControl</description>
+        /// <term> Operation Id. </term>
+        /// <description> SourceControls_GetSourceControl. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppServiceSourceControlResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AppServiceSourceControlResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AppServiceSourceControlResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _appServiceSourceControlClientDiagnostics.CreateScope("AppServiceSourceControlResource.Get");
+            using DiagnosticScope scope = _sourceControlsClientDiagnostics.CreateScope("AppServiceSourceControlResource.Get");
             scope.Start();
             try
             {
-                var response = await _appServiceSourceControlRestClient.GetSourceControlAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sourceControlsRestClient.CreateGetSourceControlRequest(Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AppServiceSourceControlData> response = Response.FromValue(AppServiceSourceControlData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AppServiceSourceControlResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -130,33 +141,41 @@ namespace Azure.ResourceManager.AppService
         /// Description for Gets source control token
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Web/sourcecontrols/{sourceControlType}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Web/sourcecontrols/{sourceControlType}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GetSourceControl</description>
+        /// <term> Operation Id. </term>
+        /// <description> SourceControls_GetSourceControl. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppServiceSourceControlResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AppServiceSourceControlResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AppServiceSourceControlResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _appServiceSourceControlClientDiagnostics.CreateScope("AppServiceSourceControlResource.Get");
+            using DiagnosticScope scope = _sourceControlsClientDiagnostics.CreateScope("AppServiceSourceControlResource.Get");
             scope.Start();
             try
             {
-                var response = _appServiceSourceControlRestClient.GetSourceControl(Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sourceControlsRestClient.CreateGetSourceControlRequest(Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AppServiceSourceControlData> response = Response.FromValue(AppServiceSourceControlData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AppServiceSourceControlResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -167,23 +186,23 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates source control token
+        /// Update a AppServiceSourceControl.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Web/sourcecontrols/{sourceControlType}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Web/sourcecontrols/{sourceControlType}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UpdateSourceControl</description>
+        /// <term> Operation Id. </term>
+        /// <description> SourceControls_UpdateSourceControl. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppServiceSourceControlResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AppServiceSourceControlResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,16 +214,24 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _appServiceSourceControlClientDiagnostics.CreateScope("AppServiceSourceControlResource.Update");
+            using DiagnosticScope scope = _sourceControlsClientDiagnostics.CreateScope("AppServiceSourceControlResource.Update");
             scope.Start();
             try
             {
-                var response = await _appServiceSourceControlRestClient.UpdateSourceControlAsync(Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _appServiceSourceControlRestClient.CreateUpdateSourceControlRequestUri(Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppServiceArmOperation<AppServiceSourceControlResource>(Response.FromValue(new AppServiceSourceControlResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sourceControlsRestClient.CreateUpdateSourceControlRequest(Id.Name, AppServiceSourceControlData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AppServiceSourceControlData> response = Response.FromValue(AppServiceSourceControlData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AppServiceArmOperation<AppServiceSourceControlResource> operation = new AppServiceArmOperation<AppServiceSourceControlResource>(Response.FromValue(new AppServiceSourceControlResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -215,23 +242,23 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates source control token
+        /// Update a AppServiceSourceControl.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Web/sourcecontrols/{sourceControlType}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Web/sourcecontrols/{sourceControlType}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UpdateSourceControl</description>
+        /// <term> Operation Id. </term>
+        /// <description> SourceControls_UpdateSourceControl. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppServiceSourceControlResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AppServiceSourceControlResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -243,16 +270,24 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _appServiceSourceControlClientDiagnostics.CreateScope("AppServiceSourceControlResource.Update");
+            using DiagnosticScope scope = _sourceControlsClientDiagnostics.CreateScope("AppServiceSourceControlResource.Update");
             scope.Start();
             try
             {
-                var response = _appServiceSourceControlRestClient.UpdateSourceControl(Id.Name, data, cancellationToken);
-                var uri = _appServiceSourceControlRestClient.CreateUpdateSourceControlRequestUri(Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppServiceArmOperation<AppServiceSourceControlResource>(Response.FromValue(new AppServiceSourceControlResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sourceControlsRestClient.CreateUpdateSourceControlRequest(Id.Name, AppServiceSourceControlData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AppServiceSourceControlData> response = Response.FromValue(AppServiceSourceControlData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AppServiceArmOperation<AppServiceSourceControlResource> operation = new AppServiceArmOperation<AppServiceSourceControlResource>(Response.FromValue(new AppServiceSourceControlResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

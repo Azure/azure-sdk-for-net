@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Cdn
             _queryStringCachingBehavior = DefineProperty<FrontDoorQueryStringCachingBehavior>(nameof(QueryStringCachingBehavior), new string[] { "queryStringCachingBehavior" });
             _queryParameters = DefineProperty<string>(nameof(QueryParameters), new string[] { "queryParameters" });
             _compressionSettings = DefineModelProperty<RouteCacheCompressionSettings>(nameof(CompressionSettings), new string[] { "compressionSettings" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for FrontDoorRouteCacheConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

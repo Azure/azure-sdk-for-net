@@ -178,6 +178,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("hyperVGeneration"u8);
                 writer.WriteStringValue(HyperVGeneration.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(InterconnectInstanceView))
+            {
+                writer.WritePropertyName("interconnectInstanceView"u8);
+                writer.WriteObjectValue(InterconnectInstanceView, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -236,6 +241,7 @@ namespace Azure.ResourceManager.Compute.Models
             string osName = default;
             string osVersion = default;
             HyperVGeneration? hyperVGeneration = default;
+            InterconnectInstanceView interconnectInstanceView = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -378,6 +384,15 @@ namespace Azure.ResourceManager.Compute.Models
                     hyperVGeneration = new HyperVGeneration(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("interconnectInstanceView"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    interconnectInstanceView = InterconnectInstanceView.DeserializeInterconnectInstanceView(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -400,6 +415,7 @@ namespace Azure.ResourceManager.Compute.Models
                 osName,
                 osVersion,
                 hyperVGeneration,
+                interconnectInstanceView,
                 additionalBinaryDataProperties);
         }
     }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             VirtualWan = virtualWan;
             DeviceProperties = deviceProperties;
-            IpAddress = ipAddress;
+            IPAddress = ipAddress;
             SiteKey = siteKey;
             AddressSpace = addressSpace;
             BgpProperties = bgpProperties;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The ip-address for the vpn-site. </summary>
         [WirePath("ipAddress")]
-        public string IpAddress { get; set; }
+        public string IPAddress { get; set; }
 
         /// <summary> The key for vpn-site that can be used for connections. </summary>
         [WirePath("siteKey")]

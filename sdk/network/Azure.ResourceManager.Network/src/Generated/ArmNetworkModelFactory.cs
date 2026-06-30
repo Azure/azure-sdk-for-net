@@ -3136,14 +3136,14 @@ namespace Azure.ResourceManager.Network.Models
                 default);
         }
 
-        /// <param name="publicIpAddressId"> Public IP ARM resource ID. </param>
-        /// <param name="publicIpAddress"> IP Address of the Public IP Resource. </param>
+        /// <param name="publicIPAddressId"> Public IP ARM resource ID. </param>
+        /// <param name="publicIPAddress"> IP Address of the Public IP Resource. </param>
         /// <param name="isWorkloadProtected"> Value indicating whether the IP address is DDoS workload protected or not. </param>
         /// <param name="ddosProtectionPlanId"> DDoS protection plan Resource Id of a if IP address is protected through a plan. </param>
         /// <returns> A new <see cref="Models.PublicIPDdosProtectionStatusResult"/> instance for mocking. </returns>
-        public static PublicIPDdosProtectionStatusResult PublicIPDdosProtectionStatusResult(ResourceIdentifier publicIpAddressId = default, string publicIpAddress = default, WorkloadProtectedFlag? isWorkloadProtected = default, ResourceIdentifier ddosProtectionPlanId = default)
+        public static PublicIPDdosProtectionStatusResult PublicIPDdosProtectionStatusResult(ResourceIdentifier publicIPAddressId = default, IPAddress publicIPAddress = default, WorkloadProtectedFlag? isWorkloadProtected = default, ResourceIdentifier ddosProtectionPlanId = default)
         {
-            return new PublicIPDdosProtectionStatusResult(publicIpAddressId, publicIpAddress, isWorkloadProtected, ddosProtectionPlanId, default);
+            return new PublicIPDdosProtectionStatusResult(publicIPAddressId, publicIPAddress, isWorkloadProtected, ddosProtectionPlanId, default);
         }
 
         /// <param name="isRollback"> When true, reverts from Static to Dynamic allocation (undo reservation). </param>
@@ -5989,7 +5989,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <param name="nicType"> NIC type. This should be either PublicNic or PrivateNic. </param>
-        /// <param name="virtualApplianceNetworkInterfaceIpConfigurations"> Gets the IpConfigurations. </param>
+        /// <param name="virtualApplianceNetworkInterfaceIpConfigurations"> Gets the VirtualApplianceNetworkInterfaceIPConfigurations. </param>
         /// <returns> A new <see cref="Models.VirtualApplianceNetworkInterfaceConfiguration"/> instance for mocking. </returns>
         public static VirtualApplianceNetworkInterfaceConfiguration VirtualApplianceNetworkInterfaceConfiguration(NicTypeInRequest? nicType = default, IEnumerable<VirtualApplianceIPConfiguration> virtualApplianceNetworkInterfaceIpConfigurations = default)
         {
@@ -11487,6 +11487,17 @@ namespace Azure.ResourceManager.Network.Models
             return new NetworkUsageName(value, localizedValue, default);
         }
 
+        /// <param name="publicIpAddressId"> Public IP ARM resource ID. </param>
+        /// <param name="publicIpAddress"> IP Address of the Public IP Resource. </param>
+        /// <param name="isWorkloadProtected"> Value indicating whether the IP address is DDoS workload protected or not. </param>
+        /// <param name="ddosProtectionPlanId"> DDoS protection plan Resource Id of a if IP address is protected through a plan. </param>
+        /// <returns> A new <see cref="Models.PublicIPDdosProtectionStatusResult"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PublicIPDdosProtectionStatusResult PublicIPDdosProtectionStatusResult(ResourceIdentifier publicIpAddressId = default, string publicIpAddress = default, WorkloadProtectedFlag? isWorkloadProtected = default, ResourceIdentifier ddosProtectionPlanId = default)
+        {
+            return new PublicIPDdosProtectionStatusResult(publicIpAddressId, default, isWorkloadProtected, ddosProtectionPlanId, default);
+        }
+
         /// <summary> Initializes a new instance of ApplicationGatewayFrontendIPConfiguration. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -16715,18 +16726,6 @@ namespace Azure.ResourceManager.Network.Models
         public static PrivateDnsZoneGroupData PrivateDnsZoneGroupData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, ETag? etag = default, NetworkProvisioningState? provisioningState = default, IEnumerable<PrivateDnsZoneConfig> privateDnsZoneConfigs = default)
         {
             return new PrivateDnsZoneGroupData(id, default, name, default, provisioningState is null && privateDnsZoneConfigs is null ? default : new PrivateDnsZoneGroupPropertiesFormat(provisioningState, (privateDnsZoneConfigs ?? new ChangeTrackingList<PrivateDnsZoneConfig>()).ToList(), default));
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PublicIPDdosProtectionStatusResult"/>. </summary>
-        /// <param name="publicIPAddressId"> Public IP ARM resource ID. </param>
-        /// <param name="publicIPAddress"> IP Address of the Public IP Resource. </param>
-        /// <param name="isWorkloadProtected"> Value indicating whether the IP address is DDoS workload protected or not. </param>
-        /// <param name="ddosProtectionPlanId"> DDoS protection plan Resource Id of a if IP address is protected through a plan. </param>
-        /// <returns> A new <see cref="Models.PublicIPDdosProtectionStatusResult"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PublicIPDdosProtectionStatusResult PublicIPDdosProtectionStatusResult(ResourceIdentifier publicIPAddressId = default, IPAddress publicIPAddress = default, WorkloadProtectedFlag? isWorkloadProtected = default, ResourceIdentifier ddosProtectionPlanId = default)
-        {
-            return new PublicIPDdosProtectionStatusResult(publicIPAddressId, default, isWorkloadProtected, ddosProtectionPlanId, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Network.PublicIPPrefixData"/>. </summary>

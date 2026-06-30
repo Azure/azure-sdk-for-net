@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> GatewayCustomBgpIpAddresses to be used for virtual network gateway Connection. </summary>
         [WirePath("properties.gatewayCustomBgpIpAddresses")]
-        public IList<GatewayCustomBgpIPAddressIPConfiguration> GatewayCustomBgpIpAddresses
+        public IList<GatewayCustomBgpIPAddressIPConfiguration> GatewayCustomBgpIPAddresses
         {
             get
             {
@@ -316,17 +316,17 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new VirtualNetworkGatewayConnectionPropertiesFormat();
                 }
-                return Properties.GatewayCustomBgpIpAddresses;
+                return Properties.GatewayCustomBgpIPAddresses;
             }
         }
 
         /// <summary> Use private local Azure IP for the connection. </summary>
         [WirePath("properties.useLocalAzureIpAddress")]
-        public bool? UseLocalAzureIpAddress
+        public bool? UseLocalAzureIPAddress
         {
             get
             {
-                return Properties is null ? default : Properties.UseLocalAzureIpAddress;
+                return Properties is null ? default : Properties.UseLocalAzureIPAddress;
             }
             set
             {
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new VirtualNetworkGatewayConnectionPropertiesFormat();
                 }
-                Properties.UseLocalAzureIpAddress = value;
+                Properties.UseLocalAzureIPAddress = value;
             }
         }
 
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The IPSec Policies to be considered by this connection. </summary>
         [WirePath("properties.ipsecPolicies")]
-        public IList<IPsecPolicy> IpsecPolicies
+        public IList<IPsecPolicy> IPsecPolicies
         {
             get
             {
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new VirtualNetworkGatewayConnectionPropertiesFormat();
                 }
-                return Properties.IpsecPolicies;
+                return Properties.IPsecPolicies;
             }
         }
 

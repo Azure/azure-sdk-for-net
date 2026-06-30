@@ -126,6 +126,10 @@ namespace Azure.Provisioning.Batch
             _endpointConfiguration = DefineModelProperty<PoolEndpointConfiguration>(nameof(EndpointConfiguration), new string[] { "endpointConfiguration" });
             _publicIPAddressConfiguration = DefineModelProperty<BatchPublicIPAddressConfiguration>(nameof(PublicIPAddressConfiguration), new string[] { "publicIPAddressConfiguration" });
             _enableAcceleratedNetworking = DefineProperty<bool>(nameof(EnableAcceleratedNetworking), new string[] { "enableAcceleratedNetworking" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchNetworkConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

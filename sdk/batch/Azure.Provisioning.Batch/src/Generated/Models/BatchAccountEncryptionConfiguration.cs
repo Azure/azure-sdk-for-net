@@ -75,6 +75,10 @@ namespace Azure.Provisioning.Batch
             base.DefineProvisionableProperties();
             _keySource = DefineProperty<BatchAccountKeySource>(nameof(KeySource), new string[] { "keySource" });
             _keyVaultProperties = DefineModelProperty<KeyVaultProperties>(nameof(KeyVaultProperties), new string[] { "keyVaultProperties" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchAccountEncryptionConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

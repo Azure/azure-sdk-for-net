@@ -144,11 +144,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption, options);
             }
-            if (Optional.IsCollectionDefined(IpAllocations))
+            if (Optional.IsCollectionDefined(IPAllocations))
             {
                 writer.WritePropertyName("ipAllocations"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in IpAllocations)
+                foreach (NetworkSubResource item in IPAllocations)
                 {
                     writer.WriteObjectValue(item, options);
                 }

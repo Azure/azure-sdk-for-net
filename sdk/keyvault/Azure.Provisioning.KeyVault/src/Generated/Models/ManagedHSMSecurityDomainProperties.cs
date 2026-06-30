@@ -47,6 +47,10 @@ namespace Azure.Provisioning.KeyVault
             base.DefineProvisionableProperties();
             _activationStatus = DefineProperty<ManagedHSMSecurityDomainActivationStatus>(nameof(ActivationStatus), new string[] { "activationStatus" }, isOutput: true);
             _activationStatusMessage = DefineProperty<string>(nameof(ActivationStatusMessage), new string[] { "activationStatusMessage" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedHSMSecurityDomainProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

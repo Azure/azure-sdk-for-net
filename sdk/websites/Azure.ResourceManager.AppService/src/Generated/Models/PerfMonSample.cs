@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Performance monitor sample in a set.
-    /// Serialized Name: PerfMonSample
-    /// </summary>
+    /// <summary> Performance monitor sample in a set. </summary>
     public partial class PerfMonSample
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PerfMonSample"/>. </summary>
         internal PerfMonSample()
@@ -54,43 +23,27 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PerfMonSample"/>. </summary>
-        /// <param name="time">
-        /// Point in time for which counter was measured.
-        /// Serialized Name: PerfMonSample.time
-        /// </param>
-        /// <param name="instanceName">
-        /// Name of the server on which the measurement is made.
-        /// Serialized Name: PerfMonSample.instanceName
-        /// </param>
-        /// <param name="value">
-        /// Value of counter at a certain time.
-        /// Serialized Name: PerfMonSample.value
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PerfMonSample(DateTimeOffset? time, string instanceName, double? value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="time"> Point in time for which counter was measured. </param>
+        /// <param name="instanceName"> Name of the server on which the measurement is made. </param>
+        /// <param name="value"> Value of counter at a certain time. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PerfMonSample(DateTimeOffset? time, string instanceName, double? value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Time = time;
             InstanceName = instanceName;
             Value = value;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Point in time for which counter was measured.
-        /// Serialized Name: PerfMonSample.time
-        /// </summary>
+        /// <summary> Point in time for which counter was measured. </summary>
         [WirePath("time")]
         public DateTimeOffset? Time { get; }
-        /// <summary>
-        /// Name of the server on which the measurement is made.
-        /// Serialized Name: PerfMonSample.instanceName
-        /// </summary>
+
+        /// <summary> Name of the server on which the measurement is made. </summary>
         [WirePath("instanceName")]
         public string InstanceName { get; }
-        /// <summary>
-        /// Value of counter at a certain time.
-        /// Serialized Name: PerfMonSample.value
-        /// </summary>
+
+        /// <summary> Value of counter at a certain time. </summary>
         [WirePath("value")]
         public double? Value { get; }
     }

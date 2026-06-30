@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The ContainerCpuUsage.
-    /// Serialized Name: ContainerCpuUsage
-    /// </summary>
+    /// <summary> The ContainerCpuUsage. </summary>
     public partial class ContainerCpuUsage
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerCpuUsage"/>. </summary>
         public ContainerCpuUsage()
@@ -55,30 +24,33 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerCpuUsage"/>. </summary>
-        /// <param name="totalUsage"> Serialized Name: ContainerCpuUsage.totalUsage. </param>
-        /// <param name="perCpuUsage"> Serialized Name: ContainerCpuUsage.perCpuUsage. </param>
-        /// <param name="kernelModeUsage"> Serialized Name: ContainerCpuUsage.kernelModeUsage. </param>
-        /// <param name="userModeUsage"> Serialized Name: ContainerCpuUsage.userModeUsage. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerCpuUsage(long? totalUsage, IList<long> perCpuUsage, long? kernelModeUsage, long? userModeUsage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="totalUsage"></param>
+        /// <param name="perCpuUsage"></param>
+        /// <param name="kernelModeUsage"></param>
+        /// <param name="userModeUsage"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerCpuUsage(long? totalUsage, IList<long> perCpuUsage, long? kernelModeUsage, long? userModeUsage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TotalUsage = totalUsage;
             PerCpuUsage = perCpuUsage;
             KernelModeUsage = kernelModeUsage;
             UserModeUsage = userModeUsage;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Serialized Name: ContainerCpuUsage.totalUsage. </summary>
+        /// <summary> Gets or sets the TotalUsage. </summary>
         [WirePath("totalUsage")]
         public long? TotalUsage { get; set; }
-        /// <summary> Serialized Name: ContainerCpuUsage.perCpuUsage. </summary>
+
+        /// <summary> Gets the PerCpuUsage. </summary>
         [WirePath("perCpuUsage")]
         public IList<long> PerCpuUsage { get; }
-        /// <summary> Serialized Name: ContainerCpuUsage.kernelModeUsage. </summary>
+
+        /// <summary> Gets or sets the KernelModeUsage. </summary>
         [WirePath("kernelModeUsage")]
         public long? KernelModeUsage { get; set; }
-        /// <summary> Serialized Name: ContainerCpuUsage.userModeUsage. </summary>
+
+        /// <summary> Gets or sets the UserModeUsage. </summary>
         [WirePath("userModeUsage")]
         public long? UserModeUsage { get; set; }
     }

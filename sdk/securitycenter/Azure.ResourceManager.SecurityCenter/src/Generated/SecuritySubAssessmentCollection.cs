@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -40,6 +41,17 @@ namespace Azure.ResourceManager.SecurityCenter
             TryGetApiVersion(SecuritySubAssessmentResource.ResourceType, out string securitySubAssessmentApiVersion);
             _subAssessmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecuritySubAssessmentResource.ResourceType.Namespace, Diagnostics);
             _subAssessmentsRestClient = new SubAssessments(_subAssessmentsClientDiagnostics, Pipeline, Endpoint, securitySubAssessmentApiVersion ?? "2019-01-01-preview");
+            ValidateResourceId(id);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != SecurityAssessmentResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SecurityAssessmentResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>

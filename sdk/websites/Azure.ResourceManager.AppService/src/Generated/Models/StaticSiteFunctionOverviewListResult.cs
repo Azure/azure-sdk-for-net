@@ -8,91 +8,40 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Collection of static site functions.
-    /// Serialized Name: StaticSiteFunctionOverviewCollection
-    /// </summary>
+    /// <summary> Collection of static site functions. </summary>
     internal partial class StaticSiteFunctionOverviewListResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteFunctionOverviewListResult"/>. </summary>
-        /// <param name="value">
-        /// The StaticSiteFunctionOverviewARMResource items on this page
-        /// Serialized Name: StaticSiteFunctionOverviewCollection.value
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <param name="value"> The StaticSiteFunctionOverviewARMResource items on this page. </param>
         internal StaticSiteFunctionOverviewListResult(IEnumerable<StaticSiteFunctionOverview> value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
             Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteFunctionOverviewListResult"/>. </summary>
-        /// <param name="value">
-        /// The StaticSiteFunctionOverviewARMResource items on this page
-        /// Serialized Name: StaticSiteFunctionOverviewCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: StaticSiteFunctionOverviewCollection.nextLink
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteFunctionOverviewListResult(IReadOnlyList<StaticSiteFunctionOverview> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="value"> The StaticSiteFunctionOverviewARMResource items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StaticSiteFunctionOverviewListResult(IList<StaticSiteFunctionOverview> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StaticSiteFunctionOverviewListResult"/> for deserialization. </summary>
-        internal StaticSiteFunctionOverviewListResult()
-        {
-        }
+        /// <summary> The StaticSiteFunctionOverviewARMResource items on this page. </summary>
+        [WirePath("value")]
+        public IList<StaticSiteFunctionOverview> Value { get; }
 
-        /// <summary>
-        /// The StaticSiteFunctionOverviewARMResource items on this page
-        /// Serialized Name: StaticSiteFunctionOverviewCollection.value
-        /// </summary>
-        public IReadOnlyList<StaticSiteFunctionOverview> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: StaticSiteFunctionOverviewCollection.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

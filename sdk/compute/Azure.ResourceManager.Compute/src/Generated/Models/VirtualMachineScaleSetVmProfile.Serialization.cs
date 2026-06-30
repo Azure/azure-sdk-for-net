@@ -139,6 +139,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("capacityReservation"u8);
                 writer.WriteObjectValue(CapacityReservation, options);
             }
+            if (Optional.IsDefined(InterconnectBlockProfile))
+            {
+                writer.WritePropertyName("interconnectBlockProfile"u8);
+                writer.WriteObjectValue(InterconnectBlockProfile, options);
+            }
             if (Optional.IsDefined(ApplicationProfile))
             {
                 writer.WritePropertyName("applicationProfile"u8);
@@ -219,6 +224,7 @@ namespace Azure.ResourceManager.Compute.Models
             ComputeScheduledEventsProfile scheduledEventsProfile = default;
             string userData = default;
             CapacityReservationProfile capacityReservation = default;
+            InterconnectBlockProfile interconnectBlockProfile = default;
             ApplicationProfile applicationProfile = default;
             VirtualMachineScaleSetHardwareProfile hardwareProfile = default;
             ServiceArtifactReference serviceArtifactReference = default;
@@ -336,6 +342,15 @@ namespace Azure.ResourceManager.Compute.Models
                     capacityReservation = CapacityReservationProfile.DeserializeCapacityReservationProfile(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("interconnectBlockProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    interconnectBlockProfile = InterconnectBlockProfile.DeserializeInterconnectBlockProfile(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("applicationProfile"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -400,6 +415,7 @@ namespace Azure.ResourceManager.Compute.Models
                 scheduledEventsProfile,
                 userData,
                 capacityReservation,
+                interconnectBlockProfile,
                 applicationProfile,
                 hardwareProfile,
                 serviceArtifactReference,

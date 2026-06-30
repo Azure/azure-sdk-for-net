@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="NetworkInterfacePropertiesFormat"/>. </summary>
         public NetworkInterfacePropertiesFormat()
         {
-            IpConfigurations = new ChangeTrackingList<NetworkInterfaceIPConfigurationData>();
+            IPConfigurations = new ChangeTrackingList<NetworkInterfaceIPConfigurationData>();
             TapConfigurations = new ChangeTrackingList<NetworkInterfaceTapConfigurationData>();
             HostedWorkloads = new ChangeTrackingList<string>();
         }
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
             VirtualMachine = virtualMachine;
             NetworkSecurityGroup = networkSecurityGroup;
             PrivateEndpoint = privateEndpoint;
-            IpConfigurations = ipConfigurations;
+            IPConfigurations = ipConfigurations;
             TapConfigurations = tapConfigurations;
             DnsSettings = dnsSettings;
             MacAddress = macAddress;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> A list of IPConfigurations of the network interface. </summary>
         [WirePath("ipConfigurations")]
-        public IList<NetworkInterfaceIPConfigurationData> IpConfigurations { get; } = new ChangeTrackingList<NetworkInterfaceIPConfigurationData>();
+        public IList<NetworkInterfaceIPConfigurationData> IPConfigurations { get; } = new ChangeTrackingList<NetworkInterfaceIPConfigurationData>();
 
         /// <summary> A list of TapConfigurations of the network interface. </summary>
         [WirePath("tapConfigurations")]

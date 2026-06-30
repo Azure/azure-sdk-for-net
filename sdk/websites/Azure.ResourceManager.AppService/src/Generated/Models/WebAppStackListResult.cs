@@ -8,91 +8,40 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Collection of Web app Stacks
-    /// Serialized Name: WebAppStackCollection
-    /// </summary>
+    /// <summary> Collection of Web app Stacks. </summary>
     internal partial class WebAppStackListResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebAppStackListResult"/>. </summary>
-        /// <param name="value">
-        /// The WebAppStack items on this page
-        /// Serialized Name: WebAppStackCollection.value
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <param name="value"> The WebAppStack items on this page. </param>
         internal WebAppStackListResult(IEnumerable<WebAppStack> value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
             Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppStackListResult"/>. </summary>
-        /// <param name="value">
-        /// The WebAppStack items on this page
-        /// Serialized Name: WebAppStackCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: WebAppStackCollection.nextLink
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppStackListResult(IReadOnlyList<WebAppStack> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="value"> The WebAppStack items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WebAppStackListResult(IList<WebAppStack> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="WebAppStackListResult"/> for deserialization. </summary>
-        internal WebAppStackListResult()
-        {
-        }
+        /// <summary> The WebAppStack items on this page. </summary>
+        [WirePath("value")]
+        public IList<WebAppStack> Value { get; }
 
-        /// <summary>
-        /// The WebAppStack items on this page
-        /// Serialized Name: WebAppStackCollection.value
-        /// </summary>
-        public IReadOnlyList<WebAppStack> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: WebAppStackCollection.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

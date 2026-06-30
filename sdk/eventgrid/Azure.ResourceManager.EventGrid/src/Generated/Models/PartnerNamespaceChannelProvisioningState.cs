@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,56 +15,87 @@ namespace Azure.ResourceManager.EventGrid.Models
     public readonly partial struct PartnerNamespaceChannelProvisioningState : IEquatable<PartnerNamespaceChannelProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Creating. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Updating. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> IdleDueToMirroredPartnerTopicDeletion. </summary>
+        private const string IdleDueToMirroredPartnerTopicDeletionValue = "IdleDueToMirroredPartnerTopicDeletion";
+        /// <summary> IdleDueToMirroredPartnerDestinationDeletion. </summary>
+        private const string IdleDueToMirroredPartnerDestinationDeletionValue = "IdleDueToMirroredPartnerDestinationDeletion";
 
         /// <summary> Initializes a new instance of <see cref="PartnerNamespaceChannelProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PartnerNamespaceChannelProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CreatingValue = "Creating";
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string SucceededValue = "Succeeded";
-        private const string CanceledValue = "Canceled";
-        private const string FailedValue = "Failed";
-        private const string IdleDueToMirroredPartnerTopicDeletionValue = "IdleDueToMirroredPartnerTopicDeletion";
-        private const string IdleDueToMirroredPartnerDestinationDeletionValue = "IdleDueToMirroredPartnerDestinationDeletion";
+            _value = value;
+        }
 
         /// <summary> Creating. </summary>
         public static PartnerNamespaceChannelProvisioningState Creating { get; } = new PartnerNamespaceChannelProvisioningState(CreatingValue);
+
         /// <summary> Updating. </summary>
         public static PartnerNamespaceChannelProvisioningState Updating { get; } = new PartnerNamespaceChannelProvisioningState(UpdatingValue);
+
         /// <summary> Deleting. </summary>
         public static PartnerNamespaceChannelProvisioningState Deleting { get; } = new PartnerNamespaceChannelProvisioningState(DeletingValue);
+
         /// <summary> Succeeded. </summary>
         public static PartnerNamespaceChannelProvisioningState Succeeded { get; } = new PartnerNamespaceChannelProvisioningState(SucceededValue);
+
         /// <summary> Canceled. </summary>
         public static PartnerNamespaceChannelProvisioningState Canceled { get; } = new PartnerNamespaceChannelProvisioningState(CanceledValue);
+
         /// <summary> Failed. </summary>
         public static PartnerNamespaceChannelProvisioningState Failed { get; } = new PartnerNamespaceChannelProvisioningState(FailedValue);
+
         /// <summary> IdleDueToMirroredPartnerTopicDeletion. </summary>
         public static PartnerNamespaceChannelProvisioningState IdleDueToMirroredPartnerTopicDeletion { get; } = new PartnerNamespaceChannelProvisioningState(IdleDueToMirroredPartnerTopicDeletionValue);
+
         /// <summary> IdleDueToMirroredPartnerDestinationDeletion. </summary>
         public static PartnerNamespaceChannelProvisioningState IdleDueToMirroredPartnerDestinationDeletion { get; } = new PartnerNamespaceChannelProvisioningState(IdleDueToMirroredPartnerDestinationDeletionValue);
+
         /// <summary> Determines if two <see cref="PartnerNamespaceChannelProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PartnerNamespaceChannelProvisioningState left, PartnerNamespaceChannelProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PartnerNamespaceChannelProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PartnerNamespaceChannelProvisioningState left, PartnerNamespaceChannelProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PartnerNamespaceChannelProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PartnerNamespaceChannelProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PartnerNamespaceChannelProvisioningState(string value) => new PartnerNamespaceChannelProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PartnerNamespaceChannelProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PartnerNamespaceChannelProvisioningState?(string value) => value == null ? null : new PartnerNamespaceChannelProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PartnerNamespaceChannelProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PartnerNamespaceChannelProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

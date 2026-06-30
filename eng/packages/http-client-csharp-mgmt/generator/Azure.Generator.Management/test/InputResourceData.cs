@@ -793,6 +793,92 @@ namespace Azure.Generator.Management.Tests.Common
             return (parentClient, childClient, [parentModel, childModel, childPageModel]);
         }
 
+        public static (InputClient ParentClient, InputClient ChildClient, IReadOnlyList<InputModelType> InputModels) ClientWithNestedExtensionChildResource()
+        {
+            const string ParentClientName = "WatchlistsClient";
+            const string ChildClientName = "WatchlistItemsClient";
+
+            var parentModel = InputFactory.Model("Watchlist",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                ],
+                decorators: []);
+
+            var childModel = InputFactory.Model("WatchlistItem",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                ],
+                decorators: []);
+
+            var parentResponseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: parentModel);
+            var childResponseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: childModel);
+            var uuidType = new InputPrimitiveType(InputPrimitiveTypeKind.String, "uuid", "Azure.Core.uuid");
+
+            var subscriptionIdOpParam = InputFactory.PathParameter("subscriptionId", uuidType, isRequired: true);
+            var resourceGroupNameOpParam = InputFactory.PathParameter("resourceGroupName", InputPrimitiveType.String, isRequired: true);
+            var workspaceNameOpParam = InputFactory.PathParameter("workspaceName", InputPrimitiveType.String, isRequired: true);
+            var watchlistAliasOpParam = InputFactory.PathParameter("watchlistAlias", InputPrimitiveType.String, isRequired: true);
+            var watchlistItemIdOpParam = InputFactory.PathParameter("watchlistItemId", InputPrimitiveType.String, isRequired: true);
+
+            var scopeIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}";
+            var parentIdPattern = scopeIdPattern + "/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}";
+            var childIdPattern = parentIdPattern + "/watchlistItems/{watchlistItemId}";
+            var childListPath = parentIdPattern + "/watchlistItems";
+
+            var parentGetOp = InputFactory.Operation(name: "getWatchlist", responses: [parentResponseType], parameters: [subscriptionIdOpParam, resourceGroupNameOpParam, workspaceNameOpParam, watchlistAliasOpParam], path: parentIdPattern);
+            var childGetOp = InputFactory.Operation(name: "getWatchlistItem", responses: [childResponseType], parameters: [subscriptionIdOpParam, resourceGroupNameOpParam, workspaceNameOpParam, watchlistAliasOpParam, watchlistItemIdOpParam], path: childIdPattern);
+            var childPageModel = InputFactory.Model("WatchlistItemListResult",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("value", InputFactory.Array(childModel)),
+                    InputFactory.Property("nextLink", InputPrimitiveType.Url),
+                ]);
+            var childListOp = InputFactory.Operation(name: "listByWatchlist", responses: [InputFactory.OperationResponse(statusCodes: [200], bodytype: childPageModel)], parameters: [subscriptionIdOpParam, resourceGroupNameOpParam, workspaceNameOpParam, watchlistAliasOpParam], path: childListPath);
+
+            var subscriptionIdParam = InputFactory.MethodParameter("subscriptionId", uuidType, location: InputRequestLocation.Path);
+            var resourceGroupNameParam = InputFactory.MethodParameter("resourceGroupName", InputPrimitiveType.String, location: InputRequestLocation.Path);
+            var workspaceNameParam = InputFactory.MethodParameter("workspaceName", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true);
+            var watchlistAliasParam = InputFactory.MethodParameter("watchlistAlias", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true);
+            var watchlistItemIdParam = InputFactory.MethodParameter("watchlistItemId", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true);
+
+            var parentGetMethod = InputFactory.BasicServiceMethod("getWatchlist", parentGetOp, parameters: [watchlistAliasParam, workspaceNameParam, subscriptionIdParam, resourceGroupNameParam], crossLanguageDefinitionId: Guid.NewGuid().ToString());
+            var childGetMethod = InputFactory.BasicServiceMethod("getWatchlistItem", childGetOp, parameters: [watchlistItemIdParam, watchlistAliasParam, workspaceNameParam, subscriptionIdParam, resourceGroupNameParam], crossLanguageDefinitionId: Guid.NewGuid().ToString());
+            var childListMethod = InputFactory.PagingServiceMethod("listByWatchlist", childListOp, parameters: [watchlistAliasParam, workspaceNameParam, subscriptionIdParam, resourceGroupNameParam], pagingMetadata: InputFactory.NextLinkPagingMetadata("value", "nextLink", InputResponseLocation.Body));
+
+            var armProviderDecorator = BuildArmProviderSchemaMultiResource([
+                new ResourceSchemaInput(parentModel, [
+                    new ResourceMethod(ResourceOperationKind.Read, parentGetMethod, new RequestPathPattern(parentGetOp.Path), new ArmScopeInfo(ResourceScope.Extension, new RequestPathPattern(parentIdPattern), "Microsoft.OperationalInsights/workspaces"), null!)
+                ], parentIdPattern, "Microsoft.SecurityInsights/watchlists", null, ResourceScope.Extension, "Watchlist", null, scopeIdPattern, "Microsoft.OperationalInsights/workspaces"),
+                new ResourceSchemaInput(childModel, [
+                    new ResourceMethod(ResourceOperationKind.Read, childGetMethod, new RequestPathPattern(childGetOp.Path), new ArmScopeInfo(ResourceScope.Extension, new RequestPathPattern(childIdPattern), "Microsoft.OperationalInsights/workspaces"), null!),
+                    new ResourceMethod(ResourceOperationKind.List, childListMethod, new RequestPathPattern(childListPath), new ArmScopeInfo(ResourceScope.Extension, new RequestPathPattern(parentIdPattern), "Microsoft.OperationalInsights/workspaces"), null!)
+                ], childIdPattern, "Microsoft.SecurityInsights/watchlists/watchlistItems", null, ResourceScope.Extension, "WatchlistItem", parentIdPattern, scopeIdPattern, "Microsoft.OperationalInsights/workspaces")
+            ]);
+
+            var parentClient = InputFactory.Client(
+                ParentClientName,
+                methods: [parentGetMethod],
+                decorators: [armProviderDecorator],
+                crossLanguageDefinitionId: $"Test.{ParentClientName}");
+
+            var childClient = InputFactory.Client(
+                ChildClientName,
+                methods: [childGetMethod, childListMethod],
+                decorators: [],
+                crossLanguageDefinitionId: $"Test.{ChildClientName}");
+
+            return (parentClient, childClient, [parentModel, childModel, childPageModel]);
+        }
+
         public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithExtensionScopedResourceList()
         {
             const string TestClientName = "TestClient";
@@ -1021,7 +1107,8 @@ namespace Azure.Generator.Management.Tests.Common
                     ["scope"] = new Dictionary<string, string?>
                     {
                         ["kind"] = r.ResourceScope.ToString(),
-                        ["scopeIdPattern"] = r.ScopeIdPattern
+                        ["scopeIdPattern"] = r.ScopeIdPattern,
+                        ["scopeResourceType"] = r.ScopeResourceType
                     },
                     ["methods"] = r.Methods.Select(SerializeResourceMethod).ToList(),
                     ["singletonResourceName"] = r.SingletonResourceName,
@@ -1079,6 +1166,7 @@ namespace Azure.Generator.Management.Tests.Common
             ResourceScope ResourceScope,
             string? ResourceName,
             string? ParentResourceId,
-            string ScopeIdPattern);
+            string ScopeIdPattern,
+            string? ScopeResourceType = null);
     }
 }

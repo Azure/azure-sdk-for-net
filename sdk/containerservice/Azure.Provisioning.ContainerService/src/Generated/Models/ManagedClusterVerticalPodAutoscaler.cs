@@ -40,6 +40,10 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _isVpaEnabled = DefineProperty<bool>(nameof(IsVpaEnabled), new string[] { "enabled" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterVerticalPodAutoscaler that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }
