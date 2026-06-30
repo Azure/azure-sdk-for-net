@@ -2,7 +2,85 @@ version: 2
 updates:
   - package-ecosystem: "npm"
     directories:
-      - "/eng/packages/**"
+      - "/eng/packages/http-client-csharp-mgmt"
+    schedule:
+      interval: "daily"
+    cooldown:
+      default-days: 7
+      exclude:
+        # Allow immediate updates of self-owned packages
+        - "@azure-tools/*"
+        - "@autorest/*"
+        - "@azure/*"
+        - "@microsoft.azure/*"
+        - "@typespec/*"
+        - "oav"
+    ignore:
+      # Updated manually to align with minimum supported Node version
+      - dependency-name: "@types/node"
+    groups:
+      typespec:
+        patterns:
+          - "*typespec*"
+      eslint:
+        patterns:
+          - "*eslint*"
+    versioning-strategy: increase-if-necessary
+  - package-ecosystem: "npm"
+    directories:
+      - "/eng/packages/http-client-csharp-provisioning"
+    schedule:
+      interval: "daily"
+    cooldown:
+      default-days: 7
+      exclude:
+        # Allow immediate updates of self-owned packages
+        - "@azure-tools/*"
+        - "@autorest/*"
+        - "@azure/*"
+        - "@microsoft.azure/*"
+        - "@typespec/*"
+        - "oav"
+    ignore:
+      # Updated manually to align with minimum supported Node version
+      - dependency-name: "@types/node"
+    groups:
+      typespec:
+        patterns:
+          - "*typespec*"
+      eslint:
+        patterns:
+          - "*eslint*"
+    versioning-strategy: increase-if-necessary
+  - package-ecosystem: "npm"
+    directories:
+      - "/eng/packages/http-client-csharp"
+    schedule:
+      interval: "daily"
+    cooldown:
+      default-days: 7
+      exclude:
+        # Allow immediate updates of self-owned packages
+        - "@azure-tools/*"
+        - "@autorest/*"
+        - "@azure/*"
+        - "@microsoft.azure/*"
+        - "@typespec/*"
+        - "oav"
+    ignore:
+      # Updated manually to align with minimum supported Node version
+      - dependency-name: "@types/node"
+    groups:
+      typespec:
+        patterns:
+          - "*typespec*"
+      eslint:
+        patterns:
+          - "*eslint*"
+    versioning-strategy: increase-if-necessary
+  - package-ecosystem: "npm"
+    directories:
+      - "/eng/packages/http-server-csharp-aspnet"
     schedule:
       interval: "daily"
     cooldown:
