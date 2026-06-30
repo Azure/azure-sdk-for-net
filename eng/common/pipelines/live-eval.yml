@@ -16,8 +16,8 @@ schedules:
 variables:
   # Managed-pool image selection (LINUXPOOL/LINUXVMIMAGE). Repo-local.
   - template: /eng/pipelines/templates/variables/image.yml
-  # The eval variable group (linked via the ADO pipeline UI) provides the secret
-  # azuresdk-copilot-github-pat, mapped into GITHUB_TOKEN in the invoke step.
+  # Provides the secret azuresdk-copilot-github-pat, mapped into GITHUB_TOKEN in the invoke step.
+  - group: AzSDK_Eval_Variable_group
 
 extends:
   template: /eng/common/pipelines/templates/stages/archetype-eval.yml
