@@ -41,9 +41,6 @@ pr:
 variables:
   # Defines LINUXPOOL + LINUXVMIMAGE used by the archetype's jobs.
   - template: /eng/pipelines/templates/variables/image.yml
-  # Per-shard job timeout (consumed by the archetype as $(shardTimeoutInMinutes)).
-  - name: shardTimeoutInMinutes
-    value: 20
   # GITHUB_TOKEN is supplied ambiently by the eval variable group linked at the pipeline.
 
 extends:
@@ -52,3 +49,5 @@ extends:
     # Mock MCP (repo-local build).
     mcpSetupTemplate: /eng/pipelines/eval/mcp-mock.yml
     vallyRoot: tools/azsdk-cli/Azure.Sdk.Tools.Vally
+    # Per-shard job timeout (report-only tier).
+    shardTimeoutInMinutes: 20

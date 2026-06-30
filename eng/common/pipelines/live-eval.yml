@@ -16,9 +16,6 @@ schedules:
 variables:
   # Managed-pool image selection (LINUXPOOL/LINUXVMIMAGE). Repo-local.
   - template: /eng/pipelines/templates/variables/image.yml
-  # Per-shard job timeout (read by the archetype as $(shardTimeoutInMinutes)).
-  - name: shardTimeoutInMinutes
-    value: 45
   # GITHUB_TOKEN comes from the linked eval variable group (ambient — no template wiring).
 
 extends:
@@ -32,3 +29,5 @@ extends:
     # AzureCLI@2 wrap so the real MCP's DevOps calls are authenticated.
     evalInvokeTemplate: /eng/pipelines/eval/eval-invoke-live.yml
     failOnFailedTests: true
+    # Live scenarios are end-to-end, so give each shard more headroom than the report-only tiers.
+    shardTimeoutInMinutes: 45

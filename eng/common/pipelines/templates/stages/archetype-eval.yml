@@ -3,8 +3,8 @@
 # references a job template — no inline steps live here.
 # A thin entrypoint supplies trigger + params + `extends` this.
 #
-# The entrypoint MUST declare a `shardTimeoutInMinutes` variable (not a param, so the live
-# tier can raise it without a job-scope default shadowing the override).
+# The per-shard timeout flows in as the `shardTimeoutInMinutes` parameter (compile-time, so
+# 1ES can set the job's timeoutInMinutes); the live tier raises it via the same param.
 
 parameters:
   - name: vallyRoot
@@ -29,6 +29,10 @@ parameters:
   - name: failOnFailedTests
     type: boolean
     default: false
+  - name: shardTimeoutInMinutes
+    # Per-shard job timeout, passed to the shard job's timeoutInMinutes. Live tier raises it.
+    type: number
+    default: 20
 
 extends:
   # 1es-redirect picks Official (internal) vs Unofficial; its Use1ESOfficial defaults true.
@@ -54,6 +58,7 @@ extends:
             parameters:
               vallyRoot: ${{ parameters.vallyRoot }}
               evalInvokeTemplate: ${{ parameters.evalInvokeTemplate }}
+              shardTimeoutInMinutes: ${{ parameters.shardTimeoutInMinutes }}
 
       - stage: Summary
         displayName: 'Summarize results'

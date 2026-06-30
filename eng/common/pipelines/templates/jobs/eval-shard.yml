@@ -10,6 +10,10 @@ parameters:
     # Swap point: runs `vally eval` for the shard. Default = hermetic node; live wraps it in AzureCLI@2.
     type: string
     default: /eng/common/pipelines/templates/steps/eval-invoke.yml
+  - name: shardTimeoutInMinutes
+    # Per-shard job timeout. Must be a parameter (not a runtime variable) so 1ES resolves it at compile time.
+    type: number
+    default: 20
 
 jobs:
   - job: RunShard
@@ -20,7 +24,7 @@ jobs:
       os: linux
     # A red shard shouldn't abort its siblings; the rollup gates in Summary.
     continueOnError: true
-    timeoutInMinutes: $(shardTimeoutInMinutes)
+    timeoutInMinutes: ${{ parameters.shardTimeoutInMinutes }}
     strategy:
       matrix: $[ stageDependencies.Prepare.generate_eval_matrix.outputs['detect.matrix'] ]
       maxParallel: 10
@@ -74,7 +78,7 @@ jobs:
         displayName: 'Prime eval git fixtures'
         env:
           EVAL_ARGS: $(evalArgs)
-      # Runs the eval via the swap-point invoke template.
+      # Runs the eval via the invoke template.
       - template: ${{ parameters.evalInvokeTemplate }}
         parameters:
           vallyRoot: ${{ parameters.vallyRoot }}
