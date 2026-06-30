@@ -12,6 +12,9 @@ parameters:
   - name: EnableLocWeighting
     type: boolean
     default: false
+  - name: EnableWeightedBatching
+    type: boolean
+    default: false
   - name: LocTarget
     type: number
     default: 474000
@@ -71,6 +74,25 @@ steps:
         }
     displayName: Only target direct packages for build and test
     condition: and(succeededOrFailed(), eq(${{ parameters.ForceDirect }}, true))
+
+  - ${{ if eq(parameters.EnableWeightedBatching, true) }}:
+    - pwsh: |
+        eng/scripts/Get-TestAssemblyWeights.ps1 `
+          -RepoRoot "$(Build.SourcesDirectory)" `
+          -PackageInfoFolder "$(Build.ArtifactStagingDirectory)/PackageInfo" `
+          -OutputFile "$(Build.ArtifactStagingDirectory)/test-weights.json"
+      displayName: Query test assembly weights for balanced batching
+      condition: and(succeededOrFailed(), eq(variables['Build.Reason'], 'PullRequest'))
+      env:
+        SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+    - pwsh: |
+        eng/scripts/Apply-WeightedBatching.ps1 `
+          -PackageInfoFolder "$(Build.ArtifactStagingDirectory)/PackageInfo" `
+          -WeightsFile "$(Build.ArtifactStagingDirectory)/test-weights.json" `
+          -Target 240
+      displayName: Apply weighted batching to PackageInfo
+      condition: and(succeededOrFailed(), eq(variables['Build.Reason'], 'PullRequest'))
 
   - ${{ if eq(parameters.EnableLocWeighting, true) }}:
     - pwsh: |
