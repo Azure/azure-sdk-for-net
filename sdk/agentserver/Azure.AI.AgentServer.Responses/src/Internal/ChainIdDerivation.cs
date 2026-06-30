@@ -100,13 +100,8 @@ internal static class ChainIdDerivation
     /// </summary>
     private static string ExtractPartitionOrRaw(string idValue)
     {
-        try
-        {
-            return IdGenerator.ExtractPartitionKey(idValue);
-        }
-        catch (ArgumentException)
-        {
-            return idValue;
-        }
+        return IdGenerator.IsValid(idValue, out _)
+            ? IdGenerator.ExtractPartitionKey(idValue)
+            : idValue;
     }
 }

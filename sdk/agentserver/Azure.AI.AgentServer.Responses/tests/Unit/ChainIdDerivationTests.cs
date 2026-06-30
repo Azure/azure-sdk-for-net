@@ -206,4 +206,15 @@ public class ChainIdDerivationTests
         Assert.That(asConversation, Is.Not.EqualTo(asChain),
             "Identical partition values from different sources must not collide");
     }
+    [Test]
+    public void Derive_ConversationId_InCanonicalIdFormat_ExtractsEmbeddedPartitionKey()
+    {
+        var result = ChainIdDerivation.Derive(ParentId, null, OtherPartitionId, new AgentReference("my-agent"), "sess-1");
+
+        var composite = $"my-agent:sess-1:conv:{PartitionKey}";
+        var expectedBytes = SHA256.HashData(Encoding.UTF8.GetBytes(composite));
+        var expected = Convert.ToHexString(expectedBytes).ToLowerInvariant()[..ExpectedLength];
+
+        Assert.That(result, Is.EqualTo(expected));
+    }
 }
