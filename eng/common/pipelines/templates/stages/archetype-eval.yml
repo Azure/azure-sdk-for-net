@@ -1,48 +1,29 @@
-# Reusable orchestrator for the eval CI. Three stages:
-#   Prepare - BuildMcp + generate-eval-matrix run in parallel (build the MCP server(s);
-#             glob eval files into a fan-out matrix).
-#   Eval    - eval-shard fans out one job per shard from the Prepare matrix.
-#   Summary - merges every shard's JUnit into one rollup and gates.
+# Reusable eval CI orchestrator. Stages: Prepare (build MCP + glob a fan-out matrix),
+# Eval (one shard job per matrix leg), Summary (merge JUnit + gate). Each stage just
+# references a job template — no inline steps live here.
+# A thin entrypoint supplies trigger + params + `extends` this.
 #
-# The consuming repo supplies a thin entrypoint (trigger + params + extends this).
-#
-# REQUIRED entrypoint variable: the thin pipeline MUST declare a `shardTimeoutInMinutes`
-# variable (the per-shard job timeout, e.g. 20 for hermetic tiers, 45 for live). It is a
-# variable rather than a parameter because the live tier overrides it and a parameter
-# default set here at job scope would SHADOW that pipeline-level override. An entrypoint
-# that omits it fails at job init ($(shardTimeoutInMinutes) won't resolve to an integer).
+# The entrypoint MUST declare a `shardTimeoutInMinutes` variable (not a param, so the live
+# tier can raise it without a job-scope default shadowing the override).
 
 parameters:
   - name: vallyRoot
-    # The single dir each shard runs `vally eval` from (where .vally.yaml lives) and the
-    # anchor the matrix's `-e` paths are relative to. Defaults to the Vally project.
+    # Dir each shard runs `vally eval` from; anchor for the matrix's -e paths.
     type: string
     default: tools/azsdk-cli/Azure.Sdk.Tools.Vally
   - name: evalGlobs
-    # File globs (forward-slashed, * ? **) selecting the *.eval.yaml files under vallyRoot.
-    # The default below IS the hermetic "mock vertical" suite (unit tools + mock workflow
-    # scenarios) that the per-PR gate runs — spelled out here so the default is visible
-    # instead of hidden behind an empty-array sentinel. Entrypoints that run a different
-    # suite (skill, live) override it with their own globs. (collect-stimuli.js keeps the
-    # same list as a local-CLI fallback for when it's run by hand with no --pattern.)
+    # Globs selecting *.eval.yaml under vallyRoot. Default = hermetic mock suite; skill/live override.
+    # collect-stimuli.js mirrors this list as its no-args fallback — keep them in sync.
     type: object
     default:
       - 'evals/tools/*.eval.yaml'
       - 'evals/workflow-scenarios/mock/*.eval.yaml'
   - name: mcpSetupTemplate
-    # Path to the step template that builds/installs the MCP server(s) this pipeline's evals
-    # drive, then publishes each under artifacts/mcp/<name> (the contract every shard
-    # re-stages). This is the ONLY MCP knob the orchestrator exposes: it stays agnostic to
-    # *how* the server is produced (any language, build, or package manager), so a consuming
-    # repo just points it at its own setup step. The default is a documented example.
+    # SWAP POINT: builds/installs the MCP server(s) under artifacts/mcp/<name>. Differs per tier.
     type: string
     default: /eng/common/pipelines/templates/steps/eval-mcp-setup.yml
   - name: evalInvokeTemplate
-    # Path to the step template that runs `vally eval` for each shard (threaded to the
-    # shard job). The default is the hermetic plain-node runner; the live tier points it at
-    # an AzureCLI@2-wrapped copy so the real MCP's DevOps calls are authenticated. This is
-    # the one run-time hook, so the orchestrator exposes no service-connection knob — the
-    # override owns it. It also covers a chatbot start/stop or a custom MCP startup.
+    # SWAP POINT: runs `vally eval` per shard. Default = hermetic node; live wraps it in AzureCLI@2.
     type: string
     default: /eng/common/pipelines/templates/steps/eval-invoke.yml
   - name: failOnFailedTests
@@ -50,37 +31,16 @@ parameters:
     default: false
 
 extends:
-  # 1es-redirect picks the Official 1ES template on the internal project (full SDL) and
-  # Unofficial elsewhere. Its Use1ESOfficial param already defaults to true, so eval
-  # pipelines don't pass it — they never need the override.
+  # 1es-redirect picks Official (internal) vs Unofficial; its Use1ESOfficial defaults true.
   template: /eng/pipelines/templates/stages/1es-redirect.yml
   parameters:
     stages:
       - stage: Prepare
         displayName: 'Build MCP'
         jobs:
-          - job: BuildMcp
-            displayName: 'Build + publish MCP server(s)'
-            pool:
-              name: $(LINUXPOOL)
-              image: $(LINUXVMIMAGE)
-              os: linux
-            # 1ES publishes artifacts via templateContext.outputs, not the `publish` shortcut.
-            templateContext:
-              outputs:
-                - output: pipelineArtifact
-                  displayName: 'Publish MCP server artifact'
-                  artifactName: mcp-servers
-                  targetPath: $(Build.SourcesDirectory)/artifacts/mcp
-            steps:
-              # The pipeline supplies the MCP build/install via mcpSetupTemplate; it must
-              # publish each server under artifacts/mcp/<name> so the shards re-stage it at
-              # the path the eval environments resolve against. The orchestrator stays
-              # agnostic to language/build tooling.
-              - template: ${{ parameters.mcpSetupTemplate }}
-
-          # Glob eval files into the fan-out matrix (parallel with BuildMcp). The Eval stage
-          # reads it cross-stage and fans out eval-shard.yml.
+          - template: /eng/common/pipelines/templates/jobs/build-mcp.yml
+            parameters:
+              mcpSetupTemplate: ${{ parameters.mcpSetupTemplate }}
           - template: /eng/common/pipelines/templates/jobs/generate-eval-matrix.yml
             parameters:
               vallyRoot: ${{ parameters.vallyRoot }}
@@ -100,13 +60,6 @@ extends:
         dependsOn: Eval
         condition: always()
         jobs:
-          - job: Summarize
-            displayName: 'Publish + gate rollup'
-            pool:
-              name: $(LINUXPOOL)
-              image: $(LINUXVMIMAGE)
-              os: linux
-            steps:
-              - template: /eng/common/pipelines/templates/steps/eval-summarize.yml
-                parameters:
-                  failOnFailedTests: ${{ parameters.failOnFailedTests }}
+          - template: /eng/common/pipelines/templates/jobs/eval-summarize.yml
+            parameters:
+              failOnFailedTests: ${{ parameters.failOnFailedTests }}

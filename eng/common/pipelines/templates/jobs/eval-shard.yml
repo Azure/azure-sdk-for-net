@@ -1,13 +1,13 @@
-# Fan-out shard job dispatched by generate-eval-matrix.yml. One leg per shard runs the
-# evals from vallyRoot and publishes per-leg JUnit (always) + transcripts (on failure).
+# Fan-out shard job: one leg per shard runs its evals against the prebuilt MCP and publishes
+# per-leg JUnit (always) + transcripts (on failure). Pass/fail is the eval VERDICT, not the
+# `vally` exit code (vally can exit 1 on a teardown flake after a pass).
 
 parameters:
   - name: vallyRoot
     type: string
     default: tools/azsdk-cli/Azure.Sdk.Tools.Vally
   - name: evalInvokeTemplate
-    # Path to the step template that runs `vally eval` for each shard. Threaded to
-    # eval-run-shard.yml; defaults to the hermetic node runner, live overrides it.
+    # Swap point: runs `vally eval` for the shard. Default = hermetic node; live wraps it in AzureCLI@2.
     type: string
     default: /eng/common/pipelines/templates/steps/eval-invoke.yml
 
@@ -18,19 +18,12 @@ jobs:
       name: $(LINUXPOOL)
       image: $(LINUXVMIMAGE)
       os: linux
-    # continueOnError lets a single red shard finish without aborting the others —
-    # the pass/fail rollup happens in Summary.
+    # A red shard shouldn't abort its siblings; the rollup gates in Summary.
     continueOnError: true
-    # shardTimeoutInMinutes is an entrypoint-declared variable (hermetic tiers 20, live 45)
-    # rather than a parameter — each thin pipeline sets it in its own `variables` block.
     timeoutInMinutes: $(shardTimeoutInMinutes)
     strategy:
-      # Cross-stage matrix from the Prepare generate job and the fan-out cap — both fixed
-      # (no caller has ever overridden them, so they're inlined rather than parameterized).
       matrix: $[ stageDependencies.Prepare.generate_eval_matrix.outputs['detect.matrix'] ]
       maxParallel: 10
-    # Per-leg artifacts (matrix injects $(shardName)). JUnit always; transcripts
-    # only on a genuine failure. Both staged by the eval-run-shard.yml steps.
     templateContext:
       outputs:
         - output: pipelineArtifact
@@ -44,7 +37,61 @@ jobs:
           targetPath: $(Build.ArtifactStagingDirectory)/debug
           condition: failed()
     steps:
-      - template: /eng/common/pipelines/templates/steps/eval-run-shard.yml
+      - checkout: self
+        fetchDepth: 1
+      - task: UseNode@1
+        displayName: 'Use Node.js 22.x'
+        inputs:
+          version: 22.x
+      # 1ES Official image blocks registry.npmjs.org; restore via the azure-sdk npm mirror.
+      - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
+        parameters:
+          npmrcPath: $(Build.SourcesDirectory)/.npmrc
+          registryUrl: https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-tools/npm/registry/
+      # Installs vally-cli + its pinned copilot-sdk executor into node_modules.
+      - script: npm ci --userconfig $(Build.SourcesDirectory)/.npmrc
+        displayName: 'Install Vally CLI + copilot-sdk (pinned)'
+        workingDirectory: eng/common/scripts/eval
+      - download: current
+        artifact: mcp-servers
+        displayName: 'Download MCP server(s)'
+      - script: |
+          mkdir -p "$(Build.SourcesDirectory)/artifacts/mcp"
+          cp -r "$(Pipeline.Workspace)/mcp-servers/." "$(Build.SourcesDirectory)/artifacts/mcp/"
+        displayName: 'Stage MCP server(s) at expected path'
+      # Clone only the git fixtures this shard's evals reference (Vally won't clone them).
+      - script: |
+          patterns=()
+          set -f
+          for tok in $EVAL_ARGS; do
+            [ "$tok" = "-e" ] && continue
+            patterns+=(--pattern "$tok")
+          done
+          set +f
+          node "$(Build.SourcesDirectory)/eng/common/scripts/eval/init-eval-git-fixtures.js" \
+            --eval-root "$(Build.SourcesDirectory)/${{ parameters.vallyRoot }}" \
+            "${patterns[@]}"
+        displayName: 'Prime eval git fixtures'
+        env:
+          EVAL_ARGS: $(evalArgs)
+      # Runs the eval via the swap-point invoke template.
+      - template: ${{ parameters.evalInvokeTemplate }}
         parameters:
           vallyRoot: ${{ parameters.vallyRoot }}
-          evalInvokeTemplate: ${{ parameters.evalInvokeTemplate }}
+      # JUnit is tiny — stage it always; heavy transcripts stage separately on failure.
+      - script: |
+          mkdir -p "$(Build.ArtifactStagingDirectory)/junit"
+          find "$(Build.SourcesDirectory)/artifacts/vally-results/$(shardName)" -name '*.junit.xml' -exec cp {} "$(Build.ArtifactStagingDirectory)/junit/" \;
+        displayName: 'Collect $(shardName) JUnit'
+        condition: always()
+      # On a real failure keep transcripts; strip JUnit so Summary can't double-count it.
+      - script: |
+          src="$(Build.SourcesDirectory)/artifacts/vally-results/$(shardName)"
+          dest="$(Build.ArtifactStagingDirectory)/debug"
+          mkdir -p "$dest"
+          if [ -d "$src" ]; then
+            cp -r "$src/." "$dest/"
+            find "$dest" -name '*.junit.xml' -delete
+          fi
+        displayName: 'Collect $(shardName) transcripts (on failure)'
+        condition: failed()

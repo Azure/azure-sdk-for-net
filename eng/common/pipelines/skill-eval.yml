@@ -20,9 +20,9 @@ trigger:
       - tools/azsdk-cli/Azure.Sdk.Tools.Mock/**
       - eng/common/pipelines/skill-eval.yml
       - eng/pipelines/eval/mcp-mock.yml
-      - eng/common/pipelines/templates/steps/eval-collect-stimuli.yml
+      - eng/common/pipelines/templates/jobs/**
       - eng/common/pipelines/templates/steps/eval-invoke.yml
-      - eng/common/pipelines/templates/steps/eval-summarize.yml
+      - eng/common/pipelines/templates/steps/eval-mcp-setup.yml
       - eng/common/pipelines/templates/stages/archetype-eval.yml
       - eng/common/scripts/eval/**
 

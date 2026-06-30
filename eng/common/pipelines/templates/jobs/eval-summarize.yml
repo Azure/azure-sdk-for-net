@@ -1,0 +1,42 @@
+# Summary job: merge every shard's JUnit into one rollup (Markdown build-summary + Tests tab)
+# and gate. Phase 1 is report-only (failOnFailedTests=false) until the eval content hardens.
+
+parameters:
+  - name: failOnFailedTests
+    type: boolean
+    default: false
+
+jobs:
+  - job: Summarize
+    displayName: 'Publish + gate rollup'
+    pool:
+      name: $(LINUXPOOL)
+      image: $(LINUXVMIMAGE)
+      os: linux
+    steps:
+      - task: UseNode@1
+        displayName: 'Use Node.js 22.x'
+        inputs:
+          version: 22.x
+      # Match *.junit.xml only so stray XML (e.g. a DLL's doc XML) can't fake a shard.
+      - task: DownloadPipelineArtifact@2
+        displayName: 'Download all shard results'
+        inputs:
+          buildType: 'current'
+          itemPattern: '**/*.junit.xml'
+          targetPath: $(Pipeline.Workspace)/eval-results
+      # Renders the rollup to the run's Summary tab (##vso[task.uploadsummary]).
+      - script: |
+          node "$(Build.SourcesDirectory)/eng/common/scripts/eval/build-eval-summary.js" \
+            --results-root "$(Pipeline.Workspace)/eval-results" \
+            --output-path "$(Build.ArtifactStagingDirectory)/eval-summary.md"
+        displayName: 'Render Markdown rollup'
+        condition: always()
+      - task: PublishTestResults@2
+        displayName: 'Publish eval rollup'
+        inputs:
+          testResultsFormat: 'JUnit'
+          testResultsFiles: '$(Pipeline.Workspace)/eval-results/**/*.junit.xml'
+          mergeTestResults: true
+          failTaskOnFailedTests: ${{ parameters.failOnFailedTests }}
+          testRunTitle: 'Vally evals'
