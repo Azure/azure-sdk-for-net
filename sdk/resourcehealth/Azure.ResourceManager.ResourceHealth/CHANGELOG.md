@@ -1,18 +1,15 @@
 # Release History
 
-## 1.1.0-beta.6 (Unreleased)
+## 1.1.0 (2026-06-28)
 
 ### Features Added
 
 - Upgraded API version to 2025-05-01.
 
-### Breaking Changes
-
-- Removed the preview-only properties `ArgQuery`, `MaintenanceId`, and `MaintenanceType` from `ResourceHealthEventData`, and `ResourceName`, `ResourceGroup`, `Status`, `MaintenanceStartTime`, and `MaintenanceEndTime` from `ResourceHealthEventImpactedResourceData`. These fields are no longer returned by the `2025-05-01` API version.
-
 ### Other Changes
 
-- Migrated SDK from AutoRest/Swagger to TypeSpec-based generation.
+- Upgraded dependent Azure.Core to 1.59.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
 
 ## 1.1.0-beta.5 (2025-08-21)
 
@@ -70,25 +67,12 @@
 
 This package is the first stable release of the Azure Resource Health management library.
 
-### Breaking Changes
+### Features Added
 
-Polishing since last public beta release:
-- Prepended `ResourceHealth` prefix to all single / simple model names.
-- Corrected the format of all `Guid` type properties / parameters.
-- Corrected the format of all `ResourceIdentifier` type properties / parameters.
-- Corrected the format of all `ResouceType` type properties / parameters.
-- Corrected the format of all `ETag` type properties / parameters.
-- Corrected the format of all `AzureLocation` type properties / parameters.
-- Corrected the format of all binary type properties / parameters.
-- Corrected all acronyms that don't follow [.NET Naming Guidelines](https://learn.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
-- Corrected enumeration name by following [Naming Enumerations Rule](https://learn.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
-- Corrected the suffix of `DateTimeOffset` properties / parameters.
-- Corrected the name of interval / duration properties / parameters that end with units.
-- Optimized the name of some models and functions.
+- Upgraded API version to `2022-10-01`.
 
 ### Other Changes
 
-- Upgraded API version to `2022-10-01`.
 - Upgraded dependent `Azure.ResourceManager` to `1.2.0`.
 - Upgraded dependent `Azure.Core` to `1.4.0`.
 
