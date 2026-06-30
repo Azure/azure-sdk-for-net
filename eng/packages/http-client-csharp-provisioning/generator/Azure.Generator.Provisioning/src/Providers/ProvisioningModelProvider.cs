@@ -186,9 +186,11 @@ namespace Azure.Generator.Provisioning.Providers
                 ).Terminate());
             }
 
+            statements.Add(This.Invoke("DefineAdditionalProperties").Terminate());
+
             var method = new MethodProvider(
                 new MethodSignature(
-                    "DefineProvisionableProperties",
+                        "DefineProvisionableProperties",
                     $"Define all the provisionable properties for {Name}.",
                     MethodSignatureModifiers.Protected | MethodSignatureModifiers.Override,
                     null,
@@ -197,7 +199,20 @@ namespace Azure.Generator.Provisioning.Providers
                 statements,
                 this);
 
-            return [method];
+            return [method, BuildDefineAdditionalPropertiesMethod()];
+        }
+
+        private MethodProvider BuildDefineAdditionalPropertiesMethod()
+        {
+            var sig = new MethodSignature(
+                "DefineAdditionalProperties",
+                $"Define additional provisionable properties for {Name} that are not part of the generated code.",
+                MethodSignatureModifiers.Partial,
+                null,
+                null,
+                []);
+
+            return new MethodProvider(sig, this);
         }
 
         protected override TypeProvider[] BuildSerializationProviders()
