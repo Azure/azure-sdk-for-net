@@ -24,11 +24,13 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Initializes a new instance of AgentToolboxes. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal AgentToolboxes(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal AgentToolboxes(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
+            ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
@@ -36,6 +38,9 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         /// [Protocol Method] Creates a new toolbox version, provisioning the toolbox itself if it does not already exist.
@@ -54,11 +59,21 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult CreateVersion(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentToolboxes.CreateVersion");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateVersionRequest(name, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateCreateVersionRequest(name, content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -78,11 +93,21 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> CreateVersionAsync(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentToolboxes.CreateVersion");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateVersionRequest(name, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateCreateVersionRequest(name, content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Creates a new toolbox version, provisioning the toolbox itself if it does not already exist. </summary>
@@ -155,10 +180,20 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult Get(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentToolboxes.Get");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetRequest(name, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateGetRequest(name, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -177,10 +212,20 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetAsync(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentToolboxes.Get");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetRequest(name, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateGetRequest(name, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieves the specified toolbox and its current configuration. </summary>
@@ -242,13 +287,23 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetAll(int? limit, string order, string after, string before, RequestOptions options)
         {
-            return new AgentToolboxesGetAllCollectionResult(
-                this,
-                limit,
-                order,
-                after,
-                before,
-                options);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentToolboxes.GetAll");
+            scope.Start();
+            try
+            {
+                return new AgentToolboxesGetAllCollectionResult(
+                    this,
+                    limit,
+                    order,
+                    after,
+                    before,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -282,13 +337,23 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetAllAsync(int? limit, string order, string after, string before, RequestOptions options)
         {
-            return new AgentToolboxesGetAllAsyncCollectionResult(
-                this,
-                limit,
-                order,
-                after,
-                before,
-                options);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentToolboxes.GetAll");
+            scope.Start();
+            try
+            {
+                return new AgentToolboxesGetAllAsyncCollectionResult(
+                    this,
+                    limit,
+                    order,
+                    after,
+                    before,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -325,16 +390,26 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetVersions(string name, int? limit, string order, string after, string before, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentToolboxes.GetVersions");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new AgentToolboxesGetVersionsCollectionResult(
-                this,
-                name,
-                limit,
-                order,
-                after,
-                before,
-                options);
+                return new AgentToolboxesGetVersionsCollectionResult(
+                    this,
+                    name,
+                    limit,
+                    order,
+                    after,
+                    before,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -371,16 +446,26 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetVersionsAsync(string name, int? limit, string order, string after, string before, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentToolboxes.GetVersions");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new AgentToolboxesGetVersionsAsyncCollectionResult(
-                this,
-                name,
-                limit,
-                order,
-                after,
-                before,
-                options);
+                return new AgentToolboxesGetVersionsAsyncCollectionResult(
+                    this,
+                    name,
+                    limit,
+                    order,
+                    after,
+                    before,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -400,11 +485,21 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetVersion(string name, string version, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentToolboxes.GetVersion");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using PipelineMessage message = CreateGetVersionRequest(name, version, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateGetVersionRequest(name, version, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -424,11 +519,21 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetVersionAsync(string name, string version, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentToolboxes.GetVersion");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using PipelineMessage message = CreateGetVersionRequest(name, version, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateGetVersionRequest(name, version, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieves the specified version of a toolbox by name and version identifier. </summary>
@@ -480,11 +585,21 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult UpdateDefaultVersion(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentToolboxes.UpdateDefaultVersion");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateDefaultVersionRequest(name, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateUpdateDefaultVersionRequest(name, content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -504,11 +619,21 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> UpdateDefaultVersionAsync(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentToolboxes.UpdateDefaultVersion");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateDefaultVersionRequest(name, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateUpdateDefaultVersionRequest(name, content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -527,10 +652,20 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult Delete(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentToolboxes.Delete");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateDeleteRequest(name, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateDeleteRequest(name, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -549,10 +684,20 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> DeleteAsync(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentToolboxes.Delete");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateDeleteRequest(name, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateDeleteRequest(name, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Removes the specified toolbox along with all of its versions. </summary>
@@ -598,11 +743,21 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult DeleteVersion(string name, string version, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentToolboxes.DeleteVersion");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using PipelineMessage message = CreateDeleteVersionRequest(name, version, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateDeleteVersionRequest(name, version, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -622,11 +777,21 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> DeleteVersionAsync(string name, string version, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentToolboxes.DeleteVersion");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using PipelineMessage message = CreateDeleteVersionRequest(name, version, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateDeleteVersionRequest(name, version, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Removes the specified version of a toolbox. </summary>

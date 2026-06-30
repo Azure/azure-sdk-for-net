@@ -33,11 +33,13 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Initializes a new instance of AgentAdministrationClient. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal AgentAdministrationClient(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal AgentAdministrationClient(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
+            ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
@@ -70,6 +72,7 @@ namespace Azure.AI.Projects.Agents
             {
                 Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(AgentAdministrationClient).Assembly) }, Array.Empty<PipelinePolicy>());
             }
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
         /// <summary> Initializes a new instance of AgentAdministrationClient from a <see cref="AgentAdministrationClientSettings"/>. </summary>
@@ -81,6 +84,9 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         /// [Protocol Method] Applies a merge-patch update to the specified agent endpoint configuration.
@@ -97,8 +103,18 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult PatchAgent(string agentName, BinaryContent content, RequestOptions options = null)
         {
-            using PipelineMessage message = CreatePatchAgentRequest(agentName, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.PatchAgent");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreatePatchAgentRequest(agentName, content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -116,8 +132,18 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> PatchAgentAsync(string agentName, BinaryContent content, RequestOptions options = null)
         {
-            using PipelineMessage message = CreatePatchAgentRequest(agentName, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.PatchAgent");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreatePatchAgentRequest(agentName, content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -144,8 +170,18 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult CreateAgentVersionFromCode(string agentName, string codeZipSha256, BinaryContent content, string contentType, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateAgentVersionFromCodeRequest(agentName, codeZipSha256, content, contentType, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.CreateAgentVersionFromCode");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCreateAgentVersionFromCodeRequest(agentName, codeZipSha256, content, contentType, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -172,8 +208,18 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> CreateAgentVersionFromCodeAsync(string agentName, string codeZipSha256, BinaryContent content, string contentType, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateAgentVersionFromCodeRequest(agentName, codeZipSha256, content, contentType, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.CreateAgentVersionFromCode");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCreateAgentVersionFromCodeRequest(agentName, codeZipSha256, content, contentType, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -245,8 +291,18 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult DownloadAgentCode(string agentName, string agentVersion, RequestOptions options)
         {
-            using PipelineMessage message = CreateDownloadAgentCodeRequest(agentName, agentVersion, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.DownloadAgentCode");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateDownloadAgentCodeRequest(agentName, agentVersion, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -272,8 +328,18 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> DownloadAgentCodeAsync(string agentName, string agentVersion, RequestOptions options)
         {
-            using PipelineMessage message = CreateDownloadAgentCodeRequest(agentName, agentVersion, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.DownloadAgentCode");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateDownloadAgentCodeRequest(agentName, agentVersion, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -335,10 +401,20 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult EnableAgent(string agentName, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.EnableAgent");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
-            using PipelineMessage message = CreateEnableAgentRequest(agentName, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateEnableAgentRequest(agentName, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -358,10 +434,20 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> EnableAgentAsync(string agentName, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.EnableAgent");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
-            using PipelineMessage message = CreateEnableAgentRequest(agentName, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateEnableAgentRequest(agentName, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -414,10 +500,20 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult DisableAgent(string agentName, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.DisableAgent");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
-            using PipelineMessage message = CreateDisableAgentRequest(agentName, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateDisableAgentRequest(agentName, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -438,10 +534,20 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> DisableAgentAsync(string agentName, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.DisableAgent");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
-            using PipelineMessage message = CreateDisableAgentRequest(agentName, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateDisableAgentRequest(agentName, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -495,8 +601,18 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult CreateSession(string agentName, BinaryContent content, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateSessionRequest(agentName, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.CreateSession");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCreateSessionRequest(agentName, content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -516,8 +632,18 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> CreateSessionAsync(string agentName, BinaryContent content, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateSessionRequest(agentName, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.CreateSession");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCreateSessionRequest(agentName, content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -535,8 +661,18 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult GetSession(string agentName, string sessionId, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetSessionRequest(agentName, sessionId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.GetSession");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateGetSessionRequest(agentName, sessionId, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -554,8 +690,18 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> GetSessionAsync(string agentName, string sessionId, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetSessionRequest(agentName, sessionId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.GetSession");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateGetSessionRequest(agentName, sessionId, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -574,8 +720,18 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult DeleteSession(string agentName, string sessionId, RequestOptions options)
         {
-            using PipelineMessage message = CreateDeleteSessionRequest(agentName, sessionId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.DeleteSession");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateDeleteSessionRequest(agentName, sessionId, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -594,8 +750,18 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> DeleteSessionAsync(string agentName, string sessionId, RequestOptions options)
         {
-            using PipelineMessage message = CreateDeleteSessionRequest(agentName, sessionId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.DeleteSession");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateDeleteSessionRequest(agentName, sessionId, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -613,8 +779,18 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult StopSession(string agentName, string sessionId, RequestOptions options)
         {
-            using PipelineMessage message = CreateStopSessionRequest(agentName, sessionId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.StopSession");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateStopSessionRequest(agentName, sessionId, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -632,8 +808,18 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> StopSessionAsync(string agentName, string sessionId, RequestOptions options)
         {
-            using PipelineMessage message = CreateStopSessionRequest(agentName, sessionId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.StopSession");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateStopSessionRequest(agentName, sessionId, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -670,8 +856,18 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult GetSessionLogStream(string agentName, string agentVersion, string sessionId, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetSessionLogStreamRequest(agentName, agentVersion, sessionId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.GetSessionLogStream");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateGetSessionLogStreamRequest(agentName, agentVersion, sessionId, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -708,8 +904,18 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> GetSessionLogStreamAsync(string agentName, string agentVersion, string sessionId, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetSessionLogStreamRequest(agentName, agentVersion, sessionId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.GetSessionLogStream");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateGetSessionLogStreamRequest(agentName, agentVersion, sessionId, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

@@ -29,11 +29,13 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Initializes a new instance of AgentSessionFiles. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal AgentSessionFiles(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal AgentSessionFiles(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
+            ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
@@ -41,6 +43,9 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         /// [Protocol Method] Uploads binary file content to the specified path in the session sandbox.
@@ -60,8 +65,18 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult Upload(string agentName, string agentSessionId, string path, BinaryContent content, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateUploadRequest(agentName, agentSessionId, path, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentSessionFiles.Upload");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateUploadRequest(agentName, agentSessionId, path, content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -82,8 +97,18 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> UploadAsync(string agentName, string agentSessionId, string path, BinaryContent content, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateUploadRequest(agentName, agentSessionId, path, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentSessionFiles.Upload");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateUploadRequest(agentName, agentSessionId, path, content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -135,8 +160,18 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult Download(string agentName, string agentSessionId, string path, RequestOptions options)
         {
-            using PipelineMessage message = CreateDownloadRequest(agentName, agentSessionId, path, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentSessionFiles.Download");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateDownloadRequest(agentName, agentSessionId, path, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -156,8 +191,18 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> DownloadAsync(string agentName, string agentSessionId, string path, RequestOptions options)
         {
-            using PipelineMessage message = CreateDownloadRequest(agentName, agentSessionId, path, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentSessionFiles.Download");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateDownloadRequest(agentName, agentSessionId, path, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -208,8 +253,18 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult Delete(string agentName, string agentSessionId, string path, bool? recursive, RequestOptions options)
         {
-            using PipelineMessage message = CreateDeleteRequest(agentName, agentSessionId, path, recursive, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentSessionFiles.Delete");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateDeleteRequest(agentName, agentSessionId, path, recursive, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -230,8 +285,18 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> DeleteAsync(string agentName, string agentSessionId, string path, bool? recursive, RequestOptions options)
         {
-            using PipelineMessage message = CreateDeleteRequest(agentName, agentSessionId, path, recursive, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentSessionFiles.Delete");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateDeleteRequest(agentName, agentSessionId, path, recursive, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>

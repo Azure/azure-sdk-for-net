@@ -93,7 +93,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="message"> The pipeline message containing the request to send. </param>
         private async ValueTask<ClientResult> GetNextResponseAsync(PipelineMessage message)
         {
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AgentToolboxes.GetToolboxVersions");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AgentToolboxes.GetVersions");
             scope.Start();
             try
             {

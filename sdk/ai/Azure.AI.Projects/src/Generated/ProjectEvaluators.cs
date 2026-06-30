@@ -600,8 +600,18 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult StartPendingUpload(string name, string version, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateStartPendingUploadRequest(name, version, content, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectEvaluators.StartPendingUpload");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateStartPendingUploadRequest(name, version, content, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -621,8 +631,18 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> StartPendingUploadAsync(string name, string version, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateStartPendingUploadRequest(name, version, content, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectEvaluators.StartPendingUpload");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateStartPendingUploadRequest(name, version, content, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Initiates a new pending upload or retrieves an existing one for the specified evaluator version. </summary>
@@ -668,8 +688,18 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult GetCredential(string name, string version, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateGetCredentialRequest(name, version, content, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectEvaluators.GetCredential");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateGetCredentialRequest(name, version, content, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -689,8 +719,18 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> GetCredentialAsync(string name, string version, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateGetCredentialRequest(name, version, content, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectEvaluators.GetCredential");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateGetCredentialRequest(name, version, content, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieves SAS credentials for accessing the storage account associated with the specified evaluator version. </summary>
