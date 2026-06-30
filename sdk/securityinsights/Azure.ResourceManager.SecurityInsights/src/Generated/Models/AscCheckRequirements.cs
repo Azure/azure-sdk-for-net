@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="kind"> Describes the kind of connector to be checked. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> ASC (Azure Security Center) requirements check properties. </param>
-        internal AscCheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ASCCheckRequirementsProperties properties) : base(kind, additionalBinaryDataProperties)
+        internal AscCheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, AscCheckRequirementsProperties properties) : base(kind, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
         /// <summary> ASC (Azure Security Center) requirements check properties. </summary>
         [WirePath("properties")]
-        internal ASCCheckRequirementsProperties Properties { get; set; }
+        internal AscCheckRequirementsProperties Properties { get; set; }
 
         /// <summary> The subscription id to connect to, and get the data from. </summary>
         [WirePath("properties.subscriptionId")]
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new ASCCheckRequirementsProperties();
+                    Properties = new AscCheckRequirementsProperties();
                 }
                 Properties.SubscriptionId = value;
             }

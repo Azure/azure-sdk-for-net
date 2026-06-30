@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="eTag"> Etag of the azure resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> MDATP (Microsoft Defender Advanced Threat Protection) data connector properties. </param>
-        internal MdatpDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, MDATPDataConnectorProperties properties) : base(id, name, resourceType, systemData, kind, eTag, additionalBinaryDataProperties)
+        internal MdatpDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, MdatpDataConnectorProperties properties) : base(id, name, resourceType, systemData, kind, eTag, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
         /// <summary> MDATP (Microsoft Defender Advanced Threat Protection) data connector properties. </summary>
         [WirePath("properties")]
-        internal MDATPDataConnectorProperties Properties { get; set; }
+        internal MdatpDataConnectorProperties Properties { get; set; }
 
         /// <summary> The tenant id to connect to, and get the data from. </summary>
         [WirePath("properties.tenantId")]
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (Properties is null)
                     {
-                        Properties = new MDATPDataConnectorProperties();
+                        Properties = new MdatpDataConnectorProperties();
                     }
                     Properties.TenantId = value.Value;
                 }

@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="kind"> Describes the kind of connector to be checked. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> OfficeATP (Office 365 Advanced Threat Protection) requirements check properties. </param>
-        internal OfficeAtpCheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, OfficeATPCheckRequirementsProperties properties) : base(kind, additionalBinaryDataProperties)
+        internal OfficeAtpCheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, OfficeAtpCheckRequirementsProperties properties) : base(kind, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
         /// <summary> OfficeATP (Office 365 Advanced Threat Protection) requirements check properties. </summary>
         [WirePath("properties")]
-        internal OfficeATPCheckRequirementsProperties Properties { get; set; }
+        internal OfficeAtpCheckRequirementsProperties Properties { get; set; }
 
         /// <summary> The tenant id to connect to, and get the data from. </summary>
         [WirePath("properties.tenantId")]
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (Properties is null)
                     {
-                        Properties = new OfficeATPCheckRequirementsProperties();
+                        Properties = new OfficeAtpCheckRequirementsProperties();
                     }
                     Properties.TenantId = value.Value;
                 }

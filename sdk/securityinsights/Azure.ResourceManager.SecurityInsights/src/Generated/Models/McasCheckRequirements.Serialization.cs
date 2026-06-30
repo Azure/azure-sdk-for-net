@@ -14,51 +14,51 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents MCAS (Microsoft Cloud App Security) requirements check request. </summary>
-    public partial class MCASCheckRequirements : DataConnectorsCheckRequirements, IJsonModel<MCASCheckRequirements>
+    public partial class McasCheckRequirements : DataConnectorsCheckRequirements, IJsonModel<McasCheckRequirements>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataConnectorsCheckRequirements PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MCASCheckRequirements>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<McasCheckRequirements>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMCASCheckRequirements(document.RootElement, options);
+                        return DeserializeMcasCheckRequirements(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MCASCheckRequirements)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(McasCheckRequirements)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MCASCheckRequirements>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<McasCheckRequirements>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MCASCheckRequirements)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(McasCheckRequirements)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MCASCheckRequirements>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<McasCheckRequirements>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MCASCheckRequirements IPersistableModel<MCASCheckRequirements>.Create(BinaryData data, ModelReaderWriterOptions options) => (MCASCheckRequirements)PersistableModelCreateCore(data, options);
+        McasCheckRequirements IPersistableModel<McasCheckRequirements>.Create(BinaryData data, ModelReaderWriterOptions options) => (McasCheckRequirements)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MCASCheckRequirements>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<McasCheckRequirements>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MCASCheckRequirements>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<McasCheckRequirements>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MCASCheckRequirements>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<McasCheckRequirements>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MCASCheckRequirements)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(McasCheckRequirements)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -84,24 +84,24 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MCASCheckRequirements IJsonModel<MCASCheckRequirements>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MCASCheckRequirements)JsonModelCreateCore(ref reader, options);
+        McasCheckRequirements IJsonModel<McasCheckRequirements>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (McasCheckRequirements)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataConnectorsCheckRequirements JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MCASCheckRequirements>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<McasCheckRequirements>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MCASCheckRequirements)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(McasCheckRequirements)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMCASCheckRequirements(document.RootElement, options);
+            return DeserializeMcasCheckRequirements(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MCASCheckRequirements DeserializeMCASCheckRequirements(JsonElement element, ModelReaderWriterOptions options)
+        internal static McasCheckRequirements DeserializeMcasCheckRequirements(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             DataConnectorKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            MCASCheckRequirementsProperties properties = default;
+            McasCheckRequirementsProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    properties = MCASCheckRequirementsProperties.DeserializeMCASCheckRequirementsProperties(prop.Value, options);
+                    properties = McasCheckRequirementsProperties.DeserializeMcasCheckRequirementsProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MCASCheckRequirements(kind, additionalBinaryDataProperties, properties);
+            return new McasCheckRequirements(kind, additionalBinaryDataProperties, properties);
         }
     }
 }

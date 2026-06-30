@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="eTag"> Etag of the azure resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> MTP (Microsoft Threat Protection) data connector properties. </param>
-        internal MtpDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, MTPDataConnectorProperties properties) : base(id, name, resourceType, systemData, kind, eTag, additionalBinaryDataProperties)
+        internal MtpDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, MtpDataConnectorProperties properties) : base(id, name, resourceType, systemData, kind, eTag, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
         /// <summary> MTP (Microsoft Threat Protection) data connector properties. </summary>
         [WirePath("properties")]
-        internal MTPDataConnectorProperties Properties { get; set; }
+        internal MtpDataConnectorProperties Properties { get; set; }
 
         /// <summary> The tenant id to connect to, and get the data from. </summary>
         [WirePath("properties.tenantId")]
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (Properties is null)
                     {
-                        Properties = new MTPDataConnectorProperties();
+                        Properties = new MtpDataConnectorProperties();
                     }
                     Properties.TenantId = value.Value;
                 }
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The available data types for the connector. </summary>
         [WirePath("properties.dataTypes")]
-        public MTPDataConnectorDataTypes DataTypes
+        public MtpDataConnectorDataTypes DataTypes
         {
             get
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new MTPDataConnectorProperties();
+                    Properties = new MtpDataConnectorProperties();
                 }
                 Properties.DataTypes = value;
             }
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new MTPDataConnectorProperties();
+                    Properties = new MtpDataConnectorProperties();
                 }
                 return Properties.FilteredProvidersAlerts;
             }

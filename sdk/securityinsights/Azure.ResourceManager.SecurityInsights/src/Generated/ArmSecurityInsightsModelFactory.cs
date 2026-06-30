@@ -2527,7 +2527,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 default,
                 etag,
                 default,
-                tenantId is null && alertsState is null ? default : new AADDataConnectorProperties(tenantId.GetValueOrDefault(), new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState.GetValueOrDefault(), default), default), default));
+                tenantId is null && alertsState is null ? default : new AadDataConnectorProperties(tenantId.GetValueOrDefault(), new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState.GetValueOrDefault(), default), default), default));
         }
 
         /// <param name="alertsState"> Describe whether this data type connection is enabled or not. </param>
@@ -2612,7 +2612,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="dataTypes"> The available data types for the connector. </param>
         /// <param name="filteredProvidersAlerts"> Alerts filtered providers. When filters are not applied, all alerts will stream through the MTP pipeline, still in private preview for all products EXCEPT MDA and MDI, which are in GA state. </param>
         /// <returns> A new <see cref="Models.MtpDataConnector"/> instance for mocking. </returns>
-        public static MtpDataConnector MtpDataConnector(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? eTag = default, Guid? tenantId = default, MTPDataConnectorDataTypes dataTypes = default, IEnumerable<MtpProvider> filteredProvidersAlerts = default)
+        public static MtpDataConnector MtpDataConnector(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? eTag = default, Guid? tenantId = default, MtpDataConnectorDataTypes dataTypes = default, IEnumerable<MtpProvider> filteredProvidersAlerts = default)
         {
             return new MtpDataConnector(
                 id,
@@ -2622,29 +2622,29 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 default,
                 eTag,
                 default,
-                tenantId is null && dataTypes is null && filteredProvidersAlerts is null ? default : new MTPDataConnectorProperties(tenantId.GetValueOrDefault(), default, dataTypes, new MtpFilteredProviders((filteredProvidersAlerts ?? new ChangeTrackingList<MtpProvider>()).ToList(), default)));
+                tenantId is null && dataTypes is null && filteredProvidersAlerts is null ? default : new MtpDataConnectorProperties(tenantId.GetValueOrDefault(), default, dataTypes, new MtpFilteredProviders((filteredProvidersAlerts ?? new ChangeTrackingList<MtpProvider>()).ToList(), default)));
         }
 
         /// <param name="incidentsState"> Describe whether this data type connection is enabled or not. </param>
         /// <param name="alertsState"> Describe whether this data type connection is enabled or not. </param>
-        /// <returns> A new <see cref="Models.MTPDataConnectorDataTypes"/> instance for mocking. </returns>
-        public static MTPDataConnectorDataTypes MTPDataConnectorDataTypes(SecurityInsightsDataTypeConnectionState incidentsState = default, SecurityInsightsDataTypeConnectionState? alertsState = default)
+        /// <returns> A new <see cref="Models.MtpDataConnectorDataTypes"/> instance for mocking. </returns>
+        public static MtpDataConnectorDataTypes MtpDataConnectorDataTypes(SecurityInsightsDataTypeConnectionState incidentsState = default, SecurityInsightsDataTypeConnectionState? alertsState = default)
         {
-            return new MTPDataConnectorDataTypes(new MTPDataConnectorDataTypesIncidents(incidentsState, default), alertsState is null ? default : new MTPDataConnectorDataTypesAlerts(alertsState.GetValueOrDefault(), default), default);
+            return new MtpDataConnectorDataTypes(new MtpDataConnectorDataTypesIncidents(incidentsState, default), alertsState is null ? default : new MtpDataConnectorDataTypesAlerts(alertsState.GetValueOrDefault(), default), default);
         }
 
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
-        /// <returns> A new <see cref="Models.MTPDataConnectorDataTypesIncidents"/> instance for mocking. </returns>
-        public static MTPDataConnectorDataTypesIncidents MTPDataConnectorDataTypesIncidents(SecurityInsightsDataTypeConnectionState state = default)
+        /// <returns> A new <see cref="Models.MtpDataConnectorDataTypesIncidents"/> instance for mocking. </returns>
+        public static MtpDataConnectorDataTypesIncidents MtpDataConnectorDataTypesIncidents(SecurityInsightsDataTypeConnectionState state = default)
         {
-            return new MTPDataConnectorDataTypesIncidents(state, default);
+            return new MtpDataConnectorDataTypesIncidents(state, default);
         }
 
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
-        /// <returns> A new <see cref="Models.MTPDataConnectorDataTypesAlerts"/> instance for mocking. </returns>
-        public static MTPDataConnectorDataTypesAlerts MTPDataConnectorDataTypesAlerts(SecurityInsightsDataTypeConnectionState state = default)
+        /// <returns> A new <see cref="Models.MtpDataConnectorDataTypesAlerts"/> instance for mocking. </returns>
+        public static MtpDataConnectorDataTypesAlerts MtpDataConnectorDataTypesAlerts(SecurityInsightsDataTypeConnectionState state = default)
         {
-            return new MTPDataConnectorDataTypesAlerts(state, default);
+            return new MtpDataConnectorDataTypesAlerts(state, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2665,7 +2665,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 default,
                 etag,
                 default,
-                tenantId is null && alertsState is null ? default : new AATPDataConnectorProperties(tenantId.GetValueOrDefault(), new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState.GetValueOrDefault(), default), default), default));
+                tenantId is null && alertsState is null ? default : new AatpDataConnectorProperties(tenantId.GetValueOrDefault(), new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState.GetValueOrDefault(), default), default), default));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2686,7 +2686,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 default,
                 etag,
                 default,
-                alertsState is null && subscriptionId is null ? default : new ASCDataConnectorProperties(new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState.GetValueOrDefault(), default), default), default, subscriptionId));
+                alertsState is null && subscriptionId is null ? default : new AscDataConnectorProperties(new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState.GetValueOrDefault(), default), default), default, subscriptionId));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3085,7 +3085,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 default,
                 eTag,
                 default,
-                connectorDefinitionName is null && auth is null && request is null && dcrConfig is null ? default : new GCPDataConnectorProperties(connectorDefinitionName, auth, request, dcrConfig, default));
+                connectorDefinitionName is null && auth is null && request is null && dcrConfig is null ? default : new GcpDataConnectorProperties(connectorDefinitionName, auth, request, dcrConfig, default));
         }
 
         /// <param name="serviceAccountEmail"> The service account that is used to access the GCP project. </param>
@@ -3125,7 +3125,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 default,
                 etag,
                 default,
-                tenantId is null && dataTypes is null ? default : new MCASDataConnectorProperties(tenantId.GetValueOrDefault(), default, dataTypes));
+                tenantId is null && dataTypes is null ? default : new McasDataConnectorProperties(tenantId.GetValueOrDefault(), default, dataTypes));
         }
 
         /// <param name="alertsState"> Describe whether this data type connection is enabled or not. </param>
@@ -3182,7 +3182,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 default,
                 eTag,
                 default,
-                tenantId is null && dataTypesAlertsState is null ? default : new OfficeATPDataConnectorProperties(tenantId.GetValueOrDefault(), new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(dataTypesAlertsState.GetValueOrDefault(), default), default), default));
+                tenantId is null && dataTypesAlertsState is null ? default : new OfficeAtpDataConnectorProperties(tenantId.GetValueOrDefault(), new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(dataTypesAlertsState.GetValueOrDefault(), default), default), default));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3324,7 +3324,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 default,
                 eTag,
                 default,
-                tenantId is null && dataTypesAlertsState is null ? default : new OfficeIRMDataConnectorProperties(tenantId.GetValueOrDefault(), new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(dataTypesAlertsState.GetValueOrDefault(), default), default), default));
+                tenantId is null && dataTypesAlertsState is null ? default : new OfficeIrmDataConnectorProperties(tenantId.GetValueOrDefault(), new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(dataTypesAlertsState.GetValueOrDefault(), default), default), default));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3345,7 +3345,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 default,
                 etag,
                 default,
-                tenantId is null && alertsState is null ? default : new MDATPDataConnectorProperties(tenantId.GetValueOrDefault(), new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState.GetValueOrDefault(), default), default), default));
+                tenantId is null && alertsState is null ? default : new MdatpDataConnectorProperties(tenantId.GetValueOrDefault(), new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState.GetValueOrDefault(), default), default), default));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -6090,21 +6090,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.AadCheckRequirements"/> instance for mocking. </returns>
         public static AadCheckRequirements AadCheckRequirements(Guid? tenantId = default)
         {
-            return new AadCheckRequirements(default, default, tenantId is null ? default : new AADCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
+            return new AadCheckRequirements(default, default, tenantId is null ? default : new AadCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
         }
 
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <returns> A new <see cref="Models.AatpCheckRequirements"/> instance for mocking. </returns>
         public static AatpCheckRequirements AatpCheckRequirements(Guid? tenantId = default)
         {
-            return new AatpCheckRequirements(default, default, tenantId is null ? default : new AATPCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
+            return new AatpCheckRequirements(default, default, tenantId is null ? default : new AatpCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
         }
 
         /// <param name="subscriptionId"> The subscription id to connect to, and get the data from. </param>
         /// <returns> A new <see cref="Models.AscCheckRequirements"/> instance for mocking. </returns>
         public static AscCheckRequirements AscCheckRequirements(string subscriptionId = default)
         {
-            return new AscCheckRequirements(default, default, subscriptionId is null ? default : new ASCCheckRequirementsProperties(subscriptionId, default));
+            return new AscCheckRequirements(default, default, subscriptionId is null ? default : new AscCheckRequirementsProperties(subscriptionId, default));
         }
 
         /// <returns> A new <see cref="Models.AwsCloudTrailCheckRequirements"/> instance for mocking. </returns>
@@ -6127,17 +6127,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        /// <returns> A new <see cref="Models.MCASCheckRequirements"/> instance for mocking. </returns>
-        public static MCASCheckRequirements MCASCheckRequirements(Guid? tenantId = default)
+        /// <returns> A new <see cref="Models.McasCheckRequirements"/> instance for mocking. </returns>
+        public static McasCheckRequirements McasCheckRequirements(Guid? tenantId = default)
         {
-            return new MCASCheckRequirements(default, default, tenantId is null ? default : new MCASCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
+            return new McasCheckRequirements(default, default, tenantId is null ? default : new McasCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
         }
 
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        /// <returns> A new <see cref="Models.MDATPCheckRequirements"/> instance for mocking. </returns>
-        public static MDATPCheckRequirements MDATPCheckRequirements(Guid? tenantId = default)
+        /// <returns> A new <see cref="Models.MdatpCheckRequirements"/> instance for mocking. </returns>
+        public static MdatpCheckRequirements MdatpCheckRequirements(Guid? tenantId = default)
         {
-            return new MDATPCheckRequirements(default, default, tenantId is null ? default : new MDATPCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
+            return new MdatpCheckRequirements(default, default, tenantId is null ? default : new MdatpCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
         }
 
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
@@ -6151,21 +6151,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.MtpCheckRequirements"/> instance for mocking. </returns>
         public static MtpCheckRequirements MtpCheckRequirements(Guid? tenantId = default)
         {
-            return new MtpCheckRequirements(default, default, tenantId is null ? default : new MTPCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
+            return new MtpCheckRequirements(default, default, tenantId is null ? default : new MtpCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
         }
 
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <returns> A new <see cref="Models.OfficeAtpCheckRequirements"/> instance for mocking. </returns>
         public static OfficeAtpCheckRequirements OfficeAtpCheckRequirements(Guid? tenantId = default)
         {
-            return new OfficeAtpCheckRequirements(default, default, tenantId is null ? default : new OfficeATPCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
+            return new OfficeAtpCheckRequirements(default, default, tenantId is null ? default : new OfficeAtpCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
         }
 
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <returns> A new <see cref="Models.OfficeIrmCheckRequirements"/> instance for mocking. </returns>
         public static OfficeIrmCheckRequirements OfficeIrmCheckRequirements(Guid? tenantId = default)
         {
-            return new OfficeIrmCheckRequirements(default, default, tenantId is null ? default : new OfficeIRMCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
+            return new OfficeIrmCheckRequirements(default, default, tenantId is null ? default : new OfficeIrmCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
         }
 
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>

@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="eTag"> Etag of the azure resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Google Cloud Platform data connector properties. </param>
-        internal GcpDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, GCPDataConnectorProperties properties) : base(id, name, resourceType, systemData, kind, eTag, additionalBinaryDataProperties)
+        internal GcpDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, GcpDataConnectorProperties properties) : base(id, name, resourceType, systemData, kind, eTag, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
         /// <summary> Google Cloud Platform data connector properties. </summary>
         [WirePath("properties")]
-        internal GCPDataConnectorProperties Properties { get; set; }
+        internal GcpDataConnectorProperties Properties { get; set; }
 
         /// <summary> The name of the connector definition that represents the UI config. </summary>
         [WirePath("properties.connectorDefinitionName")]
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new GCPDataConnectorProperties();
+                    Properties = new GcpDataConnectorProperties();
                 }
                 Properties.ConnectorDefinitionName = value;
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new GCPDataConnectorProperties();
+                    Properties = new GcpDataConnectorProperties();
                 }
                 Properties.Auth = value;
             }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new GCPDataConnectorProperties();
+                    Properties = new GcpDataConnectorProperties();
                 }
                 Properties.Request = value;
             }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new GCPDataConnectorProperties();
+                    Properties = new GcpDataConnectorProperties();
                 }
                 Properties.DcrConfig = value;
             }

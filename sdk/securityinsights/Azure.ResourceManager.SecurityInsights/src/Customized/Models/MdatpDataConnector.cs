@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new MDATPDataConnectorProperties();
+                    Properties = new MdatpDataConnectorProperties();
                 }
 
                 Properties.DataTypesAlertsState = value;

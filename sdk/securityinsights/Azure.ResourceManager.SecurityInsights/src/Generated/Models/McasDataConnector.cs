@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="eTag"> Etag of the azure resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> MCAS (Microsoft Cloud App Security) data connector properties. </param>
-        internal McasDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, MCASDataConnectorProperties properties) : base(id, name, resourceType, systemData, kind, eTag, additionalBinaryDataProperties)
+        internal McasDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, McasDataConnectorProperties properties) : base(id, name, resourceType, systemData, kind, eTag, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
         /// <summary> MCAS (Microsoft Cloud App Security) data connector properties. </summary>
         [WirePath("properties")]
-        internal MCASDataConnectorProperties Properties { get; set; }
+        internal McasDataConnectorProperties Properties { get; set; }
 
         /// <summary> The tenant id to connect to, and get the data from. </summary>
         [WirePath("properties.tenantId")]
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (Properties is null)
                     {
-                        Properties = new MCASDataConnectorProperties();
+                        Properties = new McasDataConnectorProperties();
                     }
                     Properties.TenantId = value.Value;
                 }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new MCASDataConnectorProperties();
+                    Properties = new McasDataConnectorProperties();
                 }
                 Properties.DataTypes = value;
             }

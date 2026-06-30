@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="eTag"> Etag of the azure resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> OfficeATP (Office 365 Advanced Threat Protection) data connector properties. </param>
-        internal OfficeAtpDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, OfficeATPDataConnectorProperties properties) : base(id, name, resourceType, systemData, kind, eTag, additionalBinaryDataProperties)
+        internal OfficeAtpDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, OfficeAtpDataConnectorProperties properties) : base(id, name, resourceType, systemData, kind, eTag, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
         /// <summary> OfficeATP (Office 365 Advanced Threat Protection) data connector properties. </summary>
         [WirePath("properties")]
-        internal OfficeATPDataConnectorProperties Properties { get; set; }
+        internal OfficeAtpDataConnectorProperties Properties { get; set; }
 
         /// <summary> The tenant id to connect to, and get the data from. </summary>
         [WirePath("properties.tenantId")]
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (Properties is null)
                     {
-                        Properties = new OfficeATPDataConnectorProperties();
+                        Properties = new OfficeAtpDataConnectorProperties();
                     }
                     Properties.TenantId = value.Value;
                 }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new OfficeATPDataConnectorProperties();
+                    Properties = new OfficeAtpDataConnectorProperties();
                 }
                 Properties.DataTypesAlertsState = value;
             }

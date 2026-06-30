@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="eTag"> Etag of the azure resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> OfficeIRM (Microsoft Insider Risk Management) data connector properties. </param>
-        internal OfficeIrmDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, OfficeIRMDataConnectorProperties properties) : base(id, name, resourceType, systemData, kind, eTag, additionalBinaryDataProperties)
+        internal OfficeIrmDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, OfficeIrmDataConnectorProperties properties) : base(id, name, resourceType, systemData, kind, eTag, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
         /// <summary> OfficeIRM (Microsoft Insider Risk Management) data connector properties. </summary>
         [WirePath("properties")]
-        internal OfficeIRMDataConnectorProperties Properties { get; set; }
+        internal OfficeIrmDataConnectorProperties Properties { get; set; }
 
         /// <summary> The tenant id to connect to, and get the data from. </summary>
         [WirePath("properties.tenantId")]
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (Properties is null)
                     {
-                        Properties = new OfficeIRMDataConnectorProperties();
+                        Properties = new OfficeIrmDataConnectorProperties();
                     }
                     Properties.TenantId = value.Value;
                 }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new OfficeIRMDataConnectorProperties();
+                    Properties = new OfficeIrmDataConnectorProperties();
                 }
                 Properties.DataTypesAlertsState = value;
             }

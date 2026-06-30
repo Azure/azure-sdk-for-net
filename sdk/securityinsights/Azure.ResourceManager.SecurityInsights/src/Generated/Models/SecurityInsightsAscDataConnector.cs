@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="eTag"> Etag of the azure resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> ASC (Azure Security Center) data connector properties. </param>
-        internal SecurityInsightsAscDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, ASCDataConnectorProperties properties) : base(id, name, resourceType, systemData, kind, eTag, additionalBinaryDataProperties)
+        internal SecurityInsightsAscDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, AscDataConnectorProperties properties) : base(id, name, resourceType, systemData, kind, eTag, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
         /// <summary> ASC (Azure Security Center) data connector properties. </summary>
         [WirePath("properties")]
-        internal ASCDataConnectorProperties Properties { get; set; }
+        internal AscDataConnectorProperties Properties { get; set; }
 
         /// <summary> The subscription id to connect to, and get the data from. </summary>
         [WirePath("properties.subscriptionId")]
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new ASCDataConnectorProperties();
+                    Properties = new AscDataConnectorProperties();
                 }
                 Properties.SubscriptionId = value;
             }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary>
     /// Data connector requirements properties.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AadCheckRequirements"/>, <see cref="AatpCheckRequirements"/>, <see cref="AscCheckRequirements"/>, <see cref="AwsCloudTrailCheckRequirements"/>, <see cref="AwsS3CheckRequirements"/>, <see cref="Dynamics365CheckRequirements"/>, <see cref="MCASCheckRequirements"/>, <see cref="MDATPCheckRequirements"/>, <see cref="MSTICheckRequirements"/>, <see cref="MtpCheckRequirements"/>, <see cref="OfficeAtpCheckRequirements"/>, <see cref="OfficeIrmCheckRequirements"/>, <see cref="MicrosoftPurviewInformationProtectionCheckRequirements"/>, <see cref="Office365ProjectCheckRequirements"/>, <see cref="OfficePowerBICheckRequirements"/>, <see cref="PurviewAuditCheckRequirements"/>, <see cref="ThreatIntelligenceCheckRequirements"/>, <see cref="ThreatIntelligenceTaxiiCheckRequirements"/>, and <see cref="IoTCheckRequirements"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AadCheckRequirements"/>, <see cref="AatpCheckRequirements"/>, <see cref="AscCheckRequirements"/>, <see cref="AwsCloudTrailCheckRequirements"/>, <see cref="AwsS3CheckRequirements"/>, <see cref="Dynamics365CheckRequirements"/>, <see cref="McasCheckRequirements"/>, <see cref="MdatpCheckRequirements"/>, <see cref="MSTICheckRequirements"/>, <see cref="MtpCheckRequirements"/>, <see cref="OfficeAtpCheckRequirements"/>, <see cref="OfficeIrmCheckRequirements"/>, <see cref="MicrosoftPurviewInformationProtectionCheckRequirements"/>, <see cref="Office365ProjectCheckRequirements"/>, <see cref="OfficePowerBICheckRequirements"/>, <see cref="PurviewAuditCheckRequirements"/>, <see cref="ThreatIntelligenceCheckRequirements"/>, <see cref="ThreatIntelligenceTaxiiCheckRequirements"/>, and <see cref="IoTCheckRequirements"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDataConnectorsCheckRequirements))]
     public abstract partial class DataConnectorsCheckRequirements : IJsonModel<DataConnectorsCheckRequirements>
@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     case "Dynamics365":
                         return Dynamics365CheckRequirements.DeserializeDynamics365CheckRequirements(element, options);
                     case "MicrosoftCloudAppSecurity":
-                        return MCASCheckRequirements.DeserializeMCASCheckRequirements(element, options);
+                        return McasCheckRequirements.DeserializeMcasCheckRequirements(element, options);
                     case "MicrosoftDefenderAdvancedThreatProtection":
-                        return MDATPCheckRequirements.DeserializeMDATPCheckRequirements(element, options);
+                        return MdatpCheckRequirements.DeserializeMdatpCheckRequirements(element, options);
                     case "MicrosoftThreatIntelligence":
                         return MSTICheckRequirements.DeserializeMSTICheckRequirements(element, options);
                     case "MicrosoftThreatProtection":

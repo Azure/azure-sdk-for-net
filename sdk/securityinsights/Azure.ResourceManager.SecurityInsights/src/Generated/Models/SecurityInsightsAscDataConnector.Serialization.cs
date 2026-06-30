@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             DataConnectorKind kind = default;
             ETag? eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ASCDataConnectorProperties properties = default;
+            AscDataConnectorProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    properties = ASCDataConnectorProperties.DeserializeASCDataConnectorProperties(prop.Value, options);
+                    properties = AscDataConnectorProperties.DeserializeAscDataConnectorProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

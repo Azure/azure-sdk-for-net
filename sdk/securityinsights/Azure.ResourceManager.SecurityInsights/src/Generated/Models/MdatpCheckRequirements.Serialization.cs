@@ -14,51 +14,51 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents MDATP (Microsoft Defender Advanced Threat Protection) requirements check request. </summary>
-    public partial class MDATPCheckRequirements : DataConnectorsCheckRequirements, IJsonModel<MDATPCheckRequirements>
+    public partial class MdatpCheckRequirements : DataConnectorsCheckRequirements, IJsonModel<MdatpCheckRequirements>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataConnectorsCheckRequirements PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MDATPCheckRequirements>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MdatpCheckRequirements>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMDATPCheckRequirements(document.RootElement, options);
+                        return DeserializeMdatpCheckRequirements(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MDATPCheckRequirements)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MdatpCheckRequirements)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MDATPCheckRequirements>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MdatpCheckRequirements>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MDATPCheckRequirements)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MdatpCheckRequirements)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MDATPCheckRequirements>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MdatpCheckRequirements>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MDATPCheckRequirements IPersistableModel<MDATPCheckRequirements>.Create(BinaryData data, ModelReaderWriterOptions options) => (MDATPCheckRequirements)PersistableModelCreateCore(data, options);
+        MdatpCheckRequirements IPersistableModel<MdatpCheckRequirements>.Create(BinaryData data, ModelReaderWriterOptions options) => (MdatpCheckRequirements)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MDATPCheckRequirements>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MdatpCheckRequirements>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MDATPCheckRequirements>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MdatpCheckRequirements>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MDATPCheckRequirements>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MdatpCheckRequirements>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MDATPCheckRequirements)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MdatpCheckRequirements)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -84,24 +84,24 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MDATPCheckRequirements IJsonModel<MDATPCheckRequirements>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MDATPCheckRequirements)JsonModelCreateCore(ref reader, options);
+        MdatpCheckRequirements IJsonModel<MdatpCheckRequirements>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MdatpCheckRequirements)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataConnectorsCheckRequirements JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MDATPCheckRequirements>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MdatpCheckRequirements>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MDATPCheckRequirements)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MdatpCheckRequirements)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMDATPCheckRequirements(document.RootElement, options);
+            return DeserializeMdatpCheckRequirements(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MDATPCheckRequirements DeserializeMDATPCheckRequirements(JsonElement element, ModelReaderWriterOptions options)
+        internal static MdatpCheckRequirements DeserializeMdatpCheckRequirements(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             DataConnectorKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            MDATPCheckRequirementsProperties properties = default;
+            MdatpCheckRequirementsProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    properties = MDATPCheckRequirementsProperties.DeserializeMDATPCheckRequirementsProperties(prop.Value, options);
+                    properties = MdatpCheckRequirementsProperties.DeserializeMdatpCheckRequirementsProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MDATPCheckRequirements(kind, additionalBinaryDataProperties, properties);
+            return new MdatpCheckRequirements(kind, additionalBinaryDataProperties, properties);
         }
     }
 }

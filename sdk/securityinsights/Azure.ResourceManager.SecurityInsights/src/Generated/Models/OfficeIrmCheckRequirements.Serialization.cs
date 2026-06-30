@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             DataConnectorKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            OfficeIRMCheckRequirementsProperties properties = default;
+            OfficeIrmCheckRequirementsProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    properties = OfficeIRMCheckRequirementsProperties.DeserializeOfficeIRMCheckRequirementsProperties(prop.Value, options);
+                    properties = OfficeIrmCheckRequirementsProperties.DeserializeOfficeIrmCheckRequirementsProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

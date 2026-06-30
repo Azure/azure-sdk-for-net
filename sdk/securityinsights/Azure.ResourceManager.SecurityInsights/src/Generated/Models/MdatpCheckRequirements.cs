@@ -12,25 +12,25 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents MDATP (Microsoft Defender Advanced Threat Protection) requirements check request. </summary>
-    public partial class MDATPCheckRequirements : DataConnectorsCheckRequirements
+    public partial class MdatpCheckRequirements : DataConnectorsCheckRequirements
     {
-        /// <summary> Initializes a new instance of <see cref="MDATPCheckRequirements"/>. </summary>
-        public MDATPCheckRequirements() : base(DataConnectorKind.MicrosoftDefenderAdvancedThreatProtection)
+        /// <summary> Initializes a new instance of <see cref="MdatpCheckRequirements"/>. </summary>
+        public MdatpCheckRequirements() : base(DataConnectorKind.MicrosoftDefenderAdvancedThreatProtection)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MDATPCheckRequirements"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MdatpCheckRequirements"/>. </summary>
         /// <param name="kind"> Describes the kind of connector to be checked. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> MDATP (Microsoft Defender Advanced Threat Protection) requirements check properties. </param>
-        internal MDATPCheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, MDATPCheckRequirementsProperties properties) : base(kind, additionalBinaryDataProperties)
+        internal MdatpCheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, MdatpCheckRequirementsProperties properties) : base(kind, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
         /// <summary> MDATP (Microsoft Defender Advanced Threat Protection) requirements check properties. </summary>
         [WirePath("properties")]
-        internal MDATPCheckRequirementsProperties Properties { get; set; }
+        internal MdatpCheckRequirementsProperties Properties { get; set; }
 
         /// <summary> The tenant id to connect to, and get the data from. </summary>
         [WirePath("properties.tenantId")]
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (Properties is null)
                     {
-                        Properties = new MDATPCheckRequirementsProperties();
+                        Properties = new MdatpCheckRequirementsProperties();
                     }
                     Properties.TenantId = value.Value;
                 }

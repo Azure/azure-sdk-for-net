@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="kind"> Describes the kind of connector to be checked. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> MTP (Microsoft Threat Protection) requirements check properties. </param>
-        internal MtpCheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, MTPCheckRequirementsProperties properties) : base(kind, additionalBinaryDataProperties)
+        internal MtpCheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, MtpCheckRequirementsProperties properties) : base(kind, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
         /// <summary> MTP (Microsoft Threat Protection) requirements check properties. </summary>
         [WirePath("properties")]
-        internal MTPCheckRequirementsProperties Properties { get; set; }
+        internal MtpCheckRequirementsProperties Properties { get; set; }
 
         /// <summary> The tenant id to connect to, and get the data from. </summary>
         [WirePath("properties.tenantId")]
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (Properties is null)
                     {
-                        Properties = new MTPCheckRequirementsProperties();
+                        Properties = new MtpCheckRequirementsProperties();
                     }
                     Properties.TenantId = value.Value;
                 }

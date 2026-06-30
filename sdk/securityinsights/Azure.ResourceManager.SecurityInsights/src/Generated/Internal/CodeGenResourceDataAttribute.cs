@@ -12,15 +12,9 @@ namespace Microsoft.TypeSpec.Generator.Customizations
     [AttributeUsage(AttributeTargets.Class)]
     internal partial class CodeGenResourceDataAttribute : Attribute
     {
-        private readonly Type _dataType;
-
         /// <param name="dataType"> The resource data type. </param>
         public CodeGenResourceDataAttribute(Type dataType)
         {
-            _dataType = dataType;
         }
-
-        /// <summary> Gets the DataType. </summary>
-        public Type DataType => _dataType;
     }
 }
