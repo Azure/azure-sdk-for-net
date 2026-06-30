@@ -20,4 +20,6 @@ jobs:
           artifactName: mcp-servers
           targetPath: $(Build.SourcesDirectory)/artifacts/mcp
     steps:
+      - checkout: self
+        fetchDepth: 1
       - template: ${{ parameters.mcpSetupTemplate }}

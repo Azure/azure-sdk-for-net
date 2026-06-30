@@ -1,21 +1,44 @@
-# Default (hermetic) invoke for one eval shard: runs `vally eval` via invoke-eval-shard.js.
-# Swap point — a tier needing auth points evalInvokeTemplate at its own copy (see eval-invoke-live.yml).
+# Invokes `vally eval` for one shard. UseAzSdkAuthentication=false (default) runs the hermetic
+# node script directly. UseAzSdkAuthentication=true wraps the same run in AzureCLI@2 so a live
+# MCP's Azure DevOps calls inherit the service-connection identity.
+# copilot-sdk authenticates the model session via GITHUB_TOKEN (from the linked eval variable group).
 
 parameters:
   - name: vallyRoot
     type: string
-    default: tools/azsdk-cli/Azure.Sdk.Tools.Vally
+  - name: UseAzSdkAuthentication
+    type: boolean
+    default: false
+  - name: azureSubscription
+    type: string
+    default: opensource-api-connection
 
 steps:
-  - script: |
-      node "$(Build.SourcesDirectory)/eng/common/scripts/eval/invoke-eval-shard.js" \
-        --eval-args "$(evalArgs)" \
-        --shard-name "$(shardName)" \
-        --output-dir "$(Build.SourcesDirectory)/artifacts/vally-results/$(shardName)" \
-        --skill-eval-prefix "$(Build.SourcesDirectory)/eng/common/scripts/eval" \
-        --threshold 0.8
-    displayName: 'vally eval $(shardName)'
-    workingDirectory: ${{ parameters.vallyRoot }}
-    # copilot-sdk authenticates the model session via GITHUB_TOKEN; sourced from the linked eval variable group.
-    env:
-      GITHUB_TOKEN: $(azuresdk-copilot-github-pat)
+  - ${{ if parameters.UseAzSdkAuthentication }}:
+    - task: AzureCLI@2
+      displayName: 'vally eval $(shardName) (authenticated)'
+      inputs:
+        azureSubscription: ${{ parameters.azureSubscription }}
+        scriptType: bash
+        scriptLocation: inlineScript
+        workingDirectory: ${{ parameters.vallyRoot }}
+        inlineScript: |
+          node "$(Build.SourcesDirectory)/eng/common/scripts/eval/invoke-eval-shard.js" \
+            --eval-args "$(evalArgs)" \
+            --shard-name "$(shardName)" \
+            --output-dir "$(Build.SourcesDirectory)/artifacts/vally-results/$(shardName)" \
+            --threshold 0.8
+      env:
+        GITHUB_TOKEN: $(azuresdk-copilot-github-pat)
+
+  - ${{ else }}:
+    - script: |
+        node "$(Build.SourcesDirectory)/eng/common/scripts/eval/invoke-eval-shard.js" \
+          --eval-args "$(evalArgs)" \
+          --shard-name "$(shardName)" \
+          --output-dir "$(Build.SourcesDirectory)/artifacts/vally-results/$(shardName)" \
+          --threshold 0.8
+      displayName: 'vally eval $(shardName)'
+      workingDirectory: ${{ parameters.vallyRoot }}
+      env:
+        GITHUB_TOKEN: $(azuresdk-copilot-github-pat)

@@ -2,8 +2,13 @@
 // `vally` exit code, since vally can exit non-zero on a teardown flake after a pass.
 
 import { spawnSync } from "node:child_process";
-import { pathToFileURL } from "node:url";
+import path from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { getVallyShardVerdict } from "./lib/verdict.js";
+
+// The pinned Vally CLI is installed next to this script (package.json + node_modules live here),
+// so the npm --prefix is just this file's own directory.
+const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 
 /**
  * Executes the shard and returns the process exit code (0 pass, 1 fail). Side effects
@@ -13,11 +18,10 @@ import { getVallyShardVerdict } from "./lib/verdict.js";
  * @param {string} options.evalArgs Whitespace-separated `-e <file>` args, exactly as the matrix emits them.
  * @param {string} options.shardName Shard name (log messages + result folder).
  * @param {string} options.outputDir `--output-dir` Vally writes results into.
- * @param {string} options.skillEvalPrefix npm prefix resolving the pinned Vally CLI (eng/common/scripts/eval).
  * @param {number} [options.threshold] Pass-rate gate forwarded to `vally eval --threshold`.
  * @returns {number} 0 when the shard verdict passes, 1 otherwise.
  */
-export function runShard({ evalArgs, shardName, outputDir, skillEvalPrefix, threshold = 0.8 }) {
+export function runShard({ evalArgs, shardName, outputDir, threshold = 0.8 }) {
   const evalArgList = evalArgs.split(/\s+/).filter(Boolean);
   const thresholdArg = String(threshold);
 
@@ -32,7 +36,7 @@ export function runShard({ evalArgs, shardName, outputDir, skillEvalPrefix, thre
       "exec",
       "--no",
       "--prefix",
-      skillEvalPrefix,
+      SCRIPT_DIR,
       "--",
       "vally",
       "eval",
@@ -98,9 +102,6 @@ function parseArgs(argv) {
       case "--output-dir":
         options.outputDir = next();
         break;
-      case "--skill-eval-prefix":
-        options.skillEvalPrefix = next();
-        break;
       case "--threshold":
         options.threshold = Number(next());
         break;
@@ -108,7 +109,7 @@ function parseArgs(argv) {
         throw new Error(`Unknown argument: ${argv[i]}`);
     }
   }
-  for (const required of ["evalArgs", "shardName", "outputDir", "skillEvalPrefix"]) {
+  for (const required of ["evalArgs", "shardName", "outputDir"]) {
     if (!options[required]) {
       throw new Error(`Missing required argument for ${required}.`);
     }
