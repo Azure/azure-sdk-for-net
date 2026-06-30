@@ -2,6 +2,10 @@
 
 ## 1.2.0-beta.4 (2026-06-30)
 
+### Features Added
+
+- Upgraded the api-version to 2025-07-01-preview.
+
 ### Other Changes
 
 - Upgraded dependent Azure.Core to 1.59.0.
