@@ -43,9 +43,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="patchStatus"> [Preview Feature] The status of virtual machine patch operations. </param>
         /// <param name="isVmInStandbyPool"> [Preview Feature] Specifies whether the VM is currently in or out of the Standby Pool. </param>
-        /// <param name="interconnectInstanceView"> The Interconnect runtime view of the Virtual Machine. Minimum api-version: 2026-03-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineInstanceView(int? platformUpdateDomain, int? platformFaultDomain, string computerName, string osName, string osVersion, HyperVGeneration? hyperVGeneration, string rdpThumbPrint, VirtualMachineAgentInstanceView vmAgent, MaintenanceRedeployStatus maintenanceRedeployStatus, IReadOnlyList<DiskInstanceView> disks, IReadOnlyList<VirtualMachineExtensionInstanceView> extensions, VirtualMachineHealthStatus vmHealth, BootDiagnosticsInstanceView bootDiagnostics, string assignedHost, IReadOnlyList<InstanceViewStatus> statuses, VirtualMachinePatchStatus patchStatus, bool? isVmInStandbyPool, InterconnectInstanceView interconnectInstanceView, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineInstanceView(int? platformUpdateDomain, int? platformFaultDomain, string computerName, string osName, string osVersion, HyperVGeneration? hyperVGeneration, string rdpThumbPrint, VirtualMachineAgentInstanceView vmAgent, MaintenanceRedeployStatus maintenanceRedeployStatus, IReadOnlyList<DiskInstanceView> disks, IReadOnlyList<VirtualMachineExtensionInstanceView> extensions, VirtualMachineHealthStatus vmHealth, BootDiagnosticsInstanceView bootDiagnostics, string assignedHost, IReadOnlyList<InstanceViewStatus> statuses, VirtualMachinePatchStatus patchStatus, bool? isVmInStandbyPool, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PlatformUpdateDomain = platformUpdateDomain;
             PlatformFaultDomain = platformFaultDomain;
@@ -64,7 +63,6 @@ namespace Azure.ResourceManager.Compute.Models
             Statuses = statuses;
             PatchStatus = patchStatus;
             IsVmInStandbyPool = isVmInStandbyPool;
-            InterconnectInstanceView = interconnectInstanceView;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -119,24 +117,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> [Preview Feature] Specifies whether the VM is currently in or out of the Standby Pool. </summary>
         public bool? IsVmInStandbyPool { get; }
 
-        /// <summary> The Interconnect runtime view of the Virtual Machine. Minimum api-version: 2026-03-01. </summary>
-        internal InterconnectInstanceView InterconnectInstanceView { get; }
-
         /// <summary> The health status information for the VM. </summary>
         public InstanceViewStatus VmHealthStatus
         {
             get
             {
                 return VmHealth is null ? default : VmHealth.Status;
-            }
-        }
-
-        /// <summary> The ID (GUID) of the Interconnect subgroup in which the Virtual Machine was placed. </summary>
-        public string InterconnectSubgroupId
-        {
-            get
-            {
-                return InterconnectInstanceView is null ? default : InterconnectInstanceView.InterconnectSubgroupId;
             }
         }
     }

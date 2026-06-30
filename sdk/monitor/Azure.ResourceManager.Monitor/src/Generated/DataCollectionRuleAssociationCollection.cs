@@ -10,9 +10,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Monitor
 {
@@ -23,42 +24,38 @@ namespace Azure.ResourceManager.Monitor
     /// </summary>
     public partial class DataCollectionRuleAssociationCollection : ArmCollection, IEnumerable<DataCollectionRuleAssociationResource>, IAsyncEnumerable<DataCollectionRuleAssociationResource>
     {
-        private readonly ClientDiagnostics _dataCollectionRuleAssociationClientDiagnostics;
-        private readonly DataCollectionRuleAssociationsRestOperations _dataCollectionRuleAssociationRestClient;
+        private readonly ClientDiagnostics _dataCollectionRuleAssociationsClientDiagnostics;
+        private readonly DataCollectionRuleAssociations _dataCollectionRuleAssociationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DataCollectionRuleAssociationCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DataCollectionRuleAssociationCollection for mocking. </summary>
         protected DataCollectionRuleAssociationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataCollectionRuleAssociationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleAssociationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataCollectionRuleAssociationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataCollectionRuleAssociationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", DataCollectionRuleAssociationResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(DataCollectionRuleAssociationResource.ResourceType, out string dataCollectionRuleAssociationApiVersion);
-            _dataCollectionRuleAssociationRestClient = new DataCollectionRuleAssociationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataCollectionRuleAssociationApiVersion);
+            _dataCollectionRuleAssociationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", DataCollectionRuleAssociationResource.ResourceType.Namespace, Diagnostics);
+            _dataCollectionRuleAssociationsRestClient = new DataCollectionRuleAssociations(_dataCollectionRuleAssociationsClientDiagnostics, Pipeline, Endpoint, dataCollectionRuleAssociationApiVersion ?? "2024-03-11");
         }
 
         /// <summary>
         /// Creates or updates an association.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataCollectionRuleAssociations_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataCollectionRuleAssociationProxyOnlyResources_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataCollectionRuleAssociationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-11. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,23 +63,30 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="associationName"> The name of the association. The name is case insensitive. </param>
         /// <param name="data"> The payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataCollectionRuleAssociationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string associationName, DataCollectionRuleAssociationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
-            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionRuleAssociationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _dataCollectionRuleAssociationsClientDiagnostics.CreateScope("DataCollectionRuleAssociationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _dataCollectionRuleAssociationRestClient.CreateAsync(Id, associationName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _dataCollectionRuleAssociationRestClient.CreateCreateRequestUri(Id, associationName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new MonitorArmOperation<DataCollectionRuleAssociationResource>(Response.FromValue(new DataCollectionRuleAssociationResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataCollectionRuleAssociationsRestClient.CreateCreateRequest(Id.ToString(), associationName, DataCollectionRuleAssociationData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataCollectionRuleAssociationData> response = Response.FromValue(DataCollectionRuleAssociationData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                MonitorArmOperation<DataCollectionRuleAssociationResource> operation = new MonitorArmOperation<DataCollectionRuleAssociationResource>(Response.FromValue(new DataCollectionRuleAssociationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -96,20 +100,16 @@ namespace Azure.ResourceManager.Monitor
         /// Creates or updates an association.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataCollectionRuleAssociations_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataCollectionRuleAssociationProxyOnlyResources_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataCollectionRuleAssociationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-11. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -117,23 +117,30 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="associationName"> The name of the association. The name is case insensitive. </param>
         /// <param name="data"> The payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataCollectionRuleAssociationResource> CreateOrUpdate(WaitUntil waitUntil, string associationName, DataCollectionRuleAssociationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
-            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionRuleAssociationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _dataCollectionRuleAssociationsClientDiagnostics.CreateScope("DataCollectionRuleAssociationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _dataCollectionRuleAssociationRestClient.Create(Id, associationName, data, cancellationToken);
-                var uri = _dataCollectionRuleAssociationRestClient.CreateCreateRequestUri(Id, associationName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new MonitorArmOperation<DataCollectionRuleAssociationResource>(Response.FromValue(new DataCollectionRuleAssociationResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataCollectionRuleAssociationsRestClient.CreateCreateRequest(Id.ToString(), associationName, DataCollectionRuleAssociationData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataCollectionRuleAssociationData> response = Response.FromValue(DataCollectionRuleAssociationData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                MonitorArmOperation<DataCollectionRuleAssociationResource> operation = new MonitorArmOperation<DataCollectionRuleAssociationResource>(Response.FromValue(new DataCollectionRuleAssociationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -147,38 +154,42 @@ namespace Azure.ResourceManager.Monitor
         /// Returns the specified association.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataCollectionRuleAssociations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataCollectionRuleAssociationProxyOnlyResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataCollectionRuleAssociationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-11. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="associationName"> The name of the association. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<DataCollectionRuleAssociationResource>> GetAsync(string associationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
 
-            using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionRuleAssociationCollection.Get");
+            using DiagnosticScope scope = _dataCollectionRuleAssociationsClientDiagnostics.CreateScope("DataCollectionRuleAssociationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _dataCollectionRuleAssociationRestClient.GetAsync(Id, associationName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataCollectionRuleAssociationsRestClient.CreateGetRequest(Id.ToString(), associationName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataCollectionRuleAssociationData> response = Response.FromValue(DataCollectionRuleAssociationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataCollectionRuleAssociationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -192,38 +203,42 @@ namespace Azure.ResourceManager.Monitor
         /// Returns the specified association.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataCollectionRuleAssociations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataCollectionRuleAssociationProxyOnlyResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataCollectionRuleAssociationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-11. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="associationName"> The name of the association. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<DataCollectionRuleAssociationResource> Get(string associationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
 
-            using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionRuleAssociationCollection.Get");
+            using DiagnosticScope scope = _dataCollectionRuleAssociationsClientDiagnostics.CreateScope("DataCollectionRuleAssociationCollection.Get");
             scope.Start();
             try
             {
-                var response = _dataCollectionRuleAssociationRestClient.Get(Id, associationName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataCollectionRuleAssociationsRestClient.CreateGetRequest(Id.ToString(), associationName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataCollectionRuleAssociationData> response = Response.FromValue(DataCollectionRuleAssociationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataCollectionRuleAssociationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -237,50 +252,44 @@ namespace Azure.ResourceManager.Monitor
         /// Lists associations for the specified resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataCollectionRuleAssociations_ListByResource</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataCollectionRuleAssociationProxyOnlyResources_ListByResource. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataCollectionRuleAssociationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-11. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataCollectionRuleAssociationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataCollectionRuleAssociationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataCollectionRuleAssociationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataCollectionRuleAssociationRestClient.CreateListByResourceRequest(Id);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataCollectionRuleAssociationRestClient.CreateListByResourceNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataCollectionRuleAssociationResource(Client, DataCollectionRuleAssociationData.DeserializeDataCollectionRuleAssociationData(e)), _dataCollectionRuleAssociationClientDiagnostics, Pipeline, "DataCollectionRuleAssociationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DataCollectionRuleAssociationData, DataCollectionRuleAssociationResource>(new DataCollectionRuleAssociationsGetByResourceAsyncCollectionResultOfT(_dataCollectionRuleAssociationsRestClient, Id.ToString(), context, "DataCollectionRuleAssociationCollection.GetAll"), data => new DataCollectionRuleAssociationResource(Client, data));
         }
 
         /// <summary>
         /// Lists associations for the specified resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataCollectionRuleAssociations_ListByResource</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataCollectionRuleAssociationProxyOnlyResources_ListByResource. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataCollectionRuleAssociationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-11. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,45 +297,61 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="DataCollectionRuleAssociationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataCollectionRuleAssociationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataCollectionRuleAssociationRestClient.CreateListByResourceRequest(Id);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataCollectionRuleAssociationRestClient.CreateListByResourceNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataCollectionRuleAssociationResource(Client, DataCollectionRuleAssociationData.DeserializeDataCollectionRuleAssociationData(e)), _dataCollectionRuleAssociationClientDiagnostics, Pipeline, "DataCollectionRuleAssociationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DataCollectionRuleAssociationData, DataCollectionRuleAssociationResource>(new DataCollectionRuleAssociationsGetByResourceCollectionResultOfT(_dataCollectionRuleAssociationsRestClient, Id.ToString(), context, "DataCollectionRuleAssociationCollection.GetAll"), data => new DataCollectionRuleAssociationResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataCollectionRuleAssociations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataCollectionRuleAssociationProxyOnlyResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataCollectionRuleAssociationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-11. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="associationName"> The name of the association. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string associationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
 
-            using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionRuleAssociationCollection.Exists");
+            using DiagnosticScope scope = _dataCollectionRuleAssociationsClientDiagnostics.CreateScope("DataCollectionRuleAssociationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _dataCollectionRuleAssociationRestClient.GetAsync(Id, associationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataCollectionRuleAssociationsRestClient.CreateGetRequest(Id.ToString(), associationName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DataCollectionRuleAssociationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataCollectionRuleAssociationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataCollectionRuleAssociationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -340,36 +365,50 @@ namespace Azure.ResourceManager.Monitor
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataCollectionRuleAssociations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataCollectionRuleAssociationProxyOnlyResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataCollectionRuleAssociationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-11. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="associationName"> The name of the association. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string associationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
 
-            using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionRuleAssociationCollection.Exists");
+            using DiagnosticScope scope = _dataCollectionRuleAssociationsClientDiagnostics.CreateScope("DataCollectionRuleAssociationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _dataCollectionRuleAssociationRestClient.Get(Id, associationName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataCollectionRuleAssociationsRestClient.CreateGetRequest(Id.ToString(), associationName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DataCollectionRuleAssociationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataCollectionRuleAssociationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataCollectionRuleAssociationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -383,38 +422,54 @@ namespace Azure.ResourceManager.Monitor
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataCollectionRuleAssociations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataCollectionRuleAssociationProxyOnlyResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataCollectionRuleAssociationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-11. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="associationName"> The name of the association. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<DataCollectionRuleAssociationResource>> GetIfExistsAsync(string associationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
 
-            using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionRuleAssociationCollection.GetIfExists");
+            using DiagnosticScope scope = _dataCollectionRuleAssociationsClientDiagnostics.CreateScope("DataCollectionRuleAssociationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _dataCollectionRuleAssociationRestClient.GetAsync(Id, associationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataCollectionRuleAssociationsRestClient.CreateGetRequest(Id.ToString(), associationName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DataCollectionRuleAssociationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataCollectionRuleAssociationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataCollectionRuleAssociationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DataCollectionRuleAssociationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataCollectionRuleAssociationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -428,38 +483,54 @@ namespace Azure.ResourceManager.Monitor
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataCollectionRuleAssociations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataCollectionRuleAssociationProxyOnlyResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataCollectionRuleAssociationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-11. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="associationName"> The name of the association. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<DataCollectionRuleAssociationResource> GetIfExists(string associationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
 
-            using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionRuleAssociationCollection.GetIfExists");
+            using DiagnosticScope scope = _dataCollectionRuleAssociationsClientDiagnostics.CreateScope("DataCollectionRuleAssociationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _dataCollectionRuleAssociationRestClient.Get(Id, associationName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataCollectionRuleAssociationsRestClient.CreateGetRequest(Id.ToString(), associationName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DataCollectionRuleAssociationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataCollectionRuleAssociationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataCollectionRuleAssociationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DataCollectionRuleAssociationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataCollectionRuleAssociationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -479,6 +550,7 @@ namespace Azure.ResourceManager.Monitor
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DataCollectionRuleAssociationResource> IAsyncEnumerable<DataCollectionRuleAssociationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
