@@ -28,11 +28,13 @@ namespace Azure.ResourceManager.Monitor
         {
         }
 
+        // The old alert-rule resource is no longer generated, so there is no backing data to return.
+        // Keep property getters non-throwing because reflection and HasData guards may call them unexpectedly.
         /// <summary> Gets the resource data. </summary>
-        public virtual AlertRuleData Data => throw new NotSupportedException("This API is no longer supported.");
+        public virtual AlertRuleData Data { get; }
 
         /// <summary> Gets whether the resource has data. </summary>
-        public virtual bool HasData => throw new NotSupportedException("This API is no longer supported.");
+        public virtual bool HasData { get; }
 
         /// <summary> Creates a resource identifier for an AlertRule resource. </summary>
         /// <param name="subscriptionId"> The subscription id. </param>

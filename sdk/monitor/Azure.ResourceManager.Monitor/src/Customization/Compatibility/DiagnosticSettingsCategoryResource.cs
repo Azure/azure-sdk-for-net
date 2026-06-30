@@ -28,11 +28,13 @@ namespace Azure.ResourceManager.Monitor
         {
         }
 
+        // The old diagnostic-settings category resource is no longer generated, so there is no backing data to return.
+        // Keep property getters non-throwing because reflection and HasData guards may call them unexpectedly.
         /// <summary> Gets the resource data. </summary>
-        public virtual DiagnosticSettingsCategoryData Data => throw new NotSupportedException("This API is no longer supported.");
+        public virtual DiagnosticSettingsCategoryData Data { get; }
 
         /// <summary> Gets whether the resource has data. </summary>
-        public virtual bool HasData => throw new NotSupportedException("This API is no longer supported.");
+        public virtual bool HasData { get; }
 
         /// <summary> Creates a resource identifier for a diagnostic settings category resource. </summary>
         /// <param name="resourceUri"> The resource URI. </param>
