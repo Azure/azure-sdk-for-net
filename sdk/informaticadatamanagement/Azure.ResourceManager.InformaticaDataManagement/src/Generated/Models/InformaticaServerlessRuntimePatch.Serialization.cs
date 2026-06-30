@@ -8,9 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.InformaticaDataManagement;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.InformaticaDataManagement.Models
 {
@@ -85,6 +87,11 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             {
                 throw new FormatException($"The model {nameof(InformaticaServerlessRuntimePatch)} does not support writing '{format}' format.");
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
+            }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
@@ -132,10 +139,20 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             {
                 return null;
             }
+            ManagedServiceIdentity identity = default;
             ServerlessRuntimePropertiesUpdate properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("identity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerInformaticaDataManagementContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -150,7 +167,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InformaticaServerlessRuntimePatch(properties, additionalBinaryDataProperties);
+            return new InformaticaServerlessRuntimePatch(identity, properties, additionalBinaryDataProperties);
         }
     }
 }

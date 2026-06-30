@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
+        /// <description> 2025-11-27. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
+        /// <description> 2025-11-27. </description>
         /// </item>
         /// </list>
         /// </summary>

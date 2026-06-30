@@ -131,6 +131,16 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 writer.WritePropertyName("supplementaryFileLocation"u8);
                 writer.WriteStringValue(SupplementaryFileLocation);
             }
+            if (Optional.IsCollectionDefined(ServerlessRuntimeDataDisks))
+            {
+                writer.WritePropertyName("serverlessRuntimeDataDisks"u8);
+                writer.WriteStartArray();
+                foreach (ServerlessRuntimeDataDisk item in ServerlessRuntimeDataDisks)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(ServerlessRuntimeConfig))
             {
                 writer.WritePropertyName("serverlessRuntimeConfig"u8);
@@ -203,6 +213,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             ServerlessRuntimeNetworkProfile serverlessRuntimeNetworkProfile = default;
             IList<AdvancedCustomProperties> advancedCustomProperties = default;
             string supplementaryFileLocation = default;
+            IList<ServerlessRuntimeDataDisk> serverlessRuntimeDataDisks = default;
             ServerlessRuntimeConfigProperties serverlessRuntimeConfig = default;
             IList<ServerlessRuntimeTag> serverlessRuntimeTags = default;
             ServerlessRuntimeUserContextProperties serverlessRuntimeUserContextProperties = default;
@@ -284,6 +295,20 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                     supplementaryFileLocation = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("serverlessRuntimeDataDisks"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ServerlessRuntimeDataDisk> array = new List<ServerlessRuntimeDataDisk>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ServerlessRuntimeDataDisk.DeserializeServerlessRuntimeDataDisk(item, options));
+                    }
+                    serverlessRuntimeDataDisks = array;
+                    continue;
+                }
                 if (prop.NameEquals("serverlessRuntimeConfig"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -332,6 +357,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 serverlessRuntimeNetworkProfile,
                 advancedCustomProperties ?? new ChangeTrackingList<AdvancedCustomProperties>(),
                 supplementaryFileLocation,
+                serverlessRuntimeDataDisks ?? new ChangeTrackingList<ServerlessRuntimeDataDisk>(),
                 serverlessRuntimeConfig,
                 serverlessRuntimeTags ?? new ChangeTrackingList<ServerlessRuntimeTag>(),
                 serverlessRuntimeUserContextProperties,

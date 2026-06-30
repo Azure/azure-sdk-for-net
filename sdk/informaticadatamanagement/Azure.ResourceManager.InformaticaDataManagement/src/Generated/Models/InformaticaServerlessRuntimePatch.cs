@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.InformaticaDataManagement.Models
 {
@@ -22,13 +23,18 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="InformaticaServerlessRuntimePatch"/>. </summary>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="properties"> Patchable PropertieInformaticaOrganizationPropertiesUpdates of the Organization observability resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InformaticaServerlessRuntimePatch(ServerlessRuntimePropertiesUpdate properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InformaticaServerlessRuntimePatch(ManagedServiceIdentity identity, ServerlessRuntimePropertiesUpdate properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Identity = identity;
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Patchable PropertieInformaticaOrganizationPropertiesUpdates of the Organization observability resource. </summary>
         public ServerlessRuntimePropertiesUpdate Properties { get; set; }

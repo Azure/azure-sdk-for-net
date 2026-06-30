@@ -100,6 +100,16 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 writer.WritePropertyName("supplementaryFileLocation"u8);
                 writer.WriteStringValue(SupplementaryFileLocation);
             }
+            if (Optional.IsCollectionDefined(ServerlessRuntimeDataDisks))
+            {
+                writer.WritePropertyName("serverlessRuntimeDataDisks"u8);
+                writer.WriteStartArray();
+                foreach (ServerlessRuntimeDataDisk item in ServerlessRuntimeDataDisks)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(Platform))
             {
                 writer.WritePropertyName("platform"u8);
@@ -192,6 +202,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             string resourceGroupName = default;
             string advancedCustomProperties = default;
             string supplementaryFileLocation = default;
+            IList<ServerlessRuntimeDataDisk> serverlessRuntimeDataDisks = default;
             string platform = default;
             string tags = default;
             string vnet = default;
@@ -227,6 +238,20 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 if (prop.NameEquals("supplementaryFileLocation"u8))
                 {
                     supplementaryFileLocation = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("serverlessRuntimeDataDisks"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ServerlessRuntimeDataDisk> array = new List<ServerlessRuntimeDataDisk>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ServerlessRuntimeDataDisk.DeserializeServerlessRuntimeDataDisk(item, options));
+                    }
+                    serverlessRuntimeDataDisks = array;
                     continue;
                 }
                 if (prop.NameEquals("platform"u8))
@@ -293,6 +318,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 resourceGroupName,
                 advancedCustomProperties,
                 supplementaryFileLocation,
+                serverlessRuntimeDataDisks ?? new ChangeTrackingList<ServerlessRuntimeDataDisk>(),
                 platform,
                 tags,
                 vnet,

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         {
             TryGetApiVersion(ResourceType, out string informaticaServerlessRuntimeApiVersion);
             _serverlessRuntimesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.InformaticaDataManagement", ResourceType.Namespace, Diagnostics);
-            _serverlessRuntimesRestClient = new ServerlessRuntimes(_serverlessRuntimesClientDiagnostics, Pipeline, Endpoint, informaticaServerlessRuntimeApiVersion ?? "2024-05-08");
+            _serverlessRuntimesRestClient = new ServerlessRuntimes(_serverlessRuntimesClientDiagnostics, Pipeline, Endpoint, informaticaServerlessRuntimeApiVersion ?? "2025-11-27");
             ValidateResourceId(id);
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
+        /// <description> 2025-11-27. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverlessRuntimesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _serverlessRuntimesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<InformaticaServerlessRuntimeData> response = Response.FromValue(InformaticaServerlessRuntimeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
+        /// <description> 2025-11-27. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverlessRuntimesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _serverlessRuntimesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<InformaticaServerlessRuntimeData> response = Response.FromValue(InformaticaServerlessRuntimeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
+        /// <description> 2025-11-27. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverlessRuntimesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, InformaticaServerlessRuntimePatch.ToRequestContent(patch), context);
+                HttpMessage message = _serverlessRuntimesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, InformaticaServerlessRuntimePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<InformaticaServerlessRuntimeData> response = Response.FromValue(InformaticaServerlessRuntimeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
+        /// <description> 2025-11-27. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverlessRuntimesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, InformaticaServerlessRuntimePatch.ToRequestContent(patch), context);
+                HttpMessage message = _serverlessRuntimesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, InformaticaServerlessRuntimePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<InformaticaServerlessRuntimeData> response = Response.FromValue(InformaticaServerlessRuntimeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
+        /// <description> 2025-11-27. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverlessRuntimesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _serverlessRuntimesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 InformaticaDataManagementArmOperation operation = new InformaticaDataManagementArmOperation(_serverlessRuntimesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
+        /// <description> 2025-11-27. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverlessRuntimesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _serverlessRuntimesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 InformaticaDataManagementArmOperation operation = new InformaticaDataManagementArmOperation(_serverlessRuntimesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
+        /// <description> 2025-11-27. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverlessRuntimesRestClient.CreateCheckDependenciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _serverlessRuntimesRestClient.CreateCheckDependenciesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CheckDependenciesResult> response = Response.FromValue(CheckDependenciesResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
+        /// <description> 2025-11-27. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverlessRuntimesRestClient.CreateCheckDependenciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _serverlessRuntimesRestClient.CreateCheckDependenciesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CheckDependenciesResult> response = Response.FromValue(CheckDependenciesResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
+        /// <description> 2025-11-27. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverlessRuntimesRestClient.CreateGetServerlessResourceByIdRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _serverlessRuntimesRestClient.CreateGetServerlessResourceByIdRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<InformaticaServerlessRuntimeData> response = Response.FromValue(InformaticaServerlessRuntimeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
+        /// <description> 2025-11-27. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverlessRuntimesRestClient.CreateGetServerlessResourceByIdRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _serverlessRuntimesRestClient.CreateGetServerlessResourceByIdRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<InformaticaServerlessRuntimeData> response = Response.FromValue(InformaticaServerlessRuntimeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
+        /// <description> 2025-11-27. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverlessRuntimesRestClient.CreateStartFailedServerlessRuntimeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _serverlessRuntimesRestClient.CreateStartFailedServerlessRuntimeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -638,7 +638,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
+        /// <description> 2025-11-27. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverlessRuntimesRestClient.CreateStartFailedServerlessRuntimeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _serverlessRuntimesRestClient.CreateStartFailedServerlessRuntimeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

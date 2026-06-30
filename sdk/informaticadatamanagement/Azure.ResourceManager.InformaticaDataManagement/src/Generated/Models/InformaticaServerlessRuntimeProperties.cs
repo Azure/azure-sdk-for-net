@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
 
             ServerlessAccountLocation = serverlessAccountLocation;
             AdvancedCustomProperties = new ChangeTrackingList<AdvancedCustomProperties>();
+            ServerlessRuntimeDataDisks = new ChangeTrackingList<ServerlessRuntimeDataDisk>();
             ServerlessRuntimeTags = new ChangeTrackingList<ServerlessRuntimeTag>();
         }
 
@@ -40,11 +41,12 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <param name="serverlessRuntimeNetworkProfile"> Informatica Serverless Network profile properties. </param>
         /// <param name="advancedCustomProperties"> String KV pairs indicating Advanced custom properties. </param>
         /// <param name="supplementaryFileLocation"> Supplementary file location. </param>
+        /// <param name="serverlessRuntimeDataDisks"> Serverless runtime data disks. </param>
         /// <param name="serverlessRuntimeConfig"> Serverless config properties. </param>
         /// <param name="serverlessRuntimeTags"> Serverless Runtime Tags. </param>
         /// <param name="serverlessRuntimeUserContextProperties"> Serverless runtime user context properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InformaticaServerlessRuntimeProperties(InformaticaProvisioningState? provisioningState, string description, InformaticaPlatformType? platform, InformaticaApplicationType? applicationType, string computeUnits, string executionTimeout, string serverlessAccountLocation, ServerlessRuntimeNetworkProfile serverlessRuntimeNetworkProfile, IList<AdvancedCustomProperties> advancedCustomProperties, string supplementaryFileLocation, ServerlessRuntimeConfigProperties serverlessRuntimeConfig, IList<ServerlessRuntimeTag> serverlessRuntimeTags, ServerlessRuntimeUserContextProperties serverlessRuntimeUserContextProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InformaticaServerlessRuntimeProperties(InformaticaProvisioningState? provisioningState, string description, InformaticaPlatformType? platform, InformaticaApplicationType? applicationType, string computeUnits, string executionTimeout, string serverlessAccountLocation, ServerlessRuntimeNetworkProfile serverlessRuntimeNetworkProfile, IList<AdvancedCustomProperties> advancedCustomProperties, string supplementaryFileLocation, IList<ServerlessRuntimeDataDisk> serverlessRuntimeDataDisks, ServerlessRuntimeConfigProperties serverlessRuntimeConfig, IList<ServerlessRuntimeTag> serverlessRuntimeTags, ServerlessRuntimeUserContextProperties serverlessRuntimeUserContextProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Description = description;
@@ -56,6 +58,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             ServerlessRuntimeNetworkProfile = serverlessRuntimeNetworkProfile;
             AdvancedCustomProperties = advancedCustomProperties;
             SupplementaryFileLocation = supplementaryFileLocation;
+            ServerlessRuntimeDataDisks = serverlessRuntimeDataDisks;
             ServerlessRuntimeConfig = serverlessRuntimeConfig;
             ServerlessRuntimeTags = serverlessRuntimeTags;
             ServerlessRuntimeUserContextProperties = serverlessRuntimeUserContextProperties;
@@ -91,6 +94,9 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
 
         /// <summary> Supplementary file location. </summary>
         public string SupplementaryFileLocation { get; set; }
+
+        /// <summary> Serverless runtime data disks. </summary>
+        public IList<ServerlessRuntimeDataDisk> ServerlessRuntimeDataDisks { get; }
 
         /// <summary> Serverless config properties. </summary>
         public ServerlessRuntimeConfigProperties ServerlessRuntimeConfig { get; set; }
