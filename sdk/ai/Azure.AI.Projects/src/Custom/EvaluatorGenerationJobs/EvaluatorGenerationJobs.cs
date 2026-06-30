@@ -7,13 +7,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.Memory;
 
-namespace Azure.AI.Projects;
+namespace Azure.AI.Projects.Evaluation;
 
 [Experimental("AAIP001")]
+
 [CodeGenSuppress("GetAll", typeof(FoundryFeaturesOptInKeys?), typeof(int?), typeof(MemoryStoreListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetAllAsync", typeof(FoundryFeaturesOptInKeys?), typeof(int?), typeof(MemoryStoreListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetAll", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetAllAsync", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenType("EvaluatorGenerationJobs")]
 public partial class EvaluatorGenerationJobs
 {
     /// <summary>

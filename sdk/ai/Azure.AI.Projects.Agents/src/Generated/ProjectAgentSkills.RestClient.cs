@@ -63,7 +63,7 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateUpdateSkillRequest(string name, BinaryContent content, RequestOptions options)
+        internal PipelineMessage CreateUpdateDefaultVersionRequest(string name, BinaryContent content, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public readonly partial struct SecurityAlertStatus : IEquatable<SecurityAlertStatus>
     {
         private readonly string _value;
+        /// <summary> An alert which doesn't specify a value is assigned the status 'Active'. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> An alert which is in handling state. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> Alert closed after handling. </summary>
+        private const string ResolvedValue = "Resolved";
+        /// <summary> Alert dismissed as false positive. </summary>
+        private const string DismissedValue = "Dismissed";
 
         /// <summary> Initializes a new instance of <see cref="SecurityAlertStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityAlertStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "Active";
-        private const string InProgressValue = "InProgress";
-        private const string ResolvedValue = "Resolved";
-        private const string DismissedValue = "Dismissed";
+            _value = value;
+        }
 
         /// <summary> An alert which doesn't specify a value is assigned the status 'Active'. </summary>
         public static SecurityAlertStatus Active { get; } = new SecurityAlertStatus(ActiveValue);
+
         /// <summary> An alert which is in handling state. </summary>
         public static SecurityAlertStatus InProgress { get; } = new SecurityAlertStatus(InProgressValue);
+
         /// <summary> Alert closed after handling. </summary>
         public static SecurityAlertStatus Resolved { get; } = new SecurityAlertStatus(ResolvedValue);
+
         /// <summary> Alert dismissed as false positive. </summary>
         public static SecurityAlertStatus Dismissed { get; } = new SecurityAlertStatus(DismissedValue);
+
         /// <summary> Determines if two <see cref="SecurityAlertStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityAlertStatus left, SecurityAlertStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityAlertStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityAlertStatus left, SecurityAlertStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityAlertStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityAlertStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityAlertStatus(string value) => new SecurityAlertStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityAlertStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityAlertStatus?(string value) => value == null ? null : new SecurityAlertStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityAlertStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityAlertStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -29,6 +29,7 @@ namespace Azure.SdkAnalyzers
         private static readonly string[] SupportedDiagnosticIds = new[]
         {
             "AZC0007",
+            "AZC0014",
             "AZC0030",
             "AZC0034",
             "AZC0035",

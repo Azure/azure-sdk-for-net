@@ -12,7 +12,7 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="UnknownRoutineAction"/>. </summary>
         /// <param name="type"> The action type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownRoutineAction(RoutineActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
+        internal UnknownRoutineAction(RoutineActionKind @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     internal static partial class MonitorReceiverStatusExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this MonitorReceiverStatus value) => value switch
         {
             MonitorReceiverStatus.NotSpecified => "NotSpecified",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.Monitor.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MonitorReceiverStatus value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static MonitorReceiverStatus ToMonitorReceiverStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSpecified")) return MonitorReceiverStatus.NotSpecified;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return MonitorReceiverStatus.Enabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return MonitorReceiverStatus.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSpecified"))
+            {
+                return MonitorReceiverStatus.NotSpecified;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled"))
+            {
+                return MonitorReceiverStatus.Enabled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled"))
+            {
+                return MonitorReceiverStatus.Disabled;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MonitorReceiverStatus value.");
         }
     }

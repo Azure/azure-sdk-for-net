@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Network.Models
             DestinationAddresses = new ChangeTrackingList<string>();
             DestinationPorts = new ChangeTrackingList<string>();
             DestinationFqdns = new ChangeTrackingList<string>();
-            SourceIpGroups = new ChangeTrackingList<string>();
-            DestinationIpGroups = new ChangeTrackingList<string>();
+            SourceIPGroups = new ChangeTrackingList<string>();
+            DestinationIPGroups = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureFirewallNetworkRule"/>. </summary>
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="destinationAddresses"> List of destination IP addresses. </param>
         /// <param name="destinationPorts"> List of destination ports. </param>
         /// <param name="destinationFqdns"> List of destination FQDNs. </param>
-        /// <param name="sourceIpGroups"> List of source IpGroups for this rule. </param>
-        /// <param name="destinationIpGroups"> List of destination IpGroups for this rule. </param>
+        /// <param name="sourceIPGroups"> List of source IpGroups for this rule. </param>
+        /// <param name="destinationIPGroups"> List of destination IpGroups for this rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureFirewallNetworkRule(string name, string description, IList<AzureFirewallNetworkRuleProtocol> protocols, IList<string> sourceAddresses, IList<string> destinationAddresses, IList<string> destinationPorts, IList<string> destinationFqdns, IList<string> sourceIpGroups, IList<string> destinationIpGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureFirewallNetworkRule(string name, string description, IList<AzureFirewallNetworkRuleProtocol> protocols, IList<string> sourceAddresses, IList<string> destinationAddresses, IList<string> destinationPorts, IList<string> destinationFqdns, IList<string> sourceIPGroups, IList<string> destinationIPGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Network.Models
             DestinationAddresses = destinationAddresses;
             DestinationPorts = destinationPorts;
             DestinationFqdns = destinationFqdns;
-            SourceIpGroups = sourceIpGroups;
-            DestinationIpGroups = destinationIpGroups;
+            SourceIPGroups = sourceIPGroups;
+            DestinationIPGroups = destinationIPGroups;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> List of source IpGroups for this rule. </summary>
         [WirePath("sourceIpGroups")]
-        public IList<string> SourceIpGroups { get; }
+        public IList<string> SourceIPGroups { get; }
 
         /// <summary> List of destination IpGroups for this rule. </summary>
         [WirePath("destinationIpGroups")]
-        public IList<string> DestinationIpGroups { get; }
+        public IList<string> DestinationIPGroups { get; }
     }
 }

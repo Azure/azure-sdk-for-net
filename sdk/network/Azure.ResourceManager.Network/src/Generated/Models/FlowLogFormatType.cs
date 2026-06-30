@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly string _value;
         /// <summary> JSON. </summary>
-        private const string JSONValue = "JSON";
+        private const string JsonValue = "JSON";
 
         /// <summary> Initializes a new instance of <see cref="FlowLogFormatType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> JSON. </summary>
-        public static FlowLogFormatType JSON { get; } = new FlowLogFormatType(JSONValue);
+        public static FlowLogFormatType Json { get; } = new FlowLogFormatType(JsonValue);
 
         /// <summary> Determines if two <see cref="FlowLogFormatType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

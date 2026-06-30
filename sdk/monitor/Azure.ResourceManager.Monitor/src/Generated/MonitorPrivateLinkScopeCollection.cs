@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Monitor
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.Monitor
     /// </summary>
     public partial class MonitorPrivateLinkScopeCollection : ArmCollection, IEnumerable<MonitorPrivateLinkScopeResource>, IAsyncEnumerable<MonitorPrivateLinkScopeResource>
     {
-        private readonly ClientDiagnostics _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics;
-        private readonly PrivateLinkScopesRestOperations _monitorPrivateLinkScopePrivateLinkScopesRestClient;
+        private readonly ClientDiagnostics _privateLinkScopesClientDiagnostics;
+        private readonly PrivateLinkScopes _privateLinkScopesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MonitorPrivateLinkScopeCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MonitorPrivateLinkScopeCollection for mocking. </summary>
         protected MonitorPrivateLinkScopeCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MonitorPrivateLinkScopeCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkScopeCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MonitorPrivateLinkScopeCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", MonitorPrivateLinkScopeResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(MonitorPrivateLinkScopeResource.ResourceType, out string monitorPrivateLinkScopePrivateLinkScopesApiVersion);
-            _monitorPrivateLinkScopePrivateLinkScopesRestClient = new PrivateLinkScopesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, monitorPrivateLinkScopePrivateLinkScopesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(MonitorPrivateLinkScopeResource.ResourceType, out string monitorPrivateLinkScopeApiVersion);
+            _privateLinkScopesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", MonitorPrivateLinkScopeResource.ResourceType.Namespace, Diagnostics);
+            _privateLinkScopesRestClient = new PrivateLinkScopes(_privateLinkScopesClientDiagnostics, Pipeline, Endpoint, monitorPrivateLinkScopeApiVersion ?? "2023-06-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates (or updates) a Azure Monitor PrivateLinkScope. Note: You cannot specify a different value for InstrumentationKey nor AppId in the Put operation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkScopes_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureMonitorPrivateLinkScopes_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MonitorPrivateLinkScopeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,23 +76,31 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="scopeName"> The name of the Azure Monitor PrivateLinkScope resource. </param>
         /// <param name="data"> Properties that need to be specified to create or update a Azure Monitor PrivateLinkScope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<MonitorPrivateLinkScopeResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string scopeName, MonitorPrivateLinkScopeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _privateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _monitorPrivateLinkScopePrivateLinkScopesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, scopeName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _monitorPrivateLinkScopePrivateLinkScopesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, scopeName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new MonitorArmOperation<MonitorPrivateLinkScopeResource>(Response.FromValue(new MonitorPrivateLinkScopeResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateLinkScopesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scopeName, MonitorPrivateLinkScopeData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MonitorPrivateLinkScopeData> response = Response.FromValue(MonitorPrivateLinkScopeData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                MonitorArmOperation<MonitorPrivateLinkScopeResource> operation = new MonitorArmOperation<MonitorPrivateLinkScopeResource>(Response.FromValue(new MonitorPrivateLinkScopeResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -107,20 +114,16 @@ namespace Azure.ResourceManager.Monitor
         /// Creates (or updates) a Azure Monitor PrivateLinkScope. Note: You cannot specify a different value for InstrumentationKey nor AppId in the Put operation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkScopes_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureMonitorPrivateLinkScopes_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MonitorPrivateLinkScopeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,23 +131,31 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="scopeName"> The name of the Azure Monitor PrivateLinkScope resource. </param>
         /// <param name="data"> Properties that need to be specified to create or update a Azure Monitor PrivateLinkScope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<MonitorPrivateLinkScopeResource> CreateOrUpdate(WaitUntil waitUntil, string scopeName, MonitorPrivateLinkScopeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _privateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _monitorPrivateLinkScopePrivateLinkScopesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, scopeName, data, cancellationToken);
-                var uri = _monitorPrivateLinkScopePrivateLinkScopesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, scopeName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new MonitorArmOperation<MonitorPrivateLinkScopeResource>(Response.FromValue(new MonitorPrivateLinkScopeResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateLinkScopesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scopeName, MonitorPrivateLinkScopeData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MonitorPrivateLinkScopeData> response = Response.FromValue(MonitorPrivateLinkScopeData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                MonitorArmOperation<MonitorPrivateLinkScopeResource> operation = new MonitorArmOperation<MonitorPrivateLinkScopeResource>(Response.FromValue(new MonitorPrivateLinkScopeResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -158,38 +169,42 @@ namespace Azure.ResourceManager.Monitor
         /// Returns a Azure Monitor PrivateLinkScope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkScopes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureMonitorPrivateLinkScopes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MonitorPrivateLinkScopeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeName"> The name of the Azure Monitor PrivateLinkScope resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<MonitorPrivateLinkScopeResource>> GetAsync(string scopeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
 
-            using var scope = _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeCollection.Get");
+            using DiagnosticScope scope = _privateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeCollection.Get");
             scope.Start();
             try
             {
-                var response = await _monitorPrivateLinkScopePrivateLinkScopesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, scopeName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scopeName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MonitorPrivateLinkScopeData> response = Response.FromValue(MonitorPrivateLinkScopeData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MonitorPrivateLinkScopeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -203,38 +218,42 @@ namespace Azure.ResourceManager.Monitor
         /// Returns a Azure Monitor PrivateLinkScope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkScopes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureMonitorPrivateLinkScopes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MonitorPrivateLinkScopeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeName"> The name of the Azure Monitor PrivateLinkScope resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<MonitorPrivateLinkScopeResource> Get(string scopeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
 
-            using var scope = _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeCollection.Get");
+            using DiagnosticScope scope = _privateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeCollection.Get");
             scope.Start();
             try
             {
-                var response = _monitorPrivateLinkScopePrivateLinkScopesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, scopeName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scopeName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MonitorPrivateLinkScopeData> response = Response.FromValue(MonitorPrivateLinkScopeData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MonitorPrivateLinkScopeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,50 +267,44 @@ namespace Azure.ResourceManager.Monitor
         /// Gets a list of Azure Monitor PrivateLinkScopes within a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkScopes_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureMonitorPrivateLinkScopes_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MonitorPrivateLinkScopeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MonitorPrivateLinkScopeResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MonitorPrivateLinkScopeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MonitorPrivateLinkScopeResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _monitorPrivateLinkScopePrivateLinkScopesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _monitorPrivateLinkScopePrivateLinkScopesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MonitorPrivateLinkScopeResource(Client, MonitorPrivateLinkScopeData.DeserializeMonitorPrivateLinkScopeData(e)), _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics, Pipeline, "MonitorPrivateLinkScopeCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<MonitorPrivateLinkScopeData, MonitorPrivateLinkScopeResource>(new PrivateLinkScopesGetByResourceGroupAsyncCollectionResultOfT(_privateLinkScopesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MonitorPrivateLinkScopeCollection.GetAll"), data => new MonitorPrivateLinkScopeResource(Client, data));
         }
 
         /// <summary>
         /// Gets a list of Azure Monitor PrivateLinkScopes within a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkScopes_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureMonitorPrivateLinkScopes_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MonitorPrivateLinkScopeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,45 +312,61 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="MonitorPrivateLinkScopeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MonitorPrivateLinkScopeResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _monitorPrivateLinkScopePrivateLinkScopesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _monitorPrivateLinkScopePrivateLinkScopesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MonitorPrivateLinkScopeResource(Client, MonitorPrivateLinkScopeData.DeserializeMonitorPrivateLinkScopeData(e)), _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics, Pipeline, "MonitorPrivateLinkScopeCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<MonitorPrivateLinkScopeData, MonitorPrivateLinkScopeResource>(new PrivateLinkScopesGetByResourceGroupCollectionResultOfT(_privateLinkScopesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MonitorPrivateLinkScopeCollection.GetAll"), data => new MonitorPrivateLinkScopeResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkScopes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureMonitorPrivateLinkScopes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MonitorPrivateLinkScopeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeName"> The name of the Azure Monitor PrivateLinkScope resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string scopeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
 
-            using var scope = _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeCollection.Exists");
+            using DiagnosticScope scope = _privateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _monitorPrivateLinkScopePrivateLinkScopesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, scopeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scopeName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<MonitorPrivateLinkScopeData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MonitorPrivateLinkScopeData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MonitorPrivateLinkScopeData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -351,36 +380,50 @@ namespace Azure.ResourceManager.Monitor
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkScopes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureMonitorPrivateLinkScopes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MonitorPrivateLinkScopeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeName"> The name of the Azure Monitor PrivateLinkScope resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string scopeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
 
-            using var scope = _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeCollection.Exists");
+            using DiagnosticScope scope = _privateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeCollection.Exists");
             scope.Start();
             try
             {
-                var response = _monitorPrivateLinkScopePrivateLinkScopesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, scopeName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scopeName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<MonitorPrivateLinkScopeData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MonitorPrivateLinkScopeData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MonitorPrivateLinkScopeData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -394,38 +437,54 @@ namespace Azure.ResourceManager.Monitor
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkScopes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureMonitorPrivateLinkScopes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MonitorPrivateLinkScopeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeName"> The name of the Azure Monitor PrivateLinkScope resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<MonitorPrivateLinkScopeResource>> GetIfExistsAsync(string scopeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
 
-            using var scope = _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeCollection.GetIfExists");
+            using DiagnosticScope scope = _privateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _monitorPrivateLinkScopePrivateLinkScopesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, scopeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scopeName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<MonitorPrivateLinkScopeData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MonitorPrivateLinkScopeData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MonitorPrivateLinkScopeData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<MonitorPrivateLinkScopeResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new MonitorPrivateLinkScopeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -439,38 +498,54 @@ namespace Azure.ResourceManager.Monitor
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkScopes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureMonitorPrivateLinkScopes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MonitorPrivateLinkScopeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeName"> The name of the Azure Monitor PrivateLinkScope resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<MonitorPrivateLinkScopeResource> GetIfExists(string scopeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
 
-            using var scope = _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeCollection.GetIfExists");
+            using DiagnosticScope scope = _privateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _monitorPrivateLinkScopePrivateLinkScopesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, scopeName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scopeName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<MonitorPrivateLinkScopeData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MonitorPrivateLinkScopeData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MonitorPrivateLinkScopeData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<MonitorPrivateLinkScopeResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new MonitorPrivateLinkScopeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -490,6 +565,7 @@ namespace Azure.ResourceManager.Monitor
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<MonitorPrivateLinkScopeResource> IAsyncEnumerable<MonitorPrivateLinkScopeResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

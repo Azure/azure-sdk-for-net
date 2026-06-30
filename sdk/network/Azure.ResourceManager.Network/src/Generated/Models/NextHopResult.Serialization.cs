@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("nextHopType"u8);
                 writer.WriteStringValue(NextHopType.Value.ToString());
             }
-            if (Optional.IsDefined(NextHopIpAddress))
+            if (Optional.IsDefined(NextHopIPAddress))
             {
                 writer.WritePropertyName("nextHopIpAddress"u8);
-                writer.WriteStringValue(NextHopIpAddress);
+                writer.WriteStringValue(NextHopIPAddress);
             }
             if (Optional.IsDefined(RouteTableId))
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             NextHopType? nextHopType = default;
-            string nextHopIpAddress = default;
+            string nextHopIPAddress = default;
             ResourceIdentifier routeTableId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("nextHopIpAddress"u8))
                 {
-                    nextHopIpAddress = prop.Value.GetString();
+                    nextHopIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("routeTableId"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NextHopResult(nextHopType, nextHopIpAddress, routeTableId, additionalBinaryDataProperties);
+            return new NextHopResult(nextHopType, nextHopIPAddress, routeTableId, additionalBinaryDataProperties);
         }
     }
 }

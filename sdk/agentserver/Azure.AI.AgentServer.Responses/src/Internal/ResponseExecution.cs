@@ -57,12 +57,12 @@ internal sealed class ResponseExecution : IDisposable
     public string? AgentSessionId { get; set; }
 
     /// <summary>
-    /// Gets or sets the chat isolation key that was present when this response was created.
+    /// Gets or sets the user ID key that was present when this response was created.
     /// When non-null, all subsequent operations (GET, Cancel, DELETE, InputItems) must
     /// provide the same key; mismatches are treated as "not found" (404) to prevent
-    /// information leakage across chat partitions.
+    /// information leakage across user partitions.
     /// </summary>
-    public string? ChatIsolationKey { get; set; }
+    public string? UserIdKey { get; set; }
 
     /// <summary>
     /// Gets or sets the mutable response object (accumulator for the current pipeline).
@@ -172,19 +172,19 @@ internal sealed class ResponseExecution : IDisposable
     public TaskCompletionSource FinalizedSignal { get; } = new(TaskCreationOptions.RunContinuationsAsynchronously);
 
     /// <summary>
-    /// Enforces chat isolation key for in-flight responses.
-    /// If this execution was created with a chat isolation key, the caller must
+    /// Enforces the user ID key for in-flight responses.
+    /// If this execution was created with a user ID key, the caller must
     /// provide the same key; mismatches are treated as "not found" to prevent
-    /// cross-chat information leakage.
+    /// cross-user information leakage.
     /// </summary>
-    /// <param name="isolation">The caller's isolation context.</param>
+    /// <param name="context">The caller's platform context.</param>
     /// <exception cref="ResourceNotFoundException">
-    /// Thrown when the execution has a chat isolation key and the caller's key does not match.
+    /// Thrown when the execution has a user ID key and the caller's key does not match.
     /// </exception>
-    public void EnforceChatIsolation(IsolationContext isolation)
+    public void EnforceUserIsolation(PlatformContext context)
     {
-        if (ChatIsolationKey is not null
-            && !string.Equals(ChatIsolationKey, isolation.ChatIsolationKey, StringComparison.Ordinal))
+        if (UserIdKey is not null
+            && !string.Equals(UserIdKey, context.UserIdKey, StringComparison.Ordinal))
         {
             throw new ResourceNotFoundException($"Response '{ResponseId}' not found.");
         }

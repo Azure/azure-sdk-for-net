@@ -16,7 +16,7 @@ namespace Azure.AI.Projects
         /// <param name="repository"> The GitHub repository filter that scopes which issues can fire the trigger. </param>
         /// <param name="issueEvent"> The GitHub issue event that fires the routine. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/>, <paramref name="owner"/> or <paramref name="repository"/> is null. </exception>
-        public GitHubIssueRoutineTrigger(string connectionId, string owner, string repository, GitHubIssueEvent issueEvent) : base(RoutineTriggerType.GithubIssue)
+        public GitHubIssueRoutineTrigger(string connectionId, string owner, string repository, GitHubIssueEvent issueEvent) : base(RoutineTriggerKind.GithubIssue)
         {
             Argument.AssertNotNull(connectionId, nameof(connectionId));
             Argument.AssertNotNull(owner, nameof(owner));
@@ -35,7 +35,7 @@ namespace Azure.AI.Projects
         /// <param name="owner"> The GitHub owner or organization that scopes which issues can fire the trigger. </param>
         /// <param name="repository"> The GitHub repository filter that scopes which issues can fire the trigger. </param>
         /// <param name="issueEvent"> The GitHub issue event that fires the routine. </param>
-        internal GitHubIssueRoutineTrigger(RoutineTriggerType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string connectionId, string owner, string repository, GitHubIssueEvent issueEvent) : base(@type, additionalBinaryDataProperties)
+        internal GitHubIssueRoutineTrigger(RoutineTriggerKind @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string connectionId, string owner, string repository, GitHubIssueEvent issueEvent) : base(@type, additionalBinaryDataProperties)
         {
             ConnectionId = connectionId;
             Owner = owner;

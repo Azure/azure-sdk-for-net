@@ -20,7 +20,7 @@ public partial class SessionLogEvent
         }
         catch (JsonException)
         {
-            return new SessionLogEvent(SessionLogEventType.Log, response.Content.ToString());
+            return new SessionLogEvent(SessionLogEventKind.Log, response.Content.ToString());
         }
     }
 }

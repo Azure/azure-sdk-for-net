@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 throw new FormatException($"The model {nameof(IPTag)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IpTagType))
+            if (Optional.IsDefined(IPTagType))
             {
                 writer.WritePropertyName("ipTagType"u8);
-                writer.WriteStringValue(IpTagType);
+                writer.WriteStringValue(IPTagType);
             }
             if (Optional.IsDefined(Tag))
             {

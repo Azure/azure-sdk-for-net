@@ -17,17 +17,23 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNull(openapi, nameof(openapi));
 
+            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
             Openapi = openapi;
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenApiTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="openapi"> The openapi function definition. </param>
-        internal OpenApiTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, OpenApiFunctionDefinition openapi) : base(@type, additionalBinaryDataProperties)
+        internal OpenApiTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, ToolConfig> toolConfigs, OpenApiFunctionDefinition openapi) : base(@type, additionalBinaryDataProperties)
         {
+            ToolConfigs = toolConfigs;
             Openapi = openapi;
         }
+
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public IDictionary<string, ToolConfig> ToolConfigs { get; }
 
         /// <summary> The openapi function definition. </summary>
         public OpenApiFunctionDefinition Openapi { get; set; }

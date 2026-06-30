@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> JSChallenge. </summary>
         private const string JSChallengeValue = "JSChallenge";
         /// <summary> CAPTCHA. </summary>
-        private const string CAPTCHAValue = "CAPTCHA";
+        private const string CaptchaValue = "CAPTCHA";
 
         /// <summary> Initializes a new instance of <see cref="RuleMatchActionType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
         public static RuleMatchActionType JSChallenge { get; } = new RuleMatchActionType(JSChallengeValue);
 
         /// <summary> CAPTCHA. </summary>
-        public static RuleMatchActionType CAPTCHA { get; } = new RuleMatchActionType(CAPTCHAValue);
+        public static RuleMatchActionType Captcha { get; } = new RuleMatchActionType(CaptchaValue);
 
         /// <summary> Determines if two <see cref="RuleMatchActionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

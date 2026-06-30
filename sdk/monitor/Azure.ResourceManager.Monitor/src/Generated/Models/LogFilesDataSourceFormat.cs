@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -14,35 +15,57 @@ namespace Azure.ResourceManager.Monitor.Models
     public readonly partial struct LogFilesDataSourceFormat : IEquatable<LogFilesDataSourceFormat>
     {
         private readonly string _value;
+        /// <summary> json. </summary>
+        private const string JsonValue = "json";
+        /// <summary> text. </summary>
+        private const string TextValue = "text";
 
         /// <summary> Initializes a new instance of <see cref="LogFilesDataSourceFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LogFilesDataSourceFormat(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string TextValue = "text";
+        /// <summary> json. </summary>
+        public static LogFilesDataSourceFormat Json { get; } = new LogFilesDataSourceFormat(JsonValue);
 
         /// <summary> text. </summary>
         public static LogFilesDataSourceFormat Text { get; } = new LogFilesDataSourceFormat(TextValue);
+
         /// <summary> Determines if two <see cref="LogFilesDataSourceFormat"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LogFilesDataSourceFormat left, LogFilesDataSourceFormat right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LogFilesDataSourceFormat"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LogFilesDataSourceFormat left, LogFilesDataSourceFormat right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LogFilesDataSourceFormat"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LogFilesDataSourceFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LogFilesDataSourceFormat(string value) => new LogFilesDataSourceFormat(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LogFilesDataSourceFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LogFilesDataSourceFormat?(string value) => value == null ? null : new LogFilesDataSourceFormat(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LogFilesDataSourceFormat other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LogFilesDataSourceFormat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

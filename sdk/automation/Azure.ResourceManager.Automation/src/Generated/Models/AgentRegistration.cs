@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of the agent registration information type. </summary>
     public partial class AgentRegistration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AgentRegistration"/>. </summary>
         internal AgentRegistration()
@@ -56,22 +27,25 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="endpoint"> Gets or sets the dsc server endpoint. </param>
         /// <param name="keys"> Gets or sets the agent registration keys. </param>
         /// <param name="id"> Gets or sets the id. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AgentRegistration(string dscMetaConfiguration, Uri endpoint, AgentRegistrationKeys keys, ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AgentRegistration(string dscMetaConfiguration, Uri endpoint, AgentRegistrationKeys keys, ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DscMetaConfiguration = dscMetaConfiguration;
             Endpoint = endpoint;
             Keys = keys;
             Id = id;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the dsc meta configuration. </summary>
         public string DscMetaConfiguration { get; }
+
         /// <summary> Gets or sets the dsc server endpoint. </summary>
         public Uri Endpoint { get; }
+
         /// <summary> Gets or sets the agent registration keys. </summary>
         public AgentRegistrationKeys Keys { get; }
+
         /// <summary> Gets or sets the id. </summary>
         public ResourceIdentifier Id { get; }
     }

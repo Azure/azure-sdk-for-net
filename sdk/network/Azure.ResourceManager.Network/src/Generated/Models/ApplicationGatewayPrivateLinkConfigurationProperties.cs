@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateLinkConfigurationProperties"/>. </summary>
         public ApplicationGatewayPrivateLinkConfigurationProperties()
         {
-            IpConfigurations = new ChangeTrackingList<ApplicationGatewayPrivateLinkIPConfiguration>();
+            IPConfigurations = new ChangeTrackingList<ApplicationGatewayPrivateLinkIPConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateLinkConfigurationProperties"/>. </summary>
@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ApplicationGatewayPrivateLinkConfigurationProperties(IList<ApplicationGatewayPrivateLinkIPConfiguration> ipConfigurations, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IpConfigurations = ipConfigurations;
+            IPConfigurations = ipConfigurations;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> An array of application gateway private link ip configurations. </summary>
         [WirePath("ipConfigurations")]
-        public IList<ApplicationGatewayPrivateLinkIPConfiguration> IpConfigurations { get; } = new ChangeTrackingList<ApplicationGatewayPrivateLinkIPConfiguration>();
+        public IList<ApplicationGatewayPrivateLinkIPConfiguration> IPConfigurations { get; } = new ChangeTrackingList<ApplicationGatewayPrivateLinkIPConfiguration>();
 
         /// <summary> The provisioning state of the application gateway private link configuration. </summary>
         [WirePath("provisioningState")]

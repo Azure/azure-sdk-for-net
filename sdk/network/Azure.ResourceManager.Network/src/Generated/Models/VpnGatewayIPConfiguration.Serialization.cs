@@ -80,15 +80,15 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(PublicIpAddress))
+            if (Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIpAddress"u8);
-                writer.WriteStringValue(PublicIpAddress);
+                writer.WriteStringValue(PublicIPAddress);
             }
-            if (Optional.IsDefined(PrivateIpAddress))
+            if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
-                writer.WriteStringValue(PrivateIpAddress);
+                writer.WriteStringValue(PrivateIPAddress);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            string publicIpAddress = default;
-            string privateIpAddress = default;
+            string publicIPAddress = default;
+            string privateIPAddress = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -149,12 +149,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("publicIpAddress"u8))
                 {
-                    publicIpAddress = prop.Value.GetString();
+                    publicIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("privateIpAddress"u8))
                 {
-                    privateIpAddress = prop.Value.GetString();
+                    privateIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VpnGatewayIPConfiguration(id, publicIpAddress, privateIpAddress, additionalBinaryDataProperties);
+            return new VpnGatewayIPConfiguration(id, publicIPAddress, privateIPAddress, additionalBinaryDataProperties);
         }
     }
 }
