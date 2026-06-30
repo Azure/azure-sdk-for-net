@@ -1,22 +1,11 @@
-# Documented example MCP setup — the default target of the archetype's `mcpSetupTemplate`
-# parameter. Each consuming pipeline points `mcpSetupTemplate` at its own copy of a step like
-# this to build or install whatever MCP server(s) its evals drive: a .NET build, a Java/Maven
-# server, an NPM-installed live server, etc. (azure-sdk-tools' own builds live in
-# eng/pipelines/eval/.)
-#
-# Contract: publish each server's build/install output under
-# $(Build.SourcesDirectory)/artifacts/mcp/<name>. The BuildMcp job ships that whole tree as
-# the `mcp-servers` artifact and every shard re-stages it at the same path, so <name> and the
-# layout must match the relative DLL/exe paths the repo's .vally.yaml environments resolve
-# against.
+# Example MCP setup (default mcpSetupTemplate): builds/installs the MCP server(s) and publishes
+# each under artifacts/mcp/<name>. Each repo points mcpSetupTemplate at its own copy.
 
 steps:
   - checkout: self
     fetchDepth: 1
 
-  # EXAMPLE: build the live azsdk-cli MCP from this repo. Replace the body with your own
-  # server's build or install — e.g. `npm ci` + `npm exec`, or a Java/Maven build — keeping
-  # the output under $(Build.SourcesDirectory)/artifacts/mcp/<name>.
+  # EXAMPLE — replace with your server's build/install, output under artifacts/mcp/<name>.
   - script: |
       set -e
       dotnet build tools/azsdk-cli/Azure.Sdk.Tools.Cli -c Release -o "$(Build.SourcesDirectory)/artifacts/mcp/cli" --nologo

@@ -1,5 +1,5 @@
-# Summary job: merge every shard's JUnit into one rollup (Markdown build-summary + Tests tab)
-# and gate. Phase 1 is report-only (failOnFailedTests=false) until the eval content hardens.
+# Summary job: merges every shard's JUnit into one rollup (Markdown summary + Tests tab) and
+# gates on it when failOnFailedTests is true.
 
 parameters:
   - name: failOnFailedTests

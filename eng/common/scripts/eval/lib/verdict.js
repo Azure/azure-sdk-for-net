@@ -1,13 +1,7 @@
-// Verdict helpers for the Vally eval shard gate. Port of EvalVerdict.Helpers.ps1.
-//
-// `vally` can exit non-zero AFTER computing a passing verdict and writing every artifact
-// (a teardown flake must not turn a passing shard red). So gating reads the authoritative
-// `run-summary` record from results.jsonl instead of trusting the process exit code.
-//
-// Policy:
-//   * Scored evals (scoringApplied) pass when overallScore >= threshold AND stimuli ran.
-//   * Unscored evals (binary graders) pass when their own `passed` is true AND stimuli ran.
-//   * A shard passes only if EVERY eval in the run-summary passes.
+// Verdict helpers for the Vally eval shard gate. Reads the `run-summary` record from
+// results.jsonl (authoritative) rather than the `vally` exit code, which can be non-zero
+// after a teardown flake. A shard passes only if every eval passes: scored evals need
+// overallScore >= threshold, unscored evals need their own `passed` true, both need stimuli.
 
 import fs from "node:fs";
 import path from "node:path";
@@ -36,9 +30,7 @@ export function getVallyShardVerdict({ resultsDir, threshold = 0.8 } = {}) {
     return result;
   }
 
-  // Find the newest results.jsonl anywhere beneath resultsDir (Vally nests a per-run
-  // timestamp folder). Ties resolve to the later sorted path, mirroring the PowerShell
-  // `Sort-Object LastWriteTime | Select -Last 1`.
+  // Find the newest results.jsonl beneath resultsDir (Vally nests a per-run timestamp folder).
   const candidates = globFiles(resultsDir, "**/results.jsonl");
   let summaryFile = null;
   let newest = -Infinity;

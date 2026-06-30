@@ -1,24 +1,5 @@
-# Default run-time invocation for one eval shard: run `vally eval` as a plain script and let
-# invoke-eval-shard.js gate on the VERDICT (results.jsonl), not the `vally` exit code — Vally
-# can exit 1 on a teardown timeout after a passing run, and that flake must not turn a green
-# shard red.
-#
-# AUTH IS PLUGGABLE BY TEMPLATE PATH, NOT BY PARAMETER. This file is the hermetic-tier invoke
-# and the default target of the archetype RunShard job's `evalInvokeTemplate`. Whatever runtime
-# auth a tier/repo needs, it points evalInvokeTemplate at its OWN copy of an invoke template that
-# owns that auth (see eng/pipelines/eval/eval-invoke-live.yml for the live AzureCLI@2 wrap). So:
-#   New auth method or new repo  =>  a new invoke-template file. NEVER a new pipeline parameter,
-#   never an edit to the shared archetype. The orchestrator stays auth-agnostic forever.
-#
-# Two independent auth axes both live on the RUN side (here), and each extends without schema
-# change:
-#   * Model auth  (the executor calling the LLM) — arrives AMBIENTLY as env from the entrypoint's
-#                  linked variable group (today GITHUB_TOKEN for Copilot models). A future model
-#                  (Azure OpenAI, Claude, ...) = add its var to the variable group; no YAML edit.
-#   * Resource auth (the MCP calling Azure DevOps) — a federated exchange that needs a service
-#                  connection, so it can't come from a variable group; an invoke template WRAPS
-#                  the run to provide it (AzureCLI@2 today; workload/managed identity tomorrow).
-# This default hermetic invoke needs neither, so it wires no auth at all.
+# Default (hermetic) invoke for one eval shard: runs `vally eval` via invoke-eval-shard.js.
+# Swap point — a tier needing auth points evalInvokeTemplate at its own copy (see eval-invoke-live.yml).
 
 parameters:
   - name: vallyRoot

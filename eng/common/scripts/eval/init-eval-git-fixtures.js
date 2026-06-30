@@ -1,10 +1,6 @@
-// Discovers the `environment.git` worktree fixtures declared across an eval suite and primes a
-// shallow + sparse cache clone for each unique one. Port of Initialize-EvalGitFixtures.ps1.
-//
-// Vally resolves `git.source` relative to each eval file's own directory and expects the source
-// repo to already exist on disk (it runs `git worktree add`, it does not clone). This scans the
-// suite for those declarations, de-dups them, and hands each off to syncRepo. The pure discovery
-// logic is exported (and unit-tested) so CI can dry-run with --list-only and clone nothing.
+// Discovers `environment.git` worktree fixtures across an eval suite and primes a shallow +
+// sparse cache clone for each unique one (Vally runs `git worktree add` and won't clone them).
+// The discovery logic is exported and unit-tested; --list-only dry-runs without cloning.
 
 import fs from "node:fs";
 import path from "node:path";

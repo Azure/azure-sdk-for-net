@@ -1,10 +1,5 @@
-// Runs one Vally eval shard and gates on the eval *verdict*, not the `vally` exit code.
-// Port of Invoke-EvalShard.ps1.
-//
-// `vally` can exit non-zero AFTER a passing verdict (a teardown timeout must not turn a
-// passing shard red), so this runner ignores the exit code and reads the authoritative
-// run-summary via getVallyShardVerdict. A genuine failure (below threshold, no stimuli ran,
-// or no results.jsonl) still exits 1.
+// Runs one Vally eval shard and gates on the eval verdict (from results.jsonl), not the
+// `vally` exit code, since vally can exit non-zero on a teardown flake after a pass.
 
 import { spawnSync } from "node:child_process";
 import { pathToFileURL } from "node:url";
@@ -66,17 +61,13 @@ export function runShard({ evalArgs, shardName, outputDir, skillEvalPrefix, thre
 
   if (verdict.passed) {
     if (verdict.hadExecutionErrors) {
-      // Not a build warning: vally flags hadExecutionErrors on the same teardown/shutdown
-      // path that forces the non-zero exit below, so it's the same expected agent-kill
-      // noise rather than a mid-eval tool failure. The verdict already passed; just log it.
+      // Post-run teardown noise, not a mid-eval failure — verdict already passed; just log.
       console.log(
         `Shard '${shardName}' passed the pass-rate threshold; vally flagged execution errors (post-run teardown noise, not blocking).`
       );
     }
     if (vallyExit !== 0) {
-      // Expected: vally exits non-zero when its executor teardown (agent shutdown) times
-      // out, which happens AFTER the verdict is computed and written. The exit code says
-      // nothing about the eval, so this is a plain log line, not a build warning.
+      // vally's teardown can exit non-zero after the verdict is written — log, don't fail.
       console.log(
         `vally exited ${vallyExit} during post-run shutdown; shard '${shardName}' is PASSED per results.jsonl (exit code ignored).`
       );

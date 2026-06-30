@@ -1,12 +1,6 @@
-// Renders a human-readable Markdown rollup from the per-shard Vally JUnit results.
-// Port of Build-EvalSummary.ps1.
-//
-// The Summarize stage already publishes the merged JUnit (which gates the build); this
-// script adds a glanceable layer — it reads every shard's JUnit XML, groups results by
-// shard, collapses per-trial testcases back to one stimulus, applies the suite threshold,
-// and writes a Markdown table plus the list of failing scenarios. Under Azure Pipelines it
-// emits `##vso[task.uploadsummary]` so the Markdown renders on the run Summary page. This
-// is presentation only and never changes pass/fail.
+// Renders a Markdown rollup from the per-shard Vally JUnit results: groups by shard,
+// collapses per-trial testcases to one stimulus, applies the threshold, and lists failing
+// scenarios. Presentation only — never changes pass/fail.
 
 import fs from "node:fs";
 import path from "node:path";
@@ -22,8 +16,7 @@ export function getShardName(filePath) {
       return segment.replace(/^eval-result-/, "");
     }
   }
-  // Fallback: nearest ancestor directory that isn't a Vally timestamp folder, so the shard
-  // column shows something diagnostic instead of a useless 'unknown'.
+  // Fallback: nearest ancestor dir that isn't a Vally timestamp folder.
   for (let i = segments.length - 2; i >= 0; i--) {
     if (!/^\d{4}-\d{2}-\d{2}T/.test(segments[i])) {
       return segments[i];
@@ -55,9 +48,8 @@ function getAttr(attrs, name) {
   return match ? match[1] : undefined;
 }
 
-// Minimal JUnit parse (dependency-free). The eval JUnit is non-nested: testsuites >
-// testsuite (with optional properties/property name=threshold) > testcase with optional
-// <failure>/<error>/<skipped> children. `\b` after `testsuite` avoids matching `testsuites`.
+// Minimal dependency-free JUnit parse: testsuite (optional threshold property) > testcase
+// with optional <failure>/<error>/<skipped> children. `\b` avoids matching `testsuites`.
 function parseSuites(content) {
   const suites = [];
   const suiteRe = /<testsuite\b([^>]*?)(\/>|>([\s\S]*?)<\/testsuite>)/g;
@@ -150,9 +142,7 @@ export function getEvalSummary(resultsRoot) {
     }
   }
 
-  // Collapse each stimulus's trials into a single pass/fail using the suite threshold. This
-  // runs once per shard AFTER every XML file has been read (a shard's artifact folder can
-  // hold multiple JUnit files; collapsing per-file would double-count totals).
+  // Collapse each stimulus's trials into one pass/fail, once per shard after all XML is read.
   for (const shardName of Object.keys(shards)) {
     const shard = shards[shardName];
     for (const [stimulus, entry] of shard.stimuli) {
