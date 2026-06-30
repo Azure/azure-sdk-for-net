@@ -35,6 +35,10 @@ namespace Azure.Provisioning.CostManagement
         {
             base.DefineProvisionableProperties();
             _value = DefineListProperty<ExportRun>(nameof(Value), new string[] { "value" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ExportExecutionListResult that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

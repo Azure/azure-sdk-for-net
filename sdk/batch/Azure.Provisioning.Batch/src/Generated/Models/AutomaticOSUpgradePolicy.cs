@@ -91,6 +91,10 @@ namespace Azure.Provisioning.Batch
             _enableAutomaticOSUpgrade = DefineProperty<bool>(nameof(EnableAutomaticOSUpgrade), new string[] { "enableAutomaticOSUpgrade" });
             _useRollingUpgradePolicy = DefineProperty<bool>(nameof(UseRollingUpgradePolicy), new string[] { "useRollingUpgradePolicy" });
             _osRollingUpgradeDeferral = DefineProperty<bool>(nameof(OSRollingUpgradeDeferral), new string[] { "osRollingUpgradeDeferral" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for AutomaticOSUpgradePolicy that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

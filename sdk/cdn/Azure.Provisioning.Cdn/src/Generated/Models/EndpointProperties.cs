@@ -378,6 +378,10 @@ namespace Azure.Provisioning.Cdn
             _uriSigningKeys = DefineListProperty<UriSigningKey>(nameof(UriSigningKeys), new string[] { "urlSigningKeys" });
             _deliveryPolicy = DefineModelProperty<EndpointDeliveryPolicy>(nameof(DeliveryPolicy), new string[] { "deliveryPolicy" });
             _webApplicationFirewallPolicyLink = DefineModelProperty<EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink>(nameof(WebApplicationFirewallPolicyLink), new string[] { "webApplicationFirewallPolicyLink" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for EndpointProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -57,6 +57,10 @@ namespace Azure.Provisioning.CostManagement
             base.DefineProvisionableProperties();
             _queryColumnType = DefineProperty<QueryColumnType>(nameof(QueryColumnType), new string[] { "type" }, isRequired: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ReportConfigGrouping that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -57,6 +57,10 @@ namespace Azure.Provisioning.ContainerInstance
             base.DefineProvisionableProperties();
             _defaultAccess = DefineProperty<ContainerGroupIdentityAccessLevel>(nameof(DefaultAccess), new string[] { "defaultAccess" });
             _acls = DefineListProperty<ContainerGroupIdentityAccessControl>(nameof(Acls), new string[] { "acls" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerGroupIdentityAccessControlLevels that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

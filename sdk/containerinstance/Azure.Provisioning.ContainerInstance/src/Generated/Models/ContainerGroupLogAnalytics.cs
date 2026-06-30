@@ -109,6 +109,10 @@ namespace Azure.Provisioning.ContainerInstance
             _logType = DefineProperty<ContainerGroupLogAnalyticsLogType>(nameof(LogType), new string[] { "logType" });
             _metadata = DefineDictionaryProperty<string>(nameof(Metadata), new string[] { "metadata" });
             _workspaceResourceId = DefineProperty<ResourceIdentifier>(nameof(WorkspaceResourceId), new string[] { "workspaceResourceId" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerGroupLogAnalytics that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

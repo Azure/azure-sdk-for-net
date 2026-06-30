@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Kubernetes
         {
             base.DefineProvisionableProperties();
             _isWorkloadIdentity = DefineModelProperty<ConnectedClusterWorkloadIdentityProfile>(nameof(IsWorkloadIdentity), new string[] { "workloadIdentity" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ConnectedClusterSecurityProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

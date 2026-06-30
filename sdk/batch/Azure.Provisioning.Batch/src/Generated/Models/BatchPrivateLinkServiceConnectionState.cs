@@ -69,6 +69,10 @@ namespace Azure.Provisioning.Batch
             _status = DefineProperty<BatchPrivateLinkServiceConnectionStatus>(nameof(Status), new string[] { "status" }, isRequired: true);
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
             _actionRequired = DefineProperty<string>(nameof(ActionRequired), new string[] { "actionsRequired" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchPrivateLinkServiceConnectionState that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }
