@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Kusto.Models
     public readonly partial struct KustoScriptLevel : IEquatable<KustoScriptLevel>
     {
         private readonly string _value;
+        /// <summary> Database. </summary>
+        private const string DatabaseValue = "Database";
+        /// <summary> Cluster. </summary>
+        private const string ClusterValue = "Cluster";
 
         /// <summary> Initializes a new instance of <see cref="KustoScriptLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KustoScriptLevel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DatabaseValue = "Database";
-        private const string ClusterValue = "Cluster";
+            _value = value;
+        }
 
         /// <summary> Database. </summary>
         public static KustoScriptLevel Database { get; } = new KustoScriptLevel(DatabaseValue);
+
         /// <summary> Cluster. </summary>
         public static KustoScriptLevel Cluster { get; } = new KustoScriptLevel(ClusterValue);
+
         /// <summary> Determines if two <see cref="KustoScriptLevel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KustoScriptLevel left, KustoScriptLevel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KustoScriptLevel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KustoScriptLevel left, KustoScriptLevel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KustoScriptLevel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KustoScriptLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KustoScriptLevel(string value) => new KustoScriptLevel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KustoScriptLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KustoScriptLevel?(string value) => value == null ? null : new KustoScriptLevel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KustoScriptLevel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KustoScriptLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

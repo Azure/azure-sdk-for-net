@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 HttpMessage message = _artifactManifestsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, ArtifactManifestData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridNetworkArmOperation<ArtifactManifestResource> operation = new HybridNetworkArmOperation<ArtifactManifestResource>(
-                    new ArtifactManifestOperationSource(Client),
+                    new ArtifactManifestResourceOperationSource(Client),
                     _artifactManifestsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 HttpMessage message = _artifactManifestsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, ArtifactManifestData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridNetworkArmOperation<ArtifactManifestResource> operation = new HybridNetworkArmOperation<ArtifactManifestResource>(
-                    new ArtifactManifestOperationSource(Client),
+                    new ArtifactManifestResourceOperationSource(Client),
                     _artifactManifestsClientDiagnostics,
                     Pipeline,
                     message.Request,

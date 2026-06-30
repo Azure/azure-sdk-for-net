@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A Class representing a MachineLearningRegistryEnvironmentContainer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MachineLearningRegistryEnvironmentContainerResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetMachineLearningRegistryEnvironmentContainerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MachineLearningRegistryResource"/> using the GetMachineLearningRegistryEnvironmentContainer method.
+    /// A class representing a MachineLearningRegistryEnvironmentContainer along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MachineLearningRegistryEnvironmentContainerResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningRegistryResource"/> using the GetMachineLearningRegistryEnvironmentContainers method.
     /// </summary>
     public partial class MachineLearningRegistryEnvironmentContainerResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="MachineLearningRegistryEnvironmentContainerResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="registryName"> The registryName. </param>
-        /// <param name="environmentName"> The environmentName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string registryName, string environmentName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/environments/{environmentName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _machineLearningRegistryEnvironmentContainerRegistryEnvironmentContainersClientDiagnostics;
-        private readonly RegistryEnvironmentContainersRestOperations _machineLearningRegistryEnvironmentContainerRegistryEnvironmentContainersRestClient;
+        private readonly ClientDiagnostics _registryEnvironmentContainersClientDiagnostics;
+        private readonly RegistryEnvironmentContainers _registryEnvironmentContainersRestClient;
         private readonly MachineLearningEnvironmentContainerData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/registries/environments";
 
-        /// <summary> Initializes a new instance of the <see cref="MachineLearningRegistryEnvironmentContainerResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MachineLearningRegistryEnvironmentContainerResource for mocking. </summary>
         protected MachineLearningRegistryEnvironmentContainerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MachineLearningRegistryEnvironmentContainerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningRegistryEnvironmentContainerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MachineLearningRegistryEnvironmentContainerResource(ArmClient client, MachineLearningEnvironmentContainerData data) : this(client, data.Id)
@@ -54,140 +43,93 @@ namespace Azure.ResourceManager.MachineLearning
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MachineLearningRegistryEnvironmentContainerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningRegistryEnvironmentContainerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MachineLearningRegistryEnvironmentContainerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _machineLearningRegistryEnvironmentContainerRegistryEnvironmentContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string machineLearningRegistryEnvironmentContainerRegistryEnvironmentContainersApiVersion);
-            _machineLearningRegistryEnvironmentContainerRegistryEnvironmentContainersRestClient = new RegistryEnvironmentContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningRegistryEnvironmentContainerRegistryEnvironmentContainersApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string machineLearningRegistryEnvironmentContainerApiVersion);
+            _registryEnvironmentContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
+            _registryEnvironmentContainersRestClient = new RegistryEnvironmentContainers(_registryEnvironmentContainersClientDiagnostics, Pipeline, Endpoint, machineLearningRegistryEnvironmentContainerApiVersion ?? "2026-03-15-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual MachineLearningEnvironmentContainerData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="registryName"> The registryName. </param>
+        /// <param name="environmentName"> The environmentName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string registryName, string environmentName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/environments/{environmentName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of MachineLearningRegistryEnvironmentVersionResources in the MachineLearningRegistryEnvironmentContainer. </summary>
-        /// <returns> An object representing collection of MachineLearningRegistryEnvironmentVersionResources and their operations over a MachineLearningRegistryEnvironmentVersionResource. </returns>
-        public virtual MachineLearningRegistryEnvironmentVersionCollection GetMachineLearningRegistryEnvironmentVersions()
-        {
-            return GetCachedClient(client => new MachineLearningRegistryEnvironmentVersionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get version.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/environments/{environmentName}/versions/{version}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryEnvironmentVersions_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryEnvironmentVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="version"> Version identifier. This is case-sensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<MachineLearningRegistryEnvironmentVersionResource>> GetMachineLearningRegistryEnvironmentVersionAsync(string version, CancellationToken cancellationToken = default)
-        {
-            return await GetMachineLearningRegistryEnvironmentVersions().GetAsync(version, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get version.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/environments/{environmentName}/versions/{version}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryEnvironmentVersions_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryEnvironmentVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="version"> Version identifier. This is case-sensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<MachineLearningRegistryEnvironmentVersionResource> GetMachineLearningRegistryEnvironmentVersion(string version, CancellationToken cancellationToken = default)
-        {
-            return GetMachineLearningRegistryEnvironmentVersions().Get(version, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get container.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/environments/{environmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/environments/{environmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryEnvironmentContainers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> EnvironmentContainers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryEnvironmentContainerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MachineLearningRegistryEnvironmentContainerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<MachineLearningRegistryEnvironmentContainerResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _machineLearningRegistryEnvironmentContainerRegistryEnvironmentContainersClientDiagnostics.CreateScope("MachineLearningRegistryEnvironmentContainerResource.Get");
+            using DiagnosticScope scope = _registryEnvironmentContainersClientDiagnostics.CreateScope("MachineLearningRegistryEnvironmentContainerResource.Get");
             scope.Start();
             try
             {
-                var response = await _machineLearningRegistryEnvironmentContainerRegistryEnvironmentContainersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryEnvironmentContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MachineLearningEnvironmentContainerData> response = Response.FromValue(MachineLearningEnvironmentContainerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineLearningRegistryEnvironmentContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -201,33 +143,41 @@ namespace Azure.ResourceManager.MachineLearning
         /// Get container.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/environments/{environmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/environments/{environmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryEnvironmentContainers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> EnvironmentContainers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryEnvironmentContainerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MachineLearningRegistryEnvironmentContainerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<MachineLearningRegistryEnvironmentContainerResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _machineLearningRegistryEnvironmentContainerRegistryEnvironmentContainersClientDiagnostics.CreateScope("MachineLearningRegistryEnvironmentContainerResource.Get");
+            using DiagnosticScope scope = _registryEnvironmentContainersClientDiagnostics.CreateScope("MachineLearningRegistryEnvironmentContainerResource.Get");
             scope.Start();
             try
             {
-                var response = _machineLearningRegistryEnvironmentContainerRegistryEnvironmentContainersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryEnvironmentContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MachineLearningEnvironmentContainerData> response = Response.FromValue(MachineLearningEnvironmentContainerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineLearningRegistryEnvironmentContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -241,20 +191,20 @@ namespace Azure.ResourceManager.MachineLearning
         /// Delete container.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/environments/{environmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/environments/{environmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryEnvironmentContainers_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> EnvironmentContainers_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryEnvironmentContainerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MachineLearningRegistryEnvironmentContainerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -262,14 +212,21 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _machineLearningRegistryEnvironmentContainerRegistryEnvironmentContainersClientDiagnostics.CreateScope("MachineLearningRegistryEnvironmentContainerResource.Delete");
+            using DiagnosticScope scope = _registryEnvironmentContainersClientDiagnostics.CreateScope("MachineLearningRegistryEnvironmentContainerResource.Delete");
             scope.Start();
             try
             {
-                var response = await _machineLearningRegistryEnvironmentContainerRegistryEnvironmentContainersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation(_machineLearningRegistryEnvironmentContainerRegistryEnvironmentContainersClientDiagnostics, Pipeline, _machineLearningRegistryEnvironmentContainerRegistryEnvironmentContainersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryEnvironmentContainersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                MachineLearningArmOperation operation = new MachineLearningArmOperation(_registryEnvironmentContainersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -283,20 +240,20 @@ namespace Azure.ResourceManager.MachineLearning
         /// Delete container.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/environments/{environmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/environments/{environmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryEnvironmentContainers_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> EnvironmentContainers_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryEnvironmentContainerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MachineLearningRegistryEnvironmentContainerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,14 +261,21 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _machineLearningRegistryEnvironmentContainerRegistryEnvironmentContainersClientDiagnostics.CreateScope("MachineLearningRegistryEnvironmentContainerResource.Delete");
+            using DiagnosticScope scope = _registryEnvironmentContainersClientDiagnostics.CreateScope("MachineLearningRegistryEnvironmentContainerResource.Delete");
             scope.Start();
             try
             {
-                var response = _machineLearningRegistryEnvironmentContainerRegistryEnvironmentContainersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new MachineLearningArmOperation(_machineLearningRegistryEnvironmentContainerRegistryEnvironmentContainersClientDiagnostics, Pipeline, _machineLearningRegistryEnvironmentContainerRegistryEnvironmentContainersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryEnvironmentContainersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                MachineLearningArmOperation operation = new MachineLearningArmOperation(_registryEnvironmentContainersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -322,23 +286,23 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Create or update container.
+        /// Update a MachineLearningRegistryEnvironmentContainer.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/environments/{environmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/environments/{environmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryEnvironmentContainers_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> EnvironmentContainers_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryEnvironmentContainerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MachineLearningRegistryEnvironmentContainerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -350,14 +314,27 @@ namespace Azure.ResourceManager.MachineLearning
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _machineLearningRegistryEnvironmentContainerRegistryEnvironmentContainersClientDiagnostics.CreateScope("MachineLearningRegistryEnvironmentContainerResource.Update");
+            using DiagnosticScope scope = _registryEnvironmentContainersClientDiagnostics.CreateScope("MachineLearningRegistryEnvironmentContainerResource.Update");
             scope.Start();
             try
             {
-                var response = await _machineLearningRegistryEnvironmentContainerRegistryEnvironmentContainersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<MachineLearningRegistryEnvironmentContainerResource>(new MachineLearningRegistryEnvironmentContainerOperationSource(Client), _machineLearningRegistryEnvironmentContainerRegistryEnvironmentContainersClientDiagnostics, Pipeline, _machineLearningRegistryEnvironmentContainerRegistryEnvironmentContainersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.OriginalUri);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryEnvironmentContainersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, MachineLearningEnvironmentContainerData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                MachineLearningArmOperation<MachineLearningRegistryEnvironmentContainerResource> operation = new MachineLearningArmOperation<MachineLearningRegistryEnvironmentContainerResource>(
+                    new MachineLearningRegistryEnvironmentContainerResourceOperationSource(Client),
+                    _registryEnvironmentContainersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -368,23 +345,23 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Create or update container.
+        /// Update a MachineLearningRegistryEnvironmentContainer.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/environments/{environmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/environments/{environmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryEnvironmentContainers_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> EnvironmentContainers_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryEnvironmentContainerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MachineLearningRegistryEnvironmentContainerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -396,14 +373,27 @@ namespace Azure.ResourceManager.MachineLearning
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _machineLearningRegistryEnvironmentContainerRegistryEnvironmentContainersClientDiagnostics.CreateScope("MachineLearningRegistryEnvironmentContainerResource.Update");
+            using DiagnosticScope scope = _registryEnvironmentContainersClientDiagnostics.CreateScope("MachineLearningRegistryEnvironmentContainerResource.Update");
             scope.Start();
             try
             {
-                var response = _machineLearningRegistryEnvironmentContainerRegistryEnvironmentContainersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new MachineLearningArmOperation<MachineLearningRegistryEnvironmentContainerResource>(new MachineLearningRegistryEnvironmentContainerOperationSource(Client), _machineLearningRegistryEnvironmentContainerRegistryEnvironmentContainersClientDiagnostics, Pipeline, _machineLearningRegistryEnvironmentContainerRegistryEnvironmentContainersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.OriginalUri);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryEnvironmentContainersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, MachineLearningEnvironmentContainerData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                MachineLearningArmOperation<MachineLearningRegistryEnvironmentContainerResource> operation = new MachineLearningArmOperation<MachineLearningRegistryEnvironmentContainerResource>(
+                    new MachineLearningRegistryEnvironmentContainerResourceOperationSource(Client),
+                    _registryEnvironmentContainersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

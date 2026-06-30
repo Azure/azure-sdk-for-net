@@ -57,6 +57,10 @@ namespace Azure.Provisioning.ContainerService
             base.DefineProvisionableProperties();
             _clientId = DefineProperty<string>(nameof(ClientId), new string[] { "clientId" }, isRequired: true);
             _secret = DefineProperty<string>(nameof(Secret), new string[] { "secret" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterServicePrincipalProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

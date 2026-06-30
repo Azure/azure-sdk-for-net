@@ -5,12 +5,18 @@
 ### Features Added
 
 ### Breaking Changes
+- Block IDs generated during partitioned uploads are now randomly generated instead of based on sequential integers. This ensures uniqueness across concurrent uploads to the same blob but means block IDs are no longer predictable or ordered.
 
 ### Bugs Fixed
-- Fixed an issue where the `GenerateSasUri` and `GenerateUserDelegationSasUri` convenience methods on blob clients did not honor the `RequestHeaders` and `RequestQueryParameters` properties, and where `GenerateUserDelegationSasUri` did not honor `DelegatedUserObjectId`, set on the supplied `BlobSasBuilder`.
 
 ### Other Changes
 - Improved performance of `DownloadToAsync` by buffering each range into memory concurrently instead of streaming one range at a time. This increases throughput but also increases memory consumption, as up to `MaximumConcurrency` ranges (each up to `MaximumTransferLength` in size) may be buffered simultaneously. Use `StorageTransferOptions.MaximumConcurrency` and `StorageTransferOptions.MaximumTransferLength` to control memory usage.
+
+## 12.29.1 (2026-06-23)
+
+### Bugs Fixed
+- Fixed an issue where the `GenerateSasUri` and `GenerateUserDelegationSasUri` convenience methods on blob clients did not honor the `RequestHeaders` and `RequestQueryParameters` properties, and where `GenerateUserDelegationSasUri` did not honor `DelegatedUserObjectId`, set on the supplied `BlobSasBuilder`.
+- Fixed an issue where structured-message Uploads with checksum validation could fail with a `ArgumentOutOfRangeException` for empty content
 
 ## 12.29.0 (2026-06-04)
 

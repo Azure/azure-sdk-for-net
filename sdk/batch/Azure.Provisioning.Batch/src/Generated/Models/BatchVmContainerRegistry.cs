@@ -109,6 +109,10 @@ namespace Azure.Provisioning.Batch
             _password = DefineProperty<string>(nameof(Password), new string[] { "password" });
             _registryServer = DefineProperty<string>(nameof(RegistryServer), new string[] { "registryServer" });
             _identity = DefineModelProperty<ComputeNodeIdentityReference>(nameof(Identity), new string[] { "identityReference" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchVmContainerRegistry that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

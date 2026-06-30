@@ -6,42 +6,47 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    internal partial class WorkspaceManagerAssignmentJobsRestOperations
+    internal partial class WorkspaceManagerAssignmentJobs
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of WorkspaceManagerAssignmentJobsRestOperations. </summary>
+        /// <summary> Initializes a new instance of WorkspaceManagerAssignmentJobs for mocking. </summary>
+        protected WorkspaceManagerAssignmentJobs()
+        {
+        }
+
+        /// <summary> Initializes a new instance of WorkspaceManagerAssignmentJobs. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public WorkspaceManagerAssignmentJobsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal WorkspaceManagerAssignmentJobs(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-01-01-preview";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string workspaceManagerAssignmentName, string orderBy, int? top, string skipToken)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateCreateRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, string workspaceManagerAssignmentName, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.OperationalInsights/workspaces/", false);
@@ -49,151 +54,75 @@ namespace Azure.ResourceManager.SecurityInsights
             uri.AppendPath("/providers/Microsoft.SecurityInsights/workspaceManagerAssignments/", false);
             uri.AppendPath(workspaceManagerAssignmentName, true);
             uri.AppendPath("/jobs", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (orderBy != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("$orderby", orderBy, true);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (top != null)
-            {
-                uri.AppendQuery("$top", top.Value, true);
-            }
-            if (skipToken != null)
-            {
-                uri.AppendQuery("$skipToken", skipToken, true);
-            }
-            return uri;
-        }
-
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string workspaceName, string workspaceManagerAssignmentName, string orderBy, int? top, string skipToken)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.OperationalInsights/workspaces/", false);
-            uri.AppendPath(workspaceName, true);
-            uri.AppendPath("/providers/Microsoft.SecurityInsights/workspaceManagerAssignments/", false);
-            uri.AppendPath(workspaceManagerAssignmentName, true);
-            uri.AppendPath("/jobs", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (orderBy != null)
-            {
-                uri.AppendQuery("$orderby", orderBy, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("$top", top.Value, true);
-            }
-            if (skipToken != null)
-            {
-                uri.AppendQuery("$skipToken", skipToken, true);
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Get all jobs for the specified workspace manager assignment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="workspaceManagerAssignmentName"> The name of the workspace manager assignment. </param>
-        /// <param name="orderBy"> Sorts the results. Optional. </param>
-        /// <param name="top"> Returns only the first n results. Optional. </param>
-        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="workspaceManagerAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="workspaceManagerAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<JobList>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, string workspaceManagerAssignmentName, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(workspaceManagerAssignmentName, nameof(workspaceManagerAssignmentName));
-
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, workspaceName, workspaceManagerAssignmentName, orderBy, top, skipToken);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        JobList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = JobList.DeserializeJobList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get all jobs for the specified workspace manager assignment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="workspaceManagerAssignmentName"> The name of the workspace manager assignment. </param>
-        /// <param name="orderBy"> Sorts the results. Optional. </param>
-        /// <param name="top"> Returns only the first n results. Optional. </param>
-        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="workspaceManagerAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="workspaceManagerAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<JobList> List(string subscriptionId, string resourceGroupName, string workspaceName, string workspaceManagerAssignmentName, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(workspaceManagerAssignmentName, nameof(workspaceManagerAssignmentName));
-
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, workspaceName, workspaceManagerAssignmentName, orderBy, top, skipToken);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        JobList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = JobList.DeserializeJobList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string workspaceManagerAssignmentName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.OperationalInsights/workspaces/", false);
-            uri.AppendPath(workspaceName, true);
-            uri.AppendPath("/providers/Microsoft.SecurityInsights/workspaceManagerAssignments/", false);
-            uri.AppendPath(workspaceManagerAssignmentName, true);
-            uri.AppendPath("/jobs", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string workspaceManagerAssignmentName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, string workspaceManagerAssignmentName, string jobName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.OperationalInsights/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/providers/Microsoft.SecurityInsights/workspaceManagerAssignments/", false);
+            uri.AppendPath(workspaceManagerAssignmentName, true);
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(jobName, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, string workspaceManagerAssignmentName, string jobName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.OperationalInsights/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/providers/Microsoft.SecurityInsights/workspaceManagerAssignments/", false);
+            uri.AppendPath(workspaceManagerAssignmentName, true);
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(jobName, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Delete;
+            return message;
+        }
+
+        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, string workspaceManagerAssignmentName, string @orderby, int? top, string skipToken, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.OperationalInsights/workspaces/", false);
@@ -201,379 +130,51 @@ namespace Azure.ResourceManager.SecurityInsights
             uri.AppendPath("/providers/Microsoft.SecurityInsights/workspaceManagerAssignments/", false);
             uri.AppendPath(workspaceManagerAssignmentName, true);
             uri.AppendPath("/jobs", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (@orderby != null)
+            {
+                uri.AppendQuery("$orderby", @orderby, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Create a job for the specified workspace manager assignment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="workspaceManagerAssignmentName"> The name of the workspace manager assignment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="workspaceManagerAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="workspaceManagerAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkspaceManagerAssignmentJobData>> CreateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string workspaceManagerAssignmentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(workspaceManagerAssignmentName, nameof(workspaceManagerAssignmentName));
-
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, workspaceName, workspaceManagerAssignmentName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        WorkspaceManagerAssignmentJobData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = WorkspaceManagerAssignmentJobData.DeserializeWorkspaceManagerAssignmentJobData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Create a job for the specified workspace manager assignment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="workspaceManagerAssignmentName"> The name of the workspace manager assignment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="workspaceManagerAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="workspaceManagerAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkspaceManagerAssignmentJobData> Create(string subscriptionId, string resourceGroupName, string workspaceName, string workspaceManagerAssignmentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(workspaceManagerAssignmentName, nameof(workspaceManagerAssignmentName));
-
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, workspaceName, workspaceManagerAssignmentName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        WorkspaceManagerAssignmentJobData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = WorkspaceManagerAssignmentJobData.DeserializeWorkspaceManagerAssignmentJobData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string workspaceManagerAssignmentName, string jobName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.OperationalInsights/workspaces/", false);
-            uri.AppendPath(workspaceName, true);
-            uri.AppendPath("/providers/Microsoft.SecurityInsights/workspaceManagerAssignments/", false);
-            uri.AppendPath(workspaceManagerAssignmentName, true);
-            uri.AppendPath("/jobs/", false);
-            uri.AppendPath(jobName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string workspaceName, string workspaceManagerAssignmentName, string jobName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.OperationalInsights/workspaces/", false);
-            uri.AppendPath(workspaceName, true);
-            uri.AppendPath("/providers/Microsoft.SecurityInsights/workspaceManagerAssignments/", false);
-            uri.AppendPath(workspaceManagerAssignmentName, true);
-            uri.AppendPath("/jobs/", false);
-            uri.AppendPath(jobName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Gets a job. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="workspaceManagerAssignmentName"> The name of the workspace manager assignment. </param>
-        /// <param name="jobName"> The job name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="workspaceManagerAssignmentName"/> or <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="workspaceManagerAssignmentName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkspaceManagerAssignmentJobData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string workspaceManagerAssignmentName, string jobName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string workspaceName, string workspaceManagerAssignmentName, string @orderby, int? top, string skipToken, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(workspaceManagerAssignmentName, nameof(workspaceManagerAssignmentName));
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, workspaceName, workspaceManagerAssignmentName, jobName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
             {
-                case 200:
-                    {
-                        WorkspaceManagerAssignmentJobData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = WorkspaceManagerAssignmentJobData.DeserializeWorkspaceManagerAssignmentJobData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((WorkspaceManagerAssignmentJobData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(nextPage);
             }
-        }
-
-        /// <summary> Gets a job. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="workspaceManagerAssignmentName"> The name of the workspace manager assignment. </param>
-        /// <param name="jobName"> The job name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="workspaceManagerAssignmentName"/> or <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="workspaceManagerAssignmentName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkspaceManagerAssignmentJobData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string workspaceManagerAssignmentName, string jobName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(workspaceManagerAssignmentName, nameof(workspaceManagerAssignmentName));
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, workspaceName, workspaceManagerAssignmentName, jobName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
+            else
             {
-                case 200:
-                    {
-                        WorkspaceManagerAssignmentJobData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = WorkspaceManagerAssignmentJobData.DeserializeWorkspaceManagerAssignmentJobData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((WorkspaceManagerAssignmentJobData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(new Uri(_endpoint, nextPage));
             }
-        }
-
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string workspaceManagerAssignmentName, string jobName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.OperationalInsights/workspaces/", false);
-            uri.AppendPath(workspaceName, true);
-            uri.AppendPath("/providers/Microsoft.SecurityInsights/workspaceManagerAssignments/", false);
-            uri.AppendPath(workspaceManagerAssignmentName, true);
-            uri.AppendPath("/jobs/", false);
-            uri.AppendPath(jobName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string workspaceName, string workspaceManagerAssignmentName, string jobName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.OperationalInsights/workspaces/", false);
-            uri.AppendPath(workspaceName, true);
-            uri.AppendPath("/providers/Microsoft.SecurityInsights/workspaceManagerAssignments/", false);
-            uri.AppendPath(workspaceManagerAssignmentName, true);
-            uri.AppendPath("/jobs/", false);
-            uri.AppendPath(jobName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Deletes the specified job from the specified workspace manager assignment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="workspaceManagerAssignmentName"> The name of the workspace manager assignment. </param>
-        /// <param name="jobName"> The job name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="workspaceManagerAssignmentName"/> or <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="workspaceManagerAssignmentName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string workspaceName, string workspaceManagerAssignmentName, string jobName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(workspaceManagerAssignmentName, nameof(workspaceManagerAssignmentName));
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, workspaceName, workspaceManagerAssignmentName, jobName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Deletes the specified job from the specified workspace manager assignment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="workspaceManagerAssignmentName"> The name of the workspace manager assignment. </param>
-        /// <param name="jobName"> The job name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="workspaceManagerAssignmentName"/> or <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="workspaceManagerAssignmentName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string workspaceName, string workspaceManagerAssignmentName, string jobName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(workspaceManagerAssignmentName, nameof(workspaceManagerAssignmentName));
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, workspaceName, workspaceManagerAssignmentName, jobName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string workspaceManagerAssignmentName, string orderBy, int? top, string skipToken)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string workspaceManagerAssignmentName, string orderBy, int? top, string skipToken)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
-        }
-
-        /// <summary> Get all jobs for the specified workspace manager assignment. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="workspaceManagerAssignmentName"> The name of the workspace manager assignment. </param>
-        /// <param name="orderBy"> Sorts the results. Optional. </param>
-        /// <param name="top"> Returns only the first n results. Optional. </param>
-        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="workspaceManagerAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="workspaceManagerAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<JobList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string workspaceManagerAssignmentName, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(workspaceManagerAssignmentName, nameof(workspaceManagerAssignmentName));
-
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, workspaceManagerAssignmentName, orderBy, top, skipToken);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        JobList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = JobList.DeserializeJobList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get all jobs for the specified workspace manager assignment. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="workspaceManagerAssignmentName"> The name of the workspace manager assignment. </param>
-        /// <param name="orderBy"> Sorts the results. Optional. </param>
-        /// <param name="top"> Returns only the first n results. Optional. </param>
-        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="workspaceManagerAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="workspaceManagerAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<JobList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string workspaceManagerAssignmentName, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(workspaceManagerAssignmentName, nameof(workspaceManagerAssignmentName));
-
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, workspaceManagerAssignmentName, orderBy, top, skipToken);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        JobList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = JobList.DeserializeJobList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
     }
 }

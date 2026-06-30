@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class ExtendedDatabaseBlobAuditingPolicyResource : IJsonModel<ExtendedDatabaseBlobAuditingPolicyData>
     {
-        private static ExtendedDatabaseBlobAuditingPolicyData s_dataDeserializationInstance;
-        private static ExtendedDatabaseBlobAuditingPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ExtendedDatabaseBlobAuditingPolicyData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ExtendedDatabaseBlobAuditingPolicyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ExtendedDatabaseBlobAuditingPolicyData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExtendedDatabaseBlobAuditingPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ExtendedDatabaseBlobAuditingPolicyData>)Data).Write(writer, options);
 
-        ExtendedDatabaseBlobAuditingPolicyData IJsonModel<ExtendedDatabaseBlobAuditingPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExtendedDatabaseBlobAuditingPolicyData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExtendedDatabaseBlobAuditingPolicyData IJsonModel<ExtendedDatabaseBlobAuditingPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ExtendedDatabaseBlobAuditingPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ExtendedDatabaseBlobAuditingPolicyData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ExtendedDatabaseBlobAuditingPolicyData IPersistableModel<ExtendedDatabaseBlobAuditingPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExtendedDatabaseBlobAuditingPolicyData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<ExtendedDatabaseBlobAuditingPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExtendedDatabaseBlobAuditingPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ExtendedDatabaseBlobAuditingPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

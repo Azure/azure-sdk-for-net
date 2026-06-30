@@ -34,26 +34,27 @@ public class Sample_ToolSearch : ProjectsOpenAITestBase
         #endregion
         try
         {
-            toolboxClient.DeleteToolbox(name: "myToolbox");
+            toolboxClient.Delete(name: "myToolbox");
         }
         catch { }
         #region Snippet:Sample_CreateToolbox_ToolSearch_Async
-        ProjectsAgentTool mcp = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
-            serverLabel: "api-specs",
-            serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
-        ));
-        ProjectsAgentTool codeInterpreter = ResponseTool.CreateCodeInterpreterTool(
-            new CodeInterpreterToolContainer(
+        MCPToolboxTool mcp = new(serverLabel: "api-specs")
+        {
+            ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+        };
+        CodeInterpreterToolboxTool codeInterpreter = new()
+        {
+            Container = new CodeInterpreterToolContainer(
                 CodeInterpreterToolContainerConfiguration.CreateAutomaticContainerConfiguration([])
             )
-        ).AsAgentTool();
-        ToolboxSearchPreviewTool searchTool = new()
+        };
+        ToolboxSearchPreviewToolboxTool searchTool = new()
         {
             Name = "ToolBoxSearch",
             Description = "Search for the toolboxes"
         };
-        ToolboxVersion toolBox = await toolboxClient.CreateToolboxVersionAsync(
+        ToolboxVersion toolBox = await toolboxClient.CreateVersionAsync(
             name: "myToolbox",
             tools: [mcp, codeInterpreter, searchTool],
             description: "Example toolbox created by the azure-ai-projects sample."
@@ -127,7 +128,7 @@ public class Sample_ToolSearch : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_Cleanup_ToolSearch_Async
-        await toolboxClient.DeleteToolboxAsync(name: toolBox.Name);
+        await toolboxClient.DeleteAsync(name: toolBox.Name);
         await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
@@ -149,26 +150,27 @@ public class Sample_ToolSearch : ProjectsOpenAITestBase
         AgentToolboxes toolboxClient = projectClient.AgentAdministrationClient.GetAgentToolboxes();
         try
         {
-            toolboxClient.DeleteToolbox(name: "myToolbox");
+            toolboxClient.Delete(name: "myToolbox");
         }
         catch { }
         #region Snippet:Sample_CreateToolbox_ToolSearch_Sync
-        ProjectsAgentTool mcp = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
-            serverLabel: "api-specs",
-            serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
-        ));
-        ProjectsAgentTool codeInterpreter = ResponseTool.CreateCodeInterpreterTool(
-            new CodeInterpreterToolContainer(
+        MCPToolboxTool mcp = new(serverLabel: "api-specs")
+        {
+            ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+        };
+        CodeInterpreterToolboxTool codeInterpreter = new()
+        {
+            Container = new CodeInterpreterToolContainer(
                 CodeInterpreterToolContainerConfiguration.CreateAutomaticContainerConfiguration([])
             )
-        ).AsAgentTool();
-        ToolboxSearchPreviewTool searchTool = new()
+        };
+        ToolboxSearchPreviewToolboxTool searchTool = new()
         {
             Name = "ToolBoxSearch",
             Description = "Search for the toolboxes"
         };
-        ToolboxVersion toolBox = toolboxClient.CreateToolboxVersion(
+        ToolboxVersion toolBox = toolboxClient.CreateVersion(
             name: "myToolbox",
             tools: [mcp, codeInterpreter, searchTool],
             description: "Example toolbox created by the azure-ai-projects sample."
@@ -242,7 +244,7 @@ public class Sample_ToolSearch : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_Cleanup_ToolSearch_Sync
-        toolboxClient.DeleteToolbox(name: toolBox.Name);
+        toolboxClient.Delete(name: toolBox.Name);
         projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }

@@ -3136,14 +3136,14 @@ namespace Azure.ResourceManager.Network.Models
                 default);
         }
 
-        /// <param name="publicIpAddressId"> Public IP ARM resource ID. </param>
-        /// <param name="publicIpAddress"> IP Address of the Public IP Resource. </param>
+        /// <param name="publicIPAddressId"> Public IP ARM resource ID. </param>
+        /// <param name="publicIPAddress"> IP Address of the Public IP Resource. </param>
         /// <param name="isWorkloadProtected"> Value indicating whether the IP address is DDoS workload protected or not. </param>
         /// <param name="ddosProtectionPlanId"> DDoS protection plan Resource Id of a if IP address is protected through a plan. </param>
         /// <returns> A new <see cref="Models.PublicIPDdosProtectionStatusResult"/> instance for mocking. </returns>
-        public static PublicIPDdosProtectionStatusResult PublicIPDdosProtectionStatusResult(ResourceIdentifier publicIpAddressId = default, string publicIpAddress = default, WorkloadProtectedFlag? isWorkloadProtected = default, ResourceIdentifier ddosProtectionPlanId = default)
+        public static PublicIPDdosProtectionStatusResult PublicIPDdosProtectionStatusResult(ResourceIdentifier publicIPAddressId = default, IPAddress publicIPAddress = default, WorkloadProtectedFlag? isWorkloadProtected = default, ResourceIdentifier ddosProtectionPlanId = default)
         {
-            return new PublicIPDdosProtectionStatusResult(publicIpAddressId, publicIpAddress, isWorkloadProtected, ddosProtectionPlanId, default);
+            return new PublicIPDdosProtectionStatusResult(publicIPAddressId, publicIPAddress, isWorkloadProtected, ddosProtectionPlanId, default);
         }
 
         /// <param name="isRollback"> When true, reverts from Static to Dynamic allocation (undo reservation). </param>
@@ -5989,7 +5989,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <param name="nicType"> NIC type. This should be either PublicNic or PrivateNic. </param>
-        /// <param name="virtualApplianceNetworkInterfaceIpConfigurations"> Gets the IpConfigurations. </param>
+        /// <param name="virtualApplianceNetworkInterfaceIpConfigurations"> Gets the VirtualApplianceNetworkInterfaceIPConfigurations. </param>
         /// <returns> A new <see cref="Models.VirtualApplianceNetworkInterfaceConfiguration"/> instance for mocking. </returns>
         public static VirtualApplianceNetworkInterfaceConfiguration VirtualApplianceNetworkInterfaceConfiguration(NicTypeInRequest? nicType = default, IEnumerable<VirtualApplianceIPConfiguration> virtualApplianceNetworkInterfaceIpConfigurations = default)
         {
@@ -11487,6 +11487,17 @@ namespace Azure.ResourceManager.Network.Models
             return new NetworkUsageName(value, localizedValue, default);
         }
 
+        /// <param name="publicIpAddressId"> Public IP ARM resource ID. </param>
+        /// <param name="publicIpAddress"> IP Address of the Public IP Resource. </param>
+        /// <param name="isWorkloadProtected"> Value indicating whether the IP address is DDoS workload protected or not. </param>
+        /// <param name="ddosProtectionPlanId"> DDoS protection plan Resource Id of a if IP address is protected through a plan. </param>
+        /// <returns> A new <see cref="Models.PublicIPDdosProtectionStatusResult"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PublicIPDdosProtectionStatusResult PublicIPDdosProtectionStatusResult(ResourceIdentifier publicIpAddressId = default, string publicIpAddress = default, WorkloadProtectedFlag? isWorkloadProtected = default, ResourceIdentifier ddosProtectionPlanId = default)
+        {
+            return new PublicIPDdosProtectionStatusResult(publicIpAddressId, default, isWorkloadProtected, ddosProtectionPlanId, default);
+        }
+
         /// <summary> Initializes a new instance of ApplicationGatewayFrontendIPConfiguration. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -15299,8 +15310,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="priority"> Priority of the Firewall Policy Rule Collection Group resource. </param>
         /// <param name="ruleCollections">
         /// Group of Firewall Policy rule collections.
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include  and .
+        ///                         Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///                         The available derived classes include  and .
         /// </param>
         /// <param name="provisioningState"> The provisioning state of the firewall policy rule collection group resource. </param>
         /// <returns> A new <see cref="Network.FirewallPolicyRuleCollectionGroupData"/> instance for mocking. </returns>
@@ -15357,8 +15368,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="priority"> Priority of the Firewall Policy Rule Collection Group resource. </param>
         /// <param name="ruleCollections">
         /// Group of Firewall Policy rule collections.
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include  and .
+        ///                         Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///                         The available derived classes include  and .
         /// </param>
         /// <returns> A new <see cref="Network.FirewallPolicyRuleCollectionGroupDraftData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -16717,18 +16728,6 @@ namespace Azure.ResourceManager.Network.Models
             return new PrivateDnsZoneGroupData(id, default, name, default, provisioningState is null && privateDnsZoneConfigs is null ? default : new PrivateDnsZoneGroupPropertiesFormat(provisioningState, (privateDnsZoneConfigs ?? new ChangeTrackingList<PrivateDnsZoneConfig>()).ToList(), default));
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PublicIPDdosProtectionStatusResult"/>. </summary>
-        /// <param name="publicIPAddressId"> Public IP ARM resource ID. </param>
-        /// <param name="publicIPAddress"> IP Address of the Public IP Resource. </param>
-        /// <param name="isWorkloadProtected"> Value indicating whether the IP address is DDoS workload protected or not. </param>
-        /// <param name="ddosProtectionPlanId"> DDoS protection plan Resource Id of a if IP address is protected through a plan. </param>
-        /// <returns> A new <see cref="Models.PublicIPDdosProtectionStatusResult"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PublicIPDdosProtectionStatusResult PublicIPDdosProtectionStatusResult(ResourceIdentifier publicIPAddressId = default, IPAddress publicIPAddress = default, WorkloadProtectedFlag? isWorkloadProtected = default, ResourceIdentifier ddosProtectionPlanId = default)
-        {
-            return new PublicIPDdosProtectionStatusResult(publicIPAddressId, default, isWorkloadProtected, ddosProtectionPlanId, default);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Network.PublicIPPrefixData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -16886,8 +16885,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="sku"> The service gateway SKU. </param>
         /// <param name="zones">
         /// A list of availability zones denoting the zone in which service gateway should be deployed.
-        ///             
-        ///              - The zone values must be provided as strings representing numeric identifiers like "1", "2", "3" etc.
+        ///                         
+        ///                          - The zone values must be provided as strings representing numeric identifiers like "1", "2", "3" etc.
         /// </param>
         /// <param name="virtualNetwork"> Reference to an existing virtual network. </param>
         /// <param name="routeTargetAddress"> Route Target address of Service gateway. </param>
@@ -19571,8 +19570,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="priority"> Priority of the Firewall Policy Rule Collection Group resource. </param>
         /// <param name="ruleCollections">
         /// Group of Firewall Policy rule collections.
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include  and .
+        ///                         Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///                         The available derived classes include  and .
         /// </param>
         /// <param name="provisioningState"> The provisioning state of the firewall policy rule collection group resource. </param>
         /// <returns> A new <see cref="Network.FirewallPolicyRuleCollectionGroupData"/> instance for mocking. </returns>

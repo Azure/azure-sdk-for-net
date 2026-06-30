@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.Projects.Agents;
+using Azure.AI.Projects.Evaluation;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
@@ -51,13 +52,13 @@ public class EvaluatorGenerationJobTests : ProjectsClientTestBase
             }
         };
         EvaluatorGenerationJob runningJob = await projectClient.EvaluatorGenerationJobs.CreateAsync(job);
-        while (runningJob.Status != JobStatus.Failed && runningJob.Status != JobStatus.Succeeded)
+        while (runningJob.Status != ProjectsJobStatus.Failed && runningJob.Status != ProjectsJobStatus.Succeeded)
         {
             await Delay(500);
             Console.WriteLine($"Waiting for job ID: {runningJob.Id}...");
             runningJob = await projectClient.EvaluatorGenerationJobs.GetAsync(jobId: runningJob.Id);
         }
-        Assert.That(runningJob.Status, Is.EqualTo(JobStatus.Succeeded));
+        Assert.That(runningJob.Status, Is.EqualTo(ProjectsJobStatus.Succeeded));
         Assert.That(runningJob.Result.Name, Is.Not.Null.And.Not.Empty);
         Assert.That(runningJob.Result.Version, Is.Not.Null.And.Not.Empty);
         // Cancel
@@ -74,12 +75,12 @@ public class EvaluatorGenerationJobTests : ProjectsClientTestBase
         };
         EvaluatorGenerationJob jobToCancel = await projectClient.EvaluatorGenerationJobs.CreateAsync(job);
         jobToCancel = await projectClient.EvaluatorGenerationJobs.CancelAsync(jobToCancel.Id);
-        while (jobToCancel.Status != JobStatus.Failed && jobToCancel.Status != JobStatus.Succeeded && jobToCancel.Status != JobStatus.Cancelled)
+        while (jobToCancel.Status != ProjectsJobStatus.Failed && jobToCancel.Status != ProjectsJobStatus.Succeeded && jobToCancel.Status != ProjectsJobStatus.Cancelled)
         {
             await Delay(500);
             jobToCancel = await projectClient.EvaluatorGenerationJobs.GetAsync(jobId: jobToCancel.Id);
         }
-        Assert.That(jobToCancel.Status, Is.EqualTo(JobStatus.Cancelled));
+        Assert.That(jobToCancel.Status, Is.EqualTo(ProjectsJobStatus.Cancelled));
         Assert.That(jobToCancel.Result, Is.Null);
         // List
         await Delay(20000);

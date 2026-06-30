@@ -542,13 +542,16 @@ Configure an Agent endpoint for Responses protocol.
 AgentEndpointConfiguration config = new()
 {
     VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
-    Protocols = { AgentEndpointProtocol.Responses }
+    ProtocolConfiguration = new()
+    {
+        Responses = new()
+    }
 };
 PatchAgentOptions patchOptions = new()
 {
     AgentEndpoint = config,
 };
-ProjectsAgentRecord patchedRecord = projectClient.AgentAdministrationClient.PatchAgentObject(
+ProjectsAgentRecord patchedRecord = projectClient.AgentAdministrationClient.PatchAgent(
     agentName: agentVersion.Name,
     patchAgentOptions: patchOptions);
 Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
@@ -1687,7 +1690,7 @@ the Fabric IQ connection in Microsoft Foundry and use `FabricIQPreviewTool` in t
 ```C# Snippet:Sample_CreateAgent_FabricIQ_Async
 FabricIQPreviewTool fabricIQTool = new(projectConnectionId: fabricIQProjectConnectionId)
 {
-    RequireApproval = BinaryData.FromObjectAsJson("never"),
+    RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
 };
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {

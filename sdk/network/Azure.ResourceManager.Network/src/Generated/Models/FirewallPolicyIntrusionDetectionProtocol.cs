@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly string _value;
         /// <summary> TCP. </summary>
-        private const string TCPValue = "TCP";
+        private const string TcpValue = "TCP";
         /// <summary> UDP. </summary>
-        private const string UDPValue = "UDP";
+        private const string UdpValue = "UDP";
         /// <summary> ICMP. </summary>
-        private const string ICMPValue = "ICMP";
+        private const string IcmpValue = "ICMP";
         /// <summary> ANY. </summary>
-        private const string ANYValue = "ANY";
+        private const string AnyValue = "ANY";
 
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyIntrusionDetectionProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -35,16 +35,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> TCP. </summary>
-        public static FirewallPolicyIntrusionDetectionProtocol TCP { get; } = new FirewallPolicyIntrusionDetectionProtocol(TCPValue);
+        public static FirewallPolicyIntrusionDetectionProtocol Tcp { get; } = new FirewallPolicyIntrusionDetectionProtocol(TcpValue);
 
         /// <summary> UDP. </summary>
-        public static FirewallPolicyIntrusionDetectionProtocol UDP { get; } = new FirewallPolicyIntrusionDetectionProtocol(UDPValue);
+        public static FirewallPolicyIntrusionDetectionProtocol Udp { get; } = new FirewallPolicyIntrusionDetectionProtocol(UdpValue);
 
         /// <summary> ICMP. </summary>
-        public static FirewallPolicyIntrusionDetectionProtocol ICMP { get; } = new FirewallPolicyIntrusionDetectionProtocol(ICMPValue);
+        public static FirewallPolicyIntrusionDetectionProtocol Icmp { get; } = new FirewallPolicyIntrusionDetectionProtocol(IcmpValue);
 
         /// <summary> ANY. </summary>
-        public static FirewallPolicyIntrusionDetectionProtocol ANY { get; } = new FirewallPolicyIntrusionDetectionProtocol(ANYValue);
+        public static FirewallPolicyIntrusionDetectionProtocol Any { get; } = new FirewallPolicyIntrusionDetectionProtocol(AnyValue);
 
         /// <summary> Determines if two <see cref="FirewallPolicyIntrusionDetectionProtocol"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

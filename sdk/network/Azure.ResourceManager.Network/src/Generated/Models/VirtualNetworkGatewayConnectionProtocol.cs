@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly string _value;
         /// <summary> IKEv2. </summary>
-        private const string IKEv2Value = "IKEv2";
+        private const string IkeV2Value = "IKEv2";
         /// <summary> IKEv1. </summary>
-        private const string IKEv1Value = "IKEv1";
+        private const string IkeV1Value = "IKEv1";
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayConnectionProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> IKEv2. </summary>
-        public static VirtualNetworkGatewayConnectionProtocol IKEv2 { get; } = new VirtualNetworkGatewayConnectionProtocol(IKEv2Value);
+        public static VirtualNetworkGatewayConnectionProtocol IkeV2 { get; } = new VirtualNetworkGatewayConnectionProtocol(IkeV2Value);
 
         /// <summary> IKEv1. </summary>
-        public static VirtualNetworkGatewayConnectionProtocol IKEv1 { get; } = new VirtualNetworkGatewayConnectionProtocol(IKEv1Value);
+        public static VirtualNetworkGatewayConnectionProtocol IkeV1 { get; } = new VirtualNetworkGatewayConnectionProtocol(IkeV1Value);
 
         /// <summary> Determines if two <see cref="VirtualNetworkGatewayConnectionProtocol"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

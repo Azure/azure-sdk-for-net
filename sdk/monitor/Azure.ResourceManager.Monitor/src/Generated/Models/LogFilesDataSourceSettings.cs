@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of <see cref="LogFilesDataSourceSettings"/>. </summary>
         /// <param name="text"> Text settings. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LogFilesDataSourceSettings(LogFileSettingsText text, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(text, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LogFilesDataSourceSettings(LogFileSettingsText text, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(text, additionalBinaryDataProperties)
         {
         }
     }

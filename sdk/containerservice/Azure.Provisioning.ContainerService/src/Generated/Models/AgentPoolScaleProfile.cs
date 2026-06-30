@@ -40,6 +40,10 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _manual = DefineListProperty<ManualScaleProfile>(nameof(Manual), new string[] { "manual" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for AgentPoolScaleProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

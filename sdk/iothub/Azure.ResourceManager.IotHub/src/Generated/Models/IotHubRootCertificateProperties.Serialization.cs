@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class IotHubRootCertificateProperties : IUtf8JsonSerializable, IJsonModel<IotHubRootCertificateProperties>
+    /// <summary> This property store root certificate related information. </summary>
+    public partial class IotHubRootCertificateProperties : IJsonModel<IotHubRootCertificateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotHubRootCertificateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IotHubRootCertificateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IotHubRootCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeIotHubRootCertificateProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IotHubRootCertificateProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IotHubRootCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotHubContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(IotHubRootCertificateProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<IotHubRootCertificateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IotHubRootCertificateProperties IPersistableModel<IotHubRootCertificateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IotHubRootCertificateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IotHubRootCertificateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IotHubRootCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IotHubRootCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IotHubRootCertificateProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(IsRootCertificateV2Enabled))
             {
                 writer.WritePropertyName("enableRootCertificateV2"u8);
@@ -44,15 +84,15 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WritePropertyName("lastUpdatedTimeUtc"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -61,88 +101,60 @@ namespace Azure.ResourceManager.IotHub.Models
             }
         }
 
-        IotHubRootCertificateProperties IJsonModel<IotHubRootCertificateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IotHubRootCertificateProperties IJsonModel<IotHubRootCertificateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IotHubRootCertificateProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IotHubRootCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IotHubRootCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IotHubRootCertificateProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeIotHubRootCertificateProperties(document.RootElement, options);
         }
 
-        internal static IotHubRootCertificateProperties DeserializeIotHubRootCertificateProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static IotHubRootCertificateProperties DeserializeIotHubRootCertificateProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool? enableRootCertificateV2 = default;
-            DateTimeOffset? lastUpdatedTimeUtc = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            bool? isRootCertificateV2Enabled = default;
+            DateTimeOffset? lastUpdatedOn = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("enableRootCertificateV2"u8))
+                if (prop.NameEquals("enableRootCertificateV2"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enableRootCertificateV2 = property.Value.GetBoolean();
+                    isRootCertificateV2Enabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("lastUpdatedTimeUtc"u8))
+                if (prop.NameEquals("lastUpdatedTimeUtc"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastUpdatedTimeUtc = property.Value.GetDateTimeOffset("O");
+                    lastUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new IotHubRootCertificateProperties(enableRootCertificateV2, lastUpdatedTimeUtc, serializedAdditionalRawData);
+            return new IotHubRootCertificateProperties(isRootCertificateV2Enabled, lastUpdatedOn, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<IotHubRootCertificateProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IotHubRootCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotHubContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(IotHubRootCertificateProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        IotHubRootCertificateProperties IPersistableModel<IotHubRootCertificateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IotHubRootCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeIotHubRootCertificateProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(IotHubRootCertificateProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<IotHubRootCertificateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

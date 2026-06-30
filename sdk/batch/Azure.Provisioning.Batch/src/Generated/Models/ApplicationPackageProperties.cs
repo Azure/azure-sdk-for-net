@@ -84,6 +84,10 @@ namespace Azure.Provisioning.Batch
             _storageUri = DefineProperty<Uri>(nameof(StorageUri), new string[] { "storageUrl" }, isOutput: true);
             _storageUriExpireOn = DefineProperty<DateTimeOffset>(nameof(StorageUriExpireOn), new string[] { "storageUrlExpiry" }, isOutput: true);
             _lastActivatedOn = DefineProperty<DateTimeOffset>(nameof(LastActivatedOn), new string[] { "lastActivationTime" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ApplicationPackageProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -6,47 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A Class representing a StaticSiteBuildLinkedBackend along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StaticSiteBuildLinkedBackendResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetStaticSiteBuildLinkedBackendResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StaticSiteBuildResource"/> using the GetStaticSiteBuildLinkedBackend method.
+    /// A class representing a StaticSiteBuildLinkedBackend along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StaticSiteBuildLinkedBackendResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StaticSiteBuildResource"/> using the GetStaticSiteBuildLinkedBackends method.
     /// </summary>
     public partial class StaticSiteBuildLinkedBackendResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="StaticSiteBuildLinkedBackendResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="environmentName"> The environmentName. </param>
-        /// <param name="linkedBackendName"> The linkedBackendName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string environmentName, string linkedBackendName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/linkedBackends/{linkedBackendName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _staticSiteBuildLinkedBackendStaticSitesClientDiagnostics;
-        private readonly StaticSitesRestOperations _staticSiteBuildLinkedBackendStaticSitesRestClient;
+        private readonly ClientDiagnostics _staticSiteLinkedBackendARMResourceOperationGroupClientDiagnostics;
+        private readonly StaticSiteLinkedBackendARMResourceOperationGroup _staticSiteLinkedBackendARMResourceOperationGroupRestClient;
         private readonly StaticSiteLinkedBackendData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/staticSites/builds/linkedBackends";
 
-        /// <summary> Initializes a new instance of the <see cref="StaticSiteBuildLinkedBackendResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of StaticSiteBuildLinkedBackendResource for mocking. </summary>
         protected StaticSiteBuildLinkedBackendResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="StaticSiteBuildLinkedBackendResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteBuildLinkedBackendResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StaticSiteBuildLinkedBackendResource(ArmClient client, StaticSiteLinkedBackendData data) : this(client, data.Id)
@@ -55,71 +43,94 @@ namespace Azure.ResourceManager.AppService
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="StaticSiteBuildLinkedBackendResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteBuildLinkedBackendResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal StaticSiteBuildLinkedBackendResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _staticSiteBuildLinkedBackendStaticSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string staticSiteBuildLinkedBackendStaticSitesApiVersion);
-            _staticSiteBuildLinkedBackendStaticSitesRestClient = new StaticSitesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, staticSiteBuildLinkedBackendStaticSitesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string staticSiteBuildLinkedBackendApiVersion);
+            _staticSiteLinkedBackendARMResourceOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            _staticSiteLinkedBackendARMResourceOperationGroupRestClient = new StaticSiteLinkedBackendARMResourceOperationGroup(_staticSiteLinkedBackendARMResourceOperationGroupClientDiagnostics, Pipeline, Endpoint, staticSiteBuildLinkedBackendApiVersion ?? "2026-03-15");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual StaticSiteLinkedBackendData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="environmentName"> The environmentName. </param>
+        /// <param name="linkedBackendName"> The linkedBackendName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string environmentName, string linkedBackendName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/linkedBackends/{linkedBackendName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Returns the details of a linked backend linked to a static site build by name
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/linkedBackends/{linkedBackendName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/linkedBackends/{linkedBackendName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetLinkedBackendForBuild</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteLinkedBackendARMResourceOperationGroup_GetLinkedBackendForBuild. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBuildLinkedBackendResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StaticSiteBuildLinkedBackendResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<StaticSiteBuildLinkedBackendResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _staticSiteBuildLinkedBackendStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildLinkedBackendResource.Get");
+            using DiagnosticScope scope = _staticSiteLinkedBackendARMResourceOperationGroupClientDiagnostics.CreateScope("StaticSiteBuildLinkedBackendResource.Get");
             scope.Start();
             try
             {
-                var response = await _staticSiteBuildLinkedBackendStaticSitesRestClient.GetLinkedBackendForBuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _staticSiteLinkedBackendARMResourceOperationGroupRestClient.CreateGetLinkedBackendForBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<StaticSiteLinkedBackendData> response = Response.FromValue(StaticSiteLinkedBackendData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new StaticSiteBuildLinkedBackendResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -133,33 +144,41 @@ namespace Azure.ResourceManager.AppService
         /// Returns the details of a linked backend linked to a static site build by name
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/linkedBackends/{linkedBackendName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/linkedBackends/{linkedBackendName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetLinkedBackendForBuild</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteLinkedBackendARMResourceOperationGroup_GetLinkedBackendForBuild. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBuildLinkedBackendResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StaticSiteBuildLinkedBackendResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<StaticSiteBuildLinkedBackendResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _staticSiteBuildLinkedBackendStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildLinkedBackendResource.Get");
+            using DiagnosticScope scope = _staticSiteLinkedBackendARMResourceOperationGroupClientDiagnostics.CreateScope("StaticSiteBuildLinkedBackendResource.Get");
             scope.Start();
             try
             {
-                var response = _staticSiteBuildLinkedBackendStaticSitesRestClient.GetLinkedBackendForBuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _staticSiteLinkedBackendARMResourceOperationGroupRestClient.CreateGetLinkedBackendForBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<StaticSiteLinkedBackendData> response = Response.FromValue(StaticSiteLinkedBackendData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new StaticSiteBuildLinkedBackendResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -173,38 +192,45 @@ namespace Azure.ResourceManager.AppService
         /// Unlink a backend from a static site build
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/linkedBackends/{linkedBackendName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/linkedBackends/{linkedBackendName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_UnlinkBackendFromBuild</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteLinkedBackendARMResourceOperationGroup_UnlinkBackendFromBuild. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBuildLinkedBackendResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StaticSiteBuildLinkedBackendResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="isCleaningAuthConfig"> Decides if auth will be removed from backend configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? isCleaningAuthConfig = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? isCleaningAuthConfig = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _staticSiteBuildLinkedBackendStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildLinkedBackendResource.Delete");
+            using DiagnosticScope scope = _staticSiteLinkedBackendARMResourceOperationGroupClientDiagnostics.CreateScope("StaticSiteBuildLinkedBackendResource.Delete");
             scope.Start();
             try
             {
-                var response = await _staticSiteBuildLinkedBackendStaticSitesRestClient.UnlinkBackendFromBuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, isCleaningAuthConfig, cancellationToken).ConfigureAwait(false);
-                var uri = _staticSiteBuildLinkedBackendStaticSitesRestClient.CreateUnlinkBackendFromBuildRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, isCleaningAuthConfig);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppServiceArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _staticSiteLinkedBackendARMResourceOperationGroupRestClient.CreateUnlinkBackendFromBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, isCleaningAuthConfig, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AppServiceArmOperation operation = new AppServiceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -218,130 +244,45 @@ namespace Azure.ResourceManager.AppService
         /// Unlink a backend from a static site build
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/linkedBackends/{linkedBackendName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/linkedBackends/{linkedBackendName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_UnlinkBackendFromBuild</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteLinkedBackendARMResourceOperationGroup_UnlinkBackendFromBuild. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBuildLinkedBackendResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StaticSiteBuildLinkedBackendResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="isCleaningAuthConfig"> Decides if auth will be removed from backend configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? isCleaningAuthConfig = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? isCleaningAuthConfig = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _staticSiteBuildLinkedBackendStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildLinkedBackendResource.Delete");
+            using DiagnosticScope scope = _staticSiteLinkedBackendARMResourceOperationGroupClientDiagnostics.CreateScope("StaticSiteBuildLinkedBackendResource.Delete");
             scope.Start();
             try
             {
-                var response = _staticSiteBuildLinkedBackendStaticSitesRestClient.UnlinkBackendFromBuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, isCleaningAuthConfig, cancellationToken);
-                var uri = _staticSiteBuildLinkedBackendStaticSitesRestClient.CreateUnlinkBackendFromBuildRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, isCleaningAuthConfig);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppServiceArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _staticSiteLinkedBackendARMResourceOperationGroupRestClient.CreateUnlinkBackendFromBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, isCleaningAuthConfig, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AppServiceArmOperation operation = new AppServiceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Link backend to a static site build
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/linkedBackends/{linkedBackendName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_LinkBackendToBuild</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBuildLinkedBackendResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> A JSON representation of the linked backend request properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<StaticSiteBuildLinkedBackendResource>> UpdateAsync(WaitUntil waitUntil, StaticSiteLinkedBackendData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = _staticSiteBuildLinkedBackendStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildLinkedBackendResource.Update");
-            scope.Start();
-            try
-            {
-                var response = await _staticSiteBuildLinkedBackendStaticSitesRestClient.LinkBackendToBuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<StaticSiteBuildLinkedBackendResource>(new StaticSiteBuildLinkedBackendOperationSource(Client), _staticSiteBuildLinkedBackendStaticSitesClientDiagnostics, Pipeline, _staticSiteBuildLinkedBackendStaticSitesRestClient.CreateLinkBackendToBuildRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Link backend to a static site build
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/linkedBackends/{linkedBackendName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_LinkBackendToBuild</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBuildLinkedBackendResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> A JSON representation of the linked backend request properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<StaticSiteBuildLinkedBackendResource> Update(WaitUntil waitUntil, StaticSiteLinkedBackendData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = _staticSiteBuildLinkedBackendStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildLinkedBackendResource.Update");
-            scope.Start();
-            try
-            {
-                var response = _staticSiteBuildLinkedBackendStaticSitesRestClient.LinkBackendToBuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AppServiceArmOperation<StaticSiteBuildLinkedBackendResource>(new StaticSiteBuildLinkedBackendOperationSource(Client), _staticSiteBuildLinkedBackendStaticSitesClientDiagnostics, Pipeline, _staticSiteBuildLinkedBackendStaticSitesRestClient.CreateLinkBackendToBuildRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -355,20 +296,20 @@ namespace Azure.ResourceManager.AppService
         /// Validates that a backend can be linked to a static site build
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/linkedBackends/{linkedBackendName}/validate</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/linkedBackends/{linkedBackendName}/validate. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_ValidateBackendForBuild</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteLinkedBackendARMResourceOperationGroup_ValidateBackendForBuild. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBuildLinkedBackendResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StaticSiteBuildLinkedBackendResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -380,14 +321,21 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _staticSiteBuildLinkedBackendStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildLinkedBackendResource.ValidateBackendForBuild");
+            using DiagnosticScope scope = _staticSiteLinkedBackendARMResourceOperationGroupClientDiagnostics.CreateScope("StaticSiteBuildLinkedBackendResource.ValidateBackendForBuild");
             scope.Start();
             try
             {
-                var response = await _staticSiteBuildLinkedBackendStaticSitesRestClient.ValidateBackendForBuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation(_staticSiteBuildLinkedBackendStaticSitesClientDiagnostics, Pipeline, _staticSiteBuildLinkedBackendStaticSitesRestClient.CreateValidateBackendForBuildRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _staticSiteLinkedBackendARMResourceOperationGroupRestClient.CreateValidateBackendForBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, StaticSiteLinkedBackendData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                AppServiceArmOperation operation = new AppServiceArmOperation(_staticSiteLinkedBackendARMResourceOperationGroupClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -401,20 +349,20 @@ namespace Azure.ResourceManager.AppService
         /// Validates that a backend can be linked to a static site build
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/linkedBackends/{linkedBackendName}/validate</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/linkedBackends/{linkedBackendName}/validate. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_ValidateBackendForBuild</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteLinkedBackendARMResourceOperationGroup_ValidateBackendForBuild. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBuildLinkedBackendResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StaticSiteBuildLinkedBackendResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -426,14 +374,139 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _staticSiteBuildLinkedBackendStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildLinkedBackendResource.ValidateBackendForBuild");
+            using DiagnosticScope scope = _staticSiteLinkedBackendARMResourceOperationGroupClientDiagnostics.CreateScope("StaticSiteBuildLinkedBackendResource.ValidateBackendForBuild");
             scope.Start();
             try
             {
-                var response = _staticSiteBuildLinkedBackendStaticSitesRestClient.ValidateBackendForBuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AppServiceArmOperation(_staticSiteBuildLinkedBackendStaticSitesClientDiagnostics, Pipeline, _staticSiteBuildLinkedBackendStaticSitesRestClient.CreateValidateBackendForBuildRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _staticSiteLinkedBackendARMResourceOperationGroupRestClient.CreateValidateBackendForBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, StaticSiteLinkedBackendData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                AppServiceArmOperation operation = new AppServiceArmOperation(_staticSiteLinkedBackendARMResourceOperationGroupClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a StaticSiteBuildLinkedBackend.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/linkedBackends/{linkedBackendName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteLinkedBackendARMResourceOperationGroup_LinkBackendToBuild. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StaticSiteBuildLinkedBackendResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> A JSON representation of the linked backend request properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<StaticSiteBuildLinkedBackendResource>> UpdateAsync(WaitUntil waitUntil, StaticSiteLinkedBackendData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _staticSiteLinkedBackendARMResourceOperationGroupClientDiagnostics.CreateScope("StaticSiteBuildLinkedBackendResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _staticSiteLinkedBackendARMResourceOperationGroupRestClient.CreateLinkBackendToBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, StaticSiteLinkedBackendData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                AppServiceArmOperation<StaticSiteBuildLinkedBackendResource> operation = new AppServiceArmOperation<StaticSiteBuildLinkedBackendResource>(
+                    new StaticSiteBuildLinkedBackendResourceOperationSource(Client),
+                    _staticSiteLinkedBackendARMResourceOperationGroupClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a StaticSiteBuildLinkedBackend.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/linkedBackends/{linkedBackendName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteLinkedBackendARMResourceOperationGroup_LinkBackendToBuild. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StaticSiteBuildLinkedBackendResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> A JSON representation of the linked backend request properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<StaticSiteBuildLinkedBackendResource> Update(WaitUntil waitUntil, StaticSiteLinkedBackendData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _staticSiteLinkedBackendARMResourceOperationGroupClientDiagnostics.CreateScope("StaticSiteBuildLinkedBackendResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _staticSiteLinkedBackendARMResourceOperationGroupRestClient.CreateLinkBackendToBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, StaticSiteLinkedBackendData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                AppServiceArmOperation<StaticSiteBuildLinkedBackendResource> operation = new AppServiceArmOperation<StaticSiteBuildLinkedBackendResource>(
+                    new StaticSiteBuildLinkedBackendResourceOperationSource(Client),
+                    _staticSiteLinkedBackendARMResourceOperationGroupClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

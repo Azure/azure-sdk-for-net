@@ -133,3 +133,73 @@ To fix this locally, run 'eng\scripts\CodeChecks.ps1 -ServiceDirectory $ServiceD
         Summary = $summary
     }
 }
+
+# When a batch-level project list override file is supplied (PR analyze batches), produce a project
+# list scoped to only the changed projects within $ServiceDirectory so code regeneration touches just
+# those projects instead of every package in the service directory. Returns a repo-root-relative path
+# to the scoped override file, or "" to fall back to whole-service-directory regeneration.
+#
+# Coverage invariant (why no changed project is dropped): every package in a given service directory
+# shares the "sdk/<ServiceDirectory>/" path prefix, so the filter matches either all of that service's
+# changed packages or none. When none match (e.g. a service-level shared file changed, with no package
+# in the targeted set), it returns "" so the caller regenerates the whole service directory. Worst case
+# is over-regeneration; a changed project can never be silently skipped.
+function Get-ScopedProjectListOverrideFile {
+    param(
+        [string] $GlobalOverrideFile,
+        [string] $ServiceDirectory,
+        [string] $RepoRoot
+    )
+
+    # Treat unexpanded pipeline variable references (e.g. "$(ProjectListOverrideFile)") as unset.
+    if (-not $GlobalOverrideFile -or $GlobalOverrideFile -like '$(*') {
+        return ""
+    }
+
+    $globalPath = Join-Path $RepoRoot $GlobalOverrideFile
+    if (-not (Test-Path $globalPath)) {
+        Write-Host "Project list override file '$globalPath' not found; regenerating the full '$ServiceDirectory' service directory."
+        return ""
+    }
+
+    try {
+        [xml] $overrideXml = Get-Content -Raw -Path $globalPath
+    }
+    catch {
+        Write-Host "Unable to parse project list override file '$globalPath'; regenerating the full '$ServiceDirectory' service directory."
+        return ""
+    }
+
+    $servicePattern = "(?i)sdk[\\/]$([regex]::Escape($ServiceDirectory))[\\/]"
+    $scopedIncludes = @(
+        $overrideXml.Project.ItemGroup.ProjectReference `
+        | Where-Object { $_.Include -match $servicePattern } `
+        | ForEach-Object { $_.Include }
+    )
+
+    if ($scopedIncludes.Count -eq 0) {
+        # The service changed but none of its packages are in the targeted project set (for example a
+        # service-level shared file changed). Regenerate the whole service directory to stay correct.
+        Write-Host "No changed projects matched 'sdk/$ServiceDirectory' in the project list override file; regenerating the full service directory."
+        return ""
+    }
+
+    $scopedDir = Join-Path $RepoRoot "projlist"
+    $null = New-Item -Path $scopedDir -ItemType Directory -Force
+    $safeName = $ServiceDirectory -replace '[\\/]', '_'
+    $scopedPath = Join-Path $scopedDir "codechecks_$safeName.props"
+
+    $scopedXml = [xml] '<Project><ItemGroup></ItemGroup></Project>'
+    $itemGroup = $scopedXml.SelectSingleNode("/Project/ItemGroup")
+    foreach ($include in $scopedIncludes) {
+        $node = $scopedXml.CreateElement("ProjectReference")
+        $node.SetAttribute("Include", $include)
+        $null = $itemGroup.AppendChild($node)
+    }
+    $scopedXml.Save($scopedPath)
+
+    Write-Host "Scoped code regeneration for '$ServiceDirectory' to $($scopedIncludes.Count) changed project(s):"
+    $scopedIncludes | ForEach-Object { Write-Host "  $_" }
+
+    return [System.IO.Path]::GetRelativePath($RepoRoot, $scopedPath)
+}

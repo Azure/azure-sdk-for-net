@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> DHGroup2048. </summary>
         private const string DHGroup2048Value = "DHGroup2048";
         /// <summary> ECP256. </summary>
-        private const string ECP256Value = "ECP256";
+        private const string Ecp256Value = "ECP256";
         /// <summary> ECP384. </summary>
-        private const string ECP384Value = "ECP384";
+        private const string Ecp384Value = "ECP384";
         /// <summary> DHGroup24. </summary>
         private const string DHGroup24Value = "DHGroup24";
 
@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.Network.Models
         public static DHGroup DHGroup2048 { get; } = new DHGroup(DHGroup2048Value);
 
         /// <summary> ECP256. </summary>
-        public static DHGroup ECP256 { get; } = new DHGroup(ECP256Value);
+        public static DHGroup Ecp256 { get; } = new DHGroup(Ecp256Value);
 
         /// <summary> ECP384. </summary>
-        public static DHGroup ECP384 { get; } = new DHGroup(ECP384Value);
+        public static DHGroup Ecp384 { get; } = new DHGroup(Ecp384Value);
 
         /// <summary> DHGroup24. </summary>
         public static DHGroup DHGroup24 { get; } = new DHGroup(DHGroup24Value);

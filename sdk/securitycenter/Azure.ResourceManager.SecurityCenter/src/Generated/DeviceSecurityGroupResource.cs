@@ -6,44 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A Class representing a DeviceSecurityGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DeviceSecurityGroupResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetDeviceSecurityGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetDeviceSecurityGroup method.
+    /// A class representing a DeviceSecurityGroup along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DeviceSecurityGroupResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetDeviceSecurityGroups method.
     /// </summary>
     public partial class DeviceSecurityGroupResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DeviceSecurityGroupResource"/> instance. </summary>
-        /// <param name="resourceId"> The resourceId. </param>
-        /// <param name="deviceSecurityGroupName"> The deviceSecurityGroupName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string resourceId, string deviceSecurityGroupName)
-        {
-            var resourceId0 = $"{resourceId}/providers/Microsoft.Security/deviceSecurityGroups/{deviceSecurityGroupName}";
-            return new ResourceIdentifier(resourceId0);
-        }
-
-        private readonly ClientDiagnostics _deviceSecurityGroupClientDiagnostics;
-        private readonly DeviceSecurityGroupsRestOperations _deviceSecurityGroupRestClient;
+        private readonly ClientDiagnostics _deviceSecurityGroupsClientDiagnostics;
+        private readonly DeviceSecurityGroups _deviceSecurityGroupsRestClient;
         private readonly DeviceSecurityGroupData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Security/deviceSecurityGroups";
 
-        /// <summary> Initializes a new instance of the <see cref="DeviceSecurityGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DeviceSecurityGroupResource for mocking. </summary>
         protected DeviceSecurityGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DeviceSecurityGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceSecurityGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DeviceSecurityGroupResource(ArmClient client, DeviceSecurityGroupData data) : this(client, data.Id)
@@ -52,71 +43,91 @@ namespace Azure.ResourceManager.SecurityCenter
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DeviceSecurityGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceSecurityGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DeviceSecurityGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deviceSecurityGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string deviceSecurityGroupApiVersion);
-            _deviceSecurityGroupRestClient = new DeviceSecurityGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deviceSecurityGroupApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _deviceSecurityGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
+            _deviceSecurityGroupsRestClient = new DeviceSecurityGroups(_deviceSecurityGroupsClientDiagnostics, Pipeline, Endpoint, deviceSecurityGroupApiVersion ?? "2019-08-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual DeviceSecurityGroupData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="resourceId"> The resourceId. </param>
+        /// <param name="deviceSecurityGroupName"> The deviceSecurityGroupName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string resourceId, string deviceSecurityGroupName)
+        {
+            string resourceId0 = $"{resourceId}/providers/Microsoft.Security/deviceSecurityGroups/{deviceSecurityGroupName}";
+            return new ResourceIdentifier(resourceId0);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Use this method to get the device security group for the specified IoT Hub resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/deviceSecurityGroups/{deviceSecurityGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.Security/deviceSecurityGroups/{deviceSecurityGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeviceSecurityGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeviceSecurityGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-08-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2019-08-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceSecurityGroupResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DeviceSecurityGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DeviceSecurityGroupResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _deviceSecurityGroupClientDiagnostics.CreateScope("DeviceSecurityGroupResource.Get");
+            using DiagnosticScope scope = _deviceSecurityGroupsClientDiagnostics.CreateScope("DeviceSecurityGroupResource.Get");
             scope.Start();
             try
             {
-                var response = await _deviceSecurityGroupRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deviceSecurityGroupsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DeviceSecurityGroupData> response = Response.FromValue(DeviceSecurityGroupData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DeviceSecurityGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -130,33 +141,41 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Use this method to get the device security group for the specified IoT Hub resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/deviceSecurityGroups/{deviceSecurityGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.Security/deviceSecurityGroups/{deviceSecurityGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeviceSecurityGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeviceSecurityGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-08-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2019-08-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceSecurityGroupResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DeviceSecurityGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DeviceSecurityGroupResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _deviceSecurityGroupClientDiagnostics.CreateScope("DeviceSecurityGroupResource.Get");
+            using DiagnosticScope scope = _deviceSecurityGroupsClientDiagnostics.CreateScope("DeviceSecurityGroupResource.Get");
             scope.Start();
             try
             {
-                var response = _deviceSecurityGroupRestClient.Get(Id.Parent, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deviceSecurityGroupsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DeviceSecurityGroupData> response = Response.FromValue(DeviceSecurityGroupData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DeviceSecurityGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -170,20 +189,20 @@ namespace Azure.ResourceManager.SecurityCenter
         /// User this method to deletes the device security group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/deviceSecurityGroups/{deviceSecurityGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.Security/deviceSecurityGroups/{deviceSecurityGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeviceSecurityGroups_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeviceSecurityGroups_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-08-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2019-08-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceSecurityGroupResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DeviceSecurityGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -191,16 +210,23 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _deviceSecurityGroupClientDiagnostics.CreateScope("DeviceSecurityGroupResource.Delete");
+            using DiagnosticScope scope = _deviceSecurityGroupsClientDiagnostics.CreateScope("DeviceSecurityGroupResource.Delete");
             scope.Start();
             try
             {
-                var response = await _deviceSecurityGroupRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _deviceSecurityGroupRestClient.CreateDeleteRequestUri(Id.Parent, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityCenterArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deviceSecurityGroupsRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation operation = new SecurityCenterArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -214,20 +240,20 @@ namespace Azure.ResourceManager.SecurityCenter
         /// User this method to deletes the device security group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/deviceSecurityGroups/{deviceSecurityGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.Security/deviceSecurityGroups/{deviceSecurityGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeviceSecurityGroups_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeviceSecurityGroups_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-08-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2019-08-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceSecurityGroupResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DeviceSecurityGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,16 +261,23 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _deviceSecurityGroupClientDiagnostics.CreateScope("DeviceSecurityGroupResource.Delete");
+            using DiagnosticScope scope = _deviceSecurityGroupsClientDiagnostics.CreateScope("DeviceSecurityGroupResource.Delete");
             scope.Start();
             try
             {
-                var response = _deviceSecurityGroupRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
-                var uri = _deviceSecurityGroupRestClient.CreateDeleteRequestUri(Id.Parent, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityCenterArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deviceSecurityGroupsRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation operation = new SecurityCenterArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -255,23 +288,23 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Use this method to creates or updates the device security group on a specified IoT Hub resource.
+        /// Update a DeviceSecurityGroup.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/deviceSecurityGroups/{deviceSecurityGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.Security/deviceSecurityGroups/{deviceSecurityGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeviceSecurityGroups_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeviceSecurityGroups_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-08-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2019-08-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceSecurityGroupResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DeviceSecurityGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,16 +316,24 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _deviceSecurityGroupClientDiagnostics.CreateScope("DeviceSecurityGroupResource.Update");
+            using DiagnosticScope scope = _deviceSecurityGroupsClientDiagnostics.CreateScope("DeviceSecurityGroupResource.Update");
             scope.Start();
             try
             {
-                var response = await _deviceSecurityGroupRestClient.CreateOrUpdateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _deviceSecurityGroupRestClient.CreateCreateOrUpdateRequestUri(Id.Parent, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityCenterArmOperation<DeviceSecurityGroupResource>(Response.FromValue(new DeviceSecurityGroupResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deviceSecurityGroupsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, DeviceSecurityGroupData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DeviceSecurityGroupData> response = Response.FromValue(DeviceSecurityGroupData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation<DeviceSecurityGroupResource> operation = new SecurityCenterArmOperation<DeviceSecurityGroupResource>(Response.FromValue(new DeviceSecurityGroupResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -303,23 +344,23 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Use this method to creates or updates the device security group on a specified IoT Hub resource.
+        /// Update a DeviceSecurityGroup.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/deviceSecurityGroups/{deviceSecurityGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.Security/deviceSecurityGroups/{deviceSecurityGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeviceSecurityGroups_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeviceSecurityGroups_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-08-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2019-08-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceSecurityGroupResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DeviceSecurityGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -331,16 +372,24 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _deviceSecurityGroupClientDiagnostics.CreateScope("DeviceSecurityGroupResource.Update");
+            using DiagnosticScope scope = _deviceSecurityGroupsClientDiagnostics.CreateScope("DeviceSecurityGroupResource.Update");
             scope.Start();
             try
             {
-                var response = _deviceSecurityGroupRestClient.CreateOrUpdate(Id.Parent, Id.Name, data, cancellationToken);
-                var uri = _deviceSecurityGroupRestClient.CreateCreateOrUpdateRequestUri(Id.Parent, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityCenterArmOperation<DeviceSecurityGroupResource>(Response.FromValue(new DeviceSecurityGroupResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deviceSecurityGroupsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, DeviceSecurityGroupData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DeviceSecurityGroupData> response = Response.FromValue(DeviceSecurityGroupData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation<DeviceSecurityGroupResource> operation = new SecurityCenterArmOperation<DeviceSecurityGroupResource>(Response.FromValue(new DeviceSecurityGroupResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

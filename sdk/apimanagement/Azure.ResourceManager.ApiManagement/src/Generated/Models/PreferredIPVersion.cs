@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public readonly partial struct PreferredIPVersion : IEquatable<PreferredIPVersion>
     {
         private readonly string _value;
+        private const string IPv4Value = "IPv4";
 
         /// <summary> Initializes a new instance of <see cref="PreferredIPVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PreferredIPVersion(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string IPv4Value = "IPv4";
-
-        /// <summary> IPv4. </summary>
+        /// <summary> Gets the IPv4. </summary>
         public static PreferredIPVersion IPv4 { get; } = new PreferredIPVersion(IPv4Value);
+
         /// <summary> Determines if two <see cref="PreferredIPVersion"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PreferredIPVersion left, PreferredIPVersion right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PreferredIPVersion"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PreferredIPVersion left, PreferredIPVersion right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PreferredIPVersion"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PreferredIPVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PreferredIPVersion(string value) => new PreferredIPVersion(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PreferredIPVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PreferredIPVersion?(string value) => value == null ? null : new PreferredIPVersion(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PreferredIPVersion other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PreferredIPVersion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

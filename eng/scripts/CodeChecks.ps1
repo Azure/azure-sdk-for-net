@@ -15,7 +15,10 @@ param (
     [switch] $SpellCheckPublicApiSurface,
 
     [Parameter()]
-    [switch] $SkipDiffValidation
+    [switch] $SkipDiffValidation,
+
+    [Parameter()]
+    [string] $ProjectListOverrideFile
 )
 
 Write-Host "Service Directory $ServiceDirectory"
@@ -82,6 +85,10 @@ try {
             $ServiceDirectory = $Matches['projectdir']
         }
     }
+    # Scope code regeneration to only the changed projects in this service directory when a project
+    # list override file is supplied; otherwise this is "" and the whole service directory regenerates.
+    $scopedOverrideFile = Get-ScopedProjectListOverrideFile -GlobalOverrideFile $ProjectListOverrideFile -ServiceDirectory $ServiceDirectory -RepoRoot $RepoRoot
+
     if (-not $ProjectDirectory)
     {
         # In PR builds, check if only CI config files changed for this service directory.
@@ -142,7 +149,7 @@ try {
 
             Write-Host "Re-generating clients"
             Invoke-Block {
-                & dotnet msbuild $PSScriptRoot\..\service.proj /restore /t:GenerateCode /p:SDKType=$SDKType /p:ServiceDirectory=$ServiceDirectory $diagnosticArguments /p:ProjectListOverrideFile=""
+                & dotnet msbuild $PSScriptRoot\..\service.proj /restore /t:GenerateCode /p:SDKType=$SDKType /p:ServiceDirectory=$ServiceDirectory $diagnosticArguments /p:ProjectListOverrideFile="$scopedOverrideFile"
             }
         }
     }
@@ -155,7 +162,7 @@ try {
 
         Write-Host "Re-generating listings"
         Invoke-Block {
-            & $PSScriptRoot\Export-API.ps1 -ServiceDirectory $ServiceDirectory -SDKType $SDKType -SpellCheckPublicApiSurface:$SpellCheckPublicApiSurface
+            & $PSScriptRoot\Export-API.ps1 -ServiceDirectory $ServiceDirectory -SDKType $SDKType -SpellCheckPublicApiSurface:$SpellCheckPublicApiSurface -ProjectListOverrideFile $scopedOverrideFile
         }
     }
     elseif ($ServiceDirectory -eq "tools") {

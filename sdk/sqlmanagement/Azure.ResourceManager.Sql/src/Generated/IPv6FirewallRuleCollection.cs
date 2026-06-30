@@ -8,67 +8,66 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A class representing a collection of <see cref="IPv6FirewallRuleResource"/> and their operations.
     /// Each <see cref="IPv6FirewallRuleResource"/> in the collection will belong to the same instance of <see cref="SqlServerResource"/>.
-    /// To get an <see cref="IPv6FirewallRuleCollection"/> instance call the GetIPv6FirewallRules method from an instance of <see cref="SqlServerResource"/>.
+    /// To get a <see cref="IPv6FirewallRuleCollection"/> instance call the GetIPv6FirewallRules method from an instance of <see cref="SqlServerResource"/>.
     /// </summary>
     public partial class IPv6FirewallRuleCollection : ArmCollection, IEnumerable<IPv6FirewallRuleResource>, IAsyncEnumerable<IPv6FirewallRuleResource>
     {
-        private readonly ClientDiagnostics _iPv6FirewallRuleClientDiagnostics;
-        private readonly IPv6FirewallRulesRestOperations _iPv6FirewallRuleRestClient;
+        private readonly ClientDiagnostics _iPv6FirewallRulesClientDiagnostics;
+        private readonly IPv6FirewallRules _iPv6FirewallRulesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="IPv6FirewallRuleCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of IPv6FirewallRuleCollection for mocking. </summary>
         protected IPv6FirewallRuleCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="IPv6FirewallRuleCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPv6FirewallRuleCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal IPv6FirewallRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _iPv6FirewallRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", IPv6FirewallRuleResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(IPv6FirewallRuleResource.ResourceType, out string iPv6FirewallRuleApiVersion);
-            _iPv6FirewallRuleRestClient = new IPv6FirewallRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, iPv6FirewallRuleApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _iPv6FirewallRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", IPv6FirewallRuleResource.ResourceType.Namespace, Diagnostics);
+            _iPv6FirewallRulesRestClient = new IPv6FirewallRules(_iPv6FirewallRulesClientDiagnostics, Pipeline, Endpoint, iPv6FirewallRuleApiVersion ?? "2025-02-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SqlServerResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlServerResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SqlServerResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates an IPv6 firewall rule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/ipv6FirewallRules/{firewallRuleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/ipv6FirewallRules/{firewallRuleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IPv6FirewallRules_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> IPv6FirewallRules_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IPv6FirewallRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,23 +75,31 @@ namespace Azure.ResourceManager.Sql
         /// <param name="firewallRuleName"> The name of the firewall rule. </param>
         /// <param name="data"> The required parameters for creating or updating an IPv6 firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<IPv6FirewallRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string firewallRuleName, IPv6FirewallRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _iPv6FirewallRuleClientDiagnostics.CreateScope("IPv6FirewallRuleCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _iPv6FirewallRulesClientDiagnostics.CreateScope("IPv6FirewallRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _iPv6FirewallRuleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _iPv6FirewallRuleRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SqlArmOperation<IPv6FirewallRuleResource>(Response.FromValue(new IPv6FirewallRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _iPv6FirewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, firewallRuleName, IPv6FirewallRuleData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<IPv6FirewallRuleData> response = Response.FromValue(IPv6FirewallRuleData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SqlArmOperation<IPv6FirewallRuleResource> operation = new SqlArmOperation<IPv6FirewallRuleResource>(Response.FromValue(new IPv6FirewallRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,20 +113,16 @@ namespace Azure.ResourceManager.Sql
         /// Creates or updates an IPv6 firewall rule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/ipv6FirewallRules/{firewallRuleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/ipv6FirewallRules/{firewallRuleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IPv6FirewallRules_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> IPv6FirewallRules_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IPv6FirewallRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,23 +130,31 @@ namespace Azure.ResourceManager.Sql
         /// <param name="firewallRuleName"> The name of the firewall rule. </param>
         /// <param name="data"> The required parameters for creating or updating an IPv6 firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<IPv6FirewallRuleResource> CreateOrUpdate(WaitUntil waitUntil, string firewallRuleName, IPv6FirewallRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _iPv6FirewallRuleClientDiagnostics.CreateScope("IPv6FirewallRuleCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _iPv6FirewallRulesClientDiagnostics.CreateScope("IPv6FirewallRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _iPv6FirewallRuleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data, cancellationToken);
-                var uri = _iPv6FirewallRuleRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SqlArmOperation<IPv6FirewallRuleResource>(Response.FromValue(new IPv6FirewallRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _iPv6FirewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, firewallRuleName, IPv6FirewallRuleData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<IPv6FirewallRuleData> response = Response.FromValue(IPv6FirewallRuleData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SqlArmOperation<IPv6FirewallRuleResource> operation = new SqlArmOperation<IPv6FirewallRuleResource>(Response.FromValue(new IPv6FirewallRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,38 +168,42 @@ namespace Azure.ResourceManager.Sql
         /// Gets an IPv6 firewall rule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/ipv6FirewallRules/{firewallRuleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/ipv6FirewallRules/{firewallRuleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IPv6FirewallRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IPv6FirewallRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IPv6FirewallRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="firewallRuleName"> The name of the firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<IPv6FirewallRuleResource>> GetAsync(string firewallRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
-            using var scope = _iPv6FirewallRuleClientDiagnostics.CreateScope("IPv6FirewallRuleCollection.Get");
+            using DiagnosticScope scope = _iPv6FirewallRulesClientDiagnostics.CreateScope("IPv6FirewallRuleCollection.Get");
             scope.Start();
             try
             {
-                var response = await _iPv6FirewallRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _iPv6FirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, firewallRuleName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<IPv6FirewallRuleData> response = Response.FromValue(IPv6FirewallRuleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new IPv6FirewallRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,38 +217,42 @@ namespace Azure.ResourceManager.Sql
         /// Gets an IPv6 firewall rule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/ipv6FirewallRules/{firewallRuleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/ipv6FirewallRules/{firewallRuleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IPv6FirewallRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IPv6FirewallRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IPv6FirewallRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="firewallRuleName"> The name of the firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<IPv6FirewallRuleResource> Get(string firewallRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
-            using var scope = _iPv6FirewallRuleClientDiagnostics.CreateScope("IPv6FirewallRuleCollection.Get");
+            using DiagnosticScope scope = _iPv6FirewallRulesClientDiagnostics.CreateScope("IPv6FirewallRuleCollection.Get");
             scope.Start();
             try
             {
-                var response = _iPv6FirewallRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _iPv6FirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, firewallRuleName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<IPv6FirewallRuleData> response = Response.FromValue(IPv6FirewallRuleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new IPv6FirewallRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,50 +266,50 @@ namespace Azure.ResourceManager.Sql
         /// Gets a list of IPv6 firewall rules.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/ipv6FirewallRules</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/ipv6FirewallRules. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IPv6FirewallRules_ListByServer</description>
+        /// <term> Operation Id. </term>
+        /// <description> IPv6FirewallRules_ListByServer. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IPv6FirewallRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IPv6FirewallRuleResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IPv6FirewallRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IPv6FirewallRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _iPv6FirewallRuleRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iPv6FirewallRuleRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IPv6FirewallRuleResource(Client, IPv6FirewallRuleData.DeserializeIPv6FirewallRuleData(e)), _iPv6FirewallRuleClientDiagnostics, Pipeline, "IPv6FirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<IPv6FirewallRuleData, IPv6FirewallRuleResource>(new IPv6FirewallRulesGetByServerAsyncCollectionResultOfT(
+                _iPv6FirewallRulesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "IPv6FirewallRuleCollection.GetAll"), data => new IPv6FirewallRuleResource(Client, data));
         }
 
         /// <summary>
         /// Gets a list of IPv6 firewall rules.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/ipv6FirewallRules</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/ipv6FirewallRules. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IPv6FirewallRules_ListByServer</description>
+        /// <term> Operation Id. </term>
+        /// <description> IPv6FirewallRules_ListByServer. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IPv6FirewallRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,45 +317,67 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="IPv6FirewallRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IPv6FirewallRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _iPv6FirewallRuleRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iPv6FirewallRuleRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IPv6FirewallRuleResource(Client, IPv6FirewallRuleData.DeserializeIPv6FirewallRuleData(e)), _iPv6FirewallRuleClientDiagnostics, Pipeline, "IPv6FirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<IPv6FirewallRuleData, IPv6FirewallRuleResource>(new IPv6FirewallRulesGetByServerCollectionResultOfT(
+                _iPv6FirewallRulesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "IPv6FirewallRuleCollection.GetAll"), data => new IPv6FirewallRuleResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/ipv6FirewallRules/{firewallRuleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/ipv6FirewallRules/{firewallRuleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IPv6FirewallRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IPv6FirewallRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IPv6FirewallRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="firewallRuleName"> The name of the firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string firewallRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
-            using var scope = _iPv6FirewallRuleClientDiagnostics.CreateScope("IPv6FirewallRuleCollection.Exists");
+            using DiagnosticScope scope = _iPv6FirewallRulesClientDiagnostics.CreateScope("IPv6FirewallRuleCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _iPv6FirewallRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _iPv6FirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, firewallRuleName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<IPv6FirewallRuleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(IPv6FirewallRuleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((IPv6FirewallRuleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -350,36 +391,50 @@ namespace Azure.ResourceManager.Sql
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/ipv6FirewallRules/{firewallRuleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/ipv6FirewallRules/{firewallRuleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IPv6FirewallRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IPv6FirewallRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IPv6FirewallRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="firewallRuleName"> The name of the firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string firewallRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
-            using var scope = _iPv6FirewallRuleClientDiagnostics.CreateScope("IPv6FirewallRuleCollection.Exists");
+            using DiagnosticScope scope = _iPv6FirewallRulesClientDiagnostics.CreateScope("IPv6FirewallRuleCollection.Exists");
             scope.Start();
             try
             {
-                var response = _iPv6FirewallRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _iPv6FirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, firewallRuleName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<IPv6FirewallRuleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(IPv6FirewallRuleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((IPv6FirewallRuleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -393,38 +448,54 @@ namespace Azure.ResourceManager.Sql
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/ipv6FirewallRules/{firewallRuleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/ipv6FirewallRules/{firewallRuleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IPv6FirewallRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IPv6FirewallRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IPv6FirewallRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="firewallRuleName"> The name of the firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<IPv6FirewallRuleResource>> GetIfExistsAsync(string firewallRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
-            using var scope = _iPv6FirewallRuleClientDiagnostics.CreateScope("IPv6FirewallRuleCollection.GetIfExists");
+            using DiagnosticScope scope = _iPv6FirewallRulesClientDiagnostics.CreateScope("IPv6FirewallRuleCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _iPv6FirewallRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _iPv6FirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, firewallRuleName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<IPv6FirewallRuleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(IPv6FirewallRuleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((IPv6FirewallRuleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<IPv6FirewallRuleResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new IPv6FirewallRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -438,38 +509,54 @@ namespace Azure.ResourceManager.Sql
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/ipv6FirewallRules/{firewallRuleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/ipv6FirewallRules/{firewallRuleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IPv6FirewallRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IPv6FirewallRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IPv6FirewallRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="firewallRuleName"> The name of the firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<IPv6FirewallRuleResource> GetIfExists(string firewallRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
-            using var scope = _iPv6FirewallRuleClientDiagnostics.CreateScope("IPv6FirewallRuleCollection.GetIfExists");
+            using DiagnosticScope scope = _iPv6FirewallRulesClientDiagnostics.CreateScope("IPv6FirewallRuleCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _iPv6FirewallRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _iPv6FirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, firewallRuleName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<IPv6FirewallRuleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(IPv6FirewallRuleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((IPv6FirewallRuleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<IPv6FirewallRuleResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new IPv6FirewallRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -489,6 +576,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<IPv6FirewallRuleResource> IAsyncEnumerable<IPv6FirewallRuleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

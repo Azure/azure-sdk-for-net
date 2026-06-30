@@ -83,6 +83,10 @@ namespace Azure.Provisioning.KeyVault
             _privateEndpoint = DefineModelProperty<ManagedHsmPrivateEndpoint>(nameof(PrivateEndpoint), new string[] { "privateEndpoint" });
             _privateLinkServiceConnectionState = DefineModelProperty<ManagedHsmPrivateLinkServiceConnectionState>(nameof(PrivateLinkServiceConnectionState), new string[] { "privateLinkServiceConnectionState" });
             _provisioningState = DefineProperty<ManagedHsmPrivateEndpointConnectionProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedHsmPrivateEndpointConnectionProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         internal ApplicationGatewayBackendAddress(string fqdn, string ipAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Fqdn = fqdn;
-            IpAddress = ipAddress;
+            IPAddress = ipAddress;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> IP address. </summary>
         [WirePath("ipAddress")]
-        public string IpAddress { get; set; }
+        public string IPAddress { get; set; }
     }
 }

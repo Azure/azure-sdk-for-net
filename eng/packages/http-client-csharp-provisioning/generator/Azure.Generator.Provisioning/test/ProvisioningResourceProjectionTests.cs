@@ -16,7 +16,7 @@ namespace Azure.Generator.Provisioning.Tests
         [SetUp]
         public void SetUp()
         {
-            ProvisioningMockHelpers.LoadMockGenerator();
+            ProvisioningMockHelpers.LoadMockPlugin();
         }
 
         [Test]

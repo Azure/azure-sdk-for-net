@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningMarketplacePlan. </summary>
     public partial class MachineLearningMarketplacePlan
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningMarketplacePlan"/>. </summary>
         internal MachineLearningMarketplacePlan()
@@ -51,26 +23,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningMarketplacePlan"/>. </summary>
-        /// <param name="publisherId"> The identifying name of the Publisher of the Marketplace Plan. </param>
         /// <param name="offerId"> The identifying name of the Offer of the Marketplace Plan. </param>
         /// <param name="planId"> The identifying name of the Plan of the Marketplace Plan. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningMarketplacePlan(string publisherId, string offerId, string planId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="publisherId"> The identifying name of the Publisher of the Marketplace Plan. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningMarketplacePlan(string offerId, string planId, string publisherId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            PublisherId = publisherId;
             OfferId = offerId;
             PlanId = planId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            PublisherId = publisherId;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The identifying name of the Offer of the Marketplace Plan. </summary>
+        [WirePath("offerId")]
+        public string OfferId { get; }
+
+        /// <summary> The identifying name of the Plan of the Marketplace Plan. </summary>
+        [WirePath("planId")]
+        public string PlanId { get; }
 
         /// <summary> The identifying name of the Publisher of the Marketplace Plan. </summary>
         [WirePath("publisherId")]
         public string PublisherId { get; }
-        /// <summary> The identifying name of the Offer of the Marketplace Plan. </summary>
-        [WirePath("offerId")]
-        public string OfferId { get; }
-        /// <summary> The identifying name of the Plan of the Marketplace Plan. </summary>
-        [WirePath("planId")]
-        public string PlanId { get; }
     }
 }

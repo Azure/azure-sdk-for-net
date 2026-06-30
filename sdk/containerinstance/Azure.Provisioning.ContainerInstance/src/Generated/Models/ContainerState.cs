@@ -84,6 +84,10 @@ namespace Azure.Provisioning.ContainerInstance
             _exitCode = DefineProperty<int>(nameof(ExitCode), new string[] { "exitCode" }, isOutput: true);
             _finishOn = DefineProperty<DateTimeOffset>(nameof(FinishOn), new string[] { "finishTime" }, isOutput: true);
             _detailStatus = DefineProperty<string>(nameof(DetailStatus), new string[] { "detailStatus" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerState that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

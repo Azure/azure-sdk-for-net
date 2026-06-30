@@ -7,24 +7,14 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The recurrence frequency.
-    /// Serialized Name: RecurrenceFrequency
-    /// </summary>
+    /// <summary> The recurrence frequency. </summary>
     public readonly partial struct WorkflowRecurrenceFrequency : IEquatable<WorkflowRecurrenceFrequency>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="WorkflowRecurrenceFrequency"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public WorkflowRecurrenceFrequency(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NotSpecifiedValue = "NotSpecified";
         private const string SecondValue = "Second";
         private const string MinuteValue = "Minute";
@@ -34,63 +24,70 @@ namespace Azure.ResourceManager.AppService.Models
         private const string MonthValue = "Month";
         private const string YearValue = "Year";
 
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: RecurrenceFrequency.NotSpecified
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkflowRecurrenceFrequency"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public WorkflowRecurrenceFrequency(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NotSpecified. </summary>
         public static WorkflowRecurrenceFrequency NotSpecified { get; } = new WorkflowRecurrenceFrequency(NotSpecifiedValue);
-        /// <summary>
-        /// Second
-        /// Serialized Name: RecurrenceFrequency.Second
-        /// </summary>
+
+        /// <summary> Gets the Second. </summary>
         public static WorkflowRecurrenceFrequency Second { get; } = new WorkflowRecurrenceFrequency(SecondValue);
-        /// <summary>
-        /// Minute
-        /// Serialized Name: RecurrenceFrequency.Minute
-        /// </summary>
+
+        /// <summary> Gets the Minute. </summary>
         public static WorkflowRecurrenceFrequency Minute { get; } = new WorkflowRecurrenceFrequency(MinuteValue);
-        /// <summary>
-        /// Hour
-        /// Serialized Name: RecurrenceFrequency.Hour
-        /// </summary>
+
+        /// <summary> Gets the Hour. </summary>
         public static WorkflowRecurrenceFrequency Hour { get; } = new WorkflowRecurrenceFrequency(HourValue);
-        /// <summary>
-        /// Day
-        /// Serialized Name: RecurrenceFrequency.Day
-        /// </summary>
+
+        /// <summary> Gets the Day. </summary>
         public static WorkflowRecurrenceFrequency Day { get; } = new WorkflowRecurrenceFrequency(DayValue);
-        /// <summary>
-        /// Week
-        /// Serialized Name: RecurrenceFrequency.Week
-        /// </summary>
+
+        /// <summary> Gets the Week. </summary>
         public static WorkflowRecurrenceFrequency Week { get; } = new WorkflowRecurrenceFrequency(WeekValue);
-        /// <summary>
-        /// Month
-        /// Serialized Name: RecurrenceFrequency.Month
-        /// </summary>
+
+        /// <summary> Gets the Month. </summary>
         public static WorkflowRecurrenceFrequency Month { get; } = new WorkflowRecurrenceFrequency(MonthValue);
-        /// <summary>
-        /// Year
-        /// Serialized Name: RecurrenceFrequency.Year
-        /// </summary>
+
+        /// <summary> Gets the Year. </summary>
         public static WorkflowRecurrenceFrequency Year { get; } = new WorkflowRecurrenceFrequency(YearValue);
+
         /// <summary> Determines if two <see cref="WorkflowRecurrenceFrequency"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WorkflowRecurrenceFrequency left, WorkflowRecurrenceFrequency right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WorkflowRecurrenceFrequency"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WorkflowRecurrenceFrequency left, WorkflowRecurrenceFrequency right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkflowRecurrenceFrequency"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WorkflowRecurrenceFrequency"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WorkflowRecurrenceFrequency(string value) => new WorkflowRecurrenceFrequency(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WorkflowRecurrenceFrequency"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WorkflowRecurrenceFrequency?(string value) => value == null ? null : new WorkflowRecurrenceFrequency(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WorkflowRecurrenceFrequency other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WorkflowRecurrenceFrequency other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

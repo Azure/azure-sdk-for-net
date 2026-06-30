@@ -159,6 +159,10 @@ namespace Azure.Provisioning.ContainerService
             _cacheDurationInSeconds = DefineProperty<int>(nameof(CacheDurationInSeconds), new string[] { "cacheDurationInSeconds" });
             _serveStaleDurationInSeconds = DefineProperty<int>(nameof(ServeStaleDurationInSeconds), new string[] { "serveStaleDurationInSeconds" });
             _serveStale = DefineProperty<LocalDnsServeStale>(nameof(ServeStale), new string[] { "serveStale" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for LocalDnsOverride that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

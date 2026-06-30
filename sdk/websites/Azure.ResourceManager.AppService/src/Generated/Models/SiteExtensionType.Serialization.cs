@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class SiteExtensionTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SiteExtensionType value) => value switch
         {
             SiteExtensionType.Gallery => "Gallery",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SiteExtensionType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static SiteExtensionType ToSiteExtensionType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Gallery")) return SiteExtensionType.Gallery;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "WebRoot")) return SiteExtensionType.WebRoot;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Gallery"))
+            {
+                return SiteExtensionType.Gallery;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "WebRoot"))
+            {
+                return SiteExtensionType.WebRoot;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SiteExtensionType value.");
         }
     }

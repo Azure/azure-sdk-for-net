@@ -7,74 +7,43 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
     /// <summary> A data connection check name availability request. </summary>
     public partial class KustoDataConnectionNameAvailabilityContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KustoDataConnectionNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Data Connection name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Kusto/clusters/databases/dataConnections. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public KustoDataConnectionNameAvailabilityContent(string name)
+        public KustoDataConnectionNameAvailabilityContent(string name, KustoDataConnectionType resourceType)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            ResourceType = KustoDataConnectionType.MicrosoftKustoClustersDatabasesDataConnections;
+            ResourceType = resourceType;
         }
 
         /// <summary> Initializes a new instance of <see cref="KustoDataConnectionNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Data Connection name. </param>
         /// <param name="resourceType"> The type of resource, Microsoft.Kusto/clusters/databases/dataConnections. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KustoDataConnectionNameAvailabilityContent(string name, KustoDataConnectionType resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal KustoDataConnectionNameAvailabilityContent(string name, KustoDataConnectionType resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ResourceType = resourceType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="KustoDataConnectionNameAvailabilityContent"/> for deserialization. </summary>
-        internal KustoDataConnectionNameAvailabilityContent()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Data Connection name. </summary>
         [WirePath("name")]
         public string Name { get; }
+
         /// <summary> The type of resource, Microsoft.Kusto/clusters/databases/dataConnections. </summary>
         [WirePath("type")]
         public KustoDataConnectionType ResourceType { get; }

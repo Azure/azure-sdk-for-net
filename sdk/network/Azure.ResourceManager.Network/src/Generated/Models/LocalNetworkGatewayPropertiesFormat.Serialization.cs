@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("localNetworkAddressSpace"u8);
                 writer.WriteObjectValue(LocalNetworkAddressSpace, options);
             }
-            if (Optional.IsDefined(GatewayIpAddress))
+            if (Optional.IsDefined(GatewayIPAddress))
             {
                 writer.WritePropertyName("gatewayIpAddress"u8);
-                writer.WriteStringValue(GatewayIpAddress);
+                writer.WriteStringValue(GatewayIPAddress);
             }
             if (Optional.IsDefined(Fqdn))
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             VirtualNetworkAddressSpace localNetworkAddressSpace = default;
-            string gatewayIpAddress = default;
+            string gatewayIPAddress = default;
             string fqdn = default;
             BgpSettings bgpSettings = default;
             Guid? resourceGuid = default;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("gatewayIpAddress"u8))
                 {
-                    gatewayIpAddress = prop.Value.GetString();
+                    gatewayIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("fqdn"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             return new LocalNetworkGatewayPropertiesFormat(
                 localNetworkAddressSpace,
-                gatewayIpAddress,
+                gatewayIPAddress,
                 fqdn,
                 bgpSettings,
                 resourceGuid,

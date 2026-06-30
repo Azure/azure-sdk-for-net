@@ -197,6 +197,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("snapshotAccessState"u8);
                 writer.WriteStringValue(SnapshotAccessState.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(ImmutabilityPolicy))
+            {
+                writer.WritePropertyName("immutabilityPolicy"u8);
+                writer.WriteObjectValue(ImmutabilityPolicy, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -263,6 +268,7 @@ namespace Azure.ResourceManager.Compute.Models
             CopyCompletionError copyCompletionError = default;
             DataAccessAuthMode? dataAccessAuthMode = default;
             SnapshotAccessState? snapshotAccessState = default;
+            ImmutabilityPolicy immutabilityPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -466,6 +472,15 @@ namespace Azure.ResourceManager.Compute.Models
                     snapshotAccessState = new SnapshotAccessState(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("immutabilityPolicy"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    immutabilityPolicy = ImmutabilityPolicy.DeserializeImmutabilityPolicy(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -496,6 +511,7 @@ namespace Azure.ResourceManager.Compute.Models
                 copyCompletionError,
                 dataAccessAuthMode,
                 snapshotAccessState,
+                immutabilityPolicy,
                 additionalBinaryDataProperties);
         }
     }

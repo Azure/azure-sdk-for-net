@@ -8,46 +8,18 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> API base contract details. </summary>
     public partial class ApiEntityBaseContract
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiEntityBaseContract"/>. </summary>
-        internal ApiEntityBaseContract()
+        public ApiEntityBaseContract()
         {
         }
 
@@ -67,8 +39,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="termsOfServiceLink"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
         /// <param name="contact"> Contact information for the API. </param>
         /// <param name="license"> License information for the API. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiEntityBaseContract(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="mcpProperties"> Properties specific to MCP API type. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApiEntityBaseContract(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, McpProperties mcpProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             AuthenticationSettings = authenticationSettings;
@@ -85,53 +58,72 @@ namespace Azure.ResourceManager.ApiManagement.Models
             TermsOfServiceLink = termsOfServiceLink;
             Contact = contact;
             License = license;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            McpProperties = mcpProperties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Description of the API. May include HTML formatting tags. </summary>
         [WirePath("description")]
-        public string Description { get; }
+        public string Description { get; set; }
+
         /// <summary> Collection of authentication settings included into this API. </summary>
         [WirePath("authenticationSettings")]
-        public AuthenticationSettingsContract AuthenticationSettings { get; }
+        public AuthenticationSettingsContract AuthenticationSettings { get; set; }
+
         /// <summary> Protocols over which API is made available. </summary>
         [WirePath("subscriptionKeyParameterNames")]
-        public SubscriptionKeyParameterNamesContract SubscriptionKeyParameterNames { get; }
+        public SubscriptionKeyParameterNamesContract SubscriptionKeyParameterNames { get; set; }
+
         /// <summary> Type of API. </summary>
         [WirePath("type")]
-        public ApiType? ApiType { get; }
+        public ApiType? ApiType { get; set; }
+
         /// <summary> Describes the revision of the API. If no value is provided, default revision 1 is created. </summary>
         [WirePath("apiRevision")]
-        public string ApiRevision { get; }
+        public string ApiRevision { get; set; }
+
         /// <summary> Indicates the version identifier of the API if the API is versioned. </summary>
         [WirePath("apiVersion")]
-        public string ApiVersion { get; }
+        public string ApiVersion { get; set; }
+
         /// <summary> Indicates if API revision is current api revision. </summary>
         [WirePath("isCurrent")]
-        public bool? IsCurrent { get; }
+        public bool? IsCurrent { get; set; }
+
         /// <summary> Indicates if API revision is accessible via the gateway. </summary>
         [WirePath("isOnline")]
         public bool? IsOnline { get; }
+
         /// <summary> Description of the API Revision. </summary>
         [WirePath("apiRevisionDescription")]
-        public string ApiRevisionDescription { get; }
+        public string ApiRevisionDescription { get; set; }
+
         /// <summary> Description of the API Version. </summary>
         [WirePath("apiVersionDescription")]
-        public string ApiVersionDescription { get; }
+        public string ApiVersionDescription { get; set; }
+
         /// <summary> A resource identifier for the related ApiVersionSet. </summary>
         [WirePath("apiVersionSetId")]
-        public ResourceIdentifier ApiVersionSetId { get; }
+        public ResourceIdentifier ApiVersionSetId { get; set; }
+
         /// <summary> Specifies whether an API or Product subscription is required for accessing the API. </summary>
         [WirePath("subscriptionRequired")]
-        public bool? IsSubscriptionRequired { get; }
+        public bool? IsSubscriptionRequired { get; set; }
+
         /// <summary> A URL to the Terms of Service for the API. MUST be in the format of a URL. </summary>
         [WirePath("termsOfServiceUrl")]
-        public string TermsOfServiceLink { get; }
+        public string TermsOfServiceLink { get; set; }
+
         /// <summary> Contact information for the API. </summary>
         [WirePath("contact")]
-        public ApiContactInformation Contact { get; }
+        public ApiContactInformation Contact { get; set; }
+
         /// <summary> License information for the API. </summary>
         [WirePath("license")]
-        public ApiLicenseInformation License { get; }
+        public ApiLicenseInformation License { get; set; }
+
+        /// <summary> Properties specific to MCP API type. </summary>
+        [WirePath("mcpProperties")]
+        public McpProperties McpProperties { get; set; }
     }
 }

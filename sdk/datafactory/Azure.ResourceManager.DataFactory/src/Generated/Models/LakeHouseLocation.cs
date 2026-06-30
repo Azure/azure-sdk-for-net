@@ -15,19 +15,17 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class LakeHouseLocation : DatasetLocation
     {
         /// <summary> Initializes a new instance of <see cref="LakeHouseLocation"/>. </summary>
-        public LakeHouseLocation()
+        public LakeHouseLocation() : base("LakeHouseLocation")
         {
-            DatasetLocationType = "LakeHouseLocation";
         }
 
         /// <summary> Initializes a new instance of <see cref="LakeHouseLocation"/>. </summary>
         /// <param name="datasetLocationType"> Type of dataset storage location. </param>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         internal LakeHouseLocation(string datasetLocationType, DataFactoryElement<string> folderPath, DataFactoryElement<string> fileName, IDictionary<string, BinaryData> additionalProperties) : base(datasetLocationType, folderPath, fileName, additionalProperties)
         {
-            DatasetLocationType = datasetLocationType ?? "LakeHouseLocation";
         }
     }
 }

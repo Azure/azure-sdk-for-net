@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     internal static partial class SqlNameUnavailableReasonExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SqlNameUnavailableReason value) => value switch
         {
             SqlNameUnavailableReason.Invalid => "Invalid",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Sql.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SqlNameUnavailableReason value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static SqlNameUnavailableReason ToSqlNameUnavailableReason(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid")) return SqlNameUnavailableReason.Invalid;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AlreadyExists")) return SqlNameUnavailableReason.AlreadyExists;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid"))
+            {
+                return SqlNameUnavailableReason.Invalid;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AlreadyExists"))
+            {
+                return SqlNameUnavailableReason.AlreadyExists;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SqlNameUnavailableReason value.");
         }
     }

@@ -8,16 +8,59 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class WorkspaceConnectionOAuth2 : IUtf8JsonSerializable, IJsonModel<WorkspaceConnectionOAuth2>
+    /// <summary>
+    /// ClientId and ClientSecret are required. Other properties are optional
+    /// depending on each OAuth2 provider's implementation.
+    /// </summary>
+    public partial class WorkspaceConnectionOAuth2 : IJsonModel<WorkspaceConnectionOAuth2>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkspaceConnectionOAuth2>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual WorkspaceConnectionOAuth2 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WorkspaceConnectionOAuth2>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeWorkspaceConnectionOAuth2(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WorkspaceConnectionOAuth2)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WorkspaceConnectionOAuth2>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(WorkspaceConnectionOAuth2)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<WorkspaceConnectionOAuth2>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WorkspaceConnectionOAuth2 IPersistableModel<WorkspaceConnectionOAuth2>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WorkspaceConnectionOAuth2>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WorkspaceConnectionOAuth2>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +72,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WorkspaceConnectionOAuth2>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkspaceConnectionOAuth2>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WorkspaceConnectionOAuth2)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(AuthUri))
             {
                 writer.WritePropertyName("authUrl"u8);
@@ -75,15 +117,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -92,27 +134,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        WorkspaceConnectionOAuth2 IJsonModel<WorkspaceConnectionOAuth2>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WorkspaceConnectionOAuth2 IJsonModel<WorkspaceConnectionOAuth2>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual WorkspaceConnectionOAuth2 JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WorkspaceConnectionOAuth2>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkspaceConnectionOAuth2>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WorkspaceConnectionOAuth2)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeWorkspaceConnectionOAuth2(document.RootElement, options);
         }
 
-        internal static WorkspaceConnectionOAuth2 DeserializeWorkspaceConnectionOAuth2(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static WorkspaceConnectionOAuth2 DeserializeWorkspaceConnectionOAuth2(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Uri authUrl = default;
+            Uri authUri = default;
             Guid? clientId = default;
             string clientSecret = default;
             string developerToken = default;
@@ -120,70 +167,68 @@ namespace Azure.ResourceManager.MachineLearning.Models
             string refreshToken = default;
             Guid? tenantId = default;
             string username = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("authUrl"u8))
+                if (prop.NameEquals("authUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    authUrl = new Uri(property.Value.GetString());
+                    authUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
-                if (property.NameEquals("clientId"u8))
+                if (prop.NameEquals("clientId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    clientId = property.Value.GetGuid();
+                    clientId = new Guid(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("clientSecret"u8))
+                if (prop.NameEquals("clientSecret"u8))
                 {
-                    clientSecret = property.Value.GetString();
+                    clientSecret = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("developerToken"u8))
+                if (prop.NameEquals("developerToken"u8))
                 {
-                    developerToken = property.Value.GetString();
+                    developerToken = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("password"u8))
+                if (prop.NameEquals("password"u8))
                 {
-                    password = property.Value.GetString();
+                    password = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("refreshToken"u8))
+                if (prop.NameEquals("refreshToken"u8))
                 {
-                    refreshToken = property.Value.GetString();
+                    refreshToken = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tenantId"u8))
+                if (prop.NameEquals("tenantId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    tenantId = property.Value.GetGuid();
+                    tenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("username"u8))
+                if (prop.NameEquals("username"u8))
                 {
-                    username = property.Value.GetString();
+                    username = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new WorkspaceConnectionOAuth2(
-                authUrl,
+                authUri,
                 clientId,
                 clientSecret,
                 developerToken,
@@ -191,215 +236,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 refreshToken,
                 tenantId,
                 username,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthUri), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  authUrl: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AuthUri))
-                {
-                    builder.Append("  authUrl: ");
-                    builder.AppendLine($"'{AuthUri.AbsoluteUri}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  clientId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ClientId))
-                {
-                    builder.Append("  clientId: ");
-                    builder.AppendLine($"'{ClientId.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientSecret), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  clientSecret: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ClientSecret))
-                {
-                    builder.Append("  clientSecret: ");
-                    if (ClientSecret.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ClientSecret}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ClientSecret}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeveloperToken), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  developerToken: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DeveloperToken))
-                {
-                    builder.Append("  developerToken: ");
-                    if (DeveloperToken.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DeveloperToken}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DeveloperToken}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Password), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  password: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Password))
-                {
-                    builder.Append("  password: ");
-                    if (Password.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Password}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Password}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RefreshToken), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  refreshToken: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RefreshToken))
-                {
-                    builder.Append("  refreshToken: ");
-                    if (RefreshToken.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{RefreshToken}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{RefreshToken}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  tenantId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TenantId))
-                {
-                    builder.Append("  tenantId: ");
-                    builder.AppendLine($"'{TenantId.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Username), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  username: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Username))
-                {
-                    builder.Append("  username: ");
-                    if (Username.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Username}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Username}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<WorkspaceConnectionOAuth2>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<WorkspaceConnectionOAuth2>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(WorkspaceConnectionOAuth2)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        WorkspaceConnectionOAuth2 IPersistableModel<WorkspaceConnectionOAuth2>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<WorkspaceConnectionOAuth2>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeWorkspaceConnectionOAuth2(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(WorkspaceConnectionOAuth2)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<WorkspaceConnectionOAuth2>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

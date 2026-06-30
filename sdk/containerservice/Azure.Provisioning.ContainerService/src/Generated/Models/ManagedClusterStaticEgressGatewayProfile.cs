@@ -40,6 +40,10 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _isStaticEgressGatewayAddonEnabled = DefineProperty<bool>(nameof(IsStaticEgressGatewayAddonEnabled), new string[] { "enabled" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterStaticEgressGatewayProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

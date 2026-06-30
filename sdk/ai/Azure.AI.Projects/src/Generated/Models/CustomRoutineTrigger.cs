@@ -15,7 +15,7 @@ namespace Azure.AI.Projects
         /// <param name="provider"> The external provider that emits the custom event. </param>
         /// <param name="parameters"> Provider-specific trigger parameters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/> or <paramref name="parameters"/> is null. </exception>
-        public CustomRoutineTrigger(string provider, IDictionary<string, BinaryData> parameters) : base(RoutineTriggerType.Custom)
+        public CustomRoutineTrigger(string provider, IDictionary<string, BinaryData> parameters) : base(RoutineTriggerKind.Custom)
         {
             Argument.AssertNotNull(provider, nameof(provider));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -30,7 +30,7 @@ namespace Azure.AI.Projects
         /// <param name="provider"> The external provider that emits the custom event. </param>
         /// <param name="eventName"> The provider-specific event name that fires the routine. </param>
         /// <param name="parameters"> Provider-specific trigger parameters. </param>
-        internal CustomRoutineTrigger(RoutineTriggerType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string provider, string eventName, IDictionary<string, BinaryData> parameters) : base(@type, additionalBinaryDataProperties)
+        internal CustomRoutineTrigger(RoutineTriggerKind @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string provider, string eventName, IDictionary<string, BinaryData> parameters) : base(@type, additionalBinaryDataProperties)
         {
             Provider = provider;
             EventName = eventName;

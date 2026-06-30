@@ -10,13 +10,55 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class DataCollectionRuleStorageTableDestination : IUtf8JsonSerializable, IJsonModel<DataCollectionRuleStorageTableDestination>
+    /// <summary> The DataCollectionRuleStorageTableDestination. </summary>
+    public partial class DataCollectionRuleStorageTableDestination : IJsonModel<DataCollectionRuleStorageTableDestination>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCollectionRuleStorageTableDestination>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataCollectionRuleStorageTableDestination PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleStorageTableDestination>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataCollectionRuleStorageTableDestination(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataCollectionRuleStorageTableDestination)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleStorageTableDestination>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataCollectionRuleStorageTableDestination)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataCollectionRuleStorageTableDestination>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataCollectionRuleStorageTableDestination IPersistableModel<DataCollectionRuleStorageTableDestination>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataCollectionRuleStorageTableDestination>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataCollectionRuleStorageTableDestination>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +70,11 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleStorageTableDestination>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleStorageTableDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataCollectionRuleStorageTableDestination)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("tableName"u8);
@@ -49,15 +90,15 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -66,22 +107,27 @@ namespace Azure.ResourceManager.Monitor.Models
             }
         }
 
-        DataCollectionRuleStorageTableDestination IJsonModel<DataCollectionRuleStorageTableDestination>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataCollectionRuleStorageTableDestination IJsonModel<DataCollectionRuleStorageTableDestination>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataCollectionRuleStorageTableDestination JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleStorageTableDestination>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleStorageTableDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataCollectionRuleStorageTableDestination)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataCollectionRuleStorageTableDestination(document.RootElement, options);
         }
 
-        internal static DataCollectionRuleStorageTableDestination DeserializeDataCollectionRuleStorageTableDestination(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataCollectionRuleStorageTableDestination DeserializeDataCollectionRuleStorageTableDestination(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -89,67 +135,34 @@ namespace Azure.ResourceManager.Monitor.Models
             string tableName = default;
             ResourceIdentifier storageAccountResourceId = default;
             string name = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("tableName"u8))
+                if (prop.NameEquals("tableName"u8))
                 {
-                    tableName = property.Value.GetString();
+                    tableName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("storageAccountResourceId"u8))
+                if (prop.NameEquals("storageAccountResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    storageAccountResourceId = new ResourceIdentifier(property.Value.GetString());
+                    storageAccountResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DataCollectionRuleStorageTableDestination(tableName, storageAccountResourceId, name, serializedAdditionalRawData);
+            return new DataCollectionRuleStorageTableDestination(tableName, storageAccountResourceId, name, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<DataCollectionRuleStorageTableDestination>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleStorageTableDestination>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataCollectionRuleStorageTableDestination)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DataCollectionRuleStorageTableDestination IPersistableModel<DataCollectionRuleStorageTableDestination>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleStorageTableDestination>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDataCollectionRuleStorageTableDestination(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataCollectionRuleStorageTableDestination)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DataCollectionRuleStorageTableDestination>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

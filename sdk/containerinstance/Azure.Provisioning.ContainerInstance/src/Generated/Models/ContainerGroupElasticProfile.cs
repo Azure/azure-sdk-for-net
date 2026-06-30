@@ -91,6 +91,10 @@ namespace Azure.Provisioning.ContainerInstance
             _desiredCount = DefineProperty<int>(nameof(DesiredCount), new string[] { "desiredCount" });
             _maintainDesiredCount = DefineProperty<bool>(nameof(MaintainDesiredCount), new string[] { "maintainDesiredCount" });
             _containerGroupNamingPolicy = DefineModelProperty<ElasticProfileContainerGroupNamingPolicy>(nameof(ContainerGroupNamingPolicy), new string[] { "containerGroupNamingPolicy" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerGroupElasticProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

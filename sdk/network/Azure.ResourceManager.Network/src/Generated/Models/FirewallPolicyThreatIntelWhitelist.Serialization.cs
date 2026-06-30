@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 throw new FormatException($"The model {nameof(FirewallPolicyThreatIntelWhitelist)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(IpAddresses))
+            if (Optional.IsCollectionDefined(IPAddresses))
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
-                foreach (string item in IpAddresses)
+                foreach (string item in IPAddresses)
                 {
                     if (item == null)
                     {

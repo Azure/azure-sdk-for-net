@@ -380,20 +380,20 @@ namespace Azure.AI.Projects
         /// <summary> Represents a request for a pending upload of a model version. </summary>
         /// <param name="pendingUploadId"> If PendingUploadId is not provided, a random GUID will be used. </param>
         /// <param name="connectionName"> Azure Storage Account connection name to use for generating temporary SAS token. </param>
-        /// <returns> A new <see cref="Projects.ModelPendingUploadRequest"/> instance for mocking. </returns>
-        public static ModelPendingUploadRequest ModelPendingUploadRequest(string pendingUploadId = default, string connectionName = default)
+        /// <returns> A new <see cref="Projects.ModelPendingUploadContent"/> instance for mocking. </returns>
+        public static ModelPendingUploadContent ModelPendingUploadContent(string pendingUploadId = default, string connectionName = default)
         {
-            return new ModelPendingUploadRequest(pendingUploadId, connectionName, "TemporaryBlobReference", additionalBinaryDataProperties: null);
+            return new ModelPendingUploadContent(pendingUploadId, connectionName, "TemporaryBlobReference", additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents the response for a model pending upload request. </summary>
         /// <param name="blobReference"> Container-level read, write, list SAS. </param>
         /// <param name="pendingUploadId"> ID for this upload request. </param>
         /// <param name="version"> Version of asset to be created if user did not specify version when initially creating upload. </param>
-        /// <returns> A new <see cref="Projects.ModelPendingUploadResponse"/> instance for mocking. </returns>
-        public static ModelPendingUploadResponse ModelPendingUploadResponse(AIProjectBlobReference blobReference = default, string pendingUploadId = default, string version = default)
+        /// <returns> A new <see cref="Projects.ModelPendingUploadResult"/> instance for mocking. </returns>
+        public static ModelPendingUploadResult ModelPendingUploadResult(AIProjectBlobReference blobReference = default, string pendingUploadId = default, string version = default)
         {
-            return new ModelPendingUploadResponse(blobReference, pendingUploadId, version, "TemporaryBlobReference", additionalBinaryDataProperties: null);
+            return new ModelPendingUploadResult(blobReference, pendingUploadId, version, "TemporaryBlobReference", additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -726,11 +726,11 @@ namespace Azure.AI.Projects
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <returns> A new <see cref="Evaluation.EvaluatorVersion"/> instance for mocking. </returns>
-        public static EvaluatorVersion EvaluatorVersion(string displayName = default, IDictionary<string, string> metadata = default, EvaluatorType evaluatorType = default, IEnumerable<EvaluatorCategory> categories = default, IEnumerable<EvaluationLevel> supportedEvaluationLevels = default, EvaluatorDefinition definition = default, EvaluatorGenerationArtifacts generationArtifacts = default, string createdBy = default, string createdAt = default, string modifiedAt = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
+        public static EvaluatorVersion EvaluatorVersion(string displayName = default, IDictionary<string, string> metadata = default, EvaluatorType evaluatorType = default, IEnumerable<EvaluatorCategory> categories = default, IEnumerable<ProjectsEvaluationLevel> supportedEvaluationLevels = default, EvaluatorDefinition definition = default, EvaluatorGenerationArtifacts generationArtifacts = default, string createdBy = default, string createdAt = default, string modifiedAt = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
             categories ??= new ChangeTrackingList<EvaluatorCategory>();
-            supportedEvaluationLevels ??= new ChangeTrackingList<EvaluationLevel>();
+            supportedEvaluationLevels ??= new ChangeTrackingList<ProjectsEvaluationLevel>();
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new EvaluatorVersion(
@@ -754,7 +754,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Base evaluator configuration with discriminator
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.CodeBasedEvaluatorDefinition"/>, <see cref="Evaluation.PromptBasedEvaluatorDefinition"/>, and <see cref="Projects.RubricBasedEvaluatorDefinition"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.CodeBasedEvaluatorDefinition"/>, <see cref="Evaluation.PromptBasedEvaluatorDefinition"/>, <see cref="Projects.RubricBasedEvaluatorDefinition"/>, and <see cref="Evaluation.EndpointBasedEvaluatorDefinition"/>.
         /// </summary>
         /// <param name="type"> The type of evaluator definition. </param>
         /// <param name="initParameters"> The JSON schema (Draft 2020-12) for the evaluator's input parameters. This includes parameters like type, properties, required. </param>
@@ -858,22 +858,41 @@ namespace Azure.AI.Projects
         /// <param name="id"> Stable identifier for this dimension (snake_case, e.g., `correct_resolution`). Required. Provided by the user when manually creating a rubric evaluator or during human-in-the-loop review of a generated set; the generation pipeline produces an initial value the user can edit. Editable when saving new versions. </param>
         /// <param name="description"> What this dimension measures (e.g., 'Correctly identifies the user's reservation intent and pursues the appropriate workflow'). </param>
         /// <param name="weight"> Relative weight of this dimension (1-10). The generation pipeline assigns exactly one dimension weight 8-10; all others use 1-6. User edits are not constrained by this heuristic. </param>
-        /// <param name="alwaysApplicable"> When true, the LLM judge always scores this dimension regardless of relevance (skips applicability assessment). The service-generated general quality/policy dimension has this set to true and is non-editable. Users may set this on their own custom dimensions. The service defaults to `false` if a value is not specified by the caller. </param>
+        /// <param name="isAlwaysApplicable"> When true, the LLM judge always scores this dimension regardless of relevance (skips applicability assessment). The service-generated general quality/policy dimension has this set to true and is non-editable. Users may set this on their own custom dimensions. The service defaults to `false` if a value is not specified by the caller. </param>
         /// <returns> A new <see cref="Evaluation.EvaluationsDimension"/> instance for mocking. </returns>
-        public static EvaluationsDimension EvaluationsDimension(string id = default, string description = default, int weight = default, bool? alwaysApplicable = default)
+        public static EvaluationsDimension EvaluationsDimension(string id = default, string description = default, int weight = default, bool? isAlwaysApplicable = default)
         {
-            return new EvaluationsDimension(id, description, weight, alwaysApplicable, additionalBinaryDataProperties: null);
+            return new EvaluationsDimension(id, description, weight, isAlwaysApplicable, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Endpoint-based evaluator definition. The customer owns and hosts an HTTP endpoint that implements the evaluation contract. The evaluator references a Project Connection by name; the connection stores the endpoint URL and credentials (API Key or Entra ID). At execution time, the service resolves the connection to obtain the endpoint URL and authentication details, then calls the endpoint for each evaluation row. </summary>
+        /// <param name="initParameters"> The JSON schema (Draft 2020-12) for the evaluator's input parameters. This includes parameters like type, properties, required. </param>
+        /// <param name="dataSchema"> The JSON schema (Draft 2020-12) for the evaluator's input data. This includes parameters like type, properties, required. </param>
+        /// <param name="metrics"> List of output metrics produced by this evaluator. </param>
+        /// <param name="connectionName"> Name of the Project Connection that stores the endpoint URL and credentials. The connection must exist on the project and have a non-empty target URL. Supported auth types: ApiKey (sends `api-key` header) and AAD/Entra ID (acquires a bearer token via the project's Managed Identity). </param>
+        /// <returns> A new <see cref="Evaluation.EndpointBasedEvaluatorDefinition"/> instance for mocking. </returns>
+        public static EndpointBasedEvaluatorDefinition EndpointBasedEvaluatorDefinition(BinaryData initParameters = default, BinaryData dataSchema = default, IDictionary<string, EvaluatorMetric> metrics = default, string connectionName = default)
+        {
+            metrics ??= new ChangeTrackingDictionary<string, EvaluatorMetric>();
+
+            return new EndpointBasedEvaluatorDefinition(
+                EvaluatorDefinitionType.Endpoint,
+                initParameters,
+                dataSchema,
+                metrics,
+                additionalBinaryDataProperties: null,
+                connectionName);
         }
 
         /// <summary> Service-managed provenance artifacts produced by an evaluator generation job. Present only on EvaluatorVersion resources created via the generation pipeline. The combined-JSONL Foundry Dataset is read-only and resolves to a versioned dataset in a service-reserved namespace. </summary>
-        /// <param name="dataset"> Reference to the single Foundry Dataset (one combined JSONL file, version-aligned to `EvaluatorVersion.version`) holding all artifacts produced by the generation pipeline. Each row in the JSONL carries a `kind` field discriminating its content (e.g. `spec`, `tools`, `context`). </param>
-        /// <param name="kinds"> The kinds of rows present in `dataset`. Always contains `"spec"` (the generated evaluation specification, a Markdown document describing what the evaluator measures). May additionally contain `"tools"` (when the generation pipeline produced or inferred OpenAI tool schemas) and/or `"context"` (when supplementary materials such as file uploads or trace samples were used during generation). </param>
-        /// <returns> A new <see cref="Projects.EvaluatorGenerationArtifacts"/> instance for mocking. </returns>
-        public static EvaluatorGenerationArtifacts EvaluatorGenerationArtifacts(DatasetReference dataset = default, IEnumerable<string> kinds = default)
+        /// <param name="reference"> Reference to the single Foundry Dataset (one combined JSONL file, version-aligned to `EvaluatorVersion.version`) holding all artifacts produced by the generation pipeline. Each row in the JSONL carries a `kind` field discriminating its content (e.g. `spec`, `tools`, `context`). </param>
+        /// <param name="datasetRowKinds"> The kinds of rows present in `dataset`. Always contains `"spec"` (the generated evaluation specification, a Markdown document describing what the evaluator measures). May additionally contain `"tools"` (when the generation pipeline produced or inferred OpenAI tool schemas) and/or `"context"` (when supplementary materials such as file uploads or trace samples were used during generation). </param>
+        /// <returns> A new <see cref="Evaluation.EvaluatorGenerationArtifacts"/> instance for mocking. </returns>
+        public static EvaluatorGenerationArtifacts EvaluatorGenerationArtifacts(DatasetReference reference = default, IEnumerable<string> datasetRowKinds = default)
         {
-            kinds ??= new ChangeTrackingList<string>();
+            datasetRowKinds ??= new ChangeTrackingList<string>();
 
-            return new EvaluatorGenerationArtifacts(dataset, kinds.ToList(), additionalBinaryDataProperties: null);
+            return new EvaluatorGenerationArtifacts(reference, datasetRowKinds.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Reference to a versioned Foundry Dataset. </summary>
@@ -887,10 +906,10 @@ namespace Azure.AI.Projects
 
         /// <summary> Request body for getting evaluator credentials. </summary>
         /// <param name="blobUri"> The blob URI for the evaluator storage. Example: `https://account.blob.core.windows.net:443/container`. </param>
-        /// <returns> A new <see cref="Projects.EvaluatorCredentialRequest"/> instance for mocking. </returns>
-        public static EvaluatorCredentialRequest EvaluatorCredentialRequest(Uri blobUri = default)
+        /// <returns> A new <see cref="Evaluation.EvaluationCredentialContent"/> instance for mocking. </returns>
+        public static EvaluationCredentialContent EvaluationCredentialContent(Uri blobUri = default)
         {
-            return new EvaluatorCredentialRequest(blobUri, additionalBinaryDataProperties: null);
+            return new EvaluationCredentialContent(blobUri, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Caller-supplied inputs for an evaluator generation job. </summary>
@@ -898,9 +917,9 @@ namespace Azure.AI.Projects
         /// <param name="model"> The LLM model to use for rubric generation (e.g., 'gpt-4o'). Required — users must provide their own model rather than relying on service-owned capacity. </param>
         /// <param name="evaluatorName"> The evaluator name (immutable identifier). 1-256 characters; allowed characters are ASCII letters, digits, underscore (`_`), period (`.`), tilde (`~`), and hyphen (`-`). The prefix `builtin.` is reserved for system-managed evaluators and is rejected by the service. If an evaluator with this name already exists in the project (and is rubric-subtype), the service creates a new version under the same name and uses the prior version's `dimensions` as context for incremental improvement (foundation of the post-//build adaptive loop). Old versions remain queryable via `get_version(name, version)`. If the existing evaluator is not a rubric-subtype evaluator (built-in, prompt-based, code-based), the request is rejected with `400 Bad Request`. </param>
         /// <param name="evaluatorDisplayName"> Optional human-friendly display name for the resulting evaluator. Surfaced as `EvaluatorVersion.display_name` on the persisted evaluator. When omitted, the service uses `evaluator_name` as the display name. The `evaluator_` prefix disambiguates this from the immutable `evaluator_name` identifier. </param>
-        /// <param name="evaluatorDescription"> Optional human-friendly description for the resulting evaluator. Surfaced as `EvaluatorVersion.description` on the persisted evaluator. Typically collected from the UI alongside `evaluator_display_name`. The `evaluator_` prefix disambiguates this from any other description fields on related models. </param>
-        /// <returns> A new <see cref="Projects.EvaluatorGenerationInputs"/> instance for mocking. </returns>
-        public static EvaluatorGenerationInputs EvaluatorGenerationInputs(IEnumerable<EvaluatorGenerationJobSource> sources = default, string model = default, string evaluatorName = default, string evaluatorDisplayName = default, string evaluatorDescription = default)
+        /// <param name="description"> Optional human-friendly description for the resulting evaluator. Surfaced as `EvaluatorVersion.description` on the persisted evaluator. Typically collected from the UI alongside `evaluator_display_name`. The `evaluator_` prefix disambiguates this from any other description fields on related models. </param>
+        /// <returns> A new <see cref="Evaluation.EvaluatorGenerationInputs"/> instance for mocking. </returns>
+        public static EvaluatorGenerationInputs EvaluatorGenerationInputs(IEnumerable<EvaluatorGenerationJobSource> sources = default, string model = default, string evaluatorName = default, string evaluatorDisplayName = default, string description = default)
         {
             sources ??= new ChangeTrackingList<EvaluatorGenerationJobSource>();
 
@@ -909,7 +928,7 @@ namespace Azure.AI.Projects
                 model,
                 evaluatorName,
                 evaluatorDisplayName,
-                evaluatorDescription,
+                description,
                 additionalBinaryDataProperties: null);
         }
 
@@ -918,7 +937,7 @@ namespace Azure.AI.Projects
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.PromptEvaluatorGenerationJobSource"/>, <see cref="Projects.AgentEvaluatorGenerationJobSource"/>, <see cref="Projects.TracesEvaluatorGenerationJobSource"/>, and <see cref="Projects.DatasetEvaluatorGenerationJobSource"/>.
         /// </summary>
         /// <param name="type"> The type of source. </param>
-        /// <returns> A new <see cref="Projects.EvaluatorGenerationJobSource"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.EvaluatorGenerationJobSource"/> instance for mocking. </returns>
         public static EvaluatorGenerationJobSource EvaluatorGenerationJobSource(string @type = default)
         {
             return new UnknownEvaluatorGenerationJobSource(new EvaluatorGenerationJobSourceType(@type), additionalBinaryDataProperties: null);
@@ -948,10 +967,10 @@ namespace Azure.AI.Projects
         /// <param name="agentId"> The unique agent ID used to filter traces. Provide either `agent_id` or `agent_name` — at least one is required. </param>
         /// <param name="agentName"> The agent name to fetch traces for. Provide either `agent_id` or `agent_name` — at least one is required. </param>
         /// <param name="agentVersion"> The agent version. If not specified, traces for ALL versions of the agent are included within the time window. </param>
-        /// <param name="startTime"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
-        /// <param name="endTime"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
+        /// <param name="startAt"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
+        /// <param name="endAt"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
         /// <returns> A new <see cref="Projects.TracesEvaluatorGenerationJobSource"/> instance for mocking. </returns>
-        public static TracesEvaluatorGenerationJobSource TracesEvaluatorGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startTime = default, DateTimeOffset? endTime = default)
+        public static TracesEvaluatorGenerationJobSource TracesEvaluatorGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startAt = default, DateTimeOffset? endAt = default)
         {
             return new TracesEvaluatorGenerationJobSource(
                 EvaluatorGenerationJobSourceType.Traces,
@@ -960,8 +979,8 @@ namespace Azure.AI.Projects
                 agentId,
                 agentName,
                 agentVersion,
-                startTime,
-                endTime);
+                startAt,
+                endAt);
         }
 
         /// <summary> Dataset source for evaluator generation jobs — reference to a dataset. </summary>
@@ -978,7 +997,7 @@ namespace Azure.AI.Projects
         /// <param name="inputTokens"> Number of input (prompt) tokens consumed. </param>
         /// <param name="outputTokens"> Number of output (completion) tokens generated. </param>
         /// <param name="totalTokens"> Total tokens consumed (input + output). </param>
-        /// <returns> A new <see cref="Projects.EvaluatorGenerationTokenUsage"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.EvaluatorGenerationTokenUsage"/> instance for mocking. </returns>
         public static EvaluatorGenerationTokenUsage EvaluatorGenerationTokenUsage(long inputTokens = default, long outputTokens = default, long totalTokens = default)
         {
             return new EvaluatorGenerationTokenUsage(inputTokens, outputTokens, totalTokens, additionalBinaryDataProperties: null);
@@ -1513,16 +1532,16 @@ namespace Azure.AI.Projects
         /// <param name="isUserProfileEnabled"> Whether to enable user profile extraction and storage. Default is true. </param>
         /// <param name="userProfileDetails"> Specific categories or types of user profile information to extract and store. </param>
         /// <param name="isChatSummaryEnabled"> Whether to enable chat summary extraction and storage. Defaults to `true`. </param>
-        /// <param name="proceduralMemoryEnabled"> Whether to enable procedural memory extraction and storage. The service defaults to `true` if a value is not specified by the caller. </param>
+        /// <param name="isProceduralMemoryEnabled"> Whether to enable procedural memory extraction and storage. The service defaults to `true` if a value is not specified by the caller. </param>
         /// <param name="defaultTtlSeconds"> The default time-to-live for memories in seconds. A value of `0` indicates that memories do not expire. Defaults to `0`. </param>
         /// <returns> A new <see cref="Memory.MemoryStoreDefaultOptions"/> instance for mocking. </returns>
-        public static MemoryStoreDefaultOptions MemoryStoreDefaultOptions(bool isUserProfileEnabled = default, string userProfileDetails = default, bool isChatSummaryEnabled = default, bool? proceduralMemoryEnabled = default, TimeSpan? defaultTtlSeconds = default)
+        public static MemoryStoreDefaultOptions MemoryStoreDefaultOptions(bool isUserProfileEnabled = default, string userProfileDetails = default, bool isChatSummaryEnabled = default, bool? isProceduralMemoryEnabled = default, TimeSpan? defaultTtlSeconds = default)
         {
             return new MemoryStoreDefaultOptions(
                 isUserProfileEnabled,
                 userProfileDetails,
                 isChatSummaryEnabled,
-                proceduralMemoryEnabled,
+                isProceduralMemoryEnabled,
                 defaultTtlSeconds,
                 additionalBinaryDataProperties: null);
         }
@@ -1747,10 +1766,10 @@ namespace Azure.AI.Projects
         /// <summary> Response for deleting a memory item from a memory store. </summary>
         /// <param name="memoryId"> The unique ID of the deleted memory item. </param>
         /// <param name="deleted"> Whether the memory item was successfully deleted. </param>
-        /// <returns> A new <see cref="Projects.DeleteMemoryResponse"/> instance for mocking. </returns>
-        public static DeleteMemoryResponse DeleteMemoryResponse(string memoryId = default, bool deleted = default)
+        /// <returns> A new <see cref="Projects.MemoryDeletionResult"/> instance for mocking. </returns>
+        public static MemoryDeletionResult MemoryDeletionResult(string memoryId = default, bool deleted = default)
         {
-            return new DeleteMemoryResponse("memory_store.item.deleted", memoryId, deleted, additionalBinaryDataProperties: null);
+            return new MemoryDeletionResult("memory_store.item.deleted", memoryId, deleted, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -1761,7 +1780,7 @@ namespace Azure.AI.Projects
         /// <returns> A new <see cref="Projects.RoutineTrigger"/> instance for mocking. </returns>
         public static RoutineTrigger RoutineTrigger(string @type = default)
         {
-            return new UnknownRoutineTrigger(new RoutineTriggerType(@type), additionalBinaryDataProperties: null);
+            return new UnknownRoutineTrigger(new RoutineTriggerKind(@type), additionalBinaryDataProperties: null);
         }
 
         /// <summary> A recurring cron-based routine trigger. </summary>
@@ -1770,7 +1789,7 @@ namespace Azure.AI.Projects
         /// <returns> A new <see cref="Projects.ScheduleRoutineTrigger"/> instance for mocking. </returns>
         public static ScheduleRoutineTrigger ScheduleRoutineTrigger(string cronExpression = default, string timeZone = default)
         {
-            return new ScheduleRoutineTrigger(RoutineTriggerType.Schedule, additionalBinaryDataProperties: null, cronExpression, timeZone);
+            return new ScheduleRoutineTrigger(RoutineTriggerKind.Schedule, additionalBinaryDataProperties: null, cronExpression, timeZone);
         }
 
         /// <summary> A one-shot timer routine trigger. </summary>
@@ -1778,7 +1797,7 @@ namespace Azure.AI.Projects
         /// <returns> A new <see cref="Projects.TimerRoutineTrigger"/> instance for mocking. </returns>
         public static TimerRoutineTrigger TimerRoutineTrigger(DateTimeOffset? at = default)
         {
-            return new TimerRoutineTrigger(RoutineTriggerType.Timer, additionalBinaryDataProperties: null, at);
+            return new TimerRoutineTrigger(RoutineTriggerKind.Timer, additionalBinaryDataProperties: null, at);
         }
 
         /// <summary> A GitHub issue routine trigger. </summary>
@@ -1790,7 +1809,7 @@ namespace Azure.AI.Projects
         public static GitHubIssueRoutineTrigger GitHubIssueRoutineTrigger(string connectionId = default, string owner = default, string repository = default, GitHubIssueEvent issueEvent = default)
         {
             return new GitHubIssueRoutineTrigger(
-                RoutineTriggerType.GithubIssue,
+                RoutineTriggerKind.GithubIssue,
                 additionalBinaryDataProperties: null,
                 connectionId,
                 owner,
@@ -1807,18 +1826,18 @@ namespace Azure.AI.Projects
         {
             parameters ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new CustomRoutineTrigger(RoutineTriggerType.Custom, additionalBinaryDataProperties: null, provider, eventName, parameters);
+            return new CustomRoutineTrigger(RoutineTriggerKind.Custom, additionalBinaryDataProperties: null, provider, eventName, parameters);
         }
 
         /// <summary>
         /// Base model for a routine action.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.InvokeAgentResponsesApiRoutineAction"/> and <see cref="Projects.InvokeAgentInvocationsApiRoutineAction"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AgentResponsesApiRoutineAction"/> and <see cref="Projects.AgentInvocationsApiRoutineAction"/>.
         /// </summary>
         /// <param name="type"> The action type. </param>
         /// <returns> A new <see cref="Projects.RoutineAction"/> instance for mocking. </returns>
         public static RoutineAction RoutineAction(string @type = default)
         {
-            return new UnknownRoutineAction(new RoutineActionType(@type), additionalBinaryDataProperties: null);
+            return new UnknownRoutineAction(new RoutineActionKind(@type), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Dispatches a routine through the responses API. Exactly one of agent_name or agent_endpoint_id must be provided. </summary>
@@ -1826,11 +1845,11 @@ namespace Azure.AI.Projects
         /// <param name="agentEndpointId"> Legacy endpoint-scoped agent identifier for routine dispatch. </param>
         /// <param name="input"> Static JSON value sent as the complete downstream input when the routine fires. The value is passed through as-is; no templating is applied. </param>
         /// <param name="conversation"> An optional existing conversation identifier to continue during the downstream dispatch. </param>
-        /// <returns> A new <see cref="Projects.InvokeAgentResponsesApiRoutineAction"/> instance for mocking. </returns>
-        public static InvokeAgentResponsesApiRoutineAction InvokeAgentResponsesApiRoutineAction(string agentName = default, string agentEndpointId = default, BinaryData input = default, string conversation = default)
+        /// <returns> A new <see cref="Projects.AgentResponsesApiRoutineAction"/> instance for mocking. </returns>
+        public static AgentResponsesApiRoutineAction AgentResponsesApiRoutineAction(string agentName = default, string agentEndpointId = default, BinaryData input = default, string conversation = default)
         {
-            return new InvokeAgentResponsesApiRoutineAction(
-                RoutineActionType.InvokeAgentResponsesApi,
+            return new AgentResponsesApiRoutineAction(
+                RoutineActionKind.InvokeAgentResponsesApi,
                 additionalBinaryDataProperties: null,
                 agentName,
                 agentEndpointId,
@@ -1843,11 +1862,11 @@ namespace Azure.AI.Projects
         /// <param name="agentEndpointId"> Legacy endpoint-scoped agent identifier for routine dispatch. </param>
         /// <param name="input"> Static JSON value sent as the complete downstream input when the routine fires. The value is passed through as-is; no templating is applied. </param>
         /// <param name="sessionId"> An optional existing hosted-agent session identifier to continue during the downstream dispatch. </param>
-        /// <returns> A new <see cref="Projects.InvokeAgentInvocationsApiRoutineAction"/> instance for mocking. </returns>
-        public static InvokeAgentInvocationsApiRoutineAction InvokeAgentInvocationsApiRoutineAction(string agentName = default, string agentEndpointId = default, BinaryData input = default, string sessionId = default)
+        /// <returns> A new <see cref="Projects.AgentInvocationsApiRoutineAction"/> instance for mocking. </returns>
+        public static AgentInvocationsApiRoutineAction AgentInvocationsApiRoutineAction(string agentName = default, string agentEndpointId = default, BinaryData input = default, string sessionId = default)
         {
-            return new InvokeAgentInvocationsApiRoutineAction(
-                RoutineActionType.InvokeAgentInvocationsApi,
+            return new AgentInvocationsApiRoutineAction(
+                RoutineActionKind.InvokeAgentInvocationsApi,
                 additionalBinaryDataProperties: null,
                 agentName,
                 agentEndpointId,
@@ -1858,20 +1877,20 @@ namespace Azure.AI.Projects
         /// <summary> A routine definition returned by the service. </summary>
         /// <param name="name"> The routine name. </param>
         /// <param name="description"> A human-readable description of the routine. </param>
-        /// <param name="enabled"> Whether the routine is enabled. </param>
+        /// <param name="isEnabled"> Whether the routine is enabled. </param>
         /// <param name="triggers"> The triggers configured for the routine. </param>
         /// <param name="action"> The action executed when the routine fires. </param>
         /// <param name="createdAt"> The time when the routine was created. </param>
         /// <param name="updatedAt"> The time when the routine was last updated. </param>
         /// <returns> A new <see cref="Projects.ProjectsRoutine"/> instance for mocking. </returns>
-        public static ProjectsRoutine ProjectsRoutine(string name = default, string description = default, bool enabled = default, IDictionary<string, RoutineTrigger> triggers = default, RoutineAction action = default, DateTimeOffset? createdAt = default, DateTimeOffset? updatedAt = default)
+        public static ProjectsRoutine ProjectsRoutine(string name = default, string description = default, bool isEnabled = default, IDictionary<string, RoutineTrigger> triggers = default, RoutineAction action = default, DateTimeOffset? createdAt = default, DateTimeOffset? updatedAt = default)
         {
             triggers ??= new ChangeTrackingDictionary<string, RoutineTrigger>();
 
             return new ProjectsRoutine(
                 name,
                 description,
-                enabled,
+                isEnabled,
                 triggers,
                 action,
                 createdAt,
@@ -1885,6 +1904,7 @@ namespace Azure.AI.Projects
         /// <param name="phase"> The AgentExtensions lifecycle phase for the routine attempt. </param>
         /// <param name="triggerType"> The trigger type that produced the routine attempt. </param>
         /// <param name="triggerName"> The configured trigger name that produced the routine attempt. </param>
+        /// <param name="triggerEventPayload"> The event payload captured from the event that triggered the routine attempt, when available. </param>
         /// <param name="attemptSource"> The source path that created the routine attempt. </param>
         /// <param name="actionType"> The action type dispatched for the routine attempt. </param>
         /// <param name="agentId"> The project-scoped agent identifier recorded for the routine attempt. </param>
@@ -1903,14 +1923,17 @@ namespace Azure.AI.Projects
         /// <param name="errorType"> The fully qualified error type captured for a failed attempt, when available. </param>
         /// <param name="errorMessage"> The truncated failure message captured for a failed attempt, when available. </param>
         /// <returns> A new <see cref="Projects.RoutineRun"/> instance for mocking. </returns>
-        public static RoutineRun RoutineRun(string id = default, BinaryData statusInternal = default, RoutineRunPhase? phase = default, RoutineTriggerType? triggerType = default, string triggerName = default, RoutineAttemptSource? attemptSource = default, RoutineActionType? actionType = default, string agentId = default, string agentEndpointId = default, string conversationId = default, string sessionId = default, DateTimeOffset? triggeredAt = default, DateTimeOffset? scheduledFireAt = default, DateTimeOffset? startedAt = default, DateTimeOffset? endedAt = default, string dispatchId = default, string actionCorrelationId = default, string responseId = default, string taskId = default, int? errorStatusCode = default, string errorType = default, string errorMessage = default)
+        public static RoutineRun RoutineRun(string id = default, BinaryData statusInternal = default, RoutineRunPhase? phase = default, RoutineTriggerKind? triggerType = default, string triggerName = default, IDictionary<string, BinaryData> triggerEventPayload = default, RoutineAttemptSource? attemptSource = default, RoutineActionKind? actionType = default, string agentId = default, string agentEndpointId = default, string conversationId = default, string sessionId = default, DateTimeOffset? triggeredAt = default, DateTimeOffset? scheduledFireAt = default, DateTimeOffset? startedAt = default, DateTimeOffset? endedAt = default, string dispatchId = default, string actionCorrelationId = default, string responseId = default, string taskId = default, int? errorStatusCode = default, string errorType = default, string errorMessage = default)
         {
+            triggerEventPayload ??= new ChangeTrackingDictionary<string, BinaryData>();
+
             return new RoutineRun(
                 id,
                 statusInternal,
                 phase,
                 triggerType,
                 triggerName,
+                triggerEventPayload,
                 attemptSource,
                 actionType,
                 agentId,
@@ -1933,7 +1956,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Base model for a manual dispatch payload.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.InvokeAgentResponsesApiDispatchPayload"/> and <see cref="Projects.InvokeAgentInvocationsApiDispatchPayload"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AgentResponsesApiDispatchPayload"/> and <see cref="Projects.AgentInvocationsApiDispatchPayload"/>.
         /// </summary>
         /// <param name="type"> The manual dispatch payload type. </param>
         /// <returns> A new <see cref="Projects.RoutineDispatchPayload"/> instance for mocking. </returns>
@@ -1944,28 +1967,28 @@ namespace Azure.AI.Projects
 
         /// <summary> A manual payload used to test a responses API routine dispatch. </summary>
         /// <param name="input"> The JSON value sent as the complete downstream responses input. The value is passed through as-is and can be an object, string, number, boolean, array, or null. </param>
-        /// <returns> A new <see cref="Projects.InvokeAgentResponsesApiDispatchPayload"/> instance for mocking. </returns>
-        public static InvokeAgentResponsesApiDispatchPayload InvokeAgentResponsesApiDispatchPayload(BinaryData input = default)
+        /// <returns> A new <see cref="Projects.AgentResponsesApiDispatchPayload"/> instance for mocking. </returns>
+        public static AgentResponsesApiDispatchPayload AgentResponsesApiDispatchPayload(BinaryData input = default)
         {
-            return new InvokeAgentResponsesApiDispatchPayload(RoutineDispatchPayloadType.InvokeAgentResponsesApi, additionalBinaryDataProperties: null, input);
+            return new AgentResponsesApiDispatchPayload(RoutineDispatchPayloadType.InvokeAgentResponsesApi, additionalBinaryDataProperties: null, input);
         }
 
         /// <summary> A manual payload used to test an invocations API routine dispatch. </summary>
         /// <param name="input"> The JSON value sent as the complete downstream invocations input. The value is passed through as-is and can be an object, string, number, boolean, array, or null. </param>
-        /// <returns> A new <see cref="Projects.InvokeAgentInvocationsApiDispatchPayload"/> instance for mocking. </returns>
-        public static InvokeAgentInvocationsApiDispatchPayload InvokeAgentInvocationsApiDispatchPayload(BinaryData input = default)
+        /// <returns> A new <see cref="Projects.AgentInvocationsApiDispatchPayload"/> instance for mocking. </returns>
+        public static AgentInvocationsApiDispatchPayload AgentInvocationsApiDispatchPayload(BinaryData input = default)
         {
-            return new InvokeAgentInvocationsApiDispatchPayload(RoutineDispatchPayloadType.InvokeAgentInvocationsApi, additionalBinaryDataProperties: null, input);
+            return new AgentInvocationsApiDispatchPayload(RoutineDispatchPayloadType.InvokeAgentInvocationsApi, additionalBinaryDataProperties: null, input);
         }
 
         /// <summary> Identifiers returned after a routine dispatch is queued. </summary>
         /// <param name="dispatchId"> The dispatch identifier created for the routine dispatch. </param>
         /// <param name="actionCorrelationId"> A downstream action correlation identifier, when available. </param>
         /// <param name="taskId"> A workspace task identifier created for the dispatch, when available. </param>
-        /// <returns> A new <see cref="Projects.DispatchRoutineResponse"/> instance for mocking. </returns>
-        public static DispatchRoutineResponse DispatchRoutineResponse(string dispatchId = default, string actionCorrelationId = default, string taskId = default)
+        /// <returns> A new <see cref="Projects.DispatchRoutineResult"/> instance for mocking. </returns>
+        public static DispatchRoutineResult DispatchRoutineResult(string dispatchId = default, string actionCorrelationId = default, string taskId = default)
         {
-            return new DispatchRoutineResponse(dispatchId, actionCorrelationId, taskId, additionalBinaryDataProperties: null);
+            return new DispatchRoutineResult(dispatchId, actionCorrelationId, taskId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Caller-supplied inputs for a data generation job. </summary>
@@ -2024,10 +2047,10 @@ namespace Azure.AI.Projects
         /// <param name="agentId"> The unique agent ID used to filter traces. Provide either `agent_id` or `agent_name` — at least one is required. </param>
         /// <param name="agentName"> The agent name to fetch traces for. Provide either `agent_id` or `agent_name` — at least one is required. </param>
         /// <param name="agentVersion"> The agent version. If not specified, traces for ALL versions of the agent are included within the time window. </param>
-        /// <param name="startTime"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
-        /// <param name="endTime"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
+        /// <param name="startAt"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
+        /// <param name="endAt"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
         /// <returns> A new <see cref="Projects.TracesDataGenerationJobSource"/> instance for mocking. </returns>
-        public static TracesDataGenerationJobSource TracesDataGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startTime = default, DateTimeOffset? endTime = default)
+        public static TracesDataGenerationJobSource TracesDataGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startAt = default, DateTimeOffset? endAt = default)
         {
             return new TracesDataGenerationJobSource(
                 DataGenerationJobSourceType.Traces,
@@ -2036,8 +2059,8 @@ namespace Azure.AI.Projects
                 agentId,
                 agentName,
                 agentVersion,
-                startTime,
-                endTime);
+                startAt,
+                endAt);
         }
 
         /// <summary> File source for data generation jobs — Azure OpenAI file input. </summary>
@@ -2249,7 +2272,7 @@ namespace Azure.AI.Projects
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MemoryStoreDefaultOptions MemoryStoreDefaultOptions(bool isUserProfileEnabled, string userProfileDetails, bool isChatSummaryEnabled)
         {
-            return MemoryStoreDefaultOptions(isUserProfileEnabled: isUserProfileEnabled, userProfileDetails: userProfileDetails, isChatSummaryEnabled: isChatSummaryEnabled, proceduralMemoryEnabled: default, defaultTtlSeconds: default);
+            return MemoryStoreDefaultOptions(isUserProfileEnabled: isUserProfileEnabled, userProfileDetails: userProfileDetails, isChatSummaryEnabled: isChatSummaryEnabled, isProceduralMemoryEnabled: default, defaultTtlSeconds: default);
         }
 
         /// <summary> Represents a request for a pending upload. </summary>

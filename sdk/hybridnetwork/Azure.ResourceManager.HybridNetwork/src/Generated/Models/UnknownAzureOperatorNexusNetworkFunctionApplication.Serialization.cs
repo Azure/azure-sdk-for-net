@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureOperatorNexusNetworkFunctionApplication IPersistableModel<AzureOperatorNexusNetworkFunctionApplication>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownAzureOperatorNexusNetworkFunctionApplication)PersistableModelCreateCore(data, options);
+        AzureOperatorNexusNetworkFunctionApplication IPersistableModel<AzureOperatorNexusNetworkFunctionApplication>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            return (AzureOperatorNexusNetworkFunctionApplication)PersistableModelCreateCore(data, options);
+        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AzureOperatorNexusNetworkFunctionApplication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -83,7 +86,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureOperatorNexusNetworkFunctionApplication IJsonModel<AzureOperatorNexusNetworkFunctionApplication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownAzureOperatorNexusNetworkFunctionApplication)JsonModelCreateCore(ref reader, options);
+        AzureOperatorNexusNetworkFunctionApplication IJsonModel<AzureOperatorNexusNetworkFunctionApplication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            return (AzureOperatorNexusNetworkFunctionApplication)JsonModelCreateCore(ref reader, options);
+        }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

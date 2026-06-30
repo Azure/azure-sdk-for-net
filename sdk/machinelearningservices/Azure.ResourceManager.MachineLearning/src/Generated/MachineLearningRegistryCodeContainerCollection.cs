@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MachineLearning
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.MachineLearning
     /// </summary>
     public partial class MachineLearningRegistryCodeContainerCollection : ArmCollection, IEnumerable<MachineLearningRegistryCodeContainerResource>, IAsyncEnumerable<MachineLearningRegistryCodeContainerResource>
     {
-        private readonly ClientDiagnostics _machineLearningRegistryCodeContainerRegistryCodeContainersClientDiagnostics;
-        private readonly RegistryCodeContainersRestOperations _machineLearningRegistryCodeContainerRegistryCodeContainersRestClient;
+        private readonly ClientDiagnostics _registryCodeContainersClientDiagnostics;
+        private readonly RegistryCodeContainers _registryCodeContainersRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MachineLearningRegistryCodeContainerCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MachineLearningRegistryCodeContainerCollection for mocking. </summary>
         protected MachineLearningRegistryCodeContainerCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MachineLearningRegistryCodeContainerCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningRegistryCodeContainerCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MachineLearningRegistryCodeContainerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _machineLearningRegistryCodeContainerRegistryCodeContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearningRegistryCodeContainerResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(MachineLearningRegistryCodeContainerResource.ResourceType, out string machineLearningRegistryCodeContainerRegistryCodeContainersApiVersion);
-            _machineLearningRegistryCodeContainerRegistryCodeContainersRestClient = new RegistryCodeContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningRegistryCodeContainerRegistryCodeContainersApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(MachineLearningRegistryCodeContainerResource.ResourceType, out string machineLearningRegistryCodeContainerApiVersion);
+            _registryCodeContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearningRegistryCodeContainerResource.ResourceType.Namespace, Diagnostics);
+            _registryCodeContainersRestClient = new RegistryCodeContainers(_registryCodeContainersClientDiagnostics, Pipeline, Endpoint, machineLearningRegistryCodeContainerApiVersion ?? "2026-03-15-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != MachineLearningRegistryResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, MachineLearningRegistryResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MachineLearningRegistryResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create or update Code container.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryCodeContainers_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> CodeContainers_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryCodeContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="codeName"> Container name. </param>
         /// <param name="data"> Container entity to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="codeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="codeName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="codeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<MachineLearningRegistryCodeContainerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string codeName, MachineLearningCodeContainerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(codeName, nameof(codeName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _machineLearningRegistryCodeContainerRegistryCodeContainersClientDiagnostics.CreateScope("MachineLearningRegistryCodeContainerCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _registryCodeContainersClientDiagnostics.CreateScope("MachineLearningRegistryCodeContainerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _machineLearningRegistryCodeContainerRegistryCodeContainersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, codeName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<MachineLearningRegistryCodeContainerResource>(new MachineLearningRegistryCodeContainerOperationSource(Client), _machineLearningRegistryCodeContainerRegistryCodeContainersClientDiagnostics, Pipeline, _machineLearningRegistryCodeContainerRegistryCodeContainersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, codeName, data).Request, response, OperationFinalStateVia.OriginalUri);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryCodeContainersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, codeName, MachineLearningCodeContainerData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                MachineLearningArmOperation<MachineLearningRegistryCodeContainerResource> operation = new MachineLearningArmOperation<MachineLearningRegistryCodeContainerResource>(
+                    new MachineLearningRegistryCodeContainerResourceOperationSource(Client),
+                    _registryCodeContainersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.MachineLearning
         /// Create or update Code container.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryCodeContainers_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> CodeContainers_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryCodeContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="codeName"> Container name. </param>
         /// <param name="data"> Container entity to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="codeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="codeName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="codeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<MachineLearningRegistryCodeContainerResource> CreateOrUpdate(WaitUntil waitUntil, string codeName, MachineLearningCodeContainerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(codeName, nameof(codeName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _machineLearningRegistryCodeContainerRegistryCodeContainersClientDiagnostics.CreateScope("MachineLearningRegistryCodeContainerCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _registryCodeContainersClientDiagnostics.CreateScope("MachineLearningRegistryCodeContainerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _machineLearningRegistryCodeContainerRegistryCodeContainersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, codeName, data, cancellationToken);
-                var operation = new MachineLearningArmOperation<MachineLearningRegistryCodeContainerResource>(new MachineLearningRegistryCodeContainerOperationSource(Client), _machineLearningRegistryCodeContainerRegistryCodeContainersClientDiagnostics, Pipeline, _machineLearningRegistryCodeContainerRegistryCodeContainersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, codeName, data).Request, response, OperationFinalStateVia.OriginalUri);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryCodeContainersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, codeName, MachineLearningCodeContainerData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                MachineLearningArmOperation<MachineLearningRegistryCodeContainerResource> operation = new MachineLearningArmOperation<MachineLearningRegistryCodeContainerResource>(
+                    new MachineLearningRegistryCodeContainerResourceOperationSource(Client),
+                    _registryCodeContainersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.MachineLearning
         /// Get Code container.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryCodeContainers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CodeContainers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryCodeContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="codeName"> Container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="codeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="codeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="codeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<MachineLearningRegistryCodeContainerResource>> GetAsync(string codeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(codeName, nameof(codeName));
 
-            using var scope = _machineLearningRegistryCodeContainerRegistryCodeContainersClientDiagnostics.CreateScope("MachineLearningRegistryCodeContainerCollection.Get");
+            using DiagnosticScope scope = _registryCodeContainersClientDiagnostics.CreateScope("MachineLearningRegistryCodeContainerCollection.Get");
             scope.Start();
             try
             {
-                var response = await _machineLearningRegistryCodeContainerRegistryCodeContainersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, codeName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryCodeContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, codeName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MachineLearningCodeContainerData> response = Response.FromValue(MachineLearningCodeContainerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineLearningRegistryCodeContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.MachineLearning
         /// Get Code container.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryCodeContainers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CodeContainers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryCodeContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="codeName"> Container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="codeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="codeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="codeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<MachineLearningRegistryCodeContainerResource> Get(string codeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(codeName, nameof(codeName));
 
-            using var scope = _machineLearningRegistryCodeContainerRegistryCodeContainersClientDiagnostics.CreateScope("MachineLearningRegistryCodeContainerCollection.Get");
+            using DiagnosticScope scope = _registryCodeContainersClientDiagnostics.CreateScope("MachineLearningRegistryCodeContainerCollection.Get");
             scope.Start();
             try
             {
-                var response = _machineLearningRegistryCodeContainerRegistryCodeContainersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, codeName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryCodeContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, codeName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MachineLearningCodeContainerData> response = Response.FromValue(MachineLearningCodeContainerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineLearningRegistryCodeContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,98 +272,122 @@ namespace Azure.ResourceManager.MachineLearning
         /// List containers.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryCodeContainers_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> CodeContainers_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryCodeContainerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="skip"> Continuation token for pagination. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningRegistryCodeContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningRegistryCodeContainerResource> GetAllAsync(string skip = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningRegistryCodeContainerRegistryCodeContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningRegistryCodeContainerRegistryCodeContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningRegistryCodeContainerResource(Client, MachineLearningCodeContainerData.DeserializeMachineLearningCodeContainerData(e)), _machineLearningRegistryCodeContainerRegistryCodeContainersClientDiagnostics, Pipeline, "MachineLearningRegistryCodeContainerCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List containers.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryCodeContainers_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryCodeContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MachineLearningRegistryCodeContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningRegistryCodeContainerResource> GetAll(string skip = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MachineLearningRegistryCodeContainerResource> GetAllAsync(string skip = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningRegistryCodeContainerRegistryCodeContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningRegistryCodeContainerRegistryCodeContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningRegistryCodeContainerResource(Client, MachineLearningCodeContainerData.DeserializeMachineLearningCodeContainerData(e)), _machineLearningRegistryCodeContainerRegistryCodeContainersClientDiagnostics, Pipeline, "MachineLearningRegistryCodeContainerCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<MachineLearningCodeContainerData, MachineLearningRegistryCodeContainerResource>(new RegistryCodeContainersGetAllAsyncCollectionResultOfT(
+                _registryCodeContainersRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                skip,
+                context,
+                "MachineLearningRegistryCodeContainerCollection.GetAll"), data => new MachineLearningRegistryCodeContainerResource(Client, data));
+        }
+
+        /// <summary>
+        /// List containers.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CodeContainers_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MachineLearningRegistryCodeContainerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MachineLearningRegistryCodeContainerResource> GetAll(string skip = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<MachineLearningCodeContainerData, MachineLearningRegistryCodeContainerResource>(new RegistryCodeContainersGetAllCollectionResultOfT(
+                _registryCodeContainersRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                skip,
+                context,
+                "MachineLearningRegistryCodeContainerCollection.GetAll"), data => new MachineLearningRegistryCodeContainerResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryCodeContainers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CodeContainers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryCodeContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="codeName"> Container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="codeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="codeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="codeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string codeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(codeName, nameof(codeName));
 
-            using var scope = _machineLearningRegistryCodeContainerRegistryCodeContainersClientDiagnostics.CreateScope("MachineLearningRegistryCodeContainerCollection.Exists");
+            using DiagnosticScope scope = _registryCodeContainersClientDiagnostics.CreateScope("MachineLearningRegistryCodeContainerCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _machineLearningRegistryCodeContainerRegistryCodeContainersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, codeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryCodeContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, codeName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<MachineLearningCodeContainerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MachineLearningCodeContainerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MachineLearningCodeContainerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -348,36 +401,50 @@ namespace Azure.ResourceManager.MachineLearning
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryCodeContainers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CodeContainers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryCodeContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="codeName"> Container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="codeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="codeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="codeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string codeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(codeName, nameof(codeName));
 
-            using var scope = _machineLearningRegistryCodeContainerRegistryCodeContainersClientDiagnostics.CreateScope("MachineLearningRegistryCodeContainerCollection.Exists");
+            using DiagnosticScope scope = _registryCodeContainersClientDiagnostics.CreateScope("MachineLearningRegistryCodeContainerCollection.Exists");
             scope.Start();
             try
             {
-                var response = _machineLearningRegistryCodeContainerRegistryCodeContainersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, codeName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryCodeContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, codeName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<MachineLearningCodeContainerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MachineLearningCodeContainerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MachineLearningCodeContainerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -391,38 +458,54 @@ namespace Azure.ResourceManager.MachineLearning
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryCodeContainers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CodeContainers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryCodeContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="codeName"> Container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="codeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="codeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="codeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<MachineLearningRegistryCodeContainerResource>> GetIfExistsAsync(string codeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(codeName, nameof(codeName));
 
-            using var scope = _machineLearningRegistryCodeContainerRegistryCodeContainersClientDiagnostics.CreateScope("MachineLearningRegistryCodeContainerCollection.GetIfExists");
+            using DiagnosticScope scope = _registryCodeContainersClientDiagnostics.CreateScope("MachineLearningRegistryCodeContainerCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _machineLearningRegistryCodeContainerRegistryCodeContainersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, codeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryCodeContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, codeName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<MachineLearningCodeContainerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MachineLearningCodeContainerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MachineLearningCodeContainerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<MachineLearningRegistryCodeContainerResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineLearningRegistryCodeContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -436,38 +519,54 @@ namespace Azure.ResourceManager.MachineLearning
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryCodeContainers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CodeContainers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryCodeContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="codeName"> Container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="codeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="codeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="codeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<MachineLearningRegistryCodeContainerResource> GetIfExists(string codeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(codeName, nameof(codeName));
 
-            using var scope = _machineLearningRegistryCodeContainerRegistryCodeContainersClientDiagnostics.CreateScope("MachineLearningRegistryCodeContainerCollection.GetIfExists");
+            using DiagnosticScope scope = _registryCodeContainersClientDiagnostics.CreateScope("MachineLearningRegistryCodeContainerCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _machineLearningRegistryCodeContainerRegistryCodeContainersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, codeName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryCodeContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, codeName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<MachineLearningCodeContainerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MachineLearningCodeContainerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MachineLearningCodeContainerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<MachineLearningRegistryCodeContainerResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineLearningRegistryCodeContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -487,6 +586,7 @@ namespace Azure.ResourceManager.MachineLearning
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<MachineLearningRegistryCodeContainerResource> IAsyncEnumerable<MachineLearningRegistryCodeContainerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

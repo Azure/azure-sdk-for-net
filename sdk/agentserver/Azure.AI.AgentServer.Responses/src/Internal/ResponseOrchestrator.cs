@@ -152,16 +152,16 @@ internal sealed class ResponseOrchestrator
     /// Encapsulates all guard logic: store check, background check, completion check.
     /// </summary>
     /// <param name="responseId">The response ID to look up.</param>
-    /// <param name="isolation">The platform isolation context. Use <see cref="IsolationContext.Empty"/> when not applicable.</param>
+    /// <param name="platformContext">The platform identity context. Use <see cref="PlatformContext.Empty"/> when not applicable.</param>
     /// <returns>The Response snapshot.</returns>
     /// <exception cref="ResourceNotFoundException">If the response cannot be retrieved.</exception>
-    public async Task<Models.ResponseObject> GetAsync(string responseId, IsolationContext isolation)
+    public async Task<Models.ResponseObject> GetAsync(string responseId, PlatformContext platformContext)
     {
         // If the response is in-flight, apply in-flight guards and return a snapshot.
         if (_tracker.TryGet(responseId, out var execution) && execution is not null)
         {
-            // Chat isolation enforcement for in-flight responses
-            execution.EnforceChatIsolation(isolation);
+            // User-key enforcement for in-flight responses
+            execution.EnforceUserIsolation(platformContext);
 
             // Guard: store=false responses are not retrievable (B14)
             if (!execution.Store)
@@ -196,7 +196,7 @@ internal sealed class ResponseOrchestrator
 
         // Not in-flight — fall through to the durable store.
         // Provider throws ResourceNotFoundException if the ID doesn't exist.
-        return await _provider.GetResponseAsync(responseId, isolation);
+        return await _provider.GetResponseAsync(responseId, platformContext);
     }
 
     /// <summary>
@@ -205,18 +205,18 @@ internal sealed class ResponseOrchestrator
     /// idempotency, winddown wait, output clearing.
     /// </summary>
     /// <param name="responseId">The response ID to cancel.</param>
-    /// <param name="isolation">The platform isolation context. Use <see cref="IsolationContext.Empty"/> when not applicable.</param>
+    /// <param name="platformContext">The platform identity context. Use <see cref="PlatformContext.Empty"/> when not applicable.</param>
     /// <returns>The cancelled Response snapshot.</returns>
     /// <exception cref="ResourceNotFoundException">If the response is not found.</exception>
     /// <exception cref="BadRequestException">If the response cannot be cancelled.</exception>
-    public async Task<Models.ResponseObject> CancelAsync(string responseId, IsolationContext isolation)
+    public async Task<Models.ResponseObject> CancelAsync(string responseId, PlatformContext platformContext)
     {
         if (!_tracker.TryGet(responseId, out var execution) || execution is null)
         {
             // Not in-flight — check durable store for terminal state.
             // If it exists and is already terminal, return as-is (idempotent).
             // If it doesn't exist, provider throws ResourceNotFoundException.
-            var persisted = await _provider.GetResponseAsync(responseId, isolation);
+            var persisted = await _provider.GetResponseAsync(responseId, platformContext);
 
             // B1: background check comes first — non-bg responses always get the
             // "synchronous" message regardless of terminal status (spec line 485).
@@ -236,8 +236,8 @@ internal sealed class ResponseOrchestrator
             };
         }
 
-        // Chat isolation enforcement for in-flight responses
-        execution.EnforceChatIsolation(isolation);
+        // User-key enforcement for in-flight responses
+        execution.EnforceUserIsolation(platformContext);
 
         // B1/B16: non-background in-flight responses are not findable via Cancel.
         // With eager eviction, all tracked executions are in-flight — completed
@@ -374,7 +374,7 @@ internal sealed class ResponseOrchestrator
 
                     try
                     {
-                        await _provider.CreateResponseAsync(new CreateResponseRequest(execution.Response!, inputItems, historyItemIds), context.Isolation);
+                        await _provider.CreateResponseAsync(new CreateResponseRequest(execution.Response!, inputItems, historyItemIds), context.PlatformContext);
                     }
                     catch (Exception ex)
                     {
@@ -566,12 +566,12 @@ internal sealed class ResponseOrchestrator
                         {
                             if (execution.IsBackground)
                             {
-                                await _provider.UpdateResponseAsync(execution.Response, execution.Context?.Isolation ?? IsolationContext.Empty);
+                                await _provider.UpdateResponseAsync(execution.Response, execution.Context?.PlatformContext ?? PlatformContext.Empty);
                             }
                             else
                             {
                                 var (inputItems, historyItemIds) = await ResolveItemsForPersistenceAsync(execution.Context);
-                                await _provider.CreateResponseAsync(new CreateResponseRequest(execution.Response, inputItems, historyItemIds), execution.Context?.Isolation ?? IsolationContext.Empty);
+                                await _provider.CreateResponseAsync(new CreateResponseRequest(execution.Response, inputItems, historyItemIds), execution.Context?.PlatformContext ?? PlatformContext.Empty);
                             }
                         }
                         catch (Exception ex)
@@ -895,13 +895,13 @@ internal sealed class ResponseOrchestrator
                     if (execution.IsBackground)
                     {
                         // Background mode: Create already happened at response.created time — update.
-                        await _provider.UpdateResponseAsync(execution.Response, execution.Context?.Isolation ?? IsolationContext.Empty);
+                        await _provider.UpdateResponseAsync(execution.Response, execution.Context?.PlatformContext ?? PlatformContext.Empty);
                     }
                     else if (IsNonCancelledTerminal(execution.Response.Status))
                     {
                         // Default mode: single persist at non-cancelled terminal state.
                         var (inputItems, historyItemIds) = await ResolveItemsForPersistenceAsync(execution.Context);
-                        await _provider.CreateResponseAsync(new CreateResponseRequest(execution.Response, inputItems, historyItemIds), execution.Context?.Isolation ?? IsolationContext.Empty);
+                        await _provider.CreateResponseAsync(new CreateResponseRequest(execution.Response, inputItems, historyItemIds), execution.Context?.PlatformContext ?? PlatformContext.Empty);
                     }
                 }
             }

@@ -7,48 +7,70 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> the kind of the settings string. </summary>
-    internal readonly partial struct SettingKind : IEquatable<SettingKind>
+    public readonly partial struct SettingKind : IEquatable<SettingKind>
     {
         private readonly string _value;
+        /// <summary> DataExportSettings. </summary>
+        private const string DataExportSettingsValue = "DataExportSettings";
+        /// <summary> AlertSuppressionSetting. </summary>
+        private const string AlertSuppressionSettingValue = "AlertSuppressionSetting";
+        /// <summary> AlertSyncSettings. </summary>
+        private const string AlertSyncSettingsValue = "AlertSyncSettings";
 
         /// <summary> Initializes a new instance of <see cref="SettingKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SettingKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DataExportSettingsValue = "DataExportSettings";
-        private const string AlertSuppressionSettingValue = "AlertSuppressionSetting";
-        private const string AlertSyncSettingsValue = "AlertSyncSettings";
+            _value = value;
+        }
 
         /// <summary> DataExportSettings. </summary>
         public static SettingKind DataExportSettings { get; } = new SettingKind(DataExportSettingsValue);
+
         /// <summary> AlertSuppressionSetting. </summary>
         public static SettingKind AlertSuppressionSetting { get; } = new SettingKind(AlertSuppressionSettingValue);
+
         /// <summary> AlertSyncSettings. </summary>
         public static SettingKind AlertSyncSettings { get; } = new SettingKind(AlertSyncSettingsValue);
+
         /// <summary> Determines if two <see cref="SettingKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SettingKind left, SettingKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SettingKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SettingKind left, SettingKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SettingKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SettingKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SettingKind(string value) => new SettingKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SettingKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SettingKind?(string value) => value == null ? null : new SettingKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SettingKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SettingKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

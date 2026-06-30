@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 
 namespace Azure.ResourceManager.MachineLearning
 {
@@ -15,7 +16,10 @@ namespace Azure.ResourceManager.MachineLearning
     /// Each <see cref="MachineLearningCodeVersionResource" /> in the collection will belong to the same instance of <see cref="MachineLearningCodeContainerResource" />.
     /// To get a <see cref="MachineLearningCodeVersionCollection" /> instance call the GetMachineLearningCodeVersions method from an instance of <see cref="MachineLearningCodeContainerResource" />.
     /// </summary>
-    public partial class MachineLearningCodeVersionCollection : ArmCollection, IEnumerable<MachineLearningCodeVersionResource>, IAsyncEnumerable<MachineLearningCodeVersionResource>
+    // Customized: preserve the GA list overloads that did not expose the newer optional filters.
+    // The TypeSpec generator only emits the current operation signature, so these hidden overloads
+    // forward to the generated overload to keep source compatibility with the previous SDK.
+    public partial class MachineLearningCodeVersionCollection
     {
         /// <summary>
         /// List versions.

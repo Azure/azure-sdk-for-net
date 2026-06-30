@@ -10,20 +10,13 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Unknown version of DataQualityMetricThresholdBase. </summary>
     internal partial class UnknownDataQualityMetricThresholdBase : DataQualityMetricThresholdBase
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDataQualityMetricThresholdBase"/>. </summary>
         /// <param name="dataType"> [Required] Specifies the data type of the metric threshold. </param>
         /// <param name="threshold"> The threshold value. If null, a default value will be set depending on the selected metric. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDataQualityMetricThresholdBase(MonitoringFeatureDataType dataType, MonitoringThreshold threshold, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(dataType, threshold, serializedAdditionalRawData)
-        {
-            DataType = dataType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownDataQualityMetricThresholdBase"/> for deserialization. </summary>
-        internal UnknownDataQualityMetricThresholdBase()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownDataQualityMetricThresholdBase(MonitoringFeatureDataType dataType, MonitoringThreshold threshold, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(dataType != default ? dataType : "unknown", threshold, additionalBinaryDataProperties)
         {
         }
     }

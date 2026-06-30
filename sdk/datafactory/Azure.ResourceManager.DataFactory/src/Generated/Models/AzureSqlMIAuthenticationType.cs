@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct AzureSqlMIAuthenticationType : IEquatable<AzureSqlMIAuthenticationType>
     {
         private readonly string _value;
+        /// <summary> SQL. </summary>
+        private const string SqlValue = "SQL";
+        /// <summary> ServicePrincipal. </summary>
+        private const string ServicePrincipalValue = "ServicePrincipal";
+        /// <summary> SystemAssignedManagedIdentity. </summary>
+        private const string SystemAssignedManagedIdentityValue = "SystemAssignedManagedIdentity";
+        /// <summary> UserAssignedManagedIdentity. </summary>
+        private const string UserAssignedManagedIdentityValue = "UserAssignedManagedIdentity";
 
         /// <summary> Initializes a new instance of <see cref="AzureSqlMIAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AzureSqlMIAuthenticationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SqlValue = "SQL";
-        private const string ServicePrincipalValue = "ServicePrincipal";
-        private const string SystemAssignedManagedIdentityValue = "SystemAssignedManagedIdentity";
-        private const string UserAssignedManagedIdentityValue = "UserAssignedManagedIdentity";
+            _value = value;
+        }
 
         /// <summary> SQL. </summary>
         public static AzureSqlMIAuthenticationType Sql { get; } = new AzureSqlMIAuthenticationType(SqlValue);
+
         /// <summary> ServicePrincipal. </summary>
         public static AzureSqlMIAuthenticationType ServicePrincipal { get; } = new AzureSqlMIAuthenticationType(ServicePrincipalValue);
+
         /// <summary> SystemAssignedManagedIdentity. </summary>
         public static AzureSqlMIAuthenticationType SystemAssignedManagedIdentity { get; } = new AzureSqlMIAuthenticationType(SystemAssignedManagedIdentityValue);
+
         /// <summary> UserAssignedManagedIdentity. </summary>
         public static AzureSqlMIAuthenticationType UserAssignedManagedIdentity { get; } = new AzureSqlMIAuthenticationType(UserAssignedManagedIdentityValue);
+
         /// <summary> Determines if two <see cref="AzureSqlMIAuthenticationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AzureSqlMIAuthenticationType left, AzureSqlMIAuthenticationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AzureSqlMIAuthenticationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AzureSqlMIAuthenticationType left, AzureSqlMIAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AzureSqlMIAuthenticationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AzureSqlMIAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AzureSqlMIAuthenticationType(string value) => new AzureSqlMIAuthenticationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AzureSqlMIAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AzureSqlMIAuthenticationType?(string value) => value == null ? null : new AzureSqlMIAuthenticationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AzureSqlMIAuthenticationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AzureSqlMIAuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

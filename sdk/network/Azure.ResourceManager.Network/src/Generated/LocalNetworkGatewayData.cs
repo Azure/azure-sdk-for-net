@@ -65,11 +65,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> IP address of local network gateway. </summary>
         [WirePath("properties.gatewayIpAddress")]
-        public string GatewayIpAddress
+        public string GatewayIPAddress
         {
             get
             {
-                return Properties is null ? default : Properties.GatewayIpAddress;
+                return Properties is null ? default : Properties.GatewayIPAddress;
             }
             set
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new LocalNetworkGatewayPropertiesFormat();
                 }
-                Properties.GatewayIpAddress = value;
+                Properties.GatewayIPAddress = value;
             }
         }
 

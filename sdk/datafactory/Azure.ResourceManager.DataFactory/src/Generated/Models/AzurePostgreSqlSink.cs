@@ -15,9 +15,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AzurePostgreSqlSink : CopySink
     {
         /// <summary> Initializes a new instance of <see cref="AzurePostgreSqlSink"/>. </summary>
-        public AzurePostgreSqlSink()
+        public AzurePostgreSqlSink() : base("AzurePostgreSqlSink")
         {
-            CopySinkType = "AzurePostgreSqlSink";
         }
 
         /// <summary> Initializes a new instance of <see cref="AzurePostgreSqlSink"/>. </summary>
@@ -28,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="sinkRetryWait"> Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="preCopyScript"> A query to execute before starting the copy. Type: string (or Expression with resultType string). </param>
         /// <param name="writeMethod"> The write behavior for the operation. Default is Bulk Insert. </param>
         /// <param name="upsertSettings"> Azure Database for PostgreSQL upsert option settings. </param>
@@ -37,23 +36,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             PreCopyScript = preCopyScript;
             WriteMethod = writeMethod;
             UpsertSettings = upsertSettings;
-            CopySinkType = copySinkType ?? "AzurePostgreSqlSink";
         }
 
         /// <summary> A query to execute before starting the copy. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> PreCopyScript { get; set; }
+
         /// <summary> The write behavior for the operation. Default is Bulk Insert. </summary>
         public AzurePostgreSqlWriteMethodEnum? WriteMethod { get; set; }
+
         /// <summary> Azure Database for PostgreSQL upsert option settings. </summary>
         internal AzurePostgreSqlSinkUpsertSettings UpsertSettings { get; set; }
+
         /// <summary> Key column names for unique row identification. Type: array of strings (or Expression with resultType array of strings). </summary>
         public DataFactoryElement<IList<string>> UpsertKeys
         {
-            get => UpsertSettings is null ? default : UpsertSettings.Keys;
+            get
+            {
+                return UpsertSettings is null ? default : UpsertSettings.Keys;
+            }
             set
             {
                 if (UpsertSettings is null)
+                {
                     UpsertSettings = new AzurePostgreSqlSinkUpsertSettings();
+                }
                 UpsertSettings.Keys = value;
             }
         }

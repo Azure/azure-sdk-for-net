@@ -24,7 +24,7 @@ namespace Azure.AI.Projects.Agents
 
             Id = id;
             Name = name;
-            Tags = new ChangeTrackingList<string>();
+            Labels = new ChangeTrackingList<string>();
             Examples = new ChangeTrackingList<string>();
         }
 
@@ -32,15 +32,15 @@ namespace Azure.AI.Projects.Agents
         /// <param name="id"> a unique identifier for the skill. </param>
         /// <param name="name"> The name of the skill. </param>
         /// <param name="description"> A description of the skill. </param>
-        /// <param name="tags"> set of tagwords describing classes of capabilities for the skill. </param>
+        /// <param name="labels"> set of tagwords describing classes of capabilities for the skill. </param>
         /// <param name="examples"> A list of example scenarios that the skill can perform. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentCardSkill(string id, string name, string description, IList<string> tags, IList<string> examples, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentCardSkill(string id, string name, string description, IList<string> labels, IList<string> examples, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
             Description = description;
-            Tags = tags;
+            Labels = labels;
             Examples = examples;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -55,7 +55,7 @@ namespace Azure.AI.Projects.Agents
         public string Description { get; set; }
 
         /// <summary> set of tagwords describing classes of capabilities for the skill. </summary>
-        public IList<string> Tags { get; }
+        public IList<string> Labels { get; }
 
         /// <summary> A list of example scenarios that the skill can perform. </summary>
         public IList<string> Examples { get; }

@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Kusto
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.Kusto
     /// </summary>
     public partial class KustoDataConnectionCollection : ArmCollection, IEnumerable<KustoDataConnectionResource>, IAsyncEnumerable<KustoDataConnectionResource>
     {
-        private readonly ClientDiagnostics _kustoDataConnectionDataConnectionsClientDiagnostics;
-        private readonly DataConnectionsRestOperations _kustoDataConnectionDataConnectionsRestClient;
+        private readonly ClientDiagnostics _dataConnectionsClientDiagnostics;
+        private readonly DataConnections _dataConnectionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="KustoDataConnectionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of KustoDataConnectionCollection for mocking. </summary>
         protected KustoDataConnectionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="KustoDataConnectionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoDataConnectionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal KustoDataConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _kustoDataConnectionDataConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", KustoDataConnectionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(KustoDataConnectionResource.ResourceType, out string kustoDataConnectionDataConnectionsApiVersion);
-            _kustoDataConnectionDataConnectionsRestClient = new DataConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, kustoDataConnectionDataConnectionsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(KustoDataConnectionResource.ResourceType, out string kustoDataConnectionApiVersion);
+            _dataConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", KustoDataConnectionResource.ResourceType.Namespace, Diagnostics);
+            _dataConnectionsRestClient = new DataConnections(_dataConnectionsClientDiagnostics, Pipeline, Endpoint, kustoDataConnectionApiVersion ?? "2025-02-14");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != KustoDatabaseResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, KustoDatabaseResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, KustoDatabaseResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates a data connection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/dataConnections/{dataConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/dataConnections/{dataConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataConnections_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataConnections_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoDataConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="dataConnectionName"> The name of the data connection. </param>
         /// <param name="data"> The data connection parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<KustoDataConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dataConnectionName, KustoDataConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _kustoDataConnectionDataConnectionsClientDiagnostics.CreateScope("KustoDataConnectionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _dataConnectionsClientDiagnostics.CreateScope("KustoDataConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _kustoDataConnectionDataConnectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new KustoArmOperation<KustoDataConnectionResource>(new KustoDataConnectionOperationSource(Client), _kustoDataConnectionDataConnectionsClientDiagnostics, Pipeline, _kustoDataConnectionDataConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataConnectionName, KustoDataConnectionData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                KustoArmOperation<KustoDataConnectionResource> operation = new KustoArmOperation<KustoDataConnectionResource>(
+                    new KustoDataConnectionResourceOperationSource(Client),
+                    _dataConnectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.Kusto
         /// Creates or updates a data connection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/dataConnections/{dataConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/dataConnections/{dataConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataConnections_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataConnections_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoDataConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="dataConnectionName"> The name of the data connection. </param>
         /// <param name="data"> The data connection parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<KustoDataConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string dataConnectionName, KustoDataConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _kustoDataConnectionDataConnectionsClientDiagnostics.CreateScope("KustoDataConnectionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _dataConnectionsClientDiagnostics.CreateScope("KustoDataConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _kustoDataConnectionDataConnectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataConnectionName, data, cancellationToken);
-                var operation = new KustoArmOperation<KustoDataConnectionResource>(new KustoDataConnectionOperationSource(Client), _kustoDataConnectionDataConnectionsClientDiagnostics, Pipeline, _kustoDataConnectionDataConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataConnectionName, KustoDataConnectionData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                KustoArmOperation<KustoDataConnectionResource> operation = new KustoArmOperation<KustoDataConnectionResource>(
+                    new KustoDataConnectionResourceOperationSource(Client),
+                    _dataConnectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.Kusto
         /// Returns a data connection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/dataConnections/{dataConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/dataConnections/{dataConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataConnections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoDataConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataConnectionName"> The name of the data connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<KustoDataConnectionResource>> GetAsync(string dataConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
-            using var scope = _kustoDataConnectionDataConnectionsClientDiagnostics.CreateScope("KustoDataConnectionCollection.Get");
+            using DiagnosticScope scope = _dataConnectionsClientDiagnostics.CreateScope("KustoDataConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _kustoDataConnectionDataConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataConnectionName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataConnectionName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<KustoDataConnectionData> response = Response.FromValue(KustoDataConnectionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new KustoDataConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.Kusto
         /// Returns a data connection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/dataConnections/{dataConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/dataConnections/{dataConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataConnections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoDataConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataConnectionName"> The name of the data connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<KustoDataConnectionResource> Get(string dataConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
-            using var scope = _kustoDataConnectionDataConnectionsClientDiagnostics.CreateScope("KustoDataConnectionCollection.Get");
+            using DiagnosticScope scope = _dataConnectionsClientDiagnostics.CreateScope("KustoDataConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = _kustoDataConnectionDataConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataConnectionName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataConnectionName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<KustoDataConnectionData> response = Response.FromValue(KustoDataConnectionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new KustoDataConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,49 +272,51 @@ namespace Azure.ResourceManager.Kusto
         /// Returns the list of data connections of the given Kusto database.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/dataConnections</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/dataConnections. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataConnections_ListByDatabase</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataConnections_ListByDatabase. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoDataConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KustoDataConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KustoDataConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoDataConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoDataConnectionDataConnectionsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new KustoDataConnectionResource(Client, KustoDataConnectionData.DeserializeKustoDataConnectionData(e)), _kustoDataConnectionDataConnectionsClientDiagnostics, Pipeline, "KustoDataConnectionCollection.GetAll", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<KustoDataConnectionData, KustoDataConnectionResource>(new DataConnectionsGetByDatabaseAsyncCollectionResultOfT(
+                _dataConnectionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "KustoDataConnectionCollection.GetAll"), data => new KustoDataConnectionResource(Client, data));
         }
 
         /// <summary>
         /// Returns the list of data connections of the given Kusto database.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/dataConnections</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/dataConnections. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataConnections_ListByDatabase</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataConnections_ListByDatabase. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoDataConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,44 +324,68 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> A collection of <see cref="KustoDataConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoDataConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoDataConnectionDataConnectionsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new KustoDataConnectionResource(Client, KustoDataConnectionData.DeserializeKustoDataConnectionData(e)), _kustoDataConnectionDataConnectionsClientDiagnostics, Pipeline, "KustoDataConnectionCollection.GetAll", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<KustoDataConnectionData, KustoDataConnectionResource>(new DataConnectionsGetByDatabaseCollectionResultOfT(
+                _dataConnectionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "KustoDataConnectionCollection.GetAll"), data => new KustoDataConnectionResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/dataConnections/{dataConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/dataConnections/{dataConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataConnections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoDataConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataConnectionName"> The name of the data connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string dataConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
-            using var scope = _kustoDataConnectionDataConnectionsClientDiagnostics.CreateScope("KustoDataConnectionCollection.Exists");
+            using DiagnosticScope scope = _dataConnectionsClientDiagnostics.CreateScope("KustoDataConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _kustoDataConnectionDataConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataConnectionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<KustoDataConnectionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(KustoDataConnectionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((KustoDataConnectionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -344,36 +399,50 @@ namespace Azure.ResourceManager.Kusto
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/dataConnections/{dataConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/dataConnections/{dataConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataConnections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoDataConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataConnectionName"> The name of the data connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string dataConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
-            using var scope = _kustoDataConnectionDataConnectionsClientDiagnostics.CreateScope("KustoDataConnectionCollection.Exists");
+            using DiagnosticScope scope = _dataConnectionsClientDiagnostics.CreateScope("KustoDataConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _kustoDataConnectionDataConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataConnectionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataConnectionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<KustoDataConnectionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(KustoDataConnectionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((KustoDataConnectionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,38 +456,54 @@ namespace Azure.ResourceManager.Kusto
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/dataConnections/{dataConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/dataConnections/{dataConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataConnections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoDataConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataConnectionName"> The name of the data connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<KustoDataConnectionResource>> GetIfExistsAsync(string dataConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
-            using var scope = _kustoDataConnectionDataConnectionsClientDiagnostics.CreateScope("KustoDataConnectionCollection.GetIfExists");
+            using DiagnosticScope scope = _dataConnectionsClientDiagnostics.CreateScope("KustoDataConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _kustoDataConnectionDataConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataConnectionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<KustoDataConnectionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(KustoDataConnectionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((KustoDataConnectionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<KustoDataConnectionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new KustoDataConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -432,38 +517,54 @@ namespace Azure.ResourceManager.Kusto
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/dataConnections/{dataConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/dataConnections/{dataConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataConnections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoDataConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataConnectionName"> The name of the data connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<KustoDataConnectionResource> GetIfExists(string dataConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
-            using var scope = _kustoDataConnectionDataConnectionsClientDiagnostics.CreateScope("KustoDataConnectionCollection.GetIfExists");
+            using DiagnosticScope scope = _dataConnectionsClientDiagnostics.CreateScope("KustoDataConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _kustoDataConnectionDataConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataConnectionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataConnectionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<KustoDataConnectionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(KustoDataConnectionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((KustoDataConnectionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<KustoDataConnectionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new KustoDataConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -483,6 +584,7 @@ namespace Azure.ResourceManager.Kusto
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<KustoDataConnectionResource> IAsyncEnumerable<KustoDataConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

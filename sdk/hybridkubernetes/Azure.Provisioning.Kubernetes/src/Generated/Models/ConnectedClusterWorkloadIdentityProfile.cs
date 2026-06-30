@@ -40,6 +40,10 @@ namespace Azure.Provisioning.Kubernetes
         {
             base.DefineProvisionableProperties();
             _enabled = DefineProperty<bool>(nameof(Enabled), new string[] { "enabled" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ConnectedClusterWorkloadIdentityProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

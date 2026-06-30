@@ -108,6 +108,10 @@ namespace Azure.Provisioning.ContainerService
             _licenseType = DefineProperty<WindowsVmLicenseType>(nameof(LicenseType), new string[] { "licenseType" });
             _isCsiProxyEnabled = DefineProperty<bool>(nameof(IsCsiProxyEnabled), new string[] { "enableCSIProxy" });
             _gmsaProfile = DefineModelProperty<WindowsGmsaProfile>(nameof(GmsaProfile), new string[] { "gmsaProfile" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterWindowsProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }
