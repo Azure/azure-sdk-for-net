@@ -16,6 +16,6 @@ Rules for code here:
 
 Current modules:
 
-- [`SchemaValidator.cs`](SchemaValidator.cs) — validates analyzer schema
-  JSON before any service call (catches `baseAnalyzerId` typos, missing
-  `fieldSchema`, missing `contentCategories` analyzer routes, etc.).
+- `SchemaValidator.cs` — validates analyzer schema JSON before any
+  service call (catches `baseAnalyzerId` typos, missing `fieldSchema`,
+  missing `contentCategories` analyzer routes, etc.).
