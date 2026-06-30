@@ -1,6 +1,7 @@
 // Ensures a shallow + sparse cache clone of a git repo exists and is reasonably fresh.
 // First run: shallow blobless cone-sparse clone. Within maxAgeHours: no-op. Past that:
-// fetch + hard reset. Primes the cache Vally's `environment.git` fixtures point at.
+// fetch + checkout. Primes the cache Vally's `environment.git` fixtures point at; FETCH_HEAD
+// is landed on a local branch named <ref> so `git worktree add --detach <tmp> <ref>` resolves.
 
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
@@ -52,7 +53,9 @@ export function syncRepo({
       invokeGit(["-C", cache, "sparse-checkout", "set", ...sparseCheckoutPaths]);
     }
     invokeGit(["-C", cache, "fetch", "--depth", "1", "--filter=blob:none", "origin", ref]);
-    invokeGit(["-C", cache, "checkout", "FETCH_HEAD"]);
+    // Land FETCH_HEAD on a real local branch named <ref> (not detached) so Vally's worktree
+    // fixtures can resolve `git worktree add --detach <tmp> <ref>`.
+    invokeGit(["-C", cache, "checkout", "-B", ref, "FETCH_HEAD"]);
     fs.writeFileSync(stamp, new Date().toISOString());
   } else {
     let stale = true;
@@ -63,8 +66,9 @@ export function syncRepo({
     if (stale) {
       console.log(`[sync-eval-git-repo] Refreshing cache (>${maxAgeHours}h old): ${cache}`);
       invokeGit(["-C", cache, "fetch", "--depth", "1", "origin", ref]);
-      // Reset to FETCH_HEAD (a tag/SHA has no origin/<ref> tracking branch).
-      invokeGit(["-C", cache, "reset", "--hard", "FETCH_HEAD"]);
+      // Re-point the local <ref> branch at FETCH_HEAD (also repairs a previously detached cache)
+      // so the worktree fixtures keep resolving.
+      invokeGit(["-C", cache, "checkout", "-B", ref, "FETCH_HEAD"]);
       fs.writeFileSync(stamp, new Date().toISOString());
     } else {
       console.log(`[sync-eval-git-repo] Cache is fresh (<${maxAgeHours}h): ${cache}`);
