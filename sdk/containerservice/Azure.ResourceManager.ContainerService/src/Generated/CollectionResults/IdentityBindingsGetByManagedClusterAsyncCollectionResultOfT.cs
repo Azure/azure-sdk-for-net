@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.ContainerService
                     yield break;
                 }
                 IdentityBindingListResult result = IdentityBindingListResult.FromResponse(response);
-                yield return Page<ManagedClusterIdentityBindingData>.FromValues((IReadOnlyList<ManagedClusterIdentityBindingData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ManagedClusterIdentityBindingData>.FromValues((IReadOnlyList<ManagedClusterIdentityBindingData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

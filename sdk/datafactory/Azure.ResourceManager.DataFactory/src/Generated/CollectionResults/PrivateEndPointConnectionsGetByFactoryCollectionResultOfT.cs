@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.DataFactory
                     yield break;
                 }
                 DataFactoryPrivateEndpointConnectionListResult result = DataFactoryPrivateEndpointConnectionListResult.FromResponse(response);
-                yield return Page<DataFactoryPrivateEndpointConnectionData>.FromValues((IReadOnlyList<DataFactoryPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DataFactoryPrivateEndpointConnectionData>.FromValues((IReadOnlyList<DataFactoryPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

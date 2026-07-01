@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.DataBoxEdge
                     yield break;
                 }
                 ContainerList result = ContainerList.FromResponse(response);
-                yield return Page<DataBoxEdgeStorageContainerData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DataBoxEdgeStorageContainerData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
