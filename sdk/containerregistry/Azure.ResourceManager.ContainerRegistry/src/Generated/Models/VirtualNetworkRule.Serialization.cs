@@ -14,52 +14,57 @@ using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    /// <summary> The parameters for updating cache rule properties. </summary>
-    internal partial class CacheRuleUpdateProperties : IJsonModel<CacheRuleUpdateProperties>
+    /// <summary> Virtual network rule. </summary>
+    public partial class VirtualNetworkRule : IJsonModel<VirtualNetworkRule>
     {
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkRule"/> for deserialization. </summary>
+        internal VirtualNetworkRule()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CacheRuleUpdateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual VirtualNetworkRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CacheRuleUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkRule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCacheRuleUpdateProperties(document.RootElement, options);
+                        return DeserializeVirtualNetworkRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CacheRuleUpdateProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkRule)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CacheRuleUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkRule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerRegistryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CacheRuleUpdateProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkRule)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CacheRuleUpdateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<VirtualNetworkRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CacheRuleUpdateProperties IPersistableModel<CacheRuleUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        VirtualNetworkRule IPersistableModel<VirtualNetworkRule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CacheRuleUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VirtualNetworkRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CacheRuleUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VirtualNetworkRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,21 +75,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CacheRuleUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CacheRuleUpdateProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkRule)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(CredentialSetResourceId))
+            if (Optional.IsDefined(Action))
             {
-                writer.WritePropertyName("credentialSetResourceId"u8);
-                writer.WriteStringValue(CredentialSetResourceId);
+                writer.WritePropertyName("action"u8);
+                writer.WriteStringValue(Action.Value.ToString());
             }
-            if (Optional.IsDefined(AdditionalAuthenticationProperties))
-            {
-                writer.WritePropertyName("additionalAuthenticationProperties"u8);
-                writer.WriteObjectValue(AdditionalAuthenticationProperties, options);
-            }
+            writer.WritePropertyName("virtualNetworkSubnetResourceId"u8);
+            writer.WriteStringValue(VirtualNetworkSubnetResourceId);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -104,50 +106,46 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CacheRuleUpdateProperties IJsonModel<CacheRuleUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        VirtualNetworkRule IJsonModel<VirtualNetworkRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CacheRuleUpdateProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual VirtualNetworkRule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CacheRuleUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CacheRuleUpdateProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkRule)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCacheRuleUpdateProperties(document.RootElement, options);
+            return DeserializeVirtualNetworkRule(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CacheRuleUpdateProperties DeserializeCacheRuleUpdateProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static VirtualNetworkRule DeserializeVirtualNetworkRule(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ResourceIdentifier credentialSetResourceId = default;
-            AdditionalAuthenticationProperties additionalAuthenticationProperties = default;
+            ContainerRegistryIPRuleAction? action = default;
+            ResourceIdentifier virtualNetworkSubnetResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("credentialSetResourceId"u8))
+                if (prop.NameEquals("action"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    credentialSetResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    action = new ContainerRegistryIPRuleAction(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("additionalAuthenticationProperties"u8))
+                if (prop.NameEquals("virtualNetworkSubnetResourceId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    additionalAuthenticationProperties = AdditionalAuthenticationProperties.DeserializeAdditionalAuthenticationProperties(prop.Value, options);
+                    virtualNetworkSubnetResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -155,7 +153,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CacheRuleUpdateProperties(credentialSetResourceId, additionalAuthenticationProperties, additionalBinaryDataProperties);
+            return new VirtualNetworkRule(action, virtualNetworkSubnetResourceId, additionalBinaryDataProperties);
         }
     }
 }

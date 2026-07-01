@@ -65,6 +65,24 @@ namespace Azure.ResourceManager.ContainerRegistry
             }
         }
 
+        /// <summary> Authentication configuration used by the cache rule to access the upstream source repository. </summary>
+        [WirePath("properties.additionalAuthenticationProperties")]
+        public AdditionalAuthenticationProperties AdditionalAuthenticationProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdditionalAuthenticationProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CacheRuleProperties();
+                }
+                Properties.AdditionalAuthenticationProperties = value;
+            }
+        }
+
         /// <summary> Source repository pulled from upstream. </summary>
         [WirePath("properties.sourceRepository")]
         public string SourceRepository

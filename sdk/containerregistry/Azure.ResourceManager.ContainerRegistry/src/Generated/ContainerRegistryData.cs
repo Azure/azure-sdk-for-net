@@ -395,6 +395,24 @@ namespace Azure.ResourceManager.ContainerRegistry
             }
         }
 
+        /// <summary> Whether to allow cache operations that write to repositories in this registry. </summary>
+        [WirePath("properties.writableCacheRepos")]
+        public ContainerRegistryWritableCacheRepos? WritableCacheRepos
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WritableCacheRepos;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RegistryProperties();
+                }
+                Properties.WritableCacheRepos = value;
+            }
+        }
+
         /// <summary> Determines registry role assignment mode. </summary>
         [WirePath("properties.roleAssignmentMode")]
         public ContainerRegistryRoleAssignmentMode? RoleAssignmentMode

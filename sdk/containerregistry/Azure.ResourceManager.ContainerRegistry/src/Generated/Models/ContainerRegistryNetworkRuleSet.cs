@@ -22,16 +22,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public ContainerRegistryNetworkRuleSet(ContainerRegistryNetworkRuleDefaultAction defaultAction)
         {
             DefaultAction = defaultAction;
+            VirtualNetworkRules = new ChangeTrackingList<VirtualNetworkRule>();
             IPRules = new ChangeTrackingList<ContainerRegistryIPRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryNetworkRuleSet"/>. </summary>
         /// <param name="defaultAction"> The default action of allow or deny when no other rules match. </param>
+        /// <param name="virtualNetworkRules"> The virtual network rules. </param>
         /// <param name="ipRules"> The IP ACL rules. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryNetworkRuleSet(ContainerRegistryNetworkRuleDefaultAction defaultAction, IList<ContainerRegistryIPRule> ipRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryNetworkRuleSet(ContainerRegistryNetworkRuleDefaultAction defaultAction, IList<VirtualNetworkRule> virtualNetworkRules, IList<ContainerRegistryIPRule> ipRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DefaultAction = defaultAction;
+            VirtualNetworkRules = virtualNetworkRules;
             IPRules = ipRules;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -39,6 +42,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> The default action of allow or deny when no other rules match. </summary>
         [WirePath("defaultAction")]
         public ContainerRegistryNetworkRuleDefaultAction DefaultAction { get; set; }
+
+        /// <summary> The virtual network rules. </summary>
+        [WirePath("virtualNetworkRules")]
+        public IList<VirtualNetworkRule> VirtualNetworkRules { get; }
 
         /// <summary> The IP ACL rules. </summary>
         [WirePath("ipRules")]

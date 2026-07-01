@@ -134,6 +134,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("metadataSearch"u8);
                 writer.WriteStringValue(MetadataSearch.Value.ToString());
             }
+            if (Optional.IsDefined(WritableCacheRepos))
+            {
+                writer.WritePropertyName("writableCacheRepos"u8);
+                writer.WriteStringValue(WritableCacheRepos.Value.ToString());
+            }
             if (Optional.IsDefined(RoleAssignmentMode))
             {
                 writer.WritePropertyName("roleAssignmentMode"u8);
@@ -193,6 +198,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             bool? isNetworkRuleBypassAllowedForTasks = default;
             bool? isAnonymousPullEnabled = default;
             ContainerRegistryMetadataSearch? metadataSearch = default;
+            ContainerRegistryWritableCacheRepos? writableCacheRepos = default;
             ContainerRegistryRoleAssignmentMode? roleAssignmentMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -305,6 +311,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     metadataSearch = new ContainerRegistryMetadataSearch(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("writableCacheRepos"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    writableCacheRepos = new ContainerRegistryWritableCacheRepos(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("roleAssignmentMode"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -332,6 +347,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 isNetworkRuleBypassAllowedForTasks,
                 isAnonymousPullEnabled,
                 metadataSearch,
+                writableCacheRepos,
                 roleAssignmentMode,
                 additionalBinaryDataProperties);
         }
