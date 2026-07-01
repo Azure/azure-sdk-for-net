@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.IotHub
                     yield break;
                 }
                 IotHubQuotaMetricInfoListResult result = IotHubQuotaMetricInfoListResult.FromResponse(response);
-                yield return Page<IotHubQuotaMetricInfo>.FromValues((IReadOnlyList<IotHubQuotaMetricInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<IotHubQuotaMetricInfo>.FromValues((IReadOnlyList<IotHubQuotaMetricInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
