@@ -5,7 +5,7 @@ description: Review Azure SDK for .NET Azure.Provisioning.* pull requests for pa
 
 # Azure .NET Provisioning SDK PR Review
 
-Review Azure SDK for .NET `Azure.Provisioning.*` pull requests. This skill is review-only: do not generate code, run package restore, build or test PR code, or modify the PR.
+Review Azure SDK for .NET `Azure.Provisioning.*` pull requests. This skill is review-only: do not generate code, run tests, run the provisioning generator, or modify the PR. The only allowed code execution is the trusted `Get-ProvisioningSchema.ps1` reflection extractor in Phase 2.
 
 ## Scope
 
@@ -37,7 +37,13 @@ For existing packages, verify regenerated output stays within the package and do
 
 ## Phase 2: Generated Schema and Metadata
 
-Review changed generated resources, especially `src/Generated/schema.log` and generated resource classes.
+Generate a schema from the generated C# code before reviewing resource shape issues. Run the trusted reflection script from the base branch against each changed provisioning package:
+
+```powershell
+pwsh .github/skills/azure-sdk-provisioning-pr-review/Get-ProvisioningSchema.ps1 -PackagePath <package-root> -OutputPath <temp-schema.json>
+```
+
+The script builds the package, loads the compiled assembly, creates one instance of every generated `ProvisionableResource`, initializes its `ProvisionableProperties`, and emits each ARM resource type, default API version, supported API versions, serialized property paths, property kinds, C# types, required/output flags, and metadata properties. Use this generated schema as the authoritative inventory of all ARM resources currently exposed by the package.
 
 Compare changed resource shapes against the Azure Bicep reference at `https://learn.microsoft.com/en-us/azure/templates/{provider}/{resource-type}?pivots=deployment-language-bicep`.
 
