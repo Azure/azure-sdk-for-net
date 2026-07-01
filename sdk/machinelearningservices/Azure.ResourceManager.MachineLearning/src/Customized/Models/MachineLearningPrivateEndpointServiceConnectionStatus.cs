@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private readonly string _value;
         /// <summary> Initializes a new instance of <see cref="MachineLearningPrivateEndpointServiceConnectionStatus"/>. </summary>
         public MachineLearningPrivateEndpointServiceConnectionStatus(string value) { Argument.AssertNotNull(value, nameof(value)); _value = value; }
-        /// <summary> Gets the Approved. </summary>
+        /// <summary> The private endpoint connection has been approved. </summary>
         public static MachineLearningPrivateEndpointServiceConnectionStatus Approved { get; } = new MachineLearningPrivateEndpointServiceConnectionStatus("Approved");
-        /// <summary> Gets the Disconnected. </summary>
+        /// <summary> The private endpoint connection has been disconnected. </summary>
         public static MachineLearningPrivateEndpointServiceConnectionStatus Disconnected { get; } = new MachineLearningPrivateEndpointServiceConnectionStatus("Disconnected");
-        /// <summary> Gets the Pending. </summary>
+        /// <summary> The private endpoint connection is pending approval. </summary>
         public static MachineLearningPrivateEndpointServiceConnectionStatus Pending { get; } = new MachineLearningPrivateEndpointServiceConnectionStatus("Pending");
-        /// <summary> Gets the Rejected. </summary>
+        /// <summary> The private endpoint connection has been rejected. </summary>
         public static MachineLearningPrivateEndpointServiceConnectionStatus Rejected { get; } = new MachineLearningPrivateEndpointServiceConnectionStatus("Rejected");
-        /// <summary> AutoML job timeout. </summary>
+        /// <summary> The private endpoint connection request has timed out. </summary>
         public static MachineLearningPrivateEndpointServiceConnectionStatus Timeout { get; } = new MachineLearningPrivateEndpointServiceConnectionStatus("Timeout");
         /// <summary> Converts a <c>string</c> to a <c>MachineLearningPrivateEndpointServiceConnectionStatus</c>. </summary>
         public static implicit operator MachineLearningPrivateEndpointServiceConnectionStatus(string value) => new MachineLearningPrivateEndpointServiceConnectionStatus(value);

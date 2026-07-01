@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private readonly string _value;
         /// <summary> Initializes a new instance of <see cref="MachineLearningPublicNetworkAccessType"/>. </summary>
         public MachineLearningPublicNetworkAccessType(string value) { Argument.AssertNotNull(value, nameof(value)); _value = value; }
-        /// <summary> Gets the Enabled. </summary>
+        /// <summary> Public network access is enabled. </summary>
         public static MachineLearningPublicNetworkAccessType Enabled { get; } = new MachineLearningPublicNetworkAccessType("Enabled");
-        /// <summary> Gets the Disabled. </summary>
+        /// <summary> Public network access is disabled. </summary>
         public static MachineLearningPublicNetworkAccessType Disabled { get; } = new MachineLearningPublicNetworkAccessType("Disabled");
         /// <summary> Converts a <c>string</c> to a <c>MachineLearningPublicNetworkAccessType</c>. </summary>
         public static implicit operator MachineLearningPublicNetworkAccessType(string value) => new MachineLearningPublicNetworkAccessType(value);
