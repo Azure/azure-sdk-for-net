@@ -1475,9 +1475,10 @@ namespace Azure.Data.AppConfiguration
             var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
+            string resourceType = selector.ResourceType?.ToString();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, _syncToken, null, dateTime, fields, null, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetLabelsRequest(new Uri(nextLink, UriKind.RelativeOrAbsolute), name, _syncToken, null, dateTime, fields, null, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, _syncToken, null, dateTime, fields, resourceType, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetLabelsRequest(new Uri(nextLink, UriKind.RelativeOrAbsolute), name, _syncToken, null, dateTime, fields, resourceType, context);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SettingLabel.DeserializeLabel, ClientDiagnostics, Pipeline, "ConfigurationClient.GetLabels", "items", "@nextLink", cancellationToken);
         }
 
@@ -1494,9 +1495,10 @@ namespace Azure.Data.AppConfiguration
             var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
+            string resourceType = selector.ResourceType?.ToString();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, _syncToken, null, dateTime, fields, null, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetLabelsRequest(new Uri(nextLink, UriKind.RelativeOrAbsolute), name, _syncToken, null, dateTime, fields, null, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, _syncToken, null, dateTime, fields, resourceType, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetLabelsRequest(new Uri(nextLink, UriKind.RelativeOrAbsolute), name, _syncToken, null, dateTime, fields, resourceType, context);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SettingLabel.DeserializeLabel, ClientDiagnostics, Pipeline, "ConfigurationClient.GetLabels", "items", "@nextLink", cancellationToken);
         }
 

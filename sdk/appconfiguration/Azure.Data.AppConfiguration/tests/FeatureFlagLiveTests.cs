@@ -89,7 +89,8 @@ namespace Azure.Data.AppConfiguration.Tests
                 Assert.That(response.Value, Is.Not.Null);
                 Assert.That(response.Value.Name, Is.EqualTo(name));
                 Assert.That(response.Value.Enabled, Is.EqualTo(true));
-                Assert.That(response.Value.Etag, Is.Not.Null.And.Not.Empty);
+                Assert.That(response.Value.Etag.HasValue, Is.True);
+                Assert.That(response.Value.Etag.Value.ToString(), Is.Not.Empty);
             }
             finally
             {

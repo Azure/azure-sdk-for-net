@@ -147,7 +147,7 @@ namespace Azure.Data.AppConfiguration
         {
             (string name, string label, string acceptDatetime, IEnumerable<string> select, IList<string> tags) = TranslateFeatureFlagSelector(selector);
 
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
             context.AddClassifier(304, isError: false);
 
             HttpMessage FirstPageRequest(MatchConditions conditions, int? pageSizeHint)
