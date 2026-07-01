@@ -17,7 +17,7 @@ Then invoke tests with:
 . (Join-Path $PSScriptRoot ".." ".." "common" "scripts" "Helpers" PSModule-Helpers.ps1)
 Install-ModuleIfNotInstalled "Pester" "5.3.3" | Import-Module
 
-Describe "Validate-CpmCompliance CPM-007" {
+Describe "Validate-CpmCompliance CPM-007" -Tag "UnitTest" {
     BeforeAll {
         $scriptPath = Join-Path $PSScriptRoot ".." "Validate-CpmCompliance.ps1"
         $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot ".." ".." "..")).Path.TrimEnd('\', '/')
