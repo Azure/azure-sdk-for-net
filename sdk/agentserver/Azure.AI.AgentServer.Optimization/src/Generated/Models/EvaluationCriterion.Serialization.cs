@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.AgentServer.Optimization
 {
     /// <summary> LLM-as-judge evaluation criterion applied to a single task. </summary>
-    public partial class EvaluationCriterion : IJsonModel<EvaluationCriterion>
+    internal partial class EvaluationCriterion : IJsonModel<EvaluationCriterion>
     {
         /// <summary> Initializes a new instance of <see cref="EvaluationCriterion"/> for deserialization. </summary>
         internal EvaluationCriterion()

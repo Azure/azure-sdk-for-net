@@ -14,7 +14,7 @@ using Azure;
 namespace Azure.AI.AgentServer.Optimization
 {
     /// <summary> Aggregated evaluation result for a single candidate agent configuration across all tasks. </summary>
-    public partial class OptimizationCandidate : IJsonModel<OptimizationCandidate>
+    internal partial class OptimizationCandidate : IJsonModel<OptimizationCandidate>
     {
         /// <summary> Initializes a new instance of <see cref="OptimizationCandidate"/> for deserialization. </summary>
         internal OptimizationCandidate()

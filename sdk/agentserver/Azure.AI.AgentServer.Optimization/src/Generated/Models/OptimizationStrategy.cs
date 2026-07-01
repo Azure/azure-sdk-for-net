@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.AgentServer.Optimization
 {
     /// <summary> Optimization strategy dimension. </summary>
-    public readonly partial struct OptimizationStrategy : IEquatable<OptimizationStrategy>
+    internal readonly partial struct OptimizationStrategy : IEquatable<OptimizationStrategy>
     {
         private readonly string _value;
         /// <summary> Instruction-tuning strategy — rewrites agent system prompts. </summary>

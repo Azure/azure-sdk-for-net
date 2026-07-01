@@ -3,16 +3,17 @@
 
 using System;
 using Azure.AI.AgentServer.Optimization.Configuration;
+using Microsoft.Extensions.Configuration;
 
 #nullable enable
 
-namespace Microsoft.Extensions.Configuration;
+namespace Azure.AI.AgentServer.Optimization;
 
 /// <summary>
 /// Extension methods on <see cref="IConfigurationBuilder"/> for adding an
 /// <see cref="AgentConfigurationSource"/>.
 /// </summary>
-public static class AgentConfigurationBuilderExtensions
+public static partial class AgentOptimizationClientHostExtensions
 {
     /// <summary>
     /// Adds an optimization configuration source using all default options.

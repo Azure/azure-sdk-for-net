@@ -15,7 +15,7 @@ using Azure.Core;
 namespace Azure.AI.AgentServer.Optimization
 {
     /// <summary> Agent optimization job resource — a long-running job that optimizes an agent's configuration (instructions, model, skills) to maximize evaluation scores. On success, the result contains scored candidates. </summary>
-    public partial class OptimizationJob : IJsonModel<OptimizationJob>
+    internal partial class OptimizationJob : IJsonModel<OptimizationJob>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

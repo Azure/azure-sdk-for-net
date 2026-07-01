@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.AgentServer.Optimization
 {
     /// <summary> Aggregated evaluation result for a single candidate agent configuration across all tasks. </summary>
-    public partial class OptimizationCandidate
+    internal partial class OptimizationCandidate
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

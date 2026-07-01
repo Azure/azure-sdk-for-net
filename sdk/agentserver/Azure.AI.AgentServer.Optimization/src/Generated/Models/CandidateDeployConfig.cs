@@ -47,6 +47,6 @@ namespace Azure.AI.AgentServer.Optimization
         public float? Temperature { get; }
 
         /// <summary> Optional skill overrides. </summary>
-        public IList<OptimizationAgentSkill> Skills { get; }
+        internal IList<OptimizationAgentSkill> Skills { get; }
     }
 }

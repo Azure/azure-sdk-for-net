@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.AgentServer.Optimization
 {
     /// <summary> Terminal-state result body. Populated when `status` is `succeeded` or `failed`. </summary>
-    public partial class OptimizationJobResult : IJsonModel<OptimizationJobResult>
+    internal partial class OptimizationJobResult : IJsonModel<OptimizationJobResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

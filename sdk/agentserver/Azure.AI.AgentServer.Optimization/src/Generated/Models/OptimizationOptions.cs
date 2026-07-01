@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.AgentServer.Optimization
 {
     /// <summary> Tuning knobs and run-mode for an optimization job. </summary>
-    public partial class OptimizationOptions
+    internal partial class OptimizationOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

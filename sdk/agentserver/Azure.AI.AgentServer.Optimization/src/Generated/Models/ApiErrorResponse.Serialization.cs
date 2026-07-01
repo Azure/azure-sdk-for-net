@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.AgentServer.Optimization
 {
     /// <summary> Error response for API failures. </summary>
-    public partial class ApiErrorResponse : IJsonModel<ApiErrorResponse>
+    internal partial class ApiErrorResponse : IJsonModel<ApiErrorResponse>
     {
         /// <summary> Initializes a new instance of <see cref="ApiErrorResponse"/> for deserialization. </summary>
         internal ApiErrorResponse()

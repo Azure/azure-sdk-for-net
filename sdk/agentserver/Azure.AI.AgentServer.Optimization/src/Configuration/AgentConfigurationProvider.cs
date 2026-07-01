@@ -97,7 +97,7 @@ public class AgentConfigurationProvider : ConfigurationProvider
 
     /// <summary>
     /// Resolves the configuration section that this provider writes into. Exposed
-    /// internally so the <see cref="OptimizationConfigurationExtensions"/> helpers
+    /// internally so the <see cref="AgentOptimizationClientHostExtensions"/> helpers
     /// can stay in sync with provider behavior.
     /// </summary>
     internal static string ResolveSectionName(AgentConfigurationOptions options)

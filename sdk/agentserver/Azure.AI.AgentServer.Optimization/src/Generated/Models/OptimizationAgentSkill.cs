@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.AgentServer.Optimization
 {
     /// <summary> A named skill on the agent that the optimizer may tune. </summary>
-    public partial class OptimizationAgentSkill
+    internal partial class OptimizationAgentSkill
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

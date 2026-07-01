@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.AgentServer.Optimization
 {
     /// <summary> In-flight progress; only populated while status is `queued` or `in_progress`. </summary>
-    public partial class OptimizationJobProgress : IJsonModel<OptimizationJobProgress>
+    internal partial class OptimizationJobProgress : IJsonModel<OptimizationJobProgress>
     {
         /// <summary> Initializes a new instance of <see cref="OptimizationJobProgress"/> for deserialization. </summary>
         internal OptimizationJobProgress()

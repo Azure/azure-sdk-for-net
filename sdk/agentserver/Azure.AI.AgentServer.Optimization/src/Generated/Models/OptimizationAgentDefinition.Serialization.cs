@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.AgentServer.Optimization
 {
     /// <summary> The agent definition being optimized. Identifies the Foundry agent and optional configuration overrides. </summary>
-    public partial class OptimizationAgentDefinition : IJsonModel<OptimizationAgentDefinition>
+    internal partial class OptimizationAgentDefinition : IJsonModel<OptimizationAgentDefinition>
     {
         /// <summary> Initializes a new instance of <see cref="OptimizationAgentDefinition"/> for deserialization. </summary>
         internal OptimizationAgentDefinition()

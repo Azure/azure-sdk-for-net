@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.AgentServer.Optimization
 {
     /// <summary> Caller-supplied inputs for an optimization job. </summary>
-    public partial class OptimizationJobInputs : IJsonModel<OptimizationJobInputs>
+    internal partial class OptimizationJobInputs : IJsonModel<OptimizationJobInputs>
     {
         /// <summary> Initializes a new instance of <see cref="OptimizationJobInputs"/> for deserialization. </summary>
         internal OptimizationJobInputs()

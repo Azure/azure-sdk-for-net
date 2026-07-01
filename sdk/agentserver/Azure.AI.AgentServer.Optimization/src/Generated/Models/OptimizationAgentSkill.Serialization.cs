@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.AgentServer.Optimization
 {
     /// <summary> A named skill on the agent that the optimizer may tune. </summary>
-    public partial class OptimizationAgentSkill : IJsonModel<OptimizationAgentSkill>
+    internal partial class OptimizationAgentSkill : IJsonModel<OptimizationAgentSkill>
     {
         /// <summary> Initializes a new instance of <see cref="OptimizationAgentSkill"/> for deserialization. </summary>
         internal OptimizationAgentSkill()

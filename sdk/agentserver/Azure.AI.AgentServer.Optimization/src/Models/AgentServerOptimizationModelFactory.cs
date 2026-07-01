@@ -11,17 +11,28 @@ namespace Azure.AI.AgentServer.Optimization
     /// </summary>
     public static partial class AgentServerOptimizationModelFactory
     {
-        /// <summary> Creates a new <see cref="CandidateDeployConfig"/> instance for mocking. </summary>
+        /// <summary> Creates a new <see cref="global::Azure.AI.AgentServer.Optimization.CandidateDeployConfig"/> instance for mocking. </summary>
         /// <param name="instructions"> System prompt / instructions. </param>
         /// <param name="model"> Foundry deployment name. </param>
         /// <param name="temperature"> Optional sampling temperature. </param>
-        /// <param name="skills"> Optional skill overrides. </param>
-        /// <returns> A new <see cref="CandidateDeployConfig"/> instance. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.AgentServer.Optimization.CandidateDeployConfig"/> instance. </returns>
         public static CandidateDeployConfig CandidateDeployConfig(
             string instructions = default,
             string model = default,
-            float? temperature = default,
-            IEnumerable<OptimizationAgentSkill> skills = default)
+            float? temperature = default)
+        {
+            return CandidateDeployConfig(
+                instructions,
+                model,
+                temperature,
+                skills: null);
+        }
+
+        internal static CandidateDeployConfig CandidateDeployConfig(
+            string instructions,
+            string model,
+            float? temperature,
+            IEnumerable<OptimizationAgentSkill> skills)
         {
             return new CandidateDeployConfig(
                 instructions,

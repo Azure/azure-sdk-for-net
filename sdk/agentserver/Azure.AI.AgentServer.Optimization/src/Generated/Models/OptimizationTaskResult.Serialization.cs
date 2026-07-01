@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.AgentServer.Optimization
 {
     /// <summary> Per-task evaluation result for a single candidate. </summary>
-    public partial class OptimizationTaskResult : IJsonModel<OptimizationTaskResult>
+    internal partial class OptimizationTaskResult : IJsonModel<OptimizationTaskResult>
     {
         /// <summary> Initializes a new instance of <see cref="OptimizationTaskResult"/> for deserialization. </summary>
         internal OptimizationTaskResult()

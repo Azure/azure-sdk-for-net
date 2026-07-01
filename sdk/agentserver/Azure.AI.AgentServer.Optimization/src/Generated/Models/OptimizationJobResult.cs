@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.AgentServer.Optimization
 {
     /// <summary> Terminal-state result body. Populated when `status` is `succeeded` or `failed`. </summary>
-    public partial class OptimizationJobResult
+    internal partial class OptimizationJobResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

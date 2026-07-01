@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.AgentServer.Optimization
 {
     /// <summary> Reference to a registered dataset in the Foundry Dataset Service. </summary>
-    public partial class DatasetRef
+    internal partial class DatasetRef
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

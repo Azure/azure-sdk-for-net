@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.AgentServer.Optimization
 {
     /// <summary> Per-task evaluation result for a single candidate. </summary>
-    public partial class OptimizationTaskResult
+    internal partial class OptimizationTaskResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

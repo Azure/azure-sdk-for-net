@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.AgentServer.Optimization
 {
     /// <summary> Extensible status values shared by Foundry jobs. </summary>
-    public readonly partial struct JobStatus : IEquatable<JobStatus>
+    internal readonly partial struct JobStatus : IEquatable<JobStatus>
     {
         private readonly string _value;
         /// <summary> Job is waiting to start. </summary>

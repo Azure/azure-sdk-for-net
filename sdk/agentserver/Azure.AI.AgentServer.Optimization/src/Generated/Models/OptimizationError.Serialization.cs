@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.AgentServer.Optimization
 {
     /// <summary> The OptimizationError. </summary>
-    public partial class OptimizationError : IJsonModel<OptimizationError>
+    internal partial class OptimizationError : IJsonModel<OptimizationError>
     {
         /// <summary> Initializes a new instance of <see cref="OptimizationError"/> for deserialization. </summary>
         internal OptimizationError()

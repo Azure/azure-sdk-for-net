@@ -14,7 +14,7 @@ using Azure;
 namespace Azure.AI.AgentServer.Optimization
 {
     /// <summary> Full per-task evaluation results for a candidate, returned by GET /candidates/{id}/results. </summary>
-    public partial class CandidateResults : IJsonModel<CandidateResults>
+    internal partial class CandidateResults : IJsonModel<CandidateResults>
     {
         /// <summary> Initializes a new instance of <see cref="CandidateResults"/> for deserialization. </summary>
         internal CandidateResults()

@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.AgentServer.Optimization
 {
     /// <summary> Reference to a registered dataset in the Foundry Dataset Service. </summary>
-    public partial class DatasetRef : IJsonModel<DatasetRef>
+    internal partial class DatasetRef : IJsonModel<DatasetRef>
     {
         /// <summary> Initializes a new instance of <see cref="DatasetRef"/> for deserialization. </summary>
         internal DatasetRef()

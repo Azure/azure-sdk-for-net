@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.AI.AgentServer.Optimization
 {
     /// <summary> The OptimizationError. </summary>
-    public partial class OptimizationError
+    internal partial class OptimizationError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

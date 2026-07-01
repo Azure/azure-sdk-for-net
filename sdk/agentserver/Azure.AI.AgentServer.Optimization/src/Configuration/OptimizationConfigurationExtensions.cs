@@ -2,18 +2,18 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.AI.AgentServer.Optimization;
 using Azure.AI.AgentServer.Optimization.Configuration;
+using Microsoft.Extensions.Configuration;
 
 #nullable enable
 
-namespace Microsoft.Extensions.Configuration;
+namespace Azure.AI.AgentServer.Optimization;
 
 /// <summary>
 /// Extension methods on <see cref="IConfiguration"/> for retrieving resolved
 /// <see cref="CandidateDeployConfig"/> instances from <see cref="AgentConfigurationProvider"/>.
 /// </summary>
-public static class OptimizationConfigurationExtensions
+public static partial class AgentOptimizationClientHostExtensions
 {
     private const string SingleAgentSection = "Agent";
     private const string MultiAgentSectionPrefix = "Agents";

@@ -8,7 +8,7 @@
 namespace Azure.AI.AgentServer.Optimization
 {
     /// <summary></summary>
-    public enum PageOrder
+    internal enum PageOrder
     {
         /// <summary> Asc. </summary>
         Asc,

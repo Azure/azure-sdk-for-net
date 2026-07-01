@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.AgentServer.Optimization
 {
     /// <summary> The agent definition being optimized. Identifies the Foundry agent and optional configuration overrides. </summary>
-    public partial class OptimizationAgentDefinition
+    internal partial class OptimizationAgentDefinition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

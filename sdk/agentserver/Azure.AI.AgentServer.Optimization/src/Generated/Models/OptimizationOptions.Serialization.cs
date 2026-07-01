@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.AgentServer.Optimization
 {
     /// <summary> Tuning knobs and run-mode for an optimization job. </summary>
-    public partial class OptimizationOptions : IJsonModel<OptimizationOptions>
+    internal partial class OptimizationOptions : IJsonModel<OptimizationOptions>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -16,7 +16,7 @@ namespace Azure.AI.AgentServer.Optimization;
 /// double-underscore separator matches Microsoft.Extensions.Configuration's section
 /// separator and avoids collisions with hyphenated agent keys after canonicalization.
 /// </remarks>
-public static class AgentKeyCanonicalizer
+internal static class AgentKeyCanonicalizer
 {
     /// <summary>
     /// Canonicalizes <paramref name="agentKey"/> into the form used as an env-var suffix.

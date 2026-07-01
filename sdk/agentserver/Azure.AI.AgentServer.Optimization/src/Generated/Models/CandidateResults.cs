@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.AgentServer.Optimization
 {
     /// <summary> Full per-task evaluation results for a candidate, returned by GET /candidates/{id}/results. </summary>
-    public partial class CandidateResults
+    internal partial class CandidateResults
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.AgentServer.Optimization
 {
     /// <summary> A single evaluation task with input query, expected output, and evaluation criteria. </summary>
-    public partial class DatasetItem : IJsonModel<DatasetItem>
+    internal partial class DatasetItem : IJsonModel<DatasetItem>
     {
         /// <summary> Initializes a new instance of <see cref="DatasetItem"/> for deserialization. </summary>
         internal DatasetItem()

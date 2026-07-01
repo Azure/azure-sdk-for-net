@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.AgentServer.Optimization
 {
     /// <summary> Run mode for an optimization job. </summary>
-    public readonly partial struct OptimizationMode : IEquatable<OptimizationMode>
+    internal readonly partial struct OptimizationMode : IEquatable<OptimizationMode>
     {
         private readonly string _value;
         /// <summary> Full optimization: baseline + mutation strategies. </summary>

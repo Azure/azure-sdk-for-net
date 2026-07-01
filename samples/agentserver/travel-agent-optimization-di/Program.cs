@@ -103,10 +103,5 @@ static void LogStartupConfig(CandidateDeployConfig? config)
     Console.Error.WriteLine("[Startup] ── Optimization Config (via IConfiguration) ──");
     Console.Error.WriteLine($"[Startup] Model:        {config.Model ?? "(not set)"}");
     Console.Error.WriteLine($"[Startup] Temperature:  {config.Temperature?.ToString() ?? "(not set)"}");
-    Console.Error.WriteLine($"[Startup] Skills:       {config.Skills.Count}");
-    foreach (var skill in config.Skills)
-    {
-        Console.Error.WriteLine($"[Startup]   • {skill.Name}: {skill.Description}");
-    }
     Console.Error.WriteLine("[Startup] ──────────────────────────────────────────────");
 }

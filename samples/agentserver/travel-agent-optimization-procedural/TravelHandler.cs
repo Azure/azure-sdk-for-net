@@ -153,11 +153,6 @@ internal class TravelHandler : ResponseHandler
         }
         Console.WriteLine($"[Request] Model:        {_config.Model ?? "(not set)"}");
         Console.WriteLine($"[Request] Temperature:  {_config.Temperature?.ToString() ?? "(not set)"}");
-        Console.WriteLine($"[Request] Skills:       {_config.Skills.Count}");
-        foreach (var skill in _config.Skills)
-        {
-            Console.WriteLine($"[Request]   • {skill.Name}: {skill.Description}");
-        }
         Console.WriteLine($"[Request] ────────────────────────────────────────────");
     }
 }

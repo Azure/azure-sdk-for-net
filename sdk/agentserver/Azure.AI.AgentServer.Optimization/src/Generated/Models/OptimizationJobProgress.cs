@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.AgentServer.Optimization
 {
     /// <summary> In-flight progress; only populated while status is `queued` or `in_progress`. </summary>
-    public partial class OptimizationJobProgress
+    internal partial class OptimizationJobProgress
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
