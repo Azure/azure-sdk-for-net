@@ -7,46 +7,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// A response.
-    /// Serialized Name: Response
-    /// </summary>
+    /// <summary> A response. </summary>
     public partial class WebAppResponse
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebAppResponse"/>. </summary>
         public WebAppResponse()
@@ -54,70 +24,52 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppResponse"/>. </summary>
-        /// <param name="headers">
-        /// A list of all the headers attached to the response.
-        /// Serialized Name: Response.headers
-        /// </param>
-        /// <param name="statusCode">
-        /// The status code of the response.
-        /// Serialized Name: Response.statusCode
-        /// </param>
-        /// <param name="bodyLink">
-        /// Details on the location of the body content.
-        /// Serialized Name: Response.bodyLink
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppResponse(BinaryData headers, int? statusCode, WebAppContentLink bodyLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="headers"> A list of all the headers attached to the response. </param>
+        /// <param name="statusCode"> The status code of the response. </param>
+        /// <param name="bodyLink"> Details on the location of the body content. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WebAppResponse(BinaryData headers, int? statusCode, WebAppContentLink bodyLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Headers = headers;
             StatusCode = statusCode;
             BodyLink = bodyLink;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
         /// A list of all the headers attached to the response.
-        /// Serialized Name: Response.headers
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
         [WirePath("headers")]
         public BinaryData Headers { get; set; }
-        /// <summary>
-        /// The status code of the response.
-        /// Serialized Name: Response.statusCode
-        /// </summary>
+
+        /// <summary> The status code of the response. </summary>
         [WirePath("statusCode")]
         public int? StatusCode { get; set; }
-        /// <summary>
-        /// Details on the location of the body content.
-        /// Serialized Name: Response.bodyLink
-        /// </summary>
+
+        /// <summary> Details on the location of the body content. </summary>
         [WirePath("bodyLink")]
         public WebAppContentLink BodyLink { get; set; }
     }

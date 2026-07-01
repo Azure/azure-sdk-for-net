@@ -1,0 +1,2 @@
+CannotRemoveAttribute : Attribute 'System.Runtime.Serialization.DataMemberAttribute' exists on 'Azure.Provisioning.Search.SearchServiceHostingMode Azure.Provisioning.Search.SearchServiceHostingMode.Default' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.Serialization.DataMemberAttribute' exists on 'Azure.Provisioning.Search.SearchServiceHostingMode Azure.Provisioning.Search.SearchServiceHostingMode.HighDensity' in the contract but not the implementation.

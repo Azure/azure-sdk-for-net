@@ -398,6 +398,10 @@ namespace Azure.Provisioning.CostManagement
             _enrollmentStartDate = DefineProperty<string>(nameof(EnrollmentStartDate), new string[] { "enrollmentStartDate" });
             _enrollmentEndDate = DefineProperty<string>(nameof(EnrollmentEndDate), new string[] { "enrollmentEndDate" });
             _invoicingThreshold = DefineProperty<decimal>(nameof(InvoicingThreshold), new string[] { "invoicingThreshold" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for AlertPropertiesDetails that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

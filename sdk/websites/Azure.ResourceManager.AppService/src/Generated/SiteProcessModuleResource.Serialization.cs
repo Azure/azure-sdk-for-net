@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
+    /// <summary></summary>
     public partial class SiteProcessModuleResource : IJsonModel<ProcessModuleInfoData>
     {
-        private static ProcessModuleInfoData s_dataDeserializationInstance;
-        private static ProcessModuleInfoData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ProcessModuleInfoData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ProcessModuleInfoData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ProcessModuleInfoData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ProcessModuleInfoData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ProcessModuleInfoData>)Data).Write(writer, options);
 
-        ProcessModuleInfoData IJsonModel<ProcessModuleInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProcessModuleInfoData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ProcessModuleInfoData IJsonModel<ProcessModuleInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ProcessModuleInfoData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProcessModuleInfoData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ProcessModuleInfoData IPersistableModel<ProcessModuleInfoData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProcessModuleInfoData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<ProcessModuleInfoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProcessModuleInfoData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ProcessModuleInfoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

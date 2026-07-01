@@ -8,48 +8,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the ProcessModuleInfo data model.
-    /// Process Module Information.
-    /// Serialized Name: ProcessModuleInfo
-    /// </summary>
+    /// <summary> Process Module Information. </summary>
     public partial class ProcessModuleInfoData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ProcessModuleInfoData"/>. </summary>
         public ProcessModuleInfoData()
@@ -57,147 +25,224 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of <see cref="ProcessModuleInfoData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProcessModuleInfo.kind
-        /// </param>
-        /// <param name="baseAddress">
-        /// Base address. Used as module identifier in ARM resource URI.
-        /// Serialized Name: ProcessModuleInfo.properties.base_address
-        /// </param>
-        /// <param name="fileName">
-        /// File name.
-        /// Serialized Name: ProcessModuleInfo.properties.file_name
-        /// </param>
-        /// <param name="href">
-        /// HRef URI.
-        /// Serialized Name: ProcessModuleInfo.properties.href
-        /// </param>
-        /// <param name="filePath">
-        /// File path.
-        /// Serialized Name: ProcessModuleInfo.properties.file_path
-        /// </param>
-        /// <param name="moduleMemorySize">
-        /// Module memory size.
-        /// Serialized Name: ProcessModuleInfo.properties.module_memory_size
-        /// </param>
-        /// <param name="fileVersion">
-        /// File version.
-        /// Serialized Name: ProcessModuleInfo.properties.file_version
-        /// </param>
-        /// <param name="fileDescription">
-        /// File description.
-        /// Serialized Name: ProcessModuleInfo.properties.file_description
-        /// </param>
-        /// <param name="product">
-        /// Product name.
-        /// Serialized Name: ProcessModuleInfo.properties.product
-        /// </param>
-        /// <param name="productVersion">
-        /// Product version.
-        /// Serialized Name: ProcessModuleInfo.properties.product_version
-        /// </param>
-        /// <param name="isDebug">
-        /// Is debug?
-        /// Serialized Name: ProcessModuleInfo.properties.is_debug
-        /// </param>
-        /// <param name="language">
-        /// Module language (locale).
-        /// Serialized Name: ProcessModuleInfo.properties.language
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProcessModuleInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string baseAddress, string fileName, string href, string filePath, int? moduleMemorySize, string fileVersion, string fileDescription, string product, string productVersion, bool? isDebug, string language, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> ProcessModuleInfo resource specific properties. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ProcessModuleInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProcessModuleInfoProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
             Kind = kind;
-            BaseAddress = baseAddress;
-            FileName = fileName;
-            Href = href;
-            FilePath = filePath;
-            ModuleMemorySize = moduleMemorySize;
-            FileVersion = fileVersion;
-            FileDescription = fileDescription;
-            Product = product;
-            ProductVersion = productVersion;
-            IsDebug = isDebug;
-            Language = language;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProcessModuleInfo.kind
-        /// </summary>
+        /// <summary> ProcessModuleInfo resource specific properties. </summary>
+        [WirePath("properties")]
+        internal ProcessModuleInfoProperties Properties { get; set; }
+
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
-        /// <summary>
-        /// Base address. Used as module identifier in ARM resource URI.
-        /// Serialized Name: ProcessModuleInfo.properties.base_address
-        /// </summary>
+
+        /// <summary> Base address. Used as module identifier in ARM resource URI. </summary>
         [WirePath("properties.base_address")]
-        public string BaseAddress { get; set; }
-        /// <summary>
-        /// File name.
-        /// Serialized Name: ProcessModuleInfo.properties.file_name
-        /// </summary>
+        public string BaseAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BaseAddress;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessModuleInfoProperties();
+                }
+                Properties.BaseAddress = value;
+            }
+        }
+
+        /// <summary> File name. </summary>
         [WirePath("properties.file_name")]
-        public string FileName { get; set; }
-        /// <summary>
-        /// HRef URI.
-        /// Serialized Name: ProcessModuleInfo.properties.href
-        /// </summary>
+        public string FileName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FileName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessModuleInfoProperties();
+                }
+                Properties.FileName = value;
+            }
+        }
+
+        /// <summary> HRef URI. </summary>
         [WirePath("properties.href")]
-        public string Href { get; set; }
-        /// <summary>
-        /// File path.
-        /// Serialized Name: ProcessModuleInfo.properties.file_path
-        /// </summary>
+        public string Href
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Href;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessModuleInfoProperties();
+                }
+                Properties.Href = value;
+            }
+        }
+
+        /// <summary> File path. </summary>
         [WirePath("properties.file_path")]
-        public string FilePath { get; set; }
-        /// <summary>
-        /// Module memory size.
-        /// Serialized Name: ProcessModuleInfo.properties.module_memory_size
-        /// </summary>
+        public string FilePath
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FilePath;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessModuleInfoProperties();
+                }
+                Properties.FilePath = value;
+            }
+        }
+
+        /// <summary> Module memory size. </summary>
         [WirePath("properties.module_memory_size")]
-        public int? ModuleMemorySize { get; set; }
-        /// <summary>
-        /// File version.
-        /// Serialized Name: ProcessModuleInfo.properties.file_version
-        /// </summary>
+        public int? ModuleMemorySize
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ModuleMemorySize;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessModuleInfoProperties();
+                }
+                Properties.ModuleMemorySize = value;
+            }
+        }
+
+        /// <summary> File version. </summary>
         [WirePath("properties.file_version")]
-        public string FileVersion { get; set; }
-        /// <summary>
-        /// File description.
-        /// Serialized Name: ProcessModuleInfo.properties.file_description
-        /// </summary>
+        public string FileVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FileVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessModuleInfoProperties();
+                }
+                Properties.FileVersion = value;
+            }
+        }
+
+        /// <summary> File description. </summary>
         [WirePath("properties.file_description")]
-        public string FileDescription { get; set; }
-        /// <summary>
-        /// Product name.
-        /// Serialized Name: ProcessModuleInfo.properties.product
-        /// </summary>
+        public string FileDescription
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FileDescription;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessModuleInfoProperties();
+                }
+                Properties.FileDescription = value;
+            }
+        }
+
+        /// <summary> Product name. </summary>
         [WirePath("properties.product")]
-        public string Product { get; set; }
-        /// <summary>
-        /// Product version.
-        /// Serialized Name: ProcessModuleInfo.properties.product_version
-        /// </summary>
+        public string Product
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Product;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessModuleInfoProperties();
+                }
+                Properties.Product = value;
+            }
+        }
+
+        /// <summary> Product version. </summary>
         [WirePath("properties.product_version")]
-        public string ProductVersion { get; set; }
-        /// <summary>
-        /// Is debug?
-        /// Serialized Name: ProcessModuleInfo.properties.is_debug
-        /// </summary>
+        public string ProductVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProductVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessModuleInfoProperties();
+                }
+                Properties.ProductVersion = value;
+            }
+        }
+
+        /// <summary> Is debug?. </summary>
         [WirePath("properties.is_debug")]
-        public bool? IsDebug { get; set; }
-        /// <summary>
-        /// Module language (locale).
-        /// Serialized Name: ProcessModuleInfo.properties.language
-        /// </summary>
+        public bool? IsDebug
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsDebug;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessModuleInfoProperties();
+                }
+                Properties.IsDebug = value;
+            }
+        }
+
+        /// <summary> Module language (locale). </summary>
         [WirePath("properties.language")]
-        public string Language { get; set; }
+        public string Language
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Language;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessModuleInfoProperties();
+                }
+                Properties.Language = value;
+            }
+        }
     }
 }

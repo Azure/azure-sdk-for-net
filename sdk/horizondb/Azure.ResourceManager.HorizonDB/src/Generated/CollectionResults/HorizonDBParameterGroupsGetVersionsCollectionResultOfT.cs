@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.HorizonDB
                     yield break;
                 }
                 HorizonDbParameterGroupListResult result = HorizonDbParameterGroupListResult.FromResponse(response);
-                yield return Page<HorizonDBParameterGroupData>.FromValues((IReadOnlyList<HorizonDBParameterGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<HorizonDBParameterGroupData>.FromValues((IReadOnlyList<HorizonDBParameterGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

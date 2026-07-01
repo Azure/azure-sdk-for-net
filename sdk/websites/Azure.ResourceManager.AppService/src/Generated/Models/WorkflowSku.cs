@@ -7,89 +7,39 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The sku type.
-    /// Serialized Name: WorkflowSku
-    /// </summary>
+    /// <summary> The sku type. </summary>
     public partial class WorkflowSku
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowSku"/>. </summary>
-        /// <param name="name">
-        /// The name.
-        /// Serialized Name: WorkflowSku.name
-        /// </param>
+        /// <param name="name"> The name. </param>
         internal WorkflowSku(WorkflowSkuName name)
         {
             Name = name;
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowSku"/>. </summary>
-        /// <param name="name">
-        /// The name.
-        /// Serialized Name: WorkflowSku.name
-        /// </param>
-        /// <param name="plan">
-        /// The reference to plan.
-        /// Serialized Name: WorkflowSku.plan
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowSku(WorkflowSkuName name, WorkflowResourceReference plan, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="name"> The name. </param>
+        /// <param name="plan"> The reference to plan. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WorkflowSku(WorkflowSkuName name, WorkflowResourceReference plan, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Plan = plan;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkflowSku"/> for deserialization. </summary>
-        internal WorkflowSku()
-        {
-        }
-
-        /// <summary>
-        /// The name.
-        /// Serialized Name: WorkflowSku.name
-        /// </summary>
+        /// <summary> The name. </summary>
         [WirePath("name")]
         public WorkflowSkuName Name { get; }
-        /// <summary>
-        /// The reference to plan.
-        /// Serialized Name: WorkflowSku.plan
-        /// </summary>
+
+        /// <summary> The reference to plan. </summary>
         [WirePath("plan")]
         public WorkflowResourceReference Plan { get; }
     }

@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                     yield break;
                 }
                 DedicatedHsmListResult result = DedicatedHsmListResult.FromResponse(response);
-                yield return Page<DedicatedHsmData>.FromValues((IReadOnlyList<DedicatedHsmData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DedicatedHsmData>.FromValues((IReadOnlyList<DedicatedHsmData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

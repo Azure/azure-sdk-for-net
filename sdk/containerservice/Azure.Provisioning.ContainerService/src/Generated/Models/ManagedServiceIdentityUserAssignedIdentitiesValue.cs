@@ -47,6 +47,10 @@ namespace Azure.Provisioning.ContainerService
             base.DefineProvisionableProperties();
             _principalId = DefineProperty<string>(nameof(PrincipalId), new string[] { "principalId" }, isOutput: true);
             _clientId = DefineProperty<string>(nameof(ClientId), new string[] { "clientId" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedServiceIdentityUserAssignedIdentitiesValue that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

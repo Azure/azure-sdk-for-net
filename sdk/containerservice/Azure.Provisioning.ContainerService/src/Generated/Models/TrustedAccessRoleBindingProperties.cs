@@ -70,6 +70,10 @@ namespace Azure.Provisioning.ContainerService
             _provisioningState = DefineProperty<ContainerServiceTrustedAccessRoleBindingProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _sourceResourceId = DefineProperty<ResourceIdentifier>(nameof(SourceResourceId), new string[] { "sourceResourceId" }, isRequired: true);
             _roles = DefineListProperty<string>(nameof(Roles), new string[] { "roles" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for TrustedAccessRoleBindingProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

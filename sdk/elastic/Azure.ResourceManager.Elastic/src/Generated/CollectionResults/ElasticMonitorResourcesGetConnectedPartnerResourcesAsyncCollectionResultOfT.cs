@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Elastic
                     yield break;
                 }
                 ConnectedPartnerResourcesListResponse result = ConnectedPartnerResourcesListResponse.FromResponse(response);
-                yield return Page<ConnectedPartnerResourceInfo>.FromValues((IReadOnlyList<ConnectedPartnerResourceInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ConnectedPartnerResourceInfo>.FromValues((IReadOnlyList<ConnectedPartnerResourceInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

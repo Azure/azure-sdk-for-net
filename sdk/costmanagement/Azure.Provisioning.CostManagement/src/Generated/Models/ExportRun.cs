@@ -318,6 +318,10 @@ namespace Azure.Provisioning.CostManagement
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _type = DefineProperty<ResourceType>(nameof(Type), new string[] { "type" }, isOutput: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ExportRun that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

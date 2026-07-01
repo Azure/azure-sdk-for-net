@@ -126,6 +126,10 @@ namespace Azure.Provisioning.Cdn
             _groupId = DefineProperty<string>(nameof(GroupId), new string[] { "groupId" });
             _requestMessage = DefineProperty<string>(nameof(RequestMessage), new string[] { "requestMessage" });
             _status = DefineProperty<SharedPrivateLinkResourceStatus>(nameof(Status), new string[] { "status" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SharedPrivateLinkResourceProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

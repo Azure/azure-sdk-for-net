@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.AppContainers
                     yield break;
                 }
                 DiagnosticsCollection result = DiagnosticsCollection.FromResponse(response);
-                yield return Page<ContainerAppDiagnosticData>.FromValues((IReadOnlyList<ContainerAppDiagnosticData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ContainerAppDiagnosticData>.FromValues((IReadOnlyList<ContainerAppDiagnosticData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

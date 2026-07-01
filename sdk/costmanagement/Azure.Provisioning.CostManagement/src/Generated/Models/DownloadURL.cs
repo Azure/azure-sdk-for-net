@@ -70,6 +70,10 @@ namespace Azure.Provisioning.CostManagement
             _expiryOn = DefineProperty<DateTimeOffset>(nameof(ExpiryOn), new string[] { "expiryTime" }, isOutput: true);
             _validTill = DefineProperty<DateTimeOffset>(nameof(ValidTill), new string[] { "validTill" });
             _downloadUri = DefineProperty<Uri>(nameof(DownloadUri), new string[] { "downloadUrl" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DownloadURL that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

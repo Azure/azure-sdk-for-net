@@ -40,6 +40,10 @@ namespace Azure.Provisioning.Cdn
         {
             base.DefineProvisionableProperties();
             _rules = DefineListProperty<CustomRule>(nameof(Rules), new string[] { "rules" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for CustomRuleList that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

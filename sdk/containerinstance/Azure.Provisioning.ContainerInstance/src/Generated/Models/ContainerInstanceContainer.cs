@@ -236,6 +236,10 @@ namespace Azure.Provisioning.ContainerInstance
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _properties = DefineModelProperty<ContainerProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerInstanceContainer that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

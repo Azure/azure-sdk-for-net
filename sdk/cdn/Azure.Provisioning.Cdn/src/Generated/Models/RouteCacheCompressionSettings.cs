@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Cdn
             base.DefineProvisionableProperties();
             _contentTypesToCompress = DefineListProperty<string>(nameof(ContentTypesToCompress), new string[] { "contentTypesToCompress" });
             _isCompressionEnabled = DefineProperty<bool>(nameof(IsCompressionEnabled), new string[] { "isCompressionEnabled" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for RouteCacheCompressionSettings that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

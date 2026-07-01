@@ -40,6 +40,10 @@ namespace Azure.Provisioning.Cdn
         {
             base.DefineProvisionableProperties();
             _rules = DefineListProperty<RateLimitRule>(nameof(Rules), new string[] { "rules" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for RateLimitRuleList that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

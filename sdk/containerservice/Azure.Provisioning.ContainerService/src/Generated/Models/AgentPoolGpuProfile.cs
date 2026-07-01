@@ -40,6 +40,10 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _driver = DefineProperty<AgentPoolGpuDriver>(nameof(Driver), new string[] { "driver" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for AgentPoolGpuProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.EventGrid
                     yield break;
                 }
                 TopicSpacesListResult result = TopicSpacesListResult.FromResponse(response);
-                yield return Page<TopicSpaceData>.FromValues((IReadOnlyList<TopicSpaceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<TopicSpaceData>.FromValues((IReadOnlyList<TopicSpaceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

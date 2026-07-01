@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.ConnectedCache
                     yield break;
                 }
                 IspCacheNodeResourceListResult result = IspCacheNodeResourceListResult.FromResponse(response);
-                yield return Page<IspCacheNodeData>.FromValues((IReadOnlyList<IspCacheNodeData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<IspCacheNodeData>.FromValues((IReadOnlyList<IspCacheNodeData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

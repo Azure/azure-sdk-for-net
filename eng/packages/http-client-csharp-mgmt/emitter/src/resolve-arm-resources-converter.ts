@@ -421,8 +421,8 @@ function convertResolvedResourceToMetadata(
           kind: isResourceList
             ? ResourceOperationKind.List
             : isResourceCollectionAction(sdkMethod)
-            ? ResourceOperationKind.CollectionAction
-            : ResourceOperationKind.Action,
+              ? ResourceOperationKind.CollectionAction
+              : ResourceOperationKind.Action,
           operationPath: opPath,
           scope: buildScopeInfoFromPath(opPath)
         });

@@ -57,6 +57,10 @@ namespace Azure.Provisioning.ContainerInstance
             base.DefineProvisionableProperties();
             _resource = DefineProperty<string>(nameof(Resource), new string[] { "resource" });
             _backendAddressPools = DefineListProperty<ApplicationGatewayBackendAddressPool>(nameof(BackendAddressPools), new string[] { "backendAddressPools" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ApplicationGateway that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

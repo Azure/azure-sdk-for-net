@@ -40,6 +40,10 @@ namespace Azure.Provisioning.Batch
         {
             base.DefineProvisionableProperties();
             _placement = DefineProperty<BatchDiffDiskPlacement>(nameof(Placement), new string[] { "placement" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DiffDiskSettings that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

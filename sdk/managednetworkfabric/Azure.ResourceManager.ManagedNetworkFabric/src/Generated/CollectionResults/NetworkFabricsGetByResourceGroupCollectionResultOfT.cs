@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     yield break;
                 }
                 NetworkFabricsListResult result = NetworkFabricsListResult.FromResponse(response);
-                yield return Page<NetworkFabricData>.FromValues((IReadOnlyList<NetworkFabricData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetworkFabricData>.FromValues((IReadOnlyList<NetworkFabricData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

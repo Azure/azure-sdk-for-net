@@ -142,6 +142,10 @@ namespace Azure.Provisioning.Cdn
             _secretVersion = DefineProperty<string>(nameof(SecretVersion), new string[] { "secretVersion" });
             _updateRule = DefineProperty<CertificateUpdateAction>(nameof(UpdateRule), new string[] { "updateRule" }, isRequired: true);
             _deleteRule = DefineProperty<CertificateDeleteAction>(nameof(DeleteRule), new string[] { "deleteRule" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for KeyVaultCertificateSource that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -83,6 +83,10 @@ namespace Azure.Provisioning.MySql
             _defaultStorageSize = DefineProperty<int>(nameof(DefaultStorageSize), new string[] { "defaultStorageSize" }, isOutput: true);
             _supportedStorageEditions = DefineListProperty<MySqlFlexibleServerStorageEditionCapability>(nameof(SupportedStorageEditions), new string[] { "supportedStorageEditions" }, isOutput: true);
             _supportedSkus = DefineListProperty<SkuCapabilityV2>(nameof(SupportedSkus), new string[] { "supportedSkus" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ServerEditionCapabilityV2 that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

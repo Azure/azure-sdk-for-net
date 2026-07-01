@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Redis
                     yield break;
                 }
                 RedisPatchScheduleListResult result = RedisPatchScheduleListResult.FromResponse(response);
-                yield return Page<RedisPatchScheduleData>.FromValues((IReadOnlyList<RedisPatchScheduleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<RedisPatchScheduleData>.FromValues((IReadOnlyList<RedisPatchScheduleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -7,31 +7,16 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Auth Type
-    /// Serialized Name: AuthType
-    /// </summary>
+    /// <summary> Auth Type. </summary>
     public enum SiteContainerAuthType
     {
-        /// <summary>
-        /// Anonymous
-        /// Serialized Name: AuthType.Anonymous
-        /// </summary>
+        /// <summary> Anonymous. </summary>
         Anonymous,
-        /// <summary>
-        /// UserCredentials
-        /// Serialized Name: AuthType.UserCredentials
-        /// </summary>
+        /// <summary> UserCredentials. </summary>
         UserCredentials,
-        /// <summary>
-        /// SystemIdentity
-        /// Serialized Name: AuthType.SystemIdentity
-        /// </summary>
+        /// <summary> SystemIdentity. </summary>
         SystemIdentity,
-        /// <summary>
-        /// UserAssigned
-        /// Serialized Name: AuthType.UserAssigned
-        /// </summary>
+        /// <summary> UserAssigned. </summary>
         UserAssigned
     }
 }

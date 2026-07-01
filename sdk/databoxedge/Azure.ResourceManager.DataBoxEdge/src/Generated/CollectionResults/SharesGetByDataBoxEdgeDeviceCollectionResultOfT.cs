@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.DataBoxEdge
                     yield break;
                 }
                 ShareList result = ShareList.FromResponse(response);
-                yield return Page<DataBoxEdgeShareData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DataBoxEdgeShareData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

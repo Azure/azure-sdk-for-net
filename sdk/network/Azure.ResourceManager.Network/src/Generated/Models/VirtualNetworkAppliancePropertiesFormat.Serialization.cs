@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("bandwidthInGbps"u8);
                 writer.WriteNumberValue(BandwidthInGbps.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IpConfigurations))
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (VirtualNetworkApplianceIPConfiguration item in IpConfigurations)
+                foreach (VirtualNetworkApplianceIPConfiguration item in IPConfigurations)
                 {
                     writer.WriteObjectValue(item, options);
                 }

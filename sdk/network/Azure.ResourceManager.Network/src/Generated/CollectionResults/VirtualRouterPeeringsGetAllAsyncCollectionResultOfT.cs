@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 VirtualRouterPeeringListResult result = VirtualRouterPeeringListResult.FromResponse(response);
-                yield return Page<VirtualRouterPeeringData>.FromValues((IReadOnlyList<VirtualRouterPeeringData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<VirtualRouterPeeringData>.FromValues((IReadOnlyList<VirtualRouterPeeringData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

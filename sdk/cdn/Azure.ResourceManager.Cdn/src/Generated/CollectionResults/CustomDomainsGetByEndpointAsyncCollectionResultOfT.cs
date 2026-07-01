@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.Cdn
                     yield break;
                 }
                 CustomDomainListResult result = CustomDomainListResult.FromResponse(response);
-                yield return Page<CdnCustomDomainData>.FromValues((IReadOnlyList<CdnCustomDomainData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<CdnCustomDomainData>.FromValues((IReadOnlyList<CdnCustomDomainData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

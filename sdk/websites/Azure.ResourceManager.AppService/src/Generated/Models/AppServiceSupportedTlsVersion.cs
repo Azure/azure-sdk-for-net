@@ -7,50 +7,71 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// MinTlsVersion: configures the minimum version of TLS required for SSL requests
-    /// Serialized Name: SupportedTlsVersions
-    /// </summary>
+    /// <summary> MinTlsVersion: configures the minimum version of TLS required for SSL requests. </summary>
     public readonly partial struct AppServiceSupportedTlsVersion : IEquatable<AppServiceSupportedTlsVersion>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="AppServiceSupportedTlsVersion"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AppServiceSupportedTlsVersion(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string Tls1_0Value = "1.0";
         private const string Tls1_1Value = "1.1";
         private const string Tls1_2Value = "1.2";
-        private const string One3Value = "1.3";
-        /// <summary>
-        /// 1.3
-        /// Serialized Name: SupportedTlsVersions.1.3
-        /// </summary>
-        public static AppServiceSupportedTlsVersion One3 { get; } = new AppServiceSupportedTlsVersion(One3Value);
+        private const string Tls1_3Value = "1.3";
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceSupportedTlsVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AppServiceSupportedTlsVersion(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Tls1_0. </summary>
+        public static AppServiceSupportedTlsVersion Tls1_0 { get; } = new AppServiceSupportedTlsVersion(Tls1_0Value);
+
+        /// <summary> Gets the Tls1_1. </summary>
+        public static AppServiceSupportedTlsVersion Tls1_1 { get; } = new AppServiceSupportedTlsVersion(Tls1_1Value);
+
+        /// <summary> Gets the Tls1_2. </summary>
+        public static AppServiceSupportedTlsVersion Tls1_2 { get; } = new AppServiceSupportedTlsVersion(Tls1_2Value);
+
+        /// <summary> Gets the Tls1_3. </summary>
+        public static AppServiceSupportedTlsVersion Tls1_3 { get; } = new AppServiceSupportedTlsVersion(Tls1_3Value);
+
         /// <summary> Determines if two <see cref="AppServiceSupportedTlsVersion"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AppServiceSupportedTlsVersion left, AppServiceSupportedTlsVersion right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AppServiceSupportedTlsVersion"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AppServiceSupportedTlsVersion left, AppServiceSupportedTlsVersion right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AppServiceSupportedTlsVersion"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AppServiceSupportedTlsVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AppServiceSupportedTlsVersion(string value) => new AppServiceSupportedTlsVersion(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AppServiceSupportedTlsVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AppServiceSupportedTlsVersion?(string value) => value == null ? null : new AppServiceSupportedTlsVersion(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AppServiceSupportedTlsVersion other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AppServiceSupportedTlsVersion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

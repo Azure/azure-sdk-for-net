@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Avs
                     yield break;
                 }
                 WorkloadNetworkPublicIPsList result = WorkloadNetworkPublicIPsList.FromResponse(response);
-                yield return Page<WorkloadNetworkPublicIPData>.FromValues((IReadOnlyList<WorkloadNetworkPublicIPData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<WorkloadNetworkPublicIPData>.FromValues((IReadOnlyList<WorkloadNetworkPublicIPData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

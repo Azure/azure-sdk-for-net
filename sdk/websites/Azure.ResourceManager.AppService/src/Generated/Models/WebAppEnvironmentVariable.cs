@@ -7,56 +7,19 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The WebAppEnvironmentVariable.
-    /// Serialized Name: EnvironmentVariable
-    /// </summary>
+    /// <summary> The WebAppEnvironmentVariable. </summary>
     public partial class WebAppEnvironmentVariable
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebAppEnvironmentVariable"/>. </summary>
-        /// <param name="name">
-        /// Environment variable name
-        /// Serialized Name: EnvironmentVariable.name
-        /// </param>
-        /// <param name="value">
-        /// The value of this environment variable must be the name of an AppSetting. The actual value of the environment variable in container will be retrieved from the specified AppSetting at runtime. If the AppSetting is not found, the value will be set to an empty string in the container at runtime.
-        /// Serialized Name: EnvironmentVariable.value
-        /// </param>
+        /// <param name="name"> Environment variable name. </param>
+        /// <param name="value"> The value of this environment variable must be the name of an AppSetting. The actual value of the environment variable in container will be retrieved from the specified AppSetting at runtime. If the AppSetting is not found, the value will be set to an empty string in the container at runtime. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
         public WebAppEnvironmentVariable(string name, string value)
         {
@@ -68,37 +31,21 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppEnvironmentVariable"/>. </summary>
-        /// <param name="name">
-        /// Environment variable name
-        /// Serialized Name: EnvironmentVariable.name
-        /// </param>
-        /// <param name="value">
-        /// The value of this environment variable must be the name of an AppSetting. The actual value of the environment variable in container will be retrieved from the specified AppSetting at runtime. If the AppSetting is not found, the value will be set to an empty string in the container at runtime.
-        /// Serialized Name: EnvironmentVariable.value
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppEnvironmentVariable(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="name"> Environment variable name. </param>
+        /// <param name="value"> The value of this environment variable must be the name of an AppSetting. The actual value of the environment variable in container will be retrieved from the specified AppSetting at runtime. If the AppSetting is not found, the value will be set to an empty string in the container at runtime. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WebAppEnvironmentVariable(string name, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Value = value;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="WebAppEnvironmentVariable"/> for deserialization. </summary>
-        internal WebAppEnvironmentVariable()
-        {
-        }
-
-        /// <summary>
-        /// Environment variable name
-        /// Serialized Name: EnvironmentVariable.name
-        /// </summary>
+        /// <summary> Environment variable name. </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary>
-        /// The value of this environment variable must be the name of an AppSetting. The actual value of the environment variable in container will be retrieved from the specified AppSetting at runtime. If the AppSetting is not found, the value will be set to an empty string in the container at runtime.
-        /// Serialized Name: EnvironmentVariable.value
-        /// </summary>
+
+        /// <summary> The value of this environment variable must be the name of an AppSetting. The actual value of the environment variable in container will be retrieved from the specified AppSetting at runtime. If the AppSetting is not found, the value will be set to an empty string in the container at runtime. </summary>
         [WirePath("value")]
         public string Value { get; set; }
     }

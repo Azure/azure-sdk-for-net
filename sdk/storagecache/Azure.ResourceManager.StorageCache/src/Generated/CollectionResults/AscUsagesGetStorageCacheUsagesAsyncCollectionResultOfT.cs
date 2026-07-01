@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.StorageCache
                     yield break;
                 }
                 StorageCacheUsagesResult result = StorageCacheUsagesResult.FromResponse(response);
-                yield return Page<StorageCacheUsage>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<StorageCacheUsage>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

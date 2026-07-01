@@ -1,18 +1,22 @@
 # Release History
 
-## 2.1.0-beta.4 (Unreleased)
+## 2.1.0-beta.5 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
-- Hosted Agents do not need the `Foundry-Features: HostedAgents=V1Preview` header and warning suppression anymore.
-- The deployment of hosted Agent using code does not require the `Foundry-Features: CodeAgents=V1Preview` header and warning suppression anymore.
-- Using toolboxes does not require the `Foundry-Features: Toolboxes=V1Preview`
-
 ### Bugs Fixed
 
 ### Other Changes
+
+## 2.1.0-beta.4 (2026-06-30)
+
+### Breaking Changes
+
+- Hosted Agents do not need the `Foundry-Features: HostedAgents=V1Preview` header and warning suppression anymore.
+- The deployment of hosted Agent using code does not require the `Foundry-Features: CodeAgents=V1Preview` header and warning suppression anymore.
+- Using toolboxes does not require the `Foundry-Features: Toolboxes=V1Preview` header and warning suppression anymore.
 
 ## 2.1.0-beta.3 (2026-05-29)
 

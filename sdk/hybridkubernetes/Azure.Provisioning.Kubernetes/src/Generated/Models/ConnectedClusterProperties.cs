@@ -405,6 +405,10 @@ namespace Azure.Provisioning.Kubernetes
             _gateway = DefineModelProperty<Gateway>(nameof(Gateway), new string[] { "gateway" });
             _arcAgentryConfigurations = DefineListProperty<ConnectedClusterArcAgentryConfiguration>(nameof(ArcAgentryConfigurations), new string[] { "arcAgentryConfigurations" });
             _miscellaneousProperties = DefineDictionaryProperty<string>(nameof(MiscellaneousProperties), new string[] { "miscellaneousProperties" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ConnectedClusterProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

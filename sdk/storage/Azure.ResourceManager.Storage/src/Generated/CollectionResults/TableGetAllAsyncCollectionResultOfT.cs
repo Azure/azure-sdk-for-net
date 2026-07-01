@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Storage
                     yield break;
                 }
                 ListTableResource result = ListTableResource.FromResponse(response);
-                yield return Page<TableData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<TableData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

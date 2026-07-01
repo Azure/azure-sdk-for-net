@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.ProgramEnrollment
                     yield break;
                 }
                 EduEnrollmentListResult result = EduEnrollmentListResult.FromResponse(response);
-                yield return Page<EduEnrollmentData>.FromValues((IReadOnlyList<EduEnrollmentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EduEnrollmentData>.FromValues((IReadOnlyList<EduEnrollmentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

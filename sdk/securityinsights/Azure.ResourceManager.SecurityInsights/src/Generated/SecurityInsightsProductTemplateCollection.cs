@@ -8,91 +8,96 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.SecurityInsights.Models;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// A class representing a collection of <see cref="SecurityInsightsProductTemplateResource"/> and their operations.
-    /// Each <see cref="SecurityInsightsProductTemplateResource"/> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
-    /// To get a <see cref="SecurityInsightsProductTemplateCollection"/> instance call the GetSecurityInsightsProductTemplates method from an instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
+    /// Each <see cref="SecurityInsightsProductTemplateResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="SecurityInsightsProductTemplateCollection"/> instance call the GetSecurityInsightsProductTemplates method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class SecurityInsightsProductTemplateCollection : ArmCollection, IEnumerable<SecurityInsightsProductTemplateResource>, IAsyncEnumerable<SecurityInsightsProductTemplateResource>
     {
-        private readonly ClientDiagnostics _securityInsightsProductTemplateProductTemplateClientDiagnostics;
-        private readonly ProductTemplateRestOperations _securityInsightsProductTemplateProductTemplateRestClient;
-        private readonly ClientDiagnostics _securityInsightsProductTemplateProductTemplatesClientDiagnostics;
-        private readonly ProductTemplatesRestOperations _securityInsightsProductTemplateProductTemplatesRestClient;
+        private readonly ClientDiagnostics _productTemplateClientDiagnostics;
+        private readonly ProductTemplate _productTemplateRestClient;
+        private readonly ClientDiagnostics _productTemplatesClientDiagnostics;
+        private readonly ProductTemplates _productTemplatesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsProductTemplateCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SecurityInsightsProductTemplateCollection for mocking. </summary>
         protected SecurityInsightsProductTemplateCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsProductTemplateCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsProductTemplateCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SecurityInsightsProductTemplateCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _securityInsightsProductTemplateProductTemplateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsProductTemplateResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SecurityInsightsProductTemplateResource.ResourceType, out string securityInsightsProductTemplateProductTemplateApiVersion);
-            _securityInsightsProductTemplateProductTemplateRestClient = new ProductTemplateRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsProductTemplateProductTemplateApiVersion);
-            _securityInsightsProductTemplateProductTemplatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsProductTemplateResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SecurityInsightsProductTemplateResource.ResourceType, out string securityInsightsProductTemplateProductTemplatesApiVersion);
-            _securityInsightsProductTemplateProductTemplatesRestClient = new ProductTemplatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsProductTemplateProductTemplatesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(SecurityInsightsProductTemplateResource.ResourceType, out string securityInsightsProductTemplateApiVersion);
+            _productTemplateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsProductTemplateResource.ResourceType.Namespace, Diagnostics);
+            _productTemplateRestClient = new ProductTemplate(_productTemplateClientDiagnostics, Pipeline, Endpoint, securityInsightsProductTemplateApiVersion ?? "2025-07-01-preview");
+            _productTemplatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsProductTemplateResource.ResourceType.Namespace, Diagnostics);
+            _productTemplatesRestClient = new ProductTemplates(_productTemplatesClientDiagnostics, Pipeline, Endpoint, securityInsightsProductTemplateApiVersion ?? "2025-07-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != OperationalInsightsWorkspaceSecurityInsightsResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, OperationalInsightsWorkspaceSecurityInsightsResource.ResourceType), nameof(id));
+            if (id.ResourceType != "Microsoft.OperationalInsights/workspaces")
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, "Microsoft.OperationalInsights/workspaces"), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a template by its identifier.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentproducttemplates/{templateId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentproducttemplates/{templateId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProductTemplate_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProductTemplateModels_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsProductTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="templateId"> template Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="templateId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="templateId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SecurityInsightsProductTemplateResource>> GetAsync(string templateId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(templateId, nameof(templateId));
 
-            using var scope = _securityInsightsProductTemplateProductTemplateClientDiagnostics.CreateScope("SecurityInsightsProductTemplateCollection.Get");
+            using DiagnosticScope scope = _productTemplateClientDiagnostics.CreateScope("SecurityInsightsProductTemplateCollection.Get");
             scope.Start();
             try
             {
-                var response = await _securityInsightsProductTemplateProductTemplateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, templateId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityInsightsProductTemplateData> response = Response.FromValue(SecurityInsightsProductTemplateData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsProductTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -106,38 +111,42 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Gets a template by its identifier.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentproducttemplates/{templateId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentproducttemplates/{templateId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProductTemplate_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProductTemplateModels_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsProductTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="templateId"> template Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="templateId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="templateId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SecurityInsightsProductTemplateResource> Get(string templateId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(templateId, nameof(templateId));
 
-            using var scope = _securityInsightsProductTemplateProductTemplateClientDiagnostics.CreateScope("SecurityInsightsProductTemplateCollection.Get");
+            using DiagnosticScope scope = _productTemplateClientDiagnostics.CreateScope("SecurityInsightsProductTemplateCollection.Get");
             scope.Start();
             try
             {
-                var response = _securityInsightsProductTemplateProductTemplateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, templateId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityInsightsProductTemplateData> response = Response.FromValue(SecurityInsightsProductTemplateData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsProductTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -151,102 +160,146 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Gets all templates in the catalog.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentProductTemplates</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentProductTemplates. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProductTemplates_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProductTemplateModels_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsProductTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="filter"> Filters the results, based on a Boolean condition. Optional. </param>
+        /// <param name="orderby"> Sorts the results. Optional. </param>
+        /// <param name="search"> Searches for a substring in the response. Optional. </param>
+        /// <param name="count"> Instructs the server to return only object count without actual body. Optional. </param>
+        /// <param name="top"> Returns only the first n results. Optional. </param>
+        /// <param name="skip"> Used to skip n elements in the OData query (offset). Returns a nextLink to the next page of results if there are any left. </param>
+        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityInsightsProductTemplateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecurityInsightsProductTemplateResource> GetAllAsync(SecurityInsightsProductTemplateCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityInsightsProductTemplateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecurityInsightsProductTemplateResource> GetAllAsync(string filter = default, string @orderby = default, string search = default, bool? count = default, int? top = default, int? skip = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
-            options ??= new SecurityInsightsProductTemplateCollectionGetAllOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsProductTemplateProductTemplatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.OrderBy, options.Search, options.Count, options.Top, options.Skip, options.SkipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsProductTemplateProductTemplatesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.OrderBy, options.Search, options.Count, options.Top, options.Skip, options.SkipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsProductTemplateResource(Client, SecurityInsightsProductTemplateData.DeserializeSecurityInsightsProductTemplateData(e)), _securityInsightsProductTemplateProductTemplatesClientDiagnostics, Pipeline, "SecurityInsightsProductTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SecurityInsightsProductTemplateData, SecurityInsightsProductTemplateResource>(new ProductTemplatesGetAllAsyncCollectionResultOfT(
+                _productTemplatesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                filter,
+                @orderby,
+                search,
+                count,
+                top,
+                skip,
+                skipToken,
+                context,
+                "SecurityInsightsProductTemplateCollection.GetAll"), data => new SecurityInsightsProductTemplateResource(Client, data));
         }
 
         /// <summary>
         /// Gets all templates in the catalog.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentProductTemplates</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentProductTemplates. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProductTemplates_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProductTemplateModels_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsProductTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="filter"> Filters the results, based on a Boolean condition. Optional. </param>
+        /// <param name="orderby"> Sorts the results. Optional. </param>
+        /// <param name="search"> Searches for a substring in the response. Optional. </param>
+        /// <param name="count"> Instructs the server to return only object count without actual body. Optional. </param>
+        /// <param name="top"> Returns only the first n results. Optional. </param>
+        /// <param name="skip"> Used to skip n elements in the OData query (offset). Returns a nextLink to the next page of results if there are any left. </param>
+        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityInsightsProductTemplateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecurityInsightsProductTemplateResource> GetAll(SecurityInsightsProductTemplateCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<SecurityInsightsProductTemplateResource> GetAll(string filter = default, string @orderby = default, string search = default, bool? count = default, int? top = default, int? skip = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
-            options ??= new SecurityInsightsProductTemplateCollectionGetAllOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsProductTemplateProductTemplatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.OrderBy, options.Search, options.Count, options.Top, options.Skip, options.SkipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsProductTemplateProductTemplatesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.OrderBy, options.Search, options.Count, options.Top, options.Skip, options.SkipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsProductTemplateResource(Client, SecurityInsightsProductTemplateData.DeserializeSecurityInsightsProductTemplateData(e)), _securityInsightsProductTemplateProductTemplatesClientDiagnostics, Pipeline, "SecurityInsightsProductTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SecurityInsightsProductTemplateData, SecurityInsightsProductTemplateResource>(new ProductTemplatesGetAllCollectionResultOfT(
+                _productTemplatesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                filter,
+                @orderby,
+                search,
+                count,
+                top,
+                skip,
+                skipToken,
+                context,
+                "SecurityInsightsProductTemplateCollection.GetAll"), data => new SecurityInsightsProductTemplateResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentproducttemplates/{templateId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentproducttemplates/{templateId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProductTemplate_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProductTemplateModels_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsProductTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="templateId"> template Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="templateId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="templateId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string templateId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(templateId, nameof(templateId));
 
-            using var scope = _securityInsightsProductTemplateProductTemplateClientDiagnostics.CreateScope("SecurityInsightsProductTemplateCollection.Exists");
+            using DiagnosticScope scope = _productTemplateClientDiagnostics.CreateScope("SecurityInsightsProductTemplateCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _securityInsightsProductTemplateProductTemplateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, templateId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SecurityInsightsProductTemplateData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsProductTemplateData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsProductTemplateData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -260,36 +313,50 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentproducttemplates/{templateId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentproducttemplates/{templateId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProductTemplate_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProductTemplateModels_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsProductTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="templateId"> template Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="templateId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="templateId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string templateId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(templateId, nameof(templateId));
 
-            using var scope = _securityInsightsProductTemplateProductTemplateClientDiagnostics.CreateScope("SecurityInsightsProductTemplateCollection.Exists");
+            using DiagnosticScope scope = _productTemplateClientDiagnostics.CreateScope("SecurityInsightsProductTemplateCollection.Exists");
             scope.Start();
             try
             {
-                var response = _securityInsightsProductTemplateProductTemplateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, templateId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SecurityInsightsProductTemplateData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsProductTemplateData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsProductTemplateData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -303,38 +370,54 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentproducttemplates/{templateId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentproducttemplates/{templateId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProductTemplate_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProductTemplateModels_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsProductTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="templateId"> template Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="templateId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="templateId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SecurityInsightsProductTemplateResource>> GetIfExistsAsync(string templateId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(templateId, nameof(templateId));
 
-            using var scope = _securityInsightsProductTemplateProductTemplateClientDiagnostics.CreateScope("SecurityInsightsProductTemplateCollection.GetIfExists");
+            using DiagnosticScope scope = _productTemplateClientDiagnostics.CreateScope("SecurityInsightsProductTemplateCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _securityInsightsProductTemplateProductTemplateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, templateId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SecurityInsightsProductTemplateData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsProductTemplateData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsProductTemplateData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SecurityInsightsProductTemplateResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsProductTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -348,38 +431,54 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentproducttemplates/{templateId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentproducttemplates/{templateId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProductTemplate_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProductTemplateModels_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsProductTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="templateId"> template Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="templateId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="templateId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SecurityInsightsProductTemplateResource> GetIfExists(string templateId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(templateId, nameof(templateId));
 
-            using var scope = _securityInsightsProductTemplateProductTemplateClientDiagnostics.CreateScope("SecurityInsightsProductTemplateCollection.GetIfExists");
+            using DiagnosticScope scope = _productTemplateClientDiagnostics.CreateScope("SecurityInsightsProductTemplateCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _securityInsightsProductTemplateProductTemplateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, templateId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SecurityInsightsProductTemplateData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsProductTemplateData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsProductTemplateData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SecurityInsightsProductTemplateResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsProductTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -391,17 +490,18 @@ namespace Azure.ResourceManager.SecurityInsights
 
         IEnumerator<SecurityInsightsProductTemplateResource> IEnumerable<SecurityInsightsProductTemplateResource>.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SecurityInsightsProductTemplateResource> IAsyncEnumerable<SecurityInsightsProductTemplateResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

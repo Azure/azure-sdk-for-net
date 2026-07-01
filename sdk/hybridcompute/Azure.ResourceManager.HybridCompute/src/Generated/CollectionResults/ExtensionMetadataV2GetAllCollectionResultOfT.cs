@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.HybridCompute
                     yield break;
                 }
                 ExtensionValueListResultV2 result = ExtensionValueListResultV2.FromResponse(response);
-                yield return Page<HybridComputeExtensionValueV2Data>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<HybridComputeExtensionValueV2Data>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
