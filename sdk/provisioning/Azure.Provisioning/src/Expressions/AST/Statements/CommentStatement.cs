@@ -3,7 +3,7 @@
 
 namespace Azure.Provisioning.Expressions;
 
-public class CommentStatement(string comment) : BicepStatement
+public partial class CommentStatement(string comment) : BicepStatement
 {
     public string Comment { get; } = comment;
     internal override BicepWriter Write(BicepWriter writer) =>

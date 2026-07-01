@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Azure.Provisioning.Expressions;
 
-public class ObjectExpression(params PropertyExpression[] properties) : BicepExpression
+public partial class ObjectExpression(params PropertyExpression[] properties) : BicepExpression
 {
     public PropertyExpression[] Properties { get; } = properties;
     private static bool IsIdentifierChar(char c) => char.IsLetterOrDigit(c) || c == '_';

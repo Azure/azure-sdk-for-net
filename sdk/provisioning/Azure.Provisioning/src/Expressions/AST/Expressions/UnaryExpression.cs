@@ -5,7 +5,7 @@ using System;
 
 namespace Azure.Provisioning.Expressions;
 
-public class UnaryExpression(UnaryBicepOperator op, BicepExpression value) : BicepExpression
+public partial class UnaryExpression(UnaryBicepOperator op, BicepExpression value) : BicepExpression
 {
     public UnaryBicepOperator Operator { get; } = op;
     public BicepExpression Value { get; } = value;

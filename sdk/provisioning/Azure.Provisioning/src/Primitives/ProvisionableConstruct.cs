@@ -80,7 +80,8 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
     {
         if (value.IsRequired && value.Kind == BicepValueKind.Unset)
         {
-            throw new InvalidOperationException($"{GetType().Name} definition is missing required property {value.Self?.PropertyName}");
+            string identifier = this is NamedProvisionableConstruct named ? $"'{named.BicepIdentifier}' " : "";
+            throw new InvalidOperationException($"{GetType().Name} {identifier}definition is missing required property {value.Self?.PropertyName}");
         }
     }
 
@@ -277,6 +278,12 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
             DefineProvisionableProperties();
         }
     }
+
+    /// <summary>
+    /// Ensures the construct is initialized (properties are defined).
+    /// Used internally by the deserialization path.
+    /// </summary>
+    internal void EnsureInitialized() => Initialize();
 
     /// <summary>
     /// Define the provisionable properties for this construct.
