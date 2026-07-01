@@ -7,11 +7,9 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.FrontDoor.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor
@@ -62,35 +60,6 @@ namespace Azure.ResourceManager.FrontDoor
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
-        }
-
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FrontDoorExperimentData DeserializeFrontDoorExperimentData(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            ExperimentProperties properties = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("properties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = ExperimentProperties.DeserializeExperimentProperties(prop.Value, options);
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
-            }
-            return new FrontDoorExperimentData(properties, additionalBinaryDataProperties);
         }
     }
 }

@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using Azure.ResourceManager.FrontDoor.Models;
+using System.Collections.Generic;
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
@@ -28,6 +30,22 @@ namespace Azure.ResourceManager.FrontDoor
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="FrontDoorNetworkExperimentProfileData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The properties. </param>
+        /// <param name="eTag"> The ETag. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorNetworkExperimentProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProfileProperties properties, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        {
+            Properties = properties;
+            ETag = eTag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
         // This method body is copied from the generated PersistableModelCreateCore; the customization changes
         // only the return type from FrontDoorNetworkExperimentProfileData to ResourceData so it matches TrackedResourceData.
         // Remove this workaround after https://github.com/Azure/azure-sdk-for-net/issues/60297 is fixed.
@@ -112,5 +130,49 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         FrontDoorNetworkExperimentProfileData IJsonModel<FrontDoorNetworkExperimentProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (FrontDoorNetworkExperimentProfileData)JsonModelCreateCore(ref reader, options);
+        internal static FrontDoorNetworkExperimentProfileData DeserializeFrontDoorNetworkExperimentProfileData(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
+            ProfileProperties properties = default;
+            ETag? eTag = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (FrontDoorSerializationHelpers.TryReadTrackedResourceDataProperty(prop, options, ref id, ref name, ref resourceType, ref systemData, ref tags, ref location))
+                {
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind != JsonValueKind.Null)
+                    {
+                        properties = ProfileProperties.DeserializeProfileProperties(prop.Value, options);
+                    }
+                    continue;
+                }
+                if (prop.NameEquals("etag"u8))
+                {
+                    if (prop.Value.ValueKind != JsonValueKind.Null)
+                    {
+                        eTag = new ETag(prop.Value.GetString());
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
+            }
+            return new FrontDoorNetworkExperimentProfileData(id, name, resourceType, systemData, tags ?? new ChangeTrackingDictionary<string, string>(), location, properties, eTag, additionalBinaryDataProperties);
+        }
     }
 }

@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
@@ -28,6 +29,20 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleSetDefinition"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedRuleSetDefinition(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedRuleSetDefinitionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        {
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
         // This method body is copied from the generated PersistableModelCreateCore; the customization changes
         // only the return type from ManagedRuleSetDefinition to ResourceData so it matches TrackedResourceData.
         // Remove this workaround after https://github.com/Azure/azure-sdk-for-net/issues/60297 is fixed.
@@ -107,5 +122,40 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ManagedRuleSetDefinition IJsonModel<ManagedRuleSetDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ManagedRuleSetDefinition)JsonModelCreateCore(ref reader, options);
+        internal static ManagedRuleSetDefinition DeserializeManagedRuleSetDefinition(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
+            ManagedRuleSetDefinitionProperties properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (FrontDoorSerializationHelpers.TryReadTrackedResourceDataProperty(prop, options, ref id, ref name, ref resourceType, ref systemData, ref tags, ref location))
+                {
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind != JsonValueKind.Null)
+                    {
+                        properties = ManagedRuleSetDefinitionProperties.DeserializeManagedRuleSetDefinitionProperties(prop.Value, options);
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
+            }
+            return new ManagedRuleSetDefinition(id, name, resourceType, systemData, tags ?? new ChangeTrackingDictionary<string, string>(), location, properties, additionalBinaryDataProperties);
+        }
     }
 }

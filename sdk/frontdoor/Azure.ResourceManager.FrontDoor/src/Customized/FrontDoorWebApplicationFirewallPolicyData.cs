@@ -4,10 +4,12 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.FrontDoor.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor
@@ -26,6 +28,25 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="location"> The location. </param>
         public FrontDoorWebApplicationFirewallPolicyData(AzureLocation location) : base(location)
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorWebApplicationFirewallPolicyData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of the web application firewall policy. </param>
+        /// <param name="eTag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="sku"> The pricing tier of web application firewall policy. Defaults to Classic_AzureFrontDoor if not specified. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WebApplicationFirewallPolicyProperties properties, ETag? eTag, FrontDoorSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        {
+            Properties = properties;
+            ETag = eTag;
+            Sku = sku;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         // This method body is copied from the generated PersistableModelCreateCore; the customization changes
@@ -108,6 +129,60 @@ namespace Azure.ResourceManager.FrontDoor
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFrontDoorWebApplicationFirewallPolicyData(document.RootElement, options);
+        }
+
+        internal static FrontDoorWebApplicationFirewallPolicyData DeserializeFrontDoorWebApplicationFirewallPolicyData(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
+            WebApplicationFirewallPolicyProperties properties = default;
+            ETag? eTag = default;
+            FrontDoorSku sku = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (FrontDoorSerializationHelpers.TryReadTrackedResourceDataProperty(prop, options, ref id, ref name, ref resourceType, ref systemData, ref tags, ref location))
+                {
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind != JsonValueKind.Null)
+                    {
+                        properties = WebApplicationFirewallPolicyProperties.DeserializeWebApplicationFirewallPolicyProperties(prop.Value, options);
+                    }
+                    continue;
+                }
+                if (prop.NameEquals("etag"u8))
+                {
+                    if (prop.Value.ValueKind != JsonValueKind.Null)
+                    {
+                        eTag = new ETag(prop.Value.GetString());
+                    }
+                    continue;
+                }
+                if (prop.NameEquals("sku"u8))
+                {
+                    if (prop.Value.ValueKind != JsonValueKind.Null)
+                    {
+                        sku = FrontDoorSku.DeserializeFrontDoorSku(prop.Value, options);
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
+            }
+            return new FrontDoorWebApplicationFirewallPolicyData(id, name, resourceType, systemData, tags ?? new ChangeTrackingDictionary<string, string>(), location, properties, eTag, sku, additionalBinaryDataProperties);
         }
 
         /// <param name="data"> The data to parse. </param>

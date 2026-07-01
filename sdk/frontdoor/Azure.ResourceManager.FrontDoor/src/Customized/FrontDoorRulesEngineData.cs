@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using Azure.ResourceManager.FrontDoor.Models;
+using System.Collections.Generic;
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
@@ -16,6 +18,18 @@ namespace Azure.ResourceManager.FrontDoor
     // removing the spec-side alternateType for BasicResource.
     public partial class FrontDoorRulesEngineData : ResourceData
     {
+        /// <summary> Initializes a new instance of <see cref="FrontDoorRulesEngineData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorRulesEngineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RulesEngineProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        {
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
         // This method body is copied from the generated PersistableModelCreateCore; the customization changes
         // only the return type from FrontDoorRulesEngineData to ResourceData so it matches ResourceData.
         // Remove this workaround after https://github.com/Azure/azure-sdk-for-net/issues/60297 is fixed.
@@ -95,5 +109,38 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         FrontDoorRulesEngineData IJsonModel<FrontDoorRulesEngineData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (FrontDoorRulesEngineData)JsonModelCreateCore(ref reader, options);
+        internal static FrontDoorRulesEngineData DeserializeFrontDoorRulesEngineData(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            RulesEngineProperties properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (FrontDoorSerializationHelpers.TryReadResourceDataProperty(prop, options, ref id, ref name, ref resourceType, ref systemData))
+                {
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind != JsonValueKind.Null)
+                    {
+                        properties = RulesEngineProperties.DeserializeRulesEngineProperties(prop.Value, options);
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
+            }
+            return new FrontDoorRulesEngineData(id, name, resourceType, systemData, properties, additionalBinaryDataProperties);
+        }
     }
 }
