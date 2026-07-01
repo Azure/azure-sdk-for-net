@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.ContainerService
                     yield break;
                 }
                 NodeImageVersionsListResult result = NodeImageVersionsListResult.FromResponse(response);
-                yield return Page<NodeImageVersion>.FromValues((IReadOnlyList<NodeImageVersion>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NodeImageVersion>.FromValues((IReadOnlyList<NodeImageVersion>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

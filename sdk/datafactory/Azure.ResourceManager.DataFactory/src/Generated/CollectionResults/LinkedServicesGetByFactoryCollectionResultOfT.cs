@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.DataFactory
                     yield break;
                 }
                 DataFactoryLinkedServiceListResult result = DataFactoryLinkedServiceListResult.FromResponse(response);
-                yield return Page<DataFactoryLinkedServiceData>.FromValues((IReadOnlyList<DataFactoryLinkedServiceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DataFactoryLinkedServiceData>.FromValues((IReadOnlyList<DataFactoryLinkedServiceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
