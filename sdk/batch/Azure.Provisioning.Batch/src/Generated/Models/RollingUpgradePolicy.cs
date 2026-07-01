@@ -142,6 +142,10 @@ namespace Azure.Provisioning.Batch
             _pauseTimeBetweenBatches = DefineProperty<string>(nameof(PauseTimeBetweenBatches), new string[] { "pauseTimeBetweenBatches" });
             _prioritizeUnhealthyInstances = DefineProperty<bool>(nameof(PrioritizeUnhealthyInstances), new string[] { "prioritizeUnhealthyInstances" });
             _rollbackFailedInstancesOnPolicyBreach = DefineProperty<bool>(nameof(RollbackFailedInstancesOnPolicyBreach), new string[] { "rollbackFailedInstancesOnPolicyBreach" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for RollingUpgradePolicy that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

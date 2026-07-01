@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.DnsResolver
                     yield break;
                 }
                 DnsSecurityRuleListResult result = DnsSecurityRuleListResult.FromResponse(response);
-                yield return Page<DnsSecurityRuleData>.FromValues((IReadOnlyList<DnsSecurityRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DnsSecurityRuleData>.FromValues((IReadOnlyList<DnsSecurityRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.SecurityCenter
                     yield break;
                 }
                 SecurityAssessmentList result = SecurityAssessmentList.FromResponse(response);
-                yield return Page<SecurityAssessmentData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SecurityAssessmentData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

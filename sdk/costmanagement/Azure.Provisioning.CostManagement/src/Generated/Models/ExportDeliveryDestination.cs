@@ -126,6 +126,10 @@ namespace Azure.Provisioning.CostManagement
             _rootFolderPath = DefineProperty<string>(nameof(RootFolderPath), new string[] { "rootFolderPath" });
             _sasToken = DefineProperty<string>(nameof(SasToken), new string[] { "sasToken" });
             _storageAccount = DefineProperty<string>(nameof(StorageAccount), new string[] { "storageAccount" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ExportDeliveryDestination that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

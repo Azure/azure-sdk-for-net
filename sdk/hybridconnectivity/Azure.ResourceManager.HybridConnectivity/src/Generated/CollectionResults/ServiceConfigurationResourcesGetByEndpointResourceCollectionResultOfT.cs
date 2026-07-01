@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.HybridConnectivity
                     yield break;
                 }
                 ServiceConfigurationList result = ServiceConfigurationList.FromResponse(response);
-                yield return Page<HybridConnectivityServiceConfigurationData>.FromValues((IReadOnlyList<HybridConnectivityServiceConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<HybridConnectivityServiceConfigurationData>.FromValues((IReadOnlyList<HybridConnectivityServiceConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.LoadTesting
                     yield break;
                 }
                 LoadTestProfileMappingResourceListResult result = LoadTestProfileMappingResourceListResult.FromResponse(response);
-                yield return Page<LoadTestProfileMappingData>.FromValues((IReadOnlyList<LoadTestProfileMappingData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<LoadTestProfileMappingData>.FromValues((IReadOnlyList<LoadTestProfileMappingData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

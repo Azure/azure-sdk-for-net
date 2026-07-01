@@ -92,6 +92,10 @@ namespace Azure.Provisioning.Batch
             _storageAccountType = DefineProperty<BatchStorageAccountType>(nameof(StorageAccountType), new string[] { "storageAccountType" });
             _securityProfile = DefineModelProperty<VmDiskSecurityProfile>(nameof(SecurityProfile), new string[] { "securityProfile" });
             _diskEncryptionSet = DefineModelProperty<DiskEncryptionSetParameters>(nameof(DiskEncryptionSet), new string[] { "diskEncryptionSet" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedDisk that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

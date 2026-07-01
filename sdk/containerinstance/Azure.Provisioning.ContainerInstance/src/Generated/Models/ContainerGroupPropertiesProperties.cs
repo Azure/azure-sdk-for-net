@@ -416,6 +416,10 @@ namespace Azure.Provisioning.ContainerInstance
             _containerGroupProfile = DefineModelProperty<ContainerGroupProfileReferenceDefinition>(nameof(ContainerGroupProfile), new string[] { "containerGroupProfile" });
             _standbyPoolProfile = DefineModelProperty<StandbyPoolProfileDefinition>(nameof(StandbyPoolProfile), new string[] { "standbyPoolProfile" });
             _isCreatedFromStandbyPool = DefineProperty<bool>(nameof(IsCreatedFromStandbyPool), new string[] { "isCreatedFromStandbyPool" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerGroupPropertiesProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

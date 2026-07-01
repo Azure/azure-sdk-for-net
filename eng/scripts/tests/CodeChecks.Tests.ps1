@@ -677,3 +677,117 @@ Describe "Test-OnlyCiConfigChanged" -Tag "UnitTest" {
         }
     }
 }
+
+# ─────────────────────────────────────────────
+# Get-ScopedProjectListOverrideFile
+# ─────────────────────────────────────────────
+Describe "Get-ScopedProjectListOverrideFile" -Tag "UnitTest" {
+
+  BeforeAll {
+    # Writes a global override file shaped like the one set-artifact-packages.ps1 produces, and
+    # returns its repo-root-relative path (the form passed to the function in CI).
+    function New-GlobalOverride {
+        param([string] $RepoRoot, [string[]] $Includes)
+        $dir = Join-Path $RepoRoot "projlist"
+        New-Item -Path $dir -ItemType Directory -Force | Out-Null
+        $path = Join-Path $dir "packages_Project_0.props"
+        $lines = @('<Project>', '  <ItemGroup>')
+        foreach ($inc in $Includes) { $lines += "    <ProjectReference Include=`"$inc`" />" }
+        $lines += @('  </ItemGroup>', '</Project>')
+        Set-Content -Path $path -Value ($lines -join "`n") -Encoding utf8
+        return [System.IO.Path]::GetRelativePath($RepoRoot, $path)
+    }
+
+    function Get-ScopedIncludes {
+        param([string] $RepoRoot, [string] $RelativePath)
+        if (-not $RelativePath) { return @() }
+        [xml] $xml = Get-Content -Raw -Path (Join-Path $RepoRoot $RelativePath)
+        return @($xml.Project.ItemGroup.ProjectReference | ForEach-Object { $_.Include })
+    }
+  }
+
+    BeforeEach {
+        $script:repoRoot = Join-Path ([System.IO.Path]::GetTempPath()) "scoped-override-$([System.Guid]::NewGuid().ToString('N'))"
+        New-Item -Path $script:repoRoot -ItemType Directory -Force | Out-Null
+    }
+
+    AfterEach {
+        if (Test-Path $script:repoRoot) { Remove-Item $script:repoRoot -Recurse -Force }
+    }
+
+    Context "fallback to whole-service regeneration (never drops a project)" {
+        It "returns empty when no override file is supplied" {
+            Get-ScopedProjectListOverrideFile -GlobalOverrideFile "" -ServiceDirectory "datafactory" -RepoRoot $script:repoRoot | Should -BeNullOrEmpty
+        }
+
+        It "returns empty for an unexpanded pipeline variable reference" {
+            Get-ScopedProjectListOverrideFile -GlobalOverrideFile '$(ProjectListOverrideFile)' -ServiceDirectory "datafactory" -RepoRoot $script:repoRoot | Should -BeNullOrEmpty
+        }
+
+        It "returns empty when the override file is missing" {
+            Get-ScopedProjectListOverrideFile -GlobalOverrideFile "projlist/does-not-exist.props" -ServiceDirectory "datafactory" -RepoRoot $script:repoRoot | Should -BeNullOrEmpty
+        }
+
+        It "returns empty when a changed service has no matching package (service-level shared file change)" {
+            $rel = New-GlobalOverride -RepoRoot $script:repoRoot -Includes @('$(RepoRoot)sdk/datafactory/Azure.Provisioning.DataFactory/**/*.csproj')
+            # 'storage' changed (e.g. a shared file) but no storage package is in the targeted set.
+            Get-ScopedProjectListOverrideFile -GlobalOverrideFile $rel -ServiceDirectory "storage" -RepoRoot $script:repoRoot | Should -BeNullOrEmpty
+        }
+    }
+
+    Context "scoping to a single service" {
+        It "includes every changed package in the service and excludes other services" {
+            $rel = New-GlobalOverride -RepoRoot $script:repoRoot -Includes @(
+                '$(RepoRoot)sdk/datafactory/Azure.Provisioning.DataFactory/**/*.csproj',
+                '$(RepoRoot)sdk/datafactory/Azure.ResourceManager.DataFactory/**/*.csproj',
+                '$(RepoRoot)sdk/securitycenter/Azure.Provisioning.SecurityCenter/**/*.csproj'
+            )
+            $scoped = Get-ScopedIncludes -RepoRoot $script:repoRoot -RelativePath (Get-ScopedProjectListOverrideFile -GlobalOverrideFile $rel -ServiceDirectory "datafactory" -RepoRoot $script:repoRoot)
+            $scoped.Count | Should -Be 2
+            $scoped | Should -Contain '$(RepoRoot)sdk/datafactory/Azure.Provisioning.DataFactory/**/*.csproj'
+            $scoped | Should -Contain '$(RepoRoot)sdk/datafactory/Azure.ResourceManager.DataFactory/**/*.csproj'
+            $scoped | Should -Not -Contain '$(RepoRoot)sdk/securitycenter/Azure.Provisioning.SecurityCenter/**/*.csproj'
+        }
+
+        It "matches the service directory case-insensitively" {
+            $rel = New-GlobalOverride -RepoRoot $script:repoRoot -Includes @('$(RepoRoot)sdk/datafactory/Azure.Provisioning.DataFactory/**/*.csproj')
+            $scoped = Get-ScopedIncludes -RepoRoot $script:repoRoot -RelativePath (Get-ScopedProjectListOverrideFile -GlobalOverrideFile $rel -ServiceDirectory "DataFactory" -RepoRoot $script:repoRoot)
+            $scoped.Count | Should -Be 1
+        }
+
+        It "does not match a different service that shares a name prefix" {
+            $rel = New-GlobalOverride -RepoRoot $script:repoRoot -Includes @('$(RepoRoot)sdk/storagecache/Azure.ResourceManager.StorageCache/**/*.csproj')
+            # ServiceDirectory 'storage' must NOT match 'storagecache' (the trailing separator guards this).
+            Get-ScopedProjectListOverrideFile -GlobalOverrideFile $rel -ServiceDirectory "storage" -RepoRoot $script:repoRoot | Should -BeNullOrEmpty
+        }
+    }
+
+    Context "no-drop coverage invariant across the whole batch" {
+        It "covers every changed project exactly once across all changed services" {
+            $allIncludes = @(
+                '$(RepoRoot)sdk/datafactory/Azure.Provisioning.DataFactory/**/*.csproj',
+                '$(RepoRoot)sdk/datafactory/Azure.ResourceManager.DataFactory/**/*.csproj',
+                '$(RepoRoot)sdk/securitycenter/Azure.Provisioning.SecurityCenter/**/*.csproj',
+                '$(RepoRoot)sdk/apimanagement/Azure.Provisioning.ApiManagement/**/*.csproj',
+                '$(RepoRoot)sdk/apimanagement/Azure.ResourceManager.ApiManagement/**/*.csproj'
+            )
+            $rel = New-GlobalOverride -RepoRoot $script:repoRoot -Includes $allIncludes
+            # ChangedServices is derived from the same package set, so it is exactly these services.
+            $changedServices = @('datafactory', 'securitycenter', 'apimanagement')
+
+            $covered = @()
+            foreach ($svc in $changedServices) {
+                $scopedFile = Get-ScopedProjectListOverrideFile -GlobalOverrideFile $rel -ServiceDirectory $svc -RepoRoot $script:repoRoot
+                # A service must always resolve to a concrete scoped file here (it has matching packages);
+                # an empty result would mean its packages fall back to whole-service regen (still covered),
+                # but for this batch every service has targeted packages, so assert it scoped.
+                $scopedFile | Should -Not -BeNullOrEmpty
+                $covered += Get-ScopedIncludes -RepoRoot $script:repoRoot -RelativePath $scopedFile
+            }
+
+            # Every changed project is regenerated, and none is regenerated twice.
+            ($covered | Sort-Object -Unique) | Should -Be ($allIncludes | Sort-Object -Unique)
+            $covered.Count | Should -Be $allIncludes.Count
+        }
+    }
+}

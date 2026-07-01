@@ -258,6 +258,10 @@ namespace Azure.Provisioning.Cdn
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _properties = DefineModelProperty<DeepCreatedOriginProperties>(nameof(Properties), new string[] { "properties" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DeepCreatedOrigin that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

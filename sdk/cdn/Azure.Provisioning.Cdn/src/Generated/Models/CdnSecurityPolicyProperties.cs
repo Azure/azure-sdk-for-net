@@ -76,6 +76,10 @@ namespace Azure.Provisioning.Cdn
             _properties = DefineModelProperty<SecurityPolicyProperties>(nameof(Properties), new string[] { "parameters" });
             _provisioningState = DefineProperty<FrontDoorProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _deploymentStatus = DefineProperty<FrontDoorDeploymentStatus>(nameof(DeploymentStatus), new string[] { "deploymentStatus" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for CdnSecurityPolicyProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

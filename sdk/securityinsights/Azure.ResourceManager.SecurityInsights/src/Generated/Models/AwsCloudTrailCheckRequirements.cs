@@ -14,17 +14,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class AwsCloudTrailCheckRequirements : DataConnectorsCheckRequirements
     {
         /// <summary> Initializes a new instance of <see cref="AwsCloudTrailCheckRequirements"/>. </summary>
-        public AwsCloudTrailCheckRequirements()
+        public AwsCloudTrailCheckRequirements() : base(DataConnectorKind.AmazonWebServicesCloudTrail)
         {
-            Kind = DataConnectorKind.AmazonWebServicesCloudTrail;
         }
 
         /// <summary> Initializes a new instance of <see cref="AwsCloudTrailCheckRequirements"/>. </summary>
         /// <param name="kind"> Describes the kind of connector to be checked. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AwsCloudTrailCheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AwsCloudTrailCheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, additionalBinaryDataProperties)
         {
-            Kind = kind;
         }
     }
 }

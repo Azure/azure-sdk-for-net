@@ -91,6 +91,10 @@ namespace Azure.Provisioning.KeyVault
             _defaultAction = DefineProperty<KeyVaultNetworkRuleAction>(nameof(DefaultAction), new string[] { "defaultAction" });
             _ipRules = DefineListProperty<KeyVaultIPRule>(nameof(IPRules), new string[] { "ipRules" });
             _virtualNetworkRules = DefineListProperty<KeyVaultVirtualNetworkRule>(nameof(VirtualNetworkRules), new string[] { "virtualNetworkRules" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for KeyVaultNetworkRuleSet that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

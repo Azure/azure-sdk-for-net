@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 ListHubVirtualNetworkConnectionsResult result = ListHubVirtualNetworkConnectionsResult.FromResponse(response);
-                yield return Page<HubVirtualNetworkConnectionData>.FromValues((IReadOnlyList<HubVirtualNetworkConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<HubVirtualNetworkConnectionData>.FromValues((IReadOnlyList<HubVirtualNetworkConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

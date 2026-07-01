@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class CustomDnsSuffixProvisioningStateExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this CustomDnsSuffixProvisioningState value) => value switch
         {
             CustomDnsSuffixProvisioningState.Succeeded => "Succeeded",
@@ -20,12 +21,25 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CustomDnsSuffixProvisioningState value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static CustomDnsSuffixProvisioningState ToCustomDnsSuffixProvisioningState(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded")) return CustomDnsSuffixProvisioningState.Succeeded;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return CustomDnsSuffixProvisioningState.Failed;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Degraded")) return CustomDnsSuffixProvisioningState.Degraded;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InProgress")) return CustomDnsSuffixProvisioningState.InProgress;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded"))
+            {
+                return CustomDnsSuffixProvisioningState.Succeeded;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed"))
+            {
+                return CustomDnsSuffixProvisioningState.Failed;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Degraded"))
+            {
+                return CustomDnsSuffixProvisioningState.Degraded;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InProgress"))
+            {
+                return CustomDnsSuffixProvisioningState.InProgress;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CustomDnsSuffixProvisioningState value.");
         }
     }

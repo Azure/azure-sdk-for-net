@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Metrics availability and retention.
-    /// Serialized Name: ResourceMetricAvailability
-    /// </summary>
+    /// <summary> Metrics availability and retention. </summary>
     public partial class ResourceMetricAvailability
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceMetricAvailability"/>. </summary>
         internal ResourceMetricAvailability()
@@ -54,32 +23,21 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceMetricAvailability"/>. </summary>
-        /// <param name="timeGrain">
-        /// Time grain .
-        /// Serialized Name: ResourceMetricAvailability.timeGrain
-        /// </param>
-        /// <param name="retention">
-        /// Retention period for the current time grain.
-        /// Serialized Name: ResourceMetricAvailability.retention
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceMetricAvailability(string timeGrain, string retention, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="timeGrain"> Time grain . </param>
+        /// <param name="retention"> Retention period for the current time grain. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceMetricAvailability(string timeGrain, string retention, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TimeGrain = timeGrain;
             Retention = retention;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Time grain .
-        /// Serialized Name: ResourceMetricAvailability.timeGrain
-        /// </summary>
+        /// <summary> Time grain . </summary>
         [WirePath("timeGrain")]
         public string TimeGrain { get; }
-        /// <summary>
-        /// Retention period for the current time grain.
-        /// Serialized Name: ResourceMetricAvailability.retention
-        /// </summary>
+
+        /// <summary> Retention period for the current time grain. </summary>
         [WirePath("retention")]
         public string Retention { get; }
     }

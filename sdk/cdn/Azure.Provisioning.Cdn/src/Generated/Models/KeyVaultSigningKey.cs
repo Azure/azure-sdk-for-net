@@ -125,6 +125,10 @@ namespace Azure.Provisioning.Cdn
             _vaultName = DefineProperty<string>(nameof(VaultName), new string[] { "vaultName" }, isRequired: true);
             _secretName = DefineProperty<string>(nameof(SecretName), new string[] { "secretName" }, isRequired: true);
             _secretVersion = DefineProperty<string>(nameof(SecretVersion), new string[] { "secretVersion" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for KeyVaultSigningKey that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

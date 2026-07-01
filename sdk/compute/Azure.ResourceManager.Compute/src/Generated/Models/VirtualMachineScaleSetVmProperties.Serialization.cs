@@ -175,6 +175,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("virtualMachineResourceId"u8);
                 writer.WriteStringValue(VirtualMachineResourceId);
             }
+            if (Optional.IsDefined(InterconnectBlockProfile))
+            {
+                writer.WritePropertyName("interconnectBlockProfile"u8);
+                writer.WriteObjectValue(InterconnectBlockProfile, options);
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -234,6 +239,7 @@ namespace Azure.ResourceManager.Compute.Models
             string userData = default;
             DateTimeOffset? timeCreated = default;
             ResourceIdentifier virtualMachineResourceId = default;
+            InterconnectBlockProfile interconnectBlockProfile = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -397,6 +403,15 @@ namespace Azure.ResourceManager.Compute.Models
                     virtualMachineResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("interconnectBlockProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    interconnectBlockProfile = InterconnectBlockProfile.DeserializeInterconnectBlockProfile(prop.Value, options);
+                    continue;
+                }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
             return new VirtualMachineScaleSetVmProperties(
@@ -420,6 +435,7 @@ namespace Azure.ResourceManager.Compute.Models
                 userData,
                 timeCreated,
                 virtualMachineResourceId,
+                interconnectBlockProfile,
                 additionalProperties);
         }
     }

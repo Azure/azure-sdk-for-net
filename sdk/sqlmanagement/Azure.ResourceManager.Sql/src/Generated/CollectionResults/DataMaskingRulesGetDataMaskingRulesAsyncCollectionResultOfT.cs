@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 DataMaskingRuleListResult result = DataMaskingRuleListResult.FromResponse(response);
-                yield return Page<DataMaskingRule>.FromValues((IReadOnlyList<DataMaskingRule>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DataMaskingRule>.FromValues((IReadOnlyList<DataMaskingRule>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

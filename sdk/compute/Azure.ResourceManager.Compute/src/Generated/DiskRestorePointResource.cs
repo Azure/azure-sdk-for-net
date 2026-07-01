@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute
         {
             TryGetApiVersion(ResourceType, out string diskRestorePointApiVersion);
             _diskRestorePointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
-            _diskRestorePointsRestClient = new DiskRestorePoints(_diskRestorePointsClientDiagnostics, Pipeline, Endpoint, diskRestorePointApiVersion ?? "2025-01-02");
+            _diskRestorePointsRestClient = new DiskRestorePoints(_diskRestorePointsClientDiagnostics, Pipeline, Endpoint, diskRestorePointApiVersion ?? "2026-03-02");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <description> 2026-03-02. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <description> 2026-03-02. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <description> 2026-03-02. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <description> 2026-03-02. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <description> 2026-03-02. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <description> 2026-03-02. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

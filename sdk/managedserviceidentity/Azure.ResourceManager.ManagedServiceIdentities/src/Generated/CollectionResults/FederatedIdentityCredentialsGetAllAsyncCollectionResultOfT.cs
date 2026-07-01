@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                     yield break;
                 }
                 FederatedIdentityCredentialsListResult result = FederatedIdentityCredentialsListResult.FromResponse(response);
-                yield return Page<FederatedIdentityCredentialData>.FromValues((IReadOnlyList<FederatedIdentityCredentialData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<FederatedIdentityCredentialData>.FromValues((IReadOnlyList<FederatedIdentityCredentialData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.DurableTask
                     yield break;
                 }
                 DurableTaskPrivateEndpointConnectionListResult result = DurableTaskPrivateEndpointConnectionListResult.FromResponse(response);
-                yield return Page<DurableTaskPrivateEndpointConnectionData>.FromValues((IReadOnlyList<DurableTaskPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DurableTaskPrivateEndpointConnectionData>.FromValues((IReadOnlyList<DurableTaskPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

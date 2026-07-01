@@ -7,8 +7,7 @@ import {
 } from "@azure-typespec/http-client-csharp-mgmt";
 import { JSONSchemaType } from "@typespec/compiler";
 
-export interface AzureProvisioningEmitterOptions
-  extends AzureMgmtEmitterOptions {}
+export type AzureProvisioningEmitterOptions = AzureMgmtEmitterOptions;
 
 export const AzureProvisioningEmitterOptionsSchema: JSONSchemaType<AzureProvisioningEmitterOptions> =
   {

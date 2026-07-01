@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.AppContainers
                     yield break;
                 }
                 WorkflowEnvelopeCollection result = WorkflowEnvelopeCollection.FromResponse(response);
-                yield return Page<LogicAppWorkflowEnvelopeData>.FromValues((IReadOnlyList<LogicAppWorkflowEnvelopeData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<LogicAppWorkflowEnvelopeData>.FromValues((IReadOnlyList<LogicAppWorkflowEnvelopeData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

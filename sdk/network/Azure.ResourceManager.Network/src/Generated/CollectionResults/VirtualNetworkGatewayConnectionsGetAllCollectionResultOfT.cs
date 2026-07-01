@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 VirtualNetworkGatewayConnectionListResult result = VirtualNetworkGatewayConnectionListResult.FromResponse(response);
-                yield return Page<VirtualNetworkGatewayConnectionData>.FromValues((IReadOnlyList<VirtualNetworkGatewayConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<VirtualNetworkGatewayConnectionData>.FromValues((IReadOnlyList<VirtualNetworkGatewayConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

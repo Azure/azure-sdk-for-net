@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.ContainerService
                     yield break;
                 }
                 LoadBalancerListResult result = LoadBalancerListResult.FromResponse(response);
-                yield return Page<ManagedClusterLoadBalancerData>.FromValues((IReadOnlyList<ManagedClusterLoadBalancerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ManagedClusterLoadBalancerData>.FromValues((IReadOnlyList<ManagedClusterLoadBalancerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -149,6 +149,10 @@ namespace Azure.Provisioning.CostManagement
             _currentSpend = DefineModelProperty<CurrentSpend>(nameof(CurrentSpend), new string[] { "currentSpend" }, isOutput: true);
             _notifications = DefineDictionaryProperty<BudgetNotification>(nameof(Notifications), new string[] { "notifications" });
             _forecastSpend = DefineModelProperty<ForecastSpend>(nameof(ForecastSpend), new string[] { "forecastSpend" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BudgetProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -13,286 +13,394 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the SiteExtensionInfo data model.
-    /// Site Extension Information.
-    /// Serialized Name: SiteExtensionInfo
-    /// </summary>
+    /// <summary> Site Extension Information. </summary>
     public partial class SiteExtensionInfoData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SiteExtensionInfoData"/>. </summary>
         public SiteExtensionInfoData()
         {
-            Authors = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SiteExtensionInfoData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: SiteExtensionInfo.kind
-        /// </param>
-        /// <param name="extensionId">
-        /// Site extension ID.
-        /// Serialized Name: SiteExtensionInfo.properties.extension_id
-        /// </param>
-        /// <param name="title"> Serialized Name: SiteExtensionInfo.properties.title. </param>
-        /// <param name="extensionType">
-        /// Site extension type.
-        /// Serialized Name: SiteExtensionInfo.properties.extension_type
-        /// </param>
-        /// <param name="summary">
-        /// Summary description.
-        /// Serialized Name: SiteExtensionInfo.properties.summary
-        /// </param>
-        /// <param name="description">
-        /// Detailed description.
-        /// Serialized Name: SiteExtensionInfo.properties.description
-        /// </param>
-        /// <param name="version">
-        /// Version information.
-        /// Serialized Name: SiteExtensionInfo.properties.version
-        /// </param>
-        /// <param name="extensionUri">
-        /// Extension URL.
-        /// Serialized Name: SiteExtensionInfo.properties.extension_url
-        /// </param>
-        /// <param name="projectUri">
-        /// Project URL.
-        /// Serialized Name: SiteExtensionInfo.properties.project_url
-        /// </param>
-        /// <param name="iconUri">
-        /// Icon URL.
-        /// Serialized Name: SiteExtensionInfo.properties.icon_url
-        /// </param>
-        /// <param name="licenseUri">
-        /// License URL.
-        /// Serialized Name: SiteExtensionInfo.properties.license_url
-        /// </param>
-        /// <param name="feedUri">
-        /// Feed URL.
-        /// Serialized Name: SiteExtensionInfo.properties.feed_url
-        /// </param>
-        /// <param name="authors">
-        /// List of authors.
-        /// Serialized Name: SiteExtensionInfo.properties.authors
-        /// </param>
-        /// <param name="installerCommandLineParams">
-        /// Installer command line parameters.
-        /// Serialized Name: SiteExtensionInfo.properties.installer_command_line_params
-        /// </param>
-        /// <param name="publishedOn">
-        /// Published timestamp.
-        /// Serialized Name: SiteExtensionInfo.properties.published_date_time
-        /// </param>
-        /// <param name="downloadCount">
-        /// Count of downloads.
-        /// Serialized Name: SiteExtensionInfo.properties.download_count
-        /// </param>
-        /// <param name="localIsLatestVersion">
-        /// &lt;code&gt;true&lt;/code&gt; if the local version is the latest version; &lt;code&gt;false&lt;/code&gt; otherwise.
-        /// Serialized Name: SiteExtensionInfo.properties.local_is_latest_version
-        /// </param>
-        /// <param name="localPath">
-        /// Local path.
-        /// Serialized Name: SiteExtensionInfo.properties.local_path
-        /// </param>
-        /// <param name="installedOn">
-        /// Installed timestamp.
-        /// Serialized Name: SiteExtensionInfo.properties.installed_date_time
-        /// </param>
-        /// <param name="provisioningState">
-        /// Provisioning state.
-        /// Serialized Name: SiteExtensionInfo.properties.provisioningState
-        /// </param>
-        /// <param name="comment">
-        /// Site Extension comment.
-        /// Serialized Name: SiteExtensionInfo.properties.comment
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteExtensionInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string extensionId, string title, SiteExtensionType? extensionType, string summary, string description, string version, Uri extensionUri, Uri projectUri, Uri iconUri, Uri licenseUri, Uri feedUri, IList<string> authors, string installerCommandLineParams, DateTimeOffset? publishedOn, int? downloadCount, bool? localIsLatestVersion, string localPath, DateTimeOffset? installedOn, string provisioningState, string comment, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> SiteExtensionInfo resource specific properties. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SiteExtensionInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteExtensionInfoProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
             Kind = kind;
-            ExtensionId = extensionId;
-            Title = title;
-            ExtensionType = extensionType;
-            Summary = summary;
-            Description = description;
-            Version = version;
-            ExtensionUri = extensionUri;
-            ProjectUri = projectUri;
-            IconUri = iconUri;
-            LicenseUri = licenseUri;
-            FeedUri = feedUri;
-            Authors = authors;
-            InstallerCommandLineParams = installerCommandLineParams;
-            PublishedOn = publishedOn;
-            DownloadCount = downloadCount;
-            LocalIsLatestVersion = localIsLatestVersion;
-            LocalPath = localPath;
-            InstalledOn = installedOn;
-            ProvisioningState = provisioningState;
-            Comment = comment;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: SiteExtensionInfo.kind
-        /// </summary>
+        /// <summary> SiteExtensionInfo resource specific properties. </summary>
+        [WirePath("properties")]
+        internal SiteExtensionInfoProperties Properties { get; set; }
+
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
-        /// <summary>
-        /// Site extension ID.
-        /// Serialized Name: SiteExtensionInfo.properties.extension_id
-        /// </summary>
+
+        /// <summary> Site extension ID. </summary>
         [WirePath("properties.extension_id")]
-        public string ExtensionId { get; set; }
-        /// <summary> Serialized Name: SiteExtensionInfo.properties.title. </summary>
+        public string ExtensionId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExtensionId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.ExtensionId = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Title. </summary>
         [WirePath("properties.title")]
-        public string Title { get; set; }
-        /// <summary>
-        /// Site extension type.
-        /// Serialized Name: SiteExtensionInfo.properties.extension_type
-        /// </summary>
+        public string Title
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Title;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.Title = value;
+            }
+        }
+
+        /// <summary> Site extension type. </summary>
         [WirePath("properties.extension_type")]
-        public SiteExtensionType? ExtensionType { get; set; }
-        /// <summary>
-        /// Summary description.
-        /// Serialized Name: SiteExtensionInfo.properties.summary
-        /// </summary>
+        public SiteExtensionType? ExtensionType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExtensionType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.ExtensionType = value;
+            }
+        }
+
+        /// <summary> Summary description. </summary>
         [WirePath("properties.summary")]
-        public string Summary { get; set; }
-        /// <summary>
-        /// Detailed description.
-        /// Serialized Name: SiteExtensionInfo.properties.description
-        /// </summary>
+        public string Summary
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Summary;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.Summary = value;
+            }
+        }
+
+        /// <summary> Detailed description. </summary>
         [WirePath("properties.description")]
-        public string Description { get; set; }
-        /// <summary>
-        /// Version information.
-        /// Serialized Name: SiteExtensionInfo.properties.version
-        /// </summary>
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
+        /// <summary> Version information. </summary>
         [WirePath("properties.version")]
-        public string Version { get; set; }
-        /// <summary>
-        /// Extension URL.
-        /// Serialized Name: SiteExtensionInfo.properties.extension_url
-        /// </summary>
+        public string Version
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Version;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.Version = value;
+            }
+        }
+
+        /// <summary> Extension URL. </summary>
         [WirePath("properties.extension_url")]
-        public Uri ExtensionUri { get; set; }
-        /// <summary>
-        /// Project URL.
-        /// Serialized Name: SiteExtensionInfo.properties.project_url
-        /// </summary>
+        public Uri ExtensionUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExtensionUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.ExtensionUri = value;
+            }
+        }
+
+        /// <summary> Project URL. </summary>
         [WirePath("properties.project_url")]
-        public Uri ProjectUri { get; set; }
-        /// <summary>
-        /// Icon URL.
-        /// Serialized Name: SiteExtensionInfo.properties.icon_url
-        /// </summary>
+        public Uri ProjectUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProjectUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.ProjectUri = value;
+            }
+        }
+
+        /// <summary> Icon URL. </summary>
         [WirePath("properties.icon_url")]
-        public Uri IconUri { get; set; }
-        /// <summary>
-        /// License URL.
-        /// Serialized Name: SiteExtensionInfo.properties.license_url
-        /// </summary>
+        public Uri IconUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IconUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.IconUri = value;
+            }
+        }
+
+        /// <summary> License URL. </summary>
         [WirePath("properties.license_url")]
-        public Uri LicenseUri { get; set; }
-        /// <summary>
-        /// Feed URL.
-        /// Serialized Name: SiteExtensionInfo.properties.feed_url
-        /// </summary>
+        public Uri LicenseUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LicenseUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.LicenseUri = value;
+            }
+        }
+
+        /// <summary> Feed URL. </summary>
         [WirePath("properties.feed_url")]
-        public Uri FeedUri { get; set; }
-        /// <summary>
-        /// List of authors.
-        /// Serialized Name: SiteExtensionInfo.properties.authors
-        /// </summary>
+        public Uri FeedUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FeedUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.FeedUri = value;
+            }
+        }
+
+        /// <summary> List of authors. </summary>
         [WirePath("properties.authors")]
-        public IList<string> Authors { get; }
-        /// <summary>
-        /// Installer command line parameters.
-        /// Serialized Name: SiteExtensionInfo.properties.installer_command_line_params
-        /// </summary>
+        public IList<string> Authors
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                return Properties.Authors;
+            }
+        }
+
+        /// <summary> Installer command line parameters. </summary>
         [WirePath("properties.installer_command_line_params")]
-        public string InstallerCommandLineParams { get; set; }
-        /// <summary>
-        /// Published timestamp.
-        /// Serialized Name: SiteExtensionInfo.properties.published_date_time
-        /// </summary>
+        public string InstallerCommandLineParams
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InstallerCommandLineParams;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.InstallerCommandLineParams = value;
+            }
+        }
+
+        /// <summary> Published timestamp. </summary>
         [WirePath("properties.published_date_time")]
-        public DateTimeOffset? PublishedOn { get; set; }
-        /// <summary>
-        /// Count of downloads.
-        /// Serialized Name: SiteExtensionInfo.properties.download_count
-        /// </summary>
+        public DateTimeOffset? PublishedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublishedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.PublishedOn = value;
+            }
+        }
+
+        /// <summary> Count of downloads. </summary>
         [WirePath("properties.download_count")]
-        public int? DownloadCount { get; set; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if the local version is the latest version; &lt;code&gt;false&lt;/code&gt; otherwise.
-        /// Serialized Name: SiteExtensionInfo.properties.local_is_latest_version
-        /// </summary>
+        public int? DownloadCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DownloadCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.DownloadCount = value;
+            }
+        }
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if the local version is the latest version; &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
         [WirePath("properties.local_is_latest_version")]
-        public bool? LocalIsLatestVersion { get; set; }
-        /// <summary>
-        /// Local path.
-        /// Serialized Name: SiteExtensionInfo.properties.local_path
-        /// </summary>
+        public bool? LocalIsLatestVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LocalIsLatestVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.LocalIsLatestVersion = value;
+            }
+        }
+
+        /// <summary> Local path. </summary>
         [WirePath("properties.local_path")]
-        public string LocalPath { get; set; }
-        /// <summary>
-        /// Installed timestamp.
-        /// Serialized Name: SiteExtensionInfo.properties.installed_date_time
-        /// </summary>
+        public string LocalPath
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LocalPath;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.LocalPath = value;
+            }
+        }
+
+        /// <summary> Installed timestamp. </summary>
         [WirePath("properties.installed_date_time")]
-        public DateTimeOffset? InstalledOn { get; set; }
-        /// <summary>
-        /// Provisioning state.
-        /// Serialized Name: SiteExtensionInfo.properties.provisioningState
-        /// </summary>
+        public DateTimeOffset? InstalledOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InstalledOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.InstalledOn = value;
+            }
+        }
+
+        /// <summary> Provisioning state. </summary>
         [WirePath("properties.provisioningState")]
-        public string ProvisioningState { get; set; }
-        /// <summary>
-        /// Site Extension comment.
-        /// Serialized Name: SiteExtensionInfo.properties.comment
-        /// </summary>
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.ProvisioningState = value;
+            }
+        }
+
+        /// <summary> Site Extension comment. </summary>
         [WirePath("properties.comment")]
-        public string Comment { get; set; }
+        public string Comment
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Comment;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteExtensionInfoProperties();
+                }
+                Properties.Comment = value;
+            }
+        }
     }
 }

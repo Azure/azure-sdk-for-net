@@ -371,6 +371,10 @@ namespace Azure.Provisioning.ContainerInstance
             _revision = DefineProperty<int>(nameof(Revision), new string[] { "revision" }, isOutput: true);
             _registeredRevisions = DefineListProperty<int>(nameof(RegisteredRevisions), new string[] { "registeredRevisions" }, isOutput: true);
             _useKrypton = DefineProperty<bool>(nameof(UseKrypton), new string[] { "useKrypton" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerGroupProfileProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

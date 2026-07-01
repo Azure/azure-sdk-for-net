@@ -6,65 +6,29 @@
 using System;
 using System.ComponentModel;
 using System.Threading;
-using Autorest.CSharp.Core;
-using Azure.Core;
+using System.Threading.Tasks;
 
+// ROOT CAUSE: GA 1.5.0 exposed two listing calls on this resource:
+//   * GetWebAppsByHybridConnection         → Pageable<string>     (REST: ListWebAppsByHybridConnection — site names)
+//   * GetAllWebAppsByHybridConnection      → Pageable<WebSiteData>(GA fan-out over each name)
+// The new generator only emits the REST call (renamed to GetWebAppsByHybridConnection
+// via @@clientName in client.tsp). The data-listing variant required follow-up
+// per-site Get calls which are no longer modelled and cannot be re-implemented
+// safely here; throw NotSupportedException to preserve the GA signature.
 namespace Azure.ResourceManager.AppService
 {
     public partial class AppServicePlanHybridConnectionNamespaceRelayResource
     {
-        /// <summary>
-        /// Description for Get all apps that use a Hybrid Connection in an App Service Plan.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}/sites</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AppServicePlans_ListWebAppsByHybridConnection</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppServicePlanHybridConnectionNamespaceRelayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="String"/> that may take multiple service requests to iterate over. </returns>
+        /// <summary> Description for Get all apps that use a Hybrid Connection in an App Service Plan. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<String> GetWebAppsByHybridConnectionAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServicePlanHybridConnectionNamespaceRelayAppServicePlansRestClient.CreateListWebAppsByHybridConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServicePlanHybridConnectionNamespaceRelayAppServicePlansRestClient.CreateListWebAppsByHybridConnectionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => WebSiteData.DeserializeWebSiteData(e).ToString(), _appServicePlanHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics, Pipeline, "AppServicePlanHybridConnectionNamespaceRelayResource.GetAllWebAppsByHybridConnection", "value", "nextLink", cancellationToken);
-        }
+        [Obsolete("This method is no longer supported. Use GetWebAppsByHybridConnection() to retrieve site names, then load each WebSiteResource individually.", false)]
+        public virtual AsyncPageable<WebSiteData> GetAllWebAppsByHybridConnectionAsync(CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("Use GetWebAppsByHybridConnectionAsync() to retrieve site names, then load each WebSiteResource via WebSiteCollection.GetAsync.");
 
-        /// <summary>
-        /// Description for Get all apps that use a Hybrid Connection in an App Service Plan.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}/sites</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AppServicePlans_ListWebAppsByHybridConnection</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppServicePlanHybridConnectionNamespaceRelayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="String"/> that may take multiple service requests to iterate over. </returns>
+        /// <summary> Description for Get all apps that use a Hybrid Connection in an App Service Plan. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<String> GetWebAppsByHybridConnection(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServicePlanHybridConnectionNamespaceRelayAppServicePlansRestClient.CreateListWebAppsByHybridConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServicePlanHybridConnectionNamespaceRelayAppServicePlansRestClient.CreateListWebAppsByHybridConnectionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => WebSiteData.DeserializeWebSiteData(e).ToString(), _appServicePlanHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics, Pipeline, "AppServicePlanHybridConnectionNamespaceRelayResource.GetAllWebAppsByHybridConnection", "value", "nextLink", cancellationToken);
-        }
+        [Obsolete("This method is no longer supported. Use GetWebAppsByHybridConnection() to retrieve site names, then load each WebSiteResource individually.", false)]
+        public virtual Pageable<WebSiteData> GetAllWebAppsByHybridConnection(CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("Use GetWebAppsByHybridConnection() to retrieve site names, then load each WebSiteResource via WebSiteCollection.Get.");
     }
 }

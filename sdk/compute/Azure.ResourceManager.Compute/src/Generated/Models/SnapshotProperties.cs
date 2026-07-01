@@ -53,8 +53,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="copyCompletionError"> Indicates the error details if the background copy of a resource created via the CopyStart operation fails. </param>
         /// <param name="dataAccessAuthMode"> Additional authentication requirements when exporting or uploading to a disk or snapshot. </param>
         /// <param name="snapshotAccessState"> The state of snapshot which determines the access availability of the snapshot. </param>
+        /// <param name="immutabilityPolicy"> The immutability policy currently applied to this snapshot. Present only when an immutability policy has been configured. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SnapshotProperties(DateTimeOffset? timeCreated, SupportedOperatingSystemType? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, DiskCreationData creationData, int? diskSizeGB, long? diskSizeBytes, DiskState? diskState, string uniqueId, EncryptionSettingsGroup encryptionSettingsGroup, string provisioningState, bool? incremental, string incrementalSnapshotFamilyId, DiskEncryption encryption, NetworkAccessPolicy? networkAccessPolicy, ResourceIdentifier diskAccessId, DiskSecurityProfile securityProfile, bool? supportsHibernation, DiskPublicNetworkAccess? publicNetworkAccess, float? completionPercent, CopyCompletionError copyCompletionError, DataAccessAuthMode? dataAccessAuthMode, SnapshotAccessState? snapshotAccessState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SnapshotProperties(DateTimeOffset? timeCreated, SupportedOperatingSystemType? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, DiskCreationData creationData, int? diskSizeGB, long? diskSizeBytes, DiskState? diskState, string uniqueId, EncryptionSettingsGroup encryptionSettingsGroup, string provisioningState, bool? incremental, string incrementalSnapshotFamilyId, DiskEncryption encryption, NetworkAccessPolicy? networkAccessPolicy, ResourceIdentifier diskAccessId, DiskSecurityProfile securityProfile, bool? supportsHibernation, DiskPublicNetworkAccess? publicNetworkAccess, float? completionPercent, CopyCompletionError copyCompletionError, DataAccessAuthMode? dataAccessAuthMode, SnapshotAccessState? snapshotAccessState, ImmutabilityPolicy immutabilityPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TimeCreated = timeCreated;
             OSType = osType;
@@ -80,6 +81,7 @@ namespace Azure.ResourceManager.Compute.Models
             CopyCompletionError = copyCompletionError;
             DataAccessAuthMode = dataAccessAuthMode;
             SnapshotAccessState = snapshotAccessState;
+            ImmutabilityPolicy = immutabilityPolicy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -154,5 +156,8 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> The state of snapshot which determines the access availability of the snapshot. </summary>
         public SnapshotAccessState? SnapshotAccessState { get; }
+
+        /// <summary> The immutability policy currently applied to this snapshot. Present only when an immutability policy has been configured. </summary>
+        public ImmutabilityPolicy ImmutabilityPolicy { get; }
     }
 }

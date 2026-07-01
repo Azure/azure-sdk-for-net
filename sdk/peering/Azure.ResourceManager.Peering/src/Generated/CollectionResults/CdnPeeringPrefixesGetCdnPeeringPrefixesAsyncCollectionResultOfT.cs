@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.Peering
                     yield break;
                 }
                 CdnPeeringPrefixListResult result = CdnPeeringPrefixListResult.FromResponse(response);
-                yield return Page<CdnPeeringPrefix>.FromValues((IReadOnlyList<CdnPeeringPrefix>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<CdnPeeringPrefix>.FromValues((IReadOnlyList<CdnPeeringPrefix>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

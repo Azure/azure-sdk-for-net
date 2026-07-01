@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     yield break;
                 }
                 AdministratorMicrosoftEntraList result = AdministratorMicrosoftEntraList.FromResponse(response);
-                yield return Page<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData>.FromValues((IReadOnlyList<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData>.FromValues((IReadOnlyList<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

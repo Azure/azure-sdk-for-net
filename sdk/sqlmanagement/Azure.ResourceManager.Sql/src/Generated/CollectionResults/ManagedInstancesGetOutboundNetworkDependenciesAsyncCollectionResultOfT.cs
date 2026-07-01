@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 SqlOutboundEnvironmentEndpointCollection result = SqlOutboundEnvironmentEndpointCollection.FromResponse(response);
-                yield return Page<SqlOutboundEnvironmentEndpoint>.FromValues((IReadOnlyList<SqlOutboundEnvironmentEndpoint>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SqlOutboundEnvironmentEndpoint>.FromValues((IReadOnlyList<SqlOutboundEnvironmentEndpoint>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

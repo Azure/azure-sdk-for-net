@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.ComputeSchedule
                     yield break;
                 }
                 ScheduledActionResourcesListResult result = ScheduledActionResourcesListResult.FromResponse(response);
-                yield return Page<ScheduledActionResources>.FromValues((IReadOnlyList<ScheduledActionResources>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ScheduledActionResources>.FromValues((IReadOnlyList<ScheduledActionResources>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

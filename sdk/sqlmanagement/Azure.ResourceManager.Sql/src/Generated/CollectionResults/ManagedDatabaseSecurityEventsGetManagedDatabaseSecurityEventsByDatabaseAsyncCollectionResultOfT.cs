@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 SecurityEventCollection result = SecurityEventCollection.FromResponse(response);
-                yield return Page<SecurityEvent>.FromValues((IReadOnlyList<SecurityEvent>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SecurityEvent>.FromValues((IReadOnlyList<SecurityEvent>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

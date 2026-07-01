@@ -47,6 +47,10 @@ namespace Azure.Provisioning.ServiceNetworking
             base.DefineProvisionableProperties();
             _fqdn = DefineProperty<string>(nameof(Fqdn), new string[] { "fqdn" }, isOutput: true);
             _provisioningState = DefineProperty<ServiceNetworkingProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for FrontendProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

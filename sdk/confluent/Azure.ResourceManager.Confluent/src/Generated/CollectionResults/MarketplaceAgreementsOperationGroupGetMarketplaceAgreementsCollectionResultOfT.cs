@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Confluent
                     yield break;
                 }
                 ConfluentAgreementListResult result = ConfluentAgreementListResult.FromResponse(response);
-                yield return Page<ConfluentAgreement>.FromValues((IReadOnlyList<ConfluentAgreement>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ConfluentAgreement>.FromValues((IReadOnlyList<ConfluentAgreement>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

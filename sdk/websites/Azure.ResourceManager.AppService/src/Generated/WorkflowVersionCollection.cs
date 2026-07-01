@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -24,74 +25,79 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class WorkflowVersionCollection : ArmCollection, IEnumerable<WorkflowVersionResource>, IAsyncEnumerable<WorkflowVersionResource>
     {
-        private readonly ClientDiagnostics _workflowVersionClientDiagnostics;
-        private readonly WorkflowVersionsRestOperations _workflowVersionRestClient;
+        private readonly ClientDiagnostics _workflowVersionsClientDiagnostics;
+        private readonly WorkflowVersions _workflowVersionsRestClient;
+        /// <summary> The workflowName. </summary>
         private readonly string _workflowName;
 
-        /// <summary> Initializes a new instance of the <see cref="WorkflowVersionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of WorkflowVersionCollection for mocking. </summary>
         protected WorkflowVersionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WorkflowVersionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkflowVersionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="workflowName"> The workflow name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="workflowName"> The workflowName for the resource. </param>
         internal WorkflowVersionCollection(ArmClient client, ResourceIdentifier id, string workflowName) : base(client, id)
         {
-            _workflowName = workflowName;
-            _workflowVersionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WorkflowVersionResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(WorkflowVersionResource.ResourceType, out string workflowVersionApiVersion);
-            _workflowVersionRestClient = new WorkflowVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, workflowVersionApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _workflowName = workflowName;
+            _workflowVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WorkflowVersionResource.ResourceType.Namespace, Diagnostics);
+            _workflowVersionsRestClient = new WorkflowVersions(_workflowVersionsClientDiagnostics, Pipeline, Endpoint, workflowVersionApiVersion ?? "2026-03-15");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != WebSiteResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSiteResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WebSiteResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a workflow version.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/versions/{versionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/versions/{versionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="versionId"> The workflow versionId. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<WorkflowVersionResource>> GetAsync(string versionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
 
-            using var scope = _workflowVersionClientDiagnostics.CreateScope("WorkflowVersionCollection.Get");
+            using DiagnosticScope scope = _workflowVersionsClientDiagnostics.CreateScope("WorkflowVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _workflowVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _workflowName, versionId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _workflowName, versionId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<WorkflowVersionData> response = Response.FromValue(WorkflowVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new WorkflowVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -105,38 +111,42 @@ namespace Azure.ResourceManager.AppService
         /// Gets a workflow version.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/versions/{versionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/versions/{versionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="versionId"> The workflow versionId. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<WorkflowVersionResource> Get(string versionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
 
-            using var scope = _workflowVersionClientDiagnostics.CreateScope("WorkflowVersionCollection.Get");
+            using DiagnosticScope scope = _workflowVersionsClientDiagnostics.CreateScope("WorkflowVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = _workflowVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _workflowName, versionId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _workflowName, versionId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<WorkflowVersionData> response = Response.FromValue(WorkflowVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new WorkflowVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -150,98 +160,124 @@ namespace Azure.ResourceManager.AppService
         /// Gets a list of workflow versions.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/versions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/versions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowVersions_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowVersions_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> The number of items to be included in the result. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkflowVersionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WorkflowVersionResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _workflowVersionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _workflowName, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workflowVersionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _workflowName, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkflowVersionResource(Client, WorkflowVersionData.DeserializeWorkflowVersionData(e)), _workflowVersionClientDiagnostics, Pipeline, "WorkflowVersionCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of workflow versions.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/versions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowVersions_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The number of items to be included in the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WorkflowVersionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WorkflowVersionResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<WorkflowVersionResource> GetAllAsync(int? top = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _workflowVersionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _workflowName, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workflowVersionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _workflowName, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkflowVersionResource(Client, WorkflowVersionData.DeserializeWorkflowVersionData(e)), _workflowVersionClientDiagnostics, Pipeline, "WorkflowVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<WorkflowVersionData, WorkflowVersionResource>(new WorkflowVersionsGetAllAsyncCollectionResultOfT(
+                _workflowVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                _workflowName,
+                top,
+                context,
+                "WorkflowVersionCollection.GetAll"), data => new WorkflowVersionResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets a list of workflow versions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/versions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowVersions_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The number of items to be included in the result. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="WorkflowVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WorkflowVersionResource> GetAll(int? top = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<WorkflowVersionData, WorkflowVersionResource>(new WorkflowVersionsGetAllCollectionResultOfT(
+                _workflowVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                _workflowName,
+                top,
+                context,
+                "WorkflowVersionCollection.GetAll"), data => new WorkflowVersionResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/versions/{versionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/versions/{versionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="versionId"> The workflow versionId. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string versionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
 
-            using var scope = _workflowVersionClientDiagnostics.CreateScope("WorkflowVersionCollection.Exists");
+            using DiagnosticScope scope = _workflowVersionsClientDiagnostics.CreateScope("WorkflowVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _workflowVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _workflowName, versionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _workflowName, versionId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<WorkflowVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WorkflowVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WorkflowVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -255,36 +291,50 @@ namespace Azure.ResourceManager.AppService
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/versions/{versionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/versions/{versionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="versionId"> The workflow versionId. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string versionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
 
-            using var scope = _workflowVersionClientDiagnostics.CreateScope("WorkflowVersionCollection.Exists");
+            using DiagnosticScope scope = _workflowVersionsClientDiagnostics.CreateScope("WorkflowVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _workflowVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _workflowName, versionId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _workflowName, versionId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<WorkflowVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WorkflowVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WorkflowVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -298,38 +348,54 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/versions/{versionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/versions/{versionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="versionId"> The workflow versionId. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<WorkflowVersionResource>> GetIfExistsAsync(string versionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
 
-            using var scope = _workflowVersionClientDiagnostics.CreateScope("WorkflowVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _workflowVersionsClientDiagnostics.CreateScope("WorkflowVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _workflowVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _workflowName, versionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _workflowName, versionId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<WorkflowVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WorkflowVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WorkflowVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<WorkflowVersionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new WorkflowVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -343,38 +409,54 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/versions/{versionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/versions/{versionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="versionId"> The workflow versionId. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<WorkflowVersionResource> GetIfExists(string versionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
 
-            using var scope = _workflowVersionClientDiagnostics.CreateScope("WorkflowVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _workflowVersionsClientDiagnostics.CreateScope("WorkflowVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _workflowVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _workflowName, versionId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _workflowName, versionId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<WorkflowVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WorkflowVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WorkflowVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<WorkflowVersionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new WorkflowVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -394,6 +476,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<WorkflowVersionResource> IAsyncEnumerable<WorkflowVersionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

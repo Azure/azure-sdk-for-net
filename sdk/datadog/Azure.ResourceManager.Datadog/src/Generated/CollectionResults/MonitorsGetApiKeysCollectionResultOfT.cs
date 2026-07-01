@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Datadog
                     yield break;
                 }
                 DatadogApiKeyListResponse result = DatadogApiKeyListResponse.FromResponse(response);
-                yield return Page<DatadogApiKey>.FromValues((IReadOnlyList<DatadogApiKey>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DatadogApiKey>.FromValues((IReadOnlyList<DatadogApiKey>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

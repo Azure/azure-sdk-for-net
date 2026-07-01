@@ -228,6 +228,10 @@ namespace Azure.Provisioning.CostManagement
             _manifestFile = DefineProperty<string>(nameof(ManifestFile), new string[] { "manifestFile" });
             _runSettings = DefineModelProperty<CommonExportProperties>(nameof(RunSettings), new string[] { "runSettings" });
             _error = DefineModelProperty<ExportRunErrorDetails>(nameof(Error), new string[] { "error" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ExportRunProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

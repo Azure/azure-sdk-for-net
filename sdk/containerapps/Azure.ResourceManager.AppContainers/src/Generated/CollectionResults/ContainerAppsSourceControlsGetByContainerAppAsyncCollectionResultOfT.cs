@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.AppContainers
                     yield break;
                 }
                 SourceControlCollection result = SourceControlCollection.FromResponse(response);
-                yield return Page<ContainerAppSourceControlData>.FromValues((IReadOnlyList<ContainerAppSourceControlData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ContainerAppSourceControlData>.FromValues((IReadOnlyList<ContainerAppSourceControlData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

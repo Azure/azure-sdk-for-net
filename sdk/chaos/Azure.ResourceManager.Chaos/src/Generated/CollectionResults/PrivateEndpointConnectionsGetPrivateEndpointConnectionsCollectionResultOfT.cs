@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Chaos
                     yield break;
                 }
                 ChaosPrivateEndpointConnectionListResult result = ChaosPrivateEndpointConnectionListResult.FromResponse(response);
-                yield return Page<ChaosPrivateEndpointConnectionData>.FromValues((IReadOnlyList<ChaosPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ChaosPrivateEndpointConnectionData>.FromValues((IReadOnlyList<ChaosPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

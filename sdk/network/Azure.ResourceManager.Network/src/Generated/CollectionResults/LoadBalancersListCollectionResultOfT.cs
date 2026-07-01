@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 LoadBalancerListResult result = LoadBalancerListResult.FromResponse(response);
-                yield return Page<LoadBalancerData>.FromValues((IReadOnlyList<LoadBalancerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<LoadBalancerData>.FromValues((IReadOnlyList<LoadBalancerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

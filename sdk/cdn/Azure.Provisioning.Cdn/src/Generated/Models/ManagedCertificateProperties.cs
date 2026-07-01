@@ -48,6 +48,10 @@ namespace Azure.Provisioning.Cdn
             DefineProperty<string>("type", new string[] { "type" }, defaultValue: "ManagedCertificate");
             _subject = DefineProperty<string>(nameof(Subject), new string[] { "subject" }, isOutput: true);
             _expiresOn = DefineProperty<DateTimeOffset>(nameof(ExpiresOn), new string[] { "expirationDate" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedCertificateProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

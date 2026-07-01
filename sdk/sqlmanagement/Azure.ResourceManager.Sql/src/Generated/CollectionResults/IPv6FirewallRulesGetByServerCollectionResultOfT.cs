@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 IPv6FirewallRuleListResult result = IPv6FirewallRuleListResult.FromResponse(response);
-                yield return Page<IPv6FirewallRuleData>.FromValues((IReadOnlyList<IPv6FirewallRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<IPv6FirewallRuleData>.FromValues((IReadOnlyList<IPv6FirewallRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

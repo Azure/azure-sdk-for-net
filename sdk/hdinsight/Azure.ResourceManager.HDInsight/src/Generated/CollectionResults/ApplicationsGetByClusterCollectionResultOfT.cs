@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.HDInsight
                     yield break;
                 }
                 ApplicationListResult result = ApplicationListResult.FromResponse(response);
-                yield return Page<HDInsightApplicationData>.FromValues((IReadOnlyList<HDInsightApplicationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<HDInsightApplicationData>.FromValues((IReadOnlyList<HDInsightApplicationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
