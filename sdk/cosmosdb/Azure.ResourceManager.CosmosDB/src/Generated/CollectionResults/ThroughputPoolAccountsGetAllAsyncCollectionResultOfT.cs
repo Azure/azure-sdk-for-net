@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.CosmosDB
                     yield break;
                 }
                 ThroughputPoolAccountsListResult result = ThroughputPoolAccountsListResult.FromResponse(response);
-                yield return Page<CosmosDBThroughputPoolAccountData>.FromValues((IReadOnlyList<CosmosDBThroughputPoolAccountData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<CosmosDBThroughputPoolAccountData>.FromValues((IReadOnlyList<CosmosDBThroughputPoolAccountData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

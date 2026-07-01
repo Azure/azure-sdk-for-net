@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                     yield break;
                 }
                 ServerConfigurationListResult result = ServerConfigurationListResult.FromResponse(response);
-                yield return Page<CosmosDBForPostgreSqlServerConfigurationData>.FromValues((IReadOnlyList<CosmosDBForPostgreSqlServerConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<CosmosDBForPostgreSqlServerConfigurationData>.FromValues((IReadOnlyList<CosmosDBForPostgreSqlServerConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

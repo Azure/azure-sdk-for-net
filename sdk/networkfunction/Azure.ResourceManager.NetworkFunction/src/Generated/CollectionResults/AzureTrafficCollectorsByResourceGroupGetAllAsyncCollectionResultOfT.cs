@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.NetworkFunction
                     yield break;
                 }
                 AzureTrafficCollectorListResult result = AzureTrafficCollectorListResult.FromResponse(response);
-                yield return Page<AzureTrafficCollectorData>.FromValues((IReadOnlyList<AzureTrafficCollectorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AzureTrafficCollectorData>.FromValues((IReadOnlyList<AzureTrafficCollectorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

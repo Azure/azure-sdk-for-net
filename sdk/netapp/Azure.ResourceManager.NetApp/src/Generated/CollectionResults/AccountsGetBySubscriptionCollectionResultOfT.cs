@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.NetApp
                     yield break;
                 }
                 NetAppAccountList result = NetAppAccountList.FromResponse(response);
-                yield return Page<NetAppAccountData>.FromValues((IReadOnlyList<NetAppAccountData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetAppAccountData>.FromValues((IReadOnlyList<NetAppAccountData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

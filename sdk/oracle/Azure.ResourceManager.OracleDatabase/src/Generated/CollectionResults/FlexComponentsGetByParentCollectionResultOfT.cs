@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.OracleDatabase
                     yield break;
                 }
                 FlexComponentListResult result = FlexComponentListResult.FromResponse(response);
-                yield return Page<OracleFlexComponentData>.FromValues((IReadOnlyList<OracleFlexComponentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<OracleFlexComponentData>.FromValues((IReadOnlyList<OracleFlexComponentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

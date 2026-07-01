@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.ContainerService
                     yield break;
                 }
                 MaintenanceWindowResourceListResult result = MaintenanceWindowResourceListResult.FromResponse(response);
-                yield return Page<MaintenanceWindowData>.FromValues((IReadOnlyList<MaintenanceWindowData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<MaintenanceWindowData>.FromValues((IReadOnlyList<MaintenanceWindowData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

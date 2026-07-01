@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.ContainerService
                     yield break;
                 }
                 ManagedClusterListResult result = ManagedClusterListResult.FromResponse(response);
-                yield return Page<ContainerServiceManagedClusterData>.FromValues((IReadOnlyList<ContainerServiceManagedClusterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ContainerServiceManagedClusterData>.FromValues((IReadOnlyList<ContainerServiceManagedClusterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
