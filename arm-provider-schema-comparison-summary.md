@@ -14,6 +14,69 @@ Generated comparison reports for 195 SDK libraries with paired `arm-provider-sch
 | CRUD operation differences | 40 |
 | List/action operation differences | 83 |
 
+## Resource ID pattern mismatch ranking
+
+Resource ID pattern mismatches count patterns present on only one side of the comparison: `legacy-only + resolveArmResources-only`. Libraries are sorted by the total mismatch count descending.
+
+| Category | Libraries |
+| --- | ---: |
+| No resource ID pattern mismatches | 146 |
+| 1-2 mismatches | 23 |
+| 3-9 mismatches | 23 |
+| 10+ mismatches | 3 |
+
+| Rank | Library | Total mismatches | Legacy-only | `resolveArmResources`-only | Report |
+| ---: | --- | ---: | ---: | ---: | --- |
+| 1 | `Azure.ResourceManager.Network` | 140 | 140 | 0 | [report](sdk/network/Azure.ResourceManager.Network/arm-provider-schema-comparison.md) |
+| 2 | `Azure.ResourceManager.DevTestLabs` | 30 | 15 | 15 | [report](sdk/devtestlabs/Azure.ResourceManager.DevTestLabs/arm-provider-schema-comparison.md) |
+| 3 | `Azure.ResourceManager.Resources.Policy` | 11 | 0 | 11 | [report](sdk/resources/Azure.ResourceManager.Resources.Policy/arm-provider-schema-comparison.md) |
+| 4 | `Azure.ResourceManager.Automation` | 9 | 0 | 9 | [report](sdk/automation/Azure.ResourceManager.Automation/arm-provider-schema-comparison.md) |
+| 5 | `Azure.ResourceManager.NetApp` | 9 | 0 | 9 | [report](sdk/netapp/Azure.ResourceManager.NetApp/arm-provider-schema-comparison.md) |
+| 6 | `Azure.ResourceManager.RecoveryServicesBackup` | 9 | 0 | 9 | [report](sdk/recoveryservices-backup/Azure.ResourceManager.RecoveryServicesBackup/arm-provider-schema-comparison.md) |
+| 7 | `Azure.ResourceManager.TrafficManager` | 7 | 7 | 0 | [report](sdk/trafficmanager/Azure.ResourceManager.TrafficManager/arm-provider-schema-comparison.md) |
+| 8 | `Azure.ResourceManager.HDInsight` | 6 | 0 | 6 | [report](sdk/hdinsight/Azure.ResourceManager.HDInsight/arm-provider-schema-comparison.md) |
+| 9 | `Azure.ResourceManager.Monitor.Workspaces` | 6 | 0 | 6 | [report](sdk/monitor/Azure.ResourceManager.Monitor.Workspaces/arm-provider-schema-comparison.md) |
+| 10 | `Azure.ResourceManager.Resources.DeploymentStacks` | 6 | 0 | 6 | [report](sdk/resources/Azure.ResourceManager.Resources.DeploymentStacks/arm-provider-schema-comparison.md) |
+| 11 | `Azure.ResourceManager.SecurityCenter` | 6 | 4 | 2 | [report](sdk/securitycenter/Azure.ResourceManager.SecurityCenter/arm-provider-schema-comparison.md) |
+| 12 | `Azure.ResourceManager.FrontDoor` | 6 | 6 | 0 | [report](sdk/frontdoor/Azure.ResourceManager.FrontDoor/arm-provider-schema-comparison.md) |
+| 13 | `Azure.ResourceManager.ResilienceManagement` | 5 | 0 | 5 | [report](sdk/azureresiliencemanagement/Azure.ResourceManager.ResilienceManagement/arm-provider-schema-comparison.md) |
+| 14 | `Azure.ResourceManager.Sql` | 5 | 2 | 3 | [report](sdk/sqlmanagement/Azure.ResourceManager.Sql/arm-provider-schema-comparison.md) |
+| 15 | `Azure.ResourceManager.Storage` | 5 | 2 | 3 | [report](sdk/storage/Azure.ResourceManager.Storage/arm-provider-schema-comparison.md) |
+| 16 | `Azure.ResourceManager.CosmosDB` | 5 | 3 | 2 | [report](sdk/cosmosdb/Azure.ResourceManager.CosmosDB/arm-provider-schema-comparison.md) |
+| 17 | `Azure.ResourceManager.AppService` | 5 | 4 | 1 | [report](sdk/websites/Azure.ResourceManager.AppService/arm-provider-schema-comparison.md) |
+| 18 | `Azure.ResourceManager.EventGrid` | 5 | 5 | 0 | [report](sdk/eventgrid/Azure.ResourceManager.EventGrid/arm-provider-schema-comparison.md) |
+| 19 | `Azure.ResourceManager.KeyVault` | 4 | 0 | 4 | [report](sdk/keyvault/Azure.ResourceManager.KeyVault/arm-provider-schema-comparison.md) |
+| 20 | `Azure.ResourceManager.Resources.Deployments` | 4 | 0 | 4 | [report](sdk/resources/Azure.ResourceManager.Resources.Deployments/arm-provider-schema-comparison.md) |
+| 21 | `Azure.ResourceManager.PolicyInsights` | 4 | 2 | 2 | [report](sdk/policyinsights/Azure.ResourceManager.PolicyInsights/arm-provider-schema-comparison.md) |
+| 22 | `Azure.ResourceManager.GuestConfiguration` | 4 | 4 | 0 | [report](sdk/guestconfiguration/Azure.ResourceManager.GuestConfiguration/arm-provider-schema-comparison.md) |
+| 23 | `Azure.ResourceManager.DataProtectionBackup` | 3 | 0 | 3 | [report](sdk/dataprotection/Azure.ResourceManager.DataProtectionBackup/arm-provider-schema-comparison.md) |
+| 24 | `Azure.ResourceManager.OperationalInsights` | 3 | 1 | 2 | [report](sdk/operationalinsights/Azure.ResourceManager.OperationalInsights/arm-provider-schema-comparison.md) |
+| 25 | `Azure.ResourceManager.Monitor` | 3 | 2 | 1 | [report](sdk/monitor/Azure.ResourceManager.Monitor/arm-provider-schema-comparison.md) |
+| 26 | `Azure.ResourceManager.AppContainers` | 3 | 3 | 0 | [report](sdk/containerapps/Azure.ResourceManager.AppContainers/arm-provider-schema-comparison.md) |
+| 27 | `Azure.ResourceManager.ConnectedCache` | 2 | 0 | 2 | [report](sdk/connectedcache/Azure.ResourceManager.ConnectedCache/arm-provider-schema-comparison.md) |
+| 28 | `Azure.ResourceManager.DeviceRegistry` | 2 | 0 | 2 | [report](sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry/arm-provider-schema-comparison.md) |
+| 29 | `Azure.ResourceManager.Hci.Vm` | 2 | 0 | 2 | [report](sdk/azurestackhci/Azure.ResourceManager.Hci.Vm/arm-provider-schema-comparison.md) |
+| 30 | `Azure.ResourceManager.ApiManagement` | 2 | 1 | 1 | [report](sdk/apimanagement/Azure.ResourceManager.ApiManagement/arm-provider-schema-comparison.md) |
+| 31 | `Azure.ResourceManager.ContainerRegistry` | 2 | 1 | 1 | [report](sdk/containerregistry/Azure.ResourceManager.ContainerRegistry/arm-provider-schema-comparison.md) |
+| 32 | `Azure.ResourceManager.Compute` | 2 | 2 | 0 | [report](sdk/compute/Azure.ResourceManager.Compute/arm-provider-schema-comparison.md) |
+| 33 | `Azure.ResourceManager.Kusto` | 2 | 2 | 0 | [report](sdk/kusto/Azure.ResourceManager.Kusto/arm-provider-schema-comparison.md) |
+| 34 | `Azure.ResourceManager.Batch` | 1 | 0 | 1 | [report](sdk/batch/Azure.ResourceManager.Batch/arm-provider-schema-comparison.md) |
+| 35 | `Azure.ResourceManager.CognitiveServices` | 1 | 0 | 1 | [report](sdk/cognitiveservices/Azure.ResourceManager.CognitiveServices/arm-provider-schema-comparison.md) |
+| 36 | `Azure.ResourceManager.Compute.BulkActions` | 1 | 0 | 1 | [report](sdk/compute/Azure.ResourceManager.Compute.BulkActions/arm-provider-schema-comparison.md) |
+| 37 | `Azure.ResourceManager.ComputeBulkActions` | 1 | 0 | 1 | [report](sdk/computebulkactions/Azure.ResourceManager.ComputeBulkActions/arm-provider-schema-comparison.md) |
+| 38 | `Azure.ResourceManager.ConfidentialLedger` | 1 | 0 | 1 | [report](sdk/confidentialledger/Azure.ResourceManager.ConfidentialLedger/arm-provider-schema-comparison.md) |
+| 39 | `Azure.ResourceManager.DataBoxEdge` | 1 | 0 | 1 | [report](sdk/databoxedge/Azure.ResourceManager.DataBoxEdge/arm-provider-schema-comparison.md) |
+| 40 | `Azure.ResourceManager.DeviceProvisioningServices` | 1 | 0 | 1 | [report](sdk/deviceprovisioningservices/Azure.ResourceManager.DeviceProvisioningServices/arm-provider-schema-comparison.md) |
+| 41 | `Azure.ResourceManager.IotHub` | 1 | 0 | 1 | [report](sdk/iothub/Azure.ResourceManager.IotHub/arm-provider-schema-comparison.md) |
+| 42 | `Azure.ResourceManager.MySql` | 1 | 0 | 1 | [report](sdk/mysql/Azure.ResourceManager.MySql/arm-provider-schema-comparison.md) |
+| 43 | `Azure.ResourceManager.ProviderHub` | 1 | 0 | 1 | [report](sdk/providerhub/Azure.ResourceManager.ProviderHub/arm-provider-schema-comparison.md) |
+| 44 | `Azure.ResourceManager.RecoveryServices` | 1 | 0 | 1 | [report](sdk/recoveryservices/Azure.ResourceManager.RecoveryServices/arm-provider-schema-comparison.md) |
+| 45 | `Azure.ResourceManager.RecoveryServicesSiteRecovery` | 1 | 0 | 1 | [report](sdk/recoveryservices-siterecovery/Azure.ResourceManager.RecoveryServicesSiteRecovery/arm-provider-schema-comparison.md) |
+| 46 | `Azure.ResourceManager.StorageDiscovery` | 1 | 0 | 1 | [report](sdk/storagediscovery/Azure.ResourceManager.StorageDiscovery/arm-provider-schema-comparison.md) |
+| 47 | `Azure.ResourceManager.AppConfiguration` | 1 | 1 | 0 | [report](sdk/appconfiguration/Azure.ResourceManager.AppConfiguration/arm-provider-schema-comparison.md) |
+| 48 | `Azure.ResourceManager.ContainerInstance` | 1 | 1 | 0 | [report](sdk/containerinstance/Azure.ResourceManager.ContainerInstance/arm-provider-schema-comparison.md) |
+| 49 | `Azure.ResourceManager.HorizonDB` | 1 | 1 | 0 | [report](sdk/horizondb/Azure.ResourceManager.HorizonDB/arm-provider-schema-comparison.md) |
+
 ## Per-library progress
 
 | Library | Report | Summary |
