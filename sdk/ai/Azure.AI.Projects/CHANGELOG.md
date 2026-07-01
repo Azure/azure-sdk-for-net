@@ -1,19 +1,13 @@
 # Release History
 
-## 2.1.0-beta.4 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 2.1.0-beta.4 (2026-06-30)
 
 ### Bugs Fixed
-- Fixed the `EvaluatorGenerationJob` serialization
+- Fixed the `EvaluatorGenerationJob` serialization.
 
 ### Sample Updates
 - Added sample for evaluator generator job.
 - Added sample for dispatching manual routine runs.
-
-### Other Changes
 
 ## 2.1.0-beta.3 (2026-05-29)
 
