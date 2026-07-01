@@ -1,0 +1,14 @@
+{
+  "resources": [],
+  "nonResourceMethods": [
+    {
+      "methodId": "BicepClient.DecompileOperationGroup.bicep",
+      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/decompileBicep",
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      }
+    }
+  ]
+}

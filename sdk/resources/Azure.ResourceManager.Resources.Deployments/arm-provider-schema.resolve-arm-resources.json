@@ -1,0 +1,595 @@
+{
+  "resources": [
+    {
+      "resourceModelId": "Microsoft.Resources.DeploymentExtended",
+      "resourceIdPattern": "/providers/Microsoft.Resources/deployments/{deploymentName}",
+      "resourceType": "Microsoft.Resources/deployments",
+      "methods": [
+        {
+          "methodId": "Microsoft.Resources.DeploymentsExtendedTenant.createOrUpdateAtTenantScope",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.Resources/deployments/{deploymentName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Resources/deployments/{deploymentName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentsExtendedTenant.getAtTenantScope",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Resources/deployments/{deploymentName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Resources/deployments/{deploymentName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentsExtendedTenant.deleteAtTenantScope",
+          "kind": "Delete",
+          "operationPath": "/providers/Microsoft.Resources/deployments/{deploymentName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Resources/deployments/{deploymentName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentsExtendedTenant.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Resources/deployments",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentExtendedManagementGroup.deploymentOperationsGetAtManagementGroupScope",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}/operations/{operationId}",
+          "scope": {
+            "kind": "ManagementGroup",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}",
+            "scopeResourceType": "Microsoft.Management/managementGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentExtendedSubscriptionGroup.deploymentOperationsGetAtSubscriptionScope",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deployments/{deploymentName}/operations/{operationId}",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deployments/{deploymentName}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.Deployments.deploymentOperationsGetAtScope",
+          "kind": "Action",
+          "operationPath": "/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/operations/{operationId}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentsExtendedTenant.cancelAtTenantScope",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Resources/deployments/{deploymentName}/cancel",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Resources/deployments/{deploymentName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentsExtendedTenant.deploymentOperationsGetAtTenantScope",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Resources/deployments/{deploymentName}/operations/{operationId}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Resources/deployments/{deploymentName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentsExtendedTenant.exportTemplateAtTenantScope",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Resources/deployments/{deploymentName}/exportTemplate",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Resources/deployments/{deploymentName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentsExtendedTenant.listAtTenantScope",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Resources/deployments/{deploymentName}/operations",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Resources/deployments/{deploymentName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentsExtendedTenant.validateAtTenantScope",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Resources/deployments/{deploymentName}/validate",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Resources/deployments/{deploymentName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentsExtendedTenant.whatIfAtTenantScope",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Resources/deployments/{deploymentName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "resourceName": "TenantDeploymentExtended",
+      "nameConstraints": {
+        "pattern": "^[-\\w\\._\\(\\)]+$",
+        "minLength": 1,
+        "maxLength": 64
+      },
+      "apiVersions": [],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Resources.DeploymentExtended",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}",
+      "resourceType": "Microsoft.Resources/deployments",
+      "methods": [
+        {
+          "methodId": "Microsoft.Resources.Deployments.createOrUpdateAtScope",
+          "kind": "Create",
+          "operationPath": "/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.Deployments.getAtScope",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.Deployments.deleteAtScope",
+          "kind": "Delete",
+          "operationPath": "/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.Deployments.listAtScope",
+          "kind": "List",
+          "operationPath": "/{scope}/providers/Microsoft.Resources/deployments",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.Deployments.cancelAtScope",
+          "kind": "Action",
+          "operationPath": "/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/cancel",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.Deployments.deploymentOperationsListAtScope",
+          "kind": "Action",
+          "operationPath": "/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/operations",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.Deployments.exportTemplateAtScope",
+          "kind": "Action",
+          "operationPath": "/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/exportTemplate",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.Deployments.validateAtScope",
+          "kind": "Action",
+          "operationPath": "/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/validate",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "DeploymentExtended",
+      "nameConstraints": {
+        "pattern": "^[-\\w\\._\\(\\)]+$",
+        "minLength": 1,
+        "maxLength": 64
+      },
+      "apiVersions": [
+        "2025-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Resources.DeploymentExtended",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deployments/{deploymentName}",
+      "resourceType": "Microsoft.Resources/deployments",
+      "methods": [
+        {
+          "methodId": "Microsoft.Resources.DeploymentExtendedSubscriptionGroup.createOrUpdateAtSubscriptionScope",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deployments/{deploymentName}",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deployments/{deploymentName}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentExtendedSubscriptionGroup.getAtSubscriptionScope",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deployments/{deploymentName}",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deployments/{deploymentName}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentExtendedSubscriptionGroup.deleteAtSubscriptionScope",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deployments/{deploymentName}",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deployments/{deploymentName}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentExtendedSubscriptionGroup.listAtSubscriptionScope",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deployments",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentExtendedSubscriptionGroup.cancelAtSubscriptionScope",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deployments/{deploymentName}/cancel",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deployments/{deploymentName}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentExtendedSubscriptionGroup.deploymentOperationsListAtSubscriptionScope",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deployments/{deploymentName}/operations",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deployments/{deploymentName}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentExtendedSubscriptionGroup.exportTemplateAtSubscriptionScope",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deployments/{deploymentName}/exportTemplate",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deployments/{deploymentName}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentExtendedSubscriptionGroup.validateAtSubscriptionScope",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deployments/{deploymentName}/validate",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deployments/{deploymentName}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentExtendedSubscriptionGroup.whatIfAtSubscriptionScope",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deployments/{deploymentName}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      },
+      "resourceName": "SubscriptionDeploymentExtended",
+      "nameConstraints": {
+        "pattern": "^[-\\w\\._\\(\\)]+$",
+        "minLength": 1,
+        "maxLength": 64
+      },
+      "apiVersions": [],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Resources.DeploymentExtended",
+      "resourceIdPattern": "/providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}",
+      "resourceType": "Microsoft.Resources/deployments",
+      "methods": [
+        {
+          "methodId": "Microsoft.Resources.DeploymentExtendedManagementGroup.createOrUpdateAtManagementGroupScope",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}",
+          "scope": {
+            "kind": "ManagementGroup",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}",
+            "scopeResourceType": "Microsoft.Management/managementGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentExtendedManagementGroup.getAtManagementGroupScope",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}",
+          "scope": {
+            "kind": "ManagementGroup",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}",
+            "scopeResourceType": "Microsoft.Management/managementGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentExtendedManagementGroup.deleteAtManagementGroupScope",
+          "kind": "Delete",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}",
+          "scope": {
+            "kind": "ManagementGroup",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}",
+            "scopeResourceType": "Microsoft.Management/managementGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentExtendedManagementGroup.listAtManagementGroupScope",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments",
+          "scope": {
+            "kind": "ManagementGroup",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{groupId}",
+            "scopeResourceType": "Microsoft.Management/managementGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentExtendedManagementGroup.cancelAtManagementGroupScope",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}/cancel",
+          "scope": {
+            "kind": "ManagementGroup",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}",
+            "scopeResourceType": "Microsoft.Management/managementGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentExtendedManagementGroup.deploymentOperationsListAtManagementGroupScope",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}/operations",
+          "scope": {
+            "kind": "ManagementGroup",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}",
+            "scopeResourceType": "Microsoft.Management/managementGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentExtendedManagementGroup.exportTemplateAtManagementGroupScope",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}/exportTemplate",
+          "scope": {
+            "kind": "ManagementGroup",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}",
+            "scopeResourceType": "Microsoft.Management/managementGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentExtendedManagementGroup.validateAtManagementGroupScope",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}/validate",
+          "scope": {
+            "kind": "ManagementGroup",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}",
+            "scopeResourceType": "Microsoft.Management/managementGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentExtendedManagementGroup.whatIfAtManagementGroupScope",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf",
+          "scope": {
+            "kind": "ManagementGroup",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}",
+            "scopeResourceType": "Microsoft.Management/managementGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ManagementGroup",
+        "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{groupId}",
+        "scopeResourceType": "Microsoft.Management/managementGroups"
+      },
+      "resourceName": "ManagementGroupDeploymentExtended",
+      "nameConstraints": {
+        "pattern": "^[-\\w\\._\\(\\)]+$",
+        "minLength": 1,
+        "maxLength": 64
+      },
+      "apiVersions": [],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Resources.DeploymentExtended",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}",
+      "resourceType": "Microsoft.Resources/deployments",
+      "methods": [
+        {
+          "methodId": "Microsoft.Resources.DeploymentExtendedOperationGroup.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentExtendedOperationGroup.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentExtendedOperationGroup.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentExtendedOperationGroup.listByResourceGroup",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentExtendedOperationGroup.cancel",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}/cancel",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentExtendedOperationGroup.exportTemplate",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}/exportTemplate",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentExtendedOperationGroup.validate",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}/validate",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentExtendedOperationGroup.whatIf",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "resourceName": "Deployments",
+      "nameConstraints": {
+        "pattern": "^[-\\w\\._\\(\\)]+$",
+        "minLength": 1,
+        "maxLength": 64
+      },
+      "apiVersions": [],
+      "rbacRoles": []
+    }
+  ],
+  "nonResourceMethods": [
+    {
+      "methodId": "Microsoft.Resources.DeploymentsOperationGroup.calculateTemplateHash",
+      "operationPath": "/providers/Microsoft.Resources/calculateTemplateHash",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.Resources.DeploymentOperationsOperationGroup.get",
+      "operationPath": "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/deployments/{deploymentName}/operations/{operationId}",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.Resources.DeploymentOperationsOperationGroup.list",
+      "operationPath": "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/deployments/{deploymentName}/operations",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    }
+  ]
+}
