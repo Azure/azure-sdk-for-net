@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.Redis
                     yield break;
                 }
                 RedisListResult result = RedisListResult.FromResponse(response);
-                yield return Page<RedisData>.FromValues((IReadOnlyList<RedisData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<RedisData>.FromValues((IReadOnlyList<RedisData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
