@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.SecurityCenter
                     yield break;
                 }
                 PrivateLinkGroupResourceListResult result = PrivateLinkGroupResourceListResult.FromResponse(response);
-                yield return Page<PrivateLinkGroupData>.FromValues((IReadOnlyList<PrivateLinkGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<PrivateLinkGroupData>.FromValues((IReadOnlyList<PrivateLinkGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Search
                     yield break;
                 }
                 NetworkSecurityPerimeterConfigurationListResult result = NetworkSecurityPerimeterConfigurationListResult.FromResponse(response);
-                yield return Page<SearchServiceNetworkSecurityPerimeterConfigurationData>.FromValues((IReadOnlyList<SearchServiceNetworkSecurityPerimeterConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SearchServiceNetworkSecurityPerimeterConfigurationData>.FromValues((IReadOnlyList<SearchServiceNetworkSecurityPerimeterConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

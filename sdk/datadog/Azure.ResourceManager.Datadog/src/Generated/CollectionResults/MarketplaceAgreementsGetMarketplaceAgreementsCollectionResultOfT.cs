@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Datadog
                     yield break;
                 }
                 DatadogAgreementResourceListResponse result = DatadogAgreementResourceListResponse.FromResponse(response);
-                yield return Page<DatadogAgreement>.FromValues((IReadOnlyList<DatadogAgreement>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DatadogAgreement>.FromValues((IReadOnlyList<DatadogAgreement>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

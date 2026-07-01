@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 DatabaseConnectionCollection result = DatabaseConnectionCollection.FromResponse(response);
-                yield return Page<StaticSiteDatabaseConnectionData>.FromValues((IReadOnlyList<StaticSiteDatabaseConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<StaticSiteDatabaseConnectionData>.FromValues((IReadOnlyList<StaticSiteDatabaseConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.EventGrid
                     yield break;
                 }
                 DomainTopicsListResult result = DomainTopicsListResult.FromResponse(response);
-                yield return Page<DomainTopicData>.FromValues((IReadOnlyList<DomainTopicData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DomainTopicData>.FromValues((IReadOnlyList<DomainTopicData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

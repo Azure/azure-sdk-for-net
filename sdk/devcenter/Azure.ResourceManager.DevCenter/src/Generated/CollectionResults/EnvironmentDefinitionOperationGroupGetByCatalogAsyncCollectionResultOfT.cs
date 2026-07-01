@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.DevCenter
                     yield break;
                 }
                 EnvironmentDefinitionListResult result = EnvironmentDefinitionListResult.FromResponse(response);
-                yield return Page<EnvironmentDefinitionData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EnvironmentDefinitionData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

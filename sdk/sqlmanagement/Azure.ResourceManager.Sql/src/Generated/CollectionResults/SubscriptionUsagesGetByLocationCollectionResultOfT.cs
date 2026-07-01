@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 SubscriptionUsageListResult result = SubscriptionUsageListResult.FromResponse(response);
-                yield return Page<SubscriptionUsageData>.FromValues((IReadOnlyList<SubscriptionUsageData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SubscriptionUsageData>.FromValues((IReadOnlyList<SubscriptionUsageData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

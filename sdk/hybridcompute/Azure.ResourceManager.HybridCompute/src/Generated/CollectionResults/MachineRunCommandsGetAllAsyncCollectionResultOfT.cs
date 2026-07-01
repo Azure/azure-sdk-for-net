@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.HybridCompute
                     yield break;
                 }
                 MachineRunCommandsListResult result = MachineRunCommandsListResult.FromResponse(response);
-                yield return Page<HybridComputeMachineRunCommandData>.FromValues((IReadOnlyList<HybridComputeMachineRunCommandData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<HybridComputeMachineRunCommandData>.FromValues((IReadOnlyList<HybridComputeMachineRunCommandData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

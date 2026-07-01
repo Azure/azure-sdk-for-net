@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.HybridCompute
                     yield break;
                 }
                 HybridComputePrivateLinkResourceListResult result = HybridComputePrivateLinkResourceListResult.FromResponse(response);
-                yield return Page<HybridComputePrivateLinkResourceData>.FromValues((IReadOnlyList<HybridComputePrivateLinkResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<HybridComputePrivateLinkResourceData>.FromValues((IReadOnlyList<HybridComputePrivateLinkResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.Datadog
                     yield break;
                 }
                 CreateResourceSupportedResponseList result = CreateResourceSupportedResponseList.FromResponse(response);
-                yield return Page<DatadogSubscriptionStatusResult>.FromValues((IReadOnlyList<DatadogSubscriptionStatusResult>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DatadogSubscriptionStatusResult>.FromValues((IReadOnlyList<DatadogSubscriptionStatusResult>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

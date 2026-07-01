@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.CosmosDB
                     yield break;
                 }
                 NetworkSecurityPerimeterConfigurationListResult result = NetworkSecurityPerimeterConfigurationListResult.FromResponse(response);
-                yield return Page<NetworkSecurityPerimeterConfigurationData>.FromValues((IReadOnlyList<NetworkSecurityPerimeterConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetworkSecurityPerimeterConfigurationData>.FromValues((IReadOnlyList<NetworkSecurityPerimeterConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.MachineLearning
                     yield break;
                 }
                 FeaturestoreEntityContainerResourceArmPaginatedResult result = FeaturestoreEntityContainerResourceArmPaginatedResult.FromResponse(response);
-                yield return Page<MachineLearningFeatureStoreEntityContainerData>.FromValues((IReadOnlyList<MachineLearningFeatureStoreEntityContainerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<MachineLearningFeatureStoreEntityContainerData>.FromValues((IReadOnlyList<MachineLearningFeatureStoreEntityContainerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

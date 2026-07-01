@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Compute
                     yield break;
                 }
                 VirtualMachineListResult result = VirtualMachineListResult.FromResponse(response);
-                yield return Page<VirtualMachineData>.FromValues((IReadOnlyList<VirtualMachineData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<VirtualMachineData>.FromValues((IReadOnlyList<VirtualMachineData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

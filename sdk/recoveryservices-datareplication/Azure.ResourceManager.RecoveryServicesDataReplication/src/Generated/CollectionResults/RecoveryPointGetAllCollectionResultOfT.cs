@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                     yield break;
                 }
                 RecoveryPointModelListResult result = RecoveryPointModelListResult.FromResponse(response);
-                yield return Page<DataReplicationRecoveryPointData>.FromValues((IReadOnlyList<DataReplicationRecoveryPointData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DataReplicationRecoveryPointData>.FromValues((IReadOnlyList<DataReplicationRecoveryPointData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

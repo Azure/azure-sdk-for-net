@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.CosmosDB
                     yield break;
                 }
                 FleetAnalyticsListResult result = FleetAnalyticsListResult.FromResponse(response);
-                yield return Page<FleetAnalyticsData>.FromValues((IReadOnlyList<FleetAnalyticsData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<FleetAnalyticsData>.FromValues((IReadOnlyList<FleetAnalyticsData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                     yield break;
                 }
                 InstanceListResult result = InstanceListResult.FromResponse(response);
-                yield return Page<EdgeDeploymentInstanceData>.FromValues((IReadOnlyList<EdgeDeploymentInstanceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EdgeDeploymentInstanceData>.FromValues((IReadOnlyList<EdgeDeploymentInstanceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

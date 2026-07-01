@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 ManagedTransparentDataEncryptionListResult result = ManagedTransparentDataEncryptionListResult.FromResponse(response);
-                yield return Page<ManagedTransparentDataEncryptionData>.FromValues((IReadOnlyList<ManagedTransparentDataEncryptionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ManagedTransparentDataEncryptionData>.FromValues((IReadOnlyList<ManagedTransparentDataEncryptionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

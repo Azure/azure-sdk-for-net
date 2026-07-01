@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.DataFactory
                     yield break;
                 }
                 ChangeDataCaptureListResult result = ChangeDataCaptureListResult.FromResponse(response);
-                yield return Page<DataFactoryChangeDataCaptureData>.FromValues((IReadOnlyList<DataFactoryChangeDataCaptureData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DataFactoryChangeDataCaptureData>.FromValues((IReadOnlyList<DataFactoryChangeDataCaptureData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

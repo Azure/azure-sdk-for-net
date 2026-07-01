@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Quota
                     yield break;
                 }
                 UsagesLimits result = UsagesLimits.FromResponse(response);
-                yield return Page<CurrentUsagesBaseData>.FromValues((IReadOnlyList<CurrentUsagesBaseData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<CurrentUsagesBaseData>.FromValues((IReadOnlyList<CurrentUsagesBaseData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

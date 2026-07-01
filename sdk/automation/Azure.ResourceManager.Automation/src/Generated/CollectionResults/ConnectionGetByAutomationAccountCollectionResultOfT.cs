@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Automation
                     yield break;
                 }
                 ConnectionListResult result = ConnectionListResult.FromResponse(response);
-                yield return Page<AutomationConnectionData>.FromValues((IReadOnlyList<AutomationConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AutomationConnectionData>.FromValues((IReadOnlyList<AutomationConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

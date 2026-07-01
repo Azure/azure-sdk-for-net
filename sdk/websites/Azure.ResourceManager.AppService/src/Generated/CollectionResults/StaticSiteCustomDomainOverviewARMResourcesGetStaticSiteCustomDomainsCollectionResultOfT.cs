@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 StaticSiteCustomDomainOverviewListResult result = StaticSiteCustomDomainOverviewListResult.FromResponse(response);
-                yield return Page<StaticSiteCustomDomainOverviewData>.FromValues((IReadOnlyList<StaticSiteCustomDomainOverviewData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<StaticSiteCustomDomainOverviewData>.FromValues((IReadOnlyList<StaticSiteCustomDomainOverviewData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

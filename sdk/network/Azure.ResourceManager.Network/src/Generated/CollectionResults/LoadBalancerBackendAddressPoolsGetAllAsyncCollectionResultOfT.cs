@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 LoadBalancerBackendAddressPoolListResult result = LoadBalancerBackendAddressPoolListResult.FromResponse(response);
-                yield return Page<BackendAddressPoolData>.FromValues((IReadOnlyList<BackendAddressPoolData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<BackendAddressPoolData>.FromValues((IReadOnlyList<BackendAddressPoolData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
