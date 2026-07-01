@@ -1,0 +1,1228 @@
+{
+  "resources": [
+    {
+      "resourceModelId": "PaloAltoNetworks.Cloudngfw.GlobalRulestackResource",
+      "resourceIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}",
+      "resourceType": "PaloAltoNetworks.Cloudngfw/globalRulestacks",
+      "methods": [
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.GlobalRulestackResources.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.GlobalRulestackResources.get",
+          "kind": "Read",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.GlobalRulestackResources.update",
+          "kind": "Update",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.GlobalRulestackResources.delete",
+          "kind": "Delete",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.GlobalRulestackResources.list",
+          "kind": "List",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.GlobalRulestackResources.commit",
+          "kind": "Action",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/commit",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.GlobalRulestackResources.getChangeLog",
+          "kind": "Action",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/getChangeLog",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.GlobalRulestackResources.listAdvancedSecurityObjects",
+          "kind": "Action",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/listAdvancedSecurityObjects",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.GlobalRulestackResources.listAppIds",
+          "kind": "Action",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/listAppIds",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.GlobalRulestackResources.listCountries",
+          "kind": "Action",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/listCountries",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.GlobalRulestackResources.listFirewalls",
+          "kind": "Action",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/listFirewalls",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.GlobalRulestackResources.listPredefinedUrlCategories",
+          "kind": "Action",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/listPredefinedUrlCategories",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.GlobalRulestackResources.listSecurityServices",
+          "kind": "Action",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/listSecurityServices",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.GlobalRulestackResources.revert",
+          "kind": "Action",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/revert",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "resourceName": "GlobalRulestack",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-10-08"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "PaloAltoNetworks.Cloudngfw.CertificateObjectGlobalRulestackResource",
+      "resourceIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/certificates/{name}",
+      "resourceType": "PaloAltoNetworks.Cloudngfw/globalRulestacks/certificates",
+      "methods": [
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.CertificateObjectGlobalRulestackResources.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/certificates/{name}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/certificates/{name}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.CertificateObjectGlobalRulestackResources.get",
+          "kind": "Read",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/certificates/{name}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/certificates/{name}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.CertificateObjectGlobalRulestackResources.delete",
+          "kind": "Delete",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/certificates/{name}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/certificates/{name}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.CertificateObjectGlobalRulestackResources.list",
+          "kind": "List",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/certificates",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}",
+      "resourceName": "GlobalRulestackCertificateObject",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-10-08"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "PaloAltoNetworks.Cloudngfw.FqdnListGlobalRulestackResource",
+      "resourceIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/fqdnlists/{name}",
+      "resourceType": "PaloAltoNetworks.Cloudngfw/globalRulestacks/fqdnlists",
+      "methods": [
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.FqdnListGlobalRulestackResources.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/fqdnlists/{name}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/fqdnlists/{name}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.FqdnListGlobalRulestackResources.get",
+          "kind": "Read",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/fqdnlists/{name}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/fqdnlists/{name}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.FqdnListGlobalRulestackResources.delete",
+          "kind": "Delete",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/fqdnlists/{name}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/fqdnlists/{name}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.FqdnListGlobalRulestackResources.list",
+          "kind": "List",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/fqdnlists",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}",
+      "resourceName": "GlobalRulestackFqdn",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-10-08"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "PaloAltoNetworks.Cloudngfw.PostRulesResource",
+      "resourceIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}",
+      "resourceType": "PaloAltoNetworks.Cloudngfw/globalRulestacks/postRules",
+      "methods": [
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.PostRulesResources.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.PostRulesResources.get",
+          "kind": "Read",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.PostRulesResources.delete",
+          "kind": "Delete",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.PostRulesResources.list",
+          "kind": "List",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.PostRulesResources.getCounters",
+          "kind": "Action",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}/getCounters",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.PostRulesResources.refreshCounters",
+          "kind": "Action",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}/refreshCounters",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.PostRulesResources.resetCounters",
+          "kind": "Action",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}/resetCounters",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}",
+      "resourceName": "PostRulestackRule",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-10-08"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "PaloAltoNetworks.Cloudngfw.PrefixListGlobalRulestackResource",
+      "resourceIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/prefixlists/{name}",
+      "resourceType": "PaloAltoNetworks.Cloudngfw/globalRulestacks/prefixlists",
+      "methods": [
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.PrefixListGlobalRulestackResources.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/prefixlists/{name}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/prefixlists/{name}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.PrefixListGlobalRulestackResources.get",
+          "kind": "Read",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/prefixlists/{name}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/prefixlists/{name}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.PrefixListGlobalRulestackResources.delete",
+          "kind": "Delete",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/prefixlists/{name}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/prefixlists/{name}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.PrefixListGlobalRulestackResources.list",
+          "kind": "List",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/prefixlists",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}",
+      "resourceName": "GlobalRulestackPrefix",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-10-08"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "PaloAltoNetworks.Cloudngfw.PreRulesResource",
+      "resourceIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/preRules/{priority}",
+      "resourceType": "PaloAltoNetworks.Cloudngfw/globalRulestacks/preRules",
+      "methods": [
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.PreRulesResources.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/preRules/{priority}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/preRules/{priority}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.PreRulesResources.get",
+          "kind": "Read",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/preRules/{priority}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/preRules/{priority}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.PreRulesResources.delete",
+          "kind": "Delete",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/preRules/{priority}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/preRules/{priority}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.PreRulesResources.list",
+          "kind": "List",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/preRules",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.PreRulesResources.getCounters",
+          "kind": "Action",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/preRules/{priority}/getCounters",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/preRules/{priority}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.PreRulesResources.refreshCounters",
+          "kind": "Action",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/preRules/{priority}/refreshCounters",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/preRules/{priority}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.PreRulesResources.resetCounters",
+          "kind": "Action",
+          "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/preRules/{priority}/resetCounters",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/preRules/{priority}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}",
+      "resourceName": "PreRulestackRule",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-10-08"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "PaloAltoNetworks.Cloudngfw.FirewallResource",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}",
+      "resourceType": "PaloAltoNetworks.Cloudngfw/firewalls",
+      "methods": [
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.FirewallResources.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.FirewallResources.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.FirewallResources.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.FirewallResources.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.FirewallResources.listByResourceGroup",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.FirewallResources.listBySubscription",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/PaloAltoNetworks.Cloudngfw/firewalls",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.FirewallResources.getGlobalRulestack",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/getGlobalRulestack",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.FirewallResources.getLogProfile",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/getLogProfile",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.FirewallResources.getSupportInfo",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/getSupportInfo",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.FirewallResources.saveLogProfile",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/saveLogProfile",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "resourceName": "PaloAltoNetworksFirewall",
+      "nameConstraints": {
+        "pattern": "^(?![-_])(?!.*[-_]{2})(?!.*[-_]$)[a-zA-Z0-9][a-zA-Z0-9-]{0,127}$"
+      },
+      "apiVersions": [
+        "2025-10-08"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "PaloAltoNetworks.Cloudngfw.LocalRulestackResource",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}",
+      "resourceType": "PaloAltoNetworks.Cloudngfw/localRulestacks",
+      "methods": [
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.LocalRulestackResources.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.LocalRulestackResources.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.LocalRulestackResources.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.LocalRulestackResources.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.LocalRulestackResources.listByResourceGroup",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.LocalRulestackResources.listBySubscription",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.LocalRulestackResources.commit",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/commit",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.LocalRulestackResources.getChangeLog",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/getChangeLog",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.LocalRulestackResources.getSupportInfo",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/getSupportInfo",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.LocalRulestackResources.listAdvancedSecurityObjects",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/listAdvancedSecurityObjects",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.LocalRulestackResources.listAppIds",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/listAppIds",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.LocalRulestackResources.listCountries",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/listCountries",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.LocalRulestackResources.listFirewalls",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/listFirewalls",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.LocalRulestackResources.listPredefinedUrlCategories",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/listPredefinedUrlCategories",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.LocalRulestackResources.listSecurityServices",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/listSecurityServices",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.LocalRulestackResources.revert",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/revert",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "resourceName": "LocalRulestack",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-10-08"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "PaloAltoNetworks.Cloudngfw.MetricsObjectFirewallResource",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/metrics/default",
+      "resourceType": "PaloAltoNetworks.Cloudngfw/firewalls/metrics",
+      "methods": [
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.MetricsObjectFirewallResources.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/metrics/default",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/metrics/default",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.MetricsObjectFirewallResources.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/metrics/default",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/metrics/default",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.MetricsObjectFirewallResources.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/metrics/default",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/metrics/default",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.MetricsObjectFirewallResources.listByFirewalls",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/metrics",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}",
+      "singletonResourceName": "default",
+      "resourceName": "MetricsObjectFirewall",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-10-08"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "PaloAltoNetworks.Cloudngfw.FirewallStatusResource",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/statuses/default",
+      "resourceType": "PaloAltoNetworks.Cloudngfw/firewalls/statuses",
+      "methods": [
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.FirewallStatusResources.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/statuses/default",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/statuses/default",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.FirewallStatusResources.listByFirewalls",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/statuses",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}",
+      "singletonResourceName": "default",
+      "resourceName": "PaloAltoNetworksFirewallStatus",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-10-08"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "PaloAltoNetworks.Cloudngfw.CertificateObjectLocalRulestackResource",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/certificates/{name}",
+      "resourceType": "PaloAltoNetworks.Cloudngfw/localRulestacks/certificates",
+      "methods": [
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.CertificateObjectLocalRulestackResources.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/certificates/{name}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/certificates/{name}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.CertificateObjectLocalRulestackResources.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/certificates/{name}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/certificates/{name}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.CertificateObjectLocalRulestackResources.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/certificates/{name}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/certificates/{name}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.CertificateObjectLocalRulestackResources.listByLocalRulestacks",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/certificates",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}",
+      "resourceName": "LocalRulestackCertificateObject",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-10-08"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "PaloAltoNetworks.Cloudngfw.FqdnListLocalRulestackResource",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/fqdnlists/{name}",
+      "resourceType": "PaloAltoNetworks.Cloudngfw/localRulestacks/fqdnlists",
+      "methods": [
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.FqdnListLocalRulestackResources.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/fqdnlists/{name}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/fqdnlists/{name}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.FqdnListLocalRulestackResources.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/fqdnlists/{name}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/fqdnlists/{name}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.FqdnListLocalRulestackResources.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/fqdnlists/{name}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/fqdnlists/{name}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.FqdnListLocalRulestackResources.listByLocalRulestacks",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/fqdnlists",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}",
+      "resourceName": "LocalRulestackFqdn",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-10-08"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "PaloAltoNetworks.Cloudngfw.LocalRulesResource",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/localRules/{priority}",
+      "resourceType": "PaloAltoNetworks.Cloudngfw/localRulestacks/localRules",
+      "methods": [
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.LocalRulesResources.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/localRules/{priority}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/localRules/{priority}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.LocalRulesResources.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/localRules/{priority}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/localRules/{priority}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.LocalRulesResources.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/localRules/{priority}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/localRules/{priority}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.LocalRulesResources.listByLocalRulestacks",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/localRules",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.LocalRulesResources.getCounters",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/localRules/{priority}/getCounters",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/localRules/{priority}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.LocalRulesResources.refreshCounters",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/localRules/{priority}/refreshCounters",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/localRules/{priority}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.LocalRulesResources.resetCounters",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/localRules/{priority}/resetCounters",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/localRules/{priority}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}",
+      "resourceName": "LocalRulestackRule",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-10-08"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "PaloAltoNetworks.Cloudngfw.PrefixListResource",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/prefixlists/{name}",
+      "resourceType": "PaloAltoNetworks.Cloudngfw/localRulestacks/prefixlists",
+      "methods": [
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.PrefixListResources.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/prefixlists/{name}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/prefixlists/{name}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.PrefixListResources.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/prefixlists/{name}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/prefixlists/{name}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.PrefixListResources.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/prefixlists/{name}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/prefixlists/{name}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.PrefixListResources.listByLocalRulestacks",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/prefixlists",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}",
+      "resourceName": "LocalRulestackPrefix",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-10-08"
+      ],
+      "rbacRoles": []
+    }
+  ],
+  "nonResourceMethods": [
+    {
+      "methodId": "Azure.ResourceManager.Operations.list",
+      "operationPath": "/providers/PaloAltoNetworks.Cloudngfw/operations",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "PaloAltoNetworks.Cloudngfw.PaloAltoNetworksCloudngfwOperationsOperationGroup.createProductSerialNumber",
+      "operationPath": "/subscriptions/{subscriptionId}/providers/PaloAltoNetworks.Cloudngfw/createProductSerialNumber",
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      }
+    },
+    {
+      "methodId": "PaloAltoNetworks.Cloudngfw.PaloAltoNetworksCloudngfwOperationsOperationGroup.listCloudManagerTenants",
+      "operationPath": "/subscriptions/{subscriptionId}/providers/PaloAltoNetworks.Cloudngfw/listCloudManagerTenants",
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      }
+    },
+    {
+      "methodId": "PaloAltoNetworks.Cloudngfw.PaloAltoNetworksCloudngfwOperationsOperationGroup.listProductSerialNumberStatus",
+      "operationPath": "/subscriptions/{subscriptionId}/providers/PaloAltoNetworks.Cloudngfw/listProductSerialNumberStatus",
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      }
+    },
+    {
+      "methodId": "PaloAltoNetworks.Cloudngfw.PaloAltoNetworksCloudngfwOperationsOperationGroup.listSupportInfo",
+      "operationPath": "/subscriptions/{subscriptionId}/providers/PaloAltoNetworks.Cloudngfw/listSupportInfo",
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      }
+    }
+  ]
+}
