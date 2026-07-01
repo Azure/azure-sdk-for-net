@@ -47,7 +47,6 @@ Azure.Provisioning.AppContainers
 Azure.Provisioning.ApplicationInsights
 Azure.Provisioning.Communication
 Azure.Provisioning.ContainerRegistry
-Azure.Provisioning.ContainerService
 Azure.Provisioning.Deployment
 Azure.Provisioning.Dns
 Azure.Provisioning.EventGrid
@@ -61,7 +60,6 @@ Azure.Provisioning.PostgreSql
 Azure.Provisioning.PrivateDns
 Azure.Provisioning.Redis
 Azure.Provisioning.RedisEnterprise
-Azure.Provisioning.Search
 Azure.Provisioning.ServiceBus
 Azure.Provisioning.SignalR
 Azure.Provisioning.Sql
