@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.DisconnectedOperations
                     yield break;
                 }
                 ArtifactListResult result = ArtifactListResult.FromResponse(response);
-                yield return Page<DisconnectedOperationsArtifactData>.FromValues((IReadOnlyList<DisconnectedOperationsArtifactData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DisconnectedOperationsArtifactData>.FromValues((IReadOnlyList<DisconnectedOperationsArtifactData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
