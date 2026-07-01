@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 SensitivityLabelListResult result = SensitivityLabelListResult.FromResponse(response);
-                yield return Page<SensitivityLabelData>.FromValues((IReadOnlyList<SensitivityLabelData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SensitivityLabelData>.FromValues((IReadOnlyList<SensitivityLabelData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 ExtendedServerBlobAuditingPolicyListResult result = ExtendedServerBlobAuditingPolicyListResult.FromResponse(response);
-                yield return Page<ExtendedServerBlobAuditingPolicyData>.FromValues((IReadOnlyList<ExtendedServerBlobAuditingPolicyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ExtendedServerBlobAuditingPolicyData>.FromValues((IReadOnlyList<ExtendedServerBlobAuditingPolicyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

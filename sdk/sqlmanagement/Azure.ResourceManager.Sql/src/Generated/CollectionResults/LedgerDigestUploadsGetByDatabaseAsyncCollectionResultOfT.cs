@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 LedgerDigestUploadsListResult result = LedgerDigestUploadsListResult.FromResponse(response);
-                yield return Page<LedgerDigestUploadData>.FromValues((IReadOnlyList<LedgerDigestUploadData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<LedgerDigestUploadData>.FromValues((IReadOnlyList<LedgerDigestUploadData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

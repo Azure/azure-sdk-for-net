@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.MachineLearning
                     yield break;
                 }
                 EndpointModels result = EndpointModels.FromResponse(response);
-                yield return Page<EndpointModelProperties>.FromValues((IReadOnlyList<EndpointModelProperties>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EndpointModelProperties>.FromValues((IReadOnlyList<EndpointModelProperties>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

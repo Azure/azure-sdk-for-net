@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     yield break;
                 }
                 NetworkToNetworkInterconnectsList result = NetworkToNetworkInterconnectsList.FromResponse(response);
-                yield return Page<NetworkToNetworkInterconnectData>.FromValues((IReadOnlyList<NetworkToNetworkInterconnectData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetworkToNetworkInterconnectData>.FromValues((IReadOnlyList<NetworkToNetworkInterconnectData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
