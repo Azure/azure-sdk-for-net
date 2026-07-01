@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 WorkloadGroupListResult result = WorkloadGroupListResult.FromResponse(response);
-                yield return Page<WorkloadGroupData>.FromValues((IReadOnlyList<WorkloadGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<WorkloadGroupData>.FromValues((IReadOnlyList<WorkloadGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 DatabaseListResult result = DatabaseListResult.FromResponse(response);
-                yield return Page<SqlDatabaseData>.FromValues((IReadOnlyList<SqlDatabaseData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SqlDatabaseData>.FromValues((IReadOnlyList<SqlDatabaseData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

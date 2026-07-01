@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 SyncDatabaseIdListResult result = SyncDatabaseIdListResult.FromResponse(response);
-                yield return Page<SubResource>.FromValues((IReadOnlyList<SubResource>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SubResource>.FromValues((IReadOnlyList<SubResource>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
