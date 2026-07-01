@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The network interfaces. </summary>
         public IReadOnlyList<WritableSubResource> NetworkInterfaces { get; } = new List<WritableSubResource>();
 
+        /// <summary> Writes the JSON representation of the model to the provided writer. </summary>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
             => throw new NotSupportedException("CloudService operations are no longer supported.");
 

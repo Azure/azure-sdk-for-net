@@ -10,6 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class EnvironmentVariable
     {
         // Customized: restore legacy property name; TypeSpec rename is not applied to this generated property declaration.
+        /// <summary> The type of the environment variable. </summary>
         [WirePath("type")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public EnvironmentVariableType? VariableType

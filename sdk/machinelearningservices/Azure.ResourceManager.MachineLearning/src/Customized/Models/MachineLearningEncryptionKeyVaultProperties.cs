@@ -11,18 +11,23 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
+    /// <summary> The KeyVault properties used for customer-managed-key encryption. </summary>
     public partial class MachineLearningEncryptionKeyVaultProperties : IJsonModel<MachineLearningEncryptionKeyVaultProperties>
     {
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEncryptionKeyVaultProperties"/>. </summary>
         public MachineLearningEncryptionKeyVaultProperties(ResourceIdentifier keyVaultArmId, string keyIdentifier)
         {
             KeyVaultArmId = keyVaultArmId;
             KeyIdentifier = keyIdentifier;
         }
 
+        /// <summary> The client ID of the user-assigned identity used to access the KeyVault. </summary>
         [WirePath("identityClientId")]
         public string IdentityClientId { get; set; }
+        /// <summary> Gets or sets the KeyIdentifier. </summary>
         [WirePath("keyIdentifier")]
         public string KeyIdentifier { get; set; }
+        /// <summary> The KeyVault Arm Id that contains the data encryption key. </summary>
         [WirePath("keyVaultArmId")]
         public ResourceIdentifier KeyVaultArmId { get; set; }
 
@@ -35,6 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningEncryptionKeyVaultProperties(default, default);
         }
 
+        /// <summary> Writes the JSON representation of the model to the provided writer. </summary>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();

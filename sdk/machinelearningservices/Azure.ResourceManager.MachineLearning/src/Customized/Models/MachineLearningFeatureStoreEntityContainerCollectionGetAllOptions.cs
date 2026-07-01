@@ -5,6 +5,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
+    /// <summary> The options for the corresponding <c>GetAll</c> method. </summary>
     public partial class MachineLearningFeatureStoreEntityContainerCollectionGetAllOptions : MachineLearningFeatureSetContainerCollectionGetAllOptions
     {
     }
