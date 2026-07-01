@@ -82,6 +82,7 @@ namespace Azure.AI.Language.Text
     [ModelReaderWriterBuildable(typeof(EntitySynonym))]
     [ModelReaderWriterBuildable(typeof(EntitySynonyms))]
     [ModelReaderWriterBuildable(typeof(EntityTag))]
+    [ModelReaderWriterBuildable(typeof(ErrorResponse))]
     [ModelReaderWriterBuildable(typeof(ExtractedSummaryActionResult))]
     [ModelReaderWriterBuildable(typeof(ExtractedSummarySentence))]
     [ModelReaderWriterBuildable(typeof(ExtractiveSummarizationActionContent))]

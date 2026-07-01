@@ -10,20 +10,20 @@ using OpenAI;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> An MCP tool stored in a toolbox. </summary>
-    public partial class MCPToolboxTool : ToolboxTool
+    public partial class MCPToolboxTool : global::Azure.AI.Projects.Agents.ToolboxTool
     {
-        /// <summary> Initializes a new instance of <see cref="MCPToolboxTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.MCPToolboxTool"/>. </summary>
         /// <param name="serverLabel"> A label for this MCP server, used to identify it in tool calls. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serverLabel"/> is null. </exception>
-        public MCPToolboxTool(string serverLabel) : base(ToolboxToolType.Mcp)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="serverLabel"/> is null. </exception>
+        public MCPToolboxTool(string serverLabel) : base(global::Azure.AI.Projects.Agents.ToolboxToolType.Mcp)
         {
-            Argument.AssertNotNull(serverLabel, nameof(serverLabel));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(serverLabel, nameof(serverLabel));
 
             ServerLabel = serverLabel;
-            Headers = new ChangeTrackingDictionary<string, string>();
+            Headers = new global::Azure.AI.Projects.Agents.ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MCPToolboxTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.MCPToolboxTool"/>. </summary>
         /// <param name="type"> The type of tool. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
         /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
@@ -56,7 +56,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="requireApprovalInternal"></param>
         /// <param name="deferLoading"> Whether this MCP tool is deferred and discovered via tool search. </param>
         /// <param name="projectConnectionId"> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </param>
-        internal MCPToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUri, MCPToolboxToolConnectorId? connectorId, string authorization, string serverDescription, IDictionary<string, string> headers, BinaryData allowedTools, BinaryData requireApprovalInternal, bool? deferLoading, string projectConnectionId) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
+        internal MCPToolboxTool(global::Azure.AI.Projects.Agents.ToolboxToolType @type, string name, string description, global::System.Collections.Generic.IDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> toolConfigs, global::System.Collections.Generic.IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string serverLabel, global::System.Uri serverUri, global::OpenAI.MCPToolboxToolConnectorId? connectorId, string authorization, string serverDescription, global::System.Collections.Generic.IDictionary<string, string> headers, global::System.BinaryData allowedTools, global::System.BinaryData requireApprovalInternal, bool? deferLoading, string projectConnectionId) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
             ServerUri = serverUri;
@@ -80,7 +80,7 @@ namespace Azure.AI.Projects.Agents
         ///   Currently supported `connector_id` values are:
         /// <list type="bullet"><item><description>Dropbox: `connector_dropbox`</description></item><item><description>Gmail: `connector_gmail`</description></item><item><description>Google Calendar: `connector_googlecalendar`</description></item><item><description>Google Drive: `connector_googledrive`</description></item><item><description>Microsoft Teams: `connector_microsoftteams`</description></item><item><description>Outlook Calendar: `connector_outlookcalendar`</description></item><item><description>Outlook Email: `connector_outlookemail`</description></item><item><description>SharePoint: `connector_sharepoint`</description></item></list>
         /// </summary>
-        public MCPToolboxToolConnectorId? ConnectorId { get; set; }
+        public global::OpenAI.MCPToolboxToolConnectorId? ConnectorId { get; set; }
 
         /// <summary>
         /// An OAuth access token that can be used with a remote MCP server, either
@@ -93,21 +93,21 @@ namespace Azure.AI.Projects.Agents
         public string ServerDescription { get; set; }
 
         /// <summary> Gets or sets the Headers. </summary>
-        public IDictionary<string, string> Headers { get; set; }
+        public global::System.Collections.Generic.IDictionary<string, string> Headers { get; set; }
 
         /// <summary>
         /// Gets or sets the AllowedTools.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// <remarks>
         /// Supported types:
         /// <list type="bullet">
         /// <item>
-        /// <description> <see cref="IList{T}"/> where <c>T</c> is of type <see cref="string"/>. </description>
+        /// <description> <see cref="global::System.Collections.Generic.IList{T}"/> where <c>T</c> is of type <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="InternalMCPToolFilter"/>. </description>
+        /// <description> :OpenAI.InternalMCPToolFilter. </description>
         /// </item>
         /// </list>
         /// </remarks>
@@ -134,7 +134,7 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData AllowedTools { get; set; }
+        public global::System.BinaryData AllowedTools { get; set; }
 
         /// <summary> Whether this MCP tool is deferred and discovered via tool search. </summary>
         public bool? DeferLoading { get; set; }

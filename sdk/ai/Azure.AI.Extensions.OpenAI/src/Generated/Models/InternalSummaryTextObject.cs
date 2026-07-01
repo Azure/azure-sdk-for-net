@@ -7,7 +7,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    internal partial class InternalSummaryTextObject : InternalMessageContent
+    /// <summary> Summary text. </summary>
+    public partial class InternalSummaryTextObject : InternalMessageContent
     {
         /// <summary> Initializes a new instance of <see cref="InternalSummaryTextObject"/>. </summary>
         /// <param name="text"> A summary of the reasoning output from the model so far. </param>

@@ -9,7 +9,8 @@ using System;
 
 namespace Azure.Data.AppConfiguration
 {
-    internal static partial class SettingFieldsExtensions
+    /// <summary></summary>
+    public static partial class SettingFieldsExtensions
     {
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SettingFields value) => value switch

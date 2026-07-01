@@ -14,7 +14,6 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class DocumentIntelligenceModelFactory
     {
-
         /// <summary> The error object. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> A human-readable representation of the error. </param>

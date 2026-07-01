@@ -8,10 +8,14 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.Core;
+using Azure.Core.Foundations;
 
 namespace Specs.Azure.Core.Lro.Standard
 {
+    [ModelReaderWriterBuildable(typeof(Error))]
+    [ModelReaderWriterBuildable(typeof(ErrorResponse))]
     [ModelReaderWriterBuildable(typeof(ExportedUser))]
+    [ModelReaderWriterBuildable(typeof(InnerError))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(User))]
     public partial class SpecsAzureCoreLroStandardContext : ModelReaderWriterContext

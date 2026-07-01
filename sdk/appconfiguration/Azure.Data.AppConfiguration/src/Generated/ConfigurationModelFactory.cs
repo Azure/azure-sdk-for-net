@@ -16,7 +16,6 @@ namespace Azure.Data.AppConfiguration
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ConfigurationModelFactory
     {
-
         /// <summary> A snapshot is a named, immutable subset of an App Configuration store's key-values. </summary>
         /// <param name="name"> The name of the snapshot. </param>
         /// <param name="status"> The current status of the snapshot. </param>

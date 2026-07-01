@@ -9,15 +9,15 @@ using Azure.AI.Projects.Agents;
 
 namespace OpenAI
 {
-    internal partial class InternalCodeInterpreterTool : ProjectsAgentTool
+    internal partial class InternalCodeInterpreterTool : global::Azure.AI.Projects.Agents.ProjectsAgentTool
     {
-        /// <summary> Initializes a new instance of <see cref="InternalCodeInterpreterTool"/>. </summary>
-        public InternalCodeInterpreterTool() : base(ToolType.CodeInterpreter)
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalCodeInterpreterTool"/>. </summary>
+        public InternalCodeInterpreterTool() : base(global::OpenAI.ToolType.CodeInterpreter)
         {
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+            ToolConfigs = new global::Azure.AI.Projects.Agents.ChangeTrackingDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalCodeInterpreterTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalCodeInterpreterTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
@@ -29,7 +29,7 @@ namespace OpenAI
         /// optional `memory_limit` setting.
         /// If not provided, the service assumes auto.
         /// </param>
-        internal InternalCodeInterpreterTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, BinaryData container) : base(@type, additionalBinaryDataProperties)
+        internal InternalCodeInterpreterTool(global::OpenAI.ToolType @type, global::System.Collections.Generic.IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string name, string description, global::System.Collections.Generic.IDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> toolConfigs, global::System.BinaryData container) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -44,15 +44,15 @@ namespace OpenAI
         public string Description { get; set; }
 
         /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+        public global::System.Collections.Generic.IDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> ToolConfigs { get; }
 
         /// <summary>
         /// The code interpreter container. Can be a container ID or an object that
         /// specifies uploaded file IDs to make available to your code, along with an
         /// optional `memory_limit` setting.
         /// If not provided, the service assumes auto.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// <remarks>
         /// Supported types:
@@ -61,7 +61,7 @@ namespace OpenAI
         /// <description> <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="InternalAutoCodeInterpreterToolParam"/>. </description>
+        /// <description> :OpenAI.InternalAutoCodeInterpreterToolParam. </description>
         /// </item>
         /// </list>
         /// </remarks>
@@ -88,6 +88,6 @@ namespace OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Container { get; set; }
+        public global::System.BinaryData Container { get; set; }
     }
 }

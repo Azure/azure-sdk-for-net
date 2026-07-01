@@ -9,7 +9,8 @@ using System;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    internal static partial class ScoringFunctionInterpolationExtensions
+    /// <summary></summary>
+    public static partial class ScoringFunctionInterpolationExtensions
     {
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ScoringFunctionInterpolation value) => value switch

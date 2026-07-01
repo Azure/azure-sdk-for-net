@@ -17,7 +17,6 @@ namespace Azure.Developer.DevCenter.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class DevCenterModelFactory
     {
-
         /// <summary> Project details. </summary>
         /// <param name="name"> Name of the project. </param>
         /// <param name="description"> Description of the project. </param>

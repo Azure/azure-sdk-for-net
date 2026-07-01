@@ -15,7 +15,6 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class DefenderEasmModelFactory
     {
-
         /// <summary>
         /// The items in the current page of results.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Easm.AsAssetResource"/>, <see cref="Easm.ContactAssetResource"/>, <see cref="Easm.DomainAssetResource"/>, <see cref="Easm.HostAssetResource"/>, <see cref="Easm.IpAddressAssetResource"/>, <see cref="Easm.IpBlockAssetResource"/>, <see cref="Easm.PageAssetResource"/>, and <see cref="Easm.SslCertAssetResource"/>.

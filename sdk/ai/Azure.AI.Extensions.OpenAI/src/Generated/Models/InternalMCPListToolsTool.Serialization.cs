@@ -10,7 +10,8 @@ using Azure.AI.Extensions.OpenAI;
 
 namespace OpenAI
 {
-    internal partial class InternalMCPListToolsTool : IJsonModel<InternalMCPListToolsTool>
+    /// <summary> MCP list tools tool. </summary>
+    public partial class InternalMCPListToolsTool : IJsonModel<InternalMCPListToolsTool>
     {
         /// <summary> Initializes a new instance of <see cref="InternalMCPListToolsTool"/> for deserialization. </summary>
         internal InternalMCPListToolsTool()

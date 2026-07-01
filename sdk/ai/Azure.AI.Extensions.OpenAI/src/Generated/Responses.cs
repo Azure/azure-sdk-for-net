@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    internal partial class Responses
+    /// <summary> The Responses sub-client. </summary>
+    public partial class Responses
     {
         private readonly Uri _endpoint;
 

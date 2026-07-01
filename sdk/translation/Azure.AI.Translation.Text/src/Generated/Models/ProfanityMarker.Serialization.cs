@@ -9,7 +9,8 @@ using System;
 
 namespace Azure.AI.Translation.Text
 {
-    internal static partial class ProfanityMarkerExtensions
+    /// <summary></summary>
+    public static partial class ProfanityMarkerExtensions
     {
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ProfanityMarker value) => value switch

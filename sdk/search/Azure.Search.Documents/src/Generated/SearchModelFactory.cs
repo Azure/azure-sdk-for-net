@@ -20,7 +20,6 @@ namespace Azure.Search.Documents.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class SearchModelFactory
     {
-
         /// <summary> A single bucket of a facet query result. Reports the number of documents with a field value falling within a particular range or having a particular value or interval. </summary>
         /// <param name="count"> The approximate count of documents falling within the bucket described by this facet. </param>
         /// <param name="avg"> The resulting total avg for the facet when a avg metric is requested. </param>

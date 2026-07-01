@@ -5,16 +5,13 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure;
-using Azure.Core;
 
 namespace Specs.Azure.Core.Page
 {
     public static partial class _Specs_AzureCorePageModelFactory
     {
-
         public static User User(int id = default, string name = default, IEnumerable<UserOrder> orders = default, ETag etag = default) => throw null;
 
         public static UserOrder UserOrder(int id = default, int userId = default, string detail = default) => throw null;

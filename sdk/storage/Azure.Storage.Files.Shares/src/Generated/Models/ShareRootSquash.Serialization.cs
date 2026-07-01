@@ -9,7 +9,8 @@ using System;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal static partial class ShareRootSquashExtensions
+    /// <summary></summary>
+    public static partial class ShareRootSquashExtensions
     {
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ShareRootSquash value) => value switch

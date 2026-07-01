@@ -17,7 +17,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class LanguageQuestionAnsweringAuthoringModelFactory
     {
-
         /// <summary> Represents the project. </summary>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="description"> Description of the project. </param>

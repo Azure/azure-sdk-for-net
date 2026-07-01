@@ -13,7 +13,7 @@ using Microsoft.Extensions.Configuration;
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     /// <summary> Client options for <see cref="ApplicationInsightsRestClient"/>. </summary>
-    internal partial class ApplicationInsightsRestClientOptions : ClientOptions
+    public partial class ApplicationInsightsRestClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2_1;
 
@@ -52,7 +52,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// <summary> Configures logging for the client options. </summary>
         partial void ConfigureLogging();
 
-        internal enum ServiceVersion
+        /// <summary> The version of the service to use. </summary>
+        public enum ServiceVersion
         {
             /// <summary> The V2.1 API version. </summary>
             V2_1 = 1

@@ -60,7 +60,10 @@ namespace Azure.AI.ContentUnderstanding
     [ModelReaderWriterBuildable(typeof(DocumentTable))]
     [ModelReaderWriterBuildable(typeof(DocumentTableCell))]
     [ModelReaderWriterBuildable(typeof(DocumentWord))]
+    [ModelReaderWriterBuildable(typeof(Error))]
+    [ModelReaderWriterBuildable(typeof(ErrorResponse))]
     [ModelReaderWriterBuildable(typeof(GrantCopyAuthorizationRequest))]
+    [ModelReaderWriterBuildable(typeof(InnerError))]
     [ModelReaderWriterBuildable(typeof(KnowledgeSource))]
     [ModelReaderWriterBuildable(typeof(LabeledDataKnowledgeSource))]
     [ModelReaderWriterBuildable(typeof(PagedContentAnalyzer))]
@@ -72,6 +75,7 @@ namespace Azure.AI.ContentUnderstanding
     [ModelReaderWriterBuildable(typeof(UnknownContentField))]
     [ModelReaderWriterBuildable(typeof(UnknownDocumentFigure))]
     [ModelReaderWriterBuildable(typeof(UnknownKnowledgeSource))]
+    [ModelReaderWriterBuildable(typeof(UpdateDefaultsRequest))]
     [ModelReaderWriterBuildable(typeof(UsageDetails))]
     public partial class AzureAIContentUnderstandingContext : ModelReaderWriterContext
     {

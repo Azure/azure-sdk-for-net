@@ -9,7 +9,8 @@ using System;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    internal static partial class IndexerExecutionStatusExtensions
+    /// <summary></summary>
+    public static partial class IndexerExecutionStatusExtensions
     {
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this IndexerExecutionStatus value) => value switch

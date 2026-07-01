@@ -11,7 +11,8 @@ using Azure;
 
 namespace Azure.Health.Deidentification
 {
-    internal static partial class RequestContextExtensions
+    /// <summary></summary>
+    public static partial class RequestContextExtensions
     {
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         public static ValueTuple<CancellationToken, ErrorOptions> Parse(this RequestContext context)

@@ -15,7 +15,6 @@ namespace Azure.AI.Language.Conversations.Authoring
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ConversationAnalysisAuthoringModelFactory
     {
-
         /// <summary> Represents the metadata of a project. </summary>
         /// <param name="createdOn"> Represents the project creation datetime. </param>
         /// <param name="lastModifiedOn"> Represents the project creation datetime. </param>

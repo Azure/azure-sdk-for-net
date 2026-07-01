@@ -8,7 +8,8 @@ using Azure.AI.Extensions.OpenAI;
 
 namespace OpenAI
 {
-    internal partial class InternalMCPListToolsTool
+    /// <summary> MCP list tools tool. </summary>
+    public partial class InternalMCPListToolsTool
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

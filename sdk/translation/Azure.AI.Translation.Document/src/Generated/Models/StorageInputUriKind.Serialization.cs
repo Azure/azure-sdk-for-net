@@ -9,7 +9,8 @@ using System;
 
 namespace Azure.AI.Translation.Document
 {
-    internal static partial class StorageInputUriKindExtensions
+    /// <summary></summary>
+    public static partial class StorageInputUriKindExtensions
     {
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this StorageInputUriKind value) => value switch

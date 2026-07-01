@@ -9,8 +9,12 @@ using Azure.AI.Extensions.OpenAI;
 
 namespace OpenAI
 {
+    /// <summary>
+    /// The InternalComputerAction.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: 
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownComputerAction))]
-    internal abstract partial class InternalComputerAction : IJsonModel<InternalComputerAction>
+    public abstract partial class InternalComputerAction : IJsonModel<InternalComputerAction>
     {
         /// <summary> Initializes a new instance of <see cref="InternalComputerAction"/> for deserialization. </summary>
         internal InternalComputerAction()

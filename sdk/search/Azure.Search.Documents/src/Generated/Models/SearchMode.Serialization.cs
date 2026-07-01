@@ -9,7 +9,8 @@ using System;
 
 namespace Azure.Search.Documents.Models
 {
-    internal static partial class SearchModeExtensions
+    /// <summary></summary>
+    public static partial class SearchModeExtensions
     {
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SearchMode value) => value switch

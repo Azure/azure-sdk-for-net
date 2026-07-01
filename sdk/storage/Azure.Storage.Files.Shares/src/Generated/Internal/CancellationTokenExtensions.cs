@@ -10,7 +10,8 @@ using Azure;
 
 namespace Azure.Storage.Files.Shares
 {
-    internal static partial class CancellationTokenExtensions
+    /// <summary></summary>
+    public static partial class CancellationTokenExtensions
     {
         public static RequestContext ToRequestContext(this CancellationToken cancellationToken) => cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
     }

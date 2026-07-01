@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The ResponseUsageInputTokensDetails. </summary>
-    internal partial class ResponseUsageInputTokensDetails : IJsonModel<ResponseUsageInputTokensDetails>
+    public partial class ResponseUsageInputTokensDetails : IJsonModel<ResponseUsageInputTokensDetails>
     {
         /// <summary> Initializes a new instance of <see cref="ResponseUsageInputTokensDetails"/> for deserialization. </summary>
         internal ResponseUsageInputTokensDetails()

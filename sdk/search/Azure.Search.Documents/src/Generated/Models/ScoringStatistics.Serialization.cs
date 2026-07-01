@@ -9,7 +9,8 @@ using System;
 
 namespace Azure.Search.Documents.Models
 {
-    internal static partial class ScoringStatisticsExtensions
+    /// <summary></summary>
+    public static partial class ScoringStatisticsExtensions
     {
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ScoringStatistics value) => value switch

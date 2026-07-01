@@ -9,18 +9,18 @@ using Azure.AI.Projects.Agents;
 
 namespace OpenAI
 {
-    internal partial class InternalMCPTool : ProjectsAgentTool
+    internal partial class InternalMCPTool : global::Azure.AI.Projects.Agents.ProjectsAgentTool
     {
-        /// <summary> Initializes a new instance of <see cref="InternalMCPTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalMCPTool"/>. </summary>
         /// <param name="serverLabel"> A label for this MCP server, used to identify it in tool calls. </param>
-        public InternalMCPTool(string serverLabel) : base(ToolType.Mcp)
+        public InternalMCPTool(string serverLabel) : base(global::OpenAI.ToolType.Mcp)
         {
             ServerLabel = serverLabel;
-            Headers = new ChangeTrackingDictionary<string, string>();
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+            Headers = new global::Azure.AI.Projects.Agents.ChangeTrackingDictionary<string, string>();
+            ToolConfigs = new global::Azure.AI.Projects.Agents.ChangeTrackingDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalMCPTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalMCPTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serverLabel"> A label for this MCP server, used to identify it in tool calls. </param>
@@ -47,7 +47,7 @@ namespace OpenAI
         /// <param name="deferLoading"> Whether this MCP tool is deferred and discovered via tool search. </param>
         /// <param name="projectConnectionId"> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </param>
         /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
-        internal InternalMCPTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUrl, MCPToolboxToolConnectorId? connectorId, string authorization, string serverDescription, IDictionary<string, string> headers, BinaryData allowedTools, BinaryData requireApproval, bool? deferLoading, string projectConnectionId, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
+        internal InternalMCPTool(global::OpenAI.ToolType @type, global::System.Collections.Generic.IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string serverLabel, global::System.Uri serverUrl, global::OpenAI.MCPToolboxToolConnectorId? connectorId, string authorization, string serverDescription, global::System.Collections.Generic.IDictionary<string, string> headers, global::System.BinaryData allowedTools, global::System.BinaryData requireApproval, bool? deferLoading, string projectConnectionId, global::System.Collections.Generic.IDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
             ServerUrl = serverUrl;
@@ -69,7 +69,7 @@ namespace OpenAI
         /// The URL for the MCP server. One of `server_url` or `connector_id` must be
         ///   provided.
         /// </summary>
-        public Uri ServerUrl { get; set; }
+        public global::System.Uri ServerUrl { get; set; }
 
         /// <summary>
         /// Identifier for service connectors, like those available in ChatGPT. One of
@@ -78,7 +78,7 @@ namespace OpenAI
         ///   Currently supported `connector_id` values are:
         /// <list type="bullet"><item><description>Dropbox: `connector_dropbox`</description></item><item><description>Gmail: `connector_gmail`</description></item><item><description>Google Calendar: `connector_googlecalendar`</description></item><item><description>Google Drive: `connector_googledrive`</description></item><item><description>Microsoft Teams: `connector_microsoftteams`</description></item><item><description>Outlook Calendar: `connector_outlookcalendar`</description></item><item><description>Outlook Email: `connector_outlookemail`</description></item><item><description>SharePoint: `connector_sharepoint`</description></item></list>
         /// </summary>
-        public MCPToolboxToolConnectorId? ConnectorId { get; set; }
+        public global::OpenAI.MCPToolboxToolConnectorId? ConnectorId { get; set; }
 
         /// <summary>
         /// An OAuth access token that can be used with a remote MCP server, either
@@ -91,21 +91,21 @@ namespace OpenAI
         public string ServerDescription { get; set; }
 
         /// <summary> Gets or sets the Headers. </summary>
-        public IDictionary<string, string> Headers { get; set; }
+        public global::System.Collections.Generic.IDictionary<string, string> Headers { get; set; }
 
         /// <summary>
         /// Gets or sets the AllowedTools.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// <remarks>
         /// Supported types:
         /// <list type="bullet">
         /// <item>
-        /// <description> <see cref="IList{T}"/> where <c>T</c> is of type <see cref="string"/>. </description>
+        /// <description> <see cref="global::System.Collections.Generic.IList{T}"/> where <c>T</c> is of type <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="InternalMCPToolFilter"/>. </description>
+        /// <description> :OpenAI.InternalMCPToolFilter. </description>
         /// </item>
         /// </list>
         /// </remarks>
@@ -132,18 +132,18 @@ namespace OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData AllowedTools { get; set; }
+        public global::System.BinaryData AllowedTools { get; set; }
 
         /// <summary>
         /// Gets or sets the RequireApproval.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// <remarks>
         /// Supported types:
         /// <list type="bullet">
         /// <item>
-        /// <description> <see cref="InternalMCPToolRequireApproval"/>. </description>
+        /// <description> :OpenAI.InternalMCPToolRequireApproval. </description>
         /// </item>
         /// <item>
         /// <description> "always". </description>
@@ -176,7 +176,7 @@ namespace OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData RequireApproval { get; set; }
+        public global::System.BinaryData RequireApproval { get; set; }
 
         /// <summary> Whether this MCP tool is deferred and discovered via tool search. </summary>
         public bool? DeferLoading { get; set; }
@@ -185,6 +185,6 @@ namespace OpenAI
         public string ProjectConnectionId { get; set; }
 
         /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+        public global::System.Collections.Generic.IDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> ToolConfigs { get; }
     }
 }

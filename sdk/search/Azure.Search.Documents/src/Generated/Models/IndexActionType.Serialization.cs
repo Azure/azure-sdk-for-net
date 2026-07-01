@@ -9,7 +9,8 @@ using System;
 
 namespace Azure.Search.Documents.Models
 {
-    internal static partial class IndexActionTypeExtensions
+    /// <summary></summary>
+    public static partial class IndexActionTypeExtensions
     {
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this IndexActionType value) => value switch

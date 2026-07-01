@@ -7,7 +7,8 @@ using System.ClientModel.Primitives;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    internal partial class Responses
+    /// <summary></summary>
+    public partial class Responses
     {
         private static PipelineMessageClassifier _pipelineMessageClassifier200;
 

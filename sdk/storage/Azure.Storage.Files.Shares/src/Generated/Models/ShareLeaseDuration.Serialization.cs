@@ -9,7 +9,8 @@ using System;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal static partial class ShareLeaseDurationExtensions
+    /// <summary></summary>
+    public static partial class ShareLeaseDurationExtensions
     {
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ShareLeaseDuration value) => value switch

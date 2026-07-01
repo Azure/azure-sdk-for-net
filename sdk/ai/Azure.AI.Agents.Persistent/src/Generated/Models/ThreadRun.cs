@@ -16,9 +16,9 @@ namespace Azure.AI.Agents.Persistent
     public partial class ThreadRun
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly global::System.Collections.Generic.IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ThreadRun"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ThreadRun"/>. </summary>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
         /// <param name="threadId"> The ID of the thread associated with this run. </param>
         /// <param name="assistantId"> The ID of the agent associated with the thread this run was performed against. </param>
@@ -42,7 +42,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="responseFormat"> The response format of the tool calls used in this run. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="parallelToolCalls"> Determines if tools can be executed in parallel within the run. </param>
-        internal ThreadRun(string id, string threadId, string assistantId, RunStatus status, RunError lastError, string model, string instructions, IEnumerable<ToolDefinition> tools, DateTimeOffset createdAt, DateTimeOffset? expiresAt, DateTimeOffset? startedAt, DateTimeOffset? completedAt, DateTimeOffset? cancelledAt, DateTimeOffset? failedAt, IncompleteRunDetails incompleteDetails, RunCompletionUsage usage, int? maxPromptTokens, int? maxCompletionTokens, Truncation truncationStrategy, BinaryData toolChoice, BinaryData responseFormat, IReadOnlyDictionary<string, string> metadata, bool parallelToolCalls)
+        internal ThreadRun(string id, string threadId, string assistantId, global::Azure.AI.Agents.Persistent.RunStatus status, global::Azure.AI.Agents.Persistent.RunError lastError, string model, string instructions, global::System.Collections.Generic.IEnumerable<global::Azure.AI.Agents.Persistent.ToolDefinition> tools, global::System.DateTimeOffset createdAt, global::System.DateTimeOffset? expiresAt, global::System.DateTimeOffset? startedAt, global::System.DateTimeOffset? completedAt, global::System.DateTimeOffset? cancelledAt, global::System.DateTimeOffset? failedAt, global::Azure.AI.Agents.Persistent.IncompleteRunDetails incompleteDetails, global::Azure.AI.Agents.Persistent.RunCompletionUsage usage, int? maxPromptTokens, int? maxCompletionTokens, global::Azure.AI.Agents.Persistent.Truncation truncationStrategy, global::System.BinaryData toolChoice, global::System.BinaryData responseFormat, global::System.Collections.Generic.IReadOnlyDictionary<string, string> metadata, bool parallelToolCalls)
         {
             Id = id;
             ThreadId = threadId;
@@ -69,7 +69,7 @@ namespace Azure.AI.Agents.Persistent
             ParallelToolCalls = parallelToolCalls;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ThreadRun"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ThreadRun"/>. </summary>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
         /// <param name="object"> The object type, which is always 'thread.run'. </param>
         /// <param name="threadId"> The ID of the thread associated with this run. </param>
@@ -99,10 +99,10 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="toolResources"> Override the tools the agent can use for this run. This is useful for modifying the behavior on a per-run basis. </param>
         /// <param name="parallelToolCalls"> Determines if tools can be executed in parallel within the run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ThreadRun(string id, string @object, string threadId, string assistantId, RunStatus status, RequiredAction requiredAction, RunError lastError, string model, string instructions, IReadOnlyList<ToolDefinition> tools, DateTimeOffset createdAt, DateTimeOffset? expiresAt, DateTimeOffset? startedAt, DateTimeOffset? completedAt, DateTimeOffset? cancelledAt, DateTimeOffset? failedAt, IncompleteRunDetails incompleteDetails, RunCompletionUsage usage, float? temperature, float? topP, int? maxPromptTokens, int? maxCompletionTokens, Truncation truncationStrategy, BinaryData toolChoice, BinaryData responseFormat, IReadOnlyDictionary<string, string> metadata, ToolResources toolResources, bool parallelToolCalls, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ThreadRun(string id, string @object, string threadId, string assistantId, global::Azure.AI.Agents.Persistent.RunStatus status, global::Azure.AI.Agents.Persistent.RequiredAction requiredAction, global::Azure.AI.Agents.Persistent.RunError lastError, string model, string instructions, global::System.Collections.Generic.IReadOnlyList<global::Azure.AI.Agents.Persistent.ToolDefinition> tools, global::System.DateTimeOffset createdAt, global::System.DateTimeOffset? expiresAt, global::System.DateTimeOffset? startedAt, global::System.DateTimeOffset? completedAt, global::System.DateTimeOffset? cancelledAt, global::System.DateTimeOffset? failedAt, global::Azure.AI.Agents.Persistent.IncompleteRunDetails incompleteDetails, global::Azure.AI.Agents.Persistent.RunCompletionUsage usage, float? temperature, float? topP, int? maxPromptTokens, int? maxCompletionTokens, global::Azure.AI.Agents.Persistent.Truncation truncationStrategy, global::System.BinaryData toolChoice, global::System.BinaryData responseFormat, global::System.Collections.Generic.IReadOnlyDictionary<string, string> metadata, global::Azure.AI.Agents.Persistent.ToolResources toolResources, bool parallelToolCalls, global::System.Collections.Generic.IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            Object = @object;
+            this.Object = @object;
             ThreadId = threadId;
             AssistantId = assistantId;
             Status = status;
@@ -142,13 +142,13 @@ namespace Azure.AI.Agents.Persistent
         public string AssistantId { get; }
 
         /// <summary> The status of the agent thread run. </summary>
-        public RunStatus Status { get; }
+        public global::Azure.AI.Agents.Persistent.RunStatus Status { get; }
 
         /// <summary> The details of the action required for the agent thread run to continue. </summary>
-        public RequiredAction RequiredAction { get; }
+        public global::Azure.AI.Agents.Persistent.RequiredAction RequiredAction { get; }
 
         /// <summary> The last error, if any, encountered by this agent thread run. </summary>
-        public RunError LastError { get; }
+        public global::Azure.AI.Agents.Persistent.RunError LastError { get; }
 
         /// <summary> The ID of the model to use. </summary>
         public string Model { get; }
@@ -157,31 +157,31 @@ namespace Azure.AI.Agents.Persistent
         public string Instructions { get; }
 
         /// <summary> The overridden enabled tools used for this agent thread run. </summary>
-        public IReadOnlyList<ToolDefinition> Tools { get; }
+        public global::System.Collections.Generic.IReadOnlyList<global::Azure.AI.Agents.Persistent.ToolDefinition> Tools { get; }
 
         /// <summary> The Unix timestamp, in seconds, representing when this object was created. </summary>
-        public DateTimeOffset CreatedAt { get; }
+        public global::System.DateTimeOffset CreatedAt { get; }
 
         /// <summary> The Unix timestamp, in seconds, representing when this item expires. </summary>
-        public DateTimeOffset? ExpiresAt { get; }
+        public global::System.DateTimeOffset? ExpiresAt { get; }
 
         /// <summary> The Unix timestamp, in seconds, representing when this item was started. </summary>
-        public DateTimeOffset? StartedAt { get; }
+        public global::System.DateTimeOffset? StartedAt { get; }
 
         /// <summary> The Unix timestamp, in seconds, representing when this completed. </summary>
-        public DateTimeOffset? CompletedAt { get; }
+        public global::System.DateTimeOffset? CompletedAt { get; }
 
         /// <summary> The Unix timestamp, in seconds, representing when this was cancelled. </summary>
-        public DateTimeOffset? CancelledAt { get; }
+        public global::System.DateTimeOffset? CancelledAt { get; }
 
         /// <summary> The Unix timestamp, in seconds, representing when this failed. </summary>
-        public DateTimeOffset? FailedAt { get; }
+        public global::System.DateTimeOffset? FailedAt { get; }
 
         /// <summary> Details on why the run is incomplete. Will be `null` if the run is not incomplete. </summary>
-        public IncompleteRunDetails IncompleteDetails { get; }
+        public global::Azure.AI.Agents.Persistent.IncompleteRunDetails IncompleteDetails { get; }
 
         /// <summary> Usage statistics related to the run. This value will be `null` if the run is not in a terminal state (i.e. `in_progress`, `queued`, etc.). </summary>
-        public RunCompletionUsage Usage { get; }
+        public global::Azure.AI.Agents.Persistent.RunCompletionUsage Usage { get; }
 
         /// <summary> The sampling temperature used for this run. If not set, defaults to 1. </summary>
         public float? Temperature { get; }
@@ -196,12 +196,12 @@ namespace Azure.AI.Agents.Persistent
         public int? MaxCompletionTokens { get; }
 
         /// <summary> The strategy to use for dropping messages as the context windows moves forward. </summary>
-        public Truncation TruncationStrategy { get; }
+        public global::Azure.AI.Agents.Persistent.Truncation TruncationStrategy { get; }
 
         /// <summary>
         /// Controls whether or not and which tool is called by the model.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// <remarks>
         /// Supported types:
@@ -210,10 +210,10 @@ namespace Azure.AI.Agents.Persistent
         /// <description> <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="PersistentAgentsToolChoiceOptionMode"/>. </description>
+        /// <description> <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentsToolChoiceOptionMode"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="PersistentAgentsNamedToolChoice"/>. </description>
+        /// <description> <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentsNamedToolChoice"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>
@@ -240,12 +240,12 @@ namespace Azure.AI.Agents.Persistent
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData ToolChoice { get; }
+        public global::System.BinaryData ToolChoice { get; }
 
         /// <summary>
         /// The response format of the tool calls used in this run.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// <remarks>
         /// Supported types:
@@ -254,13 +254,13 @@ namespace Azure.AI.Agents.Persistent
         /// <description> <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="PersistentAgentsResponseFormatMode"/>. </description>
+        /// <description> <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentsResponseFormatMode"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="InternalPersistentAgentsResponseFormat"/>. </description>
+        /// <description> :Azure.AI.Agents.Persistent.InternalPersistentAgentsResponseFormat. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="ResponseFormatJsonSchemaType"/>. </description>
+        /// <description> <see cref="global::Azure.AI.Agents.Persistent.ResponseFormatJsonSchemaType"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>
@@ -287,13 +287,13 @@ namespace Azure.AI.Agents.Persistent
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData ResponseFormat { get; }
+        public global::System.BinaryData ResponseFormat { get; }
 
         /// <summary> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </summary>
-        public IReadOnlyDictionary<string, string> Metadata { get; }
+        public global::System.Collections.Generic.IReadOnlyDictionary<string, string> Metadata { get; }
 
         /// <summary> Override the tools the agent can use for this run. This is useful for modifying the behavior on a per-run basis. </summary>
-        public ToolResources ToolResources { get; }
+        public global::Azure.AI.Agents.Persistent.ToolResources ToolResources { get; }
 
         /// <summary> Determines if tools can be executed in parallel within the run. </summary>
         public bool ParallelToolCalls { get; }

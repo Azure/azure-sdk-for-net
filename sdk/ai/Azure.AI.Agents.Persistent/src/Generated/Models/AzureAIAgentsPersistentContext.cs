@@ -76,7 +76,6 @@ namespace Azure.AI.Agents.Persistent
     [ModelReaderWriterBuildable(typeof(InternalMessageTextDetails))]
     [ModelReaderWriterBuildable(typeof(InternalMessageTextFileCitationDetails))]
     [ModelReaderWriterBuildable(typeof(InternalMessageTextFilePathDetails))]
-    [ModelReaderWriterBuildable(typeof(InternalPersistentAgentsResponseFormat))]
     [ModelReaderWriterBuildable(typeof(InternalRequiredFunctionToolCallDetails))]
     [ModelReaderWriterBuildable(typeof(InternalRunStepFunctionToolCallDetails))]
     [ModelReaderWriterBuildable(typeof(InternalSubmitToolOutputsDetails))]

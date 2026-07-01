@@ -15,18 +15,18 @@ namespace Azure.AI.Agents.Persistent
     internal partial class CreateAgentRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly global::System.Collections.Generic.IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CreateAgentRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.CreateAgentRequest"/>. </summary>
         /// <param name="model"> The ID of the model to use. </param>
         internal CreateAgentRequest(string model)
         {
             Model = model;
-            Tools = new ChangeTrackingList<ToolDefinition>();
-            Metadata = new ChangeTrackingDictionary<string, string>();
+            Tools = new global::Azure.AI.Agents.Persistent.ChangeTrackingList<global::Azure.AI.Agents.Persistent.ToolDefinition>();
+            Metadata = new global::Azure.AI.Agents.Persistent.ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateAgentRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.CreateAgentRequest"/>. </summary>
         /// <param name="model"> The ID of the model to use. </param>
         /// <param name="name"> The name of the new agent. </param>
         /// <param name="description"> The description of the new agent. </param>
@@ -48,7 +48,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="responseFormat"> The response format of the tool calls used by this agent. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CreateAgentRequest(string model, string name, string description, string instructions, IList<ToolDefinition> tools, ToolResources toolResources, float? temperature, float? topP, BinaryData responseFormat, IDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CreateAgentRequest(string model, string name, string description, string instructions, global::System.Collections.Generic.IList<global::Azure.AI.Agents.Persistent.ToolDefinition> tools, global::Azure.AI.Agents.Persistent.ToolResources toolResources, float? temperature, float? topP, global::System.BinaryData responseFormat, global::System.Collections.Generic.IDictionary<string, string> metadata, global::System.Collections.Generic.IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             Name = name;
@@ -76,13 +76,13 @@ namespace Azure.AI.Agents.Persistent
         public string Instructions { get; }
 
         /// <summary> The collection of tools to enable for the new agent. </summary>
-        public IList<ToolDefinition> Tools { get; }
+        public global::System.Collections.Generic.IList<global::Azure.AI.Agents.Persistent.ToolDefinition> Tools { get; }
 
         /// <summary>
         /// A set of resources that are used by the agent's tools. The resources are specific to the type of tool. For example, the `code_interpreter`
         /// tool requires a list of file IDs, while the `file_search` tool requires a list of vector store IDs.
         /// </summary>
-        public ToolResources ToolResources { get; }
+        public global::Azure.AI.Agents.Persistent.ToolResources ToolResources { get; }
 
         /// <summary>
         /// What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random,
@@ -99,8 +99,8 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// The response format of the tool calls used by this agent.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// <remarks>
         /// Supported types:
@@ -109,13 +109,13 @@ namespace Azure.AI.Agents.Persistent
         /// <description> <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="PersistentAgentsResponseFormatMode"/>. </description>
+        /// <description> <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentsResponseFormatMode"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="InternalPersistentAgentsResponseFormat"/>. </description>
+        /// <description> :Azure.AI.Agents.Persistent.InternalPersistentAgentsResponseFormat. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="ResponseFormatJsonSchemaType"/>. </description>
+        /// <description> <see cref="global::Azure.AI.Agents.Persistent.ResponseFormatJsonSchemaType"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>
@@ -142,9 +142,9 @@ namespace Azure.AI.Agents.Persistent
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData ResponseFormat { get; }
+        public global::System.BinaryData ResponseFormat { get; }
 
         /// <summary> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </summary>
-        public IDictionary<string, string> Metadata { get; }
+        public global::System.Collections.Generic.IDictionary<string, string> Metadata { get; }
     }
 }

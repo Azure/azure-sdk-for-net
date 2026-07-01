@@ -18,7 +18,6 @@ namespace Azure.Analytics.PlanetaryComputer
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class PlanetaryComputerModelFactory
     {
-
         /// <summary> Microsoft Planetary Computer Pro geo-catalog operation. </summary>
         /// <param name="id"> Operation id. </param>
         /// <param name="status"> Operation status. </param>

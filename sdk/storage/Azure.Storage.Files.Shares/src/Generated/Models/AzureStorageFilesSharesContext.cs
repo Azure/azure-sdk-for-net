@@ -16,6 +16,7 @@ namespace Azure.Storage.Files.Shares
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ClearRange))]
     [ModelReaderWriterBuildable(typeof(DirectoryItem))]
+    [ModelReaderWriterBuildable(typeof(Error))]
     [ModelReaderWriterBuildable(typeof(FileItem))]
     [ModelReaderWriterBuildable(typeof(FileProperty))]
     [ModelReaderWriterBuildable(typeof(FileRange))]

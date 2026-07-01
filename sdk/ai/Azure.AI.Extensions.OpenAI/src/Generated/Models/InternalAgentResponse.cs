@@ -13,9 +13,9 @@ namespace OpenAI
     internal partial class InternalAgentResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly global::System.Collections.Generic.IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalAgentResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalAgentResponse"/>. </summary>
         /// <param name="id"> Unique identifier for this Response. </param>
         /// <param name="createdAt"> Unix timestamp (in seconds) of when this Response was created. </param>
         /// <param name="error"></param>
@@ -32,9 +32,9 @@ namespace OpenAI
         /// <param name="instructions"></param>
         /// <param name="parallelToolCalls"> Whether to allow the model to run tool calls in parallel. </param>
         /// <param name="agentReference"> The agent used for this response. </param>
-        internal InternalAgentResponse(string id, DateTimeOffset createdAt, InternalAgentResponseError error, ResponseIncompleteDetails incompleteDetails, IEnumerable<AgentResponseItem> output, BinaryData instructions, bool parallelToolCalls, AgentReference agentReference)
+        internal InternalAgentResponse(string id, global::System.DateTimeOffset createdAt, global::OpenAI.InternalAgentResponseError error, global::Azure.AI.Extensions.OpenAI.ResponseIncompleteDetails incompleteDetails, global::System.Collections.Generic.IEnumerable<global::Azure.AI.Extensions.OpenAI.AgentResponseItem> output, global::System.BinaryData instructions, bool parallelToolCalls, global::Azure.AI.Extensions.OpenAI.AgentReference agentReference)
         {
-            Tools = new ChangeTrackingList<ResponsesTool>();
+            Tools = new global::Azure.AI.Extensions.OpenAI.ChangeTrackingList<global::Azure.AI.Extensions.OpenAI.ResponsesTool>();
             Id = id;
             CreatedAt = createdAt;
             Error = error;
@@ -43,10 +43,10 @@ namespace OpenAI
             Instructions = instructions;
             ParallelToolCalls = parallelToolCalls;
             AgentReference = agentReference;
-            ContentFilters = new ChangeTrackingList<ContentFilterResult>();
+            ContentFilters = new global::Azure.AI.Extensions.OpenAI.ChangeTrackingList<global::Azure.AI.Extensions.OpenAI.ContentFilterResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalAgentResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalAgentResponse"/>. </summary>
         /// <param name="metadata"></param>
         /// <param name="topLogprobs"></param>
         /// <param name="temperature"></param>
@@ -101,7 +101,7 @@ namespace OpenAI
         /// <param name="agentReference"> The agent used for this response. </param>
         /// <param name="contentFilters"> The content filter evaluation results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalAgentResponse(InternalMetadataContainer metadata, long? topLogprobs, double? temperature, double? topP, string user, string safetyIdentifier, string promptCacheKey, ResponseServiceTier? serviceTier, ResponsePromptCacheRetention? promptCacheRetention, string previousResponseId, string model, InternalReasoning reasoning, bool? background, long? maxOutputTokens, long? maxToolCalls, ResponseTextParam text, IList<ResponsesTool> tools, BinaryData toolChoice, Prompt prompt, ResponseTruncation? truncation, string id, string @object, InternalAgentResponseStatus? status, DateTimeOffset createdAt, DateTimeOffset? completedAt, InternalAgentResponseError error, ResponseIncompleteDetails incompleteDetails, IList<AgentResponseItem> output, BinaryData instructions, string outputText, ResponseUsage usage, bool parallelToolCalls, ConversationReference conversation, AgentReference agentReference, IList<ContentFilterResult> contentFilters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalAgentResponse(global::Azure.AI.Extensions.OpenAI.InternalMetadataContainer metadata, long? topLogprobs, double? temperature, double? topP, string user, string safetyIdentifier, string promptCacheKey, global::Azure.AI.Extensions.OpenAI.ResponseServiceTier? serviceTier, global::Azure.AI.Extensions.OpenAI.ResponsePromptCacheRetention? promptCacheRetention, string previousResponseId, string model, global::OpenAI.InternalReasoning reasoning, bool? background, long? maxOutputTokens, long? maxToolCalls, global::Azure.AI.Extensions.OpenAI.ResponseTextParam text, global::System.Collections.Generic.IList<global::Azure.AI.Extensions.OpenAI.ResponsesTool> tools, global::System.BinaryData toolChoice, global::Azure.AI.Extensions.OpenAI.Prompt prompt, global::Azure.AI.Extensions.OpenAI.ResponseTruncation? truncation, string id, string @object, global::OpenAI.InternalAgentResponseStatus? status, global::System.DateTimeOffset createdAt, global::System.DateTimeOffset? completedAt, global::OpenAI.InternalAgentResponseError error, global::Azure.AI.Extensions.OpenAI.ResponseIncompleteDetails incompleteDetails, global::System.Collections.Generic.IList<global::Azure.AI.Extensions.OpenAI.AgentResponseItem> output, global::System.BinaryData instructions, string outputText, global::Azure.AI.Extensions.OpenAI.ResponseUsage usage, bool parallelToolCalls, global::Azure.AI.Extensions.OpenAI.ConversationReference conversation, global::Azure.AI.Extensions.OpenAI.AgentReference agentReference, global::System.Collections.Generic.IList<global::Azure.AI.Extensions.OpenAI.ContentFilterResult> contentFilters, global::System.Collections.Generic.IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
             TopLogprobs = topLogprobs;
@@ -124,7 +124,7 @@ namespace OpenAI
             Prompt = prompt;
             Truncation = truncation;
             Id = id;
-            Object = @object;
+            this.Object = @object;
             Status = status;
             CreatedAt = createdAt;
             CompletedAt = completedAt;
@@ -142,7 +142,7 @@ namespace OpenAI
         }
 
         /// <summary> Gets the Metadata. </summary>
-        public InternalMetadataContainer Metadata { get; }
+        public global::Azure.AI.Extensions.OpenAI.InternalMetadataContainer Metadata { get; }
 
         /// <summary> Gets the TopLogprobs. </summary>
         public long? TopLogprobs { get; }
@@ -170,10 +170,10 @@ namespace OpenAI
         public string PromptCacheKey { get; }
 
         /// <summary> Gets the ServiceTier. </summary>
-        public ResponseServiceTier? ServiceTier { get; }
+        public global::Azure.AI.Extensions.OpenAI.ResponseServiceTier? ServiceTier { get; }
 
         /// <summary> Gets the PromptCacheRetention. </summary>
-        public ResponsePromptCacheRetention? PromptCacheRetention { get; }
+        public global::Azure.AI.Extensions.OpenAI.ResponsePromptCacheRetention? PromptCacheRetention { get; }
 
         /// <summary> Gets the PreviousResponseId. </summary>
         public string PreviousResponseId { get; }
@@ -182,7 +182,7 @@ namespace OpenAI
         public string Model { get; }
 
         /// <summary> Gets the Reasoning. </summary>
-        public InternalReasoning Reasoning { get; }
+        public global::OpenAI.InternalReasoning Reasoning { get; }
 
         /// <summary> Gets the Background. </summary>
         public bool? Background { get; }
@@ -194,24 +194,24 @@ namespace OpenAI
         public long? MaxToolCalls { get; }
 
         /// <summary> Gets the Text. </summary>
-        public ResponseTextParam Text { get; }
+        public global::Azure.AI.Extensions.OpenAI.ResponseTextParam Text { get; }
 
         /// <summary> Gets the Tools. </summary>
-        public IList<ResponsesTool> Tools { get; }
+        public global::System.Collections.Generic.IList<global::Azure.AI.Extensions.OpenAI.ResponsesTool> Tools { get; }
 
         /// <summary>
         /// Gets the ToolChoice.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// <remarks>
         /// Supported types:
         /// <list type="bullet">
         /// <item>
-        /// <description> <see cref="ToolChoiceOptions"/>. </description>
+        /// <description> <see cref="global::OpenAI.ToolChoiceOptions"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="InternalToolChoiceParam"/>. </description>
+        /// <description> :Azure.AI.Extensions.OpenAI.InternalToolChoiceParam. </description>
         /// </item>
         /// </list>
         /// </remarks>
@@ -238,13 +238,13 @@ namespace OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData ToolChoice { get; }
+        public global::System.BinaryData ToolChoice { get; }
 
         /// <summary> Gets the Prompt. </summary>
-        public Prompt Prompt { get; }
+        public global::Azure.AI.Extensions.OpenAI.Prompt Prompt { get; }
 
         /// <summary> Gets the Truncation. </summary>
-        public ResponseTruncation? Truncation { get; }
+        public global::Azure.AI.Extensions.OpenAI.ResponseTruncation? Truncation { get; }
 
         /// <summary> Unique identifier for this Response. </summary>
         public string Id { get; }
@@ -256,19 +256,19 @@ namespace OpenAI
         /// The status of the response generation. One of `completed`, `failed`,
         ///   `in_progress`, `cancelled`, `queued`, or `incomplete`.
         /// </summary>
-        public InternalAgentResponseStatus? Status { get; }
+        public global::OpenAI.InternalAgentResponseStatus? Status { get; }
 
         /// <summary> Unix timestamp (in seconds) of when this Response was created. </summary>
-        public DateTimeOffset CreatedAt { get; }
+        public global::System.DateTimeOffset CreatedAt { get; }
 
         /// <summary> Gets the CompletedAt. </summary>
-        public DateTimeOffset? CompletedAt { get; }
+        public global::System.DateTimeOffset? CompletedAt { get; }
 
         /// <summary> Gets the Error. </summary>
-        public InternalAgentResponseError Error { get; }
+        public global::OpenAI.InternalAgentResponseError Error { get; }
 
         /// <summary> Gets the IncompleteDetails. </summary>
-        public ResponseIncompleteDetails IncompleteDetails { get; }
+        public global::Azure.AI.Extensions.OpenAI.ResponseIncompleteDetails IncompleteDetails { get; }
 
         /// <summary>
         /// An array of content items generated by the model.
@@ -279,12 +279,12 @@ namespace OpenAI
         ///   the model, you might consider using the `output_text` property where
         ///   supported in SDKs.
         /// </summary>
-        public IList<AgentResponseItem> Output { get; }
+        public global::System.Collections.Generic.IList<global::Azure.AI.Extensions.OpenAI.AgentResponseItem> Output { get; }
 
         /// <summary>
         /// Gets the Instructions.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// <remarks>
         /// Supported types:
@@ -293,7 +293,7 @@ namespace OpenAI
         /// <description> <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="IList{T}"/> where <c>T</c> is of type <see cref="InputItem"/>. </description>
+        /// <description> <see cref="global::System.Collections.Generic.IList{T}"/> where <c>T</c> is of type <see cref="global::Azure.AI.Extensions.OpenAI.InputItem"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>
@@ -320,24 +320,24 @@ namespace OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Instructions { get; }
+        public global::System.BinaryData Instructions { get; }
 
         /// <summary> Gets the OutputText. </summary>
         public string OutputText { get; }
 
         /// <summary> Gets the Usage. </summary>
-        public ResponseUsage Usage { get; }
+        public global::Azure.AI.Extensions.OpenAI.ResponseUsage Usage { get; }
 
         /// <summary> Whether to allow the model to run tool calls in parallel. </summary>
         public bool ParallelToolCalls { get; }
 
         /// <summary> Gets the Conversation. </summary>
-        public ConversationReference Conversation { get; }
+        public global::Azure.AI.Extensions.OpenAI.ConversationReference Conversation { get; }
 
         /// <summary> The agent used for this response. </summary>
-        public AgentReference AgentReference { get; }
+        public global::Azure.AI.Extensions.OpenAI.AgentReference AgentReference { get; }
 
         /// <summary> The content filter evaluation results. </summary>
-        public IList<ContentFilterResult> ContentFilters { get; }
+        public global::System.Collections.Generic.IList<global::Azure.AI.Extensions.OpenAI.ContentFilterResult> ContentFilters { get; }
     }
 }

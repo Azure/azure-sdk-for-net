@@ -8,7 +8,11 @@ using Azure.AI.Extensions.OpenAI;
 
 namespace OpenAI
 {
-    internal abstract partial class InternalComputerAction
+    /// <summary>
+    /// The InternalComputerAction.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: 
+    /// </summary>
+    public abstract partial class InternalComputerAction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -55,6 +55,7 @@ namespace Azure.AI.VoiceLive
     [ModelReaderWriterBuildable(typeof(ClientEventSessionUpdate))]
     [ModelReaderWriterBuildable(typeof(ConversationRequestItem))]
     [ModelReaderWriterBuildable(typeof(EouDetection))]
+    [ModelReaderWriterBuildable(typeof(ErrorResponse))]
     [ModelReaderWriterBuildable(typeof(FileSearchResult))]
     [ModelReaderWriterBuildable(typeof(FunctionCallItem))]
     [ModelReaderWriterBuildable(typeof(FunctionCallOutputItem))]

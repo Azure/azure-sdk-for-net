@@ -9,7 +9,8 @@ using System;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal static partial class FileLastWrittenModeExtensions
+    /// <summary></summary>
+    public static partial class FileLastWrittenModeExtensions
     {
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this FileLastWrittenMode value) => value switch

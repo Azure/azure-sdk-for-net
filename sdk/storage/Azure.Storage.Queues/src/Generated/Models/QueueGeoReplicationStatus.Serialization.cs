@@ -9,7 +9,8 @@ using System;
 
 namespace Azure.Storage.Queues.Models
 {
-    internal static partial class QueueGeoReplicationStatusExtensions
+    /// <summary></summary>
+    public static partial class QueueGeoReplicationStatusExtensions
     {
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this QueueGeoReplicationStatus value) => value switch

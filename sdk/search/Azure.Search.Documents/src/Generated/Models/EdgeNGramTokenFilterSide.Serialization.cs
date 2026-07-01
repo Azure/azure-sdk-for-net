@@ -9,7 +9,8 @@ using System;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    internal static partial class EdgeNGramTokenFilterSideExtensions
+    /// <summary></summary>
+    public static partial class EdgeNGramTokenFilterSideExtensions
     {
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this EdgeNGramTokenFilterSide value) => value switch

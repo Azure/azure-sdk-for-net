@@ -9,7 +9,8 @@ using System;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal static partial class ShareFileRangeWriteTypeExtensions
+    /// <summary></summary>
+    public static partial class ShareFileRangeWriteTypeExtensions
     {
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ShareFileRangeWriteType value) => value switch

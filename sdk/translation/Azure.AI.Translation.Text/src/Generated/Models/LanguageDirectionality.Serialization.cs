@@ -9,7 +9,8 @@ using System;
 
 namespace Azure.AI.Translation.Text
 {
-    internal static partial class LanguageDirectionalityExtensions
+    /// <summary></summary>
+    public static partial class LanguageDirectionalityExtensions
     {
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this LanguageDirectionality value) => value switch

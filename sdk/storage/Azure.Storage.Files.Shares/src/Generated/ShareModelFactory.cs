@@ -15,7 +15,6 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ShareModelFactory
     {
-
         /// <summary> Storage service properties. </summary>
         /// <param name="hourMetrics"> A summary of request statistics grouped by API in hourly aggregates for files. </param>
         /// <param name="minuteMetrics"> A summary of request statistics grouped by API in minute aggregates for files. </param>

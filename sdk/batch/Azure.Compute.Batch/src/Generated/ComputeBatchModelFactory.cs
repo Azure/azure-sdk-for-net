@@ -17,7 +17,6 @@ namespace Azure.Compute.Batch
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ComputeBatchModelFactory
     {
-
         /// <summary> Contains information about an application in an Azure Batch Account. </summary>
         /// <param name="id"> A string that uniquely identifies the application within the Account. </param>
         /// <param name="displayName"> The display name for the application. </param>

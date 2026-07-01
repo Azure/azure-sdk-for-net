@@ -9,7 +9,8 @@ using System;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal static partial class OwnerCopyModeExtensions
+    /// <summary></summary>
+    public static partial class OwnerCopyModeExtensions
     {
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this OwnerCopyMode value) => value switch

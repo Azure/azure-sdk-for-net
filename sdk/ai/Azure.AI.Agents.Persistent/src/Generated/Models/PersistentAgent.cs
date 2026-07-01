@@ -16,9 +16,9 @@ namespace Azure.AI.Agents.Persistent
     public partial class PersistentAgent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly global::System.Collections.Generic.IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PersistentAgent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.PersistentAgent"/>. </summary>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
         /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
         /// <param name="name"> The name of the agent. </param>
@@ -40,7 +40,7 @@ namespace Azure.AI.Agents.Persistent
         /// We generally recommend altering this or temperature but not both.
         /// </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-        internal PersistentAgent(string id, DateTimeOffset createdAt, string name, string description, string model, string instructions, IEnumerable<ToolDefinition> tools, ToolResources toolResources, float? temperature, float? topP, IReadOnlyDictionary<string, string> metadata)
+        internal PersistentAgent(string id, global::System.DateTimeOffset createdAt, string name, string description, string model, string instructions, global::System.Collections.Generic.IEnumerable<global::Azure.AI.Agents.Persistent.ToolDefinition> tools, global::Azure.AI.Agents.Persistent.ToolResources toolResources, float? temperature, float? topP, global::System.Collections.Generic.IReadOnlyDictionary<string, string> metadata)
         {
             Id = id;
             CreatedAt = createdAt;
@@ -55,7 +55,7 @@ namespace Azure.AI.Agents.Persistent
             Metadata = metadata;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PersistentAgent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.PersistentAgent"/>. </summary>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
         /// <param name="object"> The object type, which is always assistant. </param>
         /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
@@ -80,10 +80,10 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="responseFormat"> The response format of the tool calls used by this agent. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PersistentAgent(string id, string @object, DateTimeOffset createdAt, string name, string description, string model, string instructions, IReadOnlyList<ToolDefinition> tools, ToolResources toolResources, float? temperature, float? topP, BinaryData responseFormat, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PersistentAgent(string id, string @object, global::System.DateTimeOffset createdAt, string name, string description, string model, string instructions, global::System.Collections.Generic.IReadOnlyList<global::Azure.AI.Agents.Persistent.ToolDefinition> tools, global::Azure.AI.Agents.Persistent.ToolResources toolResources, float? temperature, float? topP, global::System.BinaryData responseFormat, global::System.Collections.Generic.IReadOnlyDictionary<string, string> metadata, global::System.Collections.Generic.IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            Object = @object;
+            this.Object = @object;
             CreatedAt = createdAt;
             Name = name;
             Description = description;
@@ -102,7 +102,7 @@ namespace Azure.AI.Agents.Persistent
         public string Id { get; }
 
         /// <summary> The Unix timestamp, in seconds, representing when this object was created. </summary>
-        public DateTimeOffset CreatedAt { get; }
+        public global::System.DateTimeOffset CreatedAt { get; }
 
         /// <summary> The name of the agent. </summary>
         public string Name { get; }
@@ -117,13 +117,13 @@ namespace Azure.AI.Agents.Persistent
         public string Instructions { get; }
 
         /// <summary> The collection of tools enabled for the agent. </summary>
-        public IReadOnlyList<ToolDefinition> Tools { get; }
+        public global::System.Collections.Generic.IReadOnlyList<global::Azure.AI.Agents.Persistent.ToolDefinition> Tools { get; }
 
         /// <summary>
         /// A set of resources that are used by the agent's tools. The resources are specific to the type of tool. For example, the `code_interpreter`
         /// tool requires a list of file IDs, while the `file_search` tool requires a list of vector store IDs.
         /// </summary>
-        public ToolResources ToolResources { get; }
+        public global::Azure.AI.Agents.Persistent.ToolResources ToolResources { get; }
 
         /// <summary>
         /// What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random,
@@ -140,8 +140,8 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// The response format of the tool calls used by this agent.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// <remarks>
         /// Supported types:
@@ -150,13 +150,13 @@ namespace Azure.AI.Agents.Persistent
         /// <description> <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="PersistentAgentsResponseFormatMode"/>. </description>
+        /// <description> <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentsResponseFormatMode"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="InternalPersistentAgentsResponseFormat"/>. </description>
+        /// <description> :Azure.AI.Agents.Persistent.InternalPersistentAgentsResponseFormat. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="ResponseFormatJsonSchemaType"/>. </description>
+        /// <description> <see cref="global::Azure.AI.Agents.Persistent.ResponseFormatJsonSchemaType"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>
@@ -183,9 +183,9 @@ namespace Azure.AI.Agents.Persistent
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData ResponseFormat { get; }
+        public global::System.BinaryData ResponseFormat { get; }
 
         /// <summary> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </summary>
-        public IReadOnlyDictionary<string, string> Metadata { get; }
+        public global::System.Collections.Generic.IReadOnlyDictionary<string, string> Metadata { get; }
     }
 }

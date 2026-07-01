@@ -12,7 +12,8 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    internal partial class EventGridNamespacesClientOptions : ClientOptions
+    /// <summary> Client options for clients in this library. </summary>
+    public partial class EventGridNamespacesClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2024_06_01;
 
@@ -52,7 +53,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <summary> Configures logging for the client options. </summary>
         partial void ConfigureLogging();
 
-        internal enum ServiceVersion
+        /// <summary> The version of the service to use. </summary>
+        public enum ServiceVersion
         {
             /// <summary> V2023_11_01. </summary>
             V2023_11_01 = 1,

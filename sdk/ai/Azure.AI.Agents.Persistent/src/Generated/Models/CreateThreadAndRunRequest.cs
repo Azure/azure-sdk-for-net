@@ -15,18 +15,18 @@ namespace Azure.AI.Agents.Persistent
     internal partial class CreateThreadAndRunRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly global::System.Collections.Generic.IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CreateThreadAndRunRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.CreateThreadAndRunRequest"/>. </summary>
         /// <param name="assistantId"> The ID of the agent for which the thread should be created. </param>
         internal CreateThreadAndRunRequest(string assistantId)
         {
             AssistantId = assistantId;
-            OverrideTools = new ChangeTrackingList<ToolDefinition>();
-            Metadata = new ChangeTrackingDictionary<string, string>();
+            OverrideTools = new global::Azure.AI.Agents.Persistent.ChangeTrackingList<global::Azure.AI.Agents.Persistent.ToolDefinition>();
+            Metadata = new global::Azure.AI.Agents.Persistent.ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateThreadAndRunRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.CreateThreadAndRunRequest"/>. </summary>
         /// <param name="assistantId"> The ID of the agent for which the thread should be created. </param>
         /// <param name="thread"> The details used to create the new thread. If no thread is provided, an empty one will be created. </param>
         /// <param name="overrideModelName"> The overridden model that the agent should use to run the thread. </param>
@@ -63,7 +63,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="parallelToolCalls"> If `true` functions will run in parallel during tool use. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CreateThreadAndRunRequest(string assistantId, PersistentAgentThreadCreationOptions thread, string overrideModelName, string overrideInstructions, IList<ToolDefinition> overrideTools, ToolResources toolResources, bool? stream, float? temperature, float? topP, int? maxPromptTokens, int? maxCompletionTokens, Truncation truncationStrategy, BinaryData toolChoice, BinaryData responseFormat, bool? parallelToolCalls, IDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CreateThreadAndRunRequest(string assistantId, global::Azure.AI.Agents.Persistent.PersistentAgentThreadCreationOptions thread, string overrideModelName, string overrideInstructions, global::System.Collections.Generic.IList<global::Azure.AI.Agents.Persistent.ToolDefinition> overrideTools, global::Azure.AI.Agents.Persistent.ToolResources toolResources, bool? stream, float? temperature, float? topP, int? maxPromptTokens, int? maxCompletionTokens, global::Azure.AI.Agents.Persistent.Truncation truncationStrategy, global::System.BinaryData toolChoice, global::System.BinaryData responseFormat, bool? parallelToolCalls, global::System.Collections.Generic.IDictionary<string, string> metadata, global::System.Collections.Generic.IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AssistantId = assistantId;
             Thread = thread;
@@ -88,7 +88,7 @@ namespace Azure.AI.Agents.Persistent
         public string AssistantId { get; }
 
         /// <summary> The details used to create the new thread. If no thread is provided, an empty one will be created. </summary>
-        public PersistentAgentThreadCreationOptions Thread { get; }
+        public global::Azure.AI.Agents.Persistent.PersistentAgentThreadCreationOptions Thread { get; }
 
         /// <summary> The overridden model that the agent should use to run the thread. </summary>
         public string OverrideModelName { get; }
@@ -97,10 +97,10 @@ namespace Azure.AI.Agents.Persistent
         public string OverrideInstructions { get; }
 
         /// <summary> The overridden list of enabled tools the agent should use to run the thread. </summary>
-        public IList<ToolDefinition> OverrideTools { get; }
+        public global::System.Collections.Generic.IList<global::Azure.AI.Agents.Persistent.ToolDefinition> OverrideTools { get; }
 
         /// <summary> Override the tools the agent can use for this run. This is useful for modifying the behavior on a per-run basis. </summary>
-        public ToolResources ToolResources { get; }
+        public global::Azure.AI.Agents.Persistent.ToolResources ToolResources { get; }
 
         /// <summary>
         /// If `true`, returns a stream of events that happen during the Run as server-sent events,
@@ -137,12 +137,12 @@ namespace Azure.AI.Agents.Persistent
         public int? MaxCompletionTokens { get; }
 
         /// <summary> The strategy to use for dropping messages as the context windows moves forward. </summary>
-        public Truncation TruncationStrategy { get; }
+        public global::Azure.AI.Agents.Persistent.Truncation TruncationStrategy { get; }
 
         /// <summary>
         /// Controls whether or not and which tool is called by the model.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// <remarks>
         /// Supported types:
@@ -151,10 +151,10 @@ namespace Azure.AI.Agents.Persistent
         /// <description> <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="PersistentAgentsToolChoiceOptionMode"/>. </description>
+        /// <description> <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentsToolChoiceOptionMode"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="PersistentAgentsNamedToolChoice"/>. </description>
+        /// <description> <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentsNamedToolChoice"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>
@@ -181,12 +181,12 @@ namespace Azure.AI.Agents.Persistent
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData ToolChoice { get; }
+        public global::System.BinaryData ToolChoice { get; }
 
         /// <summary>
         /// Specifies the format that the model must output.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// <remarks>
         /// Supported types:
@@ -195,13 +195,13 @@ namespace Azure.AI.Agents.Persistent
         /// <description> <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="PersistentAgentsResponseFormatMode"/>. </description>
+        /// <description> <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentsResponseFormatMode"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="InternalPersistentAgentsResponseFormat"/>. </description>
+        /// <description> :Azure.AI.Agents.Persistent.InternalPersistentAgentsResponseFormat. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="ResponseFormatJsonSchemaType"/>. </description>
+        /// <description> <see cref="global::Azure.AI.Agents.Persistent.ResponseFormatJsonSchemaType"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>
@@ -228,12 +228,12 @@ namespace Azure.AI.Agents.Persistent
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData ResponseFormat { get; }
+        public global::System.BinaryData ResponseFormat { get; }
 
         /// <summary> If `true` functions will run in parallel during tool use. </summary>
         public bool? ParallelToolCalls { get; }
 
         /// <summary> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </summary>
-        public IDictionary<string, string> Metadata { get; }
+        public global::System.Collections.Generic.IDictionary<string, string> Metadata { get; }
     }
 }

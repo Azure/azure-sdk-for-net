@@ -74,6 +74,7 @@ namespace Azure.AI.Language.Conversations
     [ModelReaderWriterBuildable(typeof(EntityMaskTypePolicyType))]
     [ModelReaderWriterBuildable(typeof(EntitySubtype))]
     [ModelReaderWriterBuildable(typeof(EntityTag))]
+    [ModelReaderWriterBuildable(typeof(ErrorResponse))]
     [ModelReaderWriterBuildable(typeof(InformationResolution))]
     [ModelReaderWriterBuildable(typeof(InnerErrorModel))]
     [ModelReaderWriterBuildable(typeof(InputWarning))]
