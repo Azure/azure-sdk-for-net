@@ -56,19 +56,23 @@ describe("ARM provider schema snapshots", () => {
     );
     deepStrictEqual(
       writtenFiles.get(legacyArmProviderSchemaFileName),
-      toJsonValue(convertArmProviderSchemaToArguments(legacySchema))
+      toSortedSnapshot(legacySchema)
     );
     deepStrictEqual(
       writtenFiles.get(resolveArmResourcesProviderSchemaFileName),
-      toJsonValue(
-        convertArmProviderSchemaToArguments(resolveArmResourcesSchema)
-      )
+      toSortedSnapshot(resolveArmResourcesSchema)
     );
   });
 });
 
-function toJsonValue(value: unknown): unknown {
-  return JSON.parse(JSON.stringify(value));
+function toSortedSnapshot(schema: ArmProviderSchema): unknown {
+  const snapshot = JSON.parse(
+    JSON.stringify(convertArmProviderSchemaToArguments(schema))
+  );
+  snapshot.resources.sort((left: any, right: any) =>
+    (left.resourceIdPattern ?? "").localeCompare(right.resourceIdPattern ?? "")
+  );
+  return snapshot;
 }
 
 function createArmProviderSchema(source: string): ArmProviderSchema {
@@ -103,6 +107,40 @@ function createArmProviderSchema(source: string): ArmProviderSchema {
             )
           },
           resourceName: "Widget",
+          nameConstraints: {},
+          apiVersions: ["2024-01-01"],
+          rbacRoles: []
+        }
+      },
+      {
+        resourceModelId: `${source}.Account`,
+        metadata: {
+          resourceIdPattern: new RequestPath(
+            `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/accounts/{accountName}`
+          ),
+          resourceType: "Microsoft.Test/accounts",
+          methods: [
+            {
+              methodId: `${source}.Accounts_Get`,
+              kind: ResourceOperationKind.Read,
+              operationPath: new RequestPath(
+                `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/accounts/{accountName}`
+              ),
+              scope: {
+                kind: ResourceScopeKind.ResourceGroup,
+                scopeIdPattern: new RequestPath(
+                  "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
+                )
+              }
+            }
+          ],
+          scope: {
+            kind: ResourceScopeKind.ResourceGroup,
+            scopeIdPattern: new RequestPath(
+              "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
+            )
+          },
+          resourceName: "Account",
           nameConstraints: {},
           apiVersions: ["2024-01-01"],
           rbacRoles: []
