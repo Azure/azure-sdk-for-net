@@ -64,6 +64,10 @@ namespace Azure.Provisioning.DurableTask
             _groupId = DefineProperty<string>(nameof(GroupId), new string[] { "groupId" }, isOutput: true);
             _requiredMembers = DefineListProperty<string>(nameof(RequiredMembers), new string[] { "requiredMembers" }, isOutput: true);
             _requiredZoneNames = DefineListProperty<string>(nameof(RequiredZoneNames), new string[] { "requiredZoneNames" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DurableTaskPrivateLinkResourceProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

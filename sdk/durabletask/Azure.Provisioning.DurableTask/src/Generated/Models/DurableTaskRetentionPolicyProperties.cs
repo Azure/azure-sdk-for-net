@@ -52,6 +52,10 @@ namespace Azure.Provisioning.DurableTask
             base.DefineProvisionableProperties();
             _provisioningState = DefineProperty<DurableTaskProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _retentionPolicies = DefineListProperty<DurableTaskRetentionPolicyDetails>(nameof(RetentionPolicies), new string[] { "retentionPolicies" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DurableTaskRetentionPolicyProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

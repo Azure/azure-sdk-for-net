@@ -95,6 +95,10 @@ namespace Azure.Provisioning.DurableTask
             _privateEndpoint = DefineModelProperty<PrivateEndpoint>(nameof(PrivateEndpoint), new string[] { "privateEndpoint" });
             _privateLinkServiceConnectionState = DefineModelProperty<DurableTaskPrivateLinkServiceConnectionState>(nameof(PrivateLinkServiceConnectionState), new string[] { "privateLinkServiceConnectionState" }, isRequired: true);
             _provisioningState = DefineProperty<DurableTaskPrivateEndpointConnectionProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for PrivateEndpointConnectionProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

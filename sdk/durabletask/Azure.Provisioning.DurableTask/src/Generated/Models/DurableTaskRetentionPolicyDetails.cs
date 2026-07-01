@@ -57,6 +57,10 @@ namespace Azure.Provisioning.DurableTask
             base.DefineProvisionableProperties();
             _retentionPeriodInDays = DefineProperty<int>(nameof(RetentionPeriodInDays), new string[] { "retentionPeriodInDays" }, isRequired: true);
             _orchestrationState = DefineProperty<DurableTaskPurgeableOrchestrationState>(nameof(OrchestrationState), new string[] { "orchestrationState" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DurableTaskRetentionPolicyDetails that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

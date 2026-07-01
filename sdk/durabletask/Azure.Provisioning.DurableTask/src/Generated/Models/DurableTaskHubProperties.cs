@@ -48,6 +48,10 @@ namespace Azure.Provisioning.DurableTask
             base.DefineProvisionableProperties();
             _provisioningState = DefineProperty<DurableTaskProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _dashboardUri = DefineProperty<Uri>(nameof(DashboardUri), new string[] { "dashboardUrl" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DurableTaskHubProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }
