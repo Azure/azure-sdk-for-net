@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Gets or sets the status of the encryption setting. </summary>
         [WirePath("status")]
         public MachineLearningEncryptionStatus Status { get; set; }
-        /// <summary> KeyVault details to do the encryption. </summary>
+        /// <summary> The KeyVault properties used for the customer-managed-key encryption. </summary>
         [WirePath("keyVaultProperties")]
         public MachineLearningEncryptionKeyVaultProperties KeyVaultProperties { get; set; }
-        /// <summary> UserAssignedIdentity to be used to fetch the encryption key from keyVault. </summary>
+        /// <summary> The user-assigned identity used to fetch the encryption key from KeyVault. </summary>
         [WirePath("identity.userAssignedIdentity")]
         public ResourceIdentifier UserAssignedIdentity { get; set; }
 

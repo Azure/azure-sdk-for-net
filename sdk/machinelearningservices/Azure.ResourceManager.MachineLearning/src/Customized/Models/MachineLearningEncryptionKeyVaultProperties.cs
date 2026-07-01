@@ -11,7 +11,7 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The Key Vault properties used for customer-managed-key encryption. </summary>
+    /// <summary> The KeyVault properties used for customer-managed-key encryption. </summary>
     public partial class MachineLearningEncryptionKeyVaultProperties : IJsonModel<MachineLearningEncryptionKeyVaultProperties>
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningEncryptionKeyVaultProperties"/>. </summary>
@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             KeyIdentifier = keyIdentifier;
         }
 
-        /// <summary> The client ID of the user-assigned identity used to access the Key Vault. </summary>
+        /// <summary> The client ID of the user-assigned identity used to access the KeyVault. </summary>
         [WirePath("identityClientId")]
         public string IdentityClientId { get; set; }
         /// <summary> Gets or sets the KeyIdentifier. </summary>
         [WirePath("keyIdentifier")]
         public string KeyIdentifier { get; set; }
-        /// <summary> KeyVault Arm Id that contains the data encryption key. </summary>
+        /// <summary> The KeyVault Arm Id that contains the data encryption key. </summary>
         [WirePath("keyVaultArmId")]
         public ResourceIdentifier KeyVaultArmId { get; set; }
 
