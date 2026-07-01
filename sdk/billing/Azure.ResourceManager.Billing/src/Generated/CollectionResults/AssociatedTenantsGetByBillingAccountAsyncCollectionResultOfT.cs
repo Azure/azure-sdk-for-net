@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.Billing
                     yield break;
                 }
                 AssociatedTenantListResult result = AssociatedTenantListResult.FromResponse(response);
-                yield return Page<BillingAssociatedTenantData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<BillingAssociatedTenantData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
