@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.ProviderHub
                     yield break;
                 }
                 AuthorizedApplicationArrayResponseWithContinuation result = AuthorizedApplicationArrayResponseWithContinuation.FromResponse(response);
-                yield return Page<ProviderAuthorizedApplicationData>.FromValues((IReadOnlyList<ProviderAuthorizedApplicationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ProviderAuthorizedApplicationData>.FromValues((IReadOnlyList<ProviderAuthorizedApplicationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
