@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.SecurityInsights
                     yield break;
                 }
                 JobList result = JobList.FromResponse(response);
-                yield return Page<WorkspaceManagerAssignmentJobData>.FromValues((IReadOnlyList<WorkspaceManagerAssignmentJobData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<WorkspaceManagerAssignmentJobData>.FromValues((IReadOnlyList<WorkspaceManagerAssignmentJobData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.SecurityInsights
                     yield break;
                 }
                 RecommendationList result = RecommendationList.FromResponse(response);
-                yield return Page<SecurityInsightsRecommendationData>.FromValues((IReadOnlyList<SecurityInsightsRecommendationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SecurityInsightsRecommendationData>.FromValues((IReadOnlyList<SecurityInsightsRecommendationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

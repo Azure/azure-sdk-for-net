@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.SecurityInsights
                     yield break;
                 }
                 BillingStatisticList result = BillingStatisticList.FromResponse(response);
-                yield return Page<SecurityInsightsBillingStatisticData>.FromValues((IReadOnlyList<SecurityInsightsBillingStatisticData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SecurityInsightsBillingStatisticData>.FromValues((IReadOnlyList<SecurityInsightsBillingStatisticData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
