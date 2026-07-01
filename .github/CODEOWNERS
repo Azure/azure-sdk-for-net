@@ -264,10 +264,10 @@
 # ServiceOwners: @thang-bit
 
 # PRLabel: %Device Update
-/sdk/deviceupdate/    @dpokluda @sedols
+/sdk/deviceupdate/    @josephmsft @darkoa-msft @devlie
 
 # ServiceLabel: %Device Update
-# ServiceOwners: @dpokluda @sedols
+# ServiceOwners: @josephmsft @darkoa-msft @devlie
 
 # PRLabel: %Digital Twins
 /sdk/digitaltwins/    @Aashish93-stack @abhinav-ghai @efriesner @johngallardo @Satya-Kolluri @sjiherzig
