@@ -1,5 +1,15 @@
 # Release History
 
+## 1.1.2-beta.6 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.1.2-beta.5 (2026-06-30)
 
 ### Other Changes
