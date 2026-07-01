@@ -19,6 +19,8 @@ The Advisor resource detection result is mostly equivalent between the legacy de
 
 ## 1. Resource ID pattern coverage
 
+**Differences:** none. Both schemas include the same eight `resourceIdPattern` values.
+
 | Category | Count | Details |
 | --- | ---: | --- |
 | In both schemas | 8 | All Advisor resource ID patterns are present in both snapshots. |
@@ -26,6 +28,8 @@ The Advisor resource detection result is mostly equivalent between the legacy de
 | `resolveArmResources` only | 0 | None. |
 
 ## 2. Hierarchy comparison for matching resource ID patterns
+
+**Differences:** none. For every matching `resourceIdPattern`, the resource-level `scope` object is identical in both schemas.
 
 Hierarchy is represented by the resource-level `scope` object in these schema snapshots. All eight matching resource ID patterns have the same hierarchy in both schemas.
 
@@ -41,6 +45,8 @@ Hierarchy is represented by the resource-level `scope` object in these schema sn
 | `/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}/suppressions/{name}` | Extension, `scopeIdPattern: /{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}`, `scopeResourceType: Microsoft.Advisor/recommendations` | Extension, `scopeIdPattern: /{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}`, `scopeResourceType: Microsoft.Advisor/recommendations` | Same |
 
 ## 3. Resource model comparison for matching resource ID patterns
+
+**Differences:** none for `resourceModelId` or `resourceType`. All matching `resourceIdPattern` values map to the same resource model and resource type in both schemas.
 
 All matching resource ID patterns use the same `resourceModelId` and `resourceType` in both schemas.
 
@@ -59,6 +65,8 @@ All matching resource ID patterns use the same `resourceModelId` and `resourceTy
 
 ### 4.1 CRUD operations
 
+**Differences:** none. For every matching `resourceIdPattern`, the `Create`, `Read`, `Update`, and `Delete` operation sets are identical.
+
 CRUD means `Create`, `Read`, `Update`, and `Delete`. The CRUD operation set is the same for every matching resource ID pattern.
 
 | Resource ID pattern | CRUD operations | Result |
@@ -73,6 +81,8 @@ CRUD means `Create`, `Read`, `Update`, and `Delete`. The CRUD operation set is t
 | `/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}/suppressions/{name}` | `Create: Microsoft.Advisor.SuppressionContracts.create`; `Read: Microsoft.Advisor.SuppressionContracts.get`; `Delete: Microsoft.Advisor.SuppressionContracts.delete` | Same |
 
 ### 4.2 List and action operations
+
+**Differences:** one. For `/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}`, `resolveArmResources` adds `Microsoft.Advisor.ResourceRecommendationBases.list`; all other list/action operation sets are identical.
 
 List/action operations match except for one extra list operation in `resolveArmResources`.
 
@@ -91,8 +101,10 @@ List/action operations match except for one extra list operation in `resolveArmR
 
 These differences are outside the requested comparison axes but may still be useful when evaluating `resolveArmResources` output:
 
-- `resolveArmResources` emits different `resourceName` values for seven resources. The legacy names look closer to the current SDK naming style, especially where the `resolveArmResources` names are pluralized (`TriageRecommendations`, `TriageResources`) or raw model names (`ResourceRecommendationBase`).
-- `resolveArmResources` includes one additional non-resource method, `Azure.ResourceManager.Legacy.Operations.list`, for `/providers/Microsoft.Advisor/operations` at tenant scope. The legacy schema does not include this method.
+| Difference | Legacy | `resolveArmResources` | Notes |
+| --- | --- | --- | --- |
+| `resourceName` values | SDK-style names for seven resources, such as `AdvisorRecommendation`, `AdvisorTriageRecommendation`, and `AdvisorTriage`. | Raw or pluralized names for the same resources, such as `ResourceRecommendationBase`, `TriageRecommendations`, and `TriageResources`. | Outside the requested axes because `resourceModelId` and `resourceType` still match. Legacy names look closer to the current SDK naming style. |
+| Provider operations non-resource method | Missing. | Adds `Azure.ResourceManager.Legacy.Operations.list` for `/providers/Microsoft.Advisor/operations` at tenant scope. | Outside the resource-level comparison because it is a non-resource method. |
 
 ## Initial assessment
 
