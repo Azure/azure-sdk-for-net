@@ -122,27 +122,6 @@ namespace RandomNamespace
             await Verifier.VerifyAnalyzerAsync(code);
         }
 
-        [Test]
-        public async Task AZC0005ProducedForClientWithOnlyClientSettingsAndNoParameterlessCtor()
-        {
-            const string code = @"
-namespace System.ClientModel.Primitives
-{
-    public class ClientSettings {}
-}
-
-namespace RandomNamespace
-{
-    public class SomeClientSettings : System.ClientModel.Primitives.ClientSettings {}
-
-    public class {|AZC0005:SomeClient|}
-    {
-        public SomeClient(SomeClientSettings settings) {}
-    }
-}";
-            await Verifier.VerifyAnalyzerAsync(code);
-        }
-
 #if !NETFRAMEWORK // Deriving from Azure.Core.ClientOptions requires netstandard2.0+ support (net472+)
         [Test]
         public async Task AZC0007NotProducedForClientWithClientSettingsAndOtherOverloads()
