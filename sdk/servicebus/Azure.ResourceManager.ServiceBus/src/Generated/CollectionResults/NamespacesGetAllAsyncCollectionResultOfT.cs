@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.ServiceBus
                     yield break;
                 }
                 SBNamespaceListResult result = SBNamespaceListResult.FromResponse(response);
-                yield return Page<ServiceBusNamespaceData>.FromValues((IReadOnlyList<ServiceBusNamespaceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ServiceBusNamespaceData>.FromValues((IReadOnlyList<ServiceBusNamespaceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
