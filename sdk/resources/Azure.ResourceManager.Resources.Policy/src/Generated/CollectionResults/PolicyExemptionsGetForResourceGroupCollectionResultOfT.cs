@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Resources.Policy
                     yield break;
                 }
                 PolicyExemptionListResult result = PolicyExemptionListResult.FromResponse(response);
-                yield return Page<PolicyExemptionData>.FromValues((IReadOnlyList<PolicyExemptionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<PolicyExemptionData>.FromValues((IReadOnlyList<PolicyExemptionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
