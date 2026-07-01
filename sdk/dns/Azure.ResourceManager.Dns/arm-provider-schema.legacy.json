@@ -1,0 +1,939 @@
+{
+  "resources": [
+    {
+      "resourceModelId": "Microsoft.Network.DnssecConfig",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/dnssecConfigs/default",
+      "resourceType": "Microsoft.Network/dnsZones/dnssecConfigs",
+      "methods": [
+        {
+          "methodId": "Microsoft.Network.DnssecConfigs.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/dnssecConfigs/default",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/dnssecConfigs/default",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.DnssecConfigs.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/dnssecConfigs/default",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/dnssecConfigs/default",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.DnssecConfigs.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/dnssecConfigs/default",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/dnssecConfigs/default",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.DnssecConfigs.listByDnsZone",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/dnssecConfigs",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}",
+      "singletonResourceName": "default",
+      "resourceName": "DnssecConfig",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2023-07-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Network.Zone",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}",
+      "resourceType": "Microsoft.Network/dnsZones",
+      "methods": [
+        {
+          "methodId": "Microsoft.Network.Zones.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.Zones.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.Zones.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.Zones.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.Zones.listByResourceGroup",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.listByType",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.Zones.listByDnsZone",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/recordsets",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "resourceName": "DnsZone",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2023-07-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Network.RecordSet",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/A/{relativeRecordSetName}",
+      "resourceType": "Microsoft.Network/dnsZones/A",
+      "methods": [
+        {
+          "methodId": "Microsoft.Network.RecordSets.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/A/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/A/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/A/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/A/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}",
+      "resourceName": "DnsARecord",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2023-07-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Network.RecordSet",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/AAAA/{relativeRecordSetName}",
+      "resourceType": "Microsoft.Network/dnsZones/AAAA",
+      "methods": [
+        {
+          "methodId": "Microsoft.Network.RecordSets.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/AAAA/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/AAAA/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/AAAA/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/AAAA/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}",
+      "resourceName": "DnsAaaaRecord",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2023-07-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Network.RecordSet",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/CAA/{relativeRecordSetName}",
+      "resourceType": "Microsoft.Network/dnsZones/CAA",
+      "methods": [
+        {
+          "methodId": "Microsoft.Network.RecordSets.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/CAA/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/CAA/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/CAA/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/CAA/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}",
+      "resourceName": "DnsCaaRecord",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2023-07-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Network.RecordSet",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/CNAME/{relativeRecordSetName}",
+      "resourceType": "Microsoft.Network/dnsZones/CNAME",
+      "methods": [
+        {
+          "methodId": "Microsoft.Network.RecordSets.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/CNAME/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/CNAME/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/CNAME/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/CNAME/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}",
+      "resourceName": "DnsCnameRecord",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2023-07-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Network.RecordSet",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/MX/{relativeRecordSetName}",
+      "resourceType": "Microsoft.Network/dnsZones/MX",
+      "methods": [
+        {
+          "methodId": "Microsoft.Network.RecordSets.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/MX/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/MX/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/MX/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/MX/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}",
+      "resourceName": "DnsMXRecord",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2023-07-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Network.RecordSet",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/NS/{relativeRecordSetName}",
+      "resourceType": "Microsoft.Network/dnsZones/NS",
+      "methods": [
+        {
+          "methodId": "Microsoft.Network.RecordSets.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/NS/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/NS/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/NS/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/NS/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}",
+      "resourceName": "DnsNSRecord",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2023-07-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Network.RecordSet",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/PTR/{relativeRecordSetName}",
+      "resourceType": "Microsoft.Network/dnsZones/PTR",
+      "methods": [
+        {
+          "methodId": "Microsoft.Network.RecordSets.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/PTR/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/PTR/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/PTR/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/PTR/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}",
+      "resourceName": "DnsPtrRecord",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2023-07-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Network.RecordSet",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/SOA/{relativeRecordSetName}",
+      "resourceType": "Microsoft.Network/dnsZones/SOA",
+      "methods": [
+        {
+          "methodId": "Microsoft.Network.RecordSets.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/SOA/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/SOA/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/SOA/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/SOA/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}",
+      "resourceName": "DnsSoaRecord",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2023-07-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Network.RecordSet",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/SRV/{relativeRecordSetName}",
+      "resourceType": "Microsoft.Network/dnsZones/SRV",
+      "methods": [
+        {
+          "methodId": "Microsoft.Network.RecordSets.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/SRV/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/SRV/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/SRV/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/SRV/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}",
+      "resourceName": "DnsSrvRecord",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2023-07-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Network.RecordSet",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/TXT/{relativeRecordSetName}",
+      "resourceType": "Microsoft.Network/dnsZones/TXT",
+      "methods": [
+        {
+          "methodId": "Microsoft.Network.RecordSets.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/TXT/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/TXT/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/TXT/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/TXT/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}",
+      "resourceName": "DnsTxtRecord",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2023-07-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Network.RecordSet",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/TLSA/{relativeRecordSetName}",
+      "resourceType": "Microsoft.Network/dnsZones/TLSA",
+      "methods": [
+        {
+          "methodId": "Microsoft.Network.RecordSets.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/TLSA/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/TLSA/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/TLSA/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/TLSA/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}",
+      "resourceName": "DnsTlsaRecord",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2023-07-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Network.RecordSet",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/DS/{relativeRecordSetName}",
+      "resourceType": "Microsoft.Network/dnsZones/DS",
+      "methods": [
+        {
+          "methodId": "Microsoft.Network.RecordSets.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/DS/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/DS/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/DS/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/DS/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}",
+      "resourceName": "DnsDSRecord",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2023-07-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Network.RecordSet",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/NAPTR/{relativeRecordSetName}",
+      "resourceType": "Microsoft.Network/dnsZones/NAPTR",
+      "methods": [
+        {
+          "methodId": "Microsoft.Network.RecordSets.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/NAPTR/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/NAPTR/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/NAPTR/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.RecordSets.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/NAPTR/{relativeRecordSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}",
+      "resourceName": "DnsNaptrRecord",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2023-07-01-preview"
+      ],
+      "rbacRoles": []
+    }
+  ],
+  "nonResourceMethods": [
+    {
+      "methodId": "Microsoft.Network.Zones.list",
+      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Network/dnszones",
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      }
+    },
+    {
+      "methodId": "Microsoft.Network.DnsResourceReferenceOperationGroup.getByTargetResources",
+      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Network/getDnsResourceReference",
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      }
+    }
+  ]
+}

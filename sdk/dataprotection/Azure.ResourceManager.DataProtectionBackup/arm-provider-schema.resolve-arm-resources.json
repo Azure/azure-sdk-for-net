@@ -1,0 +1,974 @@
+{
+  "resources": [
+    {
+      "resourceModelId": "Microsoft.DataProtection.BackupVaultResource",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}",
+      "resourceType": "Microsoft.DataProtection/backupVaults",
+      "methods": [
+        {
+          "methodId": "Microsoft.DataProtection.BackupVaultResources.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.BackupVaultResources.exportJobsOperationResultGet",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupJobs/operations/{operationId}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.BackupVaultResources.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.BackupVaultResources.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.BackupVaultResources.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.BackupVaultOperationResults.getInResourceGroup",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.BackupVaultResources.getInSubscription",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/backupVaults",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.BackupVaultResources.trigger",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/exportBackupJobs",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.BackupVaultResources.validateForBackup",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/validateForBackup",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "resourceName": "BackupVaults",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-07-01",
+        "2025-09-01",
+        "2026-03-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.DataProtection.BackupVaultResource",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/operationResults/{operationId}",
+      "resourceType": "Microsoft.DataProtection/backupVaults/operationResults",
+      "methods": [
+        {
+          "methodId": "Microsoft.DataProtection.BackupVaultOperationResults.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/operationResults/{operationId}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/operationResults/{operationId}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "resourceName": "BackupVaultsOperationResults",
+      "nameConstraints": {},
+      "apiVersions": [],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.DataProtection.BackupVaultResource",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/operationStatus/{operationId}",
+      "resourceType": "Microsoft.DataProtection/backupVaults/operationStatus",
+      "methods": [
+        {
+          "methodId": "Microsoft.DataProtection.BackupVaultResources.operationStatusBackupVaultContextGet",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/operationStatus/{operationId}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/operationStatus/{operationId}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "resourceName": "BackupVaultsOperationStatus",
+      "nameConstraints": {},
+      "apiVersions": [],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.DataProtection.BaseBackupPolicyResource",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupPolicies/{backupPolicyName}",
+      "resourceType": "Microsoft.DataProtection/backupVaults/backupPolicies",
+      "methods": [
+        {
+          "methodId": "Microsoft.DataProtection.BaseBackupPolicyResources.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupPolicies/{backupPolicyName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupPolicies/{backupPolicyName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.BaseBackupPolicyResources.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupPolicies/{backupPolicyName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupPolicies/{backupPolicyName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.BaseBackupPolicyResources.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupPolicies/{backupPolicyName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupPolicies/{backupPolicyName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.BaseBackupPolicyResources.list",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupPolicies",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "resourceName": "BaseBackupPolicyResource",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-07-01",
+        "2025-09-01",
+        "2026-03-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.DataProtection.BackupInstanceResource",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}",
+      "resourceType": "Microsoft.DataProtection/backupVaults/backupInstances",
+      "methods": [
+        {
+          "methodId": "Microsoft.DataProtection.BackupInstanceResources.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.BackupInstanceResources.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.BackupInstanceResources.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.BackupInstances.list",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.BackupInstanceResources.adhocBackup",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}/backup",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.BackupInstanceResources.find",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}/findRestorableTimeRanges",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.BackupInstanceResources.resumeBackups",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}/resumeBackups",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.BackupInstanceResources.resumeProtection",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}/resumeProtection",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.BackupInstanceResources.stopProtection",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}/stopProtection",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.BackupInstanceResources.suspendBackups",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}/suspendBackups",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.BackupInstanceResources.syncBackupInstance",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}/sync",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.BackupInstanceResources.triggerRehydrate",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}/rehydrate",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.BackupInstanceResources.triggerRestore",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}/restore",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.BackupInstanceResources.validateForModifyBackup",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}/validateForModifyBackup",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.BackupInstanceResources.validateForRestore",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}/validateRestore",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "resourceName": "BackupVaultsBackupInstances",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-07-01",
+        "2025-09-01",
+        "2026-03-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.DataProtection.BackupInstanceResource",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}/operationResults/{operationId}",
+      "resourceType": "Microsoft.DataProtection/backupVaults/backupInstances/operationResults",
+      "methods": [
+        {
+          "methodId": "Microsoft.DataProtection.BackupInstances.getBackupInstanceOperationResult",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}/operationResults/{operationId}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}/operationResults/{operationId}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}",
+      "resourceName": "BackupInstancesOperationResults",
+      "nameConstraints": {},
+      "apiVersions": [],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.DataProtection.AzureBackupRecoveryPointResource",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}/recoveryPoints/{recoveryPointId}",
+      "resourceType": "Microsoft.DataProtection/backupVaults/backupInstances/recoveryPoints",
+      "methods": [
+        {
+          "methodId": "Microsoft.DataProtection.AzureBackupRecoveryPointResources.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}/recoveryPoints/{recoveryPointId}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}/recoveryPoints/{recoveryPointId}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.AzureBackupRecoveryPointResources.list",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}/recoveryPoints",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}",
+      "resourceName": "AzureBackupRecoveryPointResource",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-07-01",
+        "2025-09-01",
+        "2026-03-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.DataProtection.AzureBackupJobResource",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupJobs/{jobId}",
+      "resourceType": "Microsoft.DataProtection/backupVaults/backupJobs",
+      "methods": [
+        {
+          "methodId": "Microsoft.DataProtection.AzureBackupJobResources.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupJobs/{jobId}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupJobs/{jobId}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.AzureBackupJobResources.list",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupJobs",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "resourceName": "AzureBackupJobResource",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-07-01",
+        "2025-09-01",
+        "2026-03-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.DataProtection.DeletedBackupInstanceResource",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/deletedBackupInstances/{backupInstanceName}",
+      "resourceType": "Microsoft.DataProtection/backupVaults/deletedBackupInstances",
+      "methods": [
+        {
+          "methodId": "Microsoft.DataProtection.DeletedBackupInstanceResources.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/deletedBackupInstances/{backupInstanceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/deletedBackupInstances/{backupInstanceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.DeletedBackupInstanceResources.list",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/deletedBackupInstances",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.DeletedBackupInstanceResources.undelete",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/deletedBackupInstances/{backupInstanceName}/undelete",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/deletedBackupInstances/{backupInstanceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "resourceName": "DeletedBackupInstanceResource",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-07-01",
+        "2025-09-01",
+        "2026-03-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.DataProtection.ResourceGuardResource",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}",
+      "resourceType": "Microsoft.DataProtection/resourceGuards",
+      "methods": [
+        {
+          "methodId": "Microsoft.DataProtection.ResourceGuardResources.put",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.ResourceGuardResources.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.ResourceGuardResources.patch",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.ResourceGuardResources.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.ResourceGuardResources.getResourcesInResourceGroup",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.ResourceGuardResources.getResourcesInSubscription",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/resourceGuards",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.DppBaseResourceOperationGroup.getBackupSecurityPINRequestsObjects",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/getBackupSecurityPINRequests",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.DppBaseResourceOperationGroup.getDefaultBackupSecurityPINRequestsObject",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/getBackupSecurityPINRequests/{requestName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.DppBaseResourceOperationGroup.getDefaultDeleteProtectedItemRequestsObject",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteProtectedItemRequests/{requestName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.DppBaseResourceOperationGroup.getDefaultDisableSoftDeleteRequestsObject",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/disableSoftDeleteRequests/{requestName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.DppBaseResourceOperationGroup.getDefaultUpdateProtectedItemRequestsObject",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectedItemRequests/{requestName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.DppBaseResourceOperationGroup.getDefaultUpdateProtectionPolicyRequestsObject",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectionPolicyRequests/{requestName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.DppBaseResourceOperationGroup.getDeleteProtectedItemRequestsObjects",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteProtectedItemRequests",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.DppBaseResourceOperationGroup.getDisableSoftDeleteRequestsObjects",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/disableSoftDeleteRequests",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.DppBaseResourceOperationGroup.getUpdateProtectedItemRequestsObjects",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectedItemRequests",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.DppBaseResourceOperationGroup.getUpdateProtectionPolicyRequestsObjects",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectionPolicyRequests",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.ResourceGuards.getDefaultDeleteResourceGuardProxyRequestsObject",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteResourceGuardProxyRequests/{requestName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.ResourceGuards.getDeleteResourceGuardProxyRequestsObjects",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteResourceGuardProxyRequests",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "resourceName": "ResourceGuardResource",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-07-01",
+        "2025-09-01",
+        "2026-03-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.DataProtection.ResourceGuardProxyBaseResource",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}",
+      "resourceType": "Microsoft.DataProtection/backupVaults/backupResourceGuardProxies",
+      "methods": [
+        {
+          "methodId": "Microsoft.DataProtection.ResourceGuardProxyBaseResources.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.ResourceGuardProxyBaseResources.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.ResourceGuardProxyBaseResources.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.ResourceGuardProxyBaseResources.list",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupResourceGuardProxies",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.ResourceGuardProxyBaseResources.unlockDelete",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}/unlockDelete",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "resourceName": "ResourceGuardProxyBaseResource",
+      "nameConstraints": {
+        "pattern": "^[A-Za-z0-9]*$"
+      },
+      "apiVersions": [
+        "2025-07-01",
+        "2025-09-01",
+        "2026-03-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.DataProtection.DeletedBackupVaultResource",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/locations/{location}/deletedVaults/{deletedVaultName}",
+      "resourceType": "Microsoft.DataProtection/locations/deletedVaults",
+      "methods": [
+        {
+          "methodId": "Microsoft.DataProtection.DeletedBackupVaults.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/locations/{location}/deletedVaults/{deletedVaultName}",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/locations/{location}/deletedVaults/{deletedVaultName}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.DataProtection.DeletedBackupVaults.listByLocation",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/locations/{location}/deletedVaults",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      },
+      "resourceName": "DeletedBackupVaultResource",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-09-01",
+        "2026-03-01"
+      ],
+      "rbacRoles": []
+    }
+  ],
+  "nonResourceMethods": [
+    {
+      "methodId": "Azure.ResourceManager.Operations.list",
+      "operationPath": "/providers/Microsoft.DataProtection/operations",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.DataProtection.BackupVaultsOperationGroup.checkNameAvailability",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/checkNameAvailability",
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      }
+    },
+    {
+      "methodId": "Microsoft.DataProtection.OperationResultOperationGroup.get",
+      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/locations/{location}/operationResults/{operationId}",
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      }
+    },
+    {
+      "methodId": "Microsoft.DataProtection.OperationStatusOperationGroup.get",
+      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/locations/{location}/operationStatus/{operationId}",
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      }
+    },
+    {
+      "methodId": "Microsoft.DataProtection.OperationStatusResourceGroupContextOperationGroup.get",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/operationStatus/{operationId}",
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      }
+    },
+    {
+      "methodId": "Microsoft.DataProtection.DataProtectionOperationGroup.checkFeatureSupport",
+      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/locations/{location}/checkFeatureSupport",
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      }
+    },
+    {
+      "methodId": "Microsoft.DataProtection.BackupInstancesOperationGroup.triggerCrossRegionRestore",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/crossRegionRestore",
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      }
+    },
+    {
+      "methodId": "Microsoft.DataProtection.BackupInstancesOperationGroup.validateCrossRegionRestore",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/validateCrossRegionRestore",
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      }
+    },
+    {
+      "methodId": "Microsoft.DataProtection.FetchSecondaryRecoveryPointsOperationGroup.list",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/fetchSecondaryRecoveryPoints",
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      }
+    },
+    {
+      "methodId": "Microsoft.DataProtection.FetchCrossRegionRestoreJobOperationGroup.get",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/fetchCrossRegionRestoreJob",
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      }
+    },
+    {
+      "methodId": "Microsoft.DataProtection.FetchCrossRegionRestoreJobsOperationGroup.list",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/locations/{location}/fetchCrossRegionRestoreJobs",
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      }
+    },
+    {
+      "methodId": "Microsoft.DataProtection.BackupInstancesExtensionRoutingOperationGroup.list",
+      "operationPath": "/{resourceId}/providers/Microsoft.DataProtection/backupInstances",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{resourceId}"
+      }
+    }
+  ]
+}
