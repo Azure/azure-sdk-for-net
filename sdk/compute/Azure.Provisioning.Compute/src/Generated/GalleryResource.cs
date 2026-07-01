@@ -14,7 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Compute
 {
     /// <summary> Specifies information about the Shared Image Gallery that you want to create or update. </summary>
-    public partial class Gallery : ProvisionableResource
+    public partial class GalleryResource : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
@@ -24,10 +24,10 @@ namespace Azure.Provisioning.Compute
         private GalleryProperties _properties;
         private ManagedServiceIdentity _identity;
 
-        /// <summary> Creates a new Gallery. </summary>
+        /// <summary> Creates a new GalleryResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public Gallery(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Compute/galleries", resourceVersion ?? "2025-12-03")
+        public GalleryResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Compute/galleries", resourceVersion ?? "2025-12-03")
         {
         }
 
@@ -212,7 +212,7 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Define all the provisionable properties for Gallery. </summary>
+        /// <summary> Define all the provisionable properties for GalleryResource. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -226,17 +226,17 @@ namespace Azure.Provisioning.Compute
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing Gallery. </summary>
+        /// <summary> Creates a reference to an existing GalleryResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static Gallery FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static GalleryResource FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            Gallery result = new Gallery(bicepIdentifier, resourceVersion);
+            GalleryResource result = new GalleryResource(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for Gallery that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for GalleryResource that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary> Get the requirements for naming this resource. </summary>
