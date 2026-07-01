@@ -65,6 +65,14 @@ Describe "Validate-CpmCompliance CPM-007" {
 </Project>
 '@
 
+        New-Fixture "reordered/src" "Test.csproj" @'
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <PackageVersion Condition="'$(Foo)' == 'true'" Include="Microsoft.Extensions.Configuration" Version="9.0.5" />
+  </ItemGroup>
+</Project>
+'@
+
         function Invoke-Validator([string]$PackageRelativePath) {
             $output = & $scriptPath -PackagePath (Join-Path $fixtureName $PackageRelativePath) *>&1
             return [pscustomobject]@{
@@ -102,5 +110,11 @@ Describe "Validate-CpmCompliance CPM-007" {
         $result = Invoke-Validator "samplesopt"
         $result.ExitCode | Should -Be 0
         $result.Output | Should -Not -Match 'CPM-007'
+    }
+
+    It "flags a PackageVersion item where Include is not the first attribute" {
+        $result = Invoke-Validator "reordered"
+        $result.ExitCode | Should -Be 1
+        $result.Output | Should -Match 'CPM-007'
     }
 }

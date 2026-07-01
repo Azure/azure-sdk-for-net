@@ -206,7 +206,7 @@ if (Test-Path $overrideDir) {
 LogInfo "Checking for PackageVersion items outside central package management"
 
 $packageVersionFiles = $allFiles |
-    Select-String -Pattern '<PackageVersion\s+Include' |
+    Select-String -Pattern '<PackageVersion\s+[^>]*\bInclude\b' |
     Select-Object -ExpandProperty Path -Unique
 
 foreach ($file in $packageVersionFiles) {
