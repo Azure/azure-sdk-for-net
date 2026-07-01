@@ -82,7 +82,7 @@ CRUD means `Create`, `Read`, `Update`, and `Delete`. The CRUD operation set is t
 
 ### 4.2 List and action operations
 
-**Differences:** one. For `/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}`, `resolveArmResources` adds `Microsoft.Advisor.ResourceRecommendationBases.list`; all other list/action operation sets are identical.
+**Differences:** one. For `/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}`, `resolveArmResources` adds `Microsoft.Advisor.ResourceRecommendationBases.list` with request path `/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/recommendations`; all other list/action operation sets are identical.
 
 List/action operations match except for one extra list operation in `resolveArmResources`.
 
