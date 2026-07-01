@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.SecurityInsights
                     yield break;
                 }
                 AlertRuleTemplatesList result = AlertRuleTemplatesList.FromResponse(response);
-                yield return Page<SecurityInsightsAlertRuleTemplateData>.FromValues((IReadOnlyList<SecurityInsightsAlertRuleTemplateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SecurityInsightsAlertRuleTemplateData>.FromValues((IReadOnlyList<SecurityInsightsAlertRuleTemplateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

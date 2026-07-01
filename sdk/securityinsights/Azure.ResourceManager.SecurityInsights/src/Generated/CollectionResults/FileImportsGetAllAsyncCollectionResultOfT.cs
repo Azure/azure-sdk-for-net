@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.SecurityInsights
                     yield break;
                 }
                 FileImportList result = FileImportList.FromResponse(response);
-                yield return Page<SecurityInsightsFileImportData>.FromValues((IReadOnlyList<SecurityInsightsFileImportData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SecurityInsightsFileImportData>.FromValues((IReadOnlyList<SecurityInsightsFileImportData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

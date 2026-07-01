@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.AlertProcessingRules
                     yield break;
                 }
                 AlertProcessingRulesList result = AlertProcessingRulesList.FromResponse(response);
-                yield return Page<AlertProcessingRuleData>.FromValues((IReadOnlyList<AlertProcessingRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AlertProcessingRuleData>.FromValues((IReadOnlyList<AlertProcessingRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
