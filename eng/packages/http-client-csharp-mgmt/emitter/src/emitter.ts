@@ -22,13 +22,21 @@ import {
   deduplicateApiVersionEnums,
   fixClientApiVersions
 } from "./api-version-fixer.js";
+import {
+  ArmProviderSchemaSnapshots,
+  emitArmProviderSchemaSnapshots
+} from "./arm-provider-schema-snapshot.js";
 
 export async function $onEmit(context: EmitContext<AzureMgmtEmitterOptions>) {
   context.options["generator-name"] ??= "ManagementClientGenerator";
   context.options["emitter-extension-path"] ??= import.meta.url;
   context.options["sdk-context-options"] ??= azureSDKContextOptions;
   context.options["model-namespace"] ??= true;
+  let armProviderSchemaSnapshots: ArmProviderSchemaSnapshots | undefined;
   const [, diagnostics] = await emitAzureCodeModel(context, updateCodeModel);
+  if (armProviderSchemaSnapshots) {
+    await emitArmProviderSchemaSnapshots(context, armProviderSchemaSnapshots);
+  }
   context.program.reportDiagnostics(filterSuppressedDiagnostics(diagnostics));
 
   function updateCodeModel(
@@ -49,7 +57,11 @@ export async function $onEmit(context: EmitContext<AzureMgmtEmitterOptions>) {
     // inherit from parents. In mgmt SDK we flatten the hierarchy, so we infer from methods instead.
     fixClientApiVersions(codeModel, sdkContext);
 
-    updateClients(codeModel, sdkContext, context.options);
+    armProviderSchemaSnapshots = updateClients(
+      codeModel,
+      sdkContext,
+      context.options
+    );
     setFlattenProperty(codeModel, sdkContext);
     setHasClientNameOverride(codeModel, sdkContext);
     return codeModel;
