@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 RestorePointListResult result = RestorePointListResult.FromResponse(response);
-                yield return Page<SqlServerDatabaseRestorePointData>.FromValues((IReadOnlyList<SqlServerDatabaseRestorePointData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SqlServerDatabaseRestorePointData>.FromValues((IReadOnlyList<SqlServerDatabaseRestorePointData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

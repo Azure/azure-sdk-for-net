@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 ManagedInstanceLongTermRetentionBackupListResult result = ManagedInstanceLongTermRetentionBackupListResult.FromResponse(response);
-                yield return Page<ManagedInstanceLongTermRetentionBackupData>.FromValues((IReadOnlyList<ManagedInstanceLongTermRetentionBackupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ManagedInstanceLongTermRetentionBackupData>.FromValues((IReadOnlyList<ManagedInstanceLongTermRetentionBackupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

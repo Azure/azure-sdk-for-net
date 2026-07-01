@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.StorageCache
                     yield break;
                 }
                 AutoExportJobsListResult result = AutoExportJobsListResult.FromResponse(response);
-                yield return Page<AutoExportJobData>.FromValues((IReadOnlyList<AutoExportJobData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AutoExportJobData>.FromValues((IReadOnlyList<AutoExportJobData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

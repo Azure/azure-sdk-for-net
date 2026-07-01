@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.Storage
                     yield break;
                 }
                 StorageTaskAssignmentsList result = StorageTaskAssignmentsList.FromResponse(response);
-                yield return Page<StorageTaskAssignmentData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<StorageTaskAssignmentData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
