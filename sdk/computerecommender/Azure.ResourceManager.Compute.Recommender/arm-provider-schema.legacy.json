@@ -1,0 +1,54 @@
+{
+  "resources": [
+    {
+      "resourceModelId": "Microsoft.Compute.ComputeDiagnosticBase",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/spot",
+      "resourceType": "Microsoft.Compute/locations/placementScores",
+      "methods": [
+        {
+          "methodId": "Microsoft.Compute.ComputeDiagnosticBases.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/spot",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/spot",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.Compute.ComputeDiagnosticBases.post",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/spot/generate",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/spot",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      },
+      "singletonResourceName": "spot",
+      "resourceName": "ComputeRecommenderDiagnostic",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-06-05"
+      ],
+      "rbacRoles": []
+    }
+  ],
+  "nonResourceMethods": [
+    {
+      "methodId": "Azure.ResourceManager.Operations.list",
+      "operationPath": "/providers/Microsoft.Compute/operations",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    }
+  ]
+}
