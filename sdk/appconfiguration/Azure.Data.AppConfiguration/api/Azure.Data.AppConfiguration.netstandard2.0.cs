@@ -146,7 +146,7 @@ namespace Azure.Data.AppConfiguration
         public static Azure.Data.AppConfiguration.FeatureFlagTelemetryConfiguration FeatureFlagTelemetryConfiguration(bool enabled = false, System.Collections.Generic.IDictionary<string, string> metadata = null) { throw null; }
         public static Azure.Data.AppConfiguration.FeatureFlagVariantDefinition FeatureFlagVariantDefinition(string name = null, string value = null, string contentType = null, Azure.Data.AppConfiguration.StatusOverride? statusOverride = default(Azure.Data.AppConfiguration.StatusOverride?)) { throw null; }
         public static Azure.Data.AppConfiguration.GroupAllocation GroupAllocation(string variant = null, System.Collections.Generic.IEnumerable<string> groups = null) { throw null; }
-        public static Azure.Data.AppConfiguration.PercentileAllocation PercentileAllocation(string variant = null, int from = 0, int to = 0) { throw null; }
+        public static Azure.Data.AppConfiguration.PercentileAllocation PercentileAllocation(string variant = null, double from = 0, double to = 0) { throw null; }
         public static Azure.Data.AppConfiguration.SecretReferenceConfigurationSetting SecretReferenceConfigurationSetting(string key, System.Uri secretId, string label = null, Azure.ETag eTag = default(Azure.ETag), System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), bool? isReadOnly = default(bool?)) { throw null; }
         public static Azure.Data.AppConfiguration.SettingLabel SettingLabel(string name = null) { throw null; }
         public static Azure.Data.AppConfiguration.UserAllocation UserAllocation(string variant = null, System.Collections.Generic.IEnumerable<string> users = null) { throw null; }
@@ -474,9 +474,9 @@ namespace Azure.Data.AppConfiguration
     }
     public partial class PercentileAllocation : System.ClientModel.Primitives.IJsonModel<Azure.Data.AppConfiguration.PercentileAllocation>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.PercentileAllocation>
     {
-        public PercentileAllocation(string variant, int from, int to) { }
-        public int From { get { throw null; } set { } }
-        public int To { get { throw null; } set { } }
+        public PercentileAllocation(string variant, double from, double to) { }
+        public double From { get { throw null; } set { } }
+        public double To { get { throw null; } set { } }
         public string Variant { get { throw null; } set { } }
         protected virtual Azure.Data.AppConfiguration.PercentileAllocation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

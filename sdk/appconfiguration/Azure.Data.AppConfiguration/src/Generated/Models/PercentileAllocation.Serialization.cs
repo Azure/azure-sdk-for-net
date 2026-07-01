@@ -127,8 +127,8 @@ namespace Azure.Data.AppConfiguration
                 return null;
             }
             string variant = default;
-            int @from = default;
-            int to = default;
+            double @from = default;
+            double to = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -139,12 +139,12 @@ namespace Azure.Data.AppConfiguration
                 }
                 if (prop.NameEquals("from"u8))
                 {
-                    @from = prop.Value.GetInt32();
+                    @from = prop.Value.GetDouble();
                     continue;
                 }
                 if (prop.NameEquals("to"u8))
                 {
-                    to = prop.Value.GetInt32();
+                    to = prop.Value.GetDouble();
                     continue;
                 }
                 if (options.Format != "W")

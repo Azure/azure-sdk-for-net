@@ -21,7 +21,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="from"> The lower bounds for this percentile allocation. </param>
         /// <param name="to"> The upper bounds for this percentile allocation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="variant"/> is null. </exception>
-        public PercentileAllocation(string variant, int @from, int to)
+        public PercentileAllocation(string variant, double @from, double to)
         {
             Argument.AssertNotNull(variant, nameof(variant));
 
@@ -35,7 +35,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="from"> The lower bounds for this percentile allocation. </param>
         /// <param name="to"> The upper bounds for this percentile allocation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PercentileAllocation(string variant, int @from, int to, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PercentileAllocation(string variant, double @from, double to, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Variant = variant;
             From = @from;
@@ -47,9 +47,9 @@ namespace Azure.Data.AppConfiguration
         public string Variant { get; set; }
 
         /// <summary> The lower bounds for this percentile allocation. </summary>
-        public int From { get; set; }
+        public double From { get; set; }
 
         /// <summary> The upper bounds for this percentile allocation. </summary>
-        public int To { get; set; }
+        public double To { get; set; }
     }
 }

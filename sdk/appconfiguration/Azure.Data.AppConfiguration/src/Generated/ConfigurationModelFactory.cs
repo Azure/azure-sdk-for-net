@@ -180,7 +180,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="from"> The lower bounds for this percentile allocation. </param>
         /// <param name="to"> The upper bounds for this percentile allocation. </param>
         /// <returns> A new <see cref="AppConfiguration.PercentileAllocation"/> instance for mocking. </returns>
-        public static PercentileAllocation PercentileAllocation(string variant = default, int @from = default, int to = default)
+        public static PercentileAllocation PercentileAllocation(string variant = default, double @from = default, double to = default)
         {
             return new PercentileAllocation(variant, @from, to, additionalBinaryDataProperties: null);
         }
