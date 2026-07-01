@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.ProviderHub
                     yield break;
                 }
                 ResourceTypeSkuListResult result = ResourceTypeSkuListResult.FromResponse(response);
-                yield return Page<ResourceTypeSkuData>.FromValues((IReadOnlyList<ResourceTypeSkuData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ResourceTypeSkuData>.FromValues((IReadOnlyList<ResourceTypeSkuData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
